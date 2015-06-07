@@ -12,7 +12,7 @@ general-purpose parallel processors, along with their main characteristics.</p>
 <h2>Number of cores over time</h2>
 
 <div class="plot"></div>
-<script type="text/javascript" src="scatter.js"></script>
+<script type="text/javascript" src="js/scatter.js"></script>
 
 <h2>The dataset</h2>
 

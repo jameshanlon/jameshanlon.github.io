@@ -31,7 +31,7 @@ var tooltip = d3.select("body").append("div")
     .style("opacity", 0);
 
 // load data
-d3.csv("processor-list/dataset.csv", function(error, data) {
+d3.csv("processors/dataset.csv", function(error, data) {
   data.forEach(function(d) {
     d.Year = +d.Year;
     d.Cores = +d.Cores;
