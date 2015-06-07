@@ -28,7 +28,7 @@ $align=array(
 );
 $cols = array(0, 1, 2, 3, 4, 5, 9, 12, 13);
 $row = 0;
-if (($handle = fopen("processor-list/dataset.csv", "r")) !== FALSE) {
+if (($handle = fopen("processors/dataset.csv", "r")) !== FALSE) {
   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
     $bg = ($row % 2 == 1 ? "tr1" : "tr2");
     echo "<tr class=\"$bg\">\n";
