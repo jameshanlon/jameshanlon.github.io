@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="article">
+  <h1 class="article-title">{{ article.title }}</h2>
+  <div class="article-info">
+    <time class="published" datetime="{{ article.date.isoformat() }}">
+      {{ article.locale_date }}
+    </time>
+  </div>
+  <div class="article-content">{{ article.content }}</div>
+</section>
+{% endblock %}

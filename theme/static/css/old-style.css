@@ -1,5 +1,5 @@
 body {
-   font-family:Droid Sans,sans-serif; 
+   font-family:Droid Sans,sans-serif;
    font-size:10.5pt;
    padding:0px;
    margin:0px;
@@ -13,8 +13,8 @@ a:link    { text-decoration:none; }
 a:hover   { text-decoration:underline; }
 a:visited { text-decoration:none; }
 
-p { 
-  text-align: justify; 
+p {
+  text-align: justify;
 }
 
 hr {
@@ -32,7 +32,7 @@ li {
 .left { text-align: left; }
 .column { max-width: 680px; }
 
-#outer { 
+#outer {
    margin-top: 0px;
 }
 
@@ -66,7 +66,7 @@ table {
   font-size: 9pt;
   display: block;
   table-layout: fixed;
-  border-collapse: collapse; 
+  border-collapse: collapse;
 }
 
 th, td {

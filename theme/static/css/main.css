@@ -1,0 +1,162 @@
+@import url(reset.css);
+@import url(pygments.css);
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.2em;
+  margin: 0 auto;
+  max-width: 740px;
+  font-size: 0.9em;
+}
+
+header.title {
+  line-height: 1.8em;
+  font-size:1.45em;
+  color: #333333;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 1.2em;
+}
+
+h2 {
+  margin:0.8em 0 0.6em 0;
+  font-size: 1.1em;
+}
+
+h3 {
+  margin-top:0.4em;
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  border-bottom: 1px solid #bbb;
+  font-size: 1em;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav li {
+  display: inline;
+}
+
+nav li a {
+  display: inline-block;
+  color: #666;
+  padding: 0 0.8em 0.8em 0;
+}
+
+footer {
+  border-top: 1px solid #bbb;
+  padding: 0.2em;
+  margin-top: 1em;
+  font-size: 0.7em;
+  color: grey;
+}
+
+footer a {
+  color: gray;
+}
+
+#content {
+  text-align: justify;
+  margin-top: 1em;
+}
+
+#content p {
+}
+
+#article-list {
+  list-style-type: none;
+}
+
+#article-list li {
+  padding-bottom:0.6em;
+}
+
+.article {
+  margin-bottom: 1em;
+}
+
+.article h3 {
+  font-weight: normal;
+  text-align: left;
+}
+
+.article-info {
+  font-family: arial; sans;
+  font-size: 0.8em;
+  margin-top:0.4em;
+  display:inline block;
+  color: gray;
+}
+
+.article-title {
+  font-size: 1.7em;
+  margin-top: 1em;
+}
+
+.article p {
+  margin-top: 0.4em;
+}
+
+.article pre {
+  font-family: 'Inconsolata', monospace;
+  line-height: 1em;
+  padding: 20px 0;
+  margin: 0 0 0 1em;
+}
+
+.article blockquote {
+  font-size: 0.9em;
+  font-style: italic;
+  border-left: 3px solid #ccc;
+  margin-left: 30px;
+  padding-left: 10px;
+}
+
+.article img {
+  max-width: 586px;
+  height: auto;
+}
+
+.article ul,
+.article ol {
+  list-style: none;
+  margin-left: 1em;
+  padding-left: 1em;
+  text-indent: -1em;
+  text-align: left;
+}
+
+.article ul li:before {
+  content: "\2043 \020";
+}
+
+.article .images {
+  margin: 0.8em 0 0.5em 0;
+  text-align: center;
+}
+
+sup, sub {
+  vertical-align: 0;
+  position: relative;
+  font-size: 0.6em;
+}
+
+sup {
+  bottom: 1ex;
+}
+
+sub {
+  top: 1ex;
+}

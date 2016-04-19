@@ -1,9 +1,1 @@
-# Homepage
-
-My homepage, [jwhanlon.com](http://jwhanlon.com).
-
-## Dependencies
-
- * jquery
- * tablesorter
- * d3
+My homepage, http://jwhanlon.com.
