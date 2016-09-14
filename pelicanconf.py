@@ -32,4 +32,5 @@ TYPOGRIFY = True
 
 RELATIVE_URLS = True
 
+FEED_ATOM = 'reeds/atom.xml'
 FEED_RSS = 'reeds/rss.xml'
