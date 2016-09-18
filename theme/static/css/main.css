@@ -59,12 +59,12 @@ footer {
   border-top: 1px solid #bbb;
   padding: 0.2em;
   margin-top: 1em;
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: grey;
 }
 
 footer a {
-  color: gray;
+  color: #444;
 }
 
 #content {
