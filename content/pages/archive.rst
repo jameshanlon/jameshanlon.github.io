@@ -19,10 +19,10 @@ Documents
   <{filename}/files/cpa11-paper.pdf>`_, |br| Communicating Process Architectures,
   University of Limerick. June 2011.
   (`arXiv <http://arxiv.org/abs/1105.3843>`__,
-  `slides <docs/cpa11-slides.pdf>`_).
+  `slides <docs/cpa11-slides.pdf>`__).
 
 * `A network simulator with reconfigurable routing and topology
-  </files/network-simulator.pdf>`_, |br| unpublished 2011, 
+  </files/network-simulator.pdf>`_, |br| unpublished 2011,
   (`GitHub <https://github.com/jameshanlon/network-simulator>`__).
 
 * `Universal routing in processor networks <{filename}/files/dissertation.pdf>`_,
@@ -32,6 +32,10 @@ Documents
   <http://ieeexplore.ieee.org/document/5948572>`_, |br| Networks on Chip (NoCS),
   2011 Fifth IEEE/ACM International Symposium on, Pittsburgh, PA, 2011, pp.
   255-256.
+
+* `Dynamic generation of parallel computations </files/ukef10-paper.pdf>`_,
+  |br| UK Electronics Forum, Newcastle University, June 2010
+  (`slides </files/ukef10-slides.pdf>`__).
 
 * `XMP-64 performance experiments </files/xmp64experiments.pdf>`_,
   |br| unpublished 2010 (`GitHub
@@ -44,12 +48,8 @@ Talks
   `ENTRA <http://entraproject.eu/>`_ meeting, May 2015.
 
 * `Scalable data abstractions for distributed parallel computations
-  <{filename}/files/server-talk.pdf>`_, |br| Imperial College London. January 2013.
+  </files/server-talk.pdf>`_, |br| Imperial College London. January 2013.
 
 * `The resurgence of parallel programming languages
-  <{filename}/files/parallel-languages-BCS.pdf>`_, |br| BCS Advance Programming
+  </files/parallel-languages-BCS.pdf>`_, |br| BCS Advance Programming
   Specialist Group, London. April 2012.
-
-* `Dynamic generation of parallel computations
-  <{filename}/files/ukef10-slides.pdf>`_, |br| UK Electronics Forum, Newcastle
-  University. June 2010.
