@@ -7,6 +7,9 @@ Scalable abstractions for general-purpose parallel computation
 
 Ph.D. thesis, University of Bristol, March 2014.
 
+Supervised by `David May <https://www.cs.bris.ac.uk/~dave/>`_ and `Simon Hollis
+<http://www.cs.bris.ac.uk/staff/simon/>`_.
+
 Abstract
 --------
 
@@ -64,5 +67,6 @@ Download
 Other
 -----
 
-- `Engineering Faculty commendation blurb
-  <http://www.bristol.ac.uk/engineering/graduate/commendations/hanlon.html>`_.
+I was awarded an `Engineering Faculty commendation
+<http://www.bristol.ac.uk/engineering/graduate/commendations/hanlon.html>`_ for
+my work.

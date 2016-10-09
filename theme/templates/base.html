@@ -18,15 +18,18 @@
   {% endif %}
 </head>
 <body>
-  <header class=title>James Hanlon</header>
-  <nav>
-    <ul>
-      <li><a href="/">blog</a></li>
-      <li><a href="/pages/archive.html">archive</a></li>
-      <li><a href="/pages/about.html">about</a></li>
-      <li><a href="/pages/links.html">links</a></li>
-    </ul>
-  </nav>
+  <header>
+    <nav>
+      <div>
+      <ul>
+        <li><a href="/">BLOG</a></li>
+        <li><a href="/pages/archive.html">ARCHIVE</a></li>
+        <li><a href="/pages/about.html">ABOUT</a></li>
+      </ul>
+      </div>
+    </nav>
+    <div id="title">James Hanlon</div>
+  </header>
   <div id="content">
     {% block content %}{% endblock %}
   </div>
