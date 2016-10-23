@@ -25,9 +25,6 @@ Documents
   </files/network-simulator.pdf>`_, |br| unpublished 2011,
   (`GitHub <https://github.com/jameshanlon/network-simulator>`__).
 
-* `Universal routing in processor networks <{filename}/files/dissertation.pdf>`_,
-  |br| Masters Thesis, University of Bristol. May 2009.
-
 * `The XMOS XK-XMP-64 development board
   <http://ieeexplore.ieee.org/document/5948572>`_, |br| Networks on Chip (NoCS),
   2011 Fifth IEEE/ACM International Symposium on, Pittsburgh, PA, 2011, pp.
@@ -40,6 +37,9 @@ Documents
 * `XMP-64 performance experiments </files/xmp64experiments.pdf>`_,
   |br| unpublished 2010 (`GitHub
   <https://github.com/jameshanlon/xmp64-experiments>`__).
+
+* `Universal routing in processor networks <{filename}/files/dissertation.pdf>`_,
+  |br| Masters Thesis, University of Bristol. May 2009.
 
 Talks
 -----

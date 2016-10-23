@@ -1,7 +1,7 @@
 :Title: About
 
-I work as an engineer at `GraphCore <http://www.graphcore.ai>`_ in Bristol, on
-the development of a chip to accelerate machine learning applications.
+I work as an engineer at `GraphCore <http://www.graphcore.ai>`_ in Bristol
+(UK), on the development of a chip to accelerate machine learning applications.
 
 I'm also a director of the `CHEESE project <http://cheeseproject.co.uk>`_, a
 not-for-profit enterprise that uses thermal imaging to help people reduce
