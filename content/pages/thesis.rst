@@ -68,5 +68,5 @@ Other
 -----
 
 I was awarded an `Engineering Faculty commendation
-<http://www.bristol.ac.uk/engineering/graduate/commendations/hanlon.html>`_ for
+<http://www.bristol.ac.uk/engineering/postgraduate/commendations/hanlon.html>`_ for
 my work.
