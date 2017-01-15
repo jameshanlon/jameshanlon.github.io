@@ -1,7 +1,8 @@
 :Title: About
 
-I work as an engineer at `GraphCore <http://www.graphcore.ai>`_ in Bristol
-(UK), on the development of a chip to accelerate machine learning applications.
+My name is Jamie and I work as an engineer at `GraphCore
+<http://www.graphcore.ai>`_ in Bristol (UK), on the development of a chip to
+accelerate machine learning applications.
 
 I'm also a director of the `CHEESE project <http://cheeseproject.co.uk>`_, a
 not-for-profit enterprise that uses thermal imaging to help people reduce
@@ -12,7 +13,7 @@ Consulting <http://www.redoakconsulting.co.uk>`_.
 
 I completed a PhD at the `University of Bristol <http://www.bris.ac.uk>`_ in
 the `Department of Computer Science <http://www.cs.bris.ac.uk>`_ in 2014, with
-a thesis titled `Scalable abstractions for general-purpose parallel computation
+a thesis entitled `Scalable abstractions for general-purpose parallel computation
 <{filename}/pages/thesis.rst>`_.
 
 Elsewhere on the internet:
@@ -24,4 +25,4 @@ Elsewhere on the internet:
 * `LinkedIn <https://www.linkedin.com/in/jameswhanlon>`_
 * `Strava <https://www.strava.com/athletes/5351937>`_
 
-If you want to get in touch, you can email me at mail @ this domain.
+To get in touch, email me at mail @ this domain.

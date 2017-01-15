@@ -6,6 +6,7 @@
   <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
   <link rel="stylesheet" type="text/css" href="{{ SITEURL }}/theme/css/main.css"/>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link rel="icon" href="{{SITEURL}}/theme/images/favicon.png" sizes="16x16" type="image/png">
   {% if FEED_ATOM %}
   <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}"
       type="application/atom+xml" rel="alternate"
@@ -20,15 +21,13 @@
 <body>
   <header>
     <nav>
-      <div>
+      <img src="{{SITEURL}}/theme/images/hypercube.png">
       <ul>
-        <li><a href="/">BLOG</a></li>
+        <li><a href="/">WRITINGS</a></li>
         <li><a href="/pages/archive.html">ARCHIVE</a></li>
         <li><a href="/pages/about.html">ABOUT</a></li>
       </ul>
-      </div>
     </nav>
-    <div id="title">James Hanlon</div>
   </header>
   <div id="content">
     {% block content %}{% endblock %}

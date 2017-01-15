@@ -4,11 +4,13 @@
   <ul>
   {% for article in articles_page.object_list %}
     <li>
-      <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
-      <div class="article-info">
+      <div class="article-info-inline">
         <time class="published" datetime="{{ article.date.isoformat() }}">
           {{ article.locale_date }}
         </time>
+      </div>
+      <div class="article-title-inline">
+        <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
       </div>
     </li>
   {% endfor %}
