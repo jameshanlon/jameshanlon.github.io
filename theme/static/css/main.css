@@ -41,8 +41,7 @@ header nav {
 nav img {
   width: 20px;
   vertical-align: middle;
-  padding: 0.2em;
-  padding-right: 0.4em;
+  padding: 0.3em 0.4em 0.4em 0.2em;
 }
 
 nav ul {
