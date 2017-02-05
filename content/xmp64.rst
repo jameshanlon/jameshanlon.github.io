@@ -12,7 +12,6 @@ fascinating device from the point of view of providing a huge amount of
 parallelism that is programmable in a simple way. As such, I thought I would
 record some details and images of it here.
 
-
 The XMP-64 board contains a four-by-four grid of `XS1-G4 chips
 <https://en.wikipedia.org/wiki/XCore_XS1-G>`_, each with four processor cores,
 and with core providing eight hardware threads. The G4 chips themselves are
