@@ -5,7 +5,7 @@ Title: Archive
 [Emulating a large memory with a collection of smaller ones](/files/emulation.pdf),
 <br>unpublished 2014. ([arXiv](http://arxiv.org/abs/1210.1158v2))
 
-[Scalable abstractions for general-purpose parallel computation](/scalable-abstractions-for-general-purpose-parallel-computation.html),
+[Scalable abstractions for general-purpose parallel computation]({filename}/thesis.md),
 <br>Ph.D. Thesis, University of Bristol. March 2014.
 
 [Fast distributed process creation with the XMOS XS1 architecture](/files/cpa11-paper.pdf),

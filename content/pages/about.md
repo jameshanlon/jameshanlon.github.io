@@ -16,15 +16,15 @@ Consulting](http://www.redoakconsulting.co.uk).
 I completed a PhD at the [University of Bristol](http://www.bris.ac.uk) in
 the [Department of Computer Science](http://www.cs.bris.ac.uk) in 2014, with
 a thesis entitled
-[Scalable abstractions for general-purpose parallel computation]({filename}/pages/thesis.rst).
+[Scalable abstractions for general-purpose parallel computation]({filename}/thesis.md).
 
 Elsewhere on the internet:
 
-- [Twitter, @jameswhanlon](https://twitter.com/jameswhanlon>)
-- [Github](https://github.com/jameshanlon>)
-* [Wikipedia](http://en.wikipedia.org/wiki/User:JamieHanlon>)
-* [StackOverflow](http://stackoverflow.com/users/3706348/james>)
-* [LinkedIn](https://www.linkedin.com/in/jameswhanlon>)
-* [Strava](https://www.strava.com/athletes/5351937>)
+- [Twitter, @jameswhanlon](https://twitter.com/jameswhanlon)
+- [Github](https://github.com/jameshanlon)
+* [Wikipedia](http://en.wikipedia.org/wiki/User:JamieHanlon)
+* [StackOverflow](http://stackoverflow.com/users/3706348/james)
+* [LinkedIn](https://www.linkedin.com/in/jameswhanlon)
+* [Strava](https://www.strava.com/athletes/5351937)
 
 To get in touch, email me at mail @ this domain.
