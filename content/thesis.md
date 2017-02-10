@@ -1,17 +1,17 @@
-:title: PhD thesis
-:date: 2014-12-03 10:20
-:category: None
+Title: Scalable abstractions for general-purpose parallel computation
+Date: 2014-10-01
+Category: None
 
-Scalable abstractions for general-purpose parallel computation
---------------------------------------------------------------
+This is my Ph.D. thesis that I completed at the University of Bristol in March
+2014. I was supervised by [David May](https://www.cs.bris.ac.uk/~dave/) and
+[Simon Hollis](http://www.cs.bris.ac.uk/staff/simon/). I have licensed this work
+under the
+[Creative Commons BY-NC-ND 4.0 license](http://creativecommons.org/licenses/by-nc-nd/4.0/),
+so that it can be shared but not modified. I was awarded an
+[Engineering Faculty commendation](http://www.bristol.ac.uk/engineering/postgraduate/commendations/hanlon.html)
+for the work.
 
-Ph.D. thesis, University of Bristol, March 2014.
-
-Supervised by `David May <https://www.cs.bris.ac.uk/~dave/>`_ and `Simon Hollis
-<http://www.cs.bris.ac.uk/staff/simon/>`_.
-
-Abstract
---------
+# Abstract
 
 Parallelism has become the principal means of sustaining growth in
 computational performance but there has been relatively little development in
@@ -48,25 +48,13 @@ sequential programming techniques by emulating large memories, allowing general
 sequential programs to be executed with a factor of 2 to 3 overhead when
 compared to contemporary sequential machines.
 
-Published as
-------------
+# Published as
 
 James W. Hanlon, *Scalable abstractions for general-purpose parallel
 computation*.  Ph.D. thesis, Department of Computer Science, University of
 Bristol, March 2014.
 
-This work is licensed under the `Creative Commons BY-NC-ND 4.0 license
-<http://creativecommons.org/licenses/by-nc-nd/4.0/>`_.
+# Download
 
-Download
---------
-
-- `PDF <{filename}/files/thesis.pdf>`_
-- `Print PDF <{filename}/files/thesis-print.pdf>`_ (no hyperlink colours)
-
-Other
------
-
-I was awarded an `Engineering Faculty commendation
-<http://www.bristol.ac.uk/engineering/postgraduate/commendations/hanlon.html>`_ for
-my work.
+- [PDF]({filename}/files/thesis.pdf)
+- [Print PDF]({filename}/files/thesis-print.pdf) (no hyperlink colours)
