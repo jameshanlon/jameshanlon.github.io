@@ -8,6 +8,9 @@ Title: Archive
 [Scalable abstractions for general-purpose parallel computation]({filename}/thesis.md),
 <br>Ph.D. Thesis, University of Bristol. March 2014.
 
+Scalable data abstractions for distributed parallel computations,
+<br>unpublished, 2012. ([arXiv](https://arxiv.org/abs/1210.1157))
+
 [Fast distributed process creation with the XMOS XS1 architecture](/files/cpa11-paper.pdf),
 <br>Communicating Process Architectures, University of Limerick. June 2011.
 ([arXiv](http://arxiv.org/abs/1105.3843), [slides](docs/cpa11-slides.pdf)).
