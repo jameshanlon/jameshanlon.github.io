@@ -2,7 +2,7 @@ Title: About
 
 # About me
 
-I'm Jamie and I work as an engineer at [GraphCore](http://www.graphcore.ai>) in
+I'm Jamie and I work as an engineer at [GraphCore](http://www.graphcore.a
 Bristol (UK), on the development of a chip to accelerate machine learning
 applications.
 
