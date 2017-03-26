@@ -90,5 +90,7 @@ per core. A processor with a better balance between memory and compute,
 allowing more of a neural network to be stored on-chip, may facilitate much
 more dramatic improvements.
 
-\[An adapted version of this article first appeared on the
-[Graphcore blog](https://www.graphcore.ai/blog/why-is-so-much-memory-needed-for-deep-neural-networks).\]
+\[An adapted version of this article first appeared on the [Graphcore
+blog](https://www.graphcore.ai/blog/why-is-so-much-memory-needed-for-deep-neural-networks)
+and there was some discussion of it on [Hacker
+News](https://news.ycombinator.com/item?id=13928523)\]
