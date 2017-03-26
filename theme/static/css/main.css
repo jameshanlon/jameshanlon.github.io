@@ -148,20 +148,19 @@ footer a {
 
 .article ul,
 .article ol {
-  list-style: none;
+  list-style: disc;
   margin-left: 1em;
   padding-left: 1em;
-  text-indent: -1em;
   text-align: left;
   padding-bottom: 0.8em;
 }
 
-.article ul li {
-  padding-top: 0.2em;
+.article ol {
+ list-style: decimal;
 }
 
-.article ul li:before {
-  content: "\2043 \020";
+.article ul li {
+  padding-top: 0.2em;
 }
 
 .article .images {
