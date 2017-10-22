@@ -2,4 +2,5 @@
 *.pid
 output
 cache
+env
 .DS_Store

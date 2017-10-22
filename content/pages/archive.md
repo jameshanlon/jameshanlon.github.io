@@ -1,5 +1,7 @@
 Title: Archive
 
+An archive of my work during my undergraduate and PhD degrees.
+
 # Documents
 
 [Emulating a large memory with a collection of smaller ones](/files/emulation.pdf),

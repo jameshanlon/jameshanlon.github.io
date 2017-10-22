@@ -1,7 +1,6 @@
-@import url(reset.css);
 @import url(pygments.css);
 
-body {
+/*body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.4em;
   margin: 0 auto;
@@ -184,4 +183,27 @@ sup {
 
 sub {
   top: 1ex;
+}*/
+
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.navbar {
+  margin-bottom: 20px;
+}
+#article-list ul {
+  list-style-type: none;
+}
+#article-list li {
+  padding-bottom:0.6em;
+}
+.article-info {
+  font-family: arial; sans;
+  font-size: 0.8em;
+  color: gray;
+  padding: 0;
 }

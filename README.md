@@ -3,7 +3,7 @@ which is built using [Pelican](https://blog.getpelican.com/).
 
 To get up and running:
 ```
-$ pip install pelican markdown
+$ pip -r requirements.txt
 $ ./develop_server start
 ...
 ```
