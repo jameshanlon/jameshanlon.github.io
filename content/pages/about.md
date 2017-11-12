@@ -47,7 +47,7 @@ I built this website using [Pelican](https://blog.getpelican.com), a static
 website generator software written in Python. The theme is simply derived from
 [Bootstrap](https://getbootstrap.com) and it runs on a server using
 [Nginx](https://www.nginx.com). The source code is available for reuse on
-Github.
+[Github](https://github.com/jameshanlon/homepage).
 
 ## Links
 
