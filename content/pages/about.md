@@ -38,9 +38,9 @@ There are some more CV-related details on [LinkedIn](https://www.linkedin.com/in
 
 My intention with this website is somewhere to [archive](/archive.html) my old
 academic work, and as a way to publish [notes](/notes.html) on topics that
-interest me and details of hobby [projects](/projects.html) that I've
-undertaken. These are a record for myself and available on the off-chance they
-will be useful to someone who might come across this website. I'd love to
+interest me and details of [projects](/projects.html) that I've undertaken in
+my spare time. These are a record for myself and available on the off-chance
+they will be useful to someone who might come across this website. I'd love to
 hear from you if that's the case.
 
 I built this website using [Pelican](https://blog.getpelican.com), a static
@@ -49,7 +49,7 @@ website generator software written in Python. The theme is simply derived from
 [Nginx](https://www.nginx.com). The source code is available for reuse on
 [Github](https://github.com/jameshanlon/homepage).
 
-## Links
+## Related links
 
 You can find me elsewhere on the internet:
 
