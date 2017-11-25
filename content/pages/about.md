@@ -8,7 +8,7 @@ Title: About
 
 I currently work as an engineer in the silicon team at
 [Graphcore](http://www.graphcore.ai), based in Bristol in the UK, on the
-development of a new chip for machine intelligence.
+development of a new processor for machine intelligence.
 
 In my spare time, I help to run the [CHEESE
 project](http://cheeseproject.co.uk), a not-for-profit enterprise that uses

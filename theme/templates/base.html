@@ -21,9 +21,7 @@
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
   </script>
-  <script type="text/javascript" async
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?...">
-  </script>  
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -35,7 +33,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">
+			<ul class="navbar-nav mr-auto text-uppercase">
         {% for title, link in MENU_ITEMS %}
           <li class="nav-item {% if output_file == link %}active{% endif %}">
             <a class="nav-link" href="{{'/'+link}}">{{title}}</a>
@@ -87,17 +85,19 @@
         </a>
       </p>
       <p>
-      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-        <img alt="Creative Commons Licence" style="border-width:0"
-             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-      </a>
-      Unless otherwise noted, all content is licensed under a<br>
-      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-        Creative Commons Attribution 4.0 International License</a>.<br>
-      Built with <a href="http://blog.getpelican.com/">Pelican</a> /
-      <a href="https://github.com/jameshanlon/homepage">source code</a> /
-      <a href="{{FEED_DOMAIN}}/{{FEED_ATOM}}">Atom</a> /
-      <a href="{{FEED_DOMAIN}}/{{FEED_RSS}}">RSS</a></p>
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a<br>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Built with <a href="http://blog.getpelican.com/">Pelican</a>
+        [<a href="https://github.com/jameshanlon/homepage">source</a>]<br>
+        Subscribe: <a href="{{FEED_DOMAIN}}/{{FEED_ATOM}}">Atom</a> /
+        <a href="{{FEED_DOMAIN}}/{{FEED_RSS}}">RSS</a></p>
+      </div>
     </div>
   </footer>
   <script src="{{SITEURL}}/theme/js/jquery.min.js"></script>

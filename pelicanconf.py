@@ -24,10 +24,10 @@ DEFAULT_DATE_FORMAT = "%d %b %Y"
 DEFAULT_PAGINATION = False
 
 MENU_ITEMS = [
-    ('NOTES',    'index.html'),
-    ('PROJECTS', 'pages/projects.html'),
-    ('ARCHIVE',  'pages/archive.html'),
-    ('ABOUT',    'pages/about.html'),
+    ('notes',    'index.html'),
+    ('projects', 'pages/projects.html'),
+    ('archive',  'pages/archive.html'),
+    ('about',    'pages/about.html'),
 ]
 
 STATIC_PATHS = [
