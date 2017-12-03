@@ -5,9 +5,12 @@
   <div class="lead">
     <time class="published" datetime="{{ article.date.isoformat() }}">
       {{ article.locale_date }}
-    </time>
+    </time><br>
+    {% for tag in article.tags %}
+      <span class="article-tag small"><a href="/tag/{{tag}}.html">{{tag}}</a></span>
+    {% endfor %}
   </div>
-  <div>
+  <div class="article-body">
     {{ article.content }}
   </div>
   <div class="article-footer">

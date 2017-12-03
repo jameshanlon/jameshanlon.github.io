@@ -23,11 +23,14 @@ DEFAULT_LANG = u'en'
 DEFAULT_DATE_FORMAT = "%d %b %Y"
 DEFAULT_PAGINATION = False
 
+CATEGORY_SAVE_AS = '{slug}.html'
+PAGE_SAVE_AS = '{slug}.html'
+
 MENU_ITEMS = [
-    ('notes',    'index.html'),
-    ('projects', 'pages/projects.html'),
-    ('archive',  'pages/archive.html'),
-    ('about',    'pages/about.html'),
+    ('notes',    'notes.html'),
+    ('projects', 'projects.html'),
+    ('archive',  'archive.html'),
+    ('about',    'about.html'),
 ]
 
 STATIC_PATHS = [

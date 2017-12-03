@@ -1,6 +1,7 @@
 :Title: The XMOS XMP-64
 :Date: 2014-12-04
-:Category: None
+:Category: Notes
+:Tags: computing, electronics
 
 The XMP-64 is an experimental single-board distributed-memory parallel computer
 with 512 hardware threads  and is programmable with a C-like language.  It was

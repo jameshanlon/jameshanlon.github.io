@@ -1,6 +1,7 @@
 Title: A convolutional neural network from scratch
 Date: 2017-2-10
-Category: None
+Category: notes
+Tags: machine-intelligence
 
 The online book '[Neural Networks and Deep
 Learning](http://neuralnetworksanddeeplearning.com)' by Michael Nielsen is an

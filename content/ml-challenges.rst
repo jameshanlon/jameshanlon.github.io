@@ -1,6 +1,7 @@
 :Title: Machine learning challenges for computer architecture
 :Date: 2016-11-4
-:Category: None
+:Category: notes
+:Tags: machine-intelligence, computing
 
 Neural networks have become a hot topic in computing and their development is
 progressing rapidly. They have a long history with some of the first designs

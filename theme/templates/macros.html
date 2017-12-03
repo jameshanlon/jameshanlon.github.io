@@ -1,0 +1,16 @@
+{%- macro render_article_item(article) %}
+  <span class="article-info">
+    <time class="published" datetime="{{article.date.isoformat()}}">
+      {{article.locale_date}}
+    </time>
+  </span><br>
+  <a href="/{{article.url}}">
+    {{article.title}}
+  </a>
+  <br>
+  {% for tag in article.tags %}
+    <span class="article-tag small">
+      <a href="/tag/{{tag}}.html">{{tag}}</a>
+    </span>
+  {% endfor %}
+{% endmacro %}

@@ -167,10 +167,6 @@ footer a {
   text-align: center;
 }
 
-.article-footer {
-  margin-top: 2.6em;
-}
-
 sup, sub {
   vertical-align: 0;
   position: relative;
@@ -195,15 +191,25 @@ body {
 .navbar {
   margin-bottom: 20px;
 }
-#article-list ul {
+.article-list ul {
   list-style-type: none;
+  padding-left: 0;
 }
-#article-list li {
+.article-list li {
   padding-bottom:0.6em;
+}
+.article-tag a {
+  color: gray;
 }
 .article-info {
   font-family: arial; sans;
   font-size: 0.8em;
   color: gray;
   padding: 0;
+}
+.article-body {
+  padding-top: 1.4em;
+}
+.article-footer {
+  margin-top: 1.2em;
 }

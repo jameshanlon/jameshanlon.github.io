@@ -1,0 +1,13 @@
+{% import 'macros.html' as macros %}
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ category }}</h2>
+
+<div class="article-list">
+<ul>
+{% for article in articles %}
+  <li>{{ macros.render_article_item(article) }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
