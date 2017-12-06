@@ -2,3 +2,4 @@ pelican==3.7.1
 pillow==4.3.0
 typogrify==2.0.7
 Markdown==2.6.9
+html5validator==0.2.8
