@@ -35,7 +35,7 @@ Pittsburgh, PA, 2011, pp. 255-256.
 
 # Talks
 
-[Compiling for dual issue]({filename}/files/dual-issue-talk.pdf),
+[Compiling for dual issue](/files/dual-issue-talk.pdf),
 <br>[ENTRA](http://entraproject.eu/) meeting, May 2015.
 
 [Scalable data abstractions for distributed parallel computations](/files/server-talk.pdf),

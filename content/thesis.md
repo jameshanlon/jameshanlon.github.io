@@ -56,5 +56,5 @@ Bristol, March 2014.
 
 # Download
 
-- [PDF]({filename}/files/thesis.pdf)
-- [Print PDF]({filename}/files/thesis-print.pdf) (no hyperlink colours)
+- [PDF](/files/thesis.pdf)
+- [Print PDF](/files/thesis-print.pdf) (no hyperlink colours)
