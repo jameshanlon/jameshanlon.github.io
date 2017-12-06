@@ -32,8 +32,13 @@ MENU_ITEMS = [
 
 STATIC_PATHS = [
     'images',
-    'files',
+    'files/favicon.png',
+    'files/robots.txt',
 ]
+EXTRA_PATH_METADATA = {
+    'files/robots.txt': {'path': 'robots.txt'},
+    'files/favicon.png': {'path': 'favicon.png'},
+}
 
 THEME = 'theme'
 
