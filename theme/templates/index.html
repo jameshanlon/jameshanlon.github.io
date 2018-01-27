@@ -1,20 +1,16 @@
 {% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
-
 <p>Welcome to the website of <a href="/pages/about.html">James W. Hanlon</a>,
 an engineer working at <a href="http://www.graphcore.ai">Graphcore</a>, in
 Bristol (UK). Here you'll find notes on <a href="/tags.html">subjects</a> of
 interest and other projects I've been working on, as well as my work from
 academia.</p>
-
 <hr>
-<div class="article-list">
-<ul>
+<div class="container article-list">
 {% for article in articles %}
-  <li>{{ macros.render_article_item(article) }}</li>
+  {{ macros.render_article_item(article) }}
 {% endfor %}
-</ul>
 </div>
-<p><a href="/tags.html">Browse by tag</a></p>
+<!--<p><a href="/tags.html">Browse by tag</a></p>-->
 {% endblock content %}

@@ -2,12 +2,11 @@
 {% extends "base.html" %}
 {% block title %}{{ SITENAME }} - Tags{% endblock %}
 {% block content %}
-<h1>With the {{tag}} tag</h1>
-<div class="artcile-list">
-<ul>
+<h1>Tag: {{tag}}</h1>
+<hr>
+<div class="container artcile-list">
 {% for article in articles %}
-  <li>{{ macros.render_article_item(article) }}</li>
+  {{ macros.render_article_item(article) }}
 {% endfor %}
-</ul>
 </div>
 {% endblock %}

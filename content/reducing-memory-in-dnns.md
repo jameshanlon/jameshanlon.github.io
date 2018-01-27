@@ -1,6 +1,7 @@
 Title: Reducing memory use in deep neural networks
 Date: 2017-2-5
-Category: None
+Category: notes
+Tags: computing; machine-intelligence
 
 The memory requirements for modern deep neural networks can be significant,
 however memory on-chip is expensive relative to computational resources such as

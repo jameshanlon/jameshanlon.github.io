@@ -27,8 +27,7 @@ CATEGORY_SAVE_AS = '{slug}.html'
 PAGE_SAVE_AS = '{slug}.html'
 
 MENU_ITEMS = [
-    ('notes',    'notes.html'),
-    ('projects', 'projects.html'),
+    ('notes',    'index.html'),
     ('archive',  'archive.html'),
     ('about',    'about.html'),
 ]

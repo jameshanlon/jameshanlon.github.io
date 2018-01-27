@@ -181,6 +181,14 @@ sub {
   top: 1ex;
 }*/
 
+html {
+  font-size: 14px;
+}
+
+.h1, h1 { font-size: 2rem; }
+.h2, h2 { font-size: 1.6rem; }
+.h3, h3 { font-size: 1.2rem; }
+
 body {
   padding-top: 5rem;
 }
@@ -205,7 +213,7 @@ body {
   font-family: arial; sans;
   font-size: 0.8em;
   color: gray;
-  padding: 0;
+  padding: 0.2em;
 }
 .article-body {
   padding-top: 1.4em;
