@@ -14,7 +14,7 @@ ecosystem of proprietary tooling.
 
 As I see it, there are three aspects to writing synthesizable Verilog code: the
 particular features of the language to use, the style and idioms employed in
-using those features, and the tooling support for a design. These 
+using those features, and the tooling support for a design.
 
 ### The language
 
