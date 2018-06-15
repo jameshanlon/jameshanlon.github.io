@@ -34,6 +34,7 @@ MENU_ITEMS = [
 
 STATIC_PATHS = [
     'images',
+    'files',
     'files/favicon.png',
     'files/robots.txt',
 ]
