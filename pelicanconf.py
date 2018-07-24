@@ -9,12 +9,12 @@ SITEURL = 'http://jameswhanlon.com'
 PATH = 'content'
 IMAGE_PATH = 'images'
 THUMBNAIL_DIR = 'images'
-THUMBNAIL_KEEP_NAME = True
+THUMBNAIL_SIZES = { 'thumb': '150x?', }
 THUMBNAIL_KEEP_TREE = True
 GALLERY_PATH = 'images'
 
 RESIZE = [
-    ('', False, 200, 200),
+    ('gallery', False, 200, 200),
 ]
 
 TIMEZONE = 'Europe/Paris'

@@ -162,11 +162,6 @@ footer a {
   padding-top: 0.2em;
 }
 
-.article .images {
-  margin: 0.8em 0 0.5em 0;
-  text-align: center;
-}
-
 sup, sub {
   vertical-align: 0;
   position: relative;
@@ -227,4 +222,9 @@ body {
   background-color: #f5f5f5;
   border-radius: .25rem !important;
   border: 1px solid #dee2e6 !important;
+}
+
+.images {
+  margin: 0.8em 0 0.5em 0;
+  text-align: center;
 }
