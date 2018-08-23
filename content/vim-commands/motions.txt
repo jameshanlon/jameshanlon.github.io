@@ -1,0 +1,18 @@
+Action             | Effect
+`l`,`h`,`j`,`k`    | right, left, down, up
+`w` / `W`          | start of next word / start of next WORD
+`b` / `B`          | start of pevious word / start of previous WORD
+`e` / `E`          | end of next word / end of next WORD
+`0` / `$`          | start / end of line
+`^` / `g_`         | first / last non-blank character in line
+`{` / `}`          | start / end of paragraph
+`t{char}`          | till - move to next character (inclusive)
+`f{char}`          | find - move to next character (exclusive)
+`T{char}`          | till - move to previous character (inclusive)
+`F{char}`          | find - move to previous character (exclusive)
+`%`                | move to matching character (default pairs: `()`, `{}`, `[]`)
+`[(`, `[)`         | move to matching parenthesis
+`[{`, `[}`         | move to matching curly brace
+`/{pattern}`       | search forward (must be followed by `{CR}`)
+`?{pattern}`       | search backwards (must be followed by `{CR}`)
+`gg` / `G`         | move to first / last line in buffer

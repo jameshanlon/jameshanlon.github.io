@@ -35,8 +35,12 @@ MENU_ITEMS = [
 STATIC_PATHS = [
     'images',
     'files',
+    'includes',
     'files/favicon.png',
     'files/robots.txt',
+]
+ARTICLE_EXCLUDES = [
+    'vim-commands',
 ]
 EXTRA_PATH_METADATA = {
     'files/robots.txt': {'path': 'robots.txt'},

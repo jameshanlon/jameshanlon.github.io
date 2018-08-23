@@ -1,0 +1,78 @@
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l</code>,<code>h</code>,<code>j</code>,<code>k</code></td>
+<td>right, left, down, up</td>
+</tr>
+<tr>
+<td><code>w</code> / <code>W</code></td>
+<td>start of next word / start of next WORD</td>
+</tr>
+<tr>
+<td><code>b</code> / <code>B</code></td>
+<td>start of pevious word / start of previous WORD</td>
+</tr>
+<tr>
+<td><code>e</code> / <code>E</code></td>
+<td>end of next word / end of next WORD</td>
+</tr>
+<tr>
+<td><code>0</code> / <code>$</code></td>
+<td>start / end of line</td>
+</tr>
+<tr>
+<td><code>^</code> / <code>g_</code></td>
+<td>first / last non-blank character in line</td>
+</tr>
+<tr>
+<td><code>{</code> / <code>}</code></td>
+<td>start / end of paragraph</td>
+</tr>
+<tr>
+<td><code>t{char}</code></td>
+<td>till - move to next character (inclusive)</td>
+</tr>
+<tr>
+<td><code>f{char}</code></td>
+<td>find - move to next character (exclusive)</td>
+</tr>
+<tr>
+<td><code>T{char}</code></td>
+<td>till - move to previous character (inclusive)</td>
+</tr>
+<tr>
+<td><code>F{char}</code></td>
+<td>find - move to previous character (exclusive)</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>move to matching character (default pairs: <code>()</code>, <code>{}</code>, <code>[]</code>)</td>
+</tr>
+<tr>
+<td><code>[(</code>, <code>[)</code></td>
+<td>move to matching parenthesis</td>
+</tr>
+<tr>
+<td><code>[{</code>, <code>[}</code></td>
+<td>move to matching curly brace</td>
+</tr>
+<tr>
+<td><code>/{pattern}</code></td>
+<td>search forward (must be followed by <code>{CR}</code>)</td>
+</tr>
+<tr>
+<td><code>?{pattern}</code></td>
+<td>search backwards (must be followed by <code>{CR}</code>)</td>
+</tr>
+<tr>
+<td><code>gg</code> / <code>G</code></td>
+<td>move to first / last line in buffer</td>
+</tr>
+</tbody>
+</table>
