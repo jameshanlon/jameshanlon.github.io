@@ -204,6 +204,11 @@ always_comb begin
 end
 ```
 
+It is [recommended][verilator-internals] by the author of Verilator to split up
+``always`` blocks (combinatorial or sequential) so they contain as few
+statements as possible. This allows Verilator the most freedom to order the
+code to improve execution performance.
+
 **Drive one signal per block.**
 With complex control flow statements, it is tempting to use a single
 `always_comb` block to drive multiple signals. In some circumstances, there may
@@ -213,11 +218,14 @@ block makes it clear what logic involved in driving that signal, and as such,
 facilitates further simplification.
 
 An additional reason to avoid driving multiple signals per `always_comb` block
-is that [Verilator][verilator] can infer a dependence between two signals, leading to false
-circular combinatorial loops. In these cases, it issues an [`UPOPTFLAT`
-warning][unoptflat]
-and cannot optimise the path, leading to reduced emulation performance.
+is that [Verilator][verilator] can infer a dependence between two signals,
+leading to false circular combinatorial loops. In these cases, it issues an
+[`UPOPTFLAT` warning][unoptflat] and cannot optimise the path, leading to
+reduced emulation performance. Generally, fixing warnings pertaning to
+unoptimisable constructs can improve Verilator's simulation performance by [up
+to a factor of two][verilator-internals].
 
+[verilator-internals]: https://www.veripool.org/papers/verilator_philips_internals.pdf
 [verilator]: https://www.veripool.org/wiki/verilator
 [unoptflat]: https://www.embecosm.com/appnotes/ean6/html/ch07s02s07.html
 
