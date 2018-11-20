@@ -1,5 +1,5 @@
 title: Querying logical paths in a Verilog design
-date: 2018-11-14
+date: 2018-11-20
 category: notes
 tags: computing, microelectronics, Verilog
 
