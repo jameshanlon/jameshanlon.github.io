@@ -31,12 +31,12 @@ few tens of watts of power, provides deterministic (completely predictable)
 execution of 512 threads and provides a very simple programming interface.
 
 <div class="images">
-<a href="/images/xmp64/xmp64-1.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-1_thumb.JPG"></a>
-<a href="/images/xmp64/xmp64-2.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-2_thumb.JPG"></a>
-<a href="/images/xmp64/xmp64-3.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-3_thumb.JPG"></a>
-<a href="/images/xmp64/xmp64-4.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-4_thumb.JPG"></a>
-<a href="/images/xmp64/xmp64-5.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-5_thumb.JPG"></a>
-<a href="/images/xmp64/xmp64-6.JPG" data-lightbox="xmp64"><img src="/images/xmp64/xmp64-6_thumb.JPG"></a>
+<a href="{{'XMP-64/xmp64-1.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-1.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-2.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-2.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-3.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-3.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-4.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-4.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-5.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-5.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-6.JPG'|asset}}" data-lightbox="xmp64"><img src="{{'XMP-64/xmp64-6.JPG'|thumbnail('320x320')}}"></a>
 </div>
 
 As you can see in the pictures, there are two Ethernet interfaces at the top of
