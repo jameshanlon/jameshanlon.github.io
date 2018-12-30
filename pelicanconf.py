@@ -1,10 +1,19 @@
 #!/usr/bin/env python
 
 from __future__ import unicode_literals
+from thumbnail import get_thumbnail
 
 AUTHOR = u'James W. Hanlon'
 SITENAME = u'James W. Hanlon'
 SITEURL = 'http://jameswhanlon.com'
+
+ASSETS_PREFIX = 'https://jwh.ams3.digitaloceanspaces.com/homepage'
+
+def get_asset_url(filepath):
+    return ASSETS_PREFIX+'/'+filepath
+
+JINJA_FILTERS = { 'asset': get_asset_url,
+                  'thumbnail': get_thumbnail, }
 
 PATH = 'content'
 IMAGE_PATH = 'images'
@@ -57,4 +66,4 @@ FEED_ATOM = 'reeds/atom.xml'
 FEED_RSS = 'reeds/rss.xml'
 
 PLUGIN_PATHS = ['pelican-plugins', ]
-PLUGINS = ['thumbnailer', 'gallery', 'jinja2content']
+PLUGINS = ['thumbnailer', 'gallery', 'jinja_content']
