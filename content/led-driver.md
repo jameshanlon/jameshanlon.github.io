@@ -1,5 +1,5 @@
 title: Three-channel high-power LED driver
-date: 2018-12-30
+date: 2018-12-31
 category: projects
 tags: electronics
 
