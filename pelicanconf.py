@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 from __future__ import unicode_literals
+import sys
+import os
+sys.path.insert(0, os.getcwd())
 from thumbnail import get_thumbnail
 
 AUTHOR = u'James W. Hanlon'

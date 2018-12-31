@@ -7,7 +7,7 @@ $ pip install virtualenv
 ...
 $ virtualenv env
 $ source env/bin/activate
-$ pip -r requirements.txt
+$ pip install -r requirements.txt
 ...
 ```
 
