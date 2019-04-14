@@ -19,9 +19,7 @@ $ make
 
 Or, run the development server:
 ```
-$ ./develop_server start
-...
-$ ./develop_server stop
+$ pelican --listen
 ...
 ```
 Then visit ``http://0.0.0.0:8000``.
