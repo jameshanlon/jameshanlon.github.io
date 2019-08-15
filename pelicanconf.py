@@ -69,4 +69,4 @@ FEED_ATOM = 'reeds/atom.xml'
 FEED_RSS = 'reeds/rss.xml'
 
 PLUGIN_PATHS = ['pelican-plugins', ]
-PLUGINS = ['thumbnailer', 'gallery', 'jinja_content']
+PLUGINS = ['jinja_content']
