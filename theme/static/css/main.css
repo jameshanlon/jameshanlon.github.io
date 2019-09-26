@@ -205,10 +205,16 @@ body {
   color: gray;
 }
 .article-info {
+  padding: 0.2em;
+}
+.article-info-date {
   font-family: arial; sans;
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: gray;
   padding: 0.2em;
+}
+.article-info-title {
+  font-size:1.1em;
 }
 .article-body {
   padding-top: 1.4em;
@@ -231,4 +237,11 @@ body {
 
 .thumbnail {
   padding: 0.25em;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -80px;
+  visibility: hidden;
 }

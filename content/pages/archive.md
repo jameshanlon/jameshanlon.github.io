@@ -35,6 +35,10 @@ Pittsburgh, PA, 2011, pp. 255-256.
 
 # Talks
 
+[netlist-paths: A command line tool for querying paths in a Verilog,
+design](/files/netlist-paths-orconf19.pdf)<br>
+Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France.
+
 [Compiling for dual issue](/files/dual-issue-talk.pdf),
 <br>[ENTRA](http://entraproject.eu/) meeting, May 2015.
 
