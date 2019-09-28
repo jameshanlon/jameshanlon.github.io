@@ -19,7 +19,7 @@
 \begin{frame}
 \frametitle{Background and motivation}
   \begin{itemize}
-  \item Synthesized logic looses much of it's correspondence with the
+  \item Synthesized logic looses much of its correspondence with the
     RTL due to flattening and optimisation.
   \item It is then difficult to correspond timing paths back to the source code.
   \item Being able to do this is important: to quickly identify where fixes are
@@ -89,7 +89,7 @@
   \frametitle{Example: NVDLA}
   An open accelerator core for deep learning inference.\footnote{\url{https://github.com/nvdla/hw}}
 
-  Paths fan in paths to a register:
+  Paths fan-in paths to a register:
   \tiny
   \begin{verbatim}
   $ netlist-paths netlist.graph --to u_calculator.calc_op1_fp_46_d1
@@ -113,7 +113,7 @@
 
 \begin{frame}[fragile]
   \frametitle{Example: NVDLA}
-  Fan out paths from a register:
+  Fan-out paths from a register:
   \tiny
   \begin{verbatim}
   $ netlist-paths netlist.graph --reportlogic --from u_accu_dbuf_4.r_nv_ram_rws_32x512.mbist_en_flop.Q
@@ -158,7 +158,7 @@
   \item More options to specify paths: eg internal/external, avoiding points.
   \item Improve dataflow analysis in Verilator to link variables rather than
     blocks.
-  \item Avoid startup cost of loading large netlist file.
+  \item Avoid startup cost of repeatedly loading large netlist files.
   \item Use to assert properties of the netlist structure: eg no paths between
     sub hierarchies X and Y.
   \item Upstream the Verilator changes.
