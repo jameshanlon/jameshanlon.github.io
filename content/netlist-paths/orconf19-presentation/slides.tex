@@ -14,17 +14,12 @@
 \date{\today}
 \frame{\titlepage}
 
-% Contents
-%\setcounter{tocdepth}{2}
-%\section[Outline]{}
-%\frame{\tableofcontents}
-
 % Background
 \section{Background}
 \begin{frame}
 \frametitle{Background and motivation}
   \begin{itemize}
-  \item Complex synthesized logic looses much of it's correspondence with the
+  \item Synthesized logic looses much of it's correspondence with the
     RTL due to flattening and optimisation.
   \item It is then difficult to correspond timing paths back to the source code.
   \item Being able to do this is important: to quickly identify where fixes are
@@ -33,39 +28,39 @@
 \end{frame}
 
 \begin{frame}[fragile]
-  Example (simplified) report:
+  Example report (simplified):
   \tiny
   \begin{verbatim}
-  Point                                                   ref_name       Net       
-  -----                                                   --------       ---       
+  Point                                                   ref_name       Net
+  -----                                                   --------       ---
   cts_inv_10478166254/CK->X                               CKINV_CB       ctsbuf_net_839142901
   cts_inv_10473166249/CK->X                               CKINV          ctsbuf_net_837142899
-  cto_inv_169431/CK->X                                    CKINV_CB       cts482    
-  cto_inv_169430/CK->X                                    CKINV          cts481    
-  u_dbg_tdi_u_cbus_tdi_target_power_cg_19_0_0_latch/CK->Q CKGTPLT_V7Y2   n47487    
-  power_cg_269_latch/CK->Q                                CKGTPLT_CBV7Y2 n47575    
+  cto_inv_169431/CK->X                                    CKINV_CB       cts482
+  cto_inv_169430/CK->X                                    CKINV          cts481
+  u_dbg_tdi_u_cbus_tdi_target_power_cg_19_0_0_latch/CK->Q CKGTPLT_V7Y2   n47487
+  power_cg_269_latch/CK->Q                                CKGTPLT_CBV7Y2 n47575
   ctosc_drc_inst_206015/CK->X                             CKINV          ctosc_drc_75
   ctosc_drc_inst_206014/CK->X                             CKINV          ctosc_drc_74
   u_dbg_tdi_u_cbus_tdi_target_regs_reg/CK->Q              FSDPRBQ_V2FY2  u_dbg_tdi_exec_instr_24_
-  u8550/A1->X                                             NR2            n13464    
-  SGI94_133056/A2->X                                      EN2_V2Y2       n13474    
-  u5417/A2->X                                             AOI22          n4550     
-  SGI156_133051/B->X                                      OAI21_V1Y2     n13490    
-  u4065/A1->X                                             NR2            n4088     
-  u41596/A1->X                                            ND2_MM         n24109    
-  u4961/A1->X                                             NR2            n5629     
-  u10133/A1->X                                            ND2_MM         n27510    
-  u10134/A1->X                                            ND2_MM         n24210    
-  RLB_135261/B->X                                         ND2B_V1        n41234    
-  u40381/A1->X                                            ND2_CB         n24235    
-  u45746/A1->X                                            AOI21_V1Y2     n14358    
-  SGI38_135033/A2->X                                      NR3            n47198    
-  u10157/A1->X                                            ND3            n14314    
-  u10161/A2->X                                            NR2_CB         n14319    
-  SGI188_133595/A1->X                                     ND2_MM         n44980    
-  u41887/A->X                                             INV_S          n43774    
-  u13107/A1->X                                            NR2            n43005    
-  u53593/A2->X                                            ND2_CB         n25248    
+  u8550/A1->X                                             NR2            n13464
+  SGI94_133056/A2->X                                      EN2_V2Y2       n13474
+  u5417/A2->X                                             AOI22          n4550
+  SGI156_133051/B->X                                      OAI21_V1Y2     n13490
+  u4065/A1->X                                             NR2            n4088
+  u41596/A1->X                                            ND2_MM         n24109
+  u4961/A1->X                                             NR2            n5629
+  u10133/A1->X                                            ND2_MM         n27510
+  u10134/A1->X                                            ND2_MM         n24210
+  RLB_135261/B->X                                         ND2B_V1        n41234
+  u40381/A1->X                                            ND2_CB         n24235
+  u45746/A1->X                                            AOI21_V1Y2     n14358
+  SGI38_135033/A2->X                                      NR3            n47198
+  u10157/A1->X                                            ND3            n14314
+  u10161/A2->X                                            NR2_CB         n14319
+  SGI188_133595/A1->X                                     ND2_MM         n44980
+  u41887/A->X                                             INV_S          n43774
+  u13107/A1->X                                            NR2            n43005
+  u53593/A2->X                                            ND2_CB         n25248
   ...
   SGI104_172925/B->X                                      NR2B_V1        n39867
   u_exu_u_exin_x2_sel_data0e_valid_q_reg/D                FSDPRBQ_V2FY2
@@ -84,14 +79,17 @@
     \item Matches names with regexes
     \end{itemize}
   \item Reports paths with names, types and locations at each step.
-  \item Written in C++ and making use of \texttt{boost::graph}.
+  \item Written in C++ with \texttt{boost::graph}.
   \end{itemize}
 \end{frame}
 
 % Example
 \section{Example: NVDLA}
 \begin{frame}[fragile]
-  \frametitle{Example: NVDLA\footnote{\url{https://github.com/nvdla/hw}}}
+  \frametitle{Example: NVDLA}
+  An open accelerator core for deep learning inference.\footnote{\url{https://github.com/nvdla/hw}}
+
+  Paths fan in paths to a register:
   \tiny
   \begin{verbatim}
   $ netlist-paths netlist.graph --to u_calculator.calc_op1_fp_46_d1
@@ -115,23 +113,40 @@
 
 \begin{frame}[fragile]
   \frametitle{Example: NVDLA}
+  Fan out paths from a register:
   \tiny
   \begin{verbatim}
-  $ netlist-paths netlist.graph --from u_accu_dbuf_4.r_nv_ram_rws_32x512.mbist_en_flop.Q
+  $ netlist-paths netlist.graph --reportlogic --from u_accu_dbuf_4.r_nv_ram_rws_32x512.mbist_en_flop.Q
   ...
   Path 225
-  mbist_en_flop.Q                                      p_SDFCNQD1PO4.v:13
-  mbist_en_r                                           nv_ram_rws_32x512_logic.v:152
-  muxed_Di_w0_S                                        nv_ram_rws_32x512_logic.v:193
-  muxed_Di_w0                                          nv_ram_rws_32x512_logic.v:189
-  muxed_Data_A                                         nv_ram_rws_32x512_logic.v:1582
-  muxed_Data_r0                                        nv_ram_rws_32x512_logic.v:1581
-  Data_reg_r0_D                                        nv_ram_rws_32x512_logic.v:1660
-  testInst_Data_reg_r0_511_256.D                       ScanShareSel_JTAG_reg_ext_cg.v:31
-  testInst_Data_reg_r0_511_256.next_Q                  ScanShareSel_JTAG_reg_ext_cg.v:34
-  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.D   SDFQD1.v:17
-  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.sel SDFQD1.v:22
-  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.Q   SDFQD1.v:20
+  Path 225
+  mbist_en_flop.Q                                      REG_SRC p_SDFCNQD1PO4.v:13
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:154
+  mbist_en_r                                           WIRE    nv_ram_rws_32x512_logic.v:152
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:193
+  muxed_Di_w0_S                                        WIRE    nv_ram_rws_32x512_logic.v:193
+  ALWAYS                                               LOGIC   nv_ram_rws_32x512_logic.v:194
+  ASSIGN                                               LOGIC   nv_ram_rws_32x512_logic.v:196
+  muxed_Di_w0                                          VAR     nv_ram_rws_32x512_logic.v:189
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:1585
+  muxed_Data_A                                         WIRE    nv_ram_rws_32x512_logic.v:1582
+  ALWAYS                                               LOGIC   nv_ram_rws_32x512_logic.v:1587
+  ASSIGN                                               LOGIC   nv_ram_rws_32x512_logic.v:1589
+  muxed_Data_r0                                        VAR     nv_ram_rws_32x512_logic.v:1581
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:1660
+  Data_reg_r0_D                                        WIRE    nv_ram_rws_32x512_logic.v:1660
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:1667
+  ASSIGNW                                              LOGIC   nv_ram_rws_32x512_logic.v:1667
+  testInst_Data_reg_r0_511_256.D                       PORT    ScanShareSel_JTAG_reg_ext_cg.v:31
+  ASSIGNW                                              LOGIC   ScanShareSel_JTAG_reg_ext_cg.v:46
+  testInst_Data_reg_r0_511_256.next_Q                  WIRE    ScanShareSel_JTAG_reg_ext_cg.v:34
+  ASSIGNW                                              LOGIC   ScanShareSel_JTAG_reg_ext_cg.v:57
+  ASSIGNW                                              LOGIC   ScanShareSel_JTAG_reg_ext_cg.v:57
+  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.D   PORT    SDFQD1.v:17
+  ASSIGNW                                              LOGIC   SDFQD1.v:22
+  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.sel WIRE    SDFQD1.v:22
+  ALWAYS                                               LOGIC   SDFQD1.v:23
+  testInst_Data_reg_r0_511_256.Jreg_ff[195].SSS.nr.Q   REG_DST SDFQD1.v:20
   ...
   \end{verbatim}
 \end{frame}
@@ -146,7 +161,7 @@
   \item Avoid startup cost of loading large netlist file.
   \item Use to assert properties of the netlist structure: eg no paths between
     sub hierarchies X and Y.
-  \item Upstream Verilator changes.
+  \item Upstream the Verilator changes.
   \end{itemize}
 \end{frame}
 
@@ -156,7 +171,7 @@
   \begin{itemize}
   \item Github:
     \url{https://github.com/jameshanlon/netlist-paths}
-  \item More information here:
+  \item More details:
     \url{https://www.jameswhanlon.com/querying-logical-paths-in-a-verilog-design.html}
   \item Get in touch:
     \url{jamie.hanlon@graphcore.ai}
