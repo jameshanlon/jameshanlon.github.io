@@ -320,16 +320,20 @@ always_ff @(posedge i_clk or posedge i_rst)
 **Use `if` qualifiers** for single `if` and chained `if-else`
 statements for additional checking and guidance to synthesis:
 
- - `unique` to ensure exactly one condition is matched, unless there is an
-   explicit `else` and to indicate the conditions can be checked in parallel.
- - `unique0` to ensure one or no conditions match, unless there is an
-   explicit `else` and to indicate the conditions can be checked in parallel.
- - `priority` to ensure one condition is matched, unless there is an explicit
-   `else`, and to indicate the conditions should be evaluated in sequence and
-   only the body of the first matching condition is evaluated.
+ - `unique` to ensure exactly one condition is matched and to indicate the
+   conditions can be checked in parallel.
+ - `unique0` to ensure one or no conditions match and to indicate the
+   conditions can be checked in parallel.
+ - `priority` to ensure one condition is matched and to indicate the conditions
+   should be evaluated in sequence and only the body of the first matching
+   condition is evaluated.
 
-The default behaviour of a chained `if-else` block is `priority` but without
-any violation checks.
+Note that:
+
+- The use of an `else` precludes violation reports for non-existing matches in
+  `unique` and `priority`.
+- The default behaviour of a chained `if-else` block is `priority` but without
+  any violation checks.
 
 For example, when the conditions are mutually exclusive, so evaluation order is
 not important:
@@ -356,17 +360,18 @@ else statement;
 
 **Use case qualifiers** for additional checking and guidance to synthesis:
 
- - `unique` to ensure exactly one condition is matched, unless there is a
-   `default` case and to indicate the conditions can be checked in parallel.
- - `unique0` to ensure that one or no conditions are matched, unless there is a
-   `default` case and to indicate the conditions can be checked in parallel.
- - `priority` to ensure one condition is matched, unless there is a `default`
-   case, and to indicate the conditions should be evaluated in sequence and
-   only the body of the first matching case is evaluated.
+ - `unique` to ensure exactly one condition is matched and to indicate the
+   conditions can be checked in parallel.
+ - `unique0` to ensure that one or no conditions are matched and to indicate
+   the conditions can be checked in parallel.
+ - `priority` to ensure one condition is matched and to indicate the conditions
+   should be evaluated in sequence and only the body of the first matching case
+   is evaluated.
 
-Note that each of these checks precludes the use of a `default` case for any
-violation reports. The default behaviour of a `case` statement is that of
-`priority`, but without violation checks.
+Note that:
+
+ - The use of a `default` case precludes violation reports for non-existing matches in `unique` and `priority`.
+ - The default behaviour of a `case` statement is that of `priority`, but without violation checks.
 
 **Use `case (...) inside` instead of `casex` or `casez` for matching don't care
 bits.** Since set-membership `case (...) inside` matches `?` don't care bits in
@@ -716,7 +721,10 @@ relevant; the references below are a good place to find out more.
     * Stuart Sutherland and Don Mills, Can my synthesis compiler do that? What ASIC
       and FPGA synthesis compilers support in the SystemVerilog-2012 standard, DVCon 2014
       ([PDF](http://www.sutherland-hdl.com/papers/2014-DVCon_ASIC-FPGA_SV_Synthesis_paper.pdf)).
-6. Verilog HDL Coding, Semiconductor Reuse Standard, Freescale Semiconductor
+- SystemVerilog's priority & unique - A Solution to Verilog's "full_case" & "parallel_case" Evil Twins!,
+  Clifford E. Cummings, SNUG 2005
+  ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf)).
+- Verilog HDL Coding, Semiconductor Reuse Standard, Freescale Semiconductor
   ([PDF](https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf)).
-7. Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides,
+- Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides,
   ([PDF](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf)).
