@@ -1,6 +1,6 @@
 ---
 Title: New chips for machine intelligence
-Date: 2019-10-03
+Date: 2019-10-04
 Category: notes
 Tags: computing, machine intelligence
 ---
