@@ -92,8 +92,8 @@ In summary:
   <tr>
     <td><a href="#habana-gaudi">Habana Gaudi</a></td>
     <td>TSMC 16nm</td>
-    <td>300</td>
     <td>500*</td>
+    <td>300</td>
     <td>Unknown</td>
     <td>Unknown</td>
     <td>Unknown</td>
