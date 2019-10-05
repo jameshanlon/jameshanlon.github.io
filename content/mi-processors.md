@@ -6,21 +6,25 @@ Tags: computing, machine intelligence
 ---
 
 This note summarises details of some of the new silicon chips for machine
-intelligence, with the aim to distil as a reference for myself, the most
-important implementation and architectural details, to highlight the key
-differences between them. I'm focusing on chips designed for training since
-they represent the frontier in performance and capability. There are many chips
-designed for inference, but these are typically intended for use in embedded or
-edge deployments.
+intelligence. Its aim is to distil the most important implementation and
+architectural details (at least that are currently available), to highlight the
+main differences between them. I'm focusing on chips designed for training
+since they represent the frontier in performance and capability. There are many
+chips designed for inference, but these are typically intended for use in
+embedded or edge deployments.
 
 In summary:
 
 <table class="table table-sm">
-<caption>*speculated</caption>
+<caption>
+*Speculated<br>
+&dagger; Figures given for a single chip
+</caption>
 <thead>
   <tr>
     <th scope="col">Chip</th>
     <th scope="col">Process</th>
+    <th scope="col">Die size<br>mm<sup>2</sup></th>
     <th scope="col">TDP<br>(W)</th>
     <th scope="col">On-chip RAM<br>(MB)</th>
     <th scope="col">Peak FP32<br>(TFLOPs)</th>
@@ -31,8 +35,9 @@ In summary:
 </thead>
 <tbody>
   <tr>
-    <td><a href="#cerebras">Cerebras WSE</a></td>
+    <td><a href="#cerebras">Cerebras WSE<sup>&dagger;</sup></a></td>
     <td>TSMC 16nm</td>
+    <td>510</td>
     <td>180</td>
     <td>225</td>
     <td>40.6</td>
@@ -43,6 +48,7 @@ In summary:
   <tr>
     <td><a href="#google-tpu-1">Google TPU 1</a></td>
     <td>28nm</td>
+    <td>Unknown</td>
     <td>75</td>
     <td>28</td>
     <td>n/a</td>
@@ -53,6 +59,7 @@ In summary:
   <tr>
     <td><a href="#google-tpu-2">Google TPU 2</a></td>
     <td>20nm*</td>
+    <td>Unknown</td>
     <td>200*</td>
     <td>Unknown</td>
     <td>Unknown</td>
@@ -63,6 +70,7 @@ In summary:
   <tr>
     <td><a href="#google-tpu-3">Google TPU 3</a></td>
     <td>16/12nm*</td>
+    <td>Unknown</td>
     <td>200*</td>
     <td>Unknown</td>
     <td>Unknown</td>
@@ -73,6 +81,7 @@ In summary:
   <tr>
     <td><a href="#graphcore-c2-ipu">Graphcore IPU</a></td>
     <td>16nm</td>
+    <td>800*</td>
     <td>150</td>
     <td>300</td>
     <td>Unknown</td>
@@ -84,6 +93,7 @@ In summary:
     <td><a href="#habana-gaudi">Habana Gaudi</a></td>
     <td>TSMC 16nm</td>
     <td>300</td>
+    <td>500*</td>
     <td>Unknown</td>
     <td>Unknown</td>
     <td>Unknown</td>
@@ -93,6 +103,7 @@ In summary:
   <tr>
     <td><a href="huawei-ascend">Huawei Ascend 910</a></td>
     <td>7nm+ EUV</td>
+    <td>456</td>
     <td>350</td>
     <td>64</td>
     <td>Unknown</td>
@@ -103,6 +114,7 @@ In summary:
   <tr>
     <td><a href="#intel-nnp-t">Intel NNP-T</a></td>
     <td>TSMC 16FF+</td>
+    <td>688</td>
     <td>250</td>
     <td>60</td>
     <td>Unknown</td>
@@ -113,6 +125,7 @@ In summary:
   <tr>
     <td><a href="#nvidia-volta">Nvidia Volta</a></td>
     <td>TSMC 12nm FFN</td>
+    <td>815</td>
     <td>300</td>
     <td>21.1</td>
     <td>15.7</td>
@@ -123,6 +136,7 @@ In summary:
   <tr>
     <td><a href="#nvidia-turing">Nvidia Turing</a></td>
     <td>TSMC 12nm FFN</td>
+    <td>754</td>
     <td>250</td>
     <td>24.6</td>
     <td>16.3</td>
@@ -149,14 +163,14 @@ interconnect to huge proportions. This provides a machine with a large amount
 of memory (18 GB) distributed among a large amount of compute (3.3 Peta FLOPs
 peak). It is unclear how this architecture scales beyond single WSEs; the
 current trend in neural nets is to larger networks with billions of weights,
-which will necessitate this.
+which will necessitate such scaling.
 
 [anamartic]: http://www.computinghistory.org.uk/det/3043/Anamartic-Wafer-Scale-160MB-Solid-State-Disk/
 
 General details:
 
 - Announced August 2019.
-- 46,225 mm2 wafer-scale integrated system (215 mm x 215 mm) om TSMC 16 nm.
+- 46,225 mm<sup>2</sup> wafer-scale integrated system (215 mm x 215 mm) om TSMC 16 nm.
 - 1.2T transistors.
 - Many individual chips: a total of 84 (12 wide by 7 tall).
 - 18 GB total of SRAM memory, distributed among cores.
@@ -174,7 +188,7 @@ Interconnect and IO:
 
 Each core:
 
-- Is ~0.1 mm2 of silicon.
+- Is ~0.1 mm<sup>2</sup> of silicon.
 - Has 47 kB SRAM memory.
 - Zeros not loaded from memory and zeros not multiplied.
 - Assumed FP32 precision and scalar execution (can't filter zeros from memory with SIMD).
@@ -184,7 +198,7 @@ Each core:
 
 Each die:
 
-- Is 17 mm x 30 mm = 510 mm2 of silicon.
+- Is 17 mm x 30 mm = 510 mm<sup>2</sup> of silicon.
 - Has 225 MB SRAM memory.
 - Has 54 x 94 = 5,076 cores (two cores per row/column possibly unused due to repair scheme leaving 4,888 usable cores).
 - Peak FP32 performance of 40 Tera FLOPs.
@@ -217,7 +231,7 @@ General details:
 IO:
 
 - 32 GB HBM2 integrated memory with access bandwidth of 1200 GBps (assumed).
-- PCIe 3.0 x8 assumed at 8 GBps.
+- PCIe-3 x8 assumed at 8 GBps.
 
 References:
 
@@ -251,7 +265,7 @@ Each core:
 IO:
 
 - 16 GB HBM integrated memory at 600 GBps bandwidth (assumed).
-- PCIe 3.0 x8 (8 GBps).
+- PCIe-3 x8 (8 GBps).
 
 References:
 
@@ -272,7 +286,7 @@ saved much time in design and verification.
 General details:
 
 - Announced in 2016.
-- 331 mm2 die on 28nm process.
+- 331 mm<sup>2</sup> die on 28nm process.
 - Clocked at 700 MHz and 28-40W TDP.
 - 28 MB on-chip SRAM memory: 24 MB for activations and 4 MB for accumulators.
 - Proportions of the die area: 35% memory, 24% matrix multiply unit, 41%
@@ -310,11 +324,12 @@ Larger systems of IPU chips can be built by connecting the 10 inter-IPU links.
 
 General details:
 
-- 16 nm, 23.6 bn transistors.
+- 16 nm, 23.6 bn transistors, ~800mm<sup>2</sup> die size.
 - 1216 processor tiles.
 - 125 TFLOPs peak FP16 arithmetic with FP32 accumulation.
 - 300 MB total on-chip memory, distributed among processor cores, providing an
   aggregate access bandwidth of 45 TBps.
+- All model state held on chip, there is no directly-attached DRAM.
 - 150 W TDP (300 W PCIe card).
 
 IO:
@@ -325,15 +340,17 @@ IO:
 
 Each core:
 
+- Mixed-precision floating-point stochastic arithmetic.
 - Runs up to six program threads.
 
 References:
 
+- [RAAIS presentation, July 2017](https://www.appg-ai.org/library/raais-2017-simon-knowles-co-founder-cto-graphcore/)
 - [NIPS presentation, November 2017](https://cdn2.hubspot.net/hubfs/729091/NIPS2017/NIPS%2017%20-%20IPU.pdf?t=1526305355186)
 - [ScaledML presentation, March 2018](https://cdn2.hubspot.net/hubfs/729091/assets/ScaledML%20Stanford%2024mar18%20SK.pdf)
 - [EETimes: Graphcore CEO Touts 'Most Complex Processor' Ever, April 2019](https://www.eetimes.com/document.asp?doc_id=1334578#)
 - [Serve the Home overview of the C2 card, June 2019](https://www.servethehome.com/hands-on-with-a-graphcore-c2-ipu-pcie-card-at-dell-tech-world/)
-
+- [WikiChip: Colossus microarchitecture](https://en.wikichip.org/wiki/graphcore/microarchitectures/colossus)
 
 <a name="habana-gaudi" class="anchor"></a>
 ## Habana Labs Gaudi
@@ -349,7 +366,7 @@ equipment, compared with Nvidia's NVLink or OpenCAPI.
 General details:
 
 - Announced June 2019.
-- TSMC 16 nm with CoWoS.
+- TSMC 16 nm with CoWoS, assumed die size ~500m<sup>2</sup>.
 - Heterogeneous architecture with:
     * a GEMM operations engine;
     * 8 Tensor Processing Cores (TPCs);
@@ -397,8 +414,8 @@ core), 100x for L2 cache (shared between cores), and 2000x for external DRAM.
 General details:
 
 - Announced August 2019.
-- 456 mm2 logic die on a 7+ nm EUV process.
-- Copackaged with four 96 mm2 HBM2 stacks and 'Nimbus' IO processor chip.
+- 456 mm<sup>2</sup> logic die on a 7+ nm EUV process.
+- Copackaged with four 96 mm<sup>2</sup> HBM2 stacks and 'Nimbus' IO processor chip.
 - 32 DaVinci cores.
 - Peak 256 TFLOPs (32 x 4096 x 2) FP16 performance, double that for INT8.
 - 32 MB shared on-chip SRAM (L2 cache).
@@ -437,8 +454,8 @@ similar 100 Gbit IO links.
 General details:
 
 - 27 bn transistors.
-- 688 mm2 die on TSMC 16FF+ TSMC with CoWoS.
-- 32 GB HBM2-2400 in four 8 GB stacks integrated on a 1200 mm2 passive silicon interposer.
+- 688 mm<sup>2</sup> die on TSMC 16FF+ TSMC with CoWoS.
+- 32 GB HBM2-2400 in four 8 GB stacks integrated on a 1200 mm<sup>2</sup> passive silicon interposer.
 - 60 MB on-chip SRAM memory distributed among cores and ECC protected.
 - Up to 1.1 GHz core clock.
 - 150-250W TDP.
@@ -491,7 +508,7 @@ architecture](https://en.wikipedia.org/wiki/Pascal_(microarchitecture)).
 General details:
 
 - Announced May 2017.
-- 815 mm2 on TSMC 12nm FFN, 21.1 bn transistors.
+- 815 mm<sup>2</sup> on TSMC 12nm FFN, 21.1 bn transistors.
 - 300 W TDP (SXM2 form factor).
 - 6 MB L2 cache.
 - 84 SMs, each containing: 64 FP32 CUDA cores, 32 FP64 CUDA cores and 8 Tensor
@@ -524,7 +541,7 @@ perform real-time ray tracing, for which it also used the Tensor Cores.
 General details:
 
 - Announced September 2018.
-- TSMC 12nm FFN, 754 mm2 die, 18.6 bn transistors.
+- TSMC 12nm FFN, 754 mm<sup>2</sup> die, 18.6 bn transistors.
 - 260 W TDP.
 - 72 SMs, each containing: 64 FP32 cores, and 64 INT32 cores, 8 Tensor cores
   (4608 FP32 cores, 4608 INT32 cores and 576 TCs).
