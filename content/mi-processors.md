@@ -101,7 +101,7 @@ In summary:
     <td>250</td>
   </tr>
   <tr>
-    <td><a href="huawei-ascend">Huawei Ascend 910</a></td>
+    <td><a href="#huawei-ascend">Huawei Ascend 910</a></td>
     <td>7nm+ EUV</td>
     <td>456</td>
     <td>350</td>
@@ -366,7 +366,7 @@ equipment, compared with Nvidia's NVLink or OpenCAPI.
 General details:
 
 - Announced June 2019.
-- TSMC 16 nm with CoWoS, assumed die size ~500m<sup>2</sup>.
+- TSMC 16 nm with CoWoS, assumed die size ~500mm<sup>2</sup>.
 - Heterogeneous architecture with:
     * a GEMM operations engine;
     * 8 Tensor Processing Cores (TPCs);
