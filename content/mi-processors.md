@@ -46,7 +46,7 @@ In summary:
     <td>Unknown</td>
   </tr>
   <tr>
-    <td><a href="#google-tpu-1">Google TPU 1</a></td>
+    <td><a href="#google-tpu-1">Google TPU v1</a></td>
     <td>28nm</td>
     <td>Unknown</td>
     <td>75</td>
@@ -57,7 +57,7 @@ In summary:
     <td>14</td>
   </tr>
   <tr>
-    <td><a href="#google-tpu-2">Google TPU 2</a></td>
+    <td><a href="#google-tpu-2">Google TPU v2</a></td>
     <td>20nm*</td>
     <td>Unknown</td>
     <td>200*</td>
@@ -68,7 +68,7 @@ In summary:
     <td>8*</td>
   </tr>
   <tr>
-    <td><a href="#google-tpu-3">Google TPU 3</a></td>
+    <td><a href="#google-tpu-3">Google TPU v3</a></td>
     <td>16/12nm*</td>
     <td>Unknown</td>
     <td>200*</td>
@@ -211,22 +211,22 @@ References:
 
 
 <a name="google-tpu-3" class="anchor"></a>
-## Google TPU 3
+## Google TPU v3
 
 <img class="float-right img-fluid" src="{{'MI-chips/google-tpu3.png'|thumbnail('220x220')}}">
 
-With few details available on the specifications of the TPU 3, it is likely an
-incremental improvement to the TPU 2: doubling the performance, adding HBM2
+With few details available on the specifications of the TPU v3, it is likely an
+incremental improvement to the TPU v2: doubling the performance, adding HBM2
 memory to double the capacity and bandwidth.
 
-General details:
+General details (per chip):
 
 - Announced May 2018.
 - Likely to be 16nm or 12nm.
 - 200W estimated TDP.
 - 105 TFLOPs of BFloat16, likely from doubling the MXUs to four.
 - Each MXU has dedicated access to 8 GB of memory.
-- Integrated in four-chip modules.
+- Integrated in four-chip modules (pictured), 420 TFLOPs peak performance.
 
 IO:
 
@@ -238,15 +238,15 @@ References:
 - [NextPlatform Tearing apart google’s TPU 3.0 AI coprocessor](https://www.nextplatform.com/2018/05/10/tearing-apart-googles-tpu-3-0-ai-coprocessor/)
 
 <a name="google-tpu-2" class="anchor"></a>
-## Google TPU 2
+## Google TPU v2
 
 <img class="float-right img-fluid" src="{{'MI-chips/google-tpu2.png'|thumbnail('220x220')}}">
 
-The TPU 2 is designed for training and inference. It improves over the TPU 1
+The TPU v2 is designed for training and inference. It improves over the TPU v1
 with floating point arithmetic and enhanced memory capacity and bandwidth with
 HBM integrated memory.
 
-General details:
+General details (per chip):
 
 - Announced May 2017.
 - Likely to be 20nm.
@@ -254,7 +254,7 @@ General details:
 - 45 TFLOPs of BFloat16. 
 - Two cores with scalar and matrix units.
 - Also supports FP32.
-- Integrated in four-chip modules.
+- Integrated in four-chip modules (pictured), 180 TFLOPs peak performance.
 
 Each core:
 
@@ -273,7 +273,7 @@ References:
 - [Tom's Hardware: Hot Chips 2017: A Closer Look At Google's TPU v2, September 2017](https://www.tomshardware.com/news/tpu-v2-google-machine-learning,35370.html)
 
 <a name="google-tpu-1" class="anchor"></a>
-## Google TPU 1
+## Google TPU v1
 
 <img class="float-right img-fluid" src="{{'MI-chips/google-tpu1.png'|thumbnail('220x220')}}">
 
@@ -302,7 +302,7 @@ IO:
 References:
 
 - [Wikipedia: Tensor Processing Unit](https://en.wikipedia.org/wiki/Tensor_processing_unit)
-- [TPU 1 paper (In-Datacenter Performance Analysis of a Tensor Processing Unit), April 2017](https://arxiv.org/abs/1704.04760)
+- [TPU v1 paper (In-Datacenter Performance Analysis of a Tensor Processing Unit), April 2017](https://arxiv.org/abs/1704.04760)
 
 <a name="graphcore-c2-ipu" class="anchor"></a>
 ## Graphcore IPU
@@ -565,7 +565,7 @@ References:
 ## Further reading
 
 - [AI Chip - A list of ICs and IPs for AI, Machine Learning and Deep Learning (GitHub)](https://github.com/basicmi/AI-Chip)
-- [MLPerf Training v0.6 results (TPU3 and Volta only)](https://mlperf.org/training-results-0-6/)
+- [MLPerf Training v0.6 results (TPU v3 and Volta only)](https://mlperf.org/training-results-0-6/)
 
 <!--
 More:
