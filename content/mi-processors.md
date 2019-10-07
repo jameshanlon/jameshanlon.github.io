@@ -567,6 +567,10 @@ References:
 - [AI Chip - A list of ICs and IPs for AI, Machine Learning and Deep Learning (GitHub)](https://github.com/basicmi/AI-Chip)
 - [MLPerf Training v0.6 results (TPU v3 and Volta only)](https://mlperf.org/training-results-0-6/)
 
+See
+[this thread on Hacker News](https://news.ycombinator.com/item?id=21178609)
+for discussion of this note.
+
 <!--
 More:
 - SambaNova (no sign of silicon)
