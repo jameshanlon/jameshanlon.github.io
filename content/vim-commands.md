@@ -1,7 +1,7 @@
 title: Vim command composition
 date: 2018-08-23
 category: notes
-tags: computing vim
+tags: computing, vim
 summary: Composition of Vim's motions and operators
 
 I've been using Vim for a long time and I'm familiar with many of its commands

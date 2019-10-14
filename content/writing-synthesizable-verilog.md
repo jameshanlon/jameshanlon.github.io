@@ -1,7 +1,7 @@
 Title: Writing synthesizable Verilog
 Date: 2018-5-4
 Category: notes
-Tags: computing, microelectronics, HDL, Verilog
+Tags: computing, microelectronics, Verilog
 
 In the last year, I've started from scratch writing Verilog for hardware
 design. Coming from a software background where I was mainly using C/C++ and
