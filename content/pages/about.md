@@ -1,7 +1,7 @@
 Title: About
 
 <div class="float-right img-fluid">
-  <img src="/images/mugshot.jpg" width="350px">
+  <img src="/images/mugshot.jpg" width="350">
 </div>
 
 # About me

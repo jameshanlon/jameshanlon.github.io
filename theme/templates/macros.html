@@ -1,6 +1,6 @@
 {%- macro render_article_item(article) %}
   <div class="row article-info">
-    <div class="col-1 article-info-date" align="right">
+    <div class="col-1 article-info-date text-right">
       <time class="published" datetime="{{article.date.isoformat()}}">
         {{article.date|strftime('%b %Y')}}
       </time>
