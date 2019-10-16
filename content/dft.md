@@ -1,7 +1,10 @@
-title: Silicon design for test structures
-date: 2019-04-18
-category: notes
-tags: microelectronics
+---
+Title: Silicon design for test structures
+Date: 2019-04-18
+Category: notes
+Tags: microelectronics
+Status: published
+---
 
 Design for test (DFT) is a methodology for silicon integrated-circuit chips to
 allow the devices to be tested during manufacture. Such testability permits the

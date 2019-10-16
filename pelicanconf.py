@@ -51,12 +51,18 @@ STATIC_PATHS = [
     'files/favicon.png',
     'files/robots.txt',
 ]
+
 ARTICLE_EXCLUDES = [
     'vim-commands',
 ]
+
 EXTRA_PATH_METADATA = {
     'files/robots.txt': {'path': 'robots.txt'},
     'files/favicon.png': {'path': 'favicon.png'},
+}
+
+DEFAULT_METADATA = {
+    'status': 'draft',
 }
 
 THEME = 'theme'

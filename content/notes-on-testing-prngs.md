@@ -1,7 +1,10 @@
+---
 Title: Notes on testing random number generators
 Date: 2017-4-5
 Category: notes
 Tags: computing
+Status: published
+---
 
 Recently I have been doing some work testing the quality of [random
 number generators](https://en.wikipedia.org/wiki/Random_number_generator)

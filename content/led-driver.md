@@ -1,7 +1,10 @@
-title: Three-channel high-power LED driver
-date: 2018-12-31
-category: projects
-tags: electronics
+---
+Title: Three-channel high-power LED driver
+Date: 2018-12-31
+Category: projects
+Tags: electronics
+Status: published
+---
 
 <div class="float-right">
 <a href="{{'LED-driver/board-layers.png'|asset}}" data-lightbox="led-driver">

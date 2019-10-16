@@ -1,8 +1,11 @@
+---
 Title: Scalable abstractions for general-purpose parallel computation
 Date: 2014-10-01
 Category: notes
 Tags: computing
-Summary: An overvirew of my PhD thesis.
+Summary: An overview of my PhD thesis.
+Status: published
+---
 
 This is my Ph.D. thesis that I completed at the University of Bristol in March
 2014. I was supervised by [David May](https://www.cs.bris.ac.uk/~dave/) and
