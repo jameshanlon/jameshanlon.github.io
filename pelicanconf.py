@@ -35,7 +35,6 @@ DEFAULT_LANG = u'en'
 DEFAULT_DATE_FORMAT = "%d %b %Y"
 DEFAULT_PAGINATION = False
 
-CATEGORY_SAVE_AS = '{slug}.html'
 PAGE_SAVE_AS = '{slug}.html'
 
 MENU_ITEMS = [
@@ -53,7 +52,7 @@ STATIC_PATHS = [
 ]
 
 ARTICLE_EXCLUDES = [
-    'vim-commands',
+    'vim-commands', # vim-commands directory
 ]
 
 EXTRA_PATH_METADATA = {
