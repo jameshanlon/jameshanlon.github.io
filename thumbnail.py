@@ -1,7 +1,7 @@
 import os
 import sys
 import requests
-from PIL import Image
+from PIL import Image, ExifTags
 from io import BytesIO
 
 # These variables need to match the pelicanconf.py settings.
@@ -33,8 +33,24 @@ def get_thumbnail(filepath, size):
     if response.status_code != 200:
         print 'Image not found: ' + image_url
         sys.exit(1)
+    # Rotate if recorded in metadata.
+    # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
     image = Image.open(BytesIO(response.content))
-    # Resize the image up to a maximum x OR y dimension.
+    if image.format == 'JPEG' or \
+       image.format == 'TIFF':
+	for orientation in ExifTags.TAGS.keys():
+	    if ExifTags.TAGS[orientation]=='Orientation':
+		break
+        if image._getexif():
+            exif=dict(image._getexif().items())
+            if orientation in exif:
+                if exif[orientation] == 3:
+                    image=image.rotate(180, expand=True)
+                elif exif[orientation] == 6:
+                    image=image.rotate(270, expand=True)
+                elif exif[orientation] == 8:
+                    image=image.rotate(90, expand=True)
+    # Resize the image upto a maximum x OR y dimension.
     image.thumbnail(parse_size(size), Image.ANTIALIAS)
     image.save(thumb_path)
     print 'Wrote '+thumb_path
