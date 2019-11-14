@@ -235,7 +235,7 @@ example to propagate constants and inline tasks and modules.
 
 The `netlist-paths` tool is implemented in C++ and makes use of the Boost Graph
 Library. Paths are identified using the `boost::depth_first_search` algorithm.
-The all-fan-out report enumerates paths too all the end points in a depth-first
+The all-fan-out report enumerates paths to all the end points in a depth-first
 traversal of the graph, the fan-in variant uses the `boost::reverse_graph`
 adaptor and performs the same algorithm. Properties are associated with
 vertices in the graph using a `boost::dynamic_property_map`. I put together a
