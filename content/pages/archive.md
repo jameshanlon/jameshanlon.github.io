@@ -1,6 +1,5 @@
 Title: Archive
-
-An archive of my work during my undergraduate and PhD degrees.
+Status: published
 
 # Documents
 

@@ -1,4 +1,5 @@
 Title: About
+Status: published
 
 <div class="float-right img-fluid">
   <img src="/images/mugshot.jpg" width="350">
