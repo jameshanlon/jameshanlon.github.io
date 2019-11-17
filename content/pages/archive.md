@@ -3,17 +3,19 @@ Status: published
 
 # Documents
 
+These documents are from my undergraduate and PhD degrees.
+
 [Emulating a large memory with a collection of smaller ones](/files/emulation.pdf),
-<br>unpublished 2014. ([arXiv](http://arxiv.org/abs/1210.1158v2))
+<br>unpublished 2014 ([arXiv](http://arxiv.org/abs/1210.1158v2)).
 
 [Scalable abstractions for general-purpose parallel computation]({filename}/thesis.md),
 <br>Ph.D. Thesis, University of Bristol. March 2014.
 
 Scalable data abstractions for distributed parallel computations,
-<br>unpublished, 2012. ([arXiv](https://arxiv.org/abs/1210.1157))
+<br>unpublished, 2012 ([arXiv](https://arxiv.org/abs/1210.1157)).
 
 [Fast distributed process creation with the XMOS XS1 architecture](/files/cpa11-paper.pdf),
-<br>Communicating Process Architectures, University of Limerick. June 2011.
+<br>Communicating Process Architectures, University of Limerick. June 2011
 ([arXiv](http://arxiv.org/abs/1105.3843), [slides](docs/cpa11-slides.pdf)).
 
 [A network simulator with reconfigurable routing and topology](/files/network-simulator.pdf),
@@ -36,7 +38,8 @@ Pittsburgh, PA, 2011, pp. 255-256.
 
 [netlist-paths: A command line tool for querying paths in a Verilog,
 design](/files/netlist-paths-orconf19-slides.pdf)<br>
-Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France.
+Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France
+([video on YouTube](https://www.youtube.com/watch?v=sKjs5rxH8Fo)).
 
 [Compiling for dual issue](/files/dual-issue-talk.pdf),
 <br>[ENTRA](http://entraproject.eu/) meeting, May 2015.
