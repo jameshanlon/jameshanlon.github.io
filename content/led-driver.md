@@ -76,21 +76,82 @@ Here's the schematic:
 
 # Parts list
 
-| Quantity | Package | Description                     |
-| -------- | ------- | --------------------------------|
-| 3        | TO-263  | CAT4101 LED drivers 5.5V        |
-| 1        | DIP-8   | PIC12F1572 microcontroller      |
-| 1        | DIP-8   | MAX485 serial interface         |
-| 3        | 0805    | Green LEDs                      |
-| 3        | 0805    | Resistor 10K                    |
-| 3        | 0805    | Resistor 1.4K                   |
-| 3        | 0805    | Resistor 510                    |
-| 5        | 0805    | Capacitor 0.1 uF                |
-| 3        | SOT-23  | 2N7002 N-channel MOSFET 300 mA  |
-| 4        | -       | 2 way 5mm pitch terminal blocks |
-| 1        | -       | 3 way 5mm pitch terminal blocks |
-| 12       | -       | 2.54mm pitch pin headers        |
-| 3        | -       | 2.54mm pin header jumper caps   |
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Quantity</th>
+      <th scope="col">Package</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>TO-263</td>
+      <td>CAT4101 LED drivers 5.5V</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>DIP-8</td>
+      <td>PIC12F1572 microcontroller</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>DIP-8</td>
+      <td>MAX485 serial interface</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Green LEDs</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 10K</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 1.4K</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 510</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0805</td>
+      <td>Capacitor 0.1 uF</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>SOT-23</td>
+      <td>2N7002 N-channel MOSFET 300 mA</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>-</td>
+      <td>2 way 5mm pitch terminal blocks</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>-</td>
+      <td>3 way 5mm pitch terminal blocks</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>-</td>
+      <td>2.54mm pitch pin headers</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>-</td>
+      <td>2.54mm pin header jumper caps</td>
+    </tr>
+  </tbody>
+</table>
 
 <p></p><!--Add some space after the table-->
 
@@ -99,15 +160,42 @@ The CAT4101 sense resistors are chosen to give a constant current of 300 mA.
 For reference, I have assumed the following parameters of the LEDs I
 used (you should however check the datasheet for a particular LED):
 
-| Colour  | Typical forward voltage (@ 350 mA) | Part                                     |                |
-|---------|------------------------------------|------------------------------------------|----------------|
-| Red     | 2.4                                | 3W RGB module                            | [Datasheet][1] |
-| Green   | 3.4                                | 3W RGB module                            | [Datasheet][1] |
-| Blue    | 3.5                                | 3W RGB module                            | [Datasheet][1] |
-| White   | 2.8-3.4                            | 1W Ice White LED (Bridgelux 9000-15000k) | [Datasheet][2] |
-
-[1]: https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf
-[2]: https://futureeden.co.uk/collections/ice-white-bridgelux-power-led-9000-15000k/products/1w-ice-white-led-bridgelux-12000k-with-pcb
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Colour</th>
+      <th scope="col">Typical forward voltage<br>(@ 350 mA)</th>
+      <th scope="col">Part</th>
+      <th scope="col">Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Red</td>
+      <td>2.4</td>
+      <td>3W RGB module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (PDF)</a></td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>3.4</td>
+      <td>3W RGB module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (PDF)</a></td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>3.5</td>
+      <td>3W RGB module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (PDF)</a></td>
+    </tr>
+    <tr>
+      <td>White</td>
+      <td>2.8-3.4</td>
+      <td>1W Ice White LED (Bridgelux 9000-15000k)</td>
+      <td><a href="https://futureeden.co.uk/collections/ice-white-bridgelux-power-led-9000-15000k/products/1w-ice-white-led-bridgelux-12000k-with-pcb">Future Eden</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <p></p><!--Add some space after the table-->
 
