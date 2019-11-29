@@ -36,8 +36,11 @@ Pittsburgh, PA, 2011, pp. 255-256.
 
 # Talks
 
-[netlist-paths: A command line tool for querying paths in a Verilog,
-design](/files/netlist-paths-orconf19-slides.pdf)<br>
+[New chips for machine intelligence]({{'MI-chips/new-chips-for-MI.pdf'|asset}}),<br>
+Guest lecture given to the University of Bristol Advanced Computer Architecture class, November 2019.
+
+[netlist-paths: A command line tool for querying paths in a Verilog
+design](/files/netlist-paths-orconf19-slides.pdf),<br>
 Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France
 ([video on YouTube](https://www.youtube.com/watch?v=sKjs5rxH8Fo)).
 
