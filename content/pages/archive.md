@@ -16,7 +16,7 @@ Scalable data abstractions for distributed parallel computations,
 
 [Fast distributed process creation with the XMOS XS1 architecture](/files/cpa11-paper.pdf),
 <br>Communicating Process Architectures, University of Limerick. June 2011
-([arXiv](http://arxiv.org/abs/1105.3843), [slides](docs/cpa11-slides.pdf)).
+([arXiv](http://arxiv.org/abs/1105.3843), [slides](files/cpa11-slides.pdf)).
 
 [A network simulator with reconfigurable routing and topology](/files/network-simulator.pdf),
 <br>unpublished 2011 ([GitHub](https://github.com/jameshanlon/network-simulator)).
