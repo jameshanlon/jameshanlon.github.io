@@ -222,7 +222,7 @@ I found that an efficient communication protocol between an array of boards
 and the main controller (Raspberry Pi) is a sequence of bytes with the first
 uniquely determining the header and the following 36 determining the intensity
 of each of the individual LEDs. Each board uses its ID to choose three values
-in the payload. At 115,200 bps, this in theory allows up to 1,107 commands to
+in the payload. At 115,200 bps, this in theory allows up to 389 commands to
 be sent per second. Note that the boards do not send an acknowledgement, since
 this significantly reduces the throughput. In Python a packet can be sent with
 ([snippet from here](https://github.com/jameshanlon/rgb-stacks/blob/master/rgbstacks.py)):
