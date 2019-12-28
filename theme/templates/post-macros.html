@@ -1,0 +1,63 @@
+{%- macro image(filename, size='600x600', caption=None) %}
+{% if caption != None %}
+<div class="text-center">
+<figure class="figure">
+  <a href="{{filename|asset}}" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="{{filename|thumbnail(size)}}">
+  </a>
+  <figcaption class="figure-caption text-left">{{caption}}</figcaption>
+</figure>
+</div>
+{% else %}
+<div class="text-center">
+	<a href="{{filename|asset}}" data-lightbox="shed">
+		<img class="figure-img img-fluid thumbnail" src="{{filename|thumbnail(size)}}">
+	</a>
+</div>
+{% endif %}
+{% endmacro %}
+
+{%- macro pair_layout(left, right, caption=None) %}
+{% if caption != None %}
+<figure class="figure">
+{% endif %}
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    {{left}}
+    </div>
+    <div class="col">
+    {{right}}
+    </div>
+  </div>
+</div>
+{% if caption != None %}
+<figcaption class="figure-caption">{{caption}}</figcaption>
+</figure>
+{% endif %}
+{% endmacro %}
+
+{%- macro triple_layout(left, middle, right, caption=None) %}
+{% if caption != None %}
+<figure class="figure">
+{% endif %}
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    {{left}}
+    </div>
+    <div class="col">
+    {{middle}}
+    </div>
+    <div class="col">
+    {{right}}
+    </div>
+  </div>
+</div>
+{% if caption != None %}
+<figcaption class="figure-caption">{{caption}}</figcaption>
+</figure>
+{% endif %}
+{% endmacro %}
+
+
