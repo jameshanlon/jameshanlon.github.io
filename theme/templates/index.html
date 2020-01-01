@@ -3,15 +3,29 @@
 {% block content %}
 <p>Welcome to the website of <a href="/pages/about.html">James W. Hanlon</a>,
 an engineer working at <a href="http://www.graphcore.ai">Graphcore</a>, in
-Bristol (UK). Here you'll find notes on <a href="/tags.html">subjects</a> of
-interest and other projects I've been working on, as well as my work from
-academia.</p>
+Bristol (UK).</p>
+
+<p>Here you'll find notes on subjects of
+interest and projects I've been working on, as well as archived documents and talks.</p>
 <hr>
 <div class="container article-list">
 {% for article in articles %}
   {{ macros.render_article_item(article) }}
 {% endfor %}
 </div>
+{#<h3>Notes</h3>
+<div class="container article-list">
+{% for article in articles if article.category.name == 'notes' %}
+  {{ macros.render_article_item(article) }}
+{% endfor %}
+</div>
+<br>
+<h3>Projects</h3>
+<div class="container article-list">
+{% for article in articles if article.category.name == 'projects' %}
+  {{ macros.render_article_item(article) }}
+{% endfor %}
+</div>#}
 <br>
 <p>Browse: 
 <a href="/categories.html">by catergory</a>,
