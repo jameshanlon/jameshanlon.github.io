@@ -1,6 +1,6 @@
 ---
 Title: RGB lightbox stacks
-Date: 2018-06-24
+Date: 2018-12-30
 Category: projects
 Tags: making, lighting, electronics
 Status: published
@@ -100,8 +100,10 @@ terminating resistors, the arrangement performs fine.
 
 So that I could easily access the electronics, I integrated the drivers and
 their wiring on a plywood board that sits in the base of a stack. The master
-stack has the power supply, taking mains voltage and providing 5V up to 10A for
-the three stacks. See the table below for calculated power of the LEDs only.
+stack has the power supply, taking mains voltage and providing 5V up to 60W
+(12A) for the three stacks. See the table below for calculated power of the
+LEDs only. Note that the power supply does not have enough headroom do drive
+the boxes comfortably (80W would be preferrable).
 
 <table class="table table-sm">
   <thead>
@@ -109,7 +111,9 @@ the three stacks. See the table below for calculated power of the LEDs only.
       <th scope="col">Channel</th>
       <th scope="col">Voltage (V)</th>
       <th scope="col">Current (A)</th>
-      <th scope="col">Power (W)</th>
+      <th scope="col">LED power (W)</th>
+      <th scope="col">Driver efficiency</th>
+      <th scope="col">Driver power (W)</th>
     </tr>
   </thead>
   <tbody>
@@ -118,42 +122,56 @@ the three stacks. See the table below for calculated power of the LEDs only.
       <td>2.4</td>
       <td>0.3</td>
       <td>0.72</td>
+      <td>0.48</td>
+      <td>1.5</td>
     </tr>
     <tr>
       <td>Green</td>
       <td>3.4</td>
       <td>0.3</td>
       <td>1.02</td>
+      <td>0.68</td>
+      <td>1.5</td>
     </tr>
     <tr>
       <td>Blue</td>
       <td>3.5</td>
       <td>0.3</td>
       <td>1.05</td>
+      <td>0.7</td>
+      <td>1.5</td>
     </tr>
     <tr>
       <td>White</td>
       <td>3.2</td>
       <td>0.3</td>
       <td>0.96</td>
+      <td>0.64</td>
+      <td>1.5</td>
     </tr>
     <tr>
       <td>Total (per pixel)</td>
       <td>-</td>
       <td>-</td>
       <td>3.75</td>
+      <td>-</td>
+      <td>6</td>
     </tr>
     <tr>
       <td>Total (per stack)</td>
       <td>-</td>
       <td>-</td>
       <td>11.25</td>
+      <td>-</td>
+      <td>18</td>
     </tr>
     <tr>
       <td>Total</td>
       <td>-</td>
       <td>-</td>
       <td>33.75</td>
+      <td>-</td>
+      <td>54</td>
     </tr>
   </tbody>
 </table>
