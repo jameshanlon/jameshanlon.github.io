@@ -2,9 +2,11 @@
 Title: Three-channel high-power LED driver
 Date: 2018-12-31
 Category: projects
-Tags: electronics
+Tags: lighting, electronics
 Status: published
 ---
+
+{% import 'post-macros.html' as macros %}
 
 <div class="float-right">
 <a href="{{'LED-driver/board-layers.png'|asset}}" data-lightbox="led-driver">
@@ -153,8 +155,6 @@ Here's the schematic:
   </tbody>
 </table>
 
-<p></p><!--Add some space after the table-->
-
 The CAT4101 sense resistors are chosen to give a constant current of 300 mA.
 
 For reference, I have assumed the following parameters of the LEDs I
@@ -197,7 +197,62 @@ used (you should however check the datasheet for a particular LED):
   </tbody>
 </table>
 
-<p></p><!--Add some space after the table-->
+The CAT4101 is a [linear driver][#linear-driver], so it effectively acts as a
+variable resistor to deliver constant current, with an efficiency of
+$V_{led}/V_{supply}$. A disadvantage of driving each LED individually is that
+its efficiency can be low, down to 50%. The power delivered to the LED is
+$I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
+\times V_{supply}$ (not including quiescent power).
+
+[#linear-driver]: https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Channel</th>
+      <th scope="col">Voltage (V)</th>
+      <th scope="col">Current (A)</th>
+      <th scope="col">LED power (W)</th>
+      <th scope="col">CAT4101 efficiency</th>
+      <th scope="col">Driver power (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Red</td>
+      <td>2.4</td>
+      <td>0.3</td>
+      <td>0.72</td>
+      <td>0.48</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>3.4</td>
+      <td>0.3</td>
+      <td>1.02</td>
+      <td>0.68</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>3.5</td>
+      <td>0.3</td>
+      <td>1.05</td>
+      <td>0.7</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>White</td>
+      <td>3.2</td>
+      <td>0.3</td>
+      <td>0.96</td>
+      <td>0.64</td>
+      <td>1.5</td>
+    </tr>
+  </tbody>
+</table>
+
 
 # Programming
 
@@ -263,38 +318,18 @@ if (RCREGbits.RCREG == START_PACKET) {
 
 # Pictures
 
-<div class="text-center">
-  <a href="{{'LED-driver/unpopulated-boards.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/unpopulated-boards.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/assembled-1.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/assembled-1.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/assembled-2.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/assembled-2.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/assembled-programmer.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/assembled-programmer.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/assembled-top.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/assembled-top.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/array-1.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/array-1.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/array-2.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/array-2.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/4up-1.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/4up-1.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/4up-2.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/4up-2.jpg'|thumbnail('320x320')}}">
-  </a>
-  <a href="{{'LED-driver/8up.jpg'|asset}}" data-lightbox="led-driver">
-    <img class="thumbnail rounded" src="{{'LED-driver/8up.jpg'|thumbnail('320x320')}}">
-  </a>
-</div>
+{{ macros.image('LED-driver/unpopulated-boards.jpg') }}
+{{ macros.triple_layout(
+ macros.image('LED-driver/assembled-1.jpg'),
+ macros.image('LED-driver/assembled-2.jpg'),
+ macros.image('LED-driver/assembled-top.jpg')) }}
+{{ macros.pair_layout(
+     macros.image('LED-driver/assembled-programmer.jpg'),
+     macros.image('LED-driver/8up.jpg')) }}
+{{ macros.triple_layout(
+     macros.image('LED-driver/array-1.jpg'),
+     macros.image('LED-driver/array-2.jpg'),
+     macros.image('LED-driver/4up-1.jpg')) }}
 
 # Improvements
 
@@ -310,3 +345,4 @@ if (RCREGbits.RCREG == START_PACKET) {
 - [Easy CAT4101 LED Driver (Instructables)](https://www.instructables.com/id/Easy-CAT4101-LED-Driver/)
 - [High power LED driver circuits (Instructables)](https://www.instructables.com/id/Circuits-for-using-High-Power-LED-s/)
 - [Power LED's - Simplest Light With Constant-current Circuit (Instructables)](https://www.instructables.com/id/Power-LED-s---simplest-light-with-constant-current/)
+- [Re: Help understanding electrical efficiency of LEDs with PWM dimming (Candle Power Forums)](https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver)
