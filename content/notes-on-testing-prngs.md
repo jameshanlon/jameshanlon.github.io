@@ -2,7 +2,7 @@
 Title: Notes on testing random number generators
 Date: 2017-4-5
 Category: notes
-Tags: computing
+Tags: computing, PRNGs
 Status: published
 ---
 

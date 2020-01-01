@@ -2,7 +2,7 @@
 Title: Scalable abstractions for general-purpose parallel computation
 Date: 2014-10-01
 Category: notes
-Tags: computing
+Tags: computing, computer-architecture
 Summary: An overview of my PhD thesis.
 Status: published
 ---

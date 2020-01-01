@@ -2,7 +2,7 @@
 Title: Machine learning challenges for computer architecture
 Date: 2016-11-4
 Category: notes
-Tags: machine-intelligence, computing
+Tags: computing; computer-architecture; machine-intelligence
 Status: published
 ---
 
