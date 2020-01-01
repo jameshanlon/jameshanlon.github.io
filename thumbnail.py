@@ -9,11 +9,6 @@ PREFIX = 'https://jwh.ams3.digitaloceanspaces.com/homepage'
 OUT_DIR = os.path.join(os.getcwd(), 'output')
 THUMB_DIR = 'thumbs'
 
-def parse_size(size):
-    # <max-x-dim-size>x<max-y-dim-size>
-    tokens = size.split('x')
-    return (int(tokens[0]), int(tokens[1]))
-
 def get_thumbnail(filepath, size):
     image_url = PREFIX + '/' + filepath
     split_ext = os.path.splitext(os.path.basename(filepath))
@@ -50,8 +45,29 @@ def get_thumbnail(filepath, size):
                     image=image.rotate(270, expand=True)
                 elif exif[orientation] == 8:
                     image=image.rotate(90, expand=True)
+    original_w = image.size[0]
+    original_h = image.size[1]
+    print 'Old size: {} x {}'.format(original_w, original_h)
+    if 'x' in size:
+        # <max-x-dim-size>x<max-y-dim-size>
+        tokens = size.split('x')
+        size = (int(tokens[0]), int(tokens[1]))
+    elif size.startswith('h='):
+        # Fixed height
+        height = int(size.replace('h=', ''))
+        width = int(height * (float(original_w) / float(original_h)))
+        size = (width, height)
+        print 'New size: {} x {}'.format(size[0], size[1])
+    elif size.startswith('w='):
+        # Fixed width
+        width = int(size.replace('w=', ''))
+        height = int(width * (float(original_h) / float(original_w)))
+        size = (width, height)
+    else:
+        print 'Invalid size: '+size
+        sys.exit(1)
+    image.thumbnail(size, Image.ANTIALIAS)
     # Resize the image upto a maximum x OR y dimension.
-    image.thumbnail(parse_size(size), Image.ANTIALIAS)
     image.save(thumb_path)
     print 'Wrote '+thumb_path
     return thumb_url
