@@ -215,6 +215,8 @@ body {
 }
 .article-info-title {
   font-size:1.1em;
+  line-height: 1.15em;
+  padding-bottom: 0.1em;
 }
 .article-body {
   padding-top: 1.4em;
