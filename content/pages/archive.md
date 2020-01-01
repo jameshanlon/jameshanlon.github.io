@@ -1,7 +1,26 @@
 Title: Archive
 Status: published
 
-# Documents
+# Talks
+
+[New chips for machine intelligence]({{'MI-chips/new-chips-for-MI.pdf'|asset}}),<br>
+Guest lecture given to the University of Bristol Advanced Computer Architecture class, November 2019.
+
+[netlist-paths: A command line tool for querying paths in a Verilog
+design](/files/netlist-paths-orconf19-slides.pdf),<br>
+Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France
+([video on YouTube](https://www.youtube.com/watch?v=sKjs5rxH8Fo)).
+
+[Compiling for dual issue](/files/dual-issue-talk.pdf),
+<br>[ENTRA](http://entraproject.eu/) meeting, May 2015.
+
+[Scalable data abstractions for distributed parallel computations](/files/server-talk.pdf),
+<br>Imperial College London. January 2013.
+
+[The resurgence of parallel programming languages](/files/parallel-languages-BCS.pdf),
+<br>BCS Advance Programming Specialist Group, London. April 2012.
+
+# Documents from university
 
 These documents are from my undergraduate and PhD degrees.
 
@@ -34,21 +53,3 @@ Pittsburgh, PA, 2011, pp. 255-256.
 [Universal routing in processor networks](/files/dissertation.pdf),
 <br>Masters Thesis, University of Bristol. May 2009.
 
-# Talks
-
-[New chips for machine intelligence]({{'MI-chips/new-chips-for-MI.pdf'|asset}}),<br>
-Guest lecture given to the University of Bristol Advanced Computer Architecture class, November 2019.
-
-[netlist-paths: A command line tool for querying paths in a Verilog
-design](/files/netlist-paths-orconf19-slides.pdf),<br>
-Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, France
-([video on YouTube](https://www.youtube.com/watch?v=sKjs5rxH8Fo)).
-
-[Compiling for dual issue](/files/dual-issue-talk.pdf),
-<br>[ENTRA](http://entraproject.eu/) meeting, May 2015.
-
-[Scalable data abstractions for distributed parallel computations](/files/server-talk.pdf),
-<br>Imperial College London. January 2013.
-
-[The resurgence of parallel programming languages](/files/parallel-languages-BCS.pdf),
-<br>BCS Advance Programming Specialist Group, London. April 2012.

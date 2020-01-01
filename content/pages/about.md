@@ -1,23 +1,21 @@
 Title: About
 Status: published
 
-<div class="float-right img-fluid">
-  <img src="/images/mugshot.jpg" width="350">
-</div>
+<img src="/images/mugshot.jpg" width="300" class="img-fluid">
 
 # About me
 
 I work as an engineer in the silicon team at
 [Graphcore](http://www.graphcore.ai), based in Bristol in the UK, on the
-development of a new processor for machine intelligence. My current work is
-focussed on the logical (RTL) implementation of aspects of the chip.
+development of processors for machine intelligence. My current work is
+focussed on the physical and logical implementation of aspects of the chip.
 
 In my spare time, I help to run the [CHEESE project](http://cheeseproject.co.uk),
 a not-for-profit enterprise that uses thermal imaging to encourage people to reduce
 their domestic energy losses. For those who struggle to heat their homes, it improves
 their health and well being, and for those who have thermally-inefficient
 homes, it saves them money and reduces their carbon emissions. I'm a member of
-the management committee, and work as a surveyor during the winter seasons.
+the management committee.
 
 I have previously worked as a software engineer specialising on the compiler
 toolchain at [XMOS](http://www.xmos.com) in Bristol, for their embedded
