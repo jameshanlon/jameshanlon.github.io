@@ -11,13 +11,14 @@ $ pip install -r requirements.txt
 ...
 ```
 
-Then, build the website:
+Build the website:
 ```
 $ make
 ...
+$ make validate
 ```
 
-Or, run the development server:
+Run the development server:
 ```
 $ pelican --listen
 ...
