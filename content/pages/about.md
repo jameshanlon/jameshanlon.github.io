@@ -34,7 +34,7 @@ Computer Science from the same institution.
 There are some more CV-related details on
 [LinkedIn](https://www.linkedin.com/in/jameswhanlon).
 
-## About this website
+# About this website
 
 My intention with this website is to provide somewhere for me to
 [archive](/archive.html) my old academic work, and a way to publish notes on
@@ -49,7 +49,7 @@ website generator software written in Python. The theme is simply derived from
 [Nginx](https://www.nginx.com). The source code is available for reuse on
 [Github](https://github.com/jameshanlon/homepage).
 
-## Related links
+# Related links
 
 You can find me elsewhere on the internet:
 
