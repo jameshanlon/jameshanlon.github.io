@@ -10,7 +10,7 @@ The XMP-64 is an experimental single-board distributed-memory parallel computer
 with 512 hardware threads  and is programmable with a C-like language.  It was
 developed by [XMOS](https://www.xmos.com>) in 2009 to demonstrate the
 scalablility of the [XS1 architecture](https://en.wikipedia.org/wiki/XCore_XS1).
-Since then it has been [discontinued](https://www.xmos.com/published/xmp-64-end-life>)
+Since then it has been [discontinued](https://www.xmos.com/published/xmp-64-end-life)
 but remains a fascinating device from the point of view of providing a huge amount of
 parallelism that is programmable in a simple way. As such, I thought I would
 record some details and images of it here.
@@ -34,12 +34,12 @@ few tens of watts of power, provides deterministic (completely predictable)
 execution of 512 threads and provides a very simple programming interface.
 
 <div class="text-center">
-<a href="{{'XMP-64/xmp64-1.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-1.JPG'|thumbnail('320x320')}}"></a>
-<a href="{{'XMP-64/xmp64-2.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-2.JPG'|thumbnail('320x320')}}"></a>
-<a href="{{'XMP-64/xmp64-3.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-3.JPG'|thumbnail('320x320')}}"></a>
-<a href="{{'XMP-64/xmp64-4.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-4.JPG'|thumbnail('320x320')}}"></a>
-<a href="{{'XMP-64/xmp64-5.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-5.JPG'|thumbnail('320x320')}}"></a>
-<a href="{{'XMP-64/xmp64-6.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-6.JPG'|thumbnail('320x320')}}"></a>
+<a href="{{'XMP-64/xmp64-1.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-1.JPG'|thumbnail('320x320')}}" alt="XMP-64 top"></a>
+<a href="{{'XMP-64/xmp64-2.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-2.JPG'|thumbnail('320x320')}}" alt="XMP-64 bottom"></a>
+<a href="{{'XMP-64/xmp64-3.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-3.JPG'|thumbnail('320x320')}}" alt="XMP-64 top/down"></a>
+<a href="{{'XMP-64/xmp64-4.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-4.JPG'|thumbnail('320x320')}}" alt="XMP-64 left side"></a>
+<a href="{{'XMP-64/xmp64-5.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-5.JPG'|thumbnail('320x320')}}" alt="XMP-64 right side"></a>
+<a href="{{'XMP-64/xmp64-6.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-6.JPG'|thumbnail('320x320')}}" alt="XMP-64 in case"></a>
 </div>
 
 As you can see in the pictures, there are two Ethernet interfaces at the top of

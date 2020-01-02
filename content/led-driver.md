@@ -10,7 +10,7 @@ Status: published
 
 <div class="float-right">
 <a href="{{'LED-driver/board-layers.png'|asset}}" data-lightbox="led-driver">
-  <img class="thumbnail rounded" src="{{'LED-driver/board-layers.png'|thumbnail('400x400')}}">
+  <img class="thumbnail rounded" src="{{'LED-driver/board-layers.png'|thumbnail('400x400')}}" alt="Board silk screen">
 </a>
 </div>
 
@@ -72,7 +72,7 @@ Here's the schematic:
 
 <div class="text-center">
   <a href="{{'LED-driver/schematic.png'|asset}}" data-lightbox="led-driver">
-    <img class="rounded" src="{{'LED-driver/schematic.png'|thumbnail('800x800')}}">
+    <img class="rounded" src="{{'LED-driver/schematic.png'|thumbnail('800x800')}}" alt="Board circuit schematic">
   </a>
 </div>
 
@@ -325,9 +325,9 @@ if (RCREGbits.RCREG == START_PACKET) {
 
 {{ macros.image('LED-driver/unpopulated-boards.jpg') }}
 {{ macros.triple_layout(
- macros.image('LED-driver/assembled-1.jpg'),
- macros.image('LED-driver/assembled-2.jpg'),
- macros.image('LED-driver/assembled-top.jpg')) }}
+     macros.image('LED-driver/assembled-1.jpg'),
+     macros.image('LED-driver/assembled-2.jpg'),
+     macros.image('LED-driver/assembled-top.jpg')) }}
 {{ macros.pair_layout(
      macros.image('LED-driver/assembled-programmer.jpg'),
      macros.image('LED-driver/8up.jpg')) }}

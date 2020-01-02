@@ -695,7 +695,7 @@ a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
 
-<a name="summary"</a>
+<a name="summary"></a>
 ## Summary
 
 Verilog is a large language with features supporting different purposes. It is

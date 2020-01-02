@@ -284,23 +284,22 @@ in the Vim help:
 
 ## Summary of rules
 
-<p>
 <div class="container">
 <div class="row">
 <div class="col-sm">
   <h2>Motions</h2>
-  <p<code>&lt;motion-keys&gt;</code></p>
+  <p><code>&lt;motion-keys&gt;</code></p>
   <p>References: <code>:help motion</code>
     <code>:help various-motions</code></p>
   {% include 'vim-commands/motions.html' %}
 </div>
 <div class="col-sm">
   <h2>Operators</h2>
-  <p<code>&lt;operators&gt;</code></p>
+  <p><code>&lt;operators&gt;</code></p>
   <p>Reference: <code>:help operator</code></p>
   {% include 'vim-commands/operators.html' %}
   <h2>Visual operators</h2>
-  <p<code>&lt;visual-operators&gt;</code></p>
+  <p><code>&lt;visual-operators&gt;</code></p>
   <p>References: <code>:help visual-operators</code></p>
   {% include 'vim-commands/visual-operators.html' %}
 </div>
@@ -308,19 +307,18 @@ in the Vim help:
 <div class="row">
 <div class="col-sm">
   <h2>Text objects</h2>
-  <p<code>&lt;text-object-keys&gt;</code></p>
+  <p><code>&lt;text-object-keys&gt;</code></p>
   <p>References: <code>:help text-objects</code>, <code>:help objects</code></p>
   {% include 'vim-commands/text-objects.html' %}
 </div>
 <div class="col-sm">
   <h2>Modifiers</h2>
-  <p<code>&lt;modifiers&gt;</code></p>
+  <p><code>&lt;modifiers&gt;</code></p>
   <p>References: <code>:help text-objects</code></p>
   {% include 'vim-commands/modifiers.html' %}
 </div>
 </div>
 </div>
-</p>
 
 ```
 count := {digits}

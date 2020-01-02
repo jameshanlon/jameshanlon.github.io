@@ -152,7 +152,7 @@ In summary:
 <a name="cerebras" class="anchor"></a>
 ## Cerebras Wafer-Scale Engine
 
-<img class="float-right img-fluid" src="{{'MI-chips/cerebras-wse.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/cerebras-wse.png'|thumbnail('220x220')}}" alt="Cerebras chip">
 
 The Cerebras Wafer-Scale Engine (WSE) is undoubtedly the most bold and
 innovative design to appear recently. Wafer-scale integration is not a new
@@ -214,7 +214,7 @@ References:
 <a name="google-tpu-3" class="anchor"></a>
 ## Google TPU v3
 
-<img class="float-right img-fluid" src="{{'MI-chips/google-tpu3.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/google-tpu3.png'|thumbnail('220x220')}}" alt="TPU-3 board">
 
 With few details available on the specifications of the TPU v3, it is likely an
 incremental improvement to the TPU v2: doubling the performance, adding HBM2
@@ -241,7 +241,7 @@ References:
 <a name="google-tpu-2" class="anchor"></a>
 ## Google TPU v2
 
-<img class="float-right img-fluid" src="{{'MI-chips/google-tpu2.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/google-tpu2.png'|thumbnail('220x220')}}" alt="TPU-2 board">
 
 The TPU v2 is designed for training and inference. It improves over the TPU v1
 with floating point arithmetic and enhanced memory capacity and bandwidth with
@@ -276,7 +276,7 @@ References:
 <a name="google-tpu-1" class="anchor"></a>
 ## Google TPU v1
 
-<img class="float-right img-fluid" src="{{'MI-chips/google-tpu1.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/google-tpu1.png'|thumbnail('220x220')}}" alt="TPU-1 board">
 
 Google's first generation TPU was designed for inference only and supports only
 integer arithmetic. It provides acceleration to a host CPU by being sent
@@ -308,7 +308,7 @@ References:
 <a name="graphcore-c2-ipu" class="anchor"></a>
 ## Graphcore IPU
 
-<img class="float-right img-fluid" src="{{'MI-chips/graphcore-ipu.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/graphcore-ipu.png'|thumbnail('220x220')}}" alt="Graphcore IPU floorplan">
 
 **DISCLAIMER**: I work at Graphcore, and all of the information given here is
 lifted directly from the linked references below.
@@ -356,7 +356,7 @@ References:
 <a name="habana-gaudi" class="anchor"></a>
 ## Habana Labs Gaudi
 
-<img class="float-right img-fluid" src="{{'MI-chips/habana-gaudi.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/habana-gaudi.png'|thumbnail('220x220')}}" alt="Habana Gaudi board">
 
 Habana's Gaudi AI training processor shares similarities with contemporary
 GPUs, particularly wide SIMD parallelism and HBM2 memory. The chip integrates
@@ -401,7 +401,7 @@ References:
 <a name="huawei-ascend" class="anchor"></a>
 ## Huawei Ascend 910
 
-<img class="float-right img-fluid" src="{{'MI-chips/huawei-ascend.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/huawei-ascend.png'|thumbnail('220x220')}}" alt="Huawei Ascend floorplan">
 
 Huawei's Ascend also bears similarities to the latest GPUs with wide SIMD
 arithmetic and a 3D matrix unit, comparable to Nvidia's Tensor Cores, a
@@ -445,7 +445,7 @@ References:
 <a name="intel-nnp-t" class="anchor"></a>
 ## Intel NNP-T
 
-<img class="float-right img-fluid" src="{{'MI-chips/intel-nnpt.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/intel-nnpt.png'|thumbnail('220x220')}}" alt="Intel NNP-T floorplan">
 
 This chip is Intel's second attempt at an accelerator for machine learning,
 following the Xeon Phi. Like the [Habana Gaudi chip](#habana-gaudi), it
@@ -501,7 +501,7 @@ References:
 <a name="nvidia-volta" class="anchor"></a>
 ## Nvidia Volta
 
-<img class="float-right img-fluid" src="{{'MI-chips/nvidia-volta.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/nvidia-volta.png'|thumbnail('220x220')}}" alt="Nvidia Volta board">
 
 Volta introduces Tensor Cores, HBM2 and NVLink 2.0, from the [Pascal
 architecture](https://en.wikipedia.org/wiki/Pascal_(microarchitecture)).
@@ -532,7 +532,7 @@ References:
 <a name="nvidia-turing" class="anchor"></a>
 ## Nvidia Turing
 
-<img class="float-right img-fluid" src="{{'MI-chips/nvidia-turing.png'|thumbnail('220x220')}}">
+<img class="float-right img-fluid" src="{{'MI-chips/nvidia-turing.png'|thumbnail('220x220')}}" alt="Nvidia Turing die shot">
 
 Turing is an architectural revision of Volta, manufactured on the same 16 nm
 process, but with fewer CUDA and Tensor cores. It consequently has a smaller

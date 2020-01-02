@@ -9,7 +9,7 @@ Key            | Text object
 `(`, `)`       | text block between parethesises
 `'`, `'`       | text block between single quotes
 `"`, `"`       | text block between double quotes
-`<`, `>`       | text block between angle braces
+`&lt;`, `&gt;` | text block between angle braces
 `\``, `\``     | text block between back ticks
 `b`            | text block between `(` and `)`
 `B`            | text block between `{` and `}`

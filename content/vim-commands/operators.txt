@@ -3,8 +3,8 @@ Key            | Operator
 `d`            | delete
 `y`            | yank
 `~`            | swap case (or `g~`)
-`>`            | shift right (always linewise)
-`<`            | shift left (always linewise)
+`&gt;`         | shift right (always linewise)
+`&lt;`         | shift left (always linewise)
 `gu`           | make lowercase
 `gU`           | make uppercase
 `gq`           | format text

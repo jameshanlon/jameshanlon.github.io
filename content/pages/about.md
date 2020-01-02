@@ -1,7 +1,7 @@
 Title: About
 Status: published
 
-<img src="/images/mugshot.jpg" width="300" class="img-fluid">
+<img src="/images/mugshot.jpg" width="300" class="img-fluid" alt="mugshot">
 
 # About me
 
