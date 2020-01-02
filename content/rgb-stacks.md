@@ -102,8 +102,8 @@ So that I could easily access the electronics, I integrated the drivers and
 their wiring on a plywood board that sits in the base of a stack. The master
 stack has the power supply, taking mains voltage and providing 5V up to 60W
 (12A) for the three stacks. See the table below for calculated power of the
-LEDs only. Note that the power supply does not have enough headroom do drive
-the boxes comfortably (80W would be preferrable).
+LEDs only. Note that the power supply does not output enough power do drive
+the boxes comfortably (80W would be more comfortable).
 
 <table class="table table-sm">
   <thead>
@@ -175,6 +175,16 @@ the boxes comfortably (80W would be preferrable).
     </tr>
   </tbody>
 </table>
+
+To check the above power numbers I performed some measurments with a clamp
+meter of the central stack:
+
+- With all LEDs off, the quiesence current is 360 mA at 5 V, dissipating 1.8 W.
+- With all LEDs on at full intensity, the current is 4.75 A at 5 V, dissipating
+  23.75 W.
+
+These numbers are slightly higher than expected, due to the LED driver current
+ranging between 0.357 mA (blue) and 0.370 mA (green).
 
 {{ macros.triple_layout(
      macros.image('RGB-stacks/control-board-and-psu.jpg'),

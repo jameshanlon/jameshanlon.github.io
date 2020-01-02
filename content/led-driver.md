@@ -155,10 +155,13 @@ Here's the schematic:
   </tbody>
 </table>
 
-The CAT4101 sense resistors are chosen to give a constant current of 300 mA.
+The CAT4101 sense resistors are chosen to give a constant current close to 300
+mA, at 1.4 KOhms. See the CAT4101 [datasheet][#cat4101-datasheet] for more details.
 
 For reference, I have assumed the following parameters of the LEDs I
 used (you should however check the datasheet for a particular LED):
+
+[#cat4101-datasheet]: https://www.onsemi.com/pub/Collateral/CAT4101-D.PDF
 
 <table class="table table-sm">
   <thead>
@@ -253,6 +256,8 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
   </tbody>
 </table>
 
+Measurements of each of the LED channels using a current clamp meter showed
+that the current drawn ranges from 357 mA to 370 mA.
 
 # Programming
 
@@ -333,6 +338,7 @@ if (RCREGbits.RCREG == START_PACKET) {
 
 # Improvements
 
+- Adjust the CAT4101 sense resistor to deliver closer to 300 mA (1.5-1.6 KOhm).
 - Remove the 10K pull up resistor for programming the PIC since it is
   unnecessary.
 - Update the defunct silk screen URL to my new jameswhanlon.com domain.
