@@ -17,18 +17,19 @@ convenient space to add insulation.
 I considered using natural wool insulation, as opposed to rigid insulation
 board, but felt that it would difficult to secure it in place in a consistent
 way, as well as ensuring an air gap remains between the external cladding. I
-decided on using Celotex rigid insulation board. and used 12 sheets of 2400 mm
-x 1200 75 mm, and 2 sheets of the same size at 50 mm for the back wall, costing
-£512.74 including VAT. To prevent draughts as much as possible, I decided to
-tape the gaps between the boards and shed timbers. I bought about 8 rolls of
-foil tape to do this.
+decided on using Celotex rigid insulation board and used 12 sheets of 75mm
+thick standard 2400 mm x 1200 mm size, and two boards of the same size at 50 mm
+for the back wall. In total, the insulation cost £512.74 (including VAT). To
+prevent draughts as much as possible, I decided to tape the gaps between the
+boards and shed timbers. I bought about 8 rolls of foil tape to do this.
 
-The insulation board turned out to be easy to work with, fitting snugly in the
-gaps and leaving plenty of space for ventilation. I found the dust created by
-sawing the board irritating to my eyes and breathing so as much as possible
-wore eye protection and a mask (although hard to do getting hot in the small
-space). Working overhead on the roof was the worst part as it was difficult to
-avoid falling dust on my face. The whole job took three days to complete.
+The insulation board turned out to be easy to work with, easy to cut with a
+panel saw and fitting snugly in the gaps and leaving plenty of space for
+ventilation. I found the dust created by sawing the board irritating to my eyes
+and breathing so as much as possible wore eye protection and a mask (although
+hard to do getting hot in the small space). Working overhead on the roof was
+the worst part as it was difficult to avoid falling dust on my face. The whole
+job took three days to complete.
 
 {{ macros.triple_layout(
      macros.image('shed-insulation/before-left-wall.jpg'),
