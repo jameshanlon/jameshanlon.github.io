@@ -10,8 +10,8 @@ Status: published
 
 To make the shed in my garden (built by the previous owner) a usable space in
 cold weather, I decided to insulate it. The construction of it is a stud timber
-frame with a corrugated metal exterior and lined inside with OSB board. The
-construction has created voids in the floor, walls and roof, providing a
+frame of 2x4" with a corrugated metal exterior and lined inside with OSB board.
+The construction has created voids in the floor, walls and roof, providing a
 convenient space to add insulation.
 
 I considered using natural wool insulation, as opposed to rigid insulation
@@ -29,7 +29,8 @@ ventilation. I found the dust created by sawing the board irritating to my eyes
 and breathing so as much as possible wore eye protection and a mask (although
 hard to do getting hot in the small space). Working overhead on the roof was
 the worst part as it was difficult to avoid falling dust on my face. The whole
-job took three days to complete.
+job took three days to complete and has made a substantial difference to the
+stability of the temperature in the space.
 
 {{ macros.triple_layout(
      macros.image('shed-insulation/before-left-wall.jpg'),
@@ -39,7 +40,6 @@ job took three days to complete.
 
 {{ macros.image('shed-insulation/stripped-panorama.jpg', size='w=1200',
                 caption='OSB lining removed from the walls and roof.') }}
-
 
 {{ macros.pair_layout(
      macros.image('shed-insulation/stripped-floor.jpg', size='h=450',
