@@ -1,6 +1,6 @@
 ---
 Title: RGB lightbox stacks
-Date: 2018-12-30
+Date: 2018-12-31
 Category: projects
 Tags: making, lighting, electronics
 Status: published
