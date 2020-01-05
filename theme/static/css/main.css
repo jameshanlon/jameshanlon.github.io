@@ -201,7 +201,7 @@ body {
 .article-list li {
   padding-bottom:0.6em;
 }
-.article-tag a {
+.article-tag, .article-tag a {
   color: gray;
 }
 .article-info {
@@ -216,7 +216,7 @@ body {
 .article-info-title {
   font-size:1.1em;
   line-height: 1.15em;
-  padding-bottom: 0.1em;
+  padding-bottom: 0.4em;
 }
 .article-body {
   padding-top: 1.4em;

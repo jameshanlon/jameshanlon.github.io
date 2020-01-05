@@ -1,10 +1,10 @@
 {%- macro render_article_item(article) %}
   <div class="row article-info">
-    <div class="col-1 article-info-date text-right">
+    {#<div class="col-1 article-info-date text-right">
       <time class="published" datetime="{{article.date.isoformat()}}">
-        {{article.date|strftime('%b %Y')}}
+        {{article.date|strftime('%b%y')}}
       </time>
-    </div>
+    </div>#}
     <div class="col-11 article-info-title">
     <a href="/{{article.url}}">
       {{article.title}}
@@ -15,6 +15,9 @@
         <a href="/tag/{{tag}}.html">{{tag}}</a>
       </span>
     {% endfor %}
+      <span class="article-tag small">
+        ({{article.date|strftime('%b %Y')}})
+      </span>
     </div>
   </div>
 {% endmacro %}
