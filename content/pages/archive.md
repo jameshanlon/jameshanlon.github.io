@@ -1,7 +1,7 @@
 Title: Archive
 Status: published
 
-# Talks
+# Talks on computing
 
 [New chips for machine intelligence]({{'MI-chips/new-chips-for-MI.pdf'|asset}}),<br>
 Guest lecture given to the University of Bristol Advanced Computer Architecture class, November 2019.
@@ -19,6 +19,14 @@ Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, Fran
 
 [The resurgence of parallel programming languages](/files/parallel-languages-BCS.pdf),
 <br>BCS Advance Programming Specialist Group, London. April 2012.
+
+# Talks on sustainablility
+
+[An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf'|asset}}),<br>
+A talk given for the High Kingsdown Eco program, January 2020.
+
+{# [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf|asset'}}),<br>
+March 2018. #}
 
 # Documents from university
 
