@@ -6,9 +6,6 @@ Tags: computing
 Status: published
 ---
 
-<!-- TODO: comment on typical SECDED schemes in literature. -->
-
-
 Error correcting codes (ECCs) are used in computer and communication systems to
 improve resiliency to bit flips caused by permanent hardware faults or
 transient conditions, such as neutron particles from cosmic rays, known
@@ -38,8 +35,8 @@ the encoded data is received, if each of the repeated bits are non identical,
 an error has occurred. With a repetition of two, single-bit errors can be
 detected but not corrected. With a repetition of three, single bit flips can be
 corrected by determining each data bit as the majority value in each triple,
-but double bit flips are undetectable and will cause an erronious correction.
-Repetion codes are simple to implement but have a high overhead.
+but double bit flips are undetectable and will cause an erroneous correction.
+Repetition codes are simple to implement but have a high overhead.
 
 ## Hamming codes
 
@@ -260,8 +257,15 @@ data[7]      x     x x
 ```
 
 Note that mappings of data bits to check bits can be chosen flexibly, providing
-they maintain the rules that set the Hamming distance. This is useful when
-implementing ECC to reduce the cost of calculating the check bits.
+they maintain the rules that set the Hamming distance. This flexibility is
+useful when implementing ECC to reduce the cost of calculating the check bits.
+In contrast, many descriptions of ECC that I have found in text books, and on
+[Wikipedia](https://en.wikipedia.org/wiki/Hamming_code), describe a specific
+encoding that does not acknowledge this freedom. The encoding they describe
+allows the syndrome to be interpreted as the bit index of the single bit error,
+by the check bit in position $i$ covering data bits in position $i$.
+Additionally, they specify that parity bits are positioned in the codeword at
+power-of-two positions, for no apparent benefit.
 
 
 ## Implementing ECC
