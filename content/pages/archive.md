@@ -3,6 +3,9 @@ Status: published
 
 # Talks on computing
 
+[Error-correcting codes]({{'talks/ECC-May20.pdf'|asset}}),<br>
+Introduction to ECC schemes and SECDED implementation in hardware, May 2020.
+
 [New chips for machine intelligence]({{'MI-chips/new-chips-for-MI.pdf'|asset}}),<br>
 Guest lecture given to the University of Bristol Advanced Computer Architecture class, November 2019.
 
