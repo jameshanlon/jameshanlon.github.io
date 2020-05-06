@@ -14,10 +14,11 @@ describes the principles of Hamming codes that underpin ECC schemes, ECC codes
 are constructed, focusing on single-error correction and double error
 detection, and how they are implemented.
 
-ECCs work by adding additional redundant bits to be stored or transported
-with data. The bits are encoded as a function of the data in such a way that it
-is possible to detect erroneous bit flips and to correct them. The ratio of the
-number of data bits to the total number of bits encoded is called the *code rate*.
+ECCs work by adding additional redundant bits to be stored or transported with
+data. The bits are encoded as a function of the data in such a way that it is
+possible to detect erroneous bit flips and to correct them. The ratio of the
+number of data bits to the total number of bits encoded is called the *code
+rate*, with a rate of 1 being a an impossible encoding with no overhead.
 
 ## Simple ECCs
 
@@ -259,8 +260,8 @@ data[7]      x     x x
 Note that mappings of data bits to check bits can be chosen flexibly, providing
 they maintain the rules that set the Hamming distance. This flexibility is
 useful when implementing ECC to reduce the cost of calculating the check bits.
-In contrast, many descriptions of ECC that I have found in text books, and on
-[Wikipedia](https://en.wikipedia.org/wiki/Hamming_code), describe a specific
+In contrast, many descriptions of ECC that I have found in text books and on
+[Wikipedia](https://en.wikipedia.org/wiki/Hamming_code) describe a specific
 encoding that does not acknowledge this freedom. The encoding they describe
 allows the syndrome to be interpreted as the bit index of the single bit error,
 by the check bit in position $i$ covering data bits in position $i$.
