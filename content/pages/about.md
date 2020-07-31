@@ -5,10 +5,10 @@ Status: published
 
 # About me
 
-I work as an engineer in the silicon team at
+I work as an engineer in the Silicon team at
 [Graphcore](http://www.graphcore.ai), based in Bristol in the UK, on the
-development of processors for machine intelligence. My current work is
-focussed on the physical and logical implementation of aspects of the chip.
+development of processors for machine intelligence. My current work is focussed
+on physical and logical implementation of aspects.
 
 In my spare time, I help to run the [CHEESE project](http://cheeseproject.co.uk),
 a not-for-profit enterprise that uses thermal imaging to encourage people to reduce

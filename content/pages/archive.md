@@ -28,7 +28,7 @@ Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, Fran
 [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf'|asset}}),<br>
 A talk given for the High Kingsdown Eco program, January 2020.
 
-{# [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf|asset'}}),<br>
+{# [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf'|asset}}),<br>
 March 2018. #}
 
 # Documents from university
@@ -40,6 +40,10 @@ These documents are from my undergraduate and PhD degrees.
 
 [Scalable abstractions for general-purpose parallel computation]({filename}/thesis.md),
 <br>Ph.D. Thesis, University of Bristol. March 2014.
+
+The Sire programming language [definition]({{'sire/sire-definition.pdf'|asset}}) and
+[syntax]({{'sire/sire-syntax.pdf'|asset}}) (excerpts from my PhD thesis),
+<br>unpublished, 2014.
 
 Scalable data abstractions for distributed parallel computations,
 <br>unpublished, 2012 ([arXiv](https://arxiv.org/abs/1210.1157)).
