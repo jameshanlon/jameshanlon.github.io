@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ article.title|striptags }}{% endblock %}
 {% block content %}
-  <h1>{{ article.title }}</h1>
+  <h1>
+    {{ article.title }}
+    {% if article.status == 'draft' %}[DRAFT]{% endif %}
+  </h1>
   <div class="lead">
     <time class="published" datetime="{{ article.date.isoformat() }}">
       {{ article.locale_date }}
