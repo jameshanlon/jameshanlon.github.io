@@ -6,7 +6,7 @@
 <div class="text-center">
 <figure class="figure">
   <a href="{{filename|asset}}" data-lightbox="shed">
-    <img class="figure-img img-fluid thumbnail" src="{{filename|thumbnail(size)}}" alt="{{alt}}">
+    <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
   <figcaption class="figure-caption text-left">{{caption}}</figcaption>
 </figure>
@@ -17,7 +17,7 @@
   {% endif %}
 <div class="text-center">
   <a href="{{filename|asset}}" data-lightbox="shed">
-    <img class="figure-img img-fluid thumbnail" src="{{filename|thumbnail(size)}}" alt="{{alt}}">
+    <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
 </div>
 {% endif %}
