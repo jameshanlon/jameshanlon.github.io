@@ -2,7 +2,7 @@
 Title: Reflections on the state of nature
 Date: 2020-11-10
 Category: notes
-Status: draft
+Status: published
 Tags: climate-change, sustainability
 ---
 
