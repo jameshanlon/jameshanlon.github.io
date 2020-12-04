@@ -664,30 +664,34 @@ https://nymag.com/intelligencer/2017/07/climate-change-earth-too-hot-for-humans.
 
 ## Final thoughts
 
-This note attempts to summarise the facts of the global impact of human
-activity on nature. Since I'm not an expert, it necessarily skims along the top
-on what are hugely complex issues. What I do hope however is that it conveys
-the magnitude and gravity of the situation for nature on earth, and how the
-contributing issues are deeply interconnected. Climate change is now beginning
-to be taken more seriously and is increasingly becoming part of normal
-discourse. But the declines in biodiversity and ecosystem services are
-currently having a greater impact on humans with issues such as access to
-freshwater, air pollution and protection from extreme weather, and are
-generally poorly understood and regarded as risks.
+This note attempts to concisely and objectively summarise the issues
+surrounding human impact on nature. Since I'm not an expert, it necessarily
+skims along the top of what are hugely complex issues. What I do hope however
+is that it conveys the magnitude and gravity of the situation for nature on
+earth and how the contributing issues are deeply interconnected.
 
+<!--I also hope that it serves as a resource to aid understanding and as a
+contemporaneous reference for those taking part in related discussions.-->
+
+Climate change is now beginning to be taken more seriously and is increasingly
+becoming part of normal discourse. But the declines in biodiversity and
+ecosystem services are generally poorly understood and regarded as risks, but
+currently have a disproportionately greater impact on humans with issues such
+as access to freshwater, air pollution and protection from extreme weather.
 The UN Global Assessment Report finds that negative trends in nature will
-continue to 2050 and beyond due to the projected impacts of increasing land-use
+continue until 2050 and beyond due to the projected impacts of increasing land-use
 change, exploitation of organisms and climate change under current
 trajectories. These impacts will also be distributed unevenly and will affect
-many of the world's indigenous people and poorest communities first. The
-assessment of nature's current state and modelling of the future are imperfect
-and we do not and cannot fully understand the complete effects of human's
-impact, and how nature will react. What we can be sure about however is that
-our situation is unprecedented in history and the horizon until the end of the
-century for the effects to become catastrophic for life is relatively just a
-blink of an eye. This should be pause for thought, particularly when we know
-that many of the impacts are locked in for decades to come even if their causes
-were to cease tomorrow.
+many of the world's indigenous people and poorest communities first.
+
+The ongoing assessment of the state of nature and modelling of the future are
+imperfect and we cannot fully understand the consequences of human actions.
+What we can be sure about however is that our situation is unprecedented in
+history. Measured against the earth's history, the time frame for these effects
+to become catastrophic is just a blink of an eye. Should things change
+dramatically tomorrow, many of these impacts are locked in for decades.
+Momentum to mitigate these issues is building but will it be enough, and in
+time?
 
 The UN report concludes that avoiding such a scenario requires systematic,
 transformative change across across economic, social, political and
