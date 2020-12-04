@@ -667,39 +667,37 @@ https://nymag.com/intelligencer/2017/07/climate-change-earth-too-hot-for-humans.
 This note attempts to summarise the facts of the global impact of human
 activity on nature. Since I'm not an expert, it necessarily skims along the top
 on what are hugely complex issues. What I do hope however is that it conveys
-the magnitude and seriousness of the situation for nature on earth, and how the
-issues are deeply interconnected. Climate change is now beginning to be taken
-seriously and is increasingly part of normal discourse. But the declines in
-biodiversity and ecosystem services are currently causing more serious impacts
-on humans but are generally poorly understood and regarded as risks.
-<!---->
+the magnitude and gravity of the situation for nature on earth, and how the
+contributing issues are deeply interconnected. Climate change is now beginning
+to be taken more seriously and is increasingly becoming part of normal
+discourse. But the declines in biodiversity and ecosystem services are
+currently having a greater impact on humans with issues such as access to
+freshwater, air pollution and protection from extreme weather, and are
+generally poorly understood and regarded as risks.
+
 The UN Global Assessment Report finds that negative trends in nature will
 continue to 2050 and beyond due to the projected impacts of increasing land-use
-change, exploitation of organisms and climate change under current trajectories.
-Avoiding this scenario requires transformative change across across economic,
-social, political and technological factors. Unfortunately, these negative
-impacts will affect many of the world's poorest communities first.
+change, exploitation of organisms and climate change under current
+trajectories. These impacts will also be distributed unevenly and will affect
+many of the world's indigenous people and poorest communities first. The
+assessment of nature's current state and modelling of the future are imperfect
+and we do not and cannot fully understand the complete effects of human's
+impact, and how nature will react. What we can be sure about however is that
+our situation is unprecedented in history and the horizon until the end of the
+century for the effects to become catastrophic for life is relatively just a
+blink of an eye. This should be pause for thought, particularly when we know
+that many of the impacts are locked in for decades to come even if their causes
+were to cease tomorrow.
 
+The UN report concludes that avoiding such a scenario requires systematic,
+transformative change across across economic, social, political and
+technological factors. Everyone has a part to play.
 
 <!--
-
-UN Global report: "Negative trends in nature will continue to 2050 and beyond
-in all of the policy scenarios explored in the Report, except those that
-include transformative change – due to the projected impacts of increasing
-land-use change, exploitation of organisms and climate change, although with
-significant differences between regions."
-
-"The areas of the world projected to experience significant negative effects
-from global changes in climate, biodiversity, ecosystem functions and nature’s
-contributions to people are also areas in which large concentrations of
-Indigenous Peoples and many of the world’s poorest communities reside."
-
 World fails to meet a single target to stop destruction of nature – UN report
 https://www.theguardian.com/environment/2020/sep/15/every-global-target-to-stem-destruction-of-nature-by-2020-missed-un-report-aoe
-
 'Lost decade for nature' as UK fails on 17 of 20 UN biodiversity targets
 https://www.theguardian.com/global-development/2020/sep/14/lost-decade-for-nature-as-uk-fails-on-17-of-20-un-biodiversity-targets-aoe
-
 -->
 
 ## References / further reading
