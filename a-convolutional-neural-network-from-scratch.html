@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>A convolutional neural network from scratch</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto text-uppercase">
+          <li class="nav-item ">
+            <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/about.html">about</a>
+          </li>
+			</ul>
+		  <a class="navbar-brand" href="/index.html">James W. Hanlon</a>
+		</div>
+	</nav>
+  <div class="container">
+  <h1>
+    A convolutional neural network from&nbsp;scratch
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2017-02-10T00:00:00+01:00">
+      10 Feb 2017
+    </time><br>
+      <span class="article-tag small"><a href="/tag/machine-intelligence.html">machine-intelligence</a></span>
+  </div>
+  <div class="article-body">
+    <p>The online book &#8216;<a href="http://neuralnetworksanddeeplearning.com">Neural Networks and Deep
+Learning</a>&#8216; by Michael Nielsen is an
+excellent introduction to neural networks and the world of deep learning.  As
+the book works through the theory, it makes it concrete by explaining how the
+concepts are implemented using Python. The complete Python programs are
+<a href="https://github.com/mnielsen/neural-networks-and-deep-learning">available on
+Github</a> for
+further inspection and&nbsp;experimentation.</p>
+<p>I decided to write my own implementations of the examples however. Partly to
+develop a better understanding but also because I felt that the matrix-based
+presentation of the mathematics and use of NumPy operations in the examples
+obscured some of the intuition around neurons and their connections, and
+because the later examples of convolutional layers are implemented using
+<a href="deeplearning.net/software/theano/">Theano</a>.</p>
+<p>So, in the hope that it might be interesting as a simple and self-contained
+example of a convolutional neural network where nothing is hidden, I&#8217;ve put he
+source code for my implementation (written in C++) on
+<a href="https://github.com/jameshanlon/convolutional-neural-network">GitHub</a>. For
+reference I&#8217;ve also written up below the various equations for the
+fully-connected and convolutional layers in element-wise notation. I should
+thank two particularly useful blog posts by <a href="http://andrew.gibiansky.com/blog/machine-learning/convolutional-neural-networks/">Andrew
+Gibiansky</a>
+and <a href="https://grzegorzgwardys.wordpress.com/2016/04/22/8/">Grzegorz Gwardys</a>
+which helped me to derive the convolutional equations for back&nbsp;propagation.</p>
+<h1>The source&nbsp;code</h1>
+<p>The <a href="https://github.com/jameshanlon/convolutional-neural-network">repository</a>
+contains several example programs with different network
+configurations. They are instantiated from a generic header <code>Network.hpp</code>,
+which contains classes for fully-connected, softmax, convolutional and
+max-pooling layer types, and a network class that performs the stochastic
+gradient descent, minibatching and training over multiple epochs with
+randomly-shuffled training data. The header also contains definitions for
+quadratic and cross-entropy cost functions, and sigmoid and rectified-linear
+activation functions, which are specified as template parameters to the
+network. The code is written primarily primarily to be clear and
+understandable, as such there will be many opportunities for optimisations and
+other improvements (please let me know if you have any&nbsp;suggestions).</p>
+<p>For instructions on how to build and run the examples, see the <code>README.md</code>
+file. Note that Boost is required for <code>multi_array</code> and Threading Building
+Blocks to parallelise the training over minibatches and accuracy evaluation by
+performing inferences in parallel, up to the minibatch size.  It should be
+straightforward to build other network configurations or to modify the
+implementations or to experiment with new&nbsp;features.</p>
+<p>Included in the <code>extra</code> folder, are implementations of the example programs
+in <a href="https://www.tensorflow.org/">TensorFlow</a>, adapted from the <a href="https://www.tensorflow.org/tutorials/mnist/pros/"><span class="caps">MNIST</span>
+tutorial</a>. I found these
+useful as a point of comparison to validate the behaviour of the&nbsp;networks.</p>
+<h1>Equations</h1>
+<p>The following notation roughly follows the notation in the Neural Networks and
+Deep Learning&nbsp;book:</p>
+<ul>
+<li>$l$ is an index of a&nbsp;layer;</li>
+<li>$w$ is a&nbsp;weight;</li>
+<li>$z$ is a weighted&nbsp;input;</li>
+<li>$a$ is an&nbsp;activation;</li>
+<li>$y$ is a&nbsp;label;</li>
+<li>$\delta$ is an&nbsp;error;</li>
+<li>$\sigma$ is the activation function, $\sigma&#8217;$ is the derivative of&nbsp;it;</li>
+<li>$C$ is the cost&nbsp;function.</li>
+</ul>
+<h2>For a fully-connected&nbsp;layer</h2>
+<p>In the forward pass, each neuron takes a weighted sum of its inputs, adds the bias
+and uses the result as the input to the activation function:
+$$z_i^l = \sum_j w_{j,i}^{l-1} a_j^{l-1} + b^l$$
+$$a_i^l =&nbsp;\sigma(z_i^l)$$</p>
+<p>The error of a neuron $i$ in the output layer is given by
+$\delta_i = (a_i -y_i)\sigma&#8217;(z_i)$
+for the sigmoid activation function and by
+$\delta_i = a_i - y_i$
+for the cross-entropy activation&nbsp;function.</p>
+<p>In the backwards pass, errors are propagated to a neuron from neurons that are
+connected as outputs.  The weighted sum of the output neuron&#8217;s errors and
+connection weight is calculated and this value is then multiplied by the
+derivative of the activation function:
+$$\delta_i^l = \sum_j w_{j,i}^{l+1} \delta_j^{l+1}&nbsp;\sigma&#8217;(z_i^l)$$</p>
+<p>The delta for a weight is calculated from the error held by a neuron and the
+activation from the neuron connected by the input:
+$$\frac{\partial C}{\partial w_i^l} =&nbsp;a_i^{l-1}\delta_i^l$$</p>
+<p>The delta for the bias is equal to the error held by a neuron:
+$$\frac{\partial C}{\partial b_i^l} =&nbsp;\delta_i^l$$</p>
+<h2>For a convolutional&nbsp;layer</h2>
+<p>Assuming a two-dimensional input of size $N\times N$ and convolutional mask of
+size $m\times&nbsp;m$.</p>
+<p>In the forward pass, each neuron convolves the weights with its receptive field:
+$$z_{x,y}^l = \sum_{a=0}^{m-1}\sum_{b=0}^{m-1} w_{a,b}^{l-1}a_{x+a,y+b}^{l-1} + b^l$$
+$$a_{x,y}^l =&nbsp;\sigma(z_{x,y}^l)$$</p>
+<p>In the backwards pass, errors are propagated to a neuron from the neurons
+connected as outputs in the next layer:
+$$\delta_{x,y}^l = \sum_{a=0}^{m-1}\sum_{b=0}^{m-1} w_{a,b}^{l+1}\delta_{x-a,y-b}^{l+1}\sigma&#8217;(z_{x,y}^l)$$
+One way to simplify this is to <a href="https://grzegorzgwardys.wordpress.com/2016/04/22/8/">think of the convolutional layer as one
+dimensional</a> (as with a
+fully-connected layer), where each neuron has only $m\times m$ inputs connections.
+Then, back propagation operates in the same way as it does with fully-connected
+layers. You can in fact use this approach to derive the above&nbsp;equation.</p>
+<p>The delta of a weight is calculated from the activations in the previous layer
+that influence that weight and the errors held by the neurons that use it:
+$$\frac{\partial C}{\partial w_{a,b}^l} = \sum_{i=0}^{N-m}\sum_{j=0}^{N-m} a_{i+a,&nbsp;j+b}^{l-1}\delta_{i,j}^l$$</p>
+<p>The delta of a bias is calculated from the errors held by the neurons that
+use it:
+$$\frac{\partial C}{\partial b^l} = \sum_{i=0}^{N-m}\sum_{j=0}^{N-m}&nbsp;\delta_{i,j}^l$$</p>
+<p>With three-dimensional inputs, convolutional layers convolve a
+three-dimensional mask into the depth of the input. Convolutional layers can
+themselves produce three-dimensional outputs by stacking up separate
+convolutional processes in the same layer (called feature maps or channels),
+each contributing one element in the depth of the output. In this case, the
+backpropagation of the error must sum over the feature maps to get the
+contributions of each expression that contribute to the error. The weight and
+bias updates must sum errors over the input volume they are applied&nbsp;to.</p>
+<h1>Further&nbsp;reading</h1>
+<ul>
+<li><a href="http://deeplearning.net/tutorial/lenet.html">Convolutional neural networks&nbsp;tutorial</a></li>
+<li><a href="http://cs231n.github.io/">CS231n Convolutional Neural Networks for Visual&nbsp;Recognition</a></li>
+<li><a href="http://russellsstewart.com/notes/0.html">Introduction to debugging neural&nbsp;networks</a></li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery.min.js"></script>
+  <script src="./theme/js/popper.min.js"></script>
+  <script src="./theme/js/bootstrap.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Querying logical paths in a Verilog design</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto text-uppercase">
+          <li class="nav-item ">
+            <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/about.html">about</a>
+          </li>
+			</ul>
+		  <a class="navbar-brand" href="/index.html">James W. Hanlon</a>
+		</div>
+	</nav>
+  <div class="container">
+  <h1>
+    Querying logical paths in a Verilog&nbsp;design
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2018-11-20T00:00:00+01:00">
+      20 Nov 2018
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/microelectronics.html">microelectronics</a></span>
+      <span class="article-tag small"><a href="/tag/Verilog.html">Verilog</a></span>
+  </div>
+  <div class="article-body">
+    <p>I wrote a simple command-line tool for querying logical paths in a Verilog
+design. My motivation for doing this is that it&#8217;s easy to create complex logic
+in Verilog, particularly between modules, but more difficult to understand
+exactly what is driving a particular net, just from inspecting the code. It is
+the complex cones of logic that lead to timing problems in a synthesised
+design, but having to push a design through a synthesis flow takes time, making
+speculative timing fixes a lengthy process. A command-line tool is useful as it
+can be integrated into more complex workflows, in contrast with using more
+complex and usually graphical <span class="caps">EDA</span>&nbsp;tooling.</p>
+<p>The tool addresses high-level structural problems in a design, such as
+incorrect dependencies when a signal including logic that is not necessary to
+its function. It does not deal with other timing issues that are a product of
+the synthesis and physical build of the design. As such, all the structural
+information required is contained within the Verilog source&nbsp;code.</p>
+<p>This note briefly explains how the tool works and records some ideas on how it
+could be&nbsp;extended.</p>
+<h2>Use</h2>
+<p>Instructions to build the tool are in the <span class="caps">README</span> in the <a href="https://github.com/jameshanlon/netlist-paths/blob/master/README.md">GitHub
+repository</a>.
+Assuming the <code>netlist-paths</code> install <code>bin</code> directory is available in your
+<code>PATH</code>, then using the <a href="https://github.com/cliffordwolf/picorv32">PicoRV32 processor
+implementation</a> as an example, its
+netlist can be generated as&nbsp;follows:</p>
+<div class="codehilite"><pre><span></span>$ git clone https://github.com/cliffordwolf/picorv32.git
+$ <span class="nb">cd</span> picorv32
+$ verilator --dump-netlist-graph -o netlist.graph picorv32.v --top-module picorv32_axi
+... <span class="c1"># lots of warnings</span>
+</pre></div>
+
+
+<p>Here a modified version of <a href="https://www.veripool.org/wiki/verilator">Verilator</a>
+is used to generate the netlist. (Note that <code>netlist-paths</code> can invoke
+Verilator but with the <code>--compile</code> option, but PicoRV32 requires Verilator&#8217;s
+<code>--top-module</code> option. It may be useful to extend the command line arguments to
+allow arbitrary arguments to be passed to Verilator.) Verilator performs the
+generation by traversing the abstract syntax tree of the design and constructs
+a graph of dependencies between variables and combinatorial logical constructs,
+and identifies variables corresponding to sequential elements (flip&nbsp;flops).</p>
+<p>The graph structure/netlist is written to file in <a href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">Graphviz dot
+format</a>, and specifies
+the vertices, with their type and source code location information, and the
+edges between them. The analysis tool reads this file and reports on the
+connectivity between&nbsp;points.</p>
+<div class="codehilite"><pre><span></span><span class="nt">digraph</span> <span class="nt">netlist</span> <span class="p">{</span>
+  <span class="err">n0</span><span class="cp">[</span><span class="n">id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">n1</span><span class="cp">[</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="n">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_data&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">n2</span><span class="cp">[</span><span class="n">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="n">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;trace_data&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">n3</span><span class="cp">[</span><span class="n">id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">n4</span><span class="cp">[</span><span class="n">id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="n">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_valid&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span>
+  <span class="err">...</span>
+  <span class="err">n0</span> <span class="err">-&gt;</span> <span class="err">n2</span><span class="p">;</span>
+  <span class="err">n1</span> <span class="err">-&gt;</span> <span class="err">n0</span><span class="p">;</span>
+  <span class="err">n3</span> <span class="err">-&gt;</span> <span class="err">n5</span><span class="p">;</span>
+  <span class="err">n4</span> <span class="err">-&gt;</span> <span class="err">n3</span><span class="p">;</span>
+  <span class="err">n6</span> <span class="err">-&gt;</span> <span class="err">n8</span><span class="p">;</span>
+  <span class="err">...</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>A vertex in this netlist corresponds to the occurrence of a variable (ie a
+symbolic name). A given symbolic name can appear in different vertices,
+corresponding to its different uses. To see this, the option <code>--dumpnames</code>
+prints the names, types and directions of all the vertices in the graph. This
+output can be piped through <code>grep</code> to locate particular signals. For example,
+to see all the output&nbsp;variables:</p>
+<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --dumpnames <span class="p">|</span> grep OUTPUT
+PORT OUTPUT eoi
+PORT OUTPUT mem_axi_araddr
+PORT OUTPUT mem_axi_arprot
+PORT OUTPUT mem_axi_arvalid
+PORT OUTPUT mem_axi_awaddr
+PORT OUTPUT mem_axi_awprot
+PORT OUTPUT mem_axi_awvalid
+...
+</pre></div>
+
+
+<p>Or all the&nbsp;registers:</p>
+<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --dumpnames <span class="p">|</span> grep REG_DST
+REG_DST picorv32_axi.axi_adapter.ack_arvalid
+REG_DST picorv32_axi.axi_adapter.ack_awvalid
+REG_DST picorv32_axi.axi_adapter.ack_wvalid
+REG_DST picorv32_axi.axi_adapter.xfer_done
+REG_DST picorv32_axi.picorv32_core.alu_out_0_q
+REG_DST picorv32_axi.picorv32_core.alu_out_q
+REG_DST picorv32_axi.picorv32_core.alu_wait
+REG_DST picorv32_axi.picorv32_core.alu_wait_2
+REG_DST picorv32_axi.picorv32_core.cached_ascii_instr
+REG_DST picorv32_axi.picorv32_core.cached_insn_imm
+...
+</pre></div>
+
+
+<p>Here, the <code>REG_DST</code> type corresponds to a variable that is the left-hand side
+of a non-blocking assignment <code>&lt;=</code>. Conversely, the <code>REG_SRC</code> type is where the
+same variable appears in an expression on the right-hand side. In general,
+there can only be a single <code>REG_DST</code> node with a specific name, whereas there
+can be multiple <code>REG_SRC</code> nodes with a specific names. The same is true with
+<code>VAR</code>, <code>WIRE</code> and <code>PORT</code> types. When using this tool, I&#8217;ve found it
+straight forward to locate the variables I need using <code>grep</code> with
+<code>--dumpnames</code>, but there may be more sophisticated approaches that could be&nbsp;implemented.</p>
+<p>A start or end point can be specified as any named vertex, which is anything
+except logic statements. You can query if a path exists between two&nbsp;points:</p>
+<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state --end picorv32_axi.picorv32_core.dbg_valid_insn
+  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
+  ASSIGNW                                     LOGIC           picorv32.v:1373
+  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
+  ALWAYS                                      LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.dbg_valid_insn   REG_DST         picorv32.v:751
+</pre></div>
+
+
+<p>In this path report, it lists the sequential dependencies from the start point
+to the end point, through a sequence of zero or more combinatorial logic
+statements/blocks, with each dependency corresponding to a variable.
+Importantly, the filenames and line numbers given reference the original source&nbsp;code.</p>
+<p>Since there may be multiple vertices with a name matching the specified start
+and end points, the register version is preferentially located (<code>SRC</code> for a
+start point and <code>DST</code> for an end point), followed by <code>VAR</code>, <code>WIRE</code> and
+<code>PORT</code> types.</p>
+<p>You can also query all the paths that fan out from a particular start&nbsp;point:</p>
+<div class="codehilite"><pre><span></span>netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
+Path 1
+  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
+  ASSIGNW                                     LOGIC           picorv32.v:1373
+  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
+  ALWAYS                                      LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.q_ascii_instr    REG_DST         picorv32.v:742
+
+Path 2
+  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
+  ASSIGNW                                     LOGIC           picorv32.v:1373
+  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
+  ALWAYS                                      LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.q_insn_imm       REG_DST         picorv32.v:743
+
+Path 3
+  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
+  ASSIGNW                                     LOGIC           picorv32.v:1373
+  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
+  ALWAYS                                      LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.q_insn_opcode    REG_DST         picorv32.v:744
+...
+Found 223 path(s)
+</pre></div>
+
+
+<p>Or query all the paths that fan in to a particular end&nbsp;point:</p>
+<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --end picorv32_axi.picorv32_core.dbg_valid_insn
+Path <span class="m">1</span>
+  picorv32_axi.picorv32_core.trap           REG_SRC         picorv32.v:86
+  ALWAYS                                    LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.dbg_valid_insn REG_DST         picorv32.v:751
+
+Path <span class="m">2</span>
+  picorv32_axi.picorv32_core.instr_lui       REG_SRC         picorv32.v:630
+  ALWAYS                                     LOGIC           picorv32.v:684
+  ASSIGN                                     LOGIC           picorv32.v:685
+  picorv32_axi.picorv32_core.new_ascii_instr VAR             picorv32.v:673
+  ALWAYS                                     LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.dbg_valid_insn  REG_DST         picorv32.v:751
+
+Path <span class="m">3</span>
+  picorv32_axi.picorv32_core.instr_auipc     REG_SRC         picorv32.v:630
+  ALWAYS                                     LOGIC           picorv32.v:684
+  ASSIGN                                     LOGIC           picorv32.v:685
+  picorv32_axi.picorv32_core.new_ascii_instr VAR             picorv32.v:673
+  ALWAYS                                     LOGIC           picorv32.v:760
+  picorv32_axi.picorv32_core.dbg_valid_insn  REG_DST         picorv32.v:751
+...
+Found <span class="m">74</span> paths
+</pre></div>
+
+
+<p>Since the number of paths between any two points in an arbitrary graph grows
+exponentially with the size of the graph, it infeasible to report all paths
+between two points, so this tool simply looks for any path that satisfies those
+constraints. (An option is provided to enumerate all paths, but it can only be
+used on small&nbsp;netlists.)</p>
+<p>When trying to match a particular path in a physical build it it useful to
+further constrain the search to force it to match the same path. This can be
+done by specifying through points with the <code>--through</code> option. Each through
+argument is taken in order as an intermediate point in the path. The same
+search algorithm is used on each pair of points to build up a composite report.
+For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --start picorv32_axi.axi_adapter.ack_wvalid --through picorv32_axi.axi_adapter.mem_axi_wvalid --end mem_axi_wvalid
+  picorv32_axi.axi_adapter.ack_wvalid     REG_SRC         picorv32.v:2700
+  ASSIGNW                                 LOGIC           picorv32.v:2711
+  picorv32_axi.axi_adapter.mem_axi_wvalid PORT            picorv32.v:2671
+  ASSIGNW                                 LOGIC           picorv32.v:2556
+  picorv32_axi.mem_axi_wvalid             PORT            picorv32.v:2484
+  ASSIGNW                                 LOGIC           picorv32.v:2484
+  mem_axi_wvalid                          PORT            picorv32.v:2484
+</pre></div>
+
+
+<h2>Implementation</h2>
+<p>To avoid writing a preprocessor and parser for Verilog, I modified
+<a href="https://www.veripool.org/wiki/verilator">Verilator</a> to obtain the netlist of a
+Verilog design. (I would have liked to use
+<a href="http://www.clifford.at/yosys/">Yosys</a> to do this because it provides a neat
+interface to adding custom <span class="caps">AST</span> passes, but unfortunately it does not currently
+support enough of the SystemVerilog standard.) The Verilator modifications add
+a new <span class="caps">AST</span> visitor, which walks the tree after it has been processed, for
+example to propagate constants and inline tasks and&nbsp;modules.</p>
+<p>The <code>netlist-paths</code> tool is implemented in C++ and makes use of the Boost Graph
+Library. Paths are identified using the <code>boost::depth_first_search</code> algorithm.
+The all-fan-out report enumerates paths to all the end points in a depth-first
+traversal of the graph, the fan-in variant uses the <code>boost::reverse_graph</code>
+adaptor and performs the same algorithm. Properties are associated with
+vertices in the graph using a <code>boost::dynamic_property_map</code>. I put together a
+<a href="https://github.com/jameshanlon/boost_graph_example">simple example program</a> to
+illustrate how to use these maps (plus some other library features) since I
+found there were some subtleties in getting this to&nbsp;work.</p>
+<h2>Improvements</h2>
+<p>There are many ways this tool could be extended and improved. Here are a few&nbsp;ideas:</p>
+<ul>
+<li>Provide additional flexibility to allow a choice between multiple matching start, through or end&nbsp;points.</li>
+<li>Provide a mechanism to search for high fan-out&nbsp;variables.</li>
+<li>Provide a mechanism to seach for the longest paths in the&nbsp;graph.</li>
+<li>Provide a mechanism to assert there is no logical path between two sub&nbsp;modules.</li>
+<li>Detect and report timing&nbsp;loops.</li>
+<li>Add options to <code>dumpnames</code> to filter by type or&nbsp;direction.</li>
+<li>Add options to the querys to select only internal paths or only input/output&nbsp;paths.</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/jameshanlon/netlist-paths">Netlist paths tool on&nbsp;GitHub</a></li>
+<li><a href="https://github.com/jameshanlon/verilator">Modified Verilator on&nbsp;GitHub</a></li>
+<li><a href="https://github.com/jameshanlon/boost_graph_example">Boost Graph Library&nbsp;example</a></li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery.min.js"></script>
+  <script src="./theme/js/popper.min.js"></script>
+  <script src="./theme/js/bootstrap.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

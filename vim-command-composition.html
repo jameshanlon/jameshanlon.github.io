@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Vim command composition</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto text-uppercase">
+          <li class="nav-item ">
+            <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/about.html">about</a>
+          </li>
+			</ul>
+		  <a class="navbar-brand" href="/index.html">James W. Hanlon</a>
+		</div>
+	</nav>
+  <div class="container">
+  <h1>
+    Vim command&nbsp;composition
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2018-08-23T00:00:00+02:00">
+      23 Aug 2018
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/vim.html">vim</a></span>
+  </div>
+  <div class="article-body">
+    <p>I&#8217;ve been using Vim for a long time and I&#8217;m familiar with many of its commands
+but I&#8217;ve never had a good understanding of the underlying components of
+commands and their composition. Although there are many good Vim
+<a href="#references">references</a>, I felt that I was still not seeing the full picture.
+So, to try and dig a little deeper and educate myself, I&#8217;ve put together this
+reference, which details a subset of the command language. The approach I&#8217;ve
+taken was inspired by the grammar rules outlined in <a href="https://takac.github.io/2013/01/30/vim-grammar/">this blog
+post</a>, and should be useful
+for anyone who is familiar with&nbsp;Vim.</p>
+<p>A Vim command can be constructed from different rules, and below each rule is
+specified with a <a href="https://en.wikipedia.org/wiki/Extended_Backus-Naur_form"><span class="caps">EBNF</span>-style
+syntax</a>, where <code>&lt;...&gt;</code> is
+another rule. <code>{...}</code> represents some key presses, <code>|</code> is an alternative and
+<code>[...]</code> is an optional component. Be warned that
+since there are many special cases to Vim commands and I&#8217;ve not checked all the
+combinations, some of the rules below may yield invalid compositions! As such,
+these rules are better viewed as a way of remembering commands. For an
+exhaustive treatment of the command language, please check the <a href="https://www.vim.org/docs.php">Vim
+documentation</a>, or use the <code>:help</code> tags that I&#8217;ve&nbsp;given.</p>
+<h2>Motions</h2>
+<p>Motions change the position of the cursor and can be combined with a count to
+repeat the&nbsp;motion.</p>
+<div class="codehilite"><pre><span></span>count := {digits}
+motion := [&lt;count&gt;] &lt;motion-keys&gt;
+command := &lt;motion&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>2fx</code> - move to the second right-hand occurrence of <code>x</code> in the line&nbsp;(inclusive)</li>
+<li><code>2Tx</code> - move to the second left-hand occurrence of <code>x</code> in the line&nbsp;(exclusive)</li>
+<li><code>w</code> - move to the next&nbsp;word</li>
+<li><code>10j</code> or <code>10_</code> - move down 10&nbsp;lines</li>
+<li><code>10k</code> - move up 10&nbsp;lines</li>
+<li><code>6w</code> - move to start of the sixth word&nbsp;forwards</li>
+<li><code>6E</code> - move to end of sixth word&nbsp;forwards</li>
+<li><code>4b</code> - move to start of the fourth word&nbsp;backwards</li>
+<li><code>2{</code> - move two paragraphs&nbsp;down</li>
+<li><code>3/foo</code> - move to the third occurrence of <code>foo</code> later in the&nbsp;buffer</li>
+<li><code>3?foo</code> - move to the third occurrence of <code>foo</code> earlier in the&nbsp;buffer</li>
+</ul>
+<h2>Text&nbsp;objects</h2>
+<p>Text objects are a collection of characters relative to the position of the
+cursor. Compared to motions, text objects on a whole object, regardless of the
+specific cursor position. The <code>a</code> and <code>i</code> modifiers augment text objects,
+specifying whether the surrounding context should be included. The context may
+be whitespace or delimiting&nbsp;characters.</p>
+<div class="codehilite"><pre><span></span>text-object := &lt;text-object-keys&gt;
+             | &lt;modifier&gt; &lt;text-object-keys&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>aw</code> - around word (includes surrounding&nbsp;whitespace)</li>
+<li><code>iw</code> - inner word (excludes surrounding&nbsp;whitespace)</li>
+<li><code>aW</code> - around <span class="caps">WORD</span> (where word is delimited by&nbsp;whitespace)</li>
+<li><code>as</code> - around&nbsp;sentence</li>
+<li><code>is</code> - inner&nbsp;sentence</li>
+<li><code>ap</code> - around&nbsp;paragraph</li>
+<li><code>ip</code> - inner&nbsp;paragraph</li>
+<li><code>a'</code> - a single-quoted&nbsp;string</li>
+<li><code>i'</code> - inside a single-quoted&nbsp;string</li>
+<li><code>a(</code> = <code>a)</code>= <code>ab</code> - a parenthesised block, from <code>(</code> to <code>)</code></li>
+<li><code>i(</code> = <code>i)</code>= <code>ib</code> - inside a parenthesised block, contents of <code>(...)</code></li>
+<li><code>a&lt;</code> = <code>a&gt;</code> - a tag, from <code>&lt;</code> to <code>&gt;</code></li>
+<li><code>at</code> - around tag block, including matching start and end tags <code>&lt;tag&gt;...&lt;/tag&gt;</code></li>
+<li><code>it</code> - inside tag block, excluding&nbsp;tags</li>
+<li><code>aB</code> = <code>a{</code> = <code>a}</code> - around a <code>{...}</code> block</li>
+<li><code>iB</code> = <code>i{</code> = <code>i}</code> - inside a <code>{...}</code> block</li>
+</ul>
+<h2>Operators on text&nbsp;objects</h2>
+<p>Operators can be applied to text objects. In some circumstances, a count can be
+applied to the text object to repeat its&nbsp;effect.</p>
+<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;text-object&gt;
+text-object := &lt;count&gt; &lt;modifier&gt; &lt;text-object-keys&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>cw</code>  - change word from&nbsp;cursor</li>
+<li><code>ciw</code> - change word under&nbsp;cursor</li>
+<li><code>dw</code> - delete until end of&nbsp;word</li>
+<li><code>5dw</code> = <code>d5w</code> - delete until end of right-hand sixth&nbsp;word</li>
+<li><code>caw</code> - change around word under&nbsp;cursor</li>
+<li><code>2d3w</code> - delete six&nbsp;words</li>
+<li><code>5gUw</code> - make the next five words&nbsp;uppercase</li>
+<li><code>dgg</code> - delete lines from cursor to beginning of&nbsp;buffer</li>
+<li><code>dG</code> - delete lines from cursor to end of&nbsp;buffer</li>
+<li><code>3d_</code> - delete three&nbsp;lines</li>
+<li><code>c$</code> - change until end of&nbsp;line</li>
+<li><code>y_</code> = <code>yy</code> = <code>Y</code> - yank the&nbsp;line</li>
+<li><code>c_</code> = <code>cc</code> = <code>C</code> - change the&nbsp;line</li>
+<li><code>gUap</code> - make paragraph&nbsp;uppercase</li>
+<li><code>gqap</code> - format paragraph text to <code>textwidth</code> line&nbsp;length</li>
+<li><code>dit</code> - delete text between tags <code>&lt;tag&gt;&lt;/tag&gt;</code></li>
+<li><code>dat</code> - delete tag&nbsp;block</li>
+<li><code>yi"</code> - yank text in <code>"..."</code> block</li>
+<li><code>yi&lt;</code> - yank text in <code>&lt;...&gt;</code> block</li>
+<li><code>yiB</code> - yank text in <code>{...}</code> block</li>
+<li><code>yaB</code> - yank whole <code>{...}</code> block</li>
+</ul>
+<h2>Operators on&nbsp;motions</h2>
+<p>A motion can be applied after an operator to apply the operator on the text
+that was moved&nbsp;over.</p>
+<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;motion&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>dl</code> = <code>x</code> - delete next&nbsp;character</li>
+<li><code>db</code> - delete backwards to the start of a&nbsp;word</li>
+<li><code>dtx</code> - delete until <code>x</code> character in line&nbsp;(exclusive)</li>
+<li><code>dfx</code> - delete until <code>x</code> character in line&nbsp;(inclusive)</li>
+<li><code>d/foo</code> - delete from cursor to next occurrence of <code>foo</code></li>
+<li><code>d3/foo</code> - delete from cursor until the third occurrence of <code>foo</code></li>
+<li><code>c$</code> = <code>C</code> - change until end of&nbsp;line</li>
+<li><code>d$</code> = <code>D</code> - delete until end of&nbsp;line</li>
+<li><code>d0</code> - delete until beginning of&nbsp;line</li>
+<li><code>d^</code> - delete until first non-blank character in&nbsp;line</li>
+<li><code>c{</code> - change from current line to beginning of&nbsp;paragraph</li>
+<li><code>gU}</code> - make paragraph&nbsp;uppercase</li>
+<li><code>c{</code> - change paragraph (same as <code>cap</code> operator-text&nbsp;object)</li>
+<li><code>&gt;}</code> - indent&nbsp;paragraph</li>
+<li><code>y%</code> - yank the entire <code>{...}</code> block</li>
+<li><code>cgg</code> - change lines from cursor to top of&nbsp;buffer</li>
+<li><code>ggdG</code> - delete contents of&nbsp;buffer</li>
+</ul>
+<h2>Duplicate&nbsp;operators</h2>
+<p>Operators applied twice affect the entire line, a synonym for <code>&lt;operator&gt;_</code>,</p>
+<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;operator&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>dd</code> = <code>d_</code> - delete&nbsp;line</li>
+<li><code>cc</code> = <code>c_</code> - change&nbsp;line</li>
+<li><code>yy</code> = <code>y_</code> - yank&nbsp;line</li>
+<li><code>&gt;&gt;</code> = <code>&gt;_</code> = <code>&gt;l</code> - indent&nbsp;line</li>
+<li><code>&lt;&lt;</code> = <code>&lt;_</code> = <code>&gt;l</code> - unindent&nbsp;line</li>
+</ul>
+<p>Note: duplication does not apply to <code>~</code> or two-character&nbsp;operators.</p>
+<h2>Aliases</h2>
+<p>Some commonly-used commands have&nbsp;aliases.</p>
+<ul>
+<li><code>x</code> = <code>dl</code> - delete next&nbsp;character</li>
+<li><code>C</code> = <code>c$</code> - change until the end of the&nbsp;line</li>
+<li><code>D</code> = <code>d$</code> - delete until the end of the&nbsp;line</li>
+<li><code>Y</code> = <code>yy</code> - yank the&nbsp;line</li>
+<li><code>S</code> = <code>cc</code> - change the&nbsp;line</li>
+<li><code>A</code> = <code>$a</code> - append text to end of the&nbsp;line</li>
+<li><code>s</code> = <code>cl</code> - substitute character (delete and&nbsp;insert)</li>
+<li><code>S</code> = <code>cc</code> - substitute&nbsp;line</li>
+</ul>
+<h2>Filtering</h2>
+<p>Text lines can be filtered through an external program (see <code>:help filter</code>).</p>
+<div class="codehilite"><pre><span></span>command := ! &lt;motion&gt; &lt;filter&gt;
+</pre></div>
+
+
+<p>Examples, using some basic utilities found on Unix&nbsp;platforms:</p>
+<ul>
+<li><code>!8jsort</code> - sort the next 8&nbsp;lines</li>
+<li><code>!apsort</code> - sort lines in&nbsp;paragraph</li>
+<li><code>!apwc -l</code> - replace paragraph with word&nbsp;count</li>
+<li><code>!apfmt -s</code> - collapse whitespace in paragraph into single&nbsp;spaces</li>
+<li><code>!apfmt -c</code> - centre lines in&nbsp;paragraph</li>
+<li><code>!i(grep foo</code> - remove all lines in <code>(...)</code> block that don&#8217;t contain <code>foo</code>
+  (similar to the Ex command <code>:%v/foo/d</code>)</li>
+<li><code>gg!Gsort</code> - sort all lines in&nbsp;buffer</li>
+<li><code>gg!Guniq -c</code> - remove all duplicate lines in buffer and prefix remaining with duplicate&nbsp;counts</li>
+</ul>
+<h2>Visual&nbsp;selection</h2>
+<p>Visual selection, character-wise <code>v</code>, line-wise <code>V</code> or block-wise <code>Ctrl+v</code> (all
+referred to below by <code>{visual}</code>, see <code>:help visual-start</code>), followed by a
+motion or text object can be used to specify a character range. An operator can
+then be used to transform the text. Note the operators <code>gu</code>, <code>gU</code> and <code>g@</code>
+can&#8217;t be used in visual mode and text objects in visual mode, however, there
+are additional ones that can (see <code>:help visual-operators</code>). A visual block is
+created by entering a visual mode, then providing a motion or text object to
+set the selection, or alternatively by any sequence of movement commands
+(referred to by <code>{move-around}</code>).</p>
+<div class="codehilite"><pre><span></span>visual-block := {visual} {move-around}
+              | {visual} &lt;motion&gt;
+              | {visual} &lt;text-object&gt;
+command := &lt;visual-block&gt; &lt;operator&gt;
+         | &lt;visual-block&gt; &lt;visual-operator&gt;
+         | &lt;visual-block&gt; ! &lt;filter&gt;
+</pre></div>
+
+
+<p>Examples:</p>
+<ul>
+<li><code>vtxd</code> = <code>dtx</code> - delete until <code>x</code></li>
+<li><code>vt.rx</code> - replace all characters with <code>x</code> until <code>.</code></li>
+<li><code>v3as~</code> - make next three sentences&nbsp;uppercase</li>
+<li><code>vapU</code> - make paragraph&nbsp;uppercase</li>
+<li><code>vapd</code> - delete&nbsp;paragraph</li>
+<li><code>{Ctrl+v}{move-around}sfoo{Esc}</code> - replace each line of blockwise selection with <code>foo</code></li>
+<li><code>{Ctrl+v}{move-around}Ifoo{Esc}</code> - prepend <code>foo</code> to each line of blockwise&nbsp;selection</li>
+<li><code>{Ctrl+v}{move-around}Afoo{Esc}</code> - append <code>foo</code> to each line of blockwise&nbsp;selection</li>
+<li><code>vap!sort</code> - sort the lines of the current&nbsp;paragraph</li>
+<li><code>vap!fmt</code> - use the <code>fmt</code> command-line tool to format selection into
+  lines of 75 characters (similar to the <code>gqap</code> command)</li>
+<li><code>ggvG!indent</code> - use the <code>indent</code> command-line tool to apply automatic
+  indentation all lines of a C-code&nbsp;buffer</li>
+<li><code>{visual}J</code> - join the highlighted lines on the current&nbsp;line</li>
+<li><code>{visual}gJ</code> - join the highlighted lines on the current line (removing&nbsp;whitespace)</li>
+</ul>
+<h2>Other command&nbsp;combinations</h2>
+<p>Beyond the above rules, there are further command keys and more restricted
+combination with motions, operators and text&nbsp;objects.</p>
+<p>The <code>.</code> command repeats the last change that was&nbsp;made.</p>
+<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] .
+</pre></div>
+
+
+<ul>
+<li><code>db.</code> - delete the previous two&nbsp;words</li>
+<li><code>db4.</code> - delete the previous five&nbsp;words</li>
+<li><code>{insert text...}</code> then <code>/{pattern}.</code> - insert text again before next text matching <code>{pattern}</code></li>
+</ul>
+<p>The <code>gn</code> and <code>gN</code> motions can be used with operators to move between matching
+search&nbsp;patterns.</p>
+<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; gn
+         | [&lt;count&gt;] &lt;operator&gt; gN
+</pre></div>
+
+
+<ul>
+<li><code>cgn</code> - change the next search&nbsp;match</li>
+<li><code>3cgn</code> - change the third search&nbsp;match</li>
+<li><code>cgN</code> - change the previous search&nbsp;match</li>
+</ul>
+<p>Here are some other interesting and potentially useful commands that I&#8217;ve found
+in the Vim&nbsp;help:</p>
+<ul>
+<li><code>gf</code> - goto file (when cursor is on a valid filesystem&nbsp;path)</li>
+<li><code>gF</code> - goto file and line number (line number following&nbsp;path)</li>
+<li><code>J</code> - Join the current line with the next one (with space in&nbsp;between)</li>
+<li><code>gJ</code> - Join the current line with the next one (without space in&nbsp;between)</li>
+<li><code>3J</code> - join the next three lines on the current line (removing&nbsp;indent)</li>
+<li><code>3gJ</code> - join the next three lines on the current&nbsp;line</li>
+<li><code>gv</code> - reselect previous visual&nbsp;area</li>
+<li><code>g~~</code> = <code>g~g~</code> - switch case of&nbsp;line</li>
+<li><code>gUU</code> = <code>gUgU</code> - make line&nbsp;uppercase</li>
+<li><code>guu</code> = <code>gugu</code> - make line&nbsp;lowercase</li>
+<li><code>r{char}</code> - replace character under cursor with <code>{char}</code></li>
+<li><code>10r{char}</code> - replace the next 10 characters with <code>{char}</code></li>
+</ul>
+<hr />
+<h2>Summary of&nbsp;rules</h2>
+<div class="container">
+<div class="row">
+<div class="col-sm">
+  <h2>Motions</h2>
+  <p><code>&lt;motion-keys&gt;</code></p>
+  <p>References: <code>:help motion</code>
+    <code>:help various-motions</code></p>
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>l</code>,<code>h</code>,<code>j</code>,<code>k</code></td>
+<td>right, left, down, up</td>
+</tr>
+<tr>
+<td><code>w</code> / <code>W</code></td>
+<td>start of next word / start of next <span class="caps">WORD</span></td>
+</tr>
+<tr>
+<td><code>b</code> / <code>B</code></td>
+<td>start of pevious word / start of previous <span class="caps">WORD</span></td>
+</tr>
+<tr>
+<td><code>e</code> / <code>E</code></td>
+<td>end of next word / end of next <span class="caps">WORD</span></td>
+</tr>
+<tr>
+<td><code>0</code> / <code>$</code></td>
+<td>start / end of line</td>
+</tr>
+<tr>
+<td><code>^</code> / <code>g_</code></td>
+<td>first / last non-blank character in line</td>
+</tr>
+<tr>
+<td><code>{</code> / <code>}</code></td>
+<td>start / end of paragraph</td>
+</tr>
+<tr>
+<td><code>t{char}</code></td>
+<td>till - move to next character (inclusive)</td>
+</tr>
+<tr>
+<td><code>f{char}</code></td>
+<td>find - move to next character (exclusive)</td>
+</tr>
+<tr>
+<td><code>T{char}</code></td>
+<td>till - move to previous character (inclusive)</td>
+</tr>
+<tr>
+<td><code>F{char}</code></td>
+<td>find - move to previous character (exclusive)</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>move to matching character (default pairs: <code>()</code>, <code>{}</code>, <code>[]</code>)</td>
+</tr>
+<tr>
+<td><code>[(</code>, <code>[)</code></td>
+<td>move to matching parenthesis</td>
+</tr>
+<tr>
+<td><code>[{</code>, <code>[}</code></td>
+<td>move to matching curly brace</td>
+</tr>
+<tr>
+<td><code>/{pattern}</code></td>
+<td>search forward (must be followed by <code>{CR}</code>)</td>
+</tr>
+<tr>
+<td><code>?{pattern}</code></td>
+<td>search backwards (must be followed by <code>{CR}</code>)</td>
+</tr>
+<tr>
+<td><code>gg</code> / <code>G</code></td>
+<td>move to first / last line in buffer</td>
+</tr>
+</tbody>
+</table></div>
+<div class="col-sm">
+  <h2>Operators</h2>
+  <p><code>&lt;operators&gt;</code></p>
+  <p>Reference: <code>:help operator</code></p>
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Key</th>
+<th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>c</code></td>
+<td>change</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>delete</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>yank</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>swap case (or <code>g~</code>)</td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td>shift right (always linewise)</td>
+</tr>
+<tr>
+<td><code>&lt;</code></td>
+<td>shift left (always linewise)</td>
+</tr>
+<tr>
+<td><code>gu</code></td>
+<td>make lowercase</td>
+</tr>
+<tr>
+<td><code>gU</code></td>
+<td>make uppercase</td>
+</tr>
+<tr>
+<td><code>gq</code></td>
+<td>format text</td>
+</tr>
+<tr>
+<td><code>g@</code></td>
+<td>apply function (set by <code>operatorfunc</code>)</td>
+</tr>
+</tbody>
+</table>  <h2>Visual&nbsp;operators</h2>
+  <p><code>&lt;visual-operators&gt;</code></p>
+  <p>References: <code>:help visual-operators</code></p>
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Key</th>
+<th>Operator</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r{char}</code></td>
+<td>replace every character in selection with {char}</td>
+</tr>
+<tr>
+<td><code>s</code>, <code>c</code></td>
+<td>substitute (inserted text replicated on each line for blockwise)</td>
+</tr>
+<tr>
+<td><code>J</code> / <code>gJ</code></td>
+<td>join / join (remove whitespace)</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>put (replace selection with contents of register)</td>
+</tr>
+<tr>
+<td><code>U</code></td>
+<td>make uppercase</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>make lowercase</td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>insert (prepend, only on blockwise selection)</td>
+</tr>
+<tr>
+<td><code>A</code></td>
+<td>insert (append, only on blockwise selection)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="row">
+<div class="col-sm">
+  <h2>Text&nbsp;objects</h2>
+  <p><code>&lt;text-object-keys&gt;</code></p>
+  <p>References: <code>:help text-objects</code>, <code>:help objects</code></p>
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Key</th>
+<th>Text object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>w</code></td>
+<td>word (delimited by non-keyword characters, see <code>:help iskeyword</code>)</td>
+</tr>
+<tr>
+<td><code>W</code></td>
+<td><span class="caps">WORD</span> (delimited by whitespace, includes empy line)</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>sentence</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>paragraph</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>tag</td>
+</tr>
+<tr>
+<td><code>[</code>, <code>]</code></td>
+<td>text block between square brackets</td>
+</tr>
+<tr>
+<td><code>{</code>, <code>}</code></td>
+<td>text block between curly braces</td>
+</tr>
+<tr>
+<td><code>(</code>, <code>)</code></td>
+<td>text block between parethesises</td>
+</tr>
+<tr>
+<td><code>'</code>, <code>'</code></td>
+<td>text block between single quotes</td>
+</tr>
+<tr>
+<td><code>"</code>, <code>"</code></td>
+<td>text block between double quotes</td>
+</tr>
+<tr>
+<td><code>&lt;</code>, <code>&gt;</code></td>
+<td>text block between angle braces</td>
+</tr>
+<tr>
+<td><code>`</code>, <code>`</code></td>
+<td>text block between back ticks</td>
+</tr>
+<tr>
+<td><code>b</code></td>
+<td>text block between <code>(</code> and <code>)</code></td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>text block between <code>{</code> and <code>}</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="col-sm">
+  <h2>Modifiers</h2>
+  <p><code>&lt;modifiers&gt;</code></p>
+  <p>References: <code>:help text-objects</code></p>
+<table class="table table-striped table-sm">
+<thead>
+<tr>
+<th>Key</th>
+<th>Movement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a</code></td>
+<td>a or around</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>inner</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+
+<div class="codehilite"><pre><span></span>count := {digits}
+
+text-object := &lt;text-object-keys&gt;
+             | &lt;modifier&gt; &lt;text-object-keys&gt;
+             | &lt;count&gt; &lt;modifier&gt; &lt;text-object-keys&gt;
+
+motion := [&lt;count&gt;] &lt;motion-keys&gt;
+
+visual-block := {visual} {move-around}
+              | {visual} &lt;motion&gt;
+              | {visual} &lt;text-object&gt;
+
+command := &lt;motion&gt;
+         | [&lt;count&gt;] &lt;operator&gt; &lt;text-object&gt;
+         | [&lt;count&gt;] &lt;operator&gt; &lt;motion&gt;
+         | [&lt;count&gt;] &lt;operator&gt; &lt;operator&gt;
+         | ! &lt;motion&gt; &lt;filter&gt;
+         | &lt;visual-block&gt; &lt;operator&gt;
+         | &lt;visual-block&gt; &lt;visual-operator&gt;
+         | &lt;visual-block&gt; ! &lt;filter&gt;
+         | [&lt;count&gt;] .
+         | [&lt;count&gt;] &lt;operator&gt; gn
+         | [&lt;count&gt;] &lt;operator&gt; gN
+</pre></div>
+
+
+<hr />
+<h2>Some random&nbsp;commands</h2>
+<p>Just for fun, here are some random commands using the above rules to show the
+variety of actions you can perform. Some might not make sense or not work, but
+they might give you some&nbsp;ideas.</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"><h3>Motions</h3></div>
+    <div class="col-sm-3"><h3>Text&nbsp;objects</h3></div>
+    <div class="col-sm-3"><h3>Operators on text&nbsp;objects</h3></div>
+    <div class="col-sm-3"><h3>Operators on&nbsp;motions</h3></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="row">
+    <div class="col-4"><code>F{ch}</code><br><code>/{pat}</code><br><code>[}</code><br><code>t{ch}</code><br><code>9B</code><br><code>3/{pat}</code><br><code>b</code><br><code>T{ch}</code><br><code>{</code><br><code>j</code><br><code>w</code><br><code>[}</code><br><code>l</code><br><code>g_</code><br><code>5[(</code><br><code>%</code><br><code>{</code><br><code>0F{ch}</code><br><code>w</code><br><code>T{ch}</code><br><code>[}</code><br><code>10</code><br><code>k</code><br><code>[}</code><br><code>%</code><br><code>1G</code><br><code>[{</code><br><code>5k</code><br><code>0</code><br><code>/{pat}</code><br><code>1/{pat}</code><br><code>2l</code></div>
+    <div class="col-4"><code>?{pat}</code><br><code>g_</code><br><code>1h</code><br><code>h</code><br><code>t{ch}</code><br><code>4F{ch}</code><br><code>0$</code><br><code>t{ch}</code><br><code>$</code><br><code>B</code><br><code>l</code><br><code>g_</code><br><code>^</code><br><code>1{</code><br><code>2?{pat}</code><br><code>G</code><br><code>^</code><br><code>k</code><br><code>1[(</code><br><code>$</code><br><code>w</code><br><code>h</code><br><code>^</code><br><code>/{pat}</code><br><code>gg</code><br><code>w</code><br><code>g_</code><br><code>1e</code><br><code>[)</code><br><code>t{ch}</code><br><code>6/{pat}</code><br><code>t{ch}</code></div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+    <div class="col-4"><code>iw</code><br><code>ab</code><br><code>a}</code><br><code>aw</code><br><code>it</code><br><code>i&lt;</code><br><code>i[</code><br><code>i'</code><br><code>aw</code><br><code>i"</code><br><code>a"</code><br><code>ip</code><br><code>iB</code><br><code>i[</code><br><code>a]</code><br><code>a&gt;</code><br><code>iW</code><br><code>i'</code><br><code>a{</code><br><code>i'</code><br><code>a[</code><br><code>a&gt;</code><br><code>a"</code><br><code>i'</code><br><code>i{</code><br><code>i)</code><br><code>i)</code><br><code>it</code><br><code>ab</code><br><code>i&gt;</code><br><code>iW</code><br><code>a'</code></div>
+    <div class="col-4"><code>at</code><br><code>i{</code><br><code>is</code><br><code>iW</code><br><code>aW</code><br><code>a&gt;</code><br><code>i[</code><br><code>a{</code><br><code>i'</code><br><code>aB</code><br><code>ip</code><br><code>a}</code><br><code>a]</code><br><code>i"</code><br><code>a&lt;</code><br><code>iW</code><br><code>ib</code><br><code>a(</code><br><code>iw</code><br><code>i"</code><br><code>a{</code><br><code>a&lt;</code><br><code>at</code><br><code>a{</code><br><code>ip</code><br><code>a}</code><br><code>a"</code><br><code>as</code><br><code>i)</code><br><code>a{</code><br><code>ap</code><br><code>a&lt;</code></div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+    <div class="col-4"><code>&lt;aW</code><br><code>5gua{</code><br><code>&gt;4aW</code><br><code>&lt;at</code><br><code>8&gt;iW</code><br><code>gUis</code><br><code>&gt;aW</code><br><code>3g@aw</code><br><code>g@i)</code><br><code>&lt;0ap</code><br><code>~a(</code><br><code>y5a]</code><br><code>&lt;0i)</code><br><code>&gt;3ip</code><br><code>g@a}</code><br><code>da"</code><br><code>gUi[</code><br><code>gq1i{</code><br><code>&lt;i]</code><br><code>2g~ib</code><br><code>g@i]</code><br><code>gua`</code><br><code>gUi(</code><br><code>~8a}</code><br><code>&lt;is</code><br><code>d7a[</code><br><code>g~i(</code><br><code>d5aw</code><br><code>g~a}</code><br><code>4diW</code><br><code>gqiw</code><br><code>&lt;4i{</code></div>
+    <div class="col-4"><code>&lt;is</code><br><code>g~iW</code><br><code>daW</code><br><code>&lt;aB</code><br><code>~a)</code><br><code>c5a&lt;</code><br><code>gUaB</code><br><code>ca}</code><br><code>9g@as</code><br><code>gu0a(</code><br><code>~2a"</code><br><code>ya&lt;</code><br><code>gUa'</code><br><code>~9a`</code><br><code>y2is</code><br><code>gU2i)</code><br><code>c4i'</code><br><code>7ya"</code><br><code>guaB</code><br><code>0&lt;i'</code><br><code>c9i'</code><br><code>guib</code><br><code>g@a`</code><br><code>9g@a&gt;</code><br><code>6c9ip</code><br><code>2g@2ab</code><br><code>yi[</code><br><code>1c3iW</code><br><code>c3ap</code><br><code>8gUi`</code><br><code>gqit</code><br><code>g@i[</code></div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+    <div class="col-4"><code>0d{</code><br><code>9gu[)</code><br><code>2yT{ch}</code><br><code>8g~?{pat}</code><br><code>2ce</code><br><code>0gUb</code><br><code>8g~j</code><br><code>2c[(</code><br><code>3&gt;}</code><br><code>3&gt;gg</code><br><code>6&gt;G</code><br><code>6~j</code><br><code>0d[{</code><br><code>8gU{</code><br><code>4c[}</code><br><code>4~h</code><br><code>7&lt;l</code><br><code>7g@^</code><br><code>6~/{pat}</code><br><code>7yh</code><br><code>3&lt;}</code><br><code>1&lt;F{ch}</code><br><code>4cw</code><br><code>1gu[)</code><br><code>0cB</code><br><code>7g~[{</code><br><code>3g~[{</code><br><code>7yk</code><br><code>3~k</code><br><code>5g~[)</code><br><code>5g@G</code><br><code>8yt{ch}</code></div>
+    <div class="col-4"><code>0g@e</code><br><code>8&gt;0</code><br><code>6g~[(</code><br><code>5dB</code><br><code>9&gt;T{ch}</code><br><code>0gU{</code><br><code>3&lt;w</code><br><code>1y?{pat}</code><br><code>4g@[{</code><br><code>5~b</code><br><code>2&lt;^</code><br><code>4&gt;w</code><br><code>4y{</code><br><code>1&lt;e</code><br><code>8c[}</code><br><code>6c{</code><br><code>2g~/{pat}</code><br><code>3cj</code><br><code>8cT{ch}</code><br><code>3&gt;%</code><br><code>0&lt;F{ch}</code><br><code>4gqB</code><br><code>3gqT{ch}</code><br><code>3dk</code><br><code>5&gt;[)</code><br><code>2gqh</code><br><code>8ce</code><br><code>7~gg</code><br><code>3cl</code><br><code>4c^</code><br><code>4c%</code><br><code>1gq$</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p><a name="references"></a></p>
+<h2>References/further&nbsp;reading</h2>
+<ul>
+<li><a href="https://danielmiessler.com/study/vim/">A vim Tutorial and&nbsp;Primer</a></li>
+<li><a href="http://zzapper.co.uk/vimtips.html">Best of Vim&nbsp;Tips</a></li>
+<li><a href="https://yanpritzker.com/learn-to-speak-vim-verbs-nouns-and-modifiers-d7bfed1f6b2d">Learn to speak vim — verbs, nouns, and&nbsp;modifiers!</a></li>
+<li><a href="http://ismail.badawi.io/blog/2014/04/23/the-compositional-nature-of-vim/">The compositional nature of&nbsp;Vim</a></li>
+<li><a href="http://rc3.org/2012/05/12/the-grammar-of-vim/">The grammar of&nbsp;Vim</a></li>
+<li><a href="http://michael.peopleofhonoronly.com/vim/">Vim Cheat Sheet for&nbsp;Programmers</a></li>
+<li><a href="https://vim.rtorr.com/">Vim Cheat&nbsp;Sheet</a></li>
+<li><a href="https://www.fprintf.net/vimCheatSheet.html">Vim Commands Cheat&nbsp;Sheet</a></li>
+<li><a href="https://takac.github.io/2013/01/30/vim-grammar/">Vim&nbsp;Grammar</a></li>
+<li><a href="https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guidehttps://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide//https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/">Vim Text Objects: The Definitive&nbsp;Guide</a></li>
+<li><a href="https://www.vim.org/docs.php">Vim&nbsp;documentation</a></li>
+<li><a href="http://zmievski.org/files/talks/codeworks-2009/vim-for-php-programmers.pdf">Vim for <span class="caps">PHP</span>&nbsp;programmers</a></li>
+<li><a href="https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118">Your problem with Vim is that you don&#8217;t grok&nbsp;vi</a></li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery.min.js"></script>
+  <script src="./theme/js/popper.min.js"></script>
+  <script src="./theme/js/bootstrap.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

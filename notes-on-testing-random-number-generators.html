@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Notes on testing random number generators</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto text-uppercase">
+          <li class="nav-item ">
+            <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/about.html">about</a>
+          </li>
+			</ul>
+		  <a class="navbar-brand" href="/index.html">James W. Hanlon</a>
+		</div>
+	</nav>
+  <div class="container">
+  <h1>
+    Notes on testing random number&nbsp;generators
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2017-04-05T00:00:00+02:00">
+      05 Apr 2017
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/PRNGs.html">PRNGs</a></span>
+  </div>
+  <div class="article-body">
+    <p>Recently I have been doing some work testing the quality of <a href="https://en.wikipedia.org/wiki/Random_number_generator">random
+number generators</a>
+(RNGs), so I thought I would record things that should be useful as a
+reference. I won&#8217;t provide too much background here since there are many good
+existing references to the theory and practice of RNGs, the ones of which I
+have encountered I have linked&nbsp;to.</p>
+<h1>Properties</h1>
+<p>More specifically, a <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudorandom number
+generator</a> (<span class="caps">PRNG</span>)
+is a <strong>repeatable</strong> process for producing numbers that have good statistical
+random properties. A true <span class="caps">RNG</span>, in contrast, produces statistically random
+numbers in a non-repeatable way, for example in electronics by using a physical
+source of entropy. True RNGs have an obvious importance in cryptographic&nbsp;applications.</p>
+<p>A pseudorandom sequence can be repeated by starting with a particular <strong>seed</strong>
+number.  The <strong>period</strong> of a <span class="caps">PRNG</span> is the longest unique sequence of numbers
+generated from any seed. The period is bounded by the size of the internal
+state of a generator ($n$ bits of state can encode $2^n$ numbers), however a
+generator may produce shorter repeated sequences, called <strong>cycles</strong>.</p>
+<p>The properties of a &#8216;good&#8217; <span class="caps">PRNG</span>&nbsp;are:</p>
+<ol>
+<li>
+<p>That the length of its period exceeds the number of values that taken from
+   the generator by a program.  <a href="http://xoroshiro.di.unimi.it/#remarks">As a rule of
+   thumb</a>, the period should be at least
+   the square of the numbers&nbsp;used.</p>
+</li>
+<li>
+<p>For independent uses of a generator concurrently, that the probability is low
+   that any two sequences starting at different seeds&nbsp;overlap.</p>
+</li>
+<li>
+<p>That successive values are uniformly distributed. In the literature this
+   property is also described as
+   <a href="https://en.wikipedia.org/wiki/Equidistributed_sequence">equidistribution</a>,
+   which can be stated as the probability of finding a number in an interval of
+   a sequence is proportional to the length of the&nbsp;interval.</p>
+</li>
+<li>
+<p>That successive values are&nbsp;uncorrelated.</p>
+</li>
+<li>
+<p>That each value can be computed&nbsp;efficiently.</p>
+</li>
+</ol>
+<p>The first two properties can typically be determined analytically and it is
+true that PRNGs are designed in order that they can be.  Uniformity can be
+tested by sampling a large number of values and using statistical measures to
+analyse the difference from the expected distribution.  The fifth
+characteristic is straightforward to determine, whether the generator is
+implemented in hardware or software.  Much harder to determine, however, is the
+third property. If it were possible to prove whether a generator is free of
+correlation, no <span class="caps">PRNG</span> would be considered random since by definition there
+exists a well-defined relationship between successive&nbsp;numbers.</p>
+<h1>Empirical&nbsp;testing</h1>
+<p>Conventional approaches to testing RNGs subject them to a collection of tests,
+exploring different aspects of the generator&#8217;s statistics. They cannot be
+exhaustive, but are shown to be effective by their performance in detecting
+correlations in existing standard RNGs. This pragmatism is summed up well in
+<a href="http://portal.acm.org/citation.cfm?doid=1268776.1268777">this paper</a> with the
+comment: &#8220;the different between good and bad RNGs, in a nutshell, is that the
+bad ones fail very simple tests whereas the good ones fail only very
+complicated tests that are hard to figure out or impractical to&nbsp;run.&#8221;</p>
+<p>There are two popular empirical test&nbsp;suites:</p>
+<ul>
+<li>
+<p><a href="http://simul.iro.umontreal.ca/testu01/tu01.html">TestU01</a>, a comprehensive C
+  library, containing example PRNGs, utilities and a collection of statistical
+  tests drawn from the academic literature of RNGs. The statistical tests can
+  be run individually, or as part of test batteries, which have various run
+  times and levels of&nbsp;stringency.</p>
+</li>
+<li>
+<p><a href="http://pracrand.sourceforge.net/">PractRand</a>, which provides similar
+  functionality to TestU01 but implemented in C++, with more modern features
+  such as multithreading, flexible interfaces and support for long sequence
+  lengths (over 100 terabytes). <a href="http://pracrand.sourceforge.net/PractRand.txt">According to the
+  author</a>, it&#8217;s tests are not
+  drawn from the literature (presumably designed by the author instead) and are
+  therefore a good complement to testing with TestU01 or similar. It also
+  requires more random bits than TestU01 and therefore takes longer to&nbsp;run.</p>
+</li>
+</ul>
+<p>Also worth investigating are the
+<a href="https://www.phy.duke.edu/~rgb/General/dieharder.php">Dieharder</a> test suite (an
+updated version of the original
+<a href="https://en.wikipedia.org/wiki/Diehard_tests">Diehard</a>) and the
+<a href="http://cristianopi.altervista.org/RaBiGeTe/">RaBiGeTe</a> test suite. There is
+also some interesting discussion from 2010 between the authors of PractRand and
+RaBiGete <a href="http://mathforum.org/kb/message.jspa?messageID=7152033">here</a>.</p>
+<h1>Testing with&nbsp;TestU01</h1>
+<p>TestU01 provides an interface to test external generators written in C. The
+interface requires a method, <code>GetU01</code>, to generate numbers in the unit interval
+$[0, 1)$ as a <code>double</code> and a method, <code>GetBits</code>, to return 32 random bits as an
+<code>unsigned int</code>. Some tests will use random bits and some will use random floats.
+Just one function can be provided, with the other defined by TestU01 with
+the relationship&nbsp;$\texttt{GetU01}=\texttt{GetBits}/2^{32}$.</p>
+<p>Converting 32 random bits to a double-precision float is lossless in that it
+has be represented exactly in the 52 bits of mantissa. However, the conversion
+biases the higher bits since the lowest bits will be most affected by numerical
+errors. For this reason, it is considered good practice to also test the
+reversed output of generator, to expose the lowest bits. To test generators
+with a larger output, say 64 bits, it is important that all the bits are
+exposed to the tests. One way to do this is to alternately use the high and low
+bits of a 64-bit value each call to <code>GetBits</code> or <code>GetU01</code>. A further reason to
+run the reverse of a generator is that the Crush test battery are defined to
+ignore the bottom-most bit of the generator&#8217;s output, and most tests also
+ignore the second bit (see the <a href="http://simul.iro.umontreal.ca/testu01/guideshorttestu01.pdf">TestU01
+documentation</a>).</p>
+<p>In his testing of the <code>xorshift</code> family of generators, <a href="http://vigna.di.unimi.it/">Sebastiano
+Vigna</a> takes the following approach to measuring
+quality with TestU01: for a particular generator, run it with 100 different
+seeds, which are spaced at regular intervals in the state space, i.e.  for a
+generator with $n$ bits of state, choose seeds at $1 + i\lfloor 2^n/100\rfloor$
+for $0 \leq i &lt; 100$. The quality of a generator is then measured by the total
+number of failures over all seeds, with fewer failures meaning higher
+quality. If a generator has 100 or more failures, the failure is called
+<em>systematic</em> and the generator is disregarded. Quality is measured with the
+BigCrush battery, but since it takes many hours to run (using approximately
+$2^{38}$ random values in 106 tests), potential generators can be assessed by
+running the smaller test batteries SmallCrush (10 tests) and Crush (96 tests),
+continuing based on the number of&nbsp;failures.</p>
+<p>Through my own experiments, I found that the reverse of a generator won&#8217;t
+always catch weak lower bits.  <code>xoroshiro128+</code> is currently the <a href="http://xoroshiro.di.unimi.it/#shootout">highest
+quality and fastest known generator</a>,
+as measured by the above process, with 31 failures and 27 failures when
+reversed, but it has a known weak bit 0 that follows a <a href="https://en.wikipedia.org/wiki/Linearity#Boolean_functions">linear
+recurrence</a> that is
+not detected by BigCrush, even when reversed.  However, the weak bit is
+detectable with the matrix rank test with parameters $N=1$, $n=80$, $r=15$,
+$s=15$, $L=k=5000$, or more simply by swapping the high and low 16-bit portions
+of each 32-bit word to move the bottom bit into the middle. I didn&#8217;t discover
+anything new about <code>xoroshiro128+</code> here, but what this does highlight is that
+comprehensive test sets like TestU01 are by no means exhaustive, and it
+therefore worth testing some of their assumptions, particularly in this case if
+you are interested in the quality of bit&nbsp;0.</p>
+<p>Incidentally, TestU01 includes a battery of nine tests called Alphabit, which
+is allows specific bits or ranges of bits from a generator to be tested. It was
+not stringent enough however to detect the correlation of <code>xoroshirt128+</code><span class="quo">&#8216;</span>s bit&nbsp;0.</p>
+<h1>An&nbsp;example</h1>
+<p>I&#8217;ve put together a simple example, <a href="https://github.com/jameshanlon/prng-testing">available on
+Github</a>, of using TestU01 to
+assess the quality of a <span class="caps">PRNG</span>, which replicates Vigna&#8217;s testing of
+<code>xoroshiro128+</code>.  The code includes a C program to test <code>xoroshiro128+</code> with
+the Crush batteries and Python scripts to run the test over different seeds and
+to summarise the output of&nbsp;TestU01.</p>
+<h1>Further reading and&nbsp;links</h1>
+<ul>
+<li><a href="http://xoroshiro.di.unimi.it/">The <span class="caps">PRNG</span> shootout</a>.</li>
+<li>Sebastiano Vigna. An experimental exploration of Marsaglia&#8217;s xorshift
+  generators, scrambled. <span class="caps">ACM</span> Trans. Math. Software, 42(4),&nbsp;2016.</li>
+<li>For a comprehensive general introduction to PRNGs and testing them, see &#8216;The
+  art of computer systems performance analysis&#8217; by Raj Jain (1991) Chapters 26
+  and&nbsp;27.</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery.min.js"></script>
+  <script src="./theme/js/popper.min.js"></script>
+  <script src="./theme/js/bootstrap.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

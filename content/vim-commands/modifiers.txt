@@ -1,3 +1,0 @@
-Key            | Movement
-`a`            | a or around
-`i`            | inner

@@ -1,7 +1,0 @@
-*.pyc
-*.pid
-output
-cache
-env
-.DS_Store
-pelican-plugins

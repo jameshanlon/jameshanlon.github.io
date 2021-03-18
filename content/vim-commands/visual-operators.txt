@@ -1,9 +1,0 @@
-Key            | Operator
-`r{char}`      | replace every character in selection with {char}
-`s`, `c`       | substitute (inserted text replicated on each line for blockwise)
-`J` / `gJ`     | join / join (remove whitespace)
-`p`            | put (replace selection with contents of register)
-`U`            | make uppercase
-`u`            | make lowercase
-`I`            | insert (prepend, only on blockwise selection)
-`A`            | insert (append, only on blockwise selection)

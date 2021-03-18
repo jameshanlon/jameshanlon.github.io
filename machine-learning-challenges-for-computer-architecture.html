@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Machine learning challenges for computer architecture</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarsExampleDefault"
+						aria-controls="navbarsExampleDefault"
+						aria-expanded="false"
+						aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav mr-auto text-uppercase">
+          <li class="nav-item ">
+            <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/about.html">about</a>
+          </li>
+			</ul>
+		  <a class="navbar-brand" href="/index.html">James W. Hanlon</a>
+		</div>
+	</nav>
+  <div class="container">
+  <h1>
+    Machine learning challenges for computer&nbsp;architecture
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2016-11-04T00:00:00+01:00">
+      04 Nov 2016
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/computer-architecture.html">computer-architecture</a></span>
+      <span class="article-tag small"><a href="/tag/machine-intelligence.html">machine-intelligence</a></span>
+  </div>
+  <div class="article-body">
+    <p>Neural networks have become a hot topic in computing and their development is
+progressing rapidly. They have a long history with some of the first designs
+proposed in the 1940s.  But despite being an active area of research since
+then, it has not been until the last five to ten years that the field has
+started to deliver state-of-the-art results, with deep neural network-based
+algorithms displacing conventional machine-learning and programmed ones in many&nbsp;areas.</p>
+<p>The recent developments in neural networks, since around 2010,  has coincided
+with the availability of commodity high-performance GPUs. These devices provide
+enough memory and compute that networks can be trained with large datasets, in
+the order of hours or days, to perform classification tasks for practical and
+interesting problems such as image and speech recognition. Although GPUs have
+established themselves as the standard way to accelerate neural networks, they
+have done this by transitioning relatively quickly from applications in
+traditional <span class="caps">HPC</span>, but they are already evolving to meet the needs of machine
+learning. In this article I want to discuss some of the challenges that neural
+networks and their development present to GPUs, and indeed more generally to
+the status quo of computer&nbsp;architecture.</p>
+<h2>Compute and&nbsp;memory</h2>
+<p>The fundamental operations of a neural network are floating-point
+multiplications and additions. These are used to combine input data with the
+parameters of the network that control the influence of connections between
+neurons.  Modern networks require considerable resources to store millions of
+parameters and perform billions of operations per&nbsp;input.</p>
+<p><a href="https://en.wikipedia.org/wiki/Artificial_neuron">Neurons</a> in <a href="http://neuralnetworksanddeeplearning.com/chap1.html#the_architecture_of_neural_networks">fully-connected layers</a> take
+weighted sums of their inputs (a multiplication and an accumulation, <span class="caps">MAC</span>, for
+each input) from every neuron in the previous layer. The number of MACs grows
+with the square of the layer size, and the number of layers, so even with
+modest numbers of layers and neurons per layer, the number of MACs can be
+large. In the <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf">AlexNet network</a>, the last three layers are
+fully connected with 4,096, 4,096 and 1,000 neurons respectively, requiring
+58.6 million parameters and, for the <a href="http://neuralnetworksanddeeplearning.com/chap2.html">forward pass</a> to classify
+a single input image with a trained network, the same number of&nbsp;MACs.</p>
+<p>The use of <a href="http://deeplearning.net/tutorial/lenet.html">convolutional layers</a> reduces the number of
+parameters by sharing a small sets between the neurons. The five
+convolutional layers preceding the fully-connected layers in AlexNet contain
+just 2.5 million neurons, but require 655.6 million MACs per input. AlexNet was
+state of the art in 2009 and networks since then have developed with many more
+convolutional layers and a smaller fully connected component, resulting in
+relatively slow growth in the number of parameters but significant increases in
+the number of MACs. A variant of the <a href="https://arxiv.org/abs/1409.1556"><span class="caps">VGG</span> network</a>
+(2014) with 19 layers (three fully connected) has 143.6 million parameters and
+requires a total of 19.6 million MACs in the forward pass. A variant of the
+<a href="https://arxiv.org/abs/1512.03385">ResNet network</a> (2015) with 50 layers (one fully connected) has
+25.5 million parameters and 3.8 billion MACs for the forward pass. More <a href="https://arxiv.org/abs/1603.09382">recent
+work</a> has demonstrated benefits of networks with more than
+1,000&nbsp;layers.</p>
+<p>When a network is being trained, more compute is required by an additional
+backwards pass and and memory requirements increase since intermediate values
+for each parameter must be maintained from the forward&nbsp;pass.</p>
+<p>The challenge for computer architecture here is to deliver the huge number of
+MACs required for training and inference, whilst minimising the movement of
+data between fast local memory and slower main memory, or via a communication
+link.  This will of course require corresponding developments in the
+implementation of neural networks. A <a href="http://jmlr.org/proceedings/papers/v48/diamos16.pdf">recent result</a>
+demonstrated that when data is kept on chip, much better use of <span class="caps">GPU</span> compute
+resource can be made to achieve an order of magnitude improvement in the depth
+of network that could be trained. Another has <a href="https://arxiv.org/pdf/1604.06174v2.pdf">demonstrated</a>
+that compute can be traded for a logarithmic reduction of memory in the number
+of&nbsp;layers.</p>
+<h2>Precision</h2>
+<p>Reducing the precision of arithmetic reduces the cost of memory and compute
+since lower-precision floating-point numbers require less bits of storage and
+require smaller more power-efficient structures in silicon to implement
+arithmetic operations. Recent research has demonstrated that representations
+between 8 and 16 bits can deliver <a href="https://arxiv.org/abs/1412.7024">similar results</a> to
+32-bit precision for inference and training. This has already has an impact on
+architecture: Google has claimed a <a href="http://www.tomshardware.com/news/google-tensor-processing-unit-machine-learning,31834.html">10x increase in efficiency</a> with
+it&#8217;s Tensor Processing Unit (<span class="caps">TPU</span>) using <a href="https://petewarden.com/2016/05/03/how-to-quantize-neural-networks-with-tensorflow/">8-bit precision</a>, and
+Nvidia&#8217;s new Pascal architecture supports <a href="https://blogs.nvidia.com/blog/2015/03/17/pascal/">16-bit floating-point
+arithmetic</a> at twice the rate of single precision, and <a href="https://www.hpcwire.com/2016/09/12/nvidia-aims-gpus-deep-learning-inferencing/">8-bit
+integer arithmetic</a> at four times the rate. Intel have also
+<a href="http://www.anandtech.com/show/10575/intel-announces-knights-mill-a-xeon-phi-for-deep-learning">recently announced</a> a variant of their Xeon Phi processor,
+code named Knights Mill, that will be optimised for deep learning with variable
+precision floating-point&nbsp;arithmetic.</p>
+<h2>Structure</h2>
+<p>There is no single structure for data movement in deep neural networks. The
+simplest networks have connections between adjacent layers, which are evaluated
+in sequence, but many <a href="https://culurciello.github.io/tech/2016/06/04/nets.html">more complex structures have been
+proposed</a>. For example, <a href="https://arxiv.org/abs/1512.03385">residual connections</a>
+provide a pathway between non-adjacent layers, <a href="https://arxiv.org/pdf/1605.07648v1.pdf">fractal
+architectures</a> have self-similar structures at different
+scales and entire neural networks can be <a href="https://arxiv.org/abs/1312.4400">used as basic building
+blocks</a>. There can also by dynamism in the structure;
+<a href="https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf">dropout</a> prevents overfitting by randomly removing connections
+during training to &#8216;thin&#8217; the network, and networks with <a href="https://arxiv.org/abs/1603.09382v1">stochastic
+depth</a> randomly exclude subsets of layers during training
+to make deep networks more&nbsp;shallow.</p>
+<p>These neural-network structures contrast with traditional <span class="caps">HPC</span>-style programs,
+which have long been the focus of parallel computing research and development
+and are characterised by a <a href="http://view.eecs.berkeley.edu/wiki/Dwarfs">single structure and algorithm</a>. The
+challenge here is for computing hardware and the programming models targeting
+it to support complex, highly-connected and potentially dynamic communication&nbsp;structures.</p>
+<h2>Programming</h2>
+<p>There are <a href="https://github.com/josephmisiti/awesome-machine-learning">many languages, frameworks and libraries</a>
+available for creating deep-learning applications and they are having to
+evolve quickly though to keep up with the pace of research. This is a strong
+indication that the means by which we program neural networks need to be
+general enough to facilitate experimentation but also deliver reasonable
+performance so that it is practical to explore different designs and
+hyper&nbsp;parameters.</p>
+<p>However, there is a gulf between the high-level representations of neural
+networks used by researchers and their actual implementation on hardware.  For
+example, Google&#8217;s <a href="https://www.tensorflow.org/">TensorFlow</a> programming framework is written in
+C++ and interfaces with GPUs via an abstraction layer that calls <span class="caps">CUDA</span> library
+routines. On top of this, Google have released a high-level Python wrapper for
+TensorFlow, called <a href="https://research.googleblog.com/2016/08/tf-slim-high-level-library-to-define.html">TensorFlow-Slim</a>.  But despite the
+abstraction and generality of the TensorFlow framework, achieving good
+computational efficiency on GPUs depends on a heavily-optimised high-level deep
+neural network library, such as <a href="https://developer.nvidia.com/cudnn">cuDNN</a> or <a href="https://github.com/NervanaSystems/neon"><span class="caps">NEON</span></a>.
+The problem for all high-level programming approaches is that the performance
+of neural network designs that cannot exploit an underlying optimised library
+directly will degrade significantly. Closing the gap between the methods used
+to build neural networks and their mapping to a machine architecture would
+deliver more performance for a wider range of&nbsp;programs.</p>
+<h2>Deployment and&nbsp;portability</h2>
+<p>Finally, a unique aspect of machine-learning algorithms is the separation
+between the phase in which they are trained and their subsequent deployment for
+inference.  Since training demands more compute and memory resources and is
+typically carried out in a data-centre environment where space, power and, to
+some extent, time are not constraining issues.  A trained neural network can be
+deployed in more constrained environments, such as mobile or robotics, where
+they may be reacting in real time, to a voice user interface or sensor input
+for example, with limited memory and power. They may also continue to learn as
+they are exposed to more&nbsp;data.</p>
+<p>The result of training is a set of parameter values and portability to another
+platform requires the weights to be loaded in an implementation of the same
+neural network. The implementation may differ in the numerical precision it
+uses since trained networks are known to be robust to low-precision parameter
+representations, and doing so takes advantage of the associated memory,
+performance and power benefits. A portable neural network might therefore need
+separate implementations for training and inference, optimised for the memory
+and compute constraints and to be targeted at different machine architectures.
+A standardised specification of neural networks, including trained parameters,
+would further improve portability between&nbsp;platforms.</p>
+<p>There have been some efforts to try to measure aspects of the implementation,
+deployment and performance of deep neural networks. In particular
+<a href="https://github.com/DeepMark/deepmark">Deepmark</a>, which is based on specific networks, and
+<a href="https://github.com/baidu-research/DeepBench">Deepbench</a>, which takes a simpler approach by just looking at
+important&nbsp;kernels.</p>
+<h2>In&nbsp;summary</h2>
+<p>Modern deep neural networks are now state-of-the-art in many application areas
+of computing but with their unique characteristics, they pose a significant
+challenge to conventional computer architecture. This challenge however is also
+an opportunity to build new machines and programming languages that break away
+from the status quo of sequential shared-memory von Neumann&nbsp;machines.</p>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery.min.js"></script>
+  <script src="./theme/js/popper.min.js"></script>
+  <script src="./theme/js/bootstrap.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
