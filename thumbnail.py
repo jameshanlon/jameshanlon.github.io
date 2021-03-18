@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import sys
 import requests
@@ -23,10 +24,10 @@ def get_thumbnail(filepath, size):
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
     # Get the image.
-    print 'Fetching '+image_url
+    print('Fetching '+image_url)
     response = requests.get(image_url)
     if response.status_code != 200:
-        print 'Image not found: ' + image_url
+        print('Image not found: ' + image_url)
         sys.exit(1)
     # Rotate if recorded in metadata.
     # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
@@ -47,7 +48,7 @@ def get_thumbnail(filepath, size):
                     image=image.rotate(90, expand=True)
     original_w = image.size[0]
     original_h = image.size[1]
-    print 'Old size: {} x {}'.format(original_w, original_h)
+    print('Old size: {} x {}'.format(original_w, original_h))
     if 'x' in size:
         # <max-x-dim-size>x<max-y-dim-size>
         tokens = size.split('x')
@@ -57,17 +58,17 @@ def get_thumbnail(filepath, size):
         height = int(size.replace('h=', ''))
         width = int(height * (float(original_w) / float(original_h)))
         size = (width, height)
-        print 'New size: {} x {}'.format(size[0], size[1])
+        print('New size: {} x {}'.format(size[0], size[1]))
     elif size.startswith('w='):
         # Fixed width
         width = int(size.replace('w=', ''))
         height = int(width * (float(original_h) / float(original_w)))
         size = (width, height)
     else:
-        print 'Invalid size: '+size
+        print('Invalid size: '+size)
         sys.exit(1)
     image.thumbnail(size, Image.ANTIALIAS)
     # Resize the image upto a maximum x OR y dimension.
     image.save(thumb_path)
-    print 'Wrote '+thumb_path
+    print('Wrote '+thumb_path)
     return thumb_url

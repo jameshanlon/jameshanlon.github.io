@@ -1,7 +1,9 @@
 Title: Archive
 Status: published
 
-# Talks on computing
+# Talks
+
+## Computing
 
 [Error-correcting codes]({{'talks/ECC-May20.pdf'|asset}}),<br>
 Introduction to ECC schemes and SECDED implementation in hardware, May 2020.
@@ -23,7 +25,8 @@ Lightning talk presented at [ORConf 2019](https://orconf.org/) in Bordeaux, Fran
 [The resurgence of parallel programming languages](/files/parallel-languages-BCS.pdf),
 <br>BCS Advance Programming Specialist Group, London. April 2012.
 
-# Talks on sustainablility
+
+## Sustainablility
 
 [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf'|asset}}),<br>
 A talk given for the High Kingsdown Eco program, January 2020.
@@ -31,7 +34,11 @@ A talk given for the High Kingsdown Eco program, January 2020.
 {# [An overview of The CHEESE Project]({{'talks/CHEESE-overview-Jan20.pdf'|asset}}),<br>
 March 2018. #}
 
-# Documents from university
+
+
+# Documents
+
+## University
 
 These documents are from my undergraduate and PhD degrees.
 
