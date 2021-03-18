@@ -1,0 +1,26 @@
+name: Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Upgrade pip
+        run: |
+          python3 -m pip install --upgrade pip
+        
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -r ./requirements.txt
+          
+      - name: Build the website
+        run: make
