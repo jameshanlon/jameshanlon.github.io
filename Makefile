@@ -1,6 +1,6 @@
 PY?=python
 PELICAN?=pelican
-PELICANOPTS=
+PELICANOPTS=--verbose
 
 BASEDIR=`pwd`
 INPUTDIR=$(BASEDIR)/content
