@@ -40,6 +40,7 @@ PAGE_SAVE_AS = '{slug}.html'
 
 MENU_ITEMS = [
     ('notes',    'index.html'),
+    ('projects', 'projects.html'),
     ('archive',  'archive.html'),
     ('about',    'about.html'),
 ]
