@@ -1,5 +1,550 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2020-12-04T00:00:00+01:00</updated><entry><title>Reflections on the state of nature</title><link href="http://jameswhanlon.com/reflections-on-the-state-of-nature.html" rel="alternate"></link><published>2020-12-04T00:00:00+01:00</published><updated>2020-12-04T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2020-12-04:/reflections-on-the-state-of-nature.html</id><summary type="html">&lt;p&gt;For a long time I have been deeply worried about the looming threat of climate
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2021-03-31T00:00:00+02:00</updated><entry><title>Home thermal-imaging survey</title><link href="http://jameswhanlon.com/home-thermal-imaging-survey.html" rel="alternate"></link><published>2021-03-31T00:00:00+02:00</published><updated>2021-03-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2021-03-31:/home-thermal-imaging-survey.html</id><summary type="html">&lt;p&gt;I recently moved into a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit Type 1 house&lt;/a&gt;, and
+with my involvement with &lt;a href="https://cheeseproject.co.uk"&gt;The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project&lt;/a&gt; I was keen to
+perform a thermal-imaging survey to better understand how well the building
+performs thermally. Also, with the first few months in the house being in
+winter and it feeling …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently moved into a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit Type 1 house&lt;/a&gt;, and
+with my involvement with &lt;a href="https://cheeseproject.co.uk"&gt;The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project&lt;/a&gt; I was keen to
+perform a thermal-imaging survey to better understand how well the building
+performs thermally. Also, with the first few months in the house being in
+winter and it feeling very cold in places, I had extra motivaiton to find out
+where heat was being lost, and to try and resolve some faults. I have written
+this note to record what I found as a case study that others may find useful,
+from the point of view of understanding the benefits of using thermal imaging
+to assess building performance, and to see the kinds of thermal faults that are
+standard among domestic&amp;nbsp;buildings.&lt;/p&gt;
+&lt;p&gt;I followed the methodology of The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project to perform the survey (more
+details about &lt;a href="https://cheeseproject.co.uk/home-surveys"&gt;home surveys&lt;/a&gt; and the
+&lt;a href="https://cheeseproject.co.uk/pre-survey-guide"&gt;process&lt;/a&gt;). To summarise: the best thermal imaging results
+are obtained when there is a good temperature differential (at least 10
+degrees) between inside the building and outside. For this reason, winter is
+the best period, with the building heated for 24 hours to warm up the fabric
+rather than just the air inside it. A blower door fitted to an external door is
+used to reduce the internal air pressure and excentuate any draughts. Once the
+heating is switched off, the house will start to cool down by thermal
+conduction through materials and ingress of cold air through draughts. While
+this is happening the thermal camera is used to capture the effects of any
+areas of rapid cooling, ie &amp;#8216;thermal&amp;nbsp;faults.&lt;/p&gt;
+&lt;h2&gt;External&lt;/h2&gt;
+&lt;p&gt;I did the survey in December, and the external temperature was close to 0
+degrees. The images below show the back of the house in infra red (thermal) and
+visible light. There is little to learn from the thermal picture, and note that
+the windows will be reflecting some of the cool night&amp;nbsp;sky.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/external/back-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/back-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/external/back-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/back-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Front&amp;nbsp;door&lt;/h2&gt;
+&lt;p&gt;The area by the front door was noticably cold when walking past it. The thermal
+images reveal cold single glazed glass sections (at ~15 degrees compared with
+~22 degress ambient temperature of the hallway), and draughts, particularly at
+the bottom where the temperature drops to 10&amp;nbsp;degress.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/front-door-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/front-door-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/front-door-bottom-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/front-door-bottom-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To tackle the leakiness of the front door, I added some acrylic secondary
+glazing to the glass sections and blocked up the letter box with glass fiber
+insulation and a wooden&amp;nbsp;plug.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/secondary-glazing-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/secondary-glazing-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/letter-box-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/letter-box-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Windows&lt;/h2&gt;
+&lt;p&gt;The house has uPVC double glazing throughout (installed within the last 10
+years), but a main finding of the survey was the windows had several&amp;nbsp;faults.&lt;/p&gt;
+&lt;h3&gt;Leaking&amp;nbsp;trim&lt;/h3&gt;
+&lt;p&gt;The biggest culprit was draughts around the edges of the frames, from behind a
+plastic trim. In the left-hand images, the cold area is a draught emerging from
+a section of silicon sealant that had&amp;nbsp;detached.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-1-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/leaking-trim-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-1-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/leaking-trim-1-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-2-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/leaking-trim-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-2-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/leaking-trim-2-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When I removed the trim to investigate, I found the frames had not been sealed
+to the wall in any way (left), so there was a gap all around where air could
+penetrate. Mostly the plastic trims were doing a good job preventing draughts,
+but they were not providing much insulation against air circulating behind
+them. I fixed the issue by using expanding foam to fill the gaps, and used
+filler to address any smaller gaps and make it flush with the window&amp;nbsp;reveals.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/removed-trim-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/removed-trim-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/filled-gap-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/filled-gap-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Leaking&amp;nbsp;seals&lt;/h3&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/seal-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/seal-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/dining-room-window-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/dining-room-window-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Missing&amp;nbsp;insulation&lt;/h3&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/top-insulation-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/top-insulation-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/top-insulation-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/top-insulation-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Leaking&amp;nbsp;sill&lt;/h3&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/sill-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/sill-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/sill-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/sill-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Ground&amp;nbsp;wall&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/blockwork-stairs-1-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/blockwork-stairs-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/blockwork-stairs-2-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/blockwork-stairs-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/floorboard-leak-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorboard-leak-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/floorboard-leak-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorboard-leak-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;First floor&amp;nbsp;walls&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/below-window-landing-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/below-window-landing-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-2-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bedroom-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-1-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bedroom-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-3-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bedroom-3-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Air&amp;nbsp;brick&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/air-brick/air-brick-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/air-brick-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/air-brick/air-brick-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/air-brick-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Loft&amp;nbsp;hatch&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-hatch/hatch-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hatch-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-hatch/hatch-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hatch-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Loft&amp;nbsp;insulation&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/missing-bathroom-1-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/missing-bathroom-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/missing-bathroom-2-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/missing-bathroom-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Kitchen&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kitchen/cold-cupboard-1-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/cold-cupboard-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kitchen/cold-cupboard-2-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/cold-cupboard-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Bathroom&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/bathroom-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bathroom-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/sink-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/sink-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/toilet-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/toilet-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/toilet-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/toilet-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Central&amp;nbsp;heating&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/boiler-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boiler-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/boiler-visible.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boiler-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/water-tank-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/water-tank-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/radiator-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/radiator-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/pipe-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/pipe-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/pipe-ceiling-thermal.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/pipe-ceiling-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Kit&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kit/blower-door.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/blower-door_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kit/cheese-camera-kit.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/cheese-camera-kit_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</content><category term="notes"></category><category term="retrofit"></category><category term="sustainability"></category></entry><entry><title>Reflections on the state of nature</title><link href="http://jameswhanlon.com/reflections-on-the-state-of-nature.html" rel="alternate"></link><published>2020-12-04T00:00:00+01:00</published><updated>2020-12-04T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2020-12-04:/reflections-on-the-state-of-nature.html</id><summary type="html">&lt;p&gt;For a long time I have been deeply worried about the looming threat of climate
 change and its broad consequences. But greenhouse gas emissions from human
 activities are just one part of a complex picture in which we (human beings)
 are damaging our environment so severely that the future of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;For a long time I have been deeply worried about the looming threat of climate
