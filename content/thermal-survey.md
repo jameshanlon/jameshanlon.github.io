@@ -17,7 +17,12 @@ where heat was being lost, and to try and resolve some faults. I have written
 this note to record what I found as a case study that others may find useful,
 from the point of view of understanding the benefits of using thermal imaging
 to assess building performance, and to see the kinds of thermal faults that are
-standard among domestic buildings.
+standard among domestic buildings. Included also are some simple remedial
+measures that I took to address thermal faults. The emphasis of these were low
+cost and low effort to improve the house in the short term, and particularly
+during the winter. With plans to renovate and extend in the next couple of
+years, the survey would also provide guidance on where more significant
+interventions could be targeted.
 
 I followed the methodology of The CHEESE Project to perform the survey (more
 details about [home surveys][cheese-home-survey] and the
@@ -31,6 +36,7 @@ heating is switched off, the house will start to cool down by thermal
 conduction through materials and ingress of cold air through draughts. While
 this is happening the thermal camera is used to capture the effects of any
 areas of rapid cooling, ie 'thermal faults.
+
 
 
 [cheese-project]: https://cheeseproject.co.uk
@@ -51,15 +57,15 @@ the windows will be reflecting some of the cool night sky.
      macros.image('thermal-survey/external/back-visible.jpg'), ) }}
 
 There are a few things to remember when inspecting the thermal images. The
-thermal image is overlaid on the visible-light image, the temperature value is
-the measurement taken at the cross hairs, and often each image is taken with a
-particular temperature range to give the best contrast to the subject of the
-image. The temperature range is given in the top left-hand corner, and the
-black and white squares show the degree increments along the colour scale. In
-the thermal image above left, the range is centred on 20 degrees plus and minus
-23 degrees. All the thermal images in this note use a colour palette called
-'ironbow', which I find most intuitive, there are however other choices such as
-rainbow and greyscale.
+thermal image is overlaid on the larger visible-light image, the temperature
+value is the measurement taken at the cross hairs, and often each image is
+taken with a particular temperature range to give the best contrast to the
+subject of the image. The temperature range is given in the top left-hand
+corner, and the black and white squares show the degree increments along the
+colour scale. In the thermal image above left, the range is centred on 20
+degrees plus and minus 23 degrees. All the thermal images in this note use a
+colour palette called 'ironbow', which I find most intuitive, there are however
+other choices such as rainbow and greyscale.
 
 
 ## Front door
@@ -75,7 +81,11 @@ the bottom where the temperature drops to 10 degrees.
 
 To tackle the leakiness of the front door, I added some acrylic secondary
 glazing to the glass sections and blocked up the letter box with glass fibre
-insulation and a wooden plug.
+insulation and a wooden plug (there is another letter box in the porch). I
+admit this was not an elegant solution, but it was quick and cheap. The look of
+acrylic could have been improved by using magnetic strip for attaching it, also
+allowing for it to be removed. But since the door will be replaced in the next
+18 months, I was not too worried.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/front-door/secondary-glazing-visible.jpg'),
@@ -129,7 +139,9 @@ it is also easy to feel these with the back of a finger.
 
 Two opening panes had leaks along part of their seals, where the window did not
 shut tight to the frame to make it airtight. This was not a significant source
-of a draught, but a problem that is commonly found with uPVC windows.
+of a draught, but a problem that is commonly found with uPVC windows. Often the
+hinges can be adjusted to remedy this issue, or foam insulation tape could be
+added.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/windows/seal-thermal.jpg'),
@@ -170,6 +182,11 @@ the cold window frames and the missing insulation at the top.
      macros.image('thermal-survey/upper-walls/bedroom-1-thermal.jpg'),
      macros.image('thermal-survey/upper-walls/bedroom-3-thermal.jpg'), ) }}
 
+By coincidence, a near by Cornish Unit Type 1 house was undergoing some extension
+work, and has its upper timbers exposed. The picture below shows clearly the
+construction, and notably the wall voids contained no insulation.
+
+{{ macros.image('thermal-survey/upper-walls/upper-wall-construction.jpg') }}
 
 ## Ground wall
 
@@ -221,6 +238,15 @@ value of loft insulation, and it extending to the edges.
 {{ macros.pair_layout(
      macros.image('thermal-survey/loft-insulation/missing-bathroom-1-thermal.jpg'),
      macros.image('thermal-survey/loft-insulation/missing-bathroom-2-thermal.jpg'), ) }}
+
+Installing boarding in the loft for storage was a good opportunity to
+redistribute and top up insulation, and make sure it extended into corners
+(whilst maintaining space for airflow from the roof). In the right-hand
+picture, the black columns are stilts that boarding is attached to.
+
+{{ macros.pair_layout(
+     macros.image('thermal-survey/loft-insulation/loft-insulation-bare.jpg'),
+     macros.image('thermal-survey/loft-insulation/loft-insulation-stilts.jpg'), ) }}
 
 
 ## Kitchen
