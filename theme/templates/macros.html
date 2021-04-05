@@ -6,13 +6,13 @@
       </time>
     </div>#}
     <div class="col-11 article-info-title">
-    <a href="/{{article.url}}">
+    <a href="/{{article.url}}" class="text-decoration-none">
       {{article.title}}
     </a>
     <br>
     {% for tag in article.tags %}
       <span class="article-tag small">
-        <a href="/tag/{{tag}}.html">{{tag}}</a>
+        <a href="/tag/{{tag}}.html" class="text-decoration-none">{{tag}}</a>
       </span>
     {% endfor %}
       <span class="article-tag small">
