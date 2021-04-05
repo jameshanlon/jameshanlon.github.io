@@ -51,6 +51,7 @@ STATIC_PATHS = [
     'includes',
     'files/favicon.png',
     'files/robots.txt',
+    'CNAME',
 ]
 
 ARTICLE_EXCLUDES = [
