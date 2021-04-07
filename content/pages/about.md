@@ -44,18 +44,18 @@ are publically available in the hope they will be useful to others. I'd
 love to hear from you if that's the case.
 
 This website is built using [Pelican](https://blog.getpelican.com), a static
-website generator software written in Python. The theme is simply derived from
-[Bootstrap](https://getbootstrap.com) and it runs on a server using
-[Nginx](https://www.nginx.com). The source code is available for reuse on
-[Github](https://github.com/jameshanlon/homepage).
+website generator written in Python. The theme is simply derived from
+[Bootstrap](https://getbootstrap.com) and it is hosted on GitHub Pages. The
+source code is available for
+[reuse](https://github.com/jameshanlon/jameshanlon.github.io).
 
 # Related links
 
 You can find me elsewhere on the internet:
 
-* [Twitter](https://twitter.com/jameswhanlon)
 * [Github](https://github.com/jameshanlon)
 * [Wikipedia](http://en.wikipedia.org/wiki/User:JamieHanlon)
 * [Strava](https://www.strava.com/athletes/5351937)
+* [Twitter](https://twitter.com/jameswhanlon)
 
 If you'd like to get in touch, then please email me at *mail @ this domain*.
