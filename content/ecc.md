@@ -160,13 +160,13 @@ a subset of the data bits and it is set when the parity of those data bits is
 odd. To obtain a code with a particular Hamming distance, the number of check
 bits and their mapping to data bits must be chosen carefully.
 
-To build a single-error correcting (SEC) code, which requires Hamming distance
+To build a single-error correcting (SEC) code that requires Hamming distance
 three between valid codewords, it is necessary for:
 
 - The mapping of each data bit to check bits is unique.
 - Each data bit to map to at least two check bits.
 
-To see why this works, consider two distinct codewords in which necessarily
+To see why this works, consider two distinct codewords that necessarily
 must have different data bits. If the data bits differ by:
 
 - **1 bit**, at least two check bits are flipped, giving a total of three
@@ -177,14 +177,14 @@ must have different data bits. If the data bits differ by:
   the two check bit patterns). This also gives a total of three different bits as
   required.
 
-- **3 bits**, this is already sufficient.
+- **3 bits**, this is already sufficient to give a Hamming distance of three.
 
-To build a SECDED code, which requires Hamming distance four between valid
+To build a SECDED code that requires Hamming distance of four between valid
 codewords, it is necessary for:
 
 - The mapping of each data bit to check bits is unique.
 - Each data bit to map to at least three check bits.
-- Each check bit pattern has an odd number of bits set.
+- Each check bit pattern to have an odd number of bits set.
 
 Following a similar argument, consider two distinct codewords, data differing
 by:
@@ -229,7 +229,7 @@ data[c]      x     x x
 Flips        x
 ```
 
-- **4 bits** is already sufficient.
+- **4 bits** is already sufficient to provide a Hamming distance of four.
 
 An example SEC code for eight data bits with four parity bits:
 ```
