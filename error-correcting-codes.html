@@ -200,13 +200,13 @@ is always the closest one. The following table summarises Hamming&nbsp;codes.</p
 a subset of the data bits and it is set when the parity of those data bits is
 odd. To obtain a code with a particular Hamming distance, the number of check
 bits and their mapping to data bits must be chosen&nbsp;carefully.</p>
-<p>To build a single-error correcting (<span class="caps">SEC</span>) code, which requires Hamming distance
+<p>To build a single-error correcting (<span class="caps">SEC</span>) code that requires Hamming distance
 three between valid codewords, it is necessary&nbsp;for:</p>
 <ul>
 <li>The mapping of each data bit to check bits is&nbsp;unique.</li>
 <li>Each data bit to map to at least two check&nbsp;bits.</li>
 </ul>
-<p>To see why this works, consider two distinct codewords in which necessarily
+<p>To see why this works, consider two distinct codewords that necessarily
 must have different data bits. If the data bits differ&nbsp;by:</p>
 <ul>
 <li>
@@ -219,15 +219,15 @@ must have different data bits. If the data bits differ&nbsp;by:</p>
   the two check bit patterns). This also gives a total of three different bits as&nbsp;required.</p>
 </li>
 <li>
-<p><strong>3 bits</strong>, this is already&nbsp;sufficient.</p>
+<p><strong>3 bits</strong>, this is already sufficient to give a Hamming distance of&nbsp;three.</p>
 </li>
 </ul>
-<p>To build a <span class="caps">SECDED</span> code, which requires Hamming distance four between valid
+<p>To build a <span class="caps">SECDED</span> code that requires Hamming distance of four between valid
 codewords, it is necessary&nbsp;for:</p>
 <ul>
 <li>The mapping of each data bit to check bits is&nbsp;unique.</li>
 <li>Each data bit to map to at least three check&nbsp;bits.</li>
-<li>Each check bit pattern has an odd number of bits&nbsp;set.</li>
+<li>Each check bit pattern to have an odd number of bits&nbsp;set.</li>
 </ul>
 <p>Following a similar argument, consider two distinct codewords, data differing&nbsp;by:</p>
 <ul>
@@ -276,7 +276,7 @@ codewords, it is necessary&nbsp;for:</p>
 
 
 <ul>
-<li><strong>4 bits</strong> is already&nbsp;sufficient.</li>
+<li><strong>4 bits</strong> is already sufficient to provide a Hamming distance of&nbsp;four.</li>
 </ul>
 <p>An example <span class="caps">SEC</span> code for eight data bits with four parity&nbsp;bits:</p>
 <div class="codehilite"><pre><span></span>Check bits:  0 1 2 3
@@ -467,11 +467,9 @@ can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
     </div>
   </footer>
   <script src="./theme/js/jquery-3.6.0.min.js"></script>
-  <script src="./theme/js/popper.min.js"></script>
-  <script src="./theme/js/bootstrap.min.js"></script>
   <script src="./theme/js/lightbox.min.js"></script>
+  <script src="./theme/js/bootstrap.bundle.min.js"></script>
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="./theme/js/ie10-viewport-bug-workaround.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

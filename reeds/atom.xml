@@ -1548,13 +1548,13 @@ is always the closest one. The following table summarises Hamming&amp;nbsp;codes
 a subset of the data bits and it is set when the parity of those data bits is
 odd. To obtain a code with a particular Hamming distance, the number of check
 bits and their mapping to data bits must be chosen&amp;nbsp;carefully.&lt;/p&gt;
-&lt;p&gt;To build a single-error correcting (&lt;span class="caps"&gt;SEC&lt;/span&gt;) code, which requires Hamming distance
+&lt;p&gt;To build a single-error correcting (&lt;span class="caps"&gt;SEC&lt;/span&gt;) code that requires Hamming distance
 three between valid codewords, it is necessary&amp;nbsp;for:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The mapping of each data bit to check bits is&amp;nbsp;unique.&lt;/li&gt;
 &lt;li&gt;Each data bit to map to at least two check&amp;nbsp;bits.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;To see why this works, consider two distinct codewords in which necessarily
+&lt;p&gt;To see why this works, consider two distinct codewords that necessarily
 must have different data bits. If the data bits differ&amp;nbsp;by:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1567,15 +1567,15 @@ must have different data bits. If the data bits differ&amp;nbsp;by:&lt;/p&gt;
   the two check bit patterns). This also gives a total of three different bits as&amp;nbsp;required.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;3 bits&lt;/strong&gt;, this is already&amp;nbsp;sufficient.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3 bits&lt;/strong&gt;, this is already sufficient to give a Hamming distance of&amp;nbsp;three.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;To build a &lt;span class="caps"&gt;SECDED&lt;/span&gt; code, which requires Hamming distance four between valid
+&lt;p&gt;To build a &lt;span class="caps"&gt;SECDED&lt;/span&gt; code that requires Hamming distance of four between valid
 codewords, it is necessary&amp;nbsp;for:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The mapping of each data bit to check bits is&amp;nbsp;unique.&lt;/li&gt;
 &lt;li&gt;Each data bit to map to at least three check&amp;nbsp;bits.&lt;/li&gt;
-&lt;li&gt;Each check bit pattern has an odd number of bits&amp;nbsp;set.&lt;/li&gt;
+&lt;li&gt;Each check bit pattern to have an odd number of bits&amp;nbsp;set.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Following a similar argument, consider two distinct codewords, data differing&amp;nbsp;by:&lt;/p&gt;
 &lt;ul&gt;
@@ -1624,7 +1624,7 @@ codewords, it is necessary&amp;nbsp;for:&lt;/p&gt;
 
 
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;4 bits&lt;/strong&gt; is already&amp;nbsp;sufficient.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;4 bits&lt;/strong&gt; is already sufficient to provide a Hamming distance of&amp;nbsp;four.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;An example &lt;span class="caps"&gt;SEC&lt;/span&gt; code for eight data bits with four parity&amp;nbsp;bits:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Check bits:  0 1 2 3
