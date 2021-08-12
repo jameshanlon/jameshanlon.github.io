@@ -27,4 +27,10 @@ Tags: sheds, construction
 {{ macros.image('garden-workshop/back-walls.jpg') }}
 {{ macros.image('garden-workshop/all-walls.jpg') }}
 {{ macros.image('garden-workshop/osb-walls.jpg') }}
+{{ macros.image('garden-workshop/roof-osb.jpg') }}
+{{ macros.image('garden-workshop/first-battons.jpg') }}
 {{ macros.image('garden-workshop/membrane-and-battons.jpg') }}
+
+# Cladding
+
+{{ macros.image('garden-workshop/cladding-mockup.jpg') }}
