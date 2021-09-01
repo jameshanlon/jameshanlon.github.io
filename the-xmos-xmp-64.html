@@ -129,13 +129,13 @@ passed around, the <span class="caps">LED</span> connected to each G4 is switche
   <span class="nx">on</span> <span class="nx">stdcore</span><span class="p">[</span><span class="mf">60</span><span class="p">]</span><span class="o">:</span> <span class="nx">XS1_PORT_1E</span>
 <span class="p">};</span>
 
-<span class="k">void</span> <span class="nx">flash_led</span><span class="p">(</span><span class="kr">int</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">chanend</span> <span class="nx">prev</span><span class="p">,</span> <span class="nx">chanend</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">out</span> <span class="nx">port</span> <span class="nx">led</span><span class="p">)</span> <span class="p">{</span>
+<span class="ow">void</span> <span class="nx">flash_led</span><span class="p">(</span><span class="kr">int</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">chanend</span> <span class="nx">prev</span><span class="p">,</span> <span class="nx">chanend</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">out</span> <span class="nx">port</span> <span class="nx">led</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">timer</span> <span class="nx">t</span><span class="p">;</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">id</span> <span class="o">==</span> <span class="mf">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">next</span> <span class="o">&lt;:</span> <span class="mf">1</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="k">while</span> <span class="p">(</span><span class="mf">1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">prev</span> <span class="o">:&gt;</span> <span class="k">void</span><span class="p">;</span>
+    <span class="nx">prev</span> <span class="o">:&gt;</span> <span class="ow">void</span><span class="p">;</span>
     <span class="nx">led</span> <span class="o">&lt;:</span> <span class="mf">1</span><span class="p">;</span>
     <span class="nx">delay_milliseconds</span><span class="p">(</span><span class="mf">100</span><span class="p">);</span>
     <span class="nx">led</span> <span class="o">&lt;:</span> <span class="mf">0</span><span class="p">;</span>
