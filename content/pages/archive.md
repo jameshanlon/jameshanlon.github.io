@@ -1,9 +1,12 @@
 Title: Archive
 Status: published
 
-# Talks
+# Talks and papers
 
 ## Computing
+
+[Netlist Paths: a tool for front-end netlist analysis]({{'papers/Netlist-Paths-DVCon-Europe-2021.pdf'|asset}}),
+<br>DVCon Europe 2021, ([presentation slides]({{'papers/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}})).
 
 [Error-correcting codes]({{'talks/ECC-May20.pdf'|asset}}),<br>
 Introduction to ECC schemes and SECDED implementation in hardware, May 2020.
@@ -39,9 +42,7 @@ A talk given for the High Kingsdown Eco program, January 2020.
 
 ------------------------------
 
-# Documents
-
-## University
+# Documents from university
 
 These documents are from my undergraduate and PhD degrees.
 
