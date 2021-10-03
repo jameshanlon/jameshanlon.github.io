@@ -5,17 +5,19 @@ Status: published
 
 # About me
 
-I work as an engineer in the Silicon team at
-[Graphcore](http://www.graphcore.ai), based in Bristol in the UK, on the
-development of processors for machine intelligence. My current work is focussed
-on physical and logical implementation of aspects.
+I currently work as an engineer in the Silicon team at
+[Graphcore](http://www.graphcore.ai) in Bristol UK, on the design and
+implementation of new processors for machine intelligence. My work is focussed
+on the logical and physical implementation of aspects of high-performance ASICs.
 
-In my spare time, I help to run the [CHEESE project](http://cheeseproject.co.uk),
-a not-for-profit enterprise that uses thermal imaging to encourage people to reduce
-their domestic energy losses. For those who struggle to heat their homes, it improves
-their health and well being, and for those who have thermally-inefficient
-homes, it saves them money and reduces their carbon emissions. I'm a member of
-the management committee.
+ Since 2015, I have been a director of [The CHEESE
+Project](http://www.cheeseproject.co.uk), a not-for-profit enterprise that uses
+thermal imaging to encourage people to reduce their domestic energy losses. For
+those who struggle to heat their homes, it improves their health and well
+being, and for those who have thermally-inefficient homes, it saves them money
+and reduces their carbon emissions. More recently, I have helped to found [First
+Thermal](http://www.first-thermal.co.uk) to socially franchise and replicate
+the work of CHEESE.
 
 I have previously worked as a software engineer specialising on the compiler
 toolchain at [XMOS](http://www.xmos.com) in Bristol, for their embedded
@@ -32,7 +34,8 @@ programming languages and software for them. I hold a masters degree in
 Computer Science from the same institution.
 
 There are some more CV-related details on
-[LinkedIn](https://www.linkedin.com/in/jameswhanlon).
+[Linked In](https://www.linkedin.com/in/jameswhanlon).
+
 
 # About this website
 

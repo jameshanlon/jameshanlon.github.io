@@ -6,7 +6,8 @@ Status: published
 ## Computing
 
 [Netlist Paths: a tool for front-end netlist analysis]({{'papers/Netlist-Paths-DVCon-Europe-2021.pdf'|asset}}),
-<br>DVCon Europe 2021, ([presentation slides]({{'papers/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}})).
+<br>DVCon Europe 2021, ([presentation slides]({{'papers/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}}), 
+[extended abstract]({{'papers/Netlist-Paths-DVCon-Europe-2021-extended-abstract.pdf'|asset}})).
 
 [Error-correcting codes]({{'talks/ECC-May20.pdf'|asset}}),<br>
 Introduction to ECC schemes and SECDED implementation in hardware, May 2020.
