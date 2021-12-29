@@ -4455,7 +4455,7 @@ relevant; the references below are a good place to find out&amp;nbsp;more.&lt;/p
   (&lt;a href="https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;
 &lt;li&gt;Complex Digital Systems, Synthesis, &lt;span class="caps"&gt;MIT&lt;/span&gt; &lt;span class="caps"&gt;OCW&lt;/span&gt;, 2005 (presentation slides,
   (&lt;a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;
-&lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category><category term="microelectronics"></category><category term="Verilog"></category></entry><entry><title>Notes on testing random number generators</title><link href="http://jameswhanlon.com/notes-on-testing-random-number-generators.html" rel="alternate"></link><published>2017-04-05T00:00:00+02:00</published><updated>2017-04-05T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2017-04-05:/notes-on-testing-random-number-generators.html</id><summary type="html">&lt;p&gt;Recently I have been doing some work testing the quality of &lt;a href="https://en.wikipedia.org/wiki/Random_number_generator"&gt;random
+&lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category><category term="microelectronics"></category><category term="programming-languages"></category><category term="Verilog"></category></entry><entry><title>Notes on testing random number generators</title><link href="http://jameswhanlon.com/notes-on-testing-random-number-generators.html" rel="alternate"></link><published>2017-04-05T00:00:00+02:00</published><updated>2017-04-05T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2017-04-05:/notes-on-testing-random-number-generators.html</id><summary type="html">&lt;p&gt;Recently I have been doing some work testing the quality of &lt;a href="https://en.wikipedia.org/wiki/Random_number_generator"&gt;random
 number generators&lt;/a&gt;
 (RNGs), so I thought I would record things that should be useful as a
 reference. I won&amp;#8217;t provide too much background here since there are many good
@@ -4964,7 +4964,425 @@ important&amp;nbsp;kernels.&lt;/p&gt;
 of computing but with their unique characteristics, they pose a significant
 challenge to conventional computer architecture. This challenge however is also
 an opportunity to build new machines and programming languages that break away
-from the status quo of sequential shared-memory von Neumann&amp;nbsp;machines.&lt;/p&gt;</content><category term="notes"></category><category term="computing"></category><category term="computer-architecture"></category><category term="machine-intelligence"></category></entry><entry><title>The XMOS XMP-64</title><link href="http://jameswhanlon.com/the-xmos-xmp-64.html" rel="alternate"></link><published>2014-12-04T00:00:00+01:00</published><updated>2014-12-04T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2014-12-04:/the-xmos-xmp-64.html</id><summary type="html">&lt;p&gt;The &lt;span class="caps"&gt;XMP&lt;/span&gt;-64 is an experimental single-board distributed-memory parallel computer
+from the status quo of sequential shared-memory von Neumann&amp;nbsp;machines.&lt;/p&gt;</content><category term="notes"></category><category term="computing"></category><category term="computer-architecture"></category><category term="machine-intelligence"></category></entry><entry><title>The XC Programming Language</title><link href="http://jameswhanlon.com/the-xc-programming-language.html" rel="alternate"></link><published>2014-12-13T00:00:00+01:00</published><updated>2014-12-13T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2014-12-13:/the-xc-programming-language.html</id><summary type="html">&lt;p&gt;&lt;span class="caps"&gt;XC&lt;/span&gt; is a programming language developed by &lt;span class="caps"&gt;XMOS&lt;/span&gt; for real-time embedded parallel
+programming of their XCore processor architecture. &lt;span class="caps"&gt;XC&lt;/span&gt; is based on the features
+for parallelism and communication in occam, and the syntax and some sequential
+features of C. In addition, &lt;span class="caps"&gt;XC&lt;/span&gt; provides primitives to expose hardware
+resources: locks, ports …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;span class="caps"&gt;XC&lt;/span&gt; is a programming language developed by &lt;span class="caps"&gt;XMOS&lt;/span&gt; for real-time embedded parallel
+programming of their XCore processor architecture. &lt;span class="caps"&gt;XC&lt;/span&gt; is based on the features
+for parallelism and communication in occam, and the syntax and some sequential
+features of C. In addition, &lt;span class="caps"&gt;XC&lt;/span&gt; provides primitives to expose hardware
+resources: locks, ports and timers. &lt;span class="caps"&gt;XC&lt;/span&gt; programs can be executed with levels of
+I/O real-time performance that is usually attributed to &lt;span class="caps"&gt;FPGA&lt;/span&gt; or &lt;span class="caps"&gt;ASIC&lt;/span&gt; devices.
+The design of &lt;span class="caps"&gt;XC&lt;/span&gt; was heavily influenced by the occam programming language,
+which first introduced channel communication, alternation, ports and timers.
+Occam was developed by &lt;a href="https://en.wikipedia.org/wiki/David_May_(computer_scientist)"&gt;David
+May&lt;/a&gt; and built on
+the &lt;a href=""&gt;Communicating Sequential Processes&lt;/a&gt; formalism, a process algebra
+developed by &lt;a href="https://en.wikipedia.org/wiki/Tony_Hoare"&gt;Tony Hoare&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This note was originally written for
+&lt;a href="https://en.wikipedia.org/w/index.php?title=XC_(programming_language)"&gt;Wikipedia&lt;/a&gt;,
+but the content was removed owing to it being too much like a manual. To save
+it from being lost, I&amp;#8217;ve posted it here (December&amp;nbsp;2021).&lt;/p&gt;
+&lt;h2&gt;Architectural&amp;nbsp;model&lt;/h2&gt;
+&lt;p&gt;An &lt;span class="caps"&gt;XC&lt;/span&gt; program executes on a collection of XCore tiles. Each tile contains one
+or more processing cores and resources that can be shared between the cores,
+including I/O and memory. All tiles are connected by a communication network
+that allows any tile to communicate with any other tile. A given target system
+is specified during compilation and the compiler ensures that a sufficient
+number of tiles, cores and resources are available to execute the program being&amp;nbsp;compiled. &lt;/p&gt;
+&lt;h2&gt;Features&lt;/h2&gt;
+&lt;p&gt;The following sections outline the key features of &lt;span class="caps"&gt;XC&lt;/span&gt;.&lt;/p&gt;
+&lt;h3&gt;Parallelism&lt;/h3&gt;
+&lt;p&gt;Statements in &lt;span class="caps"&gt;XC&lt;/span&gt; are executed in sequence (as they are in C), so that in the
+execution&amp;nbsp;of:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the function &lt;code&gt;g&lt;/code&gt; is only executed once the execution of the function &lt;code&gt;f&lt;/code&gt; has
+completed. A set of statements can be made to execute in parallel using a &lt;code&gt;par&lt;/code&gt;
+statement, so that the&amp;nbsp;statement&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;causes &lt;code&gt;f&lt;/code&gt; and &lt;code&gt;g&lt;/code&gt; to be executed simultaneously. The execution of parallel
+statement only completes when each of the component statements have completed.
+The component statements are called tasks in &lt;span class="caps"&gt;XC&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Because the sharing of variables can lead to race conditions and
+non-deterministic behaviour, &lt;span class="caps"&gt;XC&lt;/span&gt; enforces parallel disjointness. Disjointness
+means that a variable that is changed in one component statement of a par may
+not be used in any other&amp;nbsp;statement.&lt;/p&gt;
+&lt;p&gt;Parallel statements can be written with a replicator, in a similar fashion to a
+for loop, so that many similar instances of a task can be created without
+having to write each one separately, so that the&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;is equivalent&amp;nbsp;to:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The tasks in a parallel statement are executed by creating threads on the
+processor executing the statement. Tasks can be placed on different tiles by
+using an &lt;code&gt;on&lt;/code&gt; prefix. In following&amp;nbsp;example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;core&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the task &lt;code&gt;f&lt;/code&gt; is placed on any available core of tile 0 and instances of the task
+g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
+main function of an &lt;span class="caps"&gt;XC&lt;/span&gt; program. Conceptually, this is because when an &lt;span class="caps"&gt;XC&lt;/span&gt;
+program is compiled, it is divided up at its top level, into separately
+executable programs for each&amp;nbsp;tile. &lt;/p&gt;
+&lt;h3&gt;Communication&lt;/h3&gt;
+&lt;p&gt;Parallel tasks are able to communicate with each other using interfaces or channels.&amp;nbsp;Interfaces&lt;/p&gt;
+&lt;p&gt;An interface specifies a set of transaction types, where each type is defined
+as a function with parameter and return types. When two tasks are connected via
+an interface, one operates as a server and the other as a client. The client is
+able to initiate a transaction with the corresponding server, with syntax
+similar to a conventional function call. This interaction can be seen as a
+remote procedure call. For example, in the parallel&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// server&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Received %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// client&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the client initiates the transaction &lt;code&gt;f&lt;/code&gt;, with the parameter value 42, from the
+interface &lt;code&gt;i&lt;/code&gt;. The server waits on the transaction (as a case in the select
+statement) and responds when the client initiates it by printing out a message
+with the received parameter value. Transaction functions can also be used for
+two-way communication by using reference parameters, allowing data to be
+transferred from a client to a server, and then back&amp;nbsp;again.&lt;/p&gt;
+&lt;p&gt;Interfaces can only be used by two tasks; they do not allow multiple clients to
+be connected to one server. The types of either end of an interface connection
+of type &lt;code&gt;T&lt;/code&gt; are server interface &lt;code&gt;T&lt;/code&gt; and client interface &lt;code&gt;T&lt;/code&gt;. Therefore, when
+interface types are passed as parameters, the type of connection must also be
+specified, for&amp;nbsp;example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;s&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;c&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Transaction functions in an interface restrict servers to reacting only in
+response to client requests, but in some circumstances it is useful for a
+server to be able to trigger a response from the client. This can be achieved
+by annotating a function in the interface with no parameters and a void return
+type, with &lt;code&gt;[[notification]]&lt;/code&gt; slave. The client waits on the notification
+transaction in a select statement for the server to initiate it. A
+corresponding function can be annotated with &lt;code&gt;[[clears_notification]]&lt;/code&gt;, which is
+called by the slave to clear the notification. In the following simple&amp;nbsp;example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;[notification&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;slave&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;isReady&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;[clears_notification&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="err"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;i2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;i1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isReady&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;i1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;                     &lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;i1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isReady&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getValue&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;i2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;when client 2 initiates the transaction function &lt;code&gt;f&lt;/code&gt;, the server notifies client
+1 via the transaction function &lt;code&gt;isReady&lt;/code&gt;. Client 1 waits for the server
+notification, and then initiates &lt;code&gt;getValue&lt;/code&gt; when it is&amp;nbsp;received.&lt;/p&gt;
+&lt;p&gt;So that it is easier to connect many clients to one server, interfaces can also
+be declared as arrays. A server can select over an interface array using an
+index&amp;nbsp;variable.&lt;/p&gt;
+&lt;p&gt;Interfaces can also be extended, so that basic client interfaces can be
+augmented with new functionality. In particular, client interface extensions
+can invoke transaction functions in the base interface to provide a layer of
+additional&amp;nbsp;complexity.&lt;/p&gt;
+&lt;h3&gt;Channels&lt;/h3&gt;
+&lt;p&gt;Communication channels provide a more primitive way of communicating between
+tasks than interfaces. A channel connects two tasks and allows them to send and
+receive data, using the in &lt;code&gt;&amp;lt;:&lt;/code&gt; and out &lt;code&gt;:&amp;gt;&lt;/code&gt; operators respectively. A
+communication only occurs when an input is matched with an output, and because
+either side waits for the other to be ready, this also causes the tasks to
+synchronise. In the&amp;nbsp;following:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;chan&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nl"&gt;c&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the value 42 is sent over the channel &lt;code&gt;c&lt;/code&gt; and assigned to the variable &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Streaming&amp;nbsp;channels&lt;/h3&gt;
+&lt;p&gt;A streaming channel does not require each input and matching output to
+synchronise, so communication can occur&amp;nbsp;asynchronously.&lt;/p&gt;
+&lt;h3&gt;Event&amp;nbsp;handling&lt;/h3&gt;
+&lt;p&gt;The select statement waits for events to occur. It is similar to the
+alternation process in occam. Each component of a select is an event, such as
+an interface transaction, channel input or port input (see #&lt;span class="caps"&gt;IO&lt;/span&gt;), and an
+associated action. When a select is executed, it waits until the first event is
+enabled and then executes that event&amp;#8217;s action. In the following&amp;nbsp;example:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;left&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;right&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the select statement merges data from left and right channels on to an out&amp;nbsp;channel.&lt;/p&gt;
+&lt;p&gt;A select case can be guarded, so that the case is only selected if the guard
+expression is true at the same time the event is enabled. For example, with a&amp;nbsp;guard:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;left&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;the left-hand channel of the above example can only input data when the
+variable enable is&amp;nbsp;true.&lt;/p&gt;
+&lt;p&gt;The selection of events is arbitrary, but event priority can be enforced with
+the &lt;code&gt;[[ordered]]&lt;/code&gt; attribute for selects. The effect is that higher-priority
+events occur earlier in the body of the&amp;nbsp;statement.&lt;/p&gt;
+&lt;p&gt;To aid in creating reusable components and libraries, select functions can be
+used to abstract multiple cases of a select into a single unit. The following
+select function encapsulates the cases of the above select&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;chanend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;left&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;chanend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;chanend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;left&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;right&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;v&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;so that the select statement can be&amp;nbsp;written:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;merge&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;left&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Timing&lt;/h3&gt;
+&lt;p&gt;Every tile has a reference clock that can be accessed via timer variables.
+Performing an output operation on a timer reads the current time in cycles. For
+example, to calculate the elapsed execution time of a function &lt;code&gt;f&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;timer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;uint32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nl"&gt;t&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nl"&gt;t&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Elapsed time %u s&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CYCLES_PER_SEC&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;where &lt;code&gt;CYCLES_PER_SEC&lt;/code&gt; is defined to be the number of cycles per&amp;nbsp;second.&lt;/p&gt;
+&lt;p&gt;Timers can also be used in select statements to trigger events. For example,
+the select&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;timer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;uint32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;when&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;timerafter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;// Action to be performed after the delay&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;waits for the timer &lt;code&gt;t&lt;/code&gt; to exceed the value of time before reacting to it. The
+value of &lt;code&gt;t&lt;/code&gt; is discarded with the syntax &lt;code&gt;:&amp;gt; void&lt;/code&gt;, but it can be assigned to a
+variable &lt;code&gt;x&lt;/code&gt; with the syntax &lt;code&gt;:&amp;gt; int x&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;&lt;span class="caps"&gt;IO&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;Variables of the type port provide access to &lt;span class="caps"&gt;IO&lt;/span&gt; pins on an XCore device in &lt;span class="caps"&gt;XC&lt;/span&gt;.
+Ports can have power-of-two widths, allowing the same number of bits to be
+input or output every cycle. The same channel input and output operators &lt;code&gt;&amp;lt;&lt;/code&gt;
+and &lt;code&gt;&amp;gt;&lt;/code&gt; respectively are used for&amp;nbsp;this.&lt;/p&gt;
+&lt;p&gt;The following program continuously reads the value on one port and outputs it
+on&amp;nbsp;another:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;xs1.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;XS1_PORT_1A&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;XS1_PORT_1B&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;bool&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nl"&gt;p&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The declaration of ports must have global scope and each port must specify
+whether it is inputting or outputting, and is assigned a fixed value to specify
+which pins it corresponds to. These values are defined as macros in a system
+header file (&lt;code&gt;xs1.h&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;By default, ports are driven at the tile&amp;#8217;s reference clock. However, clock
+block resources can be used to provide different clock signals, either by
+dividing the reference clock, or based on an external signal. Ports can be
+further configured to use buffering and to synchronise with other ports. This
+configuration is performed using library functions. Port&amp;nbsp;events&lt;/p&gt;
+&lt;p&gt;Ports can generate events, which can be handled in select statements. For
+example, the&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;when&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pinseq&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Received input %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;uses the predicate when &lt;code&gt;pinseq&lt;/code&gt; to wait for the value on the port &lt;code&gt;p&lt;/code&gt; to equal &lt;code&gt;v&lt;/code&gt;
+before triggering the response to print a&amp;nbsp;notification.&lt;/p&gt;
+&lt;h3&gt;Port&amp;nbsp;timing&lt;/h3&gt;
+&lt;p&gt;To be able to control when outputs on a port occur with respect to the port&amp;#8217;s
+clock, outputs can be timestamped or timed. The timestamped&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;causes the value &lt;code&gt;v&lt;/code&gt; to be output on the port &lt;code&gt;p&lt;/code&gt; and for count to be set to the
+value of the port&amp;#8217;s counter (incremented by one each reference clock cycle).
+The timed output&amp;nbsp;statement:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;causes the port to wait until its counter reaches the value of count before the
+value v is&amp;nbsp;output.&lt;/p&gt;
+&lt;h3&gt;Multiplexing tasks onto&amp;nbsp;cores&lt;/h3&gt;
+&lt;p&gt;By default, each task maps to one core on a tile. Because the number of cores
+is limited (eight in current XCore devices), &lt;span class="caps"&gt;XC&lt;/span&gt; provides two ways to map
+multiple tasks to cores and better exploit the available&amp;nbsp;cores.&lt;/p&gt;
+&lt;p&gt;Server tasks that are composed of a never-ending loop containing a select
+statement can be marked as combinable with the attribute &lt;code&gt;[[combinable]]&lt;/code&gt;. This
+allows the compiler to combine two or more combinable tasks to run on the same
+core, by merging the cases into a single&amp;nbsp;select.&lt;/p&gt;
+&lt;p&gt;Tasks of the same form as combinable ones, except that each case of the select
+handles a transaction function, can be marked with the attribute
+&lt;code&gt;[[distributable]]&lt;/code&gt;. This allows the compiler to convert the select cases into
+local function&amp;nbsp;calls.&lt;/p&gt;
+&lt;h3&gt;Memory&amp;nbsp;access&lt;/h3&gt;
+&lt;p&gt;&lt;span class="caps"&gt;XC&lt;/span&gt; has two models of memory access: safe and unsafe. Safe access is the default
+in which checks are made to ensure&amp;nbsp;that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;memory accesses do not occur outside of their&amp;nbsp;bounds;&lt;/li&gt;
+&lt;li&gt;memory aliases are not&amp;nbsp;created;&lt;/li&gt;
+&lt;li&gt;dangling pointers are not&amp;nbsp;created.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These guarantees are achieved through a combination of a different kinds of
+pointers (restricted, aliasing, movable), static checking during compilation
+and run-time&amp;nbsp;checks.&lt;/p&gt;
+&lt;p&gt;Unsafe pointers provide the same behaviour as pointers in C. An unsafe pointer
+must be declared with the unsafe keyword, and they can only be used within
+&lt;code&gt;unsafe { ... }&lt;/code&gt; regions.&lt;/p&gt;
+&lt;h3&gt;Additional&amp;nbsp;features&lt;/h3&gt;
+&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;span class="caps"&gt;XC&lt;/span&gt; provides references, that are similar to those in C++ and are specified with
+the &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; symbol after the type. A reference provides another name for an existing
+variable, such that reading and writing it is the same as reading and writing
+the original variable. References can refer to elements of an array or
+structure and can be used as parameters to regular and transaction&amp;nbsp;functions.&lt;/p&gt;
+&lt;h4&gt;Nullable&amp;nbsp;types&lt;/h4&gt;
+&lt;p&gt;Resource types such as interfaces, channel ends, ports and clocks must always
+have a valid value. The nullable qualifier allows these types to have no value,
+which is specified with the &lt;code&gt;?&lt;/code&gt; symbol. For example, a nullable channel is
+declared&amp;nbsp;with:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;chan&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Nullable resource types can also be used to implement optional resource
+arguments for functions. The &lt;code&gt;isnull()&lt;/code&gt; builtin function can be used to check
+if a resource is&amp;nbsp;null.&lt;/p&gt;
+&lt;h4&gt;Multiple&amp;nbsp;returns&lt;/h4&gt;
+&lt;p&gt;In &lt;span class="caps"&gt;XC&lt;/span&gt;, functions can return multiple values. For example, the following
+function implements the swap&amp;nbsp;operation:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;swap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The function swap is called with a multiple&amp;nbsp;assignment:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;swap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Multicore Hello&amp;nbsp;World&lt;/h2&gt;
+&lt;p&gt;The following program prints &lt;code&gt;Hello World&lt;/code&gt; on four&amp;nbsp;processors:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;platform.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;chanend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;chanend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cout&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nl"&gt;cin&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello from core %d!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;chan&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;References and further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;David May. The &lt;span class="caps"&gt;XMOS&lt;/span&gt; &lt;span class="caps"&gt;XS1&lt;/span&gt; Architecture
+   (&lt;a href="http://www.xmos.com/download/public/The-XMOS-XS1-Architecture(X7879A).pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Douglas R. Watt. Programming &lt;span class="caps"&gt;XC&lt;/span&gt; on &lt;span class="caps"&gt;XMOS&lt;/span&gt; Devices
+   (&lt;a href="https://www.xmos.com/download/public/XC-Programming-Guide(X1009B).pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;The &lt;span class="caps"&gt;XMOS&lt;/span&gt; programming guide
+   (&lt;a href="https://web.archive.org/web/20141129060750/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&amp;amp;component=17653"&gt;&lt;span class="caps"&gt;HTML&lt;/span&gt;&lt;/a&gt;,
+   &lt;a href="https://www.xmos.com/download/public/XMOS-Programming-Guide-(documentation)(E).pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;The &lt;span class="caps"&gt;XC&lt;/span&gt; Language Specification
+   (&lt;a href="https://web.archive.org/web/20141129060737/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&amp;amp;component=14805"&gt;&lt;span class="caps"&gt;HTML&lt;/span&gt;&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category><category term="computer-architecture"></category><category term="programming-languages"></category></entry><entry><title>The XMOS XMP-64</title><link href="http://jameswhanlon.com/the-xmos-xmp-64.html" rel="alternate"></link><published>2014-12-04T00:00:00+01:00</published><updated>2014-12-04T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2014-12-04:/the-xmos-xmp-64.html</id><summary type="html">&lt;p&gt;The &lt;span class="caps"&gt;XMP&lt;/span&gt;-64 is an experimental single-board distributed-memory parallel computer
 with 512 hardware threads  and is programmable with a C-like language.  It was
 developed by &lt;a href="https://www.xmos.com&amp;gt;"&gt;&lt;span class="caps"&gt;XMOS&lt;/span&gt;&lt;/a&gt; in 2009 to demonstrate the
 scalablility of the &lt;a href="https://en.wikipedia.org/wiki/XCore_XS1"&gt;&lt;span class="caps"&gt;XS1&lt;/span&gt; architecture&lt;/a&gt;.

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>The XC Programming Language</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    The <span class="caps">XC</span> Programming&nbsp;Language
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2014-12-13T00:00:00+01:00">
+      13 Dec 2014
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/computer-architecture.html">computer-architecture</a></span>
+      <span class="article-tag small"><a href="/tag/programming-languages.html">programming-languages</a></span>
+  </div>
+  <div class="article-body">
+    <p><span class="caps">XC</span> is a programming language developed by <span class="caps">XMOS</span> for real-time embedded parallel
+programming of their XCore processor architecture. <span class="caps">XC</span> is based on the features
+for parallelism and communication in occam, and the syntax and some sequential
+features of C. In addition, <span class="caps">XC</span> provides primitives to expose hardware
+resources: locks, ports and timers. <span class="caps">XC</span> programs can be executed with levels of
+I/O real-time performance that is usually attributed to <span class="caps">FPGA</span> or <span class="caps">ASIC</span> devices.
+The design of <span class="caps">XC</span> was heavily influenced by the occam programming language,
+which first introduced channel communication, alternation, ports and timers.
+Occam was developed by <a href="https://en.wikipedia.org/wiki/David_May_(computer_scientist)">David
+May</a> and built on
+the <a href="">Communicating Sequential Processes</a> formalism, a process algebra
+developed by <a href="https://en.wikipedia.org/wiki/Tony_Hoare">Tony Hoare</a>.</p>
+<p>This note was originally written for
+<a href="https://en.wikipedia.org/w/index.php?title=XC_(programming_language)">Wikipedia</a>,
+but the content was removed owing to it being too much like a manual. To save
+it from being lost, I&#8217;ve posted it here (December&nbsp;2021).</p>
+<h2>Architectural&nbsp;model</h2>
+<p>An <span class="caps">XC</span> program executes on a collection of XCore tiles. Each tile contains one
+or more processing cores and resources that can be shared between the cores,
+including I/O and memory. All tiles are connected by a communication network
+that allows any tile to communicate with any other tile. A given target system
+is specified during compilation and the compiler ensures that a sufficient
+number of tiles, cores and resources are available to execute the program being&nbsp;compiled. </p>
+<h2>Features</h2>
+<p>The following sections outline the key features of <span class="caps">XC</span>.</p>
+<h3>Parallelism</h3>
+<p>Statements in <span class="caps">XC</span> are executed in sequence (as they are in C), so that in the
+execution&nbsp;of:</p>
+<div class="codehilite"><pre><span></span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+
+
+<p>the function <code>g</code> is only executed once the execution of the function <code>f</code> has
+completed. A set of statements can be made to execute in parallel using a <code>par</code>
+statement, so that the&nbsp;statement</p>
+<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>causes <code>f</code> and <code>g</code> to be executed simultaneously. The execution of parallel
+statement only completes when each of the component statements have completed.
+The component statements are called tasks in <span class="caps">XC</span>.</p>
+<p>Because the sharing of variables can lead to race conditions and
+non-deterministic behaviour, <span class="caps">XC</span> enforces parallel disjointness. Disjointness
+means that a variable that is changed in one component statement of a par may
+not be used in any other&nbsp;statement.</p>
+<p>Parallel statements can be written with a replicator, in a similar fashion to a
+for loop, so that many similar instances of a task can be created without
+having to write each one separately, so that the&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+
+
+<p>is equivalent&nbsp;to:</p>
+<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>The tasks in a parallel statement are executed by creating threads on the
+processor executing the statement. Tasks can be placed on different tiles by
+using an <code>on</code> prefix. In following&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>the task <code>f</code> is placed on any available core of tile 0 and instances of the task
+g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
+main function of an <span class="caps">XC</span> program. Conceptually, this is because when an <span class="caps">XC</span>
+program is compiled, it is divided up at its top level, into separately
+executable programs for each&nbsp;tile. </p>
+<h3>Communication</h3>
+<p>Parallel tasks are able to communicate with each other using interfaces or channels.&nbsp;Interfaces</p>
+<p>An interface specifies a set of transaction types, where each type is defined
+as a function with parameter and return types. When two tasks are connected via
+an interface, one operates as a server and the other as a client. The client is
+able to initiate a transaction with the corresponding server, with syntax
+similar to a conventional function call. This interaction can be seen as a
+remote procedure call. For example, in the parallel&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// server</span>
+<span class="w">    </span><span class="n">i</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">:</span><span class="w"></span>
+<span class="w">      </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Received %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">i</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// client</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>the client initiates the transaction <code>f</code>, with the parameter value 42, from the
+interface <code>i</code>. The server waits on the transaction (as a case in the select
+statement) and responds when the client initiates it by printing out a message
+with the received parameter value. Transaction functions can also be used for
+two-way communication by using reference parameters, allowing data to be
+transferred from a client to a server, and then back&nbsp;again.</p>
+<p>Interfaces can only be used by two tasks; they do not allow multiple clients to
+be connected to one server. The types of either end of an interface connection
+of type <code>T</code> are server interface <code>T</code> and client interface <code>T</code>. Therefore, when
+interface types are passed as parameters, the type of connection must also be
+specified, for&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">s</span><span class="p">(</span><span class="n">server</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">client</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">s</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">c</span><span class="p">(</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>Transaction functions in an interface restrict servers to reacting only in
+response to client requests, but in some circumstances it is useful for a
+server to be able to trigger a response from the client. This can be achieved
+by annotating a function in the interface with no parameters and a void return
+type, with <code>[[notification]]</code> slave. The client waits on the notification
+transaction in a select statement for the server to initiate it. A
+corresponding function can be annotated with <code>[[clears_notification]]</code>, which is
+called by the slave to clear the notification. In the following simple&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="nc">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="n">[notification</span><span class="o">]</span><span class="err">]</span><span class="w"> </span><span class="n">slave</span><span class="w"> </span><span class="n">void</span><span class="w"> </span><span class="n">isReady</span><span class="p">();</span><span class="w"></span>
+<span class="w">  </span><span class="o">[</span><span class="n">[clears_notification</span><span class="o">]</span><span class="err">]</span><span class="w"> </span><span class="nc">int</span><span class="w"> </span><span class="n">getValue</span><span class="p">();</span><span class="w"></span>
+<span class="err">}</span><span class="p">;</span><span class="w"></span>
+<span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">i1</span><span class="p">,</span><span class="w"> </span><span class="n">i2</span><span class="p">;</span><span class="w"></span>
+<span class="n">par</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="err">{</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">server</span><span class="w"></span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">i2</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="nc">int</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">i1</span><span class="p">.</span><span class="n">isReady</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="n">i1</span><span class="p">.</span><span class="n">getValue</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">int</span><span class="w"> </span><span class="k">data</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="err">{</span><span class="w"> </span><span class="nc">int</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w">                     </span><span class="o">//</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="k">select</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">i1</span><span class="p">.</span><span class="n">isReady</span><span class="p">()</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i1</span><span class="p">.</span><span class="n">getValue</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="n">i2</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w">                    </span><span class="o">//</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>when client 2 initiates the transaction function <code>f</code>, the server notifies client
+1 via the transaction function <code>isReady</code>. Client 1 waits for the server
+notification, and then initiates <code>getValue</code> when it is&nbsp;received.</p>
+<p>So that it is easier to connect many clients to one server, interfaces can also
+be declared as arrays. A server can select over an interface array using an
+index&nbsp;variable.</p>
+<p>Interfaces can also be extended, so that basic client interfaces can be
+augmented with new functionality. In particular, client interface extensions
+can invoke transaction functions in the base interface to provide a layer of
+additional&nbsp;complexity.</p>
+<h3>Channels</h3>
+<p>Communication channels provide a more primitive way of communicating between
+tasks than interfaces. A channel connects two tasks and allows them to send and
+receive data, using the in <code>&lt;:</code> and out <code>:&gt;</code> operators respectively. A
+communication only occurs when an input is matched with an output, and because
+either side waits for the other to be ready, this also causes the tasks to
+synchronise. In the&nbsp;following:</p>
+<div class="codehilite"><pre><span></span><span class="n">chan</span><span class="w"> </span><span class="n">c</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nl">c</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>the value 42 is sent over the channel <code>c</code> and assigned to the variable <code>x</code>.</p>
+<h3>Streaming&nbsp;channels</h3>
+<p>A streaming channel does not require each input and matching output to
+synchronise, so communication can occur&nbsp;asynchronously.</p>
+<h3>Event&nbsp;handling</h3>
+<p>The select statement waits for events to occur. It is similar to the
+alternation process in occam. Each component of a select is an event, such as
+an interface transaction, channel input or port input (see #<span class="caps">IO</span>), and an
+associated action. When a select is executed, it waits until the first event is
+enabled and then executes that event&#8217;s action. In the following&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>the select statement merges data from left and right channels on to an out&nbsp;channel.</p>
+<p>A select case can be guarded, so that the case is only selected if the guard
+expression is true at the same time the event is enabled. For example, with a&nbsp;guard:</p>
+<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+
+<p>the left-hand channel of the above example can only input data when the
+variable enable is&nbsp;true.</p>
+<p>The selection of events is arbitrary, but event priority can be enforced with
+the <code>[[ordered]]</code> attribute for selects. The effect is that higher-priority
+events occur earlier in the body of the&nbsp;statement.</p>
+<p>To aid in creating reusable components and libraries, select functions can be
+used to abstract multiple cases of a select into a single unit. The following
+select function encapsulates the cases of the above select&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">chanend</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>so that the select statement can be&nbsp;written:</p>
+<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<h3>Timing</h3>
+<p>Every tile has a reference clock that can be accessed via timer variables.
+Performing an output operation on a timer reads the current time in cycles. For
+example, to calculate the elapsed execution time of a function <code>f</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"></span>
+<span class="nl">t</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"></span>
+<span class="n">f</span><span class="p">();</span><span class="w"></span>
+<span class="nl">t</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"></span>
+<span class="n">printf</span><span class="p">(</span><span class="s">&quot;Elapsed time %u s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="n">CYCLES_PER_SEC</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+
+
+<p>where <code>CYCLES_PER_SEC</code> is defined to be the number of cycles per&nbsp;second.</p>
+<p>Timers can also be used in select statements to trigger events. For example,
+the select&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
+<span class="kt">uint32_t</span><span class="w"> </span><span class="n">time</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">timerafter</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Action to be performed after the delay</span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>waits for the timer <code>t</code> to exceed the value of time before reacting to it. The
+value of <code>t</code> is discarded with the syntax <code>:&gt; void</code>, but it can be assigned to a
+variable <code>x</code> with the syntax <code>:&gt; int x</code>.</p>
+<h3><span class="caps">IO</span></h3>
+<p>Variables of the type port provide access to <span class="caps">IO</span> pins on an XCore device in <span class="caps">XC</span>.
+Ports can have power-of-two widths, allowing the same number of bits to be
+input or output every cycle. The same channel input and output operators <code>&lt;</code>
+and <code>&gt;</code> respectively are used for&nbsp;this.</p>
+<p>The following program continuously reads the value on one port and outputs it
+on&nbsp;another:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;xs1.h&gt;</span><span class="cp"></span>
+<span class="n">in</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XS1_PORT_1A</span><span class="p">;</span><span class="w"></span>
+<span class="n">out</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XS1_PORT_1B</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nl">p</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>The declaration of ports must have global scope and each port must specify
+whether it is inputting or outputting, and is assigned a fixed value to specify
+which pins it corresponds to. These values are defined as macros in a system
+header file (<code>xs1.h</code>).</p>
+<p>By default, ports are driven at the tile&#8217;s reference clock. However, clock
+block resources can be used to provide different clock signals, either by
+dividing the reference clock, or based on an external signal. Ports can be
+further configured to use buffering and to synchronise with other ports. This
+configuration is performed using library functions. Port&nbsp;events</p>
+<p>Ports can generate events, which can be handled in select statements. For
+example, the&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">pinseq</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Received input %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>uses the predicate when <code>pinseq</code> to wait for the value on the port <code>p</code> to equal <code>v</code>
+before triggering the response to print a&nbsp;notification.</p>
+<h3>Port&nbsp;timing</h3>
+<p>To be able to control when outputs on a port occur with respect to the port&#8217;s
+clock, outputs can be timestamped or timed. The timestamped&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+
+<p>causes the value <code>v</code> to be output on the port <code>p</code> and for count to be set to the
+value of the port&#8217;s counter (incremented by one each reference clock cycle).
+The timed output&nbsp;statement:</p>
+<div class="codehilite"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+
+<p>causes the port to wait until its counter reaches the value of count before the
+value v is&nbsp;output.</p>
+<h3>Multiplexing tasks onto&nbsp;cores</h3>
+<p>By default, each task maps to one core on a tile. Because the number of cores
+is limited (eight in current XCore devices), <span class="caps">XC</span> provides two ways to map
+multiple tasks to cores and better exploit the available&nbsp;cores.</p>
+<p>Server tasks that are composed of a never-ending loop containing a select
+statement can be marked as combinable with the attribute <code>[[combinable]]</code>. This
+allows the compiler to combine two or more combinable tasks to run on the same
+core, by merging the cases into a single&nbsp;select.</p>
+<p>Tasks of the same form as combinable ones, except that each case of the select
+handles a transaction function, can be marked with the attribute
+<code>[[distributable]]</code>. This allows the compiler to convert the select cases into
+local function&nbsp;calls.</p>
+<h3>Memory&nbsp;access</h3>
+<p><span class="caps">XC</span> has two models of memory access: safe and unsafe. Safe access is the default
+in which checks are made to ensure&nbsp;that:</p>
+<ul>
+<li>memory accesses do not occur outside of their&nbsp;bounds;</li>
+<li>memory aliases are not&nbsp;created;</li>
+<li>dangling pointers are not&nbsp;created.</li>
+</ul>
+<p>These guarantees are achieved through a combination of a different kinds of
+pointers (restricted, aliasing, movable), static checking during compilation
+and run-time&nbsp;checks.</p>
+<p>Unsafe pointers provide the same behaviour as pointers in C. An unsafe pointer
+must be declared with the unsafe keyword, and they can only be used within
+<code>unsafe { ... }</code> regions.</p>
+<h3>Additional&nbsp;features</h3>
+<h4>References</h4>
+<p><span class="caps">XC</span> provides references, that are similar to those in C++ and are specified with
+the <span class="amp">&amp;</span> symbol after the type. A reference provides another name for an existing
+variable, such that reading and writing it is the same as reading and writing
+the original variable. References can refer to elements of an array or
+structure and can be used as parameters to regular and transaction&nbsp;functions.</p>
+<h4>Nullable&nbsp;types</h4>
+<p>Resource types such as interfaces, channel ends, ports and clocks must always
+have a valid value. The nullable qualifier allows these types to have no value,
+which is specified with the <code>?</code> symbol. For example, a nullable channel is
+declared&nbsp;with:</p>
+<div class="codehilite"><pre><span></span><span class="n">chan</span><span class="w"> </span><span class="o">?</span><span class="n">c</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+
+
+<p>Nullable resource types can also be used to implement optional resource
+arguments for functions. The <code>isnull()</code> builtin function can be used to check
+if a resource is&nbsp;null.</p>
+<h4>Multiple&nbsp;returns</h4>
+<p>In <span class="caps">XC</span>, functions can return multiple values. For example, the following
+function implements the swap&nbsp;operation:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">}</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>The function swap is called with a multiple&nbsp;assignment:</p>
+<div class="codehilite"><pre><span></span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+
+
+<h2>Multicore Hello&nbsp;World</h2>
+<p>The following program prints <code>Hello World</code> on four&nbsp;processors:</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;platform.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cin</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cout</span><span class="p">){</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nl">cin</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from core %d!&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">chan</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hello</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">c</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">4</span><span class="p">]);</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<h2>References and further&nbsp;reading</h2>
+<ul>
+<li>David May. The <span class="caps">XMOS</span> <span class="caps">XS1</span> Architecture
+   (<a href="http://www.xmos.com/download/public/The-XMOS-XS1-Architecture(X7879A).pdf"><span class="caps">PDF</span></a>).</li>
+<li>Douglas R. Watt. Programming <span class="caps">XC</span> on <span class="caps">XMOS</span> Devices
+   (<a href="https://www.xmos.com/download/public/XC-Programming-Guide(X1009B).pdf"><span class="caps">PDF</span></a>).</li>
+<li>The <span class="caps">XMOS</span> programming guide
+   (<a href="https://web.archive.org/web/20141129060750/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&amp;component=17653"><span class="caps">HTML</span></a>,
+   <a href="https://www.xmos.com/download/public/XMOS-Programming-Guide-(documentation)(E).pdf"><span class="caps">PDF</span></a>)</li>
+<li>The <span class="caps">XC</span> Language Specification
+   (<a href="https://web.archive.org/web/20141129060737/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&amp;component=14805"><span class="caps">HTML</span></a>)</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery-3.6.0.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <script src="./theme/js/bootstrap.bundle.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-19458374-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>
