@@ -499,3 +499,4 @@ int main(void) {
    [PDF](https://www.xmos.com/download/public/XMOS-Programming-Guide-\(documentation\)\(E\).pdf))
 - The XC Language Specification
    ([HTML](https://web.archive.org/web/20141129060737/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&component=14805))
+- [xC is C plus x](https://www.teigfam.net/oyvind/home/technology/141-xc-is-c-plus-x/), Øyvind Teig.
