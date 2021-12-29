@@ -2,7 +2,7 @@
 Title: The XC Programming Language 
 Date: 2014-12-13
 Category: notes 
-Tags: computing, computer-architecture, programming-language 
+Tags: computing, computer-architecture, programming-languages 
 Status: published 
 ---
 
