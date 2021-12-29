@@ -1,4 +1,4 @@
-pelican==4.2.0
+pelican==4.7.0
 Pillow==8.3.2
 typogrify==2.0.7
 Markdown==3.1.1
