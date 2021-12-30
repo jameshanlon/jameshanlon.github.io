@@ -83,9 +83,9 @@ documentation</a>, or use the <code>:help</code> tags that I&#8217;ve&nbsp;given
 <h2>Motions</h2>
 <p>Motions change the position of the cursor and can be combined with a count to
 repeat the&nbsp;motion.</p>
-<div class="codehilite"><pre><span></span>count := {digits}
-motion := [&lt;count&gt;] &lt;motion-keys&gt;
-command := &lt;motion&gt;
+<div class="codehilite"><pre><span></span><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span><span class="w"></span>
+<span class="nv">motion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
+<span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -109,8 +109,8 @@ cursor. Compared to motions, text objects on a whole object, regardless of the
 specific cursor position. The <code>a</code> and <code>i</code> modifiers augment text objects,
 specifying whether the surrounding context should be included. The context may
 be whitespace or delimiting&nbsp;characters.</p>
-<div class="codehilite"><pre><span></span>text-object := &lt;text-object-keys&gt;
-             | &lt;modifier&gt; &lt;text-object-keys&gt;
+<div class="codehilite"><pre><span></span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -136,8 +136,8 @@ be whitespace or delimiting&nbsp;characters.</p>
 <h2>Operators on text&nbsp;objects</h2>
 <p>Operators can be applied to text objects. In some circumstances, a count can be
 applied to the text object to repeat its&nbsp;effect.</p>
-<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;text-object&gt;
-text-object := &lt;count&gt; &lt;modifier&gt; &lt;text-object-keys&gt;
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span><span class="w"></span>
+<span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -168,7 +168,7 @@ text-object := &lt;count&gt; &lt;modifier&gt; &lt;text-object-keys&gt;
 <h2>Operators on&nbsp;motions</h2>
 <p>A motion can be applied after an operator to apply the operator on the text
 that was moved&nbsp;over.</p>
-<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;motion&gt;
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -194,7 +194,7 @@ that was moved&nbsp;over.</p>
 </ul>
 <h2>Duplicate&nbsp;operators</h2>
 <p>Operators applied twice affect the entire line, a synonym for <code>&lt;operator&gt;_</code>,</p>
-<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; &lt;operator&gt;
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -221,7 +221,7 @@ that was moved&nbsp;over.</p>
 </ul>
 <h2>Filtering</h2>
 <p>Text lines can be filtered through an external program (see <code>:help filter</code>).</p>
-<div class="codehilite"><pre><span></span>command := ! &lt;motion&gt; &lt;filter&gt;
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -247,12 +247,12 @@ are additional ones that can (see <code>:help visual-operators</code>). A visual
 created by entering a visual mode, then providing a motion or text object to
 set the selection, or alternatively by any sequence of movement commands
 (referred to by <code>{move-around}</code>).</p>
-<div class="codehilite"><pre><span></span>visual-block := {visual} {move-around}
-              | {visual} &lt;motion&gt;
-              | {visual} &lt;text-object&gt;
-command := &lt;visual-block&gt; &lt;operator&gt;
-         | &lt;visual-block&gt; &lt;visual-operator&gt;
-         | &lt;visual-block&gt; ! &lt;filter&gt;
+<div class="codehilite"><pre><span></span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="nv">move</span><span class="o">-</span><span class="nv">around</span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span><span class="w"></span>
+<span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 
 
@@ -278,7 +278,7 @@ command := &lt;visual-block&gt; &lt;operator&gt;
 <p>Beyond the above rules, there are further command keys and more restricted
 combination with motions, operators and text&nbsp;objects.</p>
 <p>The <code>.</code> command repeats the last change that was&nbsp;made.</p>
-<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] .
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">.</span><span class="w"></span>
 </pre></div>
 
 
@@ -289,8 +289,8 @@ combination with motions, operators and text&nbsp;objects.</p>
 </ul>
 <p>The <code>gn</code> and <code>gN</code> motions can be used with operators to move between matching
 search&nbsp;patterns.</p>
-<div class="codehilite"><pre><span></span>command := [&lt;count&gt;] &lt;operator&gt; gn
-         | [&lt;count&gt;] &lt;operator&gt; gN
+<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gn</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gN</span><span class="w"></span>
 </pre></div>
 
 
@@ -597,29 +597,29 @@ in the Vim&nbsp;help:</p>
 </div>
 </div>
 
-<div class="codehilite"><pre><span></span>count := {digits}
+<div class="codehilite"><pre><span></span><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span><span class="w"></span>
 
-text-object := &lt;text-object-keys&gt;
-             | &lt;modifier&gt; &lt;text-object-keys&gt;
-             | &lt;count&gt; &lt;modifier&gt; &lt;text-object-keys&gt;
+<span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
 
-motion := [&lt;count&gt;] &lt;motion-keys&gt;
+<span class="nv">motion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span><span class="w"></span>
 
-visual-block := {visual} {move-around}
-              | {visual} &lt;motion&gt;
-              | {visual} &lt;text-object&gt;
+<span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="nv">move</span><span class="o">-</span><span class="nv">around</span><span class="p">}</span><span class="w"></span>
+<span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span><span class="w"></span>
 
-command := &lt;motion&gt;
-         | [&lt;count&gt;] &lt;operator&gt; &lt;text-object&gt;
-         | [&lt;count&gt;] &lt;operator&gt; &lt;motion&gt;
-         | [&lt;count&gt;] &lt;operator&gt; &lt;operator&gt;
-         | ! &lt;motion&gt; &lt;filter&gt;
-         | &lt;visual-block&gt; &lt;operator&gt;
-         | &lt;visual-block&gt; &lt;visual-operator&gt;
-         | &lt;visual-block&gt; ! &lt;filter&gt;
-         | [&lt;count&gt;] .
-         | [&lt;count&gt;] &lt;operator&gt; gn
-         | [&lt;count&gt;] &lt;operator&gt; gN
+<span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">.</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gn</span><span class="w"></span>
+<span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gN</span><span class="w"></span>
 </pre></div>
 
 

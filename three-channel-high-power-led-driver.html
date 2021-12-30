@@ -328,36 +328,36 @@ in the payload. At 115,200 bps, this in theory allows up to 389 commands to
 be sent per second. Note that the boards do not send an acknowledgement, since
 this significantly reduces the throughput. In Python a packet can be sent with
 (<a href="https://github.com/jameshanlon/rgb-stacks/blob/master/rgbstacks.py">snippet from here</a>):</p>
-<div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">set_colour</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
-    <span class="nb">assert</span> <span class="n">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
-    <span class="n">usart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bytearray</span><span class="p">([</span><span class="n">chr</span><span class="p">(</span><span class="mi">255</span><span class="p">)]</span><span class="o">+</span><span class="n">payload</span><span class="p">))</span>
-    <span class="n">usart</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="n">def</span><span class="w"> </span><span class="n">set_colour</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span><span class="w"></span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">usart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bytearray</span><span class="p">([</span><span class="n">chr</span><span class="p">(</span><span class="mi">255</span><span class="p">)]</span><span class="o">+</span><span class="n">payload</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="n">usart</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span><span class="w"></span>
 </pre></div>
 
 
 <p>The PICs receive <span class="caps">UART</span> data and set the output PWMs thus
 (<a href="https://github.com/jameshanlon/rgb-stacks/blob/master/PIC/main.c">snippet from here</a>):</p>
-<div class="codehilite"><pre><span></span><span class="o">...</span>
-<span class="o">//</span> <span class="n">Reset</span> <span class="k">if</span> <span class="n">we</span> <span class="n">see</span> <span class="n">the</span> <span class="n">start</span> <span class="n">of</span> <span class="n">packet</span> <span class="n">marker</span><span class="o">.</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span> <span class="o">==</span> <span class="n">START_PACKET</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">uart_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-  <span class="o">//</span> <span class="n">Packet</span> <span class="n">payload</span><span class="o">.</span>
-  <span class="n">uart_data</span><span class="p">[</span><span class="n">uart_count</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span><span class="p">;</span>
-  <span class="o">//</span> <span class="n">When</span> <span class="n">we</span><span class="s1">&#39;ve received the payload, update PWMs and setup for next packet.</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">uart_count</span> <span class="o">==</span> <span class="n">PAYLOAD_SIZE</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">//</span> <span class="n">Set</span> <span class="n">the</span> <span class="n">duty</span> <span class="n">cycles</span><span class="p">,</span> <span class="n">scale</span> <span class="n">an</span> <span class="mi">8</span><span class="o">-</span><span class="n">bit</span> <span class="nb">range</span> <span class="n">into</span> <span class="mi">16</span> <span class="n">bits</span><span class="o">.</span>
-    <span class="n">PWM1DC</span> <span class="o">=</span> <span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">;</span>
-    <span class="n">PWM2DC</span> <span class="o">=</span> <span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">;</span>
-    <span class="n">PWM3DC</span> <span class="o">=</span> <span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">;</span>
-    <span class="o">//</span> <span class="n">Reload</span> <span class="n">the</span> <span class="n">PWMs</span><span class="o">.</span>
-    <span class="n">PWM1LD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">PWM2LD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">PWM3LD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">uart_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-<span class="o">...</span>
+<div class="codehilite"><pre><span></span><span class="o">...</span><span class="w"></span>
+<span class="o">//</span><span class="w"> </span><span class="n">Reset</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">packet</span><span class="w"> </span><span class="n">marker</span><span class="o">.</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">START_PACKET</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">uart_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Packet</span><span class="w"> </span><span class="n">payload</span><span class="o">.</span><span class="w"></span>
+<span class="w">  </span><span class="n">uart_data</span><span class="p">[</span><span class="n">uart_count</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">When</span><span class="w"> </span><span class="n">we</span><span class="s1">&#39;ve received the payload, update PWMs and setup for next packet.</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uart_count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PAYLOAD_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">duty</span><span class="w"> </span><span class="n">cycles</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="n">bit</span><span class="w"> </span><span class="nb">range</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="n">bits</span><span class="o">.</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM1DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM2DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM3DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Reload</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">PWMs</span><span class="o">.</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM1LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM2LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">PWM3LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">uart_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+<span class="o">...</span><span class="w"></span>
 </pre></div>
 
 

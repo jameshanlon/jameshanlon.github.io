@@ -209,17 +209,17 @@ are true sequential dependencies between statements in the block. In general,
 parallelism should be exposed where ever possible. In the the following
 example, the sequentiality is not necessary since the output <code>set_foo</code> depends
 independently on the various&nbsp;conditions:</p>
-<div class="codehilite"><pre><span></span><span class="n">always_comb</span> <span class="n">begin</span>
-  <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b0;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">signal_a</span> <span class="o">&amp;&amp;</span>
-      <span class="n">signal_b</span><span class="p">)</span>
-    <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b1;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">signal_c</span> <span class="o">||</span>
-      <span class="n">signal_d</span><span class="p">)</span>
-    <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b1;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">signal_e</span><span class="p">)</span>
-    <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b1;</span>
-<span class="n">end</span>
+<div class="codehilite"><pre><span></span><span class="n">always_comb</span><span class="w"> </span><span class="n">begin</span><span class="w"></span>
+<span class="w">  </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"></span>
+<span class="w">      </span><span class="n">signal_b</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_c</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">      </span><span class="n">signal_d</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_e</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="n">end</span><span class="w"></span>
 </pre></div>
 
 
@@ -227,15 +227,15 @@ independently on the various&nbsp;conditions:</p>
 be transformed to separate the logic for each condition into separate parallel
 processes (extracting into <code>assign</code> statements as per the rule above) and
 explicitly combine them with the implied logical disjunction of the original&nbsp;block:</p>
-<div class="codehilite"><pre><span></span><span class="n">assign</span> <span class="n">condition_a</span> <span class="o">=</span> <span class="n">signal_a</span> <span class="o">&amp;&amp;</span> <span class="n">signal_b</span><span class="p">;</span>
-<span class="n">assign</span> <span class="n">condition_b</span> <span class="o">=</span> <span class="n">signal_c</span> <span class="o">||</span> <span class="n">signal_d</span><span class="p">;</span>
-<span class="n">always_comb</span> <span class="n">begin</span>
-  <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b0;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">condition_a</span> <span class="o">||</span>
-      <span class="n">condition_b</span> <span class="o">||</span>
-      <span class="n">signal_e</span><span class="p">)</span>
-    <span class="n">set_foo</span> <span class="o">=</span> <span class="mi">1</span><span class="s1">&#39;b1;</span>
-<span class="n">end</span>
+<div class="codehilite"><pre><span></span><span class="n">assign</span><span class="w"> </span><span class="n">condition_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signal_a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">signal_b</span><span class="p">;</span><span class="w"></span>
+<span class="n">assign</span><span class="w"> </span><span class="n">condition_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signal_c</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">signal_d</span><span class="p">;</span><span class="w"></span>
+<span class="n">always_comb</span><span class="w"> </span><span class="n">begin</span><span class="w"></span>
+<span class="w">  </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">condition_a</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">      </span><span class="n">condition_b</span><span class="w"> </span><span class="o">||</span><span class="w"></span>
+<span class="w">      </span><span class="n">signal_e</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="n">end</span><span class="w"></span>
 </pre></div>
 
 
@@ -257,45 +257,45 @@ leading to false circular combinatorial loops. In these cases, it issues an
 reduced emulation performance. Generally, fixing warnings pertaning to
 unoptimisable constructs can improve Verilator&#8217;s simulation performance by <a href="https://www.veripool.org/papers/verilator_philips_internals.pdf">up
 to a factor of two</a>.</p>
-<div class="codehilite"><pre><span></span><span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">foo</span> <span class="o">=</span> <span class="nt">foo_q</span><span class="o">;</span>
-  <span class="nt">bar</span> <span class="o">=</span> <span class="nt">bar_q</span><span class="o">;</span>
-  <span class="nt">if</span> <span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span>
-    <span class="nt">case</span> <span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
-      <span class="nt">0</span><span class="o">:</span> <span class="nt">begin</span>
-        <span class="nt">foo</span> <span class="o">=</span> <span class="o">...;</span>
-        <span class="nt">if</span> <span class="o">(</span><span class="nt">condition_c</span><span class="o">)</span>
-          <span class="nt">bar</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">end</span>
-      <span class="nt">1</span><span class="o">:</span> <span class="nt">foo</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">2</span><span class="o">:</span> <span class="nt">bar</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">default</span><span class="o">:;</span>
-    <span class="nt">endcase</span>
-<span class="nt">end</span>
+<div class="codehilite"><pre><span></span><span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">foo_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">bar_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span><span class="w"></span>
+<span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">        </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_c</span><span class="o">)</span><span class="w"></span>
+<span class="w">          </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">end</span><span class="w"></span>
+<span class="w">      </span><span class="nt">1</span><span class="o">:</span><span class="w"> </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">2</span><span class="o">:</span><span class="w"> </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">default</span><span class="o">:;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
 </pre></div>
 
 
 <p>The above block could be split into two&nbsp;processes:</p>
-<div class="codehilite"><pre><span></span><span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">foo</span> <span class="o">=</span> <span class="nt">foo_q</span><span class="o">;</span>
-  <span class="nt">if</span> <span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span>
-    <span class="nt">case</span> <span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
-      <span class="nt">0</span><span class="o">:</span> <span class="nt">foo</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">1</span><span class="o">:</span> <span class="nt">foo</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">default</span><span class="o">:;</span>
-    <span class="nt">endcase</span>
-<span class="nt">end</span>
+<div class="codehilite"><pre><span></span><span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">foo_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span><span class="w"></span>
+<span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">1</span><span class="o">:</span><span class="w"> </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">default</span><span class="o">:;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
 
-<span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">bar</span> <span class="o">=</span> <span class="nt">bar_q</span><span class="o">;</span>
-  <span class="nt">if</span> <span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span>
-    <span class="nt">case</span> <span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
-      <span class="nt">0</span><span class="o">:</span> <span class="nt">if</span> <span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
-           <span class="nt">bar</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">2</span><span class="o">:</span> <span class="nt">bar</span> <span class="o">=</span> <span class="o">...;</span>
-      <span class="nt">default</span><span class="o">:;</span>
-    <span class="nt">endcase</span>
-<span class="nt">end</span>
+<span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">bar_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span><span class="w"></span>
+<span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span><span class="w"></span>
+<span class="w">           </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">2</span><span class="o">:</span><span class="w"> </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">default</span><span class="o">:;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
 </pre></div>
 
 
@@ -402,42 +402,42 @@ selected. Changing to <code>unique0</code> will only check for multiple conditio
 bits.</strong> Since set-membership <code>case (...) inside</code> matches <code>?</code> don&#8217;t care bits in
 the same way <code>casez</code> does, it should be used for clarity unless matching <code>x</code>s
 or <code>z</code>s is specifically required. For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span> <span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">state_q</span><span class="o">;</span>
-<span class="nt">case</span> <span class="o">(</span><span class="nt">state_q</span><span class="o">)</span> <span class="nt">inside</span>
-  <span class="nt">4</span><span class="s1">&#39;b000?: statement;</span>
-<span class="s1">  4&#39;</span><span class="nt">b01</span><span class="o">?</span><span class="nt">0</span><span class="o">:</span> <span class="nt">statement</span><span class="o">;</span>
-  <span class="nt">4</span><span class="err">&#39;</span><span class="nt">b110</span><span class="o">?:</span> <span class="nt">statement</span><span class="o">;</span>
-<span class="nt">endcase</span>
+<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">state_q</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span><span class="w"></span>
+<span class="w">  </span><span class="nt">4</span><span class="s1">&#39;b000?: statement;</span>
+<span class="s1">  4&#39;</span><span class="nt">b01</span><span class="o">?</span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">4</span><span class="err">&#39;</span><span class="nt">b110</span><span class="o">?:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span><span class="w"></span>
+<span class="nt">endcase</span><span class="w"></span>
 </pre></div>
 
 
 <p><strong>Use <code>case (1'b1)</code> for one-hot conditions.</strong> For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span> <span class="cp">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">status_q</span><span class="o">;</span>
-<span class="nt">unique</span> <span class="nt">case</span> <span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span> <span class="nt">inside</span>
-  <span class="nt">status_q</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">:</span> <span class="nt">statement</span><span class="o">;</span>
-  <span class="nt">status_q</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="o">:</span> <span class="nt">statement</span><span class="o">;</span>
-  <span class="nt">status_q</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">:</span> <span class="nt">statement</span><span class="o">;</span>
-<span class="nt">endcase</span>
+<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span><span class="w"></span>
+<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span><span class="w"></span>
+<span class="nt">endcase</span><span class="w"></span>
 </pre></div>
 
 
 <p>As an aside, it is convenient to define a one-hot encoding in a union type with
 another struct to provide named access to each member. For example, <code>status_q</code>
 above could be redefined&nbsp;as:</p>
-<div class="codehilite"><pre><span></span><span class="n">typedef</span> <span class="k">enum</span> <span class="n">logic</span> <span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span> <span class="p">{</span>
-  <span class="n">STATUS_START</span> <span class="o">=</span> <span class="mi">3</span><span class="s1">&#39;b001,</span>
-  <span class="n">STATUS_END</span>   <span class="o">=</span> <span class="mi">3</span><span class="s1">&#39;b010,</span>
-  <span class="n">STATUS_ERROR</span> <span class="o">=</span> <span class="mi">3</span><span class="s1">&#39;b100</span>
-<span class="p">}</span> <span class="n">status_enum_t</span><span class="p">;</span>
-<span class="n">typedef</span> <span class="n">union</span> <span class="n">packed</span> <span class="p">{</span>
-  <span class="n">status_enum_t</span> <span class="n">u</span><span class="p">;</span>
-  <span class="n">struct</span> <span class="n">packed</span> <span class="p">{</span>
-    <span class="n">logic</span> <span class="n">status_start</span><span class="p">;</span>
-    <span class="n">logic</span> <span class="n">status_end</span><span class="p">;</span>
-    <span class="n">logic</span> <span class="n">status_error</span><span class="p">;</span>
-  <span class="p">}</span> <span class="n">ctrl</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">status_t</span><span class="p">;</span>
-<span class="n">status_t</span> <span class="n">status_q</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="n">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">STATUS_START</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b001,</span>
+<span class="w">  </span><span class="n">STATUS_END</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b010,</span>
+<span class="w">  </span><span class="n">STATUS_ERROR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b100</span>
+<span class="p">}</span><span class="w"> </span><span class="n">status_enum_t</span><span class="p">;</span><span class="w"></span>
+<span class="n">typedef</span><span class="w"> </span><span class="n">union</span><span class="w"> </span><span class="n">packed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">status_enum_t</span><span class="w"> </span><span class="n">u</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">struct</span><span class="w"> </span><span class="n">packed</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">logic</span><span class="w"> </span><span class="n">status_start</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">logic</span><span class="w"> </span><span class="n">status_end</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">logic</span><span class="w"> </span><span class="n">status_error</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">ctrl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="n">status_t</span><span class="p">;</span><span class="w"></span>
+<span class="n">status_t</span><span class="w"> </span><span class="n">status_q</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 
@@ -446,46 +446,46 @@ this is similar to extracting logic from <code>always_comb</code> blocks into <c
 statements where possible: to make the control flow structure clearer to the
 designer and tooling, and to provide opportunities for reuse or
 further simplification. For example, avoid nesting <code>case</code> statements:</p>
-<div class="codehilite"><pre><span></span><span class="nt">status_t</span> <span class="nt">status_q</span><span class="o">;</span>
-<span class="nt">status_t</span> <span class="nt">next_status</span><span class="o">;</span>
-<span class="nt">logic</span> <span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">mode_q</span><span class="o">;</span>
-<span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">next_status</span> <span class="o">=</span> <span class="nt">state_q</span><span class="o">;</span>
-  <span class="nt">unique</span> <span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="s1">&#39;b1)</span>
+<div class="codehilite"><pre><span></span><span class="nt">status_t</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">status_t</span><span class="w"> </span><span class="nt">next_status</span><span class="o">;</span><span class="w"></span>
+<span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">mode_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="s1">&#39;b1)</span>
 <span class="s1">    status_q.ctrl.stat_start:</span>
 <span class="s1">      unique0 case (mode) inside</span>
-<span class="s1">        4&#39;</span><span class="nt">b000</span><span class="o">?,</span>
-        <span class="nt">4</span><span class="err">&#39;</span><span class="nt">b0</span><span class="o">?</span><span class="nt">00</span><span class="o">:</span> <span class="nt">next_status</span> <span class="o">=</span> <span class="nt">STATUS_ERROR</span><span class="o">;</span>
-        <span class="nt">default</span><span class="o">:</span> <span class="nt">next_status</span> <span class="o">=</span> <span class="nt">STATUS_END</span><span class="o">;</span>
-      <span class="nt">endcase</span>
-    <span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_end</span><span class="o">:</span> <span class="o">...;</span>
-    <span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_error</span><span class="o">:</span> <span class="o">...;</span>
-  <span class="nt">endcase</span>
-<span class="nt">end</span>
+<span class="s1">        4&#39;</span><span class="nt">b000</span><span class="o">?,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">4</span><span class="err">&#39;</span><span class="nt">b0</span><span class="o">?</span><span class="nt">00</span><span class="o">:</span><span class="w"> </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">STATUS_ERROR</span><span class="o">;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">default</span><span class="o">:</span><span class="w"> </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">STATUS_END</span><span class="o">;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">endcase</span><span class="w"></span>
+<span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_end</span><span class="o">:</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_error</span><span class="o">:</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
 </pre></div>
 
 
 <p>And instead extract a nested <code>case</code> into a separate process, providing a
 result signal to use in the parent&nbsp;case:</p>
-<div class="codehilite"><pre><span></span><span class="nt">status_t</span> <span class="nt">status_q</span><span class="o">;</span>
-<span class="nt">status_t</span> <span class="nt">next_status</span><span class="o">;</span>
-<span class="nt">status_t</span> <span class="nt">start_next_status</span><span class="o">;</span>
-<span class="nt">logic</span> <span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">mode_q</span><span class="o">;</span>
-<span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">start_next_status</span> <span class="o">=</span> <span class="nt">state_q</span><span class="o">;</span>
-  <span class="nt">case</span> <span class="o">(</span><span class="nt">mode_q</span><span class="o">)</span> <span class="nt">inside</span>
-    <span class="nt">4</span><span class="s1">&#39;b000?,</span>
-<span class="s1">    4&#39;</span><span class="nt">b0</span><span class="o">?</span><span class="nt">00</span><span class="o">:</span> <span class="nt">start_next_status</span> <span class="o">=</span> <span class="nt">STATUS_ERROR</span><span class="o">;</span>
-    <span class="nt">default</span><span class="o">:</span> <span class="nt">start_next_status</span> <span class="o">=</span> <span class="nt">STATUS_END</span><span class="o">;</span>
-  <span class="nt">endcase</span>
-<span class="nt">end</span>
-<span class="nt">always_comb</span> <span class="nt">begin</span>
-  <span class="nt">unique</span> <span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span>
-    <span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_start</span><span class="o">:</span> <span class="nt">next_status</span> <span class="o">=</span> <span class="nt">start_next_status</span><span class="o">;</span>
-    <span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_end</span><span class="o">:</span> <span class="o">...;</span>
-    <span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_error</span><span class="o">:</span> <span class="o">...;</span>
-  <span class="nt">endcase</span>
-<span class="nt">end</span>
+<div class="codehilite"><pre><span></span><span class="nt">status_t</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">status_t</span><span class="w"> </span><span class="nt">next_status</span><span class="o">;</span><span class="w"></span>
+<span class="nt">status_t</span><span class="w"> </span><span class="nt">start_next_status</span><span class="o">;</span><span class="w"></span>
+<span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">mode_q</span><span class="o">;</span><span class="w"></span>
+<span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">start_next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">mode_q</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span><span class="w"></span>
+<span class="w">    </span><span class="nt">4</span><span class="s1">&#39;b000?,</span>
+<span class="s1">    4&#39;</span><span class="nt">b0</span><span class="o">?</span><span class="nt">00</span><span class="o">:</span><span class="w"> </span><span class="nt">start_next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">STATUS_ERROR</span><span class="o">;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">default</span><span class="o">:</span><span class="w"> </span><span class="nt">start_next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">STATUS_END</span><span class="o">;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
+<span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span><span class="w"></span>
+<span class="w">  </span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_start</span><span class="o">:</span><span class="w"> </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">start_next_status</span><span class="o">;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_end</span><span class="o">:</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_error</span><span class="o">:</span><span class="w"> </span><span class="o">...;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">endcase</span><span class="w"></span>
+<span class="nt">end</span><span class="w"></span>
 </pre></div>
 
 
@@ -519,9 +519,9 @@ context of the expression. Since there may be inconsistencies between tools,
 particularly between simulation and synthesis, explicitly specifying expression
 bit widths avoids these issues and makes the intent obvious. For example, pad
 the result of a narrower expression for&nbsp;assignment:</p>
-<div class="codehilite"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">result</span><span class="p">;</span>
-<span class="kt">logic</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="mh">24</span><span class="mb">&#39;b0</span><span class="p">,</span> <span class="p">{</span><span class="n">op1</span> <span class="o">&amp;</span> <span class="n">op2</span><span class="p">}};</span>
+<div class="codehilite"><pre><span></span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">op1</span><span class="p">,</span><span class="w"> </span><span class="n">op2</span><span class="p">;</span><span class="w"></span>
+<span class="k">assign</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">24</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="n">op1</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">op2</span><span class="p">}};</span><span class="w"></span>
 </pre></div>
 
 
@@ -536,9 +536,9 @@ the result of a narrower expression for&nbsp;assignment:</p>
 determined automatically by the width of the largest operand. For example,
 without an explicit type cast to a 17-bit result around <code>a + b</code>, the carry out
 bit would be&nbsp;lost:</p>
-<div class="codehilite"><pre><span></span><span class="kt">logic</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">result</span><span class="p">,</span> <span class="n">a</span> <span class="n">b</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="kt">logic</span> <span class="p">[</span><span class="mh">16</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">sum_t</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">result</span> <span class="o">=</span> <span class="n">sum_t</span><span class="p">&#39;(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mh">1</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">16</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">sum_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">assign</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum_t</span><span class="p">&#39;(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 
@@ -546,14 +546,14 @@ bit would be&nbsp;lost:</p>
 assignment width matches the full width of the right hand side. Using a prefix
 like <code>unused_</code> makes the process of signing off any related warnings with the
 downstream synthesis and physical build&nbsp;simpler:</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span> <span class="p">{</span><span class="n">unused_co</span><span class="p">,</span> <span class="n">result</span><span class="p">}</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">unused_co</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 
 <p>Exceptions to this rule can be made for the common constants 0, 1 and -1 to be
 specified as <code>integer</code> literals, for&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span> <span class="n">result</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
-<span class="k">assign</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="mh">1</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"></span>
+<span class="k">assign</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 
 
@@ -566,13 +566,13 @@ It also facilitates the use of optimised arithmetic implementations in
 synthesis, particularly with multipliers. The following example (adapted from
 <a href="http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_presentation.pdf">this presentation</a>)
 shows how these rules can be&nbsp;confusing:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span> <span class="nt">signed</span> <span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">a</span><span class="o">,</span> <span class="nt">b</span><span class="o">;</span>
-<span class="nt">logic</span> <span class="nt">signed</span> <span class="cp">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">sum</span><span class="o">;</span>
-<span class="nt">logic</span> <span class="nt">ci</span><span class="o">;</span>
-<span class="nt">sum</span> <span class="o">=</span> <span class="nt">a</span> <span class="o">+</span> <span class="nt">b</span> <span class="o">+</span> <span class="nt">ci</span><span class="o">;</span> <span class="o">//</span> <span class="nt">Unsigned</span> <span class="nt">addition</span> <span class="nt">due</span> <span class="nt">to</span> <span class="nt">unsigned</span> <span class="nt">ci</span><span class="o">.</span>
-<span class="nt">sum</span> <span class="o">=</span> <span class="nt">a</span> <span class="o">+</span> <span class="nt">b</span> <span class="o">+</span> <span class="nt">signed</span><span class="s1">&#39;(ci); // Signed addition, but ci == 1&#39;</span><span class="nt">b1</span> <span class="nt">will</span> <span class="nt">be</span>
-                           <span class="o">//</span> <span class="nt">sign</span> <span class="nt">extended</span> <span class="nt">to</span> <span class="nt">4</span><span class="s1">&#39;b1111 or -1.</span>
-<span class="s1">sum = a + b + signed&#39;</span><span class="o">(</span><span class="p">{</span><span class="err">1&#39;b0,</span> <span class="err">ci</span><span class="p">}</span><span class="o">);</span> <span class="o">//</span> <span class="nt">Safe</span> <span class="nt">sign</span> <span class="nt">extension</span><span class="o">.</span>
+<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="nt">signed</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">a</span><span class="o">,</span><span class="w"> </span><span class="nt">b</span><span class="o">;</span><span class="w"></span>
+<span class="nt">logic</span><span class="w"> </span><span class="nt">signed</span><span class="w"> </span><span class="cp">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">sum</span><span class="o">;</span><span class="w"></span>
+<span class="nt">logic</span><span class="w"> </span><span class="nt">ci</span><span class="o">;</span><span class="w"></span>
+<span class="nt">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nt">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nt">ci</span><span class="o">;</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="nt">Unsigned</span><span class="w"> </span><span class="nt">addition</span><span class="w"> </span><span class="nt">due</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">unsigned</span><span class="w"> </span><span class="nt">ci</span><span class="o">.</span><span class="w"></span>
+<span class="nt">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nt">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nt">signed</span><span class="s1">&#39;(ci); // Signed addition, but ci == 1&#39;</span><span class="nt">b1</span><span class="w"> </span><span class="nt">will</span><span class="w"> </span><span class="nt">be</span><span class="w"></span>
+<span class="w">                           </span><span class="o">//</span><span class="w"> </span><span class="nt">sign</span><span class="w"> </span><span class="nt">extended</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">4</span><span class="s1">&#39;b1111 or -1.</span>
+<span class="s1">sum = a + b + signed&#39;</span><span class="o">(</span><span class="p">{</span><span class="err">1&#39;b0,</span><span class="w"> </span><span class="err">ci</span><span class="p">}</span><span class="o">);</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="nt">Safe</span><span class="w"> </span><span class="nt">sign</span><span class="w"> </span><span class="nt">extension</span><span class="o">.</span><span class="w"></span>
 </pre></div>
 
 
@@ -582,10 +582,10 @@ signed, and that literal values can be specified as signed, for example:
 <p><strong>Avoid splitting arithmetic</strong> between statements or modules. This facilitates
 optimisation during synthesis, for example, to choose or generate an optimised
 adder implementation for the given set of operands and carry ins/outs. Instead&nbsp;of:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span> <span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">a</span><span class="o">,</span> <span class="nt">b</span><span class="o">,</span> <span class="nt">c</span><span class="o">;</span>
-<span class="nt">logic</span> <span class="cp">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">int_sum</span><span class="o">,</span> <span class="nt">sum</span><span class="o">;</span>
-<span class="nt">int_sum</span> <span class="o">=</span> <span class="nt">a</span> <span class="o">+</span> <span class="nt">b</span><span class="o">;</span>
-<span class="p">{</span><span class="err">unused_co,</span> <span class="err">sum</span><span class="p">}</span> <span class="o">=</span> <span class="nt">int_sum</span> <span class="o">+</span> <span class="p">{</span><span class="err">1&#39;b0,</span> <span class="err">c</span><span class="p">}</span><span class="o">;</span>
+<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">a</span><span class="o">,</span><span class="w"> </span><span class="nt">b</span><span class="o">,</span><span class="w"> </span><span class="nt">c</span><span class="o">;</span><span class="w"></span>
+<span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">int_sum</span><span class="o">,</span><span class="w"> </span><span class="nt">sum</span><span class="o">;</span><span class="w"></span>
+<span class="nt">int_sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nt">b</span><span class="o">;</span><span class="w"></span>
+<span class="p">{</span><span class="err">unused_co,</span><span class="w"> </span><span class="err">sum</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">int_sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="err">1&#39;b0,</span><span class="w"> </span><span class="err">c</span><span class="p">}</span><span class="o">;</span><span class="w"></span>
 </pre></div>
 
 
@@ -673,13 +673,13 @@ suffices can denote, for example, whether a signal is an input or output, the
 pipeline stage it corresponds to and whether it is driven by logic or directly
 from a flip-flop. The exact naming convention will be tailored to a project,
 but here are some&nbsp;examples:</p>
-<div class="codehilite"><pre><span></span><span class="n">i_p0_operand</span>     <span class="o">//</span> <span class="n">Input</span> <span class="n">into</span> <span class="n">pipeline</span> <span class="n">stage</span> <span class="mf">0.</span>
-<span class="n">p1_state</span>         <span class="o">//</span> <span class="n">A</span> <span class="n">current</span> <span class="n">state</span> <span class="n">of</span> <span class="n">a</span> <span class="n">state</span> <span class="n">machine</span><span class="o">.</span>
-<span class="n">p1_state_ns</span>      <span class="o">//</span> <span class="n">The</span> <span class="n">next</span> <span class="n">state</span><span class="o">.</span>
-<span class="n">state_clk</span>        <span class="o">//</span> <span class="n">A</span> <span class="n">clock</span> <span class="k">signal</span><span class="o">.</span>
-<span class="n">m1_sum_co_unused</span> <span class="o">//</span> <span class="n">An</span> <span class="n">unused</span> <span class="n">carryout</span> <span class="n">bit</span> <span class="n">from</span> <span class="n">an</span> <span class="n">addition</span><span class="o">.</span>
-<span class="n">m2_result_ff</span>     <span class="o">//</span> <span class="n">A</span> <span class="n">registered</span> <span class="n">result</span><span class="p">,</span> <span class="n">driven</span> <span class="n">by</span> <span class="n">a</span> <span class="n">flip</span><span class="o">-</span><span class="n">flop</span><span class="o">.</span>
-<span class="n">o_x4_state</span>       <span class="o">//</span> <span class="n">An</span> <span class="n">output</span> <span class="k">signal</span> <span class="n">driven</span> <span class="n">from</span> <span class="n">stage</span> <span class="n">x4</span><span class="o">.</span>
+<div class="codehilite"><pre><span></span><span class="n">i_p0_operand</span><span class="w">     </span><span class="o">//</span><span class="w"> </span><span class="n">Input</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">pipeline</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="mf">0.</span><span class="w"></span>
+<span class="n">p1_state</span><span class="w">         </span><span class="o">//</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">machine</span><span class="o">.</span><span class="w"></span>
+<span class="n">p1_state_ns</span><span class="w">      </span><span class="o">//</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="n">state</span><span class="o">.</span><span class="w"></span>
+<span class="n">state_clk</span><span class="w">        </span><span class="o">//</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">clock</span><span class="w"> </span><span class="k">signal</span><span class="o">.</span><span class="w"></span>
+<span class="n">m1_sum_co_unused</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">An</span><span class="w"> </span><span class="n">unused</span><span class="w"> </span><span class="n">carryout</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">addition</span><span class="o">.</span><span class="w"></span>
+<span class="n">m2_result_ff</span><span class="w">     </span><span class="o">//</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">registered</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">driven</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">flip</span><span class="o">-</span><span class="n">flop</span><span class="o">.</span><span class="w"></span>
+<span class="n">o_x4_state</span><span class="w">       </span><span class="o">//</span><span class="w"> </span><span class="n">An</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="k">signal</span><span class="w"> </span><span class="n">driven</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="n">x4</span><span class="o">.</span><span class="w"></span>
 </pre></div>
 
 

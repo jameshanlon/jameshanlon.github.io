@@ -237,7 +237,7 @@ synchronise. In the&nbsp;following:</p>
 <span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
 <span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="nl">c</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nl">c</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 
@@ -253,10 +253,10 @@ an interface transaction, channel input or port input (see #<span class="caps">I
 associated action. When a select is executed, it waits until the first event is
 enabled and then executes that event&#8217;s action. In the following&nbsp;example:</p>
 <div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -266,7 +266,7 @@ enabled and then executes that event&#8217;s action. In the following&nbsp;examp
 <p>the select statement merges data from left and right channels on to an out&nbsp;channel.</p>
 <p>A select case can be guarded, so that the case is only selected if the guard
 expression is true at the same time the event is enabled. For example, with a&nbsp;guard:</p>
-<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nl">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 </pre></div>
@@ -281,10 +281,10 @@ events occur earlier in the body of the&nbsp;statement.</p>
 used to abstract multiple cases of a select into a single unit. The following
 select function encapsulates the cases of the above select&nbsp;statement:</p>
 <div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">chanend</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">v</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -304,9 +304,9 @@ Performing an output operation on a timer reads the current time in cycles. For
 example, to calculate the elapsed execution time of a function <code>f</code>:</p>
 <div class="codehilite"><pre><span></span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"></span>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"></span>
-<span class="nl">t</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"></span>
+<span class="nl">t</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span><span class="w"></span>
 <span class="n">f</span><span class="p">();</span><span class="w"></span>
-<span class="nl">t</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"></span>
+<span class="nl">t</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"></span>
 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Elapsed time %u s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="n">CYCLES_PER_SEC</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 
@@ -342,7 +342,7 @@ on&nbsp;another:</p>
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="kt">bool</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nl">p</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nl">p</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -451,7 +451,7 @@ function implements the swap&nbsp;operation:</p>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;platform.h&gt;</span><span class="cp"></span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cin</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cout</span><span class="p">){</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nl">cin</span> <span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="nl">cin</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">int</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from core %d!&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -476,6 +476,7 @@ function implements the swap&nbsp;operation:</p>
    <a href="https://www.xmos.com/download/public/XMOS-Programming-Guide-(documentation)(E).pdf"><span class="caps">PDF</span></a>)</li>
 <li>The <span class="caps">XC</span> Language Specification
    (<a href="https://web.archive.org/web/20141129060737/https://www.xmos.com/support/xtools/documentation?subcategory=Programming%20in%20C%20and%20XC&amp;component=14805"><span class="caps">HTML</span></a>)</li>
+<li><a href="https://www.teigfam.net/oyvind/home/technology/141-xc-is-c-plus-x/">xC is C plus x</a>, Øyvind&nbsp;Teig.</li>
 </ul>
   </div>
   <div class="article-footer">
