@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/all-en.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2021-10-04T00:00:00+02:00</updated><entry><title>Garden workshop</title><link href="http://jameswhanlon.com/garden-workshop.html" rel="alternate"></link><published>2021-10-04T00:00:00+02:00</published><updated>2021-10-04T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2021-10-04:/garden-workshop.html</id><summary type="html">&lt;p&gt;During the summer of 2021 I built a garden workshop. This was a joint endeavour
-with my partner, who designed and specified the form and finish (credit to the
-&lt;span class="caps"&gt;CAD&lt;/span&gt; drawings goes to her). The basic construction follows the methodology of
+with my partner, who designed and specified the form and finish (credit for the
+&lt;a href="#drawings"&gt;&lt;span class="caps"&gt;CAD&lt;/span&gt; drawings&lt;/a&gt; goes to her). The basic construction follows the methodology of
 &lt;a href="https://www.oakwoodgardenrooms.com/"&gt;Oakwood Garden Rooms&lt;/a&gt; who&amp;#8217;s &lt;a href="https://www.youtube.com/channel/UChqWFbSX8STP_c8W0RVW1Xw"&gt;YouTube
 channel&lt;/a&gt; proved
 invaluable …&lt;/p&gt;</summary><content type="html">&lt;p&gt;During the summer of 2021 I built a garden workshop. This was a joint endeavour
-with my partner, who designed and specified the form and finish (credit to the
-&lt;span class="caps"&gt;CAD&lt;/span&gt; drawings goes to her). The basic construction follows the methodology of
+with my partner, who designed and specified the form and finish (credit for the
+&lt;a href="#drawings"&gt;&lt;span class="caps"&gt;CAD&lt;/span&gt; drawings&lt;/a&gt; goes to her). The basic construction follows the methodology of
 &lt;a href="https://www.oakwoodgardenrooms.com/"&gt;Oakwood Garden Rooms&lt;/a&gt; who&amp;#8217;s &lt;a href="https://www.youtube.com/channel/UChqWFbSX8STP_c8W0RVW1Xw"&gt;YouTube
 channel&lt;/a&gt; proved
 invaluable guidance through the process. I also bought from them parts for the
-rod system for the footings, and a &amp;#8216;build pack&amp;#8217;, which most importantly
+rod system for the footings, and a &amp;#8216;build pack&amp;#8217; that crucially
 provided a preliminary materials list.  This note documents the process of the
-design and build, making sure not to reveal any of the details supplied in the
+design and build, but making sure not to reveal any of the details supplied in the
 Oakwood Garden Rooms build&amp;nbsp;pack.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/3D.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/3D_600x600.png" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/corner-windows.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/corner-windows_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
 &lt;h2&gt;Groundworks&lt;/h2&gt;
 &lt;p&gt;After clearing and levelling the workshop site, holes were dug for each of the
 steel rod footings. The setting out of these was carefully determined with
@@ -524,7 +545,38 @@ walls and&amp;nbsp;ceiling.&lt;/p&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-&lt;p&gt;More details to be added as they are&amp;nbsp;completed&amp;#8230;&lt;/p&gt;</content><category term="notes"></category><category term="sheds"></category><category term="construction"></category></entry><entry><title>Home thermal-imaging survey</title><link href="http://jameswhanlon.com/home-thermal-imaging-survey.html" rel="alternate"></link><published>2021-03-31T00:00:00+02:00</published><updated>2021-03-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2021-03-31:/home-thermal-imaging-survey.html</id><summary type="html">&lt;p&gt;I recently moved into a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit Type 1 house&lt;/a&gt;, and
+&lt;p&gt;More details of the final details to be added as they are&amp;nbsp;completed&amp;#8230;&lt;/p&gt;
+&lt;p&gt;&lt;a name="drawings" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Drawings&lt;/h2&gt;
+&lt;p&gt;The following drawings are taken from the Revit model of the&amp;nbsp;workshop.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/plans.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/plans_1000x1000.png" alt="Plan views."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Plan views.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/elevations.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/elevations_1000x1000.png" alt="Elevation views."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Elevation views.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/section.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/section_1000x1000.png" alt="Section view showing
+buildups of the roof, walls and floor. and intersections between them."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Section view showing
+buildups of the roof, walls and floor. and intersections between them.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;</content><category term="notes"></category><category term="sheds"></category><category term="construction"></category></entry><entry><title>Home thermal-imaging survey</title><link href="http://jameswhanlon.com/home-thermal-imaging-survey.html" rel="alternate"></link><published>2021-03-31T00:00:00+02:00</published><updated>2021-03-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2021-03-31:/home-thermal-imaging-survey.html</id><summary type="html">&lt;p&gt;I recently moved into a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit Type 1 house&lt;/a&gt;, and
 with my involvement with &lt;a href="https://cheeseproject.co.uk"&gt;The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project&lt;/a&gt; I was keen to
 perform a thermal-imaging survey to better understand how well the building
 performs thermally. Also, with the first few months in the house being in
@@ -5100,7 +5152,7 @@ they might give you some&amp;nbsp;ideas.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;a name="references"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="references" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;References/further&amp;nbsp;reading&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://danielmiessler.com/study/vim/"&gt;A vim Tutorial and&amp;nbsp;Primer&lt;/a&gt;&lt;/li&gt;
@@ -5200,7 +5252,7 @@ of electronic design. I also owe many of these insights to the guidance from my&
 &lt;li&gt;&lt;a href="#code-structure"&gt;Code&amp;nbsp;structure&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#signal-naming"&gt;Signal&amp;nbsp;naming&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a name="comb-logic"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="comb-logic" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Combinatorial&amp;nbsp;logic&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_comb&lt;/code&gt; instead of &lt;code&gt;always&lt;/code&gt; for combinatorial logic.&lt;/strong&gt; The
 &lt;code&gt;always_comb&lt;/code&gt; procedure allows tools to check that it does not contain any
@@ -5355,7 +5407,7 @@ to a factor of two&lt;/a&gt;.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;a name="seq-logic"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="seq-logic" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Sequential&amp;nbsp;logic&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_ff&lt;/code&gt; instead of &lt;code&gt;always&lt;/code&gt; for sequential logic&lt;/strong&gt; Similarly to
 &lt;code&gt;always_comb&lt;/code&gt;, use of &lt;code&gt;always_ff&lt;/code&gt; permits tools to check that the procedure
@@ -5395,7 +5447,7 @@ in an accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;a name="if-statements"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="if-statements" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;If&amp;nbsp;statements&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Use &lt;code&gt;if&lt;/code&gt; qualifiers&lt;/strong&gt; for single &lt;code&gt;if&lt;/code&gt; and chained &lt;code&gt;if-else&lt;/code&gt;
 statements for additional checking and guidance to&amp;nbsp;synthesis:&lt;/p&gt;
@@ -5437,7 +5489,7 @@ selected. Changing to &lt;code&gt;unique0&lt;/code&gt; will only check for multi
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;a name="case-statements"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="case-statements" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Case&amp;nbsp;statements&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Use case qualifiers&lt;/strong&gt; for additional checking and guidance to&amp;nbsp;synthesis:&lt;/p&gt;
 &lt;ul&gt;
@@ -5547,7 +5599,7 @@ result signal to use in the parent&amp;nbsp;case:&lt;/p&gt;
 
 &lt;p&gt;Although this example seems simple, the &lt;code&gt;case&lt;/code&gt;-based logic driving a state
 machine can quickly become&amp;nbsp;complicated.&lt;/p&gt;
-&lt;p&gt;&lt;a name="expressions"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="expressions" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Expressions&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Make operator associativity explicit.&lt;/strong&gt; This is to avoid any ambiguity over
 the ordering of operators. In particular, always bracket the condition of a
@@ -5650,7 +5702,7 @@ adder implementation for the given set of operands and carry ins/outs. Instead&a
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;a name="code-structure"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="code-structure" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Code&amp;nbsp;structure&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Place parameters and variables at the top of their containing scope.&lt;/strong&gt; Doing
 this gives and overview of the state and complexity of a block, particularly a
@@ -5720,7 +5772,7 @@ be used to add specific exceptions. For&amp;nbsp;example:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid logic in module instantiations.&lt;/strong&gt; By instantiating a module with a set
 of named signals, it is easier to inspect the port hookups and the widths of
 the signals for&amp;nbsp;correctness.&lt;/p&gt;
-&lt;p&gt;&lt;a name="signal-naming"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="signal-naming" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Signal&amp;nbsp;naming&lt;/h2&gt;
 &lt;p&gt;A strict approach to naming should be taken to make it easier to understand and
 navigate a&amp;nbsp;design:&lt;/p&gt;
@@ -5750,7 +5802,7 @@ naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
 &lt;code&gt;u_toplevel_u_submodule_p0_signal_q_reg_17_/CK&lt;/code&gt; corresponding to the register
 &lt;code&gt;u_toplevel/u_submodule/p0_signal_q[17]&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a name="summary"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="summary" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;Verilog is a large language with features supporting different purposes. It is
 used as a standard in hardware design but its specification does not define a
@@ -5761,7 +5813,7 @@ conservative way for specifying synthesizable designs. The rules and rationale
 given in this note outline some of the important aspects of a coding style for
 hardware design. There are many more details of Verilog&amp;#8217;s features that are
 relevant; the references below are a good place to find out&amp;nbsp;more.&lt;/p&gt;
-&lt;p&gt;&lt;a name="refs"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name="refs" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;References/further&amp;nbsp;reading&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span class="caps"&gt;IEEE&lt;/span&gt; Standard for SystemVerilog (&lt;span class="caps"&gt;IEEE&lt;/span&gt; 1800-2012 and&amp;nbsp;1800-2017).&lt;/li&gt;

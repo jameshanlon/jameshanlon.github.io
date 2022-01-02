@@ -144,7 +144,7 @@ of electronic design. I also owe many of these insights to the guidance from my&
 <li><a href="#code-structure">Code&nbsp;structure</a></li>
 <li><a href="#signal-naming">Signal&nbsp;naming</a></li>
 </ul>
-<p><a name="comb-logic"></a></p>
+<p><a name="comb-logic" class="anchor"></a></p>
 <h2>Combinatorial&nbsp;logic</h2>
 <p><strong>Use <code>always_comb</code> instead of <code>always</code> for combinatorial logic.</strong> The
 <code>always_comb</code> procedure allows tools to check that it does not contain any
@@ -299,7 +299,7 @@ to a factor of two</a>.</p>
 </pre></div>
 
 
-<p><a name="seq-logic"></a></p>
+<p><a name="seq-logic" class="anchor"></a></p>
 <h2>Sequential&nbsp;logic</h2>
 <p><strong>Use <code>always_ff</code> instead of <code>always</code> for sequential logic</strong> Similarly to
 <code>always_comb</code>, use of <code>always_ff</code> permits tools to check that the procedure
@@ -339,7 +339,7 @@ in an accompanying <code>always_ff</code>, for&nbsp;example:</p>
 </pre></div>
 
 
-<p><a name="if-statements"></a></p>
+<p><a name="if-statements" class="anchor"></a></p>
 <h2>If&nbsp;statements</h2>
 <p><strong>Use <code>if</code> qualifiers</strong> for single <code>if</code> and chained <code>if-else</code>
 statements for additional checking and guidance to&nbsp;synthesis:</p>
@@ -381,7 +381,7 @@ selected. Changing to <code>unique0</code> will only check for multiple conditio
 </pre></div>
 
 
-<p><a name="case-statements"></a></p>
+<p><a name="case-statements" class="anchor"></a></p>
 <h2>Case&nbsp;statements</h2>
 <p><strong>Use case qualifiers</strong> for additional checking and guidance to&nbsp;synthesis:</p>
 <ul>
@@ -491,7 +491,7 @@ result signal to use in the parent&nbsp;case:</p>
 
 <p>Although this example seems simple, the <code>case</code>-based logic driving a state
 machine can quickly become&nbsp;complicated.</p>
-<p><a name="expressions"></a></p>
+<p><a name="expressions" class="anchor"></a></p>
 <h2>Expressions</h2>
 <p><strong>Make operator associativity explicit.</strong> This is to avoid any ambiguity over
 the ordering of operators. In particular, always bracket the condition of a
@@ -594,7 +594,7 @@ adder implementation for the given set of operands and carry ins/outs. Instead&n
 </pre></div>
 
 
-<p><a name="code-structure"></a></p>
+<p><a name="code-structure" class="anchor"></a></p>
 <h2>Code&nbsp;structure</h2>
 <p><strong>Place parameters and variables at the top of their containing scope.</strong> Doing
 this gives and overview of the state and complexity of a block, particularly a
@@ -664,7 +664,7 @@ be used to add specific exceptions. For&nbsp;example:</p>
 <p><strong>Avoid logic in module instantiations.</strong> By instantiating a module with a set
 of named signals, it is easier to inspect the port hookups and the widths of
 the signals for&nbsp;correctness.</p>
-<p><a name="signal-naming"></a></p>
+<p><a name="signal-naming" class="anchor"></a></p>
 <h2>Signal&nbsp;naming</h2>
 <p>A strict approach to naming should be taken to make it easier to understand and
 navigate a&nbsp;design:</p>
@@ -694,7 +694,7 @@ naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
 <code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the register
 <code>u_toplevel/u_submodule/p0_signal_q[17]</code>.</p>
-<p><a name="summary"></a></p>
+<p><a name="summary" class="anchor"></a></p>
 <h2>Summary</h2>
 <p>Verilog is a large language with features supporting different purposes. It is
 used as a standard in hardware design but its specification does not define a
@@ -705,7 +705,7 @@ conservative way for specifying synthesizable designs. The rules and rationale
 given in this note outline some of the important aspects of a coding style for
 hardware design. There are many more details of Verilog&#8217;s features that are
 relevant; the references below are a good place to find out&nbsp;more.</p>
-<p><a name="refs"></a></p>
+<p><a name="refs" class="anchor"></a></p>
 <h2>References/further&nbsp;reading</h2>
 <ul>
 <li><span class="caps">IEEE</span> Standard for SystemVerilog (<span class="caps">IEEE</span> 1800-2012 and&nbsp;1800-2017).</li>
