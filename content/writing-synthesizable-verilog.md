@@ -99,7 +99,7 @@ The remaining sections are as follows:
 - [Code structure](#code-structure)
 - [Signal naming](#signal-naming)
 
-<a name="comb-logic"></a>
+<a name="comb-logic" class="anchor"></a>
 ## Combinatorial logic
 
 **Use `always_comb` instead of `always` for combinatorial logic.** The
@@ -273,7 +273,7 @@ always_comb begin
 end
 ```
 
-<a name="seq-logic"></a>
+<a name="seq-logic" class="anchor"></a>
 ## Sequential logic
 
 **Use `always_ff` instead of `always` for sequential logic** Similarly to
@@ -317,7 +317,7 @@ always_ff @(posedge i_clk or posedge i_rst)
     bit_q <= bit;
 ```
 
-<a name="if-statements"></a>
+<a name="if-statements" class="anchor"></a>
 ## If statements
 
 **Use `if` qualifiers** for single `if` and chained `if-else`
@@ -358,7 +358,7 @@ unique0 if (condition_a) statement;
 else statement;
 ```
 
-<a name="case-statements"></a>
+<a name="case-statements" class="anchor"></a>
 ## Case statements
 
 **Use case qualifiers** for additional checking and guidance to synthesis:
@@ -473,7 +473,7 @@ end
 Although this example seems simple, the `case`-based logic driving a state
 machine can quickly become complicated.
 
-<a name="expressions"></a>
+<a name="expressions" class="anchor"></a>
 ## Expressions
 
 **Make operator associativity explicit.** This is to avoid any ambiguity over
@@ -585,7 +585,7 @@ expression:
 {unused_co, sum} = a + b + c;
 ```
 
-<a name="code-structure"></a>
+<a name="code-structure" class="anchor"></a>
 ## Code structure
 
 **Place parameters and variables at the top of their containing scope.** Doing
@@ -660,7 +660,7 @@ u_module foo (.*,
 of named signals, it is easier to inspect the port hookups and the widths of
 the signals for correctness.
 
-<a name="signal-naming"></a>
+<a name="signal-naming" class="anchor"></a>
 ## Signal naming
 
 A strict approach to naming should be taken to make it easier to understand and
@@ -695,7 +695,7 @@ a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
 
-<a name="summary"></a>
+<a name="summary" class="anchor"></a>
 ## Summary
 
 Verilog is a large language with features supporting different purposes. It is
@@ -708,7 +708,7 @@ given in this note outline some of the important aspects of a coding style for
 hardware design. There are many more details of Verilog's features that are
 relevant; the references below are a good place to find out more.
 
-<a name="refs"></a>
+<a name="refs" class="anchor"></a>
 ## References/further reading
 
 - IEEE Standard for SystemVerilog (IEEE 1800-2012 and 1800-2017).

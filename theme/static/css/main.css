@@ -69,3 +69,9 @@ a.no-underline {
   padding: 0.25em;
 }
 
+a.anchor {
+  display: block;
+  position: relative;
+  top: -80px;
+  visibility: hidden;
+}

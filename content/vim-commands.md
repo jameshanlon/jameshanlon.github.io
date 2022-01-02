@@ -357,7 +357,7 @@ they might give you some ideas.
 
 {% include 'vim-commands/random-commands.html' %}
 
-<a name="references"></a>
+<a name="references" class="anchor"></a>
 ## References/further reading
 
 - [A vim Tutorial and Primer](https://danielmiessler.com/study/vim/)

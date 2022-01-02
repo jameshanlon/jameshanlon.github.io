@@ -10,16 +10,19 @@ Tags: sheds, construction
 
 
 During the summer of 2021 I built a garden workshop. This was a joint endeavour
-with my partner, who designed and specified the form and finish (credit to the
-CAD drawings goes to her). The basic construction follows the methodology of
+with my partner, who designed and specified the form and finish (credit for the
+[CAD drawings](#drawings) goes to her). The basic construction follows the methodology of
 [Oakwood Garden Rooms](https://www.oakwoodgardenrooms.com/) who's [YouTube
 channel](https://www.youtube.com/channel/UChqWFbSX8STP_c8W0RVW1Xw) proved
 invaluable guidance through the process. I also bought from them parts for the
-rod system for the footings, and a 'build pack', which most importantly
+rod system for the footings, and a 'build pack' that crucially
 provided a preliminary materials list.  This note documents the process of the
-design and build, making sure not to reveal any of the details supplied in the
+design and build, but making sure not to reveal any of the details supplied in the
 Oakwood Garden Rooms build pack.
 
+{{ macros.pair_layout(
+     macros.image('garden-workshop/3D.png'),
+     macros.image('garden-workshop/corner-windows.jpg')) }}
 
 ## Groundworks
 
@@ -199,4 +202,15 @@ With the second-fix electrics completed, the workshop was operational.
 
 {{ macros.image('garden-workshop/lighting.jpg') }}
 
-More details to be added as they are completed...
+More details of the final details to be added as they are completed...
+
+<a name="drawings" class="anchor"></a>
+
+## Drawings
+
+The following drawings are taken from the Revit model of the workshop.
+
+{{ macros.image('garden-workshop/plans.png', size='1000x1000', caption='Plan views.') }}
+{{ macros.image('garden-workshop/elevations.png', size='1000x1000', caption='Elevation views.') }}
+{{ macros.image('garden-workshop/section.png', size='1000x1000', caption='Section view showing
+buildups of the roof, walls and floor. and intersections between them.') }}
