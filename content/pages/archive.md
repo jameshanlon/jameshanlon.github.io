@@ -5,7 +5,7 @@ Status: published
 
 ## Computing
 
-[Netlist Paths: a tool for front-end netlist analysis]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021.pdf'|asset}}),
+[Netlist Paths: a tool for front-end netlist analysis]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-full.pdf'|asset}}),
 <br>DVCon Europe 2021, ([presentation slides]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}}), 
 [extended abstract]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-extended-abstract.pdf'|asset}})).
 
