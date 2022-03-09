@@ -5981,9 +5981,9 @@ you are interested in the quality of bit&amp;nbsp;0.&lt;/p&gt;
 is allows specific bits or ranges of bits from a generator to be tested. It was
 not stringent enough however to detect the correlation of &lt;code&gt;xoroshirt128+&lt;/code&gt;&lt;span class="quo"&gt;&amp;#8216;&lt;/span&gt;s bit&amp;nbsp;0.&lt;/p&gt;
 &lt;h1&gt;An&amp;nbsp;example&lt;/h1&gt;
-&lt;p&gt;I&amp;#8217;ve put together a simple example, &lt;a href="https://github.com/jameshanlon/prng-testing"&gt;available on
-Github&lt;/a&gt;, of using TestU01 to
-assess the quality of a &lt;span class="caps"&gt;PRNG&lt;/span&gt;, which replicates Vigna&amp;#8217;s testing of
+&lt;p&gt;I&amp;#8217;ve put together a simple example, &lt;a href="https://github.com/jameshanlon/prng-testing/tree/2017-blog"&gt;available on
+Github&lt;/a&gt;, of using
+TestU01 to assess the quality of a &lt;span class="caps"&gt;PRNG&lt;/span&gt;, which replicates Vigna&amp;#8217;s testing of
 &lt;code&gt;xoroshiro128+&lt;/code&gt;.  The code includes a C program to test &lt;code&gt;xoroshiro128+&lt;/code&gt; with
 the Crush batteries and Python scripts to run the test over different seeds and
 to summarise the output of&amp;nbsp;TestU01.&lt;/p&gt;
