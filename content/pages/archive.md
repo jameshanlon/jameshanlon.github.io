@@ -5,6 +5,9 @@ Status: published
 
 ## Computing
 
+[A Fast Hardware Pseudorandom Number Generator Based on the xoroshiro128 LFSR](https://arxiv.org/abs/2203.04058),
+<br>with Diya Rajan and Stephen Felix, March 2022 (arXiv).
+
 [Netlist Paths: a tool for front-end netlist analysis]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-full.pdf'|asset}}),
 <br>DVCon Europe 2021, ([presentation slides]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}}), 
 [extended abstract]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-extended-abstract.pdf'|asset}})).
@@ -57,8 +60,8 @@ The Sire programming language [definition]({{'sire/sire-definition.pdf'|asset}})
 [syntax]({{'sire/sire-syntax.pdf'|asset}}) (excerpts from my PhD thesis),
 <br>unpublished, 2014.
 
-Scalable data abstractions for distributed parallel computations,
-<br>unpublished, 2012 ([arXiv](https://arxiv.org/abs/1210.1157)).
+[Scalable data abstractions for distributed parallel computations](https://arxiv.org/abs/1210.1157),
+<br>unpublished, 2012 (arXiv).
 
 [Fast distributed process creation with the XMOS XS1 architecture](/files/cpa11-paper.pdf),
 <br>Communicating Process Architectures, University of Limerick. June 2011
