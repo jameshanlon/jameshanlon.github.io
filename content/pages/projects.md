@@ -22,3 +22,14 @@ and to serve as an example of how high-level programs relate to the underlying
 hardware implementation.
 
 - [GitHub](https://github.com/jameshanlon/hex-processor)
+
+## PRNG testing
+
+This repository contains facilities for comprehensively testing PRNGs using
+statistical test suites. It provides a facility to run a PRNG against TestU01,
+PractRand and Gjrand, with parallel runs from different seeds and permutations
+of the output bits, and a script for summarising results across all the runs.
+This testing methodology was used for the investigation in [this
+paper](https://arxiv.org/abs/2203.04058).
+
+- [GitHub](https://github.com/jameshanlon/prng-testing)

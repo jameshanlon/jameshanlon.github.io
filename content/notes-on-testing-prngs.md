@@ -154,8 +154,8 @@ not stringent enough however to detect the correlation of `xoroshirt128+`'s bit
 # An example
 
 I've put together a simple example, [available on
-Github](https://github.com/jameshanlon/prng-testing), of using TestU01 to
-assess the quality of a PRNG, which replicates Vigna's testing of
+Github](https://github.com/jameshanlon/prng-testing/tree/2017-blog), of using
+TestU01 to assess the quality of a PRNG, which replicates Vigna's testing of
 `xoroshiro128+`.  The code includes a C program to test `xoroshiro128+` with
 the Crush batteries and Python scripts to run the test over different seeds and
 to summarise the output of TestU01.
