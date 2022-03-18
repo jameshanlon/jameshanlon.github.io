@@ -33,3 +33,16 @@ This testing methodology was used for the investigation in [this
 paper](https://arxiv.org/abs/2203.04058).
 
 - [GitHub](https://github.com/jameshanlon/prng-testing)
+
+<hr>
+
+#### Older projects
+
+- [Three-channel, high-power LED driver](https://github.com/jameshanlon/3C-HP-LED-driver),<br>
+  PCB design files and microcontroller code.
+- [Convolutional neural network from scratch](https://github.com/jameshanlon/convolutional-neural-network),<br>
+  a simple C++ implementation of a convolutional neural network.
+- [Sire compiler](https://github.com/jameshanlon/tool_sire),<br>
+  a language and runtime system for dynamic process creation on the XMOS XS1 architecture, targeting the XC language.
+- [Sire pre](https://github.com/jameshanlon/sire-pre),<br>
+  an early version of the sire language, directly targeting the XMOS XS1 architecture.
