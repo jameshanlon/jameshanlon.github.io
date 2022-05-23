@@ -253,10 +253,10 @@ an interface transaction, channel input or port input (see #<span class="caps">I
 associated action. When a select is executed, it waits until the first event is
 enabled and then executes that event&#8217;s action. In the following&nbsp;example:</p>
 <div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -266,7 +266,7 @@ enabled and then executes that event&#8217;s action. In the following&nbsp;examp
 <p>the select statement merges data from left and right channels on to an out&nbsp;channel.</p>
 <p>A select case can be guarded, so that the case is only selected if the guard
 expression is true at the same time the event is enabled. For example, with a&nbsp;guard:</p>
-<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="no">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
 <span class="w">  </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 </pre></div>
@@ -281,10 +281,10 @@ events occur earlier in the body of the&nbsp;statement.</p>
 used to abstract multiple cases of a select into a single unit. The following
 select function encapsulates the cases of the above select&nbsp;statement:</p>
 <div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">chanend</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="nl">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">right</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -318,7 +318,7 @@ the select&nbsp;statement:</p>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="n">time</span><span class="p">;</span><span class="w"></span>
 <span class="p">...</span><span class="w"></span>
 <span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">timerafter</span><span class="p">(</span><span class="n">time</span><span class="p">)</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">t</span><span class="w"> </span><span class="no">when</span><span class="w"> </span><span class="no">timerafter</span><span class="p">(</span><span class="no">time</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// Action to be performed after the delay</span>
 <span class="w">    </span><span class="p">...</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
@@ -361,7 +361,7 @@ configuration is performed using library functions. Port&nbsp;events</p>
 <p>Ports can generate events, which can be handled in select statements. For
 example, the&nbsp;statement:</p>
 <div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">pinseq</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">p</span><span class="w"> </span><span class="no">when</span><span class="w"> </span><span class="no">pinseq</span><span class="p">(</span><span class="no">v</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span><span class="w"></span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Received input %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
