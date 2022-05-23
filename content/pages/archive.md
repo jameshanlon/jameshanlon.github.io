@@ -5,8 +5,8 @@ Status: published
 
 ## Computing
 
-[A Fast Hardware Pseudorandom Number Generator Based on the xoroshiro128 LFSR](https://arxiv.org/abs/2203.04058),
-<br>with Diya Rajan and Stephen Felix, March 2022 (arXiv).
+[A Fast Hardware Pseudorandom Number Generator Based on xoroshiro128](https://arxiv.org/abs/2203.04058),
+<br>with Stephen Felix, March 2022 (arXiv).
 
 [Netlist Paths: a tool for front-end netlist analysis]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-full.pdf'|asset}}),
 <br>DVCon Europe 2021, ([presentation slides]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}}), 
