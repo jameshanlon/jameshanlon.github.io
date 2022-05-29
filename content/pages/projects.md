@@ -22,6 +22,7 @@ and to serve as an example of how high-level programs relate to the underlying
 hardware implementation.
 
 - [GitHub](https://github.com/jameshanlon/hex-processor)
+- [Documentation](https://jameshanlon.github.io/hex-processor)
 
 ## PRNG testing
 
@@ -42,7 +43,10 @@ paper](https://arxiv.org/abs/2203.04058).
   PCB design files and microcontroller code.
 - [Convolutional neural network from scratch](https://github.com/jameshanlon/convolutional-neural-network),<br>
   a simple C++ implementation of a convolutional neural network.
-- [Sire compiler](https://github.com/jameshanlon/tool_sire),<br>
-  a language and runtime system for dynamic process creation on the XMOS XS1 architecture, targeting the XC language.
-- [Sire pre](https://github.com/jameshanlon/sire-pre),<br>
-  an early version of the sire language, directly targeting the XMOS XS1 architecture.
+- [Sire compiler v2](https://github.com/jameshanlon/tool_sire),<br>
+  a rewrite of the original sire implementation in Python, and this time
+  targeting the XMOS XS1 architecture via the
+  [XC language](/the-xc-programming-language.html).
+- [Sire compiler v1](https://github.com/jameshanlon/sire),<br>
+  a first version of the sire language and runtime system for dynamic process
+  creation, directly targeting the XMOS XS1 architecture.
