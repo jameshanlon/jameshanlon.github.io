@@ -70,13 +70,13 @@ just as a curiosity in itself.
 </tr>
 <tr>
   <td><code>LDBI</code></td>
-  <td><code>breg := mem[areg + oreg]</code></td>
+  <td><code>breg := mem[breg + oreg]</code></td>
   <td>Load from memory with base and offset into breg</td>
 </tr>
 <tr>
   <td><code>STAI</code></td>
   <td><code>mem[breg + oreg] := areg</code></td>
-  <td>Load from memory with base and offset into breg</td>
+  <td>Store to memory with base and offset from areg</td>
 </tr>
 <tr>
   <td><code>BR</code></td>
@@ -146,14 +146,25 @@ Blah.
 
 #### Procedure calling
 
-LDAP return address (label following next BR)
+Caller:
 
-BR <label> to procedure entry point
+- ``LDAP <return address>`` (label following next ``BR``).
+- ``BR <label>`` to procedure entry point.
 
-Procedure entry stores the return address
-...
-Exit loads return address into breg
-BRB to branch back
+Callee:
+
+- Procedure entry stores the return address in ``areg``
+- Extend stack to create callee frame.
+- Execute callee body.
+- Contract stack to delete callee frame.
+- Exit loads return address into ``breg``.
+- ``BRB`` to branch back to caller.
+
+Caller:
+
+- Continue execution after procedure call.
+
+Stack memory layout:
 
 ```
 Callee frame: 0 Return address (written by callee)
