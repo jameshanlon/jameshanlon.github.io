@@ -490,7 +490,8 @@ fishing. Destructive and poorly-regulated practices like [bottom
 trawling](bottom-trawling) further cause almost irreparable habitat destruction
 for reefs, sponges and shellfish. These factors have led to a situation
 where 33% of fish stocks are caught at unsustainable levels, 60% are maximally
-sustainably fished and 7% are underfished.
+sustainably fished and only 7% are underfished. Global populations of sharks and
+rays have [declined by 71% since 1970](https://www.ecowatch.com/shark-population-overfishing-2650168793.html).
 
 {{ macros.image('nature/Global-Fishing-Watch-Fishing-activity.png', size='w=600',
     caption='Global fishing activity 2016 (Global Fishing Watch)') }}
