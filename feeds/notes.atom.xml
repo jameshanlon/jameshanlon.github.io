@@ -4002,17 +4002,17 @@ control-flow path in which a value of a signal is not set. Since &lt;code&gt;alw
 specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
 latch since there is no assignment to &lt;code&gt;foo&lt;/code&gt; when the condition is not&amp;nbsp;true.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b1;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Instead, always provide an initial&amp;nbsp;value:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;
-  &lt;span class="nv"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b0;&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b1;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
+&lt;span class="err"&gt;  if (condition)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4164,22 +4164,22 @@ particularly when clock gates are&amp;nbsp;used.&lt;/p&gt;
 &lt;p&gt;A typical pattern when implementing combinatorial logic and registers is to
 define the set and clear conditions in an &lt;code&gt;always_comb&lt;/code&gt; and register the value
 in an accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;logic&lt;/span&gt; &lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="nv"&gt;logic&lt;/span&gt; &lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 
-&lt;span class="nv"&gt;always_comb&lt;/span&gt; &lt;span class="nv"&gt;begin&lt;/span&gt;
-  &lt;span class="nv"&gt;bit&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;set_condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;bit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b1;&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;clear_condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;bit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b0;&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="nv"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;begin&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;set_condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;
+&lt;span class="err"&gt;  if (clear_condition)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
+&lt;span class="err"&gt;end&lt;/span&gt;
 
-&lt;span class="nv"&gt;always_ff&lt;/span&gt; @&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;posedge&lt;/span&gt; &lt;span class="nv"&gt;i_clk&lt;/span&gt; &lt;span class="nv"&gt;or&lt;/span&gt; &lt;span class="nv"&gt;posedge&lt;/span&gt; &lt;span class="nv"&gt;i_rst&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;i_rst&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-    &lt;span class="nv"&gt;bit_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="s"&gt;b0;&lt;/span&gt;
-  &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="nv"&gt;bit_q&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;always_ff @(posedge i_clk or posedge i_rst)&lt;/span&gt;
+&lt;span class="err"&gt;  if (i_rst)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
+&lt;span class="err"&gt;  else&lt;/span&gt;
+&lt;span class="err"&gt;    bit_q &amp;lt;= bit;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4205,23 +4205,23 @@ statements for additional checking and guidance to&amp;nbsp;synthesis:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;For example, when the conditions are mutually exclusive, so evaluation order is
 not&amp;nbsp;important:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_b&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_c&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_b&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_c&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;A violation warning is given in the above when no condition or multiple conditions are
 selected. Changing to &lt;code&gt;unique0&lt;/code&gt; will only check for multiple conditions being&amp;nbsp;selected:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-...
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+...&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And adding an &lt;code&gt;else&lt;/code&gt; will suppress violation warnings all&amp;nbsp;together:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-...
-&lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+...&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
