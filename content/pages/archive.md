@@ -7,9 +7,9 @@ Various talks and papers that I've produced since 2014.
 
 ## Computing
 
-[A Fast Hardware Pseudorandom Number Generator Based on xoroshiro128](https://arxiv.org/abs/2203.04058),
-<br>With Stephen Felix, January 2022. Accepted for publication in IEEE
-Transactions on Computers (preprint on arXiv).
+[A Fast Hardware Pseudorandom Number Generator Based on xoroshiro128](https://ieeexplore.ieee.org/document/9875973),
+<br>With Stephen Felix, in IEEE Transactions on Computers, 2022, doi: 10.1109/TC.2022.3204226
+([preprint on arXiv](https://arxiv.org/abs/2203.04058)).
 
 [Netlist Paths: a tool for front-end netlist analysis]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-full.pdf'|asset}}),
 <br>With Samuel Kong, DVCon Europe, October 2021 ([presentation slides]({{'netlist-paths/Netlist-Paths-DVCon-Europe-2021-slides.pdf'|asset}}),
