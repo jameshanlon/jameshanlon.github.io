@@ -1,20 +1,20 @@
 ---
-Title: Hex processor architecture
-Date: 2022-04-16
+Title: From logic gates to a programming language using the hex architecture
+Date: 2022-09-30
 Category: projects
-Tags: computing, computer architecture, microelectronics 
+Tags: computing, computer architecture, microelectronics
 Status: published
 ---
 
 {% import 'post-macros.html' as macros %}
 
-This note is intended to be a reference for 
+This note is intended to...
 
 ## Hex architecture
 
 The Hex architecture is designed to be very simple and suitable for explaining
 how a computer works, whilst being flexible enough to execute substantial
-programs, and easily extensible. 
+programs, and easily extensible.
 
 This repository contains an assembler, simulator and hardware implementation of
 the Hex processor architecture, as well as a compiler for a simple programming
@@ -119,69 +119,3 @@ just as a curiosity in itself.
   <td>System call</td>
 </tr>
 </table>
-
-### Hardware implemenation
-
-Blah.
-
-### Hex tools
-
-### Simulator (``hexsim``)
-
-Blah.
-
-### Assembler (``hexasm``)
-
-Blah
-
-### Compiler (``xcmp``)
-
-Blah.
-
-### Self-hosting compiler (``xhexb``)
-
-Blah.
-
-#### Structure
-
-#### Procedure calling
-
-Caller:
-
-- ``LDAP <return address>`` (label following next ``BR``).
-- ``BR <label>`` to procedure entry point.
-
-Callee:
-
-- Procedure entry stores the return address in ``areg``
-- Extend stack to create callee frame.
-- Execute callee body.
-- Contract stack to delete callee frame.
-- Exit loads return address into ``breg``.
-- ``BRB`` to branch back to caller.
-
-Caller:
-
-- Continue execution after procedure call.
-
-Stack memory layout:
-
-```
-Callee frame: 0 Return address (written by callee)
-              1 Return value 
-              2 Actual 0
-              3 Actual 1
-              4 Actual 2
-              5 Temporary 0
-              6 Temporary 1
-              7 Temporary 2
-Caller frame: 8 Return address (written by callee)
-              9 Return value 
-                Actual 0
-                Actual 1
-                Actual 2
-                Temporary 0
-                Temporary 1
-                Temporary 2
-                ...
-```
