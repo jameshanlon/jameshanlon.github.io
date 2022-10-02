@@ -1,6 +1,6 @@
 ---
-Title: From logic gates to a programming language using the hex architecture
-Date: 2022-09-30
+Title: Logic gates to a programming language using the Hex architecture
+Date: 2022-10-02
 Category: projects
 Tags: computing, computer architecture, microelectronics
 Status: published
@@ -8,23 +8,25 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-This note is intended to...
+This note walks through a hardware implementation of a simple processor and
+complete compiler for a sequential programming language targeted at it. The
+processor architecture is designed to as simple as possible but provide a
+sensible target for the compilation of complex programs using simple
+strategies. The implementation of the processor and its supporting tooling is
+self contained so to be understandable and extendable. 
+
+Besides being an interesting side project, my motivation for doing this was
+to create a complete example as a point of reference to explain how programming
+languages work and correspond to the underlying hardware of a computer
+processor.
+
 
 ## Hex architecture
 
 The Hex architecture is designed to be very simple and suitable for explaining
 how a computer works, whilst being flexible enough to execute substantial
-programs, and easily extensible.
-
-This repository contains an assembler, simulator and hardware implementation of
-the Hex processor architecture, as well as a compiler for a simple programming
-language 'X' that is targeted at it.  With complexities of modern computer
-architectures and compilers/tool chains being difficult to penetrate, the
-intention of this project is to provide a simple example Verilog implementation
-and supporting C++ tooling that can be used as the basis for another project or
-just as a curiosity in itself.
-
-## Hex instruction set
+programs, and easily extensible. The sixteen instructions are summarised in the
+following table.
 
 <table class="table">
 <thead>
