@@ -13,13 +13,30 @@ complete compiler for a sequential programming language targeted at it. The
 processor architecture is designed to as simple as possible but provide a
 sensible target for the compilation of complex programs using simple
 strategies. The implementation of the processor and its supporting tooling is
-self contained so to be understandable and extendable. 
+small and self contained so to be understandable and easily extendable. Besides
+being an interesting side project, my motivation was to create a complete
+example as a point of reference to explain how programming languages work and
+correspond to the underlying hardware of a computer processor.
 
-Besides being an interesting side project, my motivation for doing this was
-to create a complete example as a point of reference to explain how programming
-languages work and correspond to the underlying hardware of a computer
-processor.
+The Hex processor architecture was designed by [David
+May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
+computers work at the University of Bristol. David provided a simulator written
+in C and a bootstrapping compiler written in an accompnying simple language
+called X. The design of Hex draws on the [Transputer
+architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
+42](http://people.cs.bris.ac.uk/~dave/S42ISA.pdf), particulary with the use of
+short instruction encodings, prefixing mechanism for creating larger immediates
+and A, B and C registers for expression evaluation. These kind of architectural
+features made the silicon implementation of the Simple 42 and Transputers small
+enough to fit on a single chip. X draws on the basic sequential features of the
+[occam programming
+language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
 
+In my
+[implementation](https://github.com/jameshanlon/hex-processor), I have created
+a simple C++ toolchain with a simulator, Hex assembler and X language compiler.
+I have also created a Verilog implementation of Hex that is simulated with
+Verilator.
 
 ## Hex architecture
 
