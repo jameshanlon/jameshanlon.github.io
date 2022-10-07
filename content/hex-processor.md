@@ -20,9 +20,10 @@ correspond to the underlying hardware of a computer processor.
 
 The Hex processor architecture was designed by [David
 May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
-computers work at the University of Bristol. David provided a simulator written
-in C and a bootstrapping compiler written in an accompnying simple language
-called X. The design of Hex draws on the [Transputer
+computers work at the University of Bristol, whilst being flexible enough to
+execute substantial programs and easily extensible. David provided a simulator
+written in C and a bootstrapping compiler written in an accompanying simple
+language called X. The design of Hex draws on the [Transputer
 architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
 42](http://people.cs.bris.ac.uk/~dave/S42ISA.pdf), particulary with the use of
 short instruction encodings, prefixing mechanism for creating larger immediates
@@ -32,18 +33,22 @@ enough to fit on a single chip. X draws on the basic sequential features of the
 [occam programming
 language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
 
-In my
-[implementation](https://github.com/jameshanlon/hex-processor), I have created
-a simple C++ toolchain with a simulator, Hex assembler and X language compiler.
-I have also created a Verilog implementation of Hex that is simulated with
-Verilator.
+In my [implementation](https://github.com/jameshanlon/hex-processor), I have
+created a simple C++ toolchain with a simulator, Hex assembler and X language
+compiler. I have also created a Verilog implementation of Hex that is simulated
+with Verilator.
 
 ## Hex architecture
 
-The Hex architecture is designed to be very simple and suitable for explaining
-how a computer works, whilst being flexible enough to execute substantial
-programs, and easily extensible. The sixteen instructions are summarised in the
-following table.
+The Hex architecture is described in detail in [a separate
+PDF]({{'hex/hexb.pdf'|asset}}). It has four registers: program counter ``pc``,
+operand register ``oreg`` and the A and B registers ``areg`` and ``breg`` used
+for expression evaluation. It has sixteen instructions that are summarised in
+the following table. The instructions are grouped into memory access with
+absolute or relative addressing modes, loading of constants, branching,
+supervisor calls and inter-register operations. The latter group consist only
+of addition and substraction operations, but this group can be extended by
+implementing additional immediate opcodes.
 
 <table class="table">
 <thead>
@@ -60,7 +65,7 @@ following table.
 <tr>
   <td><code>LDBM</code></td>
   <td><code>breg := mem[oreg]</code></td>
-  <td>Load from memory with an absolute address from memory into breg</td>
+  <td>Load from memory with an absolute address into breg</td>
 </tr>
 <tr>
   <td><code>STAM</code></td>
@@ -123,12 +128,12 @@ following table.
   <td>Inter-register operation</td>
 </tr>
 <tr>
-  <td><code>ADD</code></td>
+  <td>&nbsp;&nbsp;<code>ADD</code></td>
   <td><code>areg := areg + breg</code></td>
   <td>Add areg and breg and set areg to the result</td>
 </tr>
 <tr>
-  <td><code>SUB</code></td>
+  <td>&nbsp;&nbsp;<code>SUB</code></td>
   <td><code>areg := areg + breg</code></td>
   <td>Subtract areg and breg and set areg to the result</td>
 </tr>
