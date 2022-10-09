@@ -16,9 +16,11 @@ strategies. The implementation of the processor and its supporting tooling is
 small and self contained so to be understandable and easily extendable. Besides
 being an interesting side project, my motivation was to create a complete
 example as a point of reference to explain how programming languages work and
-correspond to the underlying hardware of a computer processor.
+correspond to the underlying hardware of a computer processor, or to provide a
+useful reference for compilers and simulators, starting point for another
+project or just a curiosity in itself.  
 
-The Hex processor architecture was designed by [David
+The project is based on the Hex processor architecture that was designed by [David
 May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
 computers work at the University of Bristol, whilst being flexible enough to
 execute substantial programs and easily extensible. David provided a simulator
@@ -29,16 +31,15 @@ architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
 short instruction encodings, prefixing mechanism for creating larger immediates
 and A, B and C registers for expression evaluation. These kind of architectural
 features made the silicon implementation of the Simple 42 and Transputers small
-enough to fit on a single chip. X draws on the basic sequential features of the
-[occam programming
-language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
+enough to fit on a single chip in the technology of the day.
+X draws on the basic sequential features of the
+[occam programming language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
-compiler. I have also created a Verilog implementation of Hex that is simulated
-with Verilator.
+compiler, and a Verilog implementation of Hex. 
 
-## Hex architecture
+## The Hex architecture
 
 The Hex architecture is described in detail in [a separate
 PDF]({{'hex/hexb.pdf'|asset}}). It has four registers: program counter ``pc``,
@@ -50,7 +51,7 @@ supervisor calls and inter-register operations. The latter group consist only
 of addition and substraction operations, but this group can be extended by
 implementing additional immediate opcodes.
 
-<table class="table">
+<table class="table table-striped table-sm">
 <thead>
   <th scope="col">Opcode</th>
   <th scope="col">Behaviour</th>
@@ -143,3 +144,44 @@ implementing additional immediate opcodes.
   <td>System call</td>
 </tr>
 </table>
+
+## The X language
+
+The X language is defined in [a separate PDF]({{'hex/xhexnotes.pdf'|asset}}).
+X is simple enough that it can be compiled using simple techniques to the Hex
+architecture, whilst providing enough flexibility to express complex programs
+such as its own compiler. The following X program implements Bubblesort:
+
+```
+val length = 4;
+var data[length];
+
+proc sort(array a, val n) is
+  var i;
+  var j;
+  var tmp;
+{ i := 0;
+  while i < n do
+  { j := 0
+  ; while j < n - i - 1 do
+    { if a[j] > a[j+1] then
+      { tmp := a[j]
+      ; a[j] := a[j+1]
+      ; a[j+1] := tmp
+      }
+      else skip
+    ; j := j + 1
+    }
+  ; i := i + 1
+  }
+}
+
+proc main() is
+{ data[0] := 3 
+; data[1] := 2 
+; data[2] := 1 
+; data[3] := 0 
+; sort(data, length)
+}
+``` 
+
