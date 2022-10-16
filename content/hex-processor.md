@@ -147,10 +147,14 @@ implementing additional immediate opcodes.
 
 ## The X language
 
-The X language is defined in [a separate PDF]({{'hex/xhexnotes.pdf'|asset}}).
-X is simple enough that it can be compiled using simple techniques to the Hex
+The X language is defined in [a separate PDF]({{'hex/xhexnotes.pdf'|asset}}). X
+is simple enough that it can be compiled using simple techniques to the Hex
 architecture, whilst providing enough flexibility to express complex programs
-such as its own compiler. The following X program implements Bubblesort:
+such as its own compiler (more on that later). It is an imperative language and
+has features for procedure calling, composition of statements, looping and
+conditional statements, expressions including function calls, and
+representation of memory with variables, arrays and string literals. The
+following X program uses Bubblesort to sort an array of four elements:
 
 ```
 val length = 4;
@@ -185,3 +189,28 @@ proc main() is
 }
 ``` 
 
+## Hex processor integrated circuit
+
+A hardware implementation of the Hex processor is written in System Verilog,
+[``processor.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv),
+in 150 lines. This implementation is single cycle in that all elements of
+instruction execution (ie instruction fetch from memory, decode, instruction
+memory access and state writeback) are completed in that time. A separate
+memory module,
+[``memory.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/memory.sv)
+implements a single-cycle random-access memory with two ports: one for
+instruction fetch and the other for data access so that they can occur
+simultaneously in the same cycle. Note that because memory access time
+increases with the memory capacity, a implementation of Hex accessing a large
+memory (ie more than a few thousand bytes) would add pipelining to hide the
+latency to memory. Some degree of pipelining is standard in processor
+implementations.
+
+Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
+for performing synthesis, optimisation and physical layout of digital circuits,
+we can compile Hex into an integrated circuit layout.
+
+## Similar projects
+
+- [Luz CPU](https://github.com/eliben/luz-cpu)
+- [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html)
