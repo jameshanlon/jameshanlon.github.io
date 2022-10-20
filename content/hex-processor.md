@@ -18,7 +18,7 @@ being an interesting side project, my motivation was to create a complete
 example as a point of reference to explain how programming languages work and
 correspond to the underlying hardware of a computer processor, or to provide a
 useful reference for compilers and simulators, starting point for another
-project or just a curiosity in itself.  
+project or just a curiosity in itself.
 
 The project is based on the Hex processor architecture that was designed by [David
 May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
@@ -37,19 +37,20 @@ X draws on the basic sequential features of the
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
-compiler, and a Verilog implementation of Hex. 
+compiler, and a Verilog implementation of Hex.
 
 ## The Hex architecture
 
 The Hex architecture is described in detail in [a separate
-PDF]({{'hex/hexb.pdf'|asset}}). It has four registers: program counter ``pc``,
-operand register ``oreg`` and the A and B registers ``areg`` and ``breg`` used
-for expression evaluation. It has sixteen instructions that are summarised in
-the following table. The instructions are grouped into memory access with
-absolute or relative addressing modes, loading of constants, branching,
-supervisor calls and inter-register operations. The latter group consist only
-of addition and substraction operations, but this group can be extended by
-implementing additional immediate opcodes.
+PDF]({{'hex/hexb.pdf'|asset}}), but I will give a brief summary here and focus
+on several important aspects for reference. Hex has four registers: program
+counter ``pc``, operand register ``oreg`` and the A and B registers ``areg``
+and ``breg`` used for expression evaluation. The architecture is agnostic of a
+particular word size, but it has to be a miniumum of a byte and multiples of a
+byte. In the included implementation the word size is 4 bytes. Hex has sixteen
+instructions that are summarised in the following table. The instructions are
+grouped into memory access with absolute or relative addressing modes, loading
+of constants, branching, inter-register operations and supervisor calls.
 
 <table class="table table-striped table-sm">
 <thead>
@@ -124,8 +125,18 @@ implementing additional immediate opcodes.
   <td>Absolute branch</td>
 </tr>
 <tr>
+  <td><code>PFIX</code></td>
+  <td><code>oreg := oreg << 4</code></td>
+  <td>Positive prefix</td>
+</tr>
+<tr>
+  <td><code>NFIX</code></td>
+  <td><code>oreg = 0xFFFFFF00 | oreg << 4</code></td>
+  <td>Negative prefix</td>
+</tr>
+<tr>
   <td><code>OPR</code></td>
-  <td><code></code></td>
+  <td>-</td>
   <td>Inter-register operation</td>
 </tr>
 <tr>
@@ -135,15 +146,81 @@ implementing additional immediate opcodes.
 </tr>
 <tr>
   <td>&nbsp;&nbsp;<code>SUB</code></td>
-  <td><code>areg := areg + breg</code></td>
+  <td><code>areg := areg - breg</code></td>
   <td>Subtract areg and breg and set areg to the result</td>
 </tr>
 <tr>
-  <td><code>SVC</code></td>
-  <td><code></code></td>
-  <td>System call</td>
+  <td>&nbsp;&nbsp;<code>SVC</code></td>
+  <td>-</td>
+  <td>Supervisor call</td>
 </tr>
 </table>
+
+Prefixing using the ``PFIX`` and ``NFIX`` operations is used to generate
+operand values in ``oreg`` larger than the 4-bit instruction immediate. For
+example, to generate the value 16 in ``oreg`` and use ``LDAC`` to assign it to
+``areg``:
+
+```
+PFIX 1
+LDAC 0
+```
+
+Prefixes can be chained to extend the operand range, for example, creating the
+value 496 requires two positive prefixes before a load constant instruction:
+```
+PFIX 1
+PFIX 15
+LDAC 0
+```
+
+Negative values always require a negative prefix to fill the top most ``oreg``
+bits with ones, so to load the value -1 into ``oreg`` then ``areg``:
+
+```
+NFIX 15
+LDAC 15
+```
+
+And to load -512, a positive prefix is required to scale the negative value:
+
+```
+NFIX 14
+PFIX 0
+LDAC 0
+```
+
+The inter-register operations use the ``OPR`` opcode and consist only of
+addition and substraction. The group can be extended by implementing additional
+immediate opcodes to add new operations to the processor (such as other
+arithmetic and bitwise operations). The 4-bit immediate supports up to 16
+inter-register operations without the need for prefixing, but many more with
+prefixing and the according overhead to form larger immediates. The following
+instruciton sequence adds two numbers from fixed locations in memory, with the
+result written to ``areg``:
+
+```
+LDAM 1
+LDBM 2
+OPR ADD
+```
+
+A special inter-register operation is a supervisor call that transfers
+control to the system to complete an action such as read or write from a
+file, or to halt the program. The supervisor call type is encoded in the
+``oreg`` and arguments and return values specific to the call type are passed
+and returned on the stack using the standard calling convention. An example
+code sequence to invoke the exit supervisor call is:
+
+```
+LDAC 0 # Set areg to 0, the exit opcode value.
+LDBM 1 # Load the stack pointer in breg.
+STAI 2 # Store areg into stack offset two as a parameter.
+LDAC 0 # Load the exit opcode.
+OPR SVC
+```
+
+
 
 ## The X language
 
@@ -181,13 +258,13 @@ proc sort(array a, val n) is
 }
 
 proc main() is
-{ data[0] := 3 
-; data[1] := 2 
-; data[2] := 1 
-; data[3] := 0 
+{ data[0] := 3
+; data[1] := 2
+; data[2] := 1
+; data[3] := 0
 ; sort(data, length)
 }
-``` 
+```
 
 ## Hex processor integrated circuit
 
