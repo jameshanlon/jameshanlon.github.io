@@ -72,17 +72,17 @@ of constants, branching, inter-register operations and supervisor calls.
 <tr>
   <td><code>STAM</code></td>
   <td><code>mem[oreg] := areg</code></td>
-  <td>Store absolute from areg</td>
+  <td>Store to absolute address from areg</td>
 </tr>
 <tr>
   <td><code>LDAC</code></td>
   <td><code>areg := oreg</code></td>
-  <td>Load absolute into areg</td>
+  <td>Load constant into areg</td>
 </tr>
 <tr>
   <td><code>LDBC</code></td>
   <td><code>breg := oreg</code></td>
-  <td>Load absolute into breg</td>
+  <td>Load constant into breg</td>
 </tr>
 <tr>
   <td><code>LDAP</code></td>
@@ -156,17 +156,17 @@ of constants, branching, inter-register operations and supervisor calls.
 </tr>
 </table>
 
-Prefixing using the ``PFIX`` and ``NFIX`` operations is used to generate
-operand values in ``oreg`` larger than the 4-bit instruction immediate. For
-example, to generate the value 16 in ``oreg`` and use ``LDAC`` to assign it to
-``areg``:
+Prefixing using the ``PFIX`` and ``NFIX`` operations generates operand values
+in ``oreg`` larger than the 4-bit instruction immediate. For example, the
+following instructions generate the value 16 in ``oreg`` and use ``LDAC`` to
+assign it to ``areg`` :
 
 ```
 PFIX 1
 LDAC 0
 ```
 
-Prefixes can be chained to extend the operand range, for example, creating the
+Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant instruction:
 ```
 PFIX 1
@@ -196,7 +196,7 @@ immediate opcodes to add new operations to the processor (such as other
 arithmetic and bitwise operations). The 4-bit immediate supports up to 16
 inter-register operations without the need for prefixing, but many more with
 prefixing and the according overhead to form larger immediates. The following
-instruciton sequence adds two numbers from fixed locations in memory, with the
+instruction sequence adds two numbers from fixed locations in memory, with the
 result written to ``areg``:
 
 ```
@@ -220,7 +220,26 @@ LDAC 0 # Load the exit opcode.
 OPR SVC
 ```
 
+There are two variants of load and store instructions: using absolute addresses
+and addresses relative to a base address. Absolute addressing (``LDAM``,
+``LDBM`` and ``STAM``) is intended to access objects in memory that are
+allocated at offsets that are fixed with respect to a program, such as constant
+values and global variables. Relative-addressing (``LDAI``, ``LDBI`` and
+``STAI``) is typically used to access objects that are relative to a dynamic
+position, such as the stack pointer, or index into an array. The particular
+variants of load/store instructions is influenced by their targeting from a
+compiler. Having pairs of load instructions that can write to ``areg`` or
+``breg`` (such as ``LDAM`` and ``LDBM``) gives flexibility when generating
+operands for binary operations, whereas having only single variants of stores
+(``STAM`` and ``STAI``) fits most cases where expression results generated into
+``areg`` need to be written to memory.
 
+A special constant-loading instruction ``LDAP`` is used to generate bytewise
+program addresses, relative to the program counter, such as for branch targets.
+
+For branching, an unconditional relative branch is provided with ``BR`` to
+reach a label location, conditional versions ``BRZ`` and ``BRN`` are used to
+implement logical bianry operations (less than, equal etc). 
 
 ## The X language
 
