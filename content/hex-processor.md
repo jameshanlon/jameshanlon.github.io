@@ -20,7 +20,8 @@ correspond to the underlying hardware of a computer processor, or to provide a
 useful reference for compilers and simulators, starting point for another
 project or just a curiosity in itself.
 
-The project is based on the Hex processor architecture that was designed by [David
+First, to provide some background. The project is based on the Hex processor
+architecture that was designed by [David
 May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
 computers work at the University of Bristol, whilst being flexible enough to
 execute substantial programs and easily extensible. David provided a simulator
@@ -31,13 +32,14 @@ architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
 short instruction encodings, prefixing mechanism for creating larger immediates
 and A, B and C registers for expression evaluation. These kind of architectural
 features made the silicon implementation of the Simple 42 and Transputers small
-enough to fit on a single chip in the technology of the day.
-X draws on the basic sequential features of the
-[occam programming language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
+enough to fit on a single chip in the technology of the day. X draws on the
+basic sequential features of the [occam programming
+language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
-compiler, and a Verilog implementation of Hex.
+compiler, and a Verilog implementation of Hex. Before describing that, the
+next two sections introducte Hex and X.
 
 ## The Hex architecture
 
@@ -237,9 +239,11 @@ operands for binary operations, whereas having only single variants of stores
 A special constant-loading instruction ``LDAP`` is used to generate bytewise
 program addresses, relative to the program counter, such as for branch targets.
 
-For branching, an unconditional relative branch is provided with ``BR`` to
-reach a label location, conditional versions ``BRZ`` and ``BRN`` are used to
-implement logical bianry operations (less than, equal etc). 
+For branching, a relative branch is provided with ``BR``, which can be used for
+example to reach a label location. Conditional branch versions ``BRZ`` and
+``BRN`` are used to implement logical binary operations (less than, equal etc)
+and ``BRB`` is an absolute branch, which can be used, for example, to return to
+a calling function.
 
 ## The X language
 
@@ -289,7 +293,7 @@ proc main() is
 
 A hardware implementation of the Hex processor is written in System Verilog,
 [``processor.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv),
-in 150 lines. This implementation is single cycle in that all elements of
+in just 150 lines. This implementation is single cycle in that all elements of
 instruction execution (ie instruction fetch from memory, decode, instruction
 memory access and state writeback) are completed in that time. A separate
 memory module,
