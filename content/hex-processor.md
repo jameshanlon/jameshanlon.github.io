@@ -158,6 +158,8 @@ of constants, branching, inter-register operations and supervisor calls.
 </tr>
 </table>
 
+### Prefixing
+
 Prefixing using the ``PFIX`` and ``NFIX`` operations generates operand values
 in ``oreg`` larger than the 4-bit instruction immediate. For example, the
 following instructions generate the value 16 in ``oreg`` and use ``LDAC`` to
@@ -192,6 +194,8 @@ PFIX 0
 LDAC 0
 ```
 
+### Inter-register opeations
+
 The inter-register operations use the ``OPR`` opcode and consist only of
 addition and substraction. The group can be extended by implementing additional
 immediate opcodes to add new operations to the processor (such as other
@@ -222,6 +226,8 @@ LDAC 0 # Load the exit opcode.
 OPR SVC
 ```
 
+### Load-store operations
+
 There are two variants of load and store instructions: using absolute addresses
 and addresses relative to a base address. Absolute addressing (``LDAM``,
 ``LDBM`` and ``STAM``) is intended to access objects in memory that are
@@ -236,25 +242,30 @@ operands for binary operations, whereas having only single variants of stores
 (``STAM`` and ``STAI``) fits most cases where expression results generated into
 ``areg`` need to be written to memory.
 
+### Address generation
+
 A special constant-loading instruction ``LDAP`` is used to generate bytewise
 program addresses, relative to the program counter, such as for branch targets.
+
+### Branching
 
 For branching, a relative branch is provided with ``BR``, which can be used for
 example to reach a label location. Conditional branch versions ``BRZ`` and
 ``BRN`` are used to implement logical binary operations (less than, equal etc)
-and ``BRB`` is an absolute branch, which can be used, for example, to return to
-a calling function.
+and ``BRB`` is an absolute branch that is used, for example, to return to
+a calling function using an address retrieved from memory.
 
 ## The X language
 
 The X language is defined in [a separate PDF]({{'hex/xhexnotes.pdf'|asset}}). X
 is simple enough that it can be compiled using simple techniques to the Hex
 architecture, whilst providing enough flexibility to express complex programs
-such as its own compiler (more on that later). It is an imperative language and
+such as its own compiler (more on that later). X is an imperative language and
 has features for procedure calling, composition of statements, looping and
 conditional statements, expressions including function calls, and
-representation of memory with variables, arrays and string literals. The
-following X program uses Bubblesort to sort an array of four elements:
+representation of memory with variables and arrays. To give an indicative
+example of X programming, the following program implements Bubblesort to sort
+an array of four elements:
 
 ```
 val length = 4;
@@ -310,7 +321,22 @@ Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
 for performing synthesis, optimisation and physical layout of digital circuits,
 we can compile Hex into an integrated circuit layout.
 
+
+## Hex tooling
+
+There are three main tools provided in the Hex toolchain: a Hex simulator
+``hexsim``, an assembler ``hexasm`` and an X compiler ``xcmp``.
+
+
 ## Similar projects
 
-- [Luz CPU](https://github.com/eliben/luz-cpu)
-- [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html)
+The following are some similar projects that include simple implementations of
+processor toolchains.
+
+- [Luz CPU](https://github.com/eliben/luz-cpu), a simulator, assembler and
+  linker for the Luz processor architecture.
+
+- [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html), is a very simple
+  programming language designed to be used as a case study for comparing
+  compiler implementations. The provided source distribution includes several
+  implemenations of VSPL in different languages.
