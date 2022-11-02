@@ -319,7 +319,20 @@ implementations.
 
 Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
 for performing synthesis, optimisation and physical layout of digital circuits,
-we can compile Hex into an integrated circuit layout.
+we can compile Hex into an integrated circuit layout. OpenROAD uses the
+[SkyWater Process Design Kit](https://github.com/google/skywater-pdk) (PDK),
+for creating designs in 130 nm process technology, which was first
+commercialised in 2001. The PDK is a collection of analog and digital cell
+libraries, design rules and tooling. 
+
+The final physical design has:
+
+- A total of 9,719 standard cells.
+- Occupies an area of 16,706 $^2\mu$.
+- Clocks at 229 MHz.
+- Total switching power is 4.12 mW. 
+
+{{ macros.image('hex-processor/floorplan-stdcells.png', local=True) }}
 
 
 ## Hex tooling
