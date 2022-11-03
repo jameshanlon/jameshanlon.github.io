@@ -321,18 +321,38 @@ Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
 for performing synthesis, optimisation and physical layout of digital circuits,
 we can compile Hex into an integrated circuit layout. OpenROAD uses the
 [SkyWater Process Design Kit](https://github.com/google/skywater-pdk) (PDK),
-for creating designs in 130 nm process technology, which was first
+for creating designs in 130 nm process technology, which was a technology first
 commercialised in 2001. The PDK is a collection of analog and digital cell
-libraries, design rules and tooling. 
+libraries, design rules and tooling. Since OpenROAD uses
+[Yosys](https://yosyshq.net/yosys/) for synthesis, and it doesn't support
+particular SystemVerilog features, I used
+[sv2v](https://github.com/zachjs/sv2v) to convert the implementation to plain
+Verilog 2005 (see [``processor.v``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.v)).
 
-The final physical design has:
+The final physical design is based on a default flow, and has the following
+characteristics:
 
+- A die size of ~280x280 microns.
 - A total of 9,719 standard cells.
-- Occupies an area of 16,706 $^2\mu$.
-- Clocks at 229 MHz.
-- Total switching power is 4.12 mW. 
+- A cell area of 16,706 square microns at 25% utilisation.
+- A clock speed of 229 MHz.
+- Total switching power of 4.12 mW.
 
-{{ macros.image('hex-processor/floorplan-stdcells.png', local=True) }}
+The OpenROAD GUI provides many ways to visualise and explore the design. The
+following images are some basic examples of the different aspects of the
+physical design.
+
+{{ macros.pair_layout(
+     macros.image('hex-processor/floorplan-stdcells.png', caption='Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).', local=True),
+     macros.image('hex-processor/floorplan-closeup.png', caption='A zoomed view of a part of the design.', local=True)) }}
+
+{{ macros.pair_layout(
+     macros.image('hex-processor/floorplan-clocktree.png', caption='All of the nets constituting the clock tree.', local=True),
+     macros.image('hex-processor/floorplan-routing-congestion.png', caption='A heatmap showing routing congestion.', local=True)) }}
+
+{{ macros.pair_layout(
+     macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, showing the nets and cells on the path as well as the paths for the launch and capture clocks.', local=True),
+     macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visulation for the worst (least slack) hold path in the design.', local=True)) }}
 
 
 ## Hex tooling
