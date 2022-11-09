@@ -1,6 +1,6 @@
 ---
 Title: Logic gates to a programming language using the Hex architecture
-Date: 2022-10-02
+Date: 2022-11-09
 Category: projects
 Tags: computing, computer architecture, microelectronics
 Status: published
@@ -17,7 +17,7 @@ small and self contained so to be understandable and easily extendable. Besides
 being an interesting side project, my motivation was to create a complete
 example as a point of reference to explain how programming languages work and
 correspond to the underlying hardware of a computer processor, or to provide a
-useful reference for compilers and simulators, starting point for another
+useful reference for compilers and simulators, a starting point for another
 project or just a curiosity in itself.
 
 First, to provide some background. The project is based on the Hex processor
@@ -26,20 +26,21 @@ May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
 computers work at the University of Bristol, whilst being flexible enough to
 execute substantial programs and easily extensible. David provided a simulator
 written in C and a bootstrapping compiler written in an accompanying simple
-language called X. The design of Hex draws on the [Transputer
+impreative programming language called X. The design of Hex draws on the [Transputer
 architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
 42](http://people.cs.bris.ac.uk/~dave/S42ISA.pdf), particulary with the use of
-short instruction encodings, prefixing mechanism for creating larger immediates
+short instruction encodings, a prefixing mechanism for creating larger immediates
 and A, B and C registers for expression evaluation. These kind of architectural
 features made the silicon implementation of the Simple 42 and Transputers small
 enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the [occam programming
-language](https://en.wikipedia.org/wiki/Occam_(programming_language)).
+language](https://en.wikipedia.org/wiki/Occam_(programming_language)) but it
+not disimilar to a small subset of C, for example.
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
-compiler, and a Verilog implementation of Hex. Before describing that, the
-next two sections introducte Hex and X.
+compiler, and a Verilog implementation of Hex. Before describing them, the
+next two sections introduce Hex and X.
 
 ## The Hex architecture
 
@@ -50,9 +51,10 @@ counter ``pc``, operand register ``oreg`` and the A and B registers ``areg``
 and ``breg`` used for expression evaluation. The architecture is agnostic of a
 particular word size, but it has to be a miniumum of a byte and multiples of a
 byte. In the included implementation the word size is 4 bytes. Hex has sixteen
-instructions that are summarised in the following table. The instructions are
-grouped into memory access with absolute or relative addressing modes, loading
-of constants, branching, inter-register operations and supervisor calls.
+instructions (hence its name!) that are summarised in the following table. The
+instructions are grouped into memory access with absolute or relative
+addressing modes, loading of constants, branching, inter-register operations
+and supervisor calls.
 
 <table class="table table-striped table-sm">
 <thead>
@@ -166,32 +168,33 @@ following instructions generate the value 16 in ``oreg`` and use ``LDAC`` to
 assign it to ``areg`` :
 
 ```
-PFIX 1
-LDAC 0
+PFIX 1  # oreg = oreg (1) << 4 (0x000010)
+LDAC 0  # areg = oreg 16
 ```
 
 Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant instruction:
+
 ```
-PFIX 1
-PFIX 15
-LDAC 0
+PFIX 1  # oreg = oreg (1) << 4 (0x000010)
+PFIX 15 # oreg = oreg (31) << 4 (0x0001f0)
+LDAC 0  # areg = oreg 496
 ```
 
 Negative values always require a negative prefix to fill the top most ``oreg``
 bits with ones, so to load the value -1 into ``oreg`` then ``areg``:
 
 ```
-NFIX 15
-LDAC 15
+NFIX 15 # oreg = 0xFFFFFF00 | oreg (15) << 4 (0xfffffff0)
+LDAC 15 # areg = oreg 4294967295
 ```
 
 And to load -512, a positive prefix is required to scale the negative value:
 
 ```
-NFIX 14
-PFIX 0
-LDAC 0
+NFIX 14 # oreg = 0xFFFFFF00 | oreg (14) << 4 (0xffffffe0)
+PFIX 0  # oreg = oreg (4294967264) << 4 (0xfffffe00)
+LDAC 0  # areg = oreg 4294966784
 ```
 
 ### Inter-register opeations
@@ -206,9 +209,9 @@ instruction sequence adds two numbers from fixed locations in memory, with the
 result written to ``areg``:
 
 ```
-LDAM 1
-LDBM 2
-OPR ADD
+LDAM 1  # areg = mem[oreg (0x000001)] (7)
+LDBM 2  # breg = mem[oreg (0x000002)] (9)
+OPR  1  # ADD areg = areg (7) + breg (9) (16)
 ```
 
 A special inter-register operation is a supervisor call that transfers
@@ -219,11 +222,21 @@ and returned on the stack using the standard calling convention. An example
 code sequence to invoke the exit supervisor call is:
 
 ```
-LDAC 0 # Set areg to 0, the exit opcode value.
-LDBM 1 # Load the stack pointer in breg.
-STAI 2 # Store areg into stack offset two as a parameter.
-LDAC 0 # Load the exit opcode.
-OPR SVC
+LDAC 0  # Set areg to 0, the exit opcode value.
+LDBM 1  # Load the stack pointer in breg.
+STAI 2  # Store areg into stack offset two as a parameter.
+LDAC 0  # Load the exit opcode.
+OPR SVC # Perform the supervisor call
+```
+
+With the execution trace:
+
+```
+LDAC 0  # areg = oreg 0
+LDBM 1  # breg = mem[oreg (0x000001)] (16383)
+STAI 2  # mem[breg (16383) + oreg (2) = 0x004001] = areg (0)
+LDAC 0  # areg = oreg 0
+OPR  3  # exit 0
 ```
 
 ### Load-store operations
@@ -242,18 +255,51 @@ operands for binary operations, whereas having only single variants of stores
 (``STAM`` and ``STAI``) fits most cases where expression results generated into
 ``areg`` need to be written to memory.
 
-### Address generation
-
-A special constant-loading instruction ``LDAP`` is used to generate bytewise
-program addresses, relative to the program counter, such as for branch targets.
-
 ### Branching
 
 For branching, a relative branch is provided with ``BR``, which can be used for
 example to reach a label location. Conditional branch versions ``BRZ`` and
 ``BRN`` are used to implement logical binary operations (less than, equal etc)
 and ``BRB`` is an absolute branch that is used, for example, to return to
-a calling function using an address retrieved from memory.
+a calling function using an address retrieved from memory (see example in next
+section).
+
+### Address generation
+
+A special constant-loading instruction ``LDAP`` is used to generate bytewise
+program addresses, relative to the program counter, such as for branch targets.
+The following instruciton sequence performs a call to ``foo`` but first loads
+the return (link) address using ``LDAP`` to use with ``BR``. The callee ``foo``
+returns to the caller using ``BRB``.
+
+```
+FUNC foo
+LDBM 1
+STAI 0 # Save caller address
+...
+LDBI 0 # Restore caller address
+OPR 0  # Return to caller
+
+PROC main
+...
+LDAP lab2
+BR foo
+lab2
+```
+
+Which has the following execution trace:
+
+```
+main+32  LDAP 2   # areg = pc (60) + oreg (2) 62
+main+33  NFIX 13  # oreg = 0xFFFFFF00 | oreg (13) << 4 (0xffffffd0)
+main+34  BR   1   # pc = pc + oreg (4294967249) (0x00000f)
+foo+0    LDBM 1   # breg = mem[oreg (0x000001)] (199994)
+foo+1    STAI 0   # mem[breg (199994) + oreg (0) = 0x030d3a] = areg (62)
+...
+foo+10   LDBI 0   # breg = mem[breg (199994) + oreg (0) = 0x030d3a] (62)
+foo+11   OPR  0   # BRB pc = breg (0x00003e)
+main+35  ...
+```
 
 ## The X language
 
@@ -319,7 +365,8 @@ implementations.
 
 Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
 for performing synthesis, optimisation and physical layout of digital circuits,
-we can compile Hex into an integrated circuit layout. OpenROAD uses the
+we can compile Hex into an integrated circuit layout in order that it could be
+manufactured into a silicon device. OpenROAD uses the
 [SkyWater Process Design Kit](https://github.com/google/skywater-pdk) (PDK),
 for creating designs in 130 nm process technology, which was a technology first
 commercialised in 2001. The PDK is a collection of analog and digital cell
@@ -329,8 +376,10 @@ particular SystemVerilog features, I used
 [sv2v](https://github.com/zachjs/sv2v) to convert the implementation to plain
 Verilog 2005 (see [``processor.v``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.v)).
 
-The final physical design is based on a default flow, and has the following
-characteristics:
+The physical design is based on an OpenROAD [default
+flow](https://openroad.readthedocs.io/en/latest/tutorials/FlowTutorial.html),
+which takes a few minutes to be compiled from the source RTL. The final design
+has the following characteristics:
 
 - A die size of ~280x280 microns.
 - A total of 9,719 standard cells.
@@ -339,26 +388,97 @@ characteristics:
 - Total switching power of 4.12 mW.
 
 The OpenROAD GUI provides many ways to visualise and explore the design. The
-following images are some basic examples of the different aspects of the
-physical design.
+following images are some examples of the different views.
 
 {{ macros.pair_layout(
      macros.image('hex-processor/floorplan-stdcells.png', caption='Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).', local=True),
-     macros.image('hex-processor/floorplan-closeup.png', caption='A zoomed view of a part of the design.', local=True)) }}
+     macros.image('hex-processor/floorplan-closeup.png', caption='A zoomed view showing standard cells with logic and M1 layers only.', local=True)) }}
 
 {{ macros.pair_layout(
-     macros.image('hex-processor/floorplan-clocktree.png', caption='All of the nets constituting the clock tree.', local=True),
-     macros.image('hex-processor/floorplan-routing-congestion.png', caption='A heatmap showing routing congestion.', local=True)) }}
+     macros.image('hex-processor/floorplan-clocktree.png', caption='A view showing all nets constituting the clock tree.', local=True),
+     macros.image('hex-processor/floorplan-routing-congestion.png', caption='A heatmap view representing routing congestion.', local=True)) }}
 
 {{ macros.pair_layout(
-     macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, showing the nets and cells on the path as well as the paths for the launch and capture clocks.', local=True),
+     macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.', local=True),
      macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visulation for the worst (least slack) hold path in the design.', local=True)) }}
 
 
 ## Hex tooling
 
-There are three main tools provided in the Hex toolchain: a Hex simulator
-``hexsim``, an assembler ``hexasm`` and an X compiler ``xcmp``.
+There are three tools provided in the Hex toolchain: a Hex instruction set
+simulator ``hexsim``, a Hex assembler ``hexasm`` and an X compiler ``xcmp``.
+Instructions on how to build the tools are included in the
+[documentation](https://jameshanlon.github.io/hex-processor).
+The implementation is provided in a small number of source files (with only one
+external dependency on ``boost::format``):
+
+- General Hex defintions are provided in
+  [``hex.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.hpp) and
+  [``hex.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.cpp).
+
+- The Hex simulator is implemented in the headers
+  [``hexsim.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsim.hpp) and
+  [``hexsimio.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsimio.hpp).
+  (Note that listings for a complete simulator in C are given in the [Hex definition (PDF)]({{'hex/hexb.pdf'|asset}}).)
+
+- The Hex assembler is implemented in the header
+  [``hexasm.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.hpp).
+
+- The X compiler is implemented in the header
+  [``xcmp.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/xcmp.hpp).
+
+- Driver code for the respective command-line tools ``hexsim``, ``hexasm`` and
+  ``xcmp`` is implemented in
+  [``hexsim.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsim.cpp),
+  [``hexasm.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp) and
+  [``xcmp.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/xcmp.cpp).
+
+Taking a most basic example of an assembly program that simply exits:
+
+```
+➜ cat tests/asm/exit0.S
+BR start
+DATA 16383 # sp
+start
+LDAC 0 # areg <- 0
+LDBM 1 # breg <- sp
+STAI 2 # sp[2] <- areg
+LDAC 0
+OPR SVC
+```
+
+The assembler can display the program layout in memory and computed symbol values:
+```
+➜ hexasm tests/asm/exit0.S --instrs
+00000000 BR start (7)         (1 bytes)
+0x000004 DATA 16383           (4 bytes)
+0x000008 start                (0 bytes)
+0x000008 LDAC 0               (1 bytes)
+0x000009 LDBM 1               (1 bytes)
+0x00000a STAI 2               (1 bytes)
+0x00000b LDAC 0               (1 bytes)
+0x00000c OPR SVC              (1 bytes)
+00000000 PADDING 3            (3 bytes)
+13 bytes
+```
+
+
+And create a 13-byte executable binary:
+```
+➜ hexasm tests/asm/exit0.S
+```
+
+This binary can then be simulated with tracing to show what's going on:
+```
+➜ hexsim a.out -t
+0      0      BR   7  pc = pc + oreg (7) (0x000008)
+1      8      LDAC 0  areg = oreg 0
+2      9      LDBM 1  breg = mem[oreg (0x000001)] (16383)
+3      10     STAI 2  mem[breg (16383) + oreg (2) = 0x004001] = areg (0)
+4      11     LDAC 0  areg = oreg 0
+5      12     OPR  3  exit 0
+```
+
 
 
 ## Similar projects
