@@ -433,9 +433,11 @@ external dependency on ``boost::format``):
   [``hexasm.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp) and
   [``xcmp.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/xcmp.cpp).
 
+### A simple example
+
 Taking a most basic example of an assembly program that simply exits:
 
-```
+```bash
 ➜ cat tests/asm/exit0.S
 BR start
 DATA 16383 # sp
@@ -448,7 +450,7 @@ OPR SVC
 ```
 
 The assembler can display the program layout in memory and computed symbol values:
-```
+```bash
 ➜ hexasm tests/asm/exit0.S --instrs
 00000000 BR start (7)         (1 bytes)
 0x000004 DATA 16383           (4 bytes)
@@ -462,14 +464,16 @@ The assembler can display the program layout in memory and computed symbol value
 13 bytes
 ```
 
-
 And create a 13-byte executable binary:
-```
+
+```bash
 ➜ hexasm tests/asm/exit0.S
 ```
 
-This binary can then be simulated with tracing to show what's going on:
-```
+This binary can then be simulated with tracing to show what's going on (the
+first column is the cycle count and the second is the ``pc`` value):
+
+```bash
 ➜ hexsim a.out -t
 0      0      BR   7  pc = pc + oreg (7) (0x000008)
 1      8      LDAC 0  areg = oreg 0
@@ -478,6 +482,70 @@ This binary can then be simulated with tracing to show what's going on:
 4      11     LDAC 0  areg = oreg 0
 5      12     OPR  3  exit 0
 ```
+
+The X compiler can be used to produce more complex Hex programs. Starting with
+a similar most basic program  written in X:
+
+```
+proc main() is skip
+```
+
+This null program is compiled into Hex assembly, where the entry code calls
+``main`` then exits, and ``main`` does nothing (apart from saving and restoring
+the link location):
+
+```bash
+➜ xcmp tests/x/exit.x --insts-lowered
+BR start
+DATA 199999
+start
+LDAP _exit
+BR main
+_exit
+LDBM 1
+LDAC 0
+STAI 2
+OPR SVC
+
+PROC main
+LDBM 1
+STAI 0
+lab0
+LDBM 1
+LDBI 0
+OPR BRB
+```
+
+And when simulated produces the following trace where execution through
+``main`` can be seen since it is the only labelled portion of the code:
+
+```
+0      0                   BR   7  pc = pc + oreg (7) (0x000008)
+1      8                   LDAP 1  areg = pc (9) + oreg (1) 10
+2      9                   BR   4  pc = pc + oreg (4) (0x00000e)
+3      14     main+0       LDBM 1  breg = mem[oreg (0x000001)] (199999)
+4      15     main+1       STAI 0  mem[breg (199999) + oreg (0) = 0x030d3f] = areg (10)
+5      16     main+2       LDBM 1  breg = mem[oreg (0x000001)] (199999)
+6      17     main+3       LDBI 0  breg = mem[breg (199999) + oreg (0) = 0x030d3f] (10)
+7      18     main+4       OPR  0  BRB pc = breg (0x00000a)
+8      10                  LDBM 1  breg = mem[oreg (0x000001)] (199999)
+9      11                  LDAC 0  areg = oreg 0
+10     12                  STAI 2  mem[breg (199999) + oreg (2) = 0x030d41] = areg (0)
+11     13                  OPR  3  exit 0
+```
+
+### Implementation details
+
+The assembler works in two main phases: parsing to create a list of directives
+and code generation to iterate through the directives and emit binary output.
+Before emission, the value of labels must be determined, which involves two
+problems. The first is that for a given relative reference, the length of the
+encoding (ie number of prefixes) depends on the value of the reference and vice
+versa. This is solved by iteratively increasing the encoding length until it
+meets the required range (see ``instrLen()``). The second problem is that the
+value of a relative reference depends on the length of any relative encodings
+contained within the range. This is solved by iteratively updating label values
+until they reach a stable state (see ``resolveLabels()``).
 
 
 
