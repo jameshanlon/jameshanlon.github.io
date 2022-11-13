@@ -536,17 +536,44 @@ And when simulated produces the following trace where execution through
 
 ### Implementation details
 
-The assembler works in two main phases: parsing to create a list of directives
-and code generation to iterate through the directives and emit binary output.
-Before emission, the value of labels must be determined, which involves two
+The assembler works in two main phases:
+
+- Parsing the program to form a list of directives (instructions, labels, data
+  etc).
+- Code generation to iterate through the directives and emit binary output.
+
+Before emission, the value of labels must be determined, which involves solving two
 problems. The first is that for a given relative reference, the length of the
 encoding (ie number of prefixes) depends on the value of the reference and vice
 versa. This is solved by iteratively increasing the encoding length until it
 meets the required range (see ``instrLen()``). The second problem is that the
 value of a relative reference depends on the length of any relative encodings
 contained within the range. This is solved by iteratively updating label values
-until they reach a stable state (see ``resolveLabels()``).
+until they reach a stable state (see ``resolveLabels()``). The assembler adds
+additional rudimentary debug information to the binary, with a mapping of
+instruction ranges to symbol values. This allows the simulator to display the
+current symbol and offset.
 
+The compiler works a traditional way, structured as a sequence of phases, first
+creating a parse tree, then performing passes on the tree to optimise it and
+then lowering the tree to machine instructions:
+
+- Parse the program to form an abstract syntax tree.
+- Walk the tree to populate a symbol table with names occuring in the program.
+- Walk the tree to propagate constant values within expressions.
+- Walk the tree to transform expressions into a canonical form.
+- Walk the tree to generate a sequence of intermediate machine instructions.
+- Lower the intermediate instructions to machine instructions.
+- Optimise the machine instruction sequence.
+- Assemble and emit the machine instruction sequence.
+
+Compared with a more sophisticated compiler, Hex and X afford two significant
+simplifications. First, the small set of features in X make it straightforward
+to map to directly to machine instructions rather than an intermediate
+machine-independent representation. Secondly, the register architecture of Hex
+means that allocation of registers can be handled easily during mapping to
+machine instructions, rather than having to allocate physical registers to a
+virtual set as is typical in machines with more registers.
 
 
 ## Similar projects
