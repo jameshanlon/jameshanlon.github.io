@@ -26,16 +26,16 @@ May](http://people.cs.bris.ac.uk/~dave) as a vehicle for teaching about how
 computers work at the University of Bristol, whilst being flexible enough to
 execute substantial programs and easily extensible. David provided a simulator
 written in C and a bootstrapping compiler written in an accompanying simple
-impreative programming language called X. The design of Hex draws on the [Transputer
+imperative programming language called X. The design of Hex draws on the [Transputer
 architecture](https://en.wikipedia.org/wiki/Transputer) and the earlier [Simple
-42](http://people.cs.bris.ac.uk/~dave/S42ISA.pdf), particulary with the use of
+42](http://people.cs.bris.ac.uk/~dave/S42ISA.pdf), particularly with the use of
 short instruction encodings, a prefixing mechanism for creating larger immediates
 and A, B and C registers for expression evaluation. These kind of architectural
 features made the silicon implementation of the Simple 42 and Transputers small
 enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the [occam programming
 language](https://en.wikipedia.org/wiki/Occam_(programming_language)) but it
-not disimilar to a small subset of C, for example.
+not dissimilar to a small subset of C, for example.
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
@@ -49,7 +49,7 @@ PDF]({{'hex/hexb.pdf'|asset}}), but I will give a brief summary here and focus
 on several important aspects for reference. Hex has four registers: program
 counter ``pc``, operand register ``oreg`` and the A and B registers ``areg``
 and ``breg`` used for expression evaluation. The architecture is agnostic of a
-particular word size, but it has to be a miniumum of a byte and multiples of a
+particular word size, but it has to be a minimum of a byte and multiples of a
 byte. In the included implementation the word size is 4 bytes. Hex has sixteen
 instructions (hence its name!) that are summarised in the following table. The
 instructions are grouped into memory access with absolute or relative
@@ -197,10 +197,10 @@ PFIX 0  # oreg = oreg (4294967264) << 4 (0xfffffe00)
 LDAC 0  # areg = oreg 4294966784
 ```
 
-### Inter-register opeations
+### Inter-register operations
 
 The inter-register operations use the ``OPR`` opcode and consist only of
-addition and substraction. The group can be extended by implementing additional
+addition and subtraction. The group can be extended by implementing additional
 immediate opcodes to add new operations to the processor (such as other
 arithmetic and bitwise operations). The 4-bit immediate supports up to 16
 inter-register operations without the need for prefixing, but many more with
@@ -257,8 +257,8 @@ operands for binary operations, whereas having only single variants of stores
 
 ### Branching
 
-For branching, a relative branch is provided with ``BR``, which can be used for
-example to reach a label location. Conditional branch versions ``BRZ`` and
+For branching, a relative branch is provided with ``BR``, which can be used, for
+example, to reach a label location. Conditional branch versions ``BRZ`` and
 ``BRN`` are used to implement logical binary operations (less than, equal etc)
 and ``BRB`` is an absolute branch that is used, for example, to return to
 a calling function using an address retrieved from memory (see example in next
@@ -268,7 +268,7 @@ section).
 
 A special constant-loading instruction ``LDAP`` is used to generate bytewise
 program addresses, relative to the program counter, such as for branch targets.
-The following instruciton sequence performs a call to ``foo`` but first loads
+The following instruction sequence performs a call to ``foo`` but first loads
 the return (link) address using ``LDAP`` to use with ``BR``. The callee ``foo``
 returns to the caller using ``BRB``.
 
@@ -287,7 +287,7 @@ BR foo
 lab2
 ```
 
-Which has the following execution trace:
+These instructions have the following execution trace:
 
 ```
 main+32  LDAP 2   # areg = pc (60) + oreg (2) 62
@@ -361,7 +361,8 @@ simultaneously in the same cycle. Note that because memory access time
 increases with the memory capacity, a implementation of Hex accessing a large
 memory (ie more than a few thousand bytes) would add pipelining to hide the
 latency to memory. Some degree of pipelining is standard in processor
-implementations.
+implementations. The hardware design is simulated using Verilator, with C++
+testbench driver code in [``hextb.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hextb.cpp).
 
 Using [OpenROAD](https://theopenroadproject.org/), an open-source tool chain
 for performing synthesis, optimisation and physical layout of digital circuits,
@@ -400,7 +401,7 @@ following images are some examples of the different views.
 
 {{ macros.pair_layout(
      macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.', local=True),
-     macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visulation for the worst (least slack) hold path in the design.', local=True)) }}
+     macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visualisation for the worst (least slack) hold path in the design.', local=True)) }}
 
 
 ## Hex tooling
@@ -412,7 +413,7 @@ Instructions on how to build the tools are included in the
 The implementation is provided in a small number of source files (with only one
 external dependency on ``boost::format``):
 
-- General Hex defintions are provided in
+- General Hex definitions are provided in
   [``hex.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.hpp) and
   [``hex.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.cpp).
 
@@ -519,7 +520,8 @@ OPR BRB
 And when simulated produces the following trace where execution through
 ``main`` can be seen since it is the only labelled portion of the code:
 
-```
+```bash
+➜ hexsim a.out -t
 0      0                   BR   7  pc = pc + oreg (7) (0x000008)
 1      8                   LDAP 1  areg = pc (9) + oreg (1) 10
 2      9                   BR   4  pc = pc + oreg (4) (0x00000e)
@@ -533,6 +535,30 @@ And when simulated produces the following trace where execution through
 10     12                  STAI 2  mem[breg (199999) + oreg (2) = 0x030d41] = areg (0)
 11     13                  OPR  3  exit 0
 ```
+
+The program can also be run on the Verilog Hex implementation using ``hextb``:
+
+```bash
+➜ hextb a.out -t
+Wrote 20 bytes to memory
+[11] 8      0x51 LDAP
+[13] 9      0x94 BR
+[15] 14     0x11 LDBM
+[17] 15     0x80 STAI
+[19] 16     0x11 LDBM
+[21] 17     0x70 LDBI
+[23] 18     0xd0 OPR
+[25] 10     0x11 LDBM
+[27] 11     0x30 LDAC
+[29] 12     0x82 STAI
+[31] 13     0xd3 OPR
+exit 0
+```
+
+TODO:
+- show other outputs from the compiler
+- show hello world
+- show xhexb.x bootstrap
 
 ### Implementation details
 
@@ -559,7 +585,7 @@ creating a parse tree, then performing passes on the tree to optimise it and
 then lowering the tree to machine instructions:
 
 - Parse the program to form an abstract syntax tree.
-- Walk the tree to populate a symbol table with names occuring in the program.
+- Walk the tree to populate a symbol table with names occurring in the program.
 - Walk the tree to propagate constant values within expressions.
 - Walk the tree to transform expressions into a canonical form.
 - Walk the tree to generate a sequence of intermediate machine instructions.
@@ -576,6 +602,11 @@ machine instructions, rather than having to allocate physical registers to a
 virtual set as is typical in machines with more registers.
 
 
+## Final thoughts
+
+To do.
+
+
 ## Similar projects
 
 The following are some similar projects that include simple implementations of
@@ -587,4 +618,4 @@ processor toolchains.
 - [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html), is a very simple
   programming language designed to be used as a case study for comparing
   compiler implementations. The provided source distribution includes several
-  implemenations of VSPL in different languages.
+  implementations of VSPL in different languages.
