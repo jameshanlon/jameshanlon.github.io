@@ -229,7 +229,8 @@ LDAC 0  # Load the exit opcode.
 OPR SVC # Perform the supervisor call
 ```
 
-With the execution trace:
+With the following execution trace, noting that the simulator implements the
+system call directly rather than being handled by a kernel routine:
 
 ```
 LDAC 0  # areg = oreg 0
@@ -345,6 +346,43 @@ proc main() is
 ; sort(data, length)
 }
 ```
+
+Limitations of X to note that simplify its implementation are:
+
+- Arrays are limited to one dimension.
+
+- No operator precedence to avoid built-in rules so precedence must be
+  indicated explicitly with bracketing (apart from associative operators).
+
+- Conditional statements (beginning ``if``) must always have an ``else`` part
+  to simplify parsing.
+
+- Variables can only be passed by value into procedures.
+
+- There is no block scoping so variable and array declarations can only be made
+  at global and procedure scopes. Similarly, nested definitions of procedures
+  are not permitted.
+
+Other noteworthy features of X are:
+
+- There are two types of procedure: **processes** (using the ``proc`` keyword)
+  that execute a sequence of steps with possible side effects, and
+  **functions** (using the ``func``keyword ) that have no side effects and return
+  a value.
+
+- Names in a program are introduced as **definitions** of processes or functions,
+  **declarations** that represent memory locations, and **abbreviations** that
+  introduce alternative names for expressions, arrays, processes and
+  functions.
+
+- The scoping and abbreviation rules are defined so that that actual parameters
+  act as abbreviations of the supplied formals. This allows processes and
+  functions to be compiled by either as closed subroutines or by substitution of
+  the body at the call site, either as a source code transformation or compiler
+  optimisation. For example, given the definition ``proc foo(val a, array b) is B``,
+  it can be called as a subroutine: ``foo(x, y)`` or substituted: ``val a = x; array b = y; B``
+  providing the names are unique in the procedure.
+
 
 ## Hex processor integrated circuit
 
@@ -555,12 +593,116 @@ Wrote 20 bytes to memory
 exit 0
 ```
 
+### Hello World
+
+A more fullsome example is 'Hello World', where the main process is simply:
+
+```
+proc main() is prints("hello world\n")
+```
+
+And ``prints`` unpacks the bytewise string representation by using routines for
+performing divison and remainder by 265. The full program listing:
+
+```bash
+➜ cat tests/x/hello_prints.x
+val put = 1;
+val bytesperword = 4;
+var div_x;
+
+proc main() is prints("hello world\n")
+
+proc putval(val c) is put(c, 0)
+
+func lsu(val x, val y) is
+  if (x < 0) = (y < 0)
+  then
+    return x < y
+  else
+    return y < 0
+
+func div_step(val b, val y) is
+  var r;
+{ if (y < 0) or (~lsu(y, div_x))
+  then
+    r := 0
+  else
+    r := div_step(b + b, y + y);
+  if ~lsu(div_x, y)
+  then
+  { div_x := div_x - y;
+    r := r + b
+  }
+  else
+    skip;
+  return r
+}
+
+func div(val n, val m) is
+{ div_x := n;
+  if lsu(n, m)
+  then
+    return 0
+  else
+    return div_step(1, m)
+}
+
+func rem(val n, val m) is
+  var x;
+{ x := div(n, m);
+  return div_x
+}
+
+proc prints(array s) is
+  var n;
+  var p;
+  var w;
+  var l;
+  var b;
+{ n := 1;
+  p := 0;
+  w := s[p];
+  l := rem(w, 256);
+  w := div(w, 256);
+  b := 1;
+  while (n <= l) do
+  { putval(rem(w, 256));
+    w := div(w, 256);
+    n := n + 1;
+    b := b + 1;
+    if (b = bytesperword)
+    then
+    { b := 0;
+      p := p + 1;
+      w := s[p]
+    }
+    else skip
+  }
+}
+```
+
+Compiling and runnning this shows that it takes ~50K cycles to execute and
+inspecting the trace is clear to see that most time is spent in the arithmetic
+routines.
+
+```bash
+➜ xcmp tests/x/hello_prints.x
+➜ hexsim a.out
+hello world
+➜ hexsim a.out -t
+...
+48902  61                  OPR  3  exit 0
+```
+
+### Building an X compiler and bootstrapping
+
 TODO:
 - show other outputs from the compiler
-- show hello world
-- show xhexb.x bootstrap
 
 ### Implementation details
+
+Both the assembler and compiler are based on the ``xhexb.x`` boostrapping
+compiler for X.
 
 The assembler works in two main phases:
 
@@ -592,6 +734,9 @@ then lowering the tree to machine instructions:
 - Lower the intermediate instructions to machine instructions.
 - Optimise the machine instruction sequence.
 - Assemble and emit the machine instruction sequence.
+
+Command line options such as ``--tree`` are available to inspect the internal
+representation of the program in between these stages.
 
 Compared with a more sophisticated compiler, Hex and X afford two significant
 simplifications. First, the small set of features in X make it straightforward
