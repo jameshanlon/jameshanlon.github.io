@@ -696,13 +696,54 @@ hello world
 
 ### Building an X compiler and bootstrapping
 
-TODO:
-- show other outputs from the compiler
+A third example is a complete compiler for X, written in X:
+[``xhexb.x``](https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x).
+This serves as a challenging program to compile, and interesting that it can
+bootstrap itself.
+
+```bash
+➜ xcmp -S tests/x/xhexb.x
+...
+20739 bytes
+```
+
+Hello World:
+
+```bash
+# Create a compiler binary
+➜ xcmp tests/x/xhexb.x
+
+# Compile Hello World
+➜ hexsim a.out < tests/x/hello_prints.x
+tree size: 602
+program size: 414
+size: 414
+
+# Run it
+➜ hexsim simout2
+hello world
+```
+
+xhexb:
+
+```bash
+➜ hexsim a.out < tests/x/xhexb.x
+tree size: 18631
+program size: 17093
+size: 177097
+➜ hexsim simout2 < tests/x/hello_prints.x
+tree size: 602
+program size: 414
+size: 414
+➜ hexsim simout2
+hello world
+```
+
 
 ### Implementation details
 
 Both the assembler and compiler are based on the ``xhexb.x`` boostrapping
-compiler for X.
+compiler for X discussed above.
 
 The assembler works in two main phases:
 
