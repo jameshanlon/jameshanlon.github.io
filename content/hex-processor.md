@@ -1,6 +1,6 @@
 ---
 Title: Logic gates to a programming language using the Hex architecture
-Date: 2022-11-09
+Date: 2022-11-18
 Category: projects
 Tags: computing, computer architecture, microelectronics
 Status: published
@@ -9,16 +9,16 @@ Status: published
 {% import 'post-macros.html' as macros %}
 
 This note walks through a hardware implementation of a simple processor and
-complete compiler for a sequential programming language targeted at it. The
-processor architecture is designed to as simple as possible but provide a
-sensible target for the compilation of complex programs using simple
-strategies. The implementation of the processor and its supporting tooling is
-small and self contained so to be understandable and easily extendable. Besides
-being an interesting side project, my motivation was to create a complete
-example as a point of reference to explain how programming languages work and
-correspond to the underlying hardware of a computer processor, or to provide a
-useful reference for compilers and simulators, a starting point for another
-project or just a curiosity in itself.
+complete compiler for a programming language targeted at it. The processor
+architecture is designed to as simple as possible but provide a sensible target
+for the compilation of complex programs using simple strategies. The
+implementation of the processor and its supporting tooling is small and self
+contained so to be understandable and easily extendable. Besides being an
+interesting side project, my motivation was to create a complete example as a
+point of reference to explain how programming languages work and correspond to
+the underlying hardware of a computer processor, or to provide a useful
+reference for compilers and simulators, a starting point for another project or
+just a curiosity in itself.
 
 First, to provide some background. The project is based on the Hex processor
 architecture that was designed by [David
@@ -383,6 +383,9 @@ Other noteworthy features of X are:
   it can be called as a subroutine: ``foo(x, y)`` or substituted: ``val a = x; array b = y; B``
   providing the names are unique in the procedure.
 
+- A ``valof`` element allows processes to be called from expressions to
+  generate values, however it is not implemented in ``xhexb`` or ``xcmp``.
+
 
 ## Hex processor integrated circuit
 
@@ -574,7 +577,8 @@ And when simulated produces the following trace where execution through
 11     13                  OPR  3  exit 0
 ```
 
-The program can also be run on the Verilog Hex implementation using ``hextb``:
+The program can also be run on the Verilog Hex implementation using ``hextb``
+(which doesn't provide as rich instruction tracing as ``hexsim``):
 
 ```bash
 ➜ hextb a.out -t
@@ -595,14 +599,14 @@ exit 0
 
 ### Hello World
 
-A more fullsome example is 'Hello World', where the main process is simply:
+A more fulsome example is 'Hello World', where the main process is simply:
 
 ```
 proc main() is prints("hello world\n")
 ```
 
 And ``prints`` unpacks the bytewise string representation by using routines for
-performing divison and remainder by 265. The full program listing:
+performing division and remainder by 265. The full program listing is:
 
 ```bash
 ➜ cat tests/x/hello_prints.x
@@ -681,7 +685,7 @@ proc prints(array s) is
 }
 ```
 
-Compiling and runnning this shows that it takes ~50K cycles to execute and
+Compiling and running this shows that it takes ~50K cycles to execute and
 inspecting the trace is clear to see that most time is spent in the arithmetic
 routines.
 
@@ -697,9 +701,11 @@ hello world
 ### Building an X compiler and bootstrapping
 
 A third example is a complete compiler for X, written in X:
-[``xhexb.x``](https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x).
-This serves as a challenging program to compile, and interesting that it can
-bootstrap itself.
+[``xhexb.x``](https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x)
+written by David May in ~3,000 lines of X. This serves as a challenging program
+to compile, and interesting that it can bootstrap itself. Using the notation
+X(Y) to mean compile source Y using binary X, we can first create an ``xhexb``
+binary by running ``xcmp``(``xhexb.x``):
 
 ```bash
 ➜ xcmp -S tests/x/xhexb.x
@@ -707,34 +713,44 @@ bootstrap itself.
 20739 bytes
 ```
 
-Hello World:
+We can then use ``xcmp``(``xhexb.x``) to compile Hello World as
+``xcmp``(``xhexb.x``)(``hello_prints.x``):
 
 ```bash
-# Create a compiler binary
+# Create an xhexb compiler binary.
 ➜ xcmp tests/x/xhexb.x
 
-# Compile Hello World
+# Compile Hello World.
 ➜ hexsim a.out < tests/x/hello_prints.x
 tree size: 602
 program size: 414
 size: 414
 
-# Run it
+# Run it.
 ➜ hexsim simout2
 hello world
 ```
 
-xhexb:
+Similarly, we can use ``xcmp``(``xhexb.x``) to bootstrap itself by running
+``xcmp``(``xhexb.x``)(``xhexb.x``):
 
 ```bash
+# Create an xhexb compiler binary.
+➜ xcmp tests/x/xhexb.x
+
+# Use xhexb binary to compile xhexb.x.
 ➜ hexsim a.out < tests/x/xhexb.x
 tree size: 18631
 program size: 17093
 size: 177097
+
+# Use the bootstrapped xhexb binary to compile Hello World.
 ➜ hexsim simout2 < tests/x/hello_prints.x
 tree size: 602
 program size: 414
 size: 414
+
+# Run it.
 ➜ hexsim simout2
 hello world
 ```
@@ -742,7 +758,7 @@ hello world
 
 ### Implementation details
 
-Both the assembler and compiler are based on the ``xhexb.x`` boostrapping
+Both the assembler and compiler are based on the ``xhexb.x`` bootstrapping
 compiler for X discussed above.
 
 The assembler works in two main phases:
@@ -787,10 +803,21 @@ means that allocation of registers can be handled easily during mapping to
 machine instructions, rather than having to allocate physical registers to a
 virtual set as is typical in machines with more registers.
 
+More details of the ``xhexb`` compiler implementation are included in the [X
+and Hex notes PDF]({{'hex/xhexnotes.pdf'|asset}}), with aspects such as the
+calling convention, handling of operators and arithmetic and memory layout
+being shared in ``xcmp``.
 
-## Final thoughts
 
-To do.
+## Summary
+
+Modern processors, languages, compilers, and tooling are complex and difficult
+to understand. This note walks through possibly the simplest processor
+architecture that allows a compact implementation of rudimentary tooling and a
+complete high-level programming language targeted at it. The definitions and
+implementations are contained in a single repository and just a small set of
+source files, making it an excellent project to use to explore processors and
+compilers.
 
 
 ## Similar projects
