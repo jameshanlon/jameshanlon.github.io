@@ -1,5 +1,859 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - projects</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/projects.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2019-11-10T00:00:00+01:00</updated><entry><title>Recycled allotment shed</title><link href="http://jameswhanlon.com/recycled-allotment-shed.html" rel="alternate"></link><published>2019-11-10T00:00:00+01:00</published><updated>2019-11-10T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2019-11-10:/recycled-allotment-shed.html</id><summary type="html">&lt;p&gt;A friend was in need of a shed on her allotment to store tools and as a place
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - projects</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/projects.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2022-11-18T00:00:00+01:00</updated><entry><title>Logic gates to a programming language using the Hex architecture</title><link href="http://jameswhanlon.com/logic-gates-to-a-programming-language-using-the-hex-architecture.html" rel="alternate"></link><published>2022-11-18T00:00:00+01:00</published><updated>2022-11-18T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-11-18:/logic-gates-to-a-programming-language-using-the-hex-architecture.html</id><summary type="html">&lt;p&gt;This note walks through a hardware implementation of a simple processor and
+complete compiler for a programming language targeted at it. The processor
+architecture is designed to as simple as possible but provide a sensible target
+for the compilation of complex programs using simple strategies. The
+implementation of the processor …&lt;/p&gt;</summary><content type="html">&lt;p&gt;This note walks through a hardware implementation of a simple processor and
+complete compiler for a programming language targeted at it. The processor
+architecture is designed to as simple as possible but provide a sensible target
+for the compilation of complex programs using simple strategies. The
+implementation of the processor and its supporting tooling is small and self
+contained so to be understandable and easily extendable. Besides being an
+interesting side project, my motivation was to create a complete example as a
+point of reference to explain how programming languages work and correspond to
+the underlying hardware of a computer processor, or to provide a useful
+reference for compilers and simulators, a starting point for another project or
+just a curiosity in&amp;nbsp;itself.&lt;/p&gt;
+&lt;p&gt;First, to provide some background. The project is based on the Hex processor
+architecture that was designed by &lt;a href="http://people.cs.bris.ac.uk/~dave"&gt;David
+May&lt;/a&gt; as a vehicle for teaching about how
+computers work at the University of Bristol, whilst being flexible enough to
+execute substantial programs and easily extensible. David provided a simulator
+written in C and a bootstrapping compiler written in an accompanying simple
+imperative programming language called X. The design of Hex draws on the &lt;a href="https://en.wikipedia.org/wiki/Transputer"&gt;Transputer
+architecture&lt;/a&gt; and the earlier &lt;a href="http://people.cs.bris.ac.uk/~dave/S42ISA.pdf"&gt;Simple
+42&lt;/a&gt;, particularly with the use of
+short instruction encodings, a prefixing mechanism for creating larger immediates
+and A, B and C registers for expression evaluation. These kind of architectural
+features made the silicon implementation of the Simple 42 and Transputers small
+enough to fit on a single chip in the technology of the day. X draws on the
+basic sequential features of the &lt;a href="https://en.wikipedia.org/wiki/Occam_(programming_language)"&gt;occam programming
+language&lt;/a&gt; but it
+not dissimilar to a small subset of C, for&amp;nbsp;example.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href="https://github.com/jameshanlon/hex-processor"&gt;implementation&lt;/a&gt;, I have
+created a simple C++ toolchain with a simulator, Hex assembler and X language
+compiler, and a Verilog implementation of Hex. Before describing them, the
+next two sections introduce Hex and&amp;nbsp;X.&lt;/p&gt;
+&lt;h2&gt;The Hex&amp;nbsp;architecture&lt;/h2&gt;
+&lt;p&gt;The Hex architecture is described in detail in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf"&gt;a separate
+&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, but I will give a brief summary here
+and focus on several important aspects for reference. Hex has four registers:
+program counter &lt;code&gt;pc&lt;/code&gt;, operand register &lt;code&gt;oreg&lt;/code&gt; and the A and B registers
+&lt;code&gt;areg&lt;/code&gt; and &lt;code&gt;breg&lt;/code&gt; used for expression evaluation. The architecture is
+agnostic of a particular word size, but it has to be a minimum of a byte and
+multiples of a byte. In the included implementation the word size is 4 bytes.
+Hex has sixteen instructions (hence its name!) that are summarised in the
+following table. The instructions are grouped into memory access with absolute
+or relative addressing modes, loading of constants, branching, inter-register
+operations and supervisor&amp;nbsp;calls.&lt;/p&gt;
+&lt;table class="table table-striped table-sm"&gt;
+&lt;thead&gt;
+  &lt;th scope="col"&gt;Opcode&lt;/th&gt;
+  &lt;th scope="col"&gt;Behaviour&lt;/th&gt;
+  &lt;th scope="col"&gt;Description&lt;/th&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDAM&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := mem[oreg]&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load from memory with an absolute address into areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDBM&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;breg := mem[oreg]&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load from memory with an absolute address into breg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;STAM&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;mem[oreg] := areg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Store to absolute address from areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDAC&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load constant into areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDBC&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;breg := oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load constant into breg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDAP&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := pc + oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load program counter-relative address into areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDAI&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := mem[areg + oreg]&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load from memory with base and offset into areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;LDBI&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;breg := mem[breg + oreg]&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Load from memory with base and offset into breg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;STAI&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;mem[breg + oreg] := areg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Store to memory with base and offset from areg&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;BR&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;pc := pc + oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Branch relative&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;BRZ&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;if areg = 0: pc := pc + oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Conditional branch relative on areg being zero&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;BRN&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;if areg &lt; 0: pc := pc + oreg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Conditional branch relative on areg being negative&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;BRB&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;pc := breg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Absolute branch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;PFIX&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;oreg := oreg &lt;&lt; 4&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Positive prefix&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;NFIX&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;oreg = 0xFFFFFF00 | oreg &lt;&lt; 4&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Negative prefix&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&lt;code&gt;OPR&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;-&lt;/td&gt;
+  &lt;td&gt;Inter-register operation&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&amp;nbsp;&amp;nbsp;&lt;code&gt;ADD&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := areg + breg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Add areg and breg and set areg to the result&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&amp;nbsp;&amp;nbsp;&lt;code&gt;SUB&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;&lt;code&gt;areg := areg - breg&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;Subtract areg and breg and set areg to the result&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;&amp;nbsp;&amp;nbsp;&lt;code&gt;SVC&lt;/code&gt;&lt;/td&gt;
+  &lt;td&gt;-&lt;/td&gt;
+  &lt;td&gt;Supervisor call&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;h3&gt;Prefixing&lt;/h3&gt;
+&lt;p&gt;Prefixing using the &lt;code&gt;PFIX&lt;/code&gt; and &lt;code&gt;NFIX&lt;/code&gt; operations generates operand values
+in &lt;code&gt;oreg&lt;/code&gt; larger than the 4-bit instruction immediate. For example, the
+following instructions generate the value 16 in &lt;code&gt;oreg&lt;/code&gt; and use &lt;code&gt;LDAC&lt;/code&gt; to
+assign it to &lt;code&gt;areg&lt;/code&gt; :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;PFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000010&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Prefixes can be chained to extend the operand range, for example, generating the
+value 496 requires two positive prefixes before a load constant&amp;nbsp;instruction:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;PFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000010&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;PFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;31&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x0001f0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;496&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Negative values always require a negative prefix to fill the top most &lt;code&gt;oreg&lt;/code&gt;
+bits with ones, so to load the value -1 into &lt;code&gt;oreg&lt;/code&gt; then &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;NFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xFFFFFF00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xfffffff0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4294967295&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And to load -512, a positive prefix is required to scale the negative&amp;nbsp;value:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;NFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;14&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xFFFFFF00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;14&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffffffe0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;PFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;4294967264&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xfffffe00&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4294966784&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Inter-register&amp;nbsp;operations&lt;/h3&gt;
+&lt;p&gt;The inter-register operations use the &lt;code&gt;OPR&lt;/code&gt; opcode and consist only of
+addition and subtraction. The group can be extended by implementing additional
+immediate opcodes to add new operations to the processor (such as other
+arithmetic and bitwise operations). The 4-bit immediate supports up to 16
+inter-register operations without the need for prefixing, but many more with
+prefixing and the according overhead to form larger immediates. The following
+instruction sequence adds two numbers from fixed locations in memory, with the
+result written to &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;LDAM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000001&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000002&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;9&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ADD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;9&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A special inter-register operation is a supervisor call that transfers
+control to the system to complete an action such as read or write from a
+file, or to halt the program. The supervisor call type is encoded in the
+&lt;code&gt;oreg&lt;/code&gt; and arguments and return values specific to the call type are passed
+and returned on the stack using the standard calling convention. An example
+code sequence to invoke the exit supervisor call&amp;nbsp;is:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;opcode&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stack&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pointer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;STAI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Store&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;into&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stack&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;offset&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;two&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Load&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;opcode&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;SVC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Perform&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;supervisor&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;With the following execution trace, noting that the simulator implements the
+system call directly rather than being handled by a kernel&amp;nbsp;routine:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000001&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;16383&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;STAI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;16383&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x004001&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;LDAC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Load-store&amp;nbsp;operations&lt;/h3&gt;
+&lt;p&gt;There are two variants of load and store instructions: using absolute addresses
+and addresses relative to a base address. Absolute addressing (&lt;code&gt;LDAM&lt;/code&gt;,
+&lt;code&gt;LDBM&lt;/code&gt; and &lt;code&gt;STAM&lt;/code&gt;) is intended to access objects in memory that are
+allocated at offsets that are fixed with respect to a program, such as constant
+values and global variables. Relative-addressing (&lt;code&gt;LDAI&lt;/code&gt;, &lt;code&gt;LDBI&lt;/code&gt; and
+&lt;code&gt;STAI&lt;/code&gt;) is typically used to access objects that are relative to a dynamic
+position, such as the stack pointer, or index into an array. The particular
+variants of load/store instructions is influenced by their targeting from a
+compiler. Having pairs of load instructions that can write to &lt;code&gt;areg&lt;/code&gt; or
+&lt;code&gt;breg&lt;/code&gt; (such as &lt;code&gt;LDAM&lt;/code&gt; and &lt;code&gt;LDBM&lt;/code&gt;) gives flexibility when generating
+operands for binary operations, whereas having only single variants of stores
+(&lt;code&gt;STAM&lt;/code&gt; and &lt;code&gt;STAI&lt;/code&gt;) fits most cases where expression results generated into
+&lt;code&gt;areg&lt;/code&gt; need to be written to&amp;nbsp;memory.&lt;/p&gt;
+&lt;h3&gt;Branching&lt;/h3&gt;
+&lt;p&gt;For branching, a relative branch is provided with &lt;code&gt;BR&lt;/code&gt;, which can be used, for
+example, to reach a label location. Conditional branch versions &lt;code&gt;BRZ&lt;/code&gt; and
+&lt;code&gt;BRN&lt;/code&gt; are used to implement logical binary operations (less than, equal etc)
+and &lt;code&gt;BRB&lt;/code&gt; is an absolute branch that is used, for example, to return to
+a calling function using an address retrieved from memory (see example in next&amp;nbsp;section).&lt;/p&gt;
+&lt;h3&gt;Address&amp;nbsp;generation&lt;/h3&gt;
+&lt;p&gt;A special constant-loading instruction &lt;code&gt;LDAP&lt;/code&gt; is used to generate bytewise
+program addresses, relative to the program counter, such as for branch targets.
+The following instruction sequence performs a call to &lt;code&gt;foo&lt;/code&gt; but first loads
+the return (link) address using &lt;code&gt;LDAP&lt;/code&gt; to use with &lt;code&gt;BR&lt;/code&gt;. The callee &lt;code&gt;foo&lt;/code&gt;
+returns to the caller using &lt;code&gt;BRB&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;FUNC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;STAI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;#&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;Save&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;caller&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;address&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+...&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;LDBI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;#&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;Restore&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;caller&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;address&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;#&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;Return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;to&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;caller&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="nv"&gt;PROC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;main&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+...&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;LDAP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;lab2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;BR&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nv"&gt;lab2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;These instructions have the following execution&amp;nbsp;trace:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;32&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;LDAP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;60&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;62&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;33&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;NFIX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;13&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xFFFFFF00&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;xffffffd0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;34&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;BR&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;4294967249&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x00000f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000001&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;199994&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;STAI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;199994&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x030d3a&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;62&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;10&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;LDBI&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;199994&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x030d3a&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;62&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;11&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;BRB&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x00003e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mh"&gt;35&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;The X&amp;nbsp;language&lt;/h2&gt;
+&lt;p&gt;The X language is defined in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf"&gt;a separate
+&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;. X is simple enough that it can
+be compiled using simple techniques to the Hex architecture, whilst providing
+enough flexibility to express complex programs such as its own compiler (more
+on that later). X is an imperative language and has features for procedure
+calling, composition of statements, looping and conditional statements,
+expressions including function calls, and representation of memory with
+variables and arrays. To give an indicative example of X programming, the
+following program implements Bubblesort to sort an array of four&amp;nbsp;elements:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="nf"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;proc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;array&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nf"&gt;var&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;do&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j+1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j+1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j+1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;skip&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;proc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;is&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;0&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;1&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;2&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;3&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;:&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Limitations of X to note that simplify its implementation&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Arrays are limited to one&amp;nbsp;dimension.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;No operator precedence to avoid built-in rules so precedence must be
+  indicated explicitly with bracketing (apart from associative&amp;nbsp;operators).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Conditional statements (beginning &lt;code&gt;if&lt;/code&gt;) must always have an &lt;code&gt;else&lt;/code&gt; part
+  to simplify&amp;nbsp;parsing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Variables can only be passed by value into&amp;nbsp;procedures.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;There is no block scoping so variable and array declarations can only be made
+  at global and procedure scopes. Similarly, nested definitions of procedures
+  are not&amp;nbsp;permitted.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other noteworthy features of X&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;There are two types of procedure: &lt;strong&gt;processes&lt;/strong&gt; (using the &lt;code&gt;proc&lt;/code&gt; keyword)
+  that execute a sequence of steps with possible side effects, and
+  &lt;strong&gt;functions&lt;/strong&gt; (using the &lt;code&gt;func&lt;/code&gt;keyword ) that have no side effects and return
+  a&amp;nbsp;value.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Names in a program are introduced as &lt;strong&gt;definitions&lt;/strong&gt; of processes or functions,
+  &lt;strong&gt;declarations&lt;/strong&gt; that represent memory locations, and &lt;strong&gt;abbreviations&lt;/strong&gt; that
+  introduce alternative names for expressions, arrays, processes and&amp;nbsp;functions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The scoping and abbreviation rules are defined so that that actual parameters
+  act as abbreviations of the supplied formals. This allows processes and
+  functions to be compiled by either as closed subroutines or by substitution of
+  the body at the call site, either as a source code transformation or compiler
+  optimisation. For example, given the definition &lt;code&gt;proc foo(val a, array b) is B&lt;/code&gt;,
+  it can be called as a subroutine: &lt;code&gt;foo(x, y)&lt;/code&gt; or substituted: &lt;code&gt;val a = x; array b = y; B&lt;/code&gt;
+  providing the names are unique in the&amp;nbsp;procedure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A &lt;code&gt;valof&lt;/code&gt; element allows processes to be called from expressions to
+  generate values, however it is not implemented in &lt;code&gt;xhexb&lt;/code&gt; or &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Hex processor integrated&amp;nbsp;circuit&lt;/h2&gt;
+&lt;p&gt;A hardware implementation of the Hex processor is written in System Verilog,
+&lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv"&gt;&lt;code&gt;processor.sv&lt;/code&gt;&lt;/a&gt;,
+in just 150 lines. This implementation is single cycle in that all elements of
+instruction execution (ie instruction fetch from memory, decode, instruction
+memory access and state writeback) are completed in that time. A separate
+memory module,
+&lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/memory.sv"&gt;&lt;code&gt;memory.sv&lt;/code&gt;&lt;/a&gt;
+implements a single-cycle random-access memory with two ports: one for
+instruction fetch and the other for data access so that they can occur
+simultaneously in the same cycle. Note that because memory access time
+increases with the memory capacity, a implementation of Hex accessing a large
+memory (ie more than a few thousand bytes) would add pipelining to hide the
+latency to memory. Some degree of pipelining is standard in processor
+implementations. The hardware design is simulated using Verilator, with C++
+testbench driver code in &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hextb.cpp"&gt;&lt;code&gt;hextb.cpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Using &lt;a href="https://theopenroadproject.org/"&gt;OpenROAD&lt;/a&gt;, an open-source tool chain
+for performing synthesis, optimisation and physical layout of digital circuits,
+we can compile Hex into an integrated circuit layout in order that it could be
+manufactured into a silicon device. OpenROAD uses the
+&lt;a href="https://github.com/google/skywater-pdk"&gt;SkyWater Process Design Kit&lt;/a&gt; (&lt;span class="caps"&gt;PDK&lt;/span&gt;),
+for creating designs in 130 nm process technology, which was a technology first
+commercialised in 2001. The &lt;span class="caps"&gt;PDK&lt;/span&gt; is a collection of analog and digital cell
+libraries, design rules and tooling. Since OpenROAD uses
+&lt;a href="https://yosyshq.net/yosys/"&gt;Yosys&lt;/a&gt; for synthesis, and it doesn&amp;#8217;t support
+particular SystemVerilog features, I used
+&lt;a href="https://github.com/zachjs/sv2v"&gt;sv2v&lt;/a&gt; to convert the implementation to plain
+Verilog 2005 (see &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.v"&gt;&lt;code&gt;processor.v&lt;/code&gt;&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;The physical design is based on an OpenROAD &lt;a href="https://openroad.readthedocs.io/en/latest/tutorials/FlowTutorial.html"&gt;default
+flow&lt;/a&gt;,
+which takes a few minutes to be compiled from the source &lt;span class="caps"&gt;RTL&lt;/span&gt;. The final design
+has the following&amp;nbsp;characteristics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A die size of ~280x280&amp;nbsp;microns.&lt;/li&gt;
+&lt;li&gt;A total of 9,719 standard&amp;nbsp;cells.&lt;/li&gt;
+&lt;li&gt;A cell area of 16,706 square microns at 25%&amp;nbsp;utilisation.&lt;/li&gt;
+&lt;li&gt;A clock speed of 229&amp;nbsp;MHz.&lt;/li&gt;
+&lt;li&gt;Total switching power of 4.12&amp;nbsp;mW.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The OpenROAD &lt;span class="caps"&gt;GUI&lt;/span&gt; provides many ways to visualise and explore the design. The
+following images are some examples of the different&amp;nbsp;views.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-stdcells.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-stdcells_600x600.png" alt="Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1)."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-closeup.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-closeup_600x600.png" alt="A zoomed view showing standard cells with logic and M1 layers only."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;A zoomed view showing standard cells with logic and M1 layers only.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-clocktree.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-clocktree_600x600.png" alt="A view showing all nets constituting the clock tree."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;A view showing all nets constituting the clock tree.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-routing-congestion.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-routing-congestion_600x600.png" alt="A heatmap view representing routing congestion."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;A heatmap view representing routing congestion.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-setup-worstpath.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-setup-worstpath_600x600.png" alt="A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-hold-worstpath.png" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-hold-worstpath_600x600.png" alt="The same visualisation for the worst (least slack) hold path in the design."&gt;
+  &lt;/a&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;The same visualisation for the worst (least slack) hold path in the design.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Hex&amp;nbsp;tooling&lt;/h2&gt;
+&lt;p&gt;There are three tools provided in the Hex toolchain: a Hex instruction set
+simulator &lt;code&gt;hexsim&lt;/code&gt;, a Hex assembler &lt;code&gt;hexasm&lt;/code&gt; and an X compiler &lt;code&gt;xcmp&lt;/code&gt;.
+Instructions on how to build the tools are included in the
+&lt;a href="https://jameshanlon.github.io/hex-processor"&gt;documentation&lt;/a&gt;.
+The implementation is provided in a small number of source files (with only one
+external dependency on &lt;code&gt;boost::format&lt;/code&gt;):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;General Hex definitions are provided in
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hex.hpp"&gt;&lt;code&gt;hex.hpp&lt;/code&gt;&lt;/a&gt; and
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hex.cpp"&gt;&lt;code&gt;hex.cpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The Hex simulator is implemented in the headers
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsim.hpp"&gt;&lt;code&gt;hexsim.hpp&lt;/code&gt;&lt;/a&gt; and
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsimio.hpp"&gt;&lt;code&gt;hexsimio.hpp&lt;/code&gt;&lt;/a&gt;.
+  (Note that listings for a complete simulator in C are given in the &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf"&gt;Hex definition (&lt;span class="caps"&gt;PDF&lt;/span&gt;)&lt;/a&gt;.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The Hex assembler is implemented in the header
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexasm.hpp"&gt;&lt;code&gt;hexasm.hpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The X compiler is implemented in the header
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/xcmp.hpp"&gt;&lt;code&gt;xcmp.hpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Driver code for the respective command-line tools &lt;code&gt;hexsim&lt;/code&gt;, &lt;code&gt;hexasm&lt;/code&gt; and
+  &lt;code&gt;xcmp&lt;/code&gt; is implemented in
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsim.cpp"&gt;&lt;code&gt;hexsim.cpp&lt;/code&gt;&lt;/a&gt;,
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp"&gt;&lt;code&gt;hexasm.cpp&lt;/code&gt;&lt;/a&gt; and
+  &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/xcmp.cpp"&gt;&lt;code&gt;xcmp.cpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;A simple&amp;nbsp;example&lt;/h3&gt;
+&lt;p&gt;Taking a most basic example of an assembly program that simply&amp;nbsp;exits:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ cat tests/asm/exit0.S
+BR start
+DATA &lt;span class="m"&gt;16383&lt;/span&gt; &lt;span class="c1"&gt;# sp&lt;/span&gt;
+start
+LDAC &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="c1"&gt;# areg &amp;lt;- 0&lt;/span&gt;
+LDBM &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="c1"&gt;# breg &amp;lt;- sp&lt;/span&gt;
+STAI &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="c1"&gt;# sp[2] &amp;lt;- areg&lt;/span&gt;
+LDAC &lt;span class="m"&gt;0&lt;/span&gt;
+OPR SVC
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The assembler can display the program layout in memory and computed symbol&amp;nbsp;values:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ hexasm tests/asm/exit0.S --instrs
+&lt;span class="m"&gt;00000000&lt;/span&gt; BR start &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x000004 DATA &lt;span class="m"&gt;16383&lt;/span&gt;           &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x000008 start                &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x000008 LDAC &lt;span class="m"&gt;0&lt;/span&gt;               &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x000009 LDBM &lt;span class="m"&gt;1&lt;/span&gt;               &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x00000a STAI &lt;span class="m"&gt;2&lt;/span&gt;               &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x00000b LDAC &lt;span class="m"&gt;0&lt;/span&gt;               &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+0x00000c OPR SVC              &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;00000000&lt;/span&gt; PADDING &lt;span class="m"&gt;3&lt;/span&gt;            &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt; bytes&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;13&lt;/span&gt; bytes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And create a 13-byte executable&amp;nbsp;binary:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ hexasm tests/asm/exit0.S
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This binary can then be simulated with tracing to show what&amp;#8217;s going on (the
+first column is the cycle count and the second is the &lt;code&gt;pc&lt;/code&gt; value):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ hexsim a.out -t
+&lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      BR   &lt;span class="m"&gt;7&lt;/span&gt;  &lt;span class="nv"&gt;pc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; pc + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;0x000008&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;      &lt;span class="m"&gt;8&lt;/span&gt;      LDAC &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="nv"&gt;areg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; oreg &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;span class="m"&gt;2&lt;/span&gt;      &lt;span class="m"&gt;9&lt;/span&gt;      LDBM &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="nv"&gt;breg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mem&lt;span class="o"&gt;[&lt;/span&gt;oreg &lt;span class="o"&gt;(&lt;/span&gt;0x000001&lt;span class="o"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;16383&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;3&lt;/span&gt;      &lt;span class="m"&gt;10&lt;/span&gt;     STAI &lt;span class="m"&gt;2&lt;/span&gt;  mem&lt;span class="o"&gt;[&lt;/span&gt;breg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;16383&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 0x004001&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; areg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;4&lt;/span&gt;      &lt;span class="m"&gt;11&lt;/span&gt;     LDAC &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="nv"&gt;areg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; oreg &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;span class="m"&gt;5&lt;/span&gt;      &lt;span class="m"&gt;12&lt;/span&gt;     OPR  &lt;span class="m"&gt;3&lt;/span&gt;  &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The X compiler can be used to produce more complex Hex programs. Starting with
+a similar most basic program  written in&amp;nbsp;X:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;proc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;skip&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This null program is compiled into Hex assembly, where the entry code calls
+&lt;code&gt;main&lt;/code&gt; then exits, and &lt;code&gt;main&lt;/code&gt; does nothing (apart from saving and restoring
+the link&amp;nbsp;location):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ xcmp tests/x/exit.x --insts-lowered
+BR start
+DATA &lt;span class="m"&gt;199999&lt;/span&gt;
+start
+LDAP _exit
+BR main
+_exit
+LDBM &lt;span class="m"&gt;1&lt;/span&gt;
+LDAC &lt;span class="m"&gt;0&lt;/span&gt;
+STAI &lt;span class="m"&gt;2&lt;/span&gt;
+OPR SVC
+
+PROC main
+LDBM &lt;span class="m"&gt;1&lt;/span&gt;
+STAI &lt;span class="m"&gt;0&lt;/span&gt;
+lab0
+LDBM &lt;span class="m"&gt;1&lt;/span&gt;
+LDBI &lt;span class="m"&gt;0&lt;/span&gt;
+OPR BRB
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And when simulated produces the following trace where execution through
+&lt;code&gt;main&lt;/code&gt; can be seen since it is the only labelled portion of the&amp;nbsp;code:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ hexsim a.out -t
+&lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;                   BR   &lt;span class="m"&gt;7&lt;/span&gt;  &lt;span class="nv"&gt;pc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; pc + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;0x000008&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;      &lt;span class="m"&gt;8&lt;/span&gt;                   LDAP &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="nv"&gt;areg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; pc &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;
+&lt;span class="m"&gt;2&lt;/span&gt;      &lt;span class="m"&gt;9&lt;/span&gt;                   BR   &lt;span class="m"&gt;4&lt;/span&gt;  &lt;span class="nv"&gt;pc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; pc + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;0x00000e&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;3&lt;/span&gt;      &lt;span class="m"&gt;14&lt;/span&gt;     main+0       LDBM &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="nv"&gt;breg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mem&lt;span class="o"&gt;[&lt;/span&gt;oreg &lt;span class="o"&gt;(&lt;/span&gt;0x000001&lt;span class="o"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;4&lt;/span&gt;      &lt;span class="m"&gt;15&lt;/span&gt;     main+1       STAI &lt;span class="m"&gt;0&lt;/span&gt;  mem&lt;span class="o"&gt;[&lt;/span&gt;breg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 0x030d3f&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; areg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;5&lt;/span&gt;      &lt;span class="m"&gt;16&lt;/span&gt;     main+2       LDBM &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="nv"&gt;breg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mem&lt;span class="o"&gt;[&lt;/span&gt;oreg &lt;span class="o"&gt;(&lt;/span&gt;0x000001&lt;span class="o"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;6&lt;/span&gt;      &lt;span class="m"&gt;17&lt;/span&gt;     main+3       LDBI &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="nv"&gt;breg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mem&lt;span class="o"&gt;[&lt;/span&gt;breg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 0x030d3f&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;7&lt;/span&gt;      &lt;span class="m"&gt;18&lt;/span&gt;     main+4       OPR  &lt;span class="m"&gt;0&lt;/span&gt;  BRB &lt;span class="nv"&gt;pc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; breg &lt;span class="o"&gt;(&lt;/span&gt;0x00000a&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;8&lt;/span&gt;      &lt;span class="m"&gt;10&lt;/span&gt;                  LDBM &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="nv"&gt;breg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; mem&lt;span class="o"&gt;[&lt;/span&gt;oreg &lt;span class="o"&gt;(&lt;/span&gt;0x000001&lt;span class="o"&gt;)]&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;9&lt;/span&gt;      &lt;span class="m"&gt;11&lt;/span&gt;                  LDAC &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="nv"&gt;areg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; oreg &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;span class="m"&gt;10&lt;/span&gt;     &lt;span class="m"&gt;12&lt;/span&gt;                  STAI &lt;span class="m"&gt;2&lt;/span&gt;  mem&lt;span class="o"&gt;[&lt;/span&gt;breg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;199999&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; + oreg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 0x030d41&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; areg &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;11&lt;/span&gt;     &lt;span class="m"&gt;13&lt;/span&gt;                  OPR  &lt;span class="m"&gt;3&lt;/span&gt;  &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The program can also be run on the Verilog Hex implementation using &lt;code&gt;hextb&lt;/code&gt;
+(which doesn&amp;#8217;t provide as rich instruction tracing as &lt;code&gt;hexsim&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ hextb a.out -t
+Wrote &lt;span class="m"&gt;20&lt;/span&gt; bytes to memory
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;      0x51 LDAP
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;9&lt;/span&gt;      0x94 BR
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;15&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;14&lt;/span&gt;     0x11 LDBM
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;15&lt;/span&gt;     0x80 STAI
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;19&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;     0x11 LDBM
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;21&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;17&lt;/span&gt;     0x70 LDBI
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;23&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;18&lt;/span&gt;     0xd0 OPR
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;25&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt;     0x11 LDBM
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;27&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;11&lt;/span&gt;     0x30 LDAC
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;29&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;12&lt;/span&gt;     0x82 STAI
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;31&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="m"&gt;13&lt;/span&gt;     0xd3 OPR
+&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Hello&amp;nbsp;World&lt;/h3&gt;
+&lt;p&gt;A more fulsome example is &amp;#8216;Hello World&amp;#8217;, where the main process is&amp;nbsp;simply:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;proc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;prints&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And &lt;code&gt;prints&lt;/code&gt; unpacks the bytewise string representation by using routines for
+performing division and remainder by 265. The full program listing&amp;nbsp;is:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ cat tests/x/hello_prints.x
+val &lt;span class="nv"&gt;put&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+val &lt;span class="nv"&gt;bytesperword&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+var div_x&lt;span class="p"&gt;;&lt;/span&gt;
+
+proc main&lt;span class="o"&gt;()&lt;/span&gt; is prints&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hello world\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+proc putval&lt;span class="o"&gt;(&lt;/span&gt;val c&lt;span class="o"&gt;)&lt;/span&gt; is put&lt;span class="o"&gt;(&lt;/span&gt;c, &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+func lsu&lt;span class="o"&gt;(&lt;/span&gt;val x, val y&lt;span class="o"&gt;)&lt;/span&gt; is
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;x &amp;lt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;y &amp;lt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; x &amp;lt; y
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; y &amp;lt; &lt;span class="m"&gt;0&lt;/span&gt;
+
+func div_step&lt;span class="o"&gt;(&lt;/span&gt;val b, val y&lt;span class="o"&gt;)&lt;/span&gt; is
+  var r&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;y &amp;lt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; or &lt;span class="o"&gt;(&lt;/span&gt;~lsu&lt;span class="o"&gt;(&lt;/span&gt;y, div_x&lt;span class="o"&gt;))&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+    r :&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    r :&lt;span class="o"&gt;=&lt;/span&gt; div_step&lt;span class="o"&gt;(&lt;/span&gt;b + b, y + y&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; ~lsu&lt;span class="o"&gt;(&lt;/span&gt;div_x, y&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+  &lt;span class="o"&gt;{&lt;/span&gt; div_x :&lt;span class="o"&gt;=&lt;/span&gt; div_x - y&lt;span class="p"&gt;;&lt;/span&gt;
+    r :&lt;span class="o"&gt;=&lt;/span&gt; r + b
+  &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    skip&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; r
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+func div&lt;span class="o"&gt;(&lt;/span&gt;val n, val m&lt;span class="o"&gt;)&lt;/span&gt; is
+&lt;span class="o"&gt;{&lt;/span&gt; div_x :&lt;span class="o"&gt;=&lt;/span&gt; n&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; lsu&lt;span class="o"&gt;(&lt;/span&gt;n, m&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; div_step&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;, m&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+func rem&lt;span class="o"&gt;(&lt;/span&gt;val n, val m&lt;span class="o"&gt;)&lt;/span&gt; is
+  var x&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt; x :&lt;span class="o"&gt;=&lt;/span&gt; div&lt;span class="o"&gt;(&lt;/span&gt;n, m&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; div_x
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+proc prints&lt;span class="o"&gt;(&lt;/span&gt;array s&lt;span class="o"&gt;)&lt;/span&gt; is
+  var n&lt;span class="p"&gt;;&lt;/span&gt;
+  var p&lt;span class="p"&gt;;&lt;/span&gt;
+  var w&lt;span class="p"&gt;;&lt;/span&gt;
+  var l&lt;span class="p"&gt;;&lt;/span&gt;
+  var b&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt; n :&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  p :&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  w :&lt;span class="o"&gt;=&lt;/span&gt; s&lt;span class="o"&gt;[&lt;/span&gt;p&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  l :&lt;span class="o"&gt;=&lt;/span&gt; rem&lt;span class="o"&gt;(&lt;/span&gt;w, &lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  w :&lt;span class="o"&gt;=&lt;/span&gt; div&lt;span class="o"&gt;(&lt;/span&gt;w, &lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  b :&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;n &amp;lt;&lt;span class="o"&gt;=&lt;/span&gt; l&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+  &lt;span class="o"&gt;{&lt;/span&gt; putval&lt;span class="o"&gt;(&lt;/span&gt;rem&lt;span class="o"&gt;(&lt;/span&gt;w, &lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    w :&lt;span class="o"&gt;=&lt;/span&gt; div&lt;span class="o"&gt;(&lt;/span&gt;w, &lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    n :&lt;span class="o"&gt;=&lt;/span&gt; n + &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    b :&lt;span class="o"&gt;=&lt;/span&gt; b + &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; bytesperword&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt; b :&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      p :&lt;span class="o"&gt;=&lt;/span&gt; p + &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      w :&lt;span class="o"&gt;=&lt;/span&gt; s&lt;span class="o"&gt;[&lt;/span&gt;p&lt;span class="o"&gt;]&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; skip
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Compiling and running this shows that it takes ~50K cycles to execute and
+inspecting the trace is clear to see that most time is spent in the arithmetic&amp;nbsp;routines.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ xcmp tests/x/hello_prints.x
+➜ hexsim a.out
+hello world
+➜ hexsim a.out -t
+...
+&lt;span class="m"&gt;48902&lt;/span&gt;  &lt;span class="m"&gt;61&lt;/span&gt;                  OPR  &lt;span class="m"&gt;3&lt;/span&gt;  &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Building an X compiler and&amp;nbsp;bootstrapping&lt;/h3&gt;
+&lt;p&gt;A third example is a complete compiler for X, written in X:
+&lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x"&gt;&lt;code&gt;xhexb.x&lt;/code&gt;&lt;/a&gt;
+written by David May in ~3,000 lines of X. This serves as a challenging program
+to compile, and interesting that it can bootstrap itself. Using the notation
+X(Y) to mean compile source Y using binary X, we can first create an &lt;code&gt;xhexb&lt;/code&gt;
+binary by running &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;➜ xcmp -S tests/x/xhexb.x
+...
+&lt;span class="m"&gt;20739&lt;/span&gt; bytes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We can then use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to compile Hello World as
+&lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;)(&lt;code&gt;hello_prints.x&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Create an xhexb compiler binary.&lt;/span&gt;
+➜ xcmp tests/x/xhexb.x
+
+&lt;span class="c1"&gt;# Compile Hello World.&lt;/span&gt;
+➜ hexsim a.out &amp;lt; tests/x/hello_prints.x
+tree size: &lt;span class="m"&gt;602&lt;/span&gt;
+program size: &lt;span class="m"&gt;414&lt;/span&gt;
+size: &lt;span class="m"&gt;414&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Run it.&lt;/span&gt;
+➜ hexsim simout2
+hello world
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Similarly, we can use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to bootstrap itself by running
+&lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;)(&lt;code&gt;xhexb.x&lt;/code&gt;):&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Create an xhexb compiler binary.&lt;/span&gt;
+➜ xcmp tests/x/xhexb.x
+
+&lt;span class="c1"&gt;# Use xhexb binary to compile xhexb.x.&lt;/span&gt;
+➜ hexsim a.out &amp;lt; tests/x/xhexb.x
+tree size: &lt;span class="m"&gt;18631&lt;/span&gt;
+program size: &lt;span class="m"&gt;17093&lt;/span&gt;
+size: &lt;span class="m"&gt;177097&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Use the bootstrapped xhexb binary to compile Hello World.&lt;/span&gt;
+➜ hexsim simout2 &amp;lt; tests/x/hello_prints.x
+tree size: &lt;span class="m"&gt;602&lt;/span&gt;
+program size: &lt;span class="m"&gt;414&lt;/span&gt;
+size: &lt;span class="m"&gt;414&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Run it.&lt;/span&gt;
+➜ hexsim simout2
+hello world
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Implementation&amp;nbsp;details&lt;/h3&gt;
+&lt;p&gt;Both the assembler and compiler are based on the &lt;code&gt;xhexb.x&lt;/code&gt; bootstrapping
+compiler for X discussed&amp;nbsp;above.&lt;/p&gt;
+&lt;p&gt;The assembler works in two main&amp;nbsp;phases:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Parsing the program to form a list of directives (instructions, labels, data&amp;nbsp;etc).&lt;/li&gt;
+&lt;li&gt;Code generation to iterate through the directives and emit binary&amp;nbsp;output.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Before emission, the value of labels must be determined, which involves solving two
+problems. The first is that for a given relative reference, the length of the
+encoding (ie number of prefixes) depends on the value of the reference and vice
+versa. This is solved by iteratively increasing the encoding length until it
+meets the required range (see &lt;code&gt;instrLen()&lt;/code&gt;). The second problem is that the
+value of a relative reference depends on the length of any relative encodings
+contained within the range. This is solved by iteratively updating label values
+until they reach a stable state (see &lt;code&gt;resolveLabels()&lt;/code&gt;). The assembler adds
+additional rudimentary debug information to the binary, with a mapping of
+instruction ranges to symbol values. This allows the simulator to display the
+current symbol and&amp;nbsp;offset.&lt;/p&gt;
+&lt;p&gt;The compiler works a traditional way, structured as a sequence of phases, first
+creating a parse tree, then performing passes on the tree to optimise it and
+then lowering the tree to machine&amp;nbsp;instructions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Parse the program to form an abstract syntax&amp;nbsp;tree.&lt;/li&gt;
+&lt;li&gt;Walk the tree to populate a symbol table with names occurring in the&amp;nbsp;program.&lt;/li&gt;
+&lt;li&gt;Walk the tree to propagate constant values within&amp;nbsp;expressions.&lt;/li&gt;
+&lt;li&gt;Walk the tree to transform expressions into a canonical&amp;nbsp;form.&lt;/li&gt;
+&lt;li&gt;Walk the tree to generate a sequence of intermediate machine&amp;nbsp;instructions.&lt;/li&gt;
+&lt;li&gt;Lower the intermediate instructions to machine&amp;nbsp;instructions.&lt;/li&gt;
+&lt;li&gt;Optimise the machine instruction&amp;nbsp;sequence.&lt;/li&gt;
+&lt;li&gt;Assemble and emit the machine instruction&amp;nbsp;sequence.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Command line options such as &lt;code&gt;--tree&lt;/code&gt; are available to inspect the internal
+representation of the program in between these&amp;nbsp;stages.&lt;/p&gt;
+&lt;p&gt;Compared with a more sophisticated compiler, Hex and X afford two significant
+simplifications. First, the small set of features in X make it straightforward
+to map to directly to machine instructions rather than an intermediate
+machine-independent representation. Secondly, the register architecture of Hex
+means that allocation of registers can be handled easily during mapping to
+machine instructions, rather than having to allocate physical registers to a
+virtual set as is typical in machines with more&amp;nbsp;registers.&lt;/p&gt;
+&lt;p&gt;More details of the &lt;code&gt;xhexb&lt;/code&gt; compiler implementation are included in the &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf"&gt;X
+and Hex notes &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, with aspects such as the
+calling convention, handling of operators and arithmetic and memory layout
+being shared in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;Modern processors, languages, compilers, and tooling are complex and difficult
+to understand. This note walks through possibly the simplest processor
+architecture that allows a compact implementation of rudimentary tooling and a
+complete high-level programming language targeted at it. The definitions and
+implementations are contained in a single repository and just a small set of
+source files, making it an excellent project to use to explore processors and&amp;nbsp;compilers.&lt;/p&gt;
+&lt;h2&gt;Similar&amp;nbsp;projects&lt;/h2&gt;
+&lt;p&gt;The following are some similar projects that include simple implementations of
+processor&amp;nbsp;toolchains.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/eliben/luz-cpu"&gt;Luz &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt;, a simulator, assembler and
+  linker for the Luz processor&amp;nbsp;architecture.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://www.cl.cam.ac.uk/~mr10/VSPL.html"&gt;&lt;span class="caps"&gt;VSPL&lt;/span&gt;&lt;/a&gt;, is a very simple
+  programming language designed to be used as a case study for comparing
+  compiler implementations. The provided source distribution includes several
+  implementations of &lt;span class="caps"&gt;VSPL&lt;/span&gt; in different&amp;nbsp;languages.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="projects"></category><category term="computing"></category><category term="computer architecture"></category><category term="microelectronics"></category></entry><entry><title>Recycled allotment shed</title><link href="http://jameswhanlon.com/recycled-allotment-shed.html" rel="alternate"></link><published>2019-11-10T00:00:00+01:00</published><updated>2019-11-10T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2019-11-10:/recycled-allotment-shed.html</id><summary type="html">&lt;p&gt;A friend was in need of a shed on her allotment to store tools and as a place
 to shelter in the rain, so I helped her to build one. The aim was to build
 something solid that would stand up to the elements (unlike most allotment
 sheds), to use …&lt;/p&gt;</summary><content type="html">&lt;p&gt;A friend was in need of a shed on her allotment to store tools and as a place

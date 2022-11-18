@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZTCPLK4EJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PZTCPLK4EJ');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Logic gates to a programming language using the Hex architecture</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    Logic gates to a programming language using the Hex&nbsp;architecture
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2022-11-18T00:00:00+01:00">
+      18 Nov 2022
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/computer architecture.html">computer architecture</a></span>
+      <span class="article-tag small"><a href="/tag/microelectronics.html">microelectronics</a></span>
+  </div>
+  <div class="article-body">
+    <p>This note walks through a hardware implementation of a simple processor and
+complete compiler for a programming language targeted at it. The processor
+architecture is designed to as simple as possible but provide a sensible target
+for the compilation of complex programs using simple strategies. The
+implementation of the processor and its supporting tooling is small and self
+contained so to be understandable and easily extendable. Besides being an
+interesting side project, my motivation was to create a complete example as a
+point of reference to explain how programming languages work and correspond to
+the underlying hardware of a computer processor, or to provide a useful
+reference for compilers and simulators, a starting point for another project or
+just a curiosity in&nbsp;itself.</p>
+<p>First, to provide some background. The project is based on the Hex processor
+architecture that was designed by <a href="http://people.cs.bris.ac.uk/~dave">David
+May</a> as a vehicle for teaching about how
+computers work at the University of Bristol, whilst being flexible enough to
+execute substantial programs and easily extensible. David provided a simulator
+written in C and a bootstrapping compiler written in an accompanying simple
+imperative programming language called X. The design of Hex draws on the <a href="https://en.wikipedia.org/wiki/Transputer">Transputer
+architecture</a> and the earlier <a href="http://people.cs.bris.ac.uk/~dave/S42ISA.pdf">Simple
+42</a>, particularly with the use of
+short instruction encodings, a prefixing mechanism for creating larger immediates
+and A, B and C registers for expression evaluation. These kind of architectural
+features made the silicon implementation of the Simple 42 and Transputers small
+enough to fit on a single chip in the technology of the day. X draws on the
+basic sequential features of the <a href="https://en.wikipedia.org/wiki/Occam_(programming_language)">occam programming
+language</a> but it
+not dissimilar to a small subset of C, for&nbsp;example.</p>
+<p>In my <a href="https://github.com/jameshanlon/hex-processor">implementation</a>, I have
+created a simple C++ toolchain with a simulator, Hex assembler and X language
+compiler, and a Verilog implementation of Hex. Before describing them, the
+next two sections introduce Hex and&nbsp;X.</p>
+<h2>The Hex&nbsp;architecture</h2>
+<p>The Hex architecture is described in detail in <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf">a separate
+<span class="caps">PDF</span></a>, but I will give a brief summary here
+and focus on several important aspects for reference. Hex has four registers:
+program counter <code>pc</code>, operand register <code>oreg</code> and the A and B registers
+<code>areg</code> and <code>breg</code> used for expression evaluation. The architecture is
+agnostic of a particular word size, but it has to be a minimum of a byte and
+multiples of a byte. In the included implementation the word size is 4 bytes.
+Hex has sixteen instructions (hence its name!) that are summarised in the
+following table. The instructions are grouped into memory access with absolute
+or relative addressing modes, loading of constants, branching, inter-register
+operations and supervisor&nbsp;calls.</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Opcode</th>
+  <th scope="col">Behaviour</th>
+  <th scope="col">Description</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>LDAM</code></td>
+  <td><code>areg := mem[oreg]</code></td>
+  <td>Load from memory with an absolute address into areg</td>
+</tr>
+<tr>
+  <td><code>LDBM</code></td>
+  <td><code>breg := mem[oreg]</code></td>
+  <td>Load from memory with an absolute address into breg</td>
+</tr>
+<tr>
+  <td><code>STAM</code></td>
+  <td><code>mem[oreg] := areg</code></td>
+  <td>Store to absolute address from areg</td>
+</tr>
+<tr>
+  <td><code>LDAC</code></td>
+  <td><code>areg := oreg</code></td>
+  <td>Load constant into areg</td>
+</tr>
+<tr>
+  <td><code>LDBC</code></td>
+  <td><code>breg := oreg</code></td>
+  <td>Load constant into breg</td>
+</tr>
+<tr>
+  <td><code>LDAP</code></td>
+  <td><code>areg := pc + oreg</code></td>
+  <td>Load program counter-relative address into areg</td>
+</tr>
+<tr>
+  <td><code>LDAI</code></td>
+  <td><code>areg := mem[areg + oreg]</code></td>
+  <td>Load from memory with base and offset into areg</td>
+</tr>
+<tr>
+  <td><code>LDBI</code></td>
+  <td><code>breg := mem[breg + oreg]</code></td>
+  <td>Load from memory with base and offset into breg</td>
+</tr>
+<tr>
+  <td><code>STAI</code></td>
+  <td><code>mem[breg + oreg] := areg</code></td>
+  <td>Store to memory with base and offset from areg</td>
+</tr>
+<tr>
+  <td><code>BR</code></td>
+  <td><code>pc := pc + oreg</code></td>
+  <td>Branch relative</td>
+</tr>
+<tr>
+  <td><code>BRZ</code></td>
+  <td><code>if areg = 0: pc := pc + oreg</code></td>
+  <td>Conditional branch relative on areg being zero</td>
+</tr>
+<tr>
+  <td><code>BRN</code></td>
+  <td><code>if areg < 0: pc := pc + oreg</code></td>
+  <td>Conditional branch relative on areg being negative</td>
+</tr>
+<tr>
+  <td><code>BRB</code></td>
+  <td><code>pc := breg</code></td>
+  <td>Absolute branch</td>
+</tr>
+<tr>
+  <td><code>PFIX</code></td>
+  <td><code>oreg := oreg << 4</code></td>
+  <td>Positive prefix</td>
+</tr>
+<tr>
+  <td><code>NFIX</code></td>
+  <td><code>oreg = 0xFFFFFF00 | oreg << 4</code></td>
+  <td>Negative prefix</td>
+</tr>
+<tr>
+  <td><code>OPR</code></td>
+  <td>-</td>
+  <td>Inter-register operation</td>
+</tr>
+<tr>
+  <td>&nbsp;&nbsp;<code>ADD</code></td>
+  <td><code>areg := areg + breg</code></td>
+  <td>Add areg and breg and set areg to the result</td>
+</tr>
+<tr>
+  <td>&nbsp;&nbsp;<code>SUB</code></td>
+  <td><code>areg := areg - breg</code></td>
+  <td>Subtract areg and breg and set areg to the result</td>
+</tr>
+<tr>
+  <td>&nbsp;&nbsp;<code>SVC</code></td>
+  <td>-</td>
+  <td>Supervisor call</td>
+</tr>
+</table>
+
+<h3>Prefixing</h3>
+<p>Prefixing using the <code>PFIX</code> and <code>NFIX</code> operations generates operand values
+in <code>oreg</code> larger than the 4-bit instruction immediate. For example, the
+following instructions generate the value 16 in <code>oreg</code> and use <code>LDAC</code> to
+assign it to <code>areg</code> :</p>
+<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">16</span><span class="w"></span>
+</pre></div>
+
+
+<p>Prefixes can be chained to extend the operand range, for example, generating the
+value 496 requires two positive prefixes before a load constant&nbsp;instruction:</p>
+<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span><span class="w"></span>
+<span class="n">PFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">31</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x0001f0</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">496</span><span class="w"></span>
+</pre></div>
+
+
+<p>Negative values always require a negative prefix to fill the top most <code>oreg</code>
+bits with ones, so to load the value -1 into <code>oreg</code> then <code>areg</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">15</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffff0</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294967295</span><span class="w"></span>
+</pre></div>
+
+
+<p>And to load -512, a positive prefix is required to scale the negative&nbsp;value:</p>
+<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">14</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">14</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffe0</span><span class="p">)</span><span class="w"></span>
+<span class="n">PFIX</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967264</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffe00</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294966784</span><span class="w"></span>
+</pre></div>
+
+
+<h3>Inter-register&nbsp;operations</h3>
+<p>The inter-register operations use the <code>OPR</code> opcode and consist only of
+addition and subtraction. The group can be extended by implementing additional
+immediate opcodes to add new operations to the processor (such as other
+arithmetic and bitwise operations). The 4-bit immediate supports up to 16
+inter-register operations without the need for prefixing, but many more with
+prefixing and the according overhead to form larger immediates. The following
+instruction sequence adds two numbers from fixed locations in memory, with the
+result written to <code>areg</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">LDAM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000002</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"></span>
+<span class="n">OPR</span><span class="w">  </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">ADD</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">16</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>A special inter-register operation is a supervisor call that transfers
+control to the system to complete an action such as read or write from a
+file, or to halt the program. The supervisor call type is encoded in the
+<code>oreg</code> and arguments and return values specific to the call type are passed
+and returned on the stack using the standard calling convention. An example
+code sequence to invoke the exit supervisor call&nbsp;is:</p>
+<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="w"></span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">pointer</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">breg</span><span class="p">.</span><span class="w"></span>
+<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">parameter</span><span class="p">.</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="p">.</span><span class="w"></span>
+<span class="n">OPR</span><span class="w"> </span><span class="n">SVC</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">Perform</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">supervisor</span><span class="w"> </span><span class="n">call</span><span class="w"></span>
+</pre></div>
+
+
+<p>With the following execution trace, noting that the simulator implements the
+system call directly rather than being handled by a kernel&nbsp;routine:</p>
+<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span><span class="w"></span>
+<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x004001</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"></span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
+<span class="n">OPR</span><span class="w">  </span><span class="mh">3</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
+</pre></div>
+
+
+<h3>Load-store&nbsp;operations</h3>
+<p>There are two variants of load and store instructions: using absolute addresses
+and addresses relative to a base address. Absolute addressing (<code>LDAM</code>,
+<code>LDBM</code> and <code>STAM</code>) is intended to access objects in memory that are
+allocated at offsets that are fixed with respect to a program, such as constant
+values and global variables. Relative-addressing (<code>LDAI</code>, <code>LDBI</code> and
+<code>STAI</code>) is typically used to access objects that are relative to a dynamic
+position, such as the stack pointer, or index into an array. The particular
+variants of load/store instructions is influenced by their targeting from a
+compiler. Having pairs of load instructions that can write to <code>areg</code> or
+<code>breg</code> (such as <code>LDAM</code> and <code>LDBM</code>) gives flexibility when generating
+operands for binary operations, whereas having only single variants of stores
+(<code>STAM</code> and <code>STAI</code>) fits most cases where expression results generated into
+<code>areg</code> need to be written to&nbsp;memory.</p>
+<h3>Branching</h3>
+<p>For branching, a relative branch is provided with <code>BR</code>, which can be used, for
+example, to reach a label location. Conditional branch versions <code>BRZ</code> and
+<code>BRN</code> are used to implement logical binary operations (less than, equal etc)
+and <code>BRB</code> is an absolute branch that is used, for example, to return to
+a calling function using an address retrieved from memory (see example in next&nbsp;section).</p>
+<h3>Address&nbsp;generation</h3>
+<p>A special constant-loading instruction <code>LDAP</code> is used to generate bytewise
+program addresses, relative to the program counter, such as for branch targets.
+The following instruction sequence performs a call to <code>foo</code> but first loads
+the return (link) address using <code>LDAP</code> to use with <code>BR</code>. The callee <code>foo</code>
+returns to the caller using <code>BRB</code>.</p>
+<div class="codehilite"><pre><span></span><span class="nv">FUNC</span><span class="w"> </span><span class="nv">foo</span><span class="w"></span>
+<span class="nv">LDBM</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="nv">STAI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Save</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span><span class="w"></span>
+...<span class="w"></span>
+<span class="nv">LDBI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Restore</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span><span class="w"></span>
+<span class="nv">OPR</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span>#<span class="w"> </span><span class="k">Return</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">caller</span><span class="w"></span>
+
+<span class="nv">PROC</span><span class="w"> </span><span class="nv">main</span><span class="w"></span>
+...<span class="w"></span>
+<span class="nv">LDAP</span><span class="w"> </span><span class="nv">lab2</span><span class="w"></span>
+<span class="nv">BR</span><span class="w"> </span><span class="nv">foo</span><span class="w"></span>
+<span class="nv">lab2</span><span class="w"></span>
+</pre></div>
+
+
+<p>These instructions have the following execution&nbsp;trace:</p>
+<div class="codehilite"><pre><span></span><span class="n">main</span><span class="o">+</span><span class="mh">32</span><span class="w">  </span><span class="n">LDAP</span><span class="w"> </span><span class="mh">2</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="p">(</span><span class="mh">60</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="mh">62</span><span class="w"></span>
+<span class="n">main</span><span class="o">+</span><span class="mh">33</span><span class="w">  </span><span class="n">NFIX</span><span class="w"> </span><span class="mh">13</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">13</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffd0</span><span class="p">)</span><span class="w"></span>
+<span class="n">main</span><span class="o">+</span><span class="mh">34</span><span class="w">  </span><span class="n">BR</span><span class="w">   </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967249</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00000f</span><span class="p">)</span><span class="w"></span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">0</span><span class="w">    </span><span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"></span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">1</span><span class="w">    </span><span class="n">STAI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">10</span><span class="w">   </span><span class="n">LDBI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span><span class="w"></span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">11</span><span class="w">   </span><span class="n">OPR</span><span class="w">  </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">BRB</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00003e</span><span class="p">)</span><span class="w"></span>
+<span class="n">main</span><span class="o">+</span><span class="mh">35</span><span class="w">  </span><span class="p">...</span><span class="w"></span>
+</pre></div>
+
+
+<h2>The X&nbsp;language</h2>
+<p>The X language is defined in <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf">a separate
+<span class="caps">PDF</span></a>. X is simple enough that it can
+be compiled using simple techniques to the Hex architecture, whilst providing
+enough flexibility to express complex programs such as its own compiler (more
+on that later). X is an imperative language and has features for procedure
+calling, composition of statements, looping and conditional statements,
+expressions including function calls, and representation of memory with
+variables and arrays. To give an indicative example of X programming, the
+following program implements Bubblesort to sort an array of four&nbsp;elements:</p>
+<div class="codehilite"><pre><span></span><span class="n">val</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
+<span class="nf">var</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">length</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">proc</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">array</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">tmp</span><span class="p">;</span><span class="w"></span>
+<span class="err">{</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">do</span><span class="w"></span>
+<span class="w">  </span><span class="err">{</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">do</span><span class="w"></span>
+<span class="w">    </span><span class="err">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">      </span><span class="err">{</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"></span>
+<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span><span class="w"></span>
+<span class="w">      </span><span class="err">}</span><span class="w"></span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="n">skip</span><span class="w"></span>
+<span class="w">    </span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="w">  </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="k">proc</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
+<span class="err">{</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="p">;</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">)</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>Limitations of X to note that simplify its implementation&nbsp;are:</p>
+<ul>
+<li>
+<p>Arrays are limited to one&nbsp;dimension.</p>
+</li>
+<li>
+<p>No operator precedence to avoid built-in rules so precedence must be
+  indicated explicitly with bracketing (apart from associative&nbsp;operators).</p>
+</li>
+<li>
+<p>Conditional statements (beginning <code>if</code>) must always have an <code>else</code> part
+  to simplify&nbsp;parsing.</p>
+</li>
+<li>
+<p>Variables can only be passed by value into&nbsp;procedures.</p>
+</li>
+<li>
+<p>There is no block scoping so variable and array declarations can only be made
+  at global and procedure scopes. Similarly, nested definitions of procedures
+  are not&nbsp;permitted.</p>
+</li>
+</ul>
+<p>Other noteworthy features of X&nbsp;are:</p>
+<ul>
+<li>
+<p>There are two types of procedure: <strong>processes</strong> (using the <code>proc</code> keyword)
+  that execute a sequence of steps with possible side effects, and
+  <strong>functions</strong> (using the <code>func</code>keyword ) that have no side effects and return
+  a&nbsp;value.</p>
+</li>
+<li>
+<p>Names in a program are introduced as <strong>definitions</strong> of processes or functions,
+  <strong>declarations</strong> that represent memory locations, and <strong>abbreviations</strong> that
+  introduce alternative names for expressions, arrays, processes and&nbsp;functions.</p>
+</li>
+<li>
+<p>The scoping and abbreviation rules are defined so that that actual parameters
+  act as abbreviations of the supplied formals. This allows processes and
+  functions to be compiled by either as closed subroutines or by substitution of
+  the body at the call site, either as a source code transformation or compiler
+  optimisation. For example, given the definition <code>proc foo(val a, array b) is B</code>,
+  it can be called as a subroutine: <code>foo(x, y)</code> or substituted: <code>val a = x; array b = y; B</code>
+  providing the names are unique in the&nbsp;procedure.</p>
+</li>
+<li>
+<p>A <code>valof</code> element allows processes to be called from expressions to
+  generate values, however it is not implemented in <code>xhexb</code> or <code>xcmp</code>.</p>
+</li>
+</ul>
+<h2>Hex processor integrated&nbsp;circuit</h2>
+<p>A hardware implementation of the Hex processor is written in System Verilog,
+<a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv"><code>processor.sv</code></a>,
+in just 150 lines. This implementation is single cycle in that all elements of
+instruction execution (ie instruction fetch from memory, decode, instruction
+memory access and state writeback) are completed in that time. A separate
+memory module,
+<a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/memory.sv"><code>memory.sv</code></a>
+implements a single-cycle random-access memory with two ports: one for
+instruction fetch and the other for data access so that they can occur
+simultaneously in the same cycle. Note that because memory access time
+increases with the memory capacity, a implementation of Hex accessing a large
+memory (ie more than a few thousand bytes) would add pipelining to hide the
+latency to memory. Some degree of pipelining is standard in processor
+implementations. The hardware design is simulated using Verilator, with C++
+testbench driver code in <a href="https://github.com/jameshanlon/hex-processor/blob/master/hextb.cpp"><code>hextb.cpp</code></a>.</p>
+<p>Using <a href="https://theopenroadproject.org/">OpenROAD</a>, an open-source tool chain
+for performing synthesis, optimisation and physical layout of digital circuits,
+we can compile Hex into an integrated circuit layout in order that it could be
+manufactured into a silicon device. OpenROAD uses the
+<a href="https://github.com/google/skywater-pdk">SkyWater Process Design Kit</a> (<span class="caps">PDK</span>),
+for creating designs in 130 nm process technology, which was a technology first
+commercialised in 2001. The <span class="caps">PDK</span> is a collection of analog and digital cell
+libraries, design rules and tooling. Since OpenROAD uses
+<a href="https://yosyshq.net/yosys/">Yosys</a> for synthesis, and it doesn&#8217;t support
+particular SystemVerilog features, I used
+<a href="https://github.com/zachjs/sv2v">sv2v</a> to convert the implementation to plain
+Verilog 2005 (see <a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.v"><code>processor.v</code></a>).</p>
+<p>The physical design is based on an OpenROAD <a href="https://openroad.readthedocs.io/en/latest/tutorials/FlowTutorial.html">default
+flow</a>,
+which takes a few minutes to be compiled from the source <span class="caps">RTL</span>. The final design
+has the following&nbsp;characteristics:</p>
+<ul>
+<li>A die size of ~280x280&nbsp;microns.</li>
+<li>A total of 9,719 standard&nbsp;cells.</li>
+<li>A cell area of 16,706 square microns at 25%&nbsp;utilisation.</li>
+<li>A clock speed of 229&nbsp;MHz.</li>
+<li>Total switching power of 4.12&nbsp;mW.</li>
+</ul>
+<p>The OpenROAD <span class="caps">GUI</span> provides many ways to visualise and explore the design. The
+following images are some examples of the different&nbsp;views.</p>
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-stdcells.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-stdcells_600x600.png" alt="Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).">
+  </a>
+  <figcaption class="figure-caption text-left">Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).</figcaption>
+</figure>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-closeup.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-closeup_600x600.png" alt="A zoomed view showing standard cells with logic and M1 layers only.">
+  </a>
+  <figcaption class="figure-caption text-left">A zoomed view showing standard cells with logic and M1 layers only.</figcaption>
+</figure>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-clocktree.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-clocktree_600x600.png" alt="A view showing all nets constituting the clock tree.">
+  </a>
+  <figcaption class="figure-caption text-left">A view showing all nets constituting the clock tree.</figcaption>
+</figure>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-routing-congestion.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-routing-congestion_600x600.png" alt="A heatmap view representing routing congestion.">
+  </a>
+  <figcaption class="figure-caption text-left">A heatmap view representing routing congestion.</figcaption>
+</figure>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-setup-worstpath.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-setup-worstpath_600x600.png" alt="A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.">
+  </a>
+  <figcaption class="figure-caption text-left">A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.</figcaption>
+</figure>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-hold-worstpath.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-hold-worstpath_600x600.png" alt="The same visualisation for the worst (least slack) hold path in the design.">
+  </a>
+  <figcaption class="figure-caption text-left">The same visualisation for the worst (least slack) hold path in the design.</figcaption>
+</figure>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<h2>Hex&nbsp;tooling</h2>
+<p>There are three tools provided in the Hex toolchain: a Hex instruction set
+simulator <code>hexsim</code>, a Hex assembler <code>hexasm</code> and an X compiler <code>xcmp</code>.
+Instructions on how to build the tools are included in the
+<a href="https://jameshanlon.github.io/hex-processor">documentation</a>.
+The implementation is provided in a small number of source files (with only one
+external dependency on <code>boost::format</code>):</p>
+<ul>
+<li>
+<p>General Hex definitions are provided in
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hex.hpp"><code>hex.hpp</code></a> and
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hex.cpp"><code>hex.cpp</code></a>.</p>
+</li>
+<li>
+<p>The Hex simulator is implemented in the headers
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsim.hpp"><code>hexsim.hpp</code></a> and
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsimio.hpp"><code>hexsimio.hpp</code></a>.
+  (Note that listings for a complete simulator in C are given in the <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf">Hex definition (<span class="caps">PDF</span>)</a>.)</p>
+</li>
+<li>
+<p>The Hex assembler is implemented in the header
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hexasm.hpp"><code>hexasm.hpp</code></a>.</p>
+</li>
+<li>
+<p>The X compiler is implemented in the header
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/xcmp.hpp"><code>xcmp.hpp</code></a>.</p>
+</li>
+<li>
+<p>Driver code for the respective command-line tools <code>hexsim</code>, <code>hexasm</code> and
+  <code>xcmp</code> is implemented in
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsim.cpp"><code>hexsim.cpp</code></a>,
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp"><code>hexasm.cpp</code></a> and
+  <a href="https://github.com/jameshanlon/hex-processor/blob/master/xcmp.cpp"><code>xcmp.cpp</code></a>.</p>
+</li>
+</ul>
+<h3>A simple&nbsp;example</h3>
+<p>Taking a most basic example of an assembly program that simply&nbsp;exits:</p>
+<div class="codehilite"><pre><span></span>➜ cat tests/asm/exit0.S
+BR start
+DATA <span class="m">16383</span> <span class="c1"># sp</span>
+start
+LDAC <span class="m">0</span> <span class="c1"># areg &lt;- 0</span>
+LDBM <span class="m">1</span> <span class="c1"># breg &lt;- sp</span>
+STAI <span class="m">2</span> <span class="c1"># sp[2] &lt;- areg</span>
+LDAC <span class="m">0</span>
+OPR SVC
+</pre></div>
+
+
+<p>The assembler can display the program layout in memory and computed symbol&nbsp;values:</p>
+<div class="codehilite"><pre><span></span>➜ hexasm tests/asm/exit0.S --instrs
+<span class="m">00000000</span> BR start <span class="o">(</span><span class="m">7</span><span class="o">)</span>         <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+0x000004 DATA <span class="m">16383</span>           <span class="o">(</span><span class="m">4</span> bytes<span class="o">)</span>
+0x000008 start                <span class="o">(</span><span class="m">0</span> bytes<span class="o">)</span>
+0x000008 LDAC <span class="m">0</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+0x000009 LDBM <span class="m">1</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+0x00000a STAI <span class="m">2</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+0x00000b LDAC <span class="m">0</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+0x00000c OPR SVC              <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
+<span class="m">00000000</span> PADDING <span class="m">3</span>            <span class="o">(</span><span class="m">3</span> bytes<span class="o">)</span>
+<span class="m">13</span> bytes
+</pre></div>
+
+
+<p>And create a 13-byte executable&nbsp;binary:</p>
+<div class="codehilite"><pre><span></span>➜ hexasm tests/asm/exit0.S
+</pre></div>
+
+
+<p>This binary can then be simulated with tracing to show what&#8217;s going on (the
+first column is the cycle count and the second is the <code>pc</code> value):</p>
+<div class="codehilite"><pre><span></span>➜ hexsim a.out -t
+<span class="m">0</span>      <span class="m">0</span>      BR   <span class="m">7</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">7</span><span class="o">)</span> <span class="o">(</span>0x000008<span class="o">)</span>
+<span class="m">1</span>      <span class="m">8</span>      LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
+<span class="m">2</span>      <span class="m">9</span>      LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">16383</span><span class="o">)</span>
+<span class="m">3</span>      <span class="m">10</span>     STAI <span class="m">2</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">16383</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">2</span><span class="o">)</span> <span class="o">=</span> 0x004001<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="m">4</span>      <span class="m">11</span>     LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
+<span class="m">5</span>      <span class="m">12</span>     OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+</pre></div>
+
+
+<p>The X compiler can be used to produce more complex Hex programs. Starting with
+a similar most basic program  written in&nbsp;X:</p>
+<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">skip</span><span class="w"></span>
+</pre></div>
+
+
+<p>This null program is compiled into Hex assembly, where the entry code calls
+<code>main</code> then exits, and <code>main</code> does nothing (apart from saving and restoring
+the link&nbsp;location):</p>
+<div class="codehilite"><pre><span></span>➜ xcmp tests/x/exit.x --insts-lowered
+BR start
+DATA <span class="m">199999</span>
+start
+LDAP _exit
+BR main
+_exit
+LDBM <span class="m">1</span>
+LDAC <span class="m">0</span>
+STAI <span class="m">2</span>
+OPR SVC
+
+PROC main
+LDBM <span class="m">1</span>
+STAI <span class="m">0</span>
+lab0
+LDBM <span class="m">1</span>
+LDBI <span class="m">0</span>
+OPR BRB
+</pre></div>
+
+
+<p>And when simulated produces the following trace where execution through
+<code>main</code> can be seen since it is the only labelled portion of the&nbsp;code:</p>
+<div class="codehilite"><pre><span></span>➜ hexsim a.out -t
+<span class="m">0</span>      <span class="m">0</span>                   BR   <span class="m">7</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">7</span><span class="o">)</span> <span class="o">(</span>0x000008<span class="o">)</span>
+<span class="m">1</span>      <span class="m">8</span>                   LDAP <span class="m">1</span>  <span class="nv">areg</span> <span class="o">=</span> pc <span class="o">(</span><span class="m">9</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">1</span><span class="o">)</span> <span class="m">10</span>
+<span class="m">2</span>      <span class="m">9</span>                   BR   <span class="m">4</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">4</span><span class="o">)</span> <span class="o">(</span>0x00000e<span class="o">)</span>
+<span class="m">3</span>      <span class="m">14</span>     main+0       LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">4</span>      <span class="m">15</span>     main+1       STAI <span class="m">0</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="o">=</span> 0x030d3f<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">10</span><span class="o">)</span>
+<span class="m">5</span>      <span class="m">16</span>     main+2       LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">6</span>      <span class="m">17</span>     main+3       LDBI <span class="m">0</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="o">=</span> 0x030d3f<span class="o">]</span> <span class="o">(</span><span class="m">10</span><span class="o">)</span>
+<span class="m">7</span>      <span class="m">18</span>     main+4       OPR  <span class="m">0</span>  BRB <span class="nv">pc</span> <span class="o">=</span> breg <span class="o">(</span>0x00000a<span class="o">)</span>
+<span class="m">8</span>      <span class="m">10</span>                  LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">9</span>      <span class="m">11</span>                  LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
+<span class="m">10</span>     <span class="m">12</span>                  STAI <span class="m">2</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">2</span><span class="o">)</span> <span class="o">=</span> 0x030d41<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="m">11</span>     <span class="m">13</span>                  OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+</pre></div>
+
+
+<p>The program can also be run on the Verilog Hex implementation using <code>hextb</code>
+(which doesn&#8217;t provide as rich instruction tracing as <code>hexsim</code>):</p>
+<div class="codehilite"><pre><span></span>➜ hextb a.out -t
+Wrote <span class="m">20</span> bytes to memory
+<span class="o">[</span><span class="m">11</span><span class="o">]</span> <span class="m">8</span>      0x51 LDAP
+<span class="o">[</span><span class="m">13</span><span class="o">]</span> <span class="m">9</span>      0x94 BR
+<span class="o">[</span><span class="m">15</span><span class="o">]</span> <span class="m">14</span>     0x11 LDBM
+<span class="o">[</span><span class="m">17</span><span class="o">]</span> <span class="m">15</span>     0x80 STAI
+<span class="o">[</span><span class="m">19</span><span class="o">]</span> <span class="m">16</span>     0x11 LDBM
+<span class="o">[</span><span class="m">21</span><span class="o">]</span> <span class="m">17</span>     0x70 LDBI
+<span class="o">[</span><span class="m">23</span><span class="o">]</span> <span class="m">18</span>     0xd0 OPR
+<span class="o">[</span><span class="m">25</span><span class="o">]</span> <span class="m">10</span>     0x11 LDBM
+<span class="o">[</span><span class="m">27</span><span class="o">]</span> <span class="m">11</span>     0x30 LDAC
+<span class="o">[</span><span class="m">29</span><span class="o">]</span> <span class="m">12</span>     0x82 STAI
+<span class="o">[</span><span class="m">31</span><span class="o">]</span> <span class="m">13</span>     0xd3 OPR
+<span class="nb">exit</span> <span class="m">0</span>
+</pre></div>
+
+
+<h3>Hello&nbsp;World</h3>
+<p>A more fulsome example is &#8216;Hello World&#8217;, where the main process is&nbsp;simply:</p>
+<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">prints</span><span class="p">(</span><span class="s">&quot;hello world\n&quot;</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+
+
+<p>And <code>prints</code> unpacks the bytewise string representation by using routines for
+performing division and remainder by 265. The full program listing&nbsp;is:</p>
+<div class="codehilite"><pre><span></span>➜ cat tests/x/hello_prints.x
+val <span class="nv">put</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+val <span class="nv">bytesperword</span> <span class="o">=</span> <span class="m">4</span><span class="p">;</span>
+var div_x<span class="p">;</span>
+
+proc main<span class="o">()</span> is prints<span class="o">(</span><span class="s2">&quot;hello world\n&quot;</span><span class="o">)</span>
+
+proc putval<span class="o">(</span>val c<span class="o">)</span> is put<span class="o">(</span>c, <span class="m">0</span><span class="o">)</span>
+
+func lsu<span class="o">(</span>val x, val y<span class="o">)</span> is
+  <span class="k">if</span> <span class="o">(</span>x &lt; <span class="m">0</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span>y &lt; <span class="m">0</span><span class="o">)</span>
+  <span class="k">then</span>
+    <span class="k">return</span> x &lt; y
+  <span class="k">else</span>
+    <span class="k">return</span> y &lt; <span class="m">0</span>
+
+func div_step<span class="o">(</span>val b, val y<span class="o">)</span> is
+  var r<span class="p">;</span>
+<span class="o">{</span> <span class="k">if</span> <span class="o">(</span>y &lt; <span class="m">0</span><span class="o">)</span> or <span class="o">(</span>~lsu<span class="o">(</span>y, div_x<span class="o">))</span>
+  <span class="k">then</span>
+    r :<span class="o">=</span> <span class="m">0</span>
+  <span class="k">else</span>
+    r :<span class="o">=</span> div_step<span class="o">(</span>b + b, y + y<span class="o">)</span><span class="p">;</span>
+  <span class="k">if</span> ~lsu<span class="o">(</span>div_x, y<span class="o">)</span>
+  <span class="k">then</span>
+  <span class="o">{</span> div_x :<span class="o">=</span> div_x - y<span class="p">;</span>
+    r :<span class="o">=</span> r + b
+  <span class="o">}</span>
+  <span class="k">else</span>
+    skip<span class="p">;</span>
+  <span class="k">return</span> r
+<span class="o">}</span>
+
+func div<span class="o">(</span>val n, val m<span class="o">)</span> is
+<span class="o">{</span> div_x :<span class="o">=</span> n<span class="p">;</span>
+  <span class="k">if</span> lsu<span class="o">(</span>n, m<span class="o">)</span>
+  <span class="k">then</span>
+    <span class="k">return</span> <span class="m">0</span>
+  <span class="k">else</span>
+    <span class="k">return</span> div_step<span class="o">(</span><span class="m">1</span>, m<span class="o">)</span>
+<span class="o">}</span>
+
+func rem<span class="o">(</span>val n, val m<span class="o">)</span> is
+  var x<span class="p">;</span>
+<span class="o">{</span> x :<span class="o">=</span> div<span class="o">(</span>n, m<span class="o">)</span><span class="p">;</span>
+  <span class="k">return</span> div_x
+<span class="o">}</span>
+
+proc prints<span class="o">(</span>array s<span class="o">)</span> is
+  var n<span class="p">;</span>
+  var p<span class="p">;</span>
+  var w<span class="p">;</span>
+  var l<span class="p">;</span>
+  var b<span class="p">;</span>
+<span class="o">{</span> n :<span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+  p :<span class="o">=</span> <span class="m">0</span><span class="p">;</span>
+  w :<span class="o">=</span> s<span class="o">[</span>p<span class="o">]</span><span class="p">;</span>
+  l :<span class="o">=</span> rem<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
+  w :<span class="o">=</span> div<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
+  b :<span class="o">=</span> <span class="m">1</span><span class="p">;</span>
+  <span class="k">while</span> <span class="o">(</span>n &lt;<span class="o">=</span> l<span class="o">)</span> <span class="k">do</span>
+  <span class="o">{</span> putval<span class="o">(</span>rem<span class="o">(</span>w, <span class="m">256</span><span class="o">))</span><span class="p">;</span>
+    w :<span class="o">=</span> div<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
+    n :<span class="o">=</span> n + <span class="m">1</span><span class="p">;</span>
+    b :<span class="o">=</span> b + <span class="m">1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nv">b</span> <span class="o">=</span> bytesperword<span class="o">)</span>
+    <span class="k">then</span>
+    <span class="o">{</span> b :<span class="o">=</span> <span class="m">0</span><span class="p">;</span>
+      p :<span class="o">=</span> p + <span class="m">1</span><span class="p">;</span>
+      w :<span class="o">=</span> s<span class="o">[</span>p<span class="o">]</span>
+    <span class="o">}</span>
+    <span class="k">else</span> skip
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>Compiling and running this shows that it takes ~50K cycles to execute and
+inspecting the trace is clear to see that most time is spent in the arithmetic&nbsp;routines.</p>
+<div class="codehilite"><pre><span></span>➜ xcmp tests/x/hello_prints.x
+➜ hexsim a.out
+hello world
+➜ hexsim a.out -t
+...
+<span class="m">48902</span>  <span class="m">61</span>                  OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+</pre></div>
+
+
+<h3>Building an X compiler and&nbsp;bootstrapping</h3>
+<p>A third example is a complete compiler for X, written in X:
+<a href="https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x"><code>xhexb.x</code></a>
+written by David May in ~3,000 lines of X. This serves as a challenging program
+to compile, and interesting that it can bootstrap itself. Using the notation
+X(Y) to mean compile source Y using binary X, we can first create an <code>xhexb</code>
+binary by running <code>xcmp</code>(<code>xhexb.x</code>):</p>
+<div class="codehilite"><pre><span></span>➜ xcmp -S tests/x/xhexb.x
+...
+<span class="m">20739</span> bytes
+</pre></div>
+
+
+<p>We can then use <code>xcmp</code>(<code>xhexb.x</code>) to compile Hello World as
+<code>xcmp</code>(<code>xhexb.x</code>)(<code>hello_prints.x</code>):</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Create an xhexb compiler binary.</span>
+➜ xcmp tests/x/xhexb.x
+
+<span class="c1"># Compile Hello World.</span>
+➜ hexsim a.out &lt; tests/x/hello_prints.x
+tree size: <span class="m">602</span>
+program size: <span class="m">414</span>
+size: <span class="m">414</span>
+
+<span class="c1"># Run it.</span>
+➜ hexsim simout2
+hello world
+</pre></div>
+
+
+<p>Similarly, we can use <code>xcmp</code>(<code>xhexb.x</code>) to bootstrap itself by running
+<code>xcmp</code>(<code>xhexb.x</code>)(<code>xhexb.x</code>):</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Create an xhexb compiler binary.</span>
+➜ xcmp tests/x/xhexb.x
+
+<span class="c1"># Use xhexb binary to compile xhexb.x.</span>
+➜ hexsim a.out &lt; tests/x/xhexb.x
+tree size: <span class="m">18631</span>
+program size: <span class="m">17093</span>
+size: <span class="m">177097</span>
+
+<span class="c1"># Use the bootstrapped xhexb binary to compile Hello World.</span>
+➜ hexsim simout2 &lt; tests/x/hello_prints.x
+tree size: <span class="m">602</span>
+program size: <span class="m">414</span>
+size: <span class="m">414</span>
+
+<span class="c1"># Run it.</span>
+➜ hexsim simout2
+hello world
+</pre></div>
+
+
+<h3>Implementation&nbsp;details</h3>
+<p>Both the assembler and compiler are based on the <code>xhexb.x</code> bootstrapping
+compiler for X discussed&nbsp;above.</p>
+<p>The assembler works in two main&nbsp;phases:</p>
+<ul>
+<li>Parsing the program to form a list of directives (instructions, labels, data&nbsp;etc).</li>
+<li>Code generation to iterate through the directives and emit binary&nbsp;output.</li>
+</ul>
+<p>Before emission, the value of labels must be determined, which involves solving two
+problems. The first is that for a given relative reference, the length of the
+encoding (ie number of prefixes) depends on the value of the reference and vice
+versa. This is solved by iteratively increasing the encoding length until it
+meets the required range (see <code>instrLen()</code>). The second problem is that the
+value of a relative reference depends on the length of any relative encodings
+contained within the range. This is solved by iteratively updating label values
+until they reach a stable state (see <code>resolveLabels()</code>). The assembler adds
+additional rudimentary debug information to the binary, with a mapping of
+instruction ranges to symbol values. This allows the simulator to display the
+current symbol and&nbsp;offset.</p>
+<p>The compiler works a traditional way, structured as a sequence of phases, first
+creating a parse tree, then performing passes on the tree to optimise it and
+then lowering the tree to machine&nbsp;instructions:</p>
+<ul>
+<li>Parse the program to form an abstract syntax&nbsp;tree.</li>
+<li>Walk the tree to populate a symbol table with names occurring in the&nbsp;program.</li>
+<li>Walk the tree to propagate constant values within&nbsp;expressions.</li>
+<li>Walk the tree to transform expressions into a canonical&nbsp;form.</li>
+<li>Walk the tree to generate a sequence of intermediate machine&nbsp;instructions.</li>
+<li>Lower the intermediate instructions to machine&nbsp;instructions.</li>
+<li>Optimise the machine instruction&nbsp;sequence.</li>
+<li>Assemble and emit the machine instruction&nbsp;sequence.</li>
+</ul>
+<p>Command line options such as <code>--tree</code> are available to inspect the internal
+representation of the program in between these&nbsp;stages.</p>
+<p>Compared with a more sophisticated compiler, Hex and X afford two significant
+simplifications. First, the small set of features in X make it straightforward
+to map to directly to machine instructions rather than an intermediate
+machine-independent representation. Secondly, the register architecture of Hex
+means that allocation of registers can be handled easily during mapping to
+machine instructions, rather than having to allocate physical registers to a
+virtual set as is typical in machines with more&nbsp;registers.</p>
+<p>More details of the <code>xhexb</code> compiler implementation are included in the <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf">X
+and Hex notes <span class="caps">PDF</span></a>, with aspects such as the
+calling convention, handling of operators and arithmetic and memory layout
+being shared in <code>xcmp</code>.</p>
+<h2>Summary</h2>
+<p>Modern processors, languages, compilers, and tooling are complex and difficult
+to understand. This note walks through possibly the simplest processor
+architecture that allows a compact implementation of rudimentary tooling and a
+complete high-level programming language targeted at it. The definitions and
+implementations are contained in a single repository and just a small set of
+source files, making it an excellent project to use to explore processors and&nbsp;compilers.</p>
+<h2>Similar&nbsp;projects</h2>
+<p>The following are some similar projects that include simple implementations of
+processor&nbsp;toolchains.</p>
+<ul>
+<li>
+<p><a href="https://github.com/eliben/luz-cpu">Luz <span class="caps">CPU</span></a>, a simulator, assembler and
+  linker for the Luz processor&nbsp;architecture.</p>
+</li>
+<li>
+<p><a href="https://www.cl.cam.ac.uk/~mr10/VSPL.html"><span class="caps">VSPL</span></a>, is a very simple
+  programming language designed to be used as a case study for comparing
+  compiler implementations. The provided source distribution includes several
+  implementations of <span class="caps">VSPL</span> in different&nbsp;languages.</p>
+</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery-3.6.0.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <script src="./theme/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
