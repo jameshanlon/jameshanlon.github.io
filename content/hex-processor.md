@@ -45,16 +45,16 @@ next two sections introduce Hex and X.
 ## The Hex architecture
 
 The Hex architecture is described in detail in [a separate
-PDF]({{'hex/hexb.pdf'|asset}}), but I will give a brief summary here and focus
-on several important aspects for reference. Hex has four registers: program
-counter ``pc``, operand register ``oreg`` and the A and B registers ``areg``
-and ``breg`` used for expression evaluation. The architecture is agnostic of a
-particular word size, but it has to be a minimum of a byte and multiples of a
-byte. In the included implementation the word size is 4 bytes. Hex has sixteen
-instructions (hence its name!) that are summarised in the following table. The
-instructions are grouped into memory access with absolute or relative
-addressing modes, loading of constants, branching, inter-register operations
-and supervisor calls.
+PDF]({{'hex-processor/hexb.pdf'|asset}}), but I will give a brief summary here
+and focus on several important aspects for reference. Hex has four registers:
+program counter ``pc``, operand register ``oreg`` and the A and B registers
+``areg`` and ``breg`` used for expression evaluation. The architecture is
+agnostic of a particular word size, but it has to be a minimum of a byte and
+multiples of a byte. In the included implementation the word size is 4 bytes.
+Hex has sixteen instructions (hence its name!) that are summarised in the
+following table. The instructions are grouped into memory access with absolute
+or relative addressing modes, loading of constants, branching, inter-register
+operations and supervisor calls.
 
 <table class="table table-striped table-sm">
 <thead>
@@ -304,15 +304,15 @@ main+35  ...
 
 ## The X language
 
-The X language is defined in [a separate PDF]({{'hex/xhexnotes.pdf'|asset}}). X
-is simple enough that it can be compiled using simple techniques to the Hex
-architecture, whilst providing enough flexibility to express complex programs
-such as its own compiler (more on that later). X is an imperative language and
-has features for procedure calling, composition of statements, looping and
-conditional statements, expressions including function calls, and
-representation of memory with variables and arrays. To give an indicative
-example of X programming, the following program implements Bubblesort to sort
-an array of four elements:
+The X language is defined in [a separate
+PDF]({{'hex-processor/xhexnotes.pdf'|asset}}). X is simple enough that it can
+be compiled using simple techniques to the Hex architecture, whilst providing
+enough flexibility to express complex programs such as its own compiler (more
+on that later). X is an imperative language and has features for procedure
+calling, composition of statements, looping and conditional statements,
+expressions including function calls, and representation of memory with
+variables and arrays. To give an indicative example of X programming, the
+following program implements Bubblesort to sort an array of four elements:
 
 ```
 val length = 4;
@@ -433,16 +433,16 @@ The OpenROAD GUI provides many ways to visualise and explore the design. The
 following images are some examples of the different views.
 
 {{ macros.pair_layout(
-     macros.image('hex-processor/floorplan-stdcells.png', caption='Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).', local=True),
-     macros.image('hex-processor/floorplan-closeup.png', caption='A zoomed view showing standard cells with logic and M1 layers only.', local=True)) }}
+     macros.image('hex-processor/floorplan-stdcells.png', caption='Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).'),
+     macros.image('hex-processor/floorplan-closeup.png', caption='A zoomed view showing standard cells with logic and M1 layers only.')) }}
 
 {{ macros.pair_layout(
-     macros.image('hex-processor/floorplan-clocktree.png', caption='A view showing all nets constituting the clock tree.', local=True),
-     macros.image('hex-processor/floorplan-routing-congestion.png', caption='A heatmap view representing routing congestion.', local=True)) }}
+     macros.image('hex-processor/floorplan-clocktree.png', caption='A view showing all nets constituting the clock tree.'),
+     macros.image('hex-processor/floorplan-routing-congestion.png', caption='A heatmap view representing routing congestion.')) }}
 
 {{ macros.pair_layout(
-     macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.', local=True),
-     macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visualisation for the worst (least slack) hold path in the design.', local=True)) }}
+     macros.image('hex-processor/floorplan-setup-worstpath.png', caption='A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.'),
+     macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visualisation for the worst (least slack) hold path in the design.')) }}
 
 
 ## Hex tooling
@@ -461,7 +461,7 @@ external dependency on ``boost::format``):
 - The Hex simulator is implemented in the headers
   [``hexsim.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsim.hpp) and
   [``hexsimio.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsimio.hpp).
-  (Note that listings for a complete simulator in C are given in the [Hex definition (PDF)]({{'hex/hexb.pdf'|asset}}).)
+  (Note that listings for a complete simulator in C are given in the [Hex definition (PDF)]({{'hex-processor/hexb.pdf'|asset}}).)
 
 - The Hex assembler is implemented in the header
   [``hexasm.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.hpp).
@@ -804,7 +804,7 @@ machine instructions, rather than having to allocate physical registers to a
 virtual set as is typical in machines with more registers.
 
 More details of the ``xhexb`` compiler implementation are included in the [X
-and Hex notes PDF]({{'hex/xhexnotes.pdf'|asset}}), with aspects such as the
+and Hex notes PDF]({{'hex-processor/xhexnotes.pdf'|asset}}), with aspects such as the
 calling convention, handling of operators and arithmetic and memory layout
 being shared in ``xcmp``.
 
