@@ -814,10 +814,10 @@ being shared in ``xcmp``.
 Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
 architecture that allows a compact implementation of rudimentary tooling and a
-complete high-level programming language targeted at it. The definitions and
-implementations are contained in a single repository and just a small set of
-source files, making it an excellent project to use to explore processors and
-compilers.
+complete high-level programming language to be targeted at it. The definitions
+and implementations are contained in a single repository and just a small set
+of source files, making it an excellent project to use to explore processors
+and compilers.
 
 
 ## Similar projects
@@ -825,10 +825,27 @@ compilers.
 The following are some similar projects that include simple implementations of
 processor toolchains.
 
-- [Luz CPU](https://github.com/eliben/luz-cpu), a simulator, assembler and
-  linker for the Luz processor architecture.
-
 - [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html), is a very simple
-  programming language designed to be used as a case study for comparing
-  compiler implementations. The provided source distribution includes several
-  implementations of VSPL in different languages.
+  programming language designed by Martin Richards to be used as a case study
+  for comparing compiler implementations. The provided source distribution
+  includes several implementations of VSPL in different languages.
+
+- [Experiments in Computer System
+  Design](https://people.inf.ethz.ch/wirth/FPGA-relatedWork/ComputerSystemDesign.pdf)
+  is a walk through of an implementation of a Tiny Register Machine (TRM) in
+  Verilog with serial communication, DRAM access and multiprocessing (Niklaus
+  Wirth, 2010).
+
+- [Luz CPU](https://github.com/eliben/luz-cpu), a simulator, assembler and
+  linker for the Luz processor architecture written by Eli Bendersky.
+
+## Further reading
+
+- [Processor Design: An
+  Introduction](http://www.gamezero.com/team-0/articles/math_magic/micro/) a
+  ground-up explanation of how processors work.
+
+- [LLVM Kaleidoscope
+  Tutorial](https://releases.llvm.org/9.0.0/docs/tutorial/LangImpl01.html)
+  which walks through an implementation of a simple programming language using
+  LLVM as a backend for code generation and just-in-time compilation.
