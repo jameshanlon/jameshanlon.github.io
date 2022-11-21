@@ -836,22 +836,44 @@ being shared in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
 architecture that allows a compact implementation of rudimentary tooling and a
-complete high-level programming language targeted at it. The definitions and
-implementations are contained in a single repository and just a small set of
-source files, making it an excellent project to use to explore processors and&amp;nbsp;compilers.&lt;/p&gt;
+complete high-level programming language to be targeted at it. The definitions
+and implementations are contained in a single repository and just a small set
+of source files, making it an excellent project to use to explore processors
+and&amp;nbsp;compilers.&lt;/p&gt;
 &lt;h2&gt;Similar&amp;nbsp;projects&lt;/h2&gt;
 &lt;p&gt;The following are some similar projects that include simple implementations of
 processor&amp;nbsp;toolchains.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://github.com/eliben/luz-cpu"&gt;Luz &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt;, a simulator, assembler and
-  linker for the Luz processor&amp;nbsp;architecture.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.cl.cam.ac.uk/~mr10/VSPL.html"&gt;&lt;span class="caps"&gt;VSPL&lt;/span&gt;&lt;/a&gt;, is a very simple
+  programming language designed by Martin Richards to be used as a case study
+  for comparing compiler implementations. The provided source distribution
+  includes several implementations of &lt;span class="caps"&gt;VSPL&lt;/span&gt; in different&amp;nbsp;languages.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;a href="https://www.cl.cam.ac.uk/~mr10/VSPL.html"&gt;&lt;span class="caps"&gt;VSPL&lt;/span&gt;&lt;/a&gt;, is a very simple
-  programming language designed to be used as a case study for comparing
-  compiler implementations. The provided source distribution includes several
-  implementations of &lt;span class="caps"&gt;VSPL&lt;/span&gt; in different&amp;nbsp;languages.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://people.inf.ethz.ch/wirth/FPGA-relatedWork/ComputerSystemDesign.pdf"&gt;Experiments in Computer System
+  Design&lt;/a&gt;
+  is a walk through of an implementation of a Tiny Register Machine (&lt;span class="caps"&gt;TRM&lt;/span&gt;) in
+  Verilog with serial communication, &lt;span class="caps"&gt;DRAM&lt;/span&gt; access and multiprocessing (Niklaus
+  Wirth,&amp;nbsp;2010).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/eliben/luz-cpu"&gt;Luz &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt;, a simulator, assembler and
+  linker for the Luz processor architecture written by Eli&amp;nbsp;Bendersky.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://www.gamezero.com/team-0/articles/math_magic/micro/"&gt;Processor Design: An
+  Introduction&lt;/a&gt; a
+  ground-up explanation of how processors&amp;nbsp;work.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://releases.llvm.org/9.0.0/docs/tutorial/LangImpl01.html"&gt;&lt;span class="caps"&gt;LLVM&lt;/span&gt; Kaleidoscope
+  Tutorial&lt;/a&gt;
+  which walks through an implementation of a simple programming language using
+  &lt;span class="caps"&gt;LLVM&lt;/span&gt; as a backend for code generation and just-in-time&amp;nbsp;compilation.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</content><category term="projects"></category><category term="computing"></category><category term="computer architecture"></category><category term="microelectronics"></category></entry><entry><title>Recycled allotment shed</title><link href="http://jameswhanlon.com/recycled-allotment-shed.html" rel="alternate"></link><published>2019-11-10T00:00:00+01:00</published><updated>2019-11-10T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2019-11-10:/recycled-allotment-shed.html</id><summary type="html">&lt;p&gt;A friend was in need of a shed on her allotment to store tools and as a place
 to shelter in the rain, so I helped her to build one. The aim was to build
