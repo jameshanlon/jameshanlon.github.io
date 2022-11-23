@@ -2,7 +2,7 @@
 Title: Writing synthesizable Verilog
 Date: 2018-5-4
 Category: notes
-Tags: computing, microelectronics, programming-languages, Verilog
+Tags: computing, microelectronics, programming-languages, verilog
 Status: published
 ---
 
