@@ -311,13 +311,13 @@ And scaled to relative sizes:
 
 This note has provided an overview of the methodology and results of the
 analysis we conducted into the statistical quality of our novel PRNG
-xoroshiro128aox. This has established that our generator mitigates known
-existing weaknesses of xoroshiro128plus on which it is based, and delivers
+``xoroshiro128aox``. This has established that our generator mitigates known
+existing weaknesses of ``xoroshiro128+`` on which it is based, and delivers
 comparable levels of statistical quality on the gold-standard BigCrush test set
-as two contemporary fast PRNGs : pcg64 and philox4x32-10. Extending our testing
-by using PractRand and Gjrand, we do eventually find that a weakness is
+as two contemporary fast PRNGs : ``pcg64`` and ``philox4x32-10``. Extending
+testing by using PractRand and Gjrand, we do eventually find that a weakness is
 detectable by Gjrand. Since this is not systematic across the test suites, as
-we have seen for the Mersenne Twister, we can consider xoroshiro128aox to
+we have seen for the Mersenne Twister, we can consider ``xoroshiro128aox`` to
 provide an excellent tradeoff between quality and implementation cost in
 hardware.
 
