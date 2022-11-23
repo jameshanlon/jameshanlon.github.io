@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZTCPLK4EJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PZTCPLK4EJ');
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>The hardware pseudorandom number generator of the Graphcore IPU</title>
+  <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+      type="application/atom+xml" rel="alternate"
+      title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+      type="application/rss+xml" rel="alternate"
+      title="James W. Hanlon RSS Feed" />
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    The hardware pseudorandom number generator of the Graphcore <span class="caps">IPU</span>
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2022-09-21T00:00:00+02:00">
+      21 Sep 2022
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/PRNGs.html">PRNGs</a></span>
+  </div>
+  <div class="article-body">
+    <p>This note is a short summary of my <a href="https://ieeexplore.ieee.org/document/9875973"><span class="caps">IEEE</span> Transactions on Computers journal
+paper</a> and was originally written
+to appear on the Graphcore&nbsp;blog.</p>
+<p>The Graphcore <span class="caps">IPU</span> contains a novel pseudorandom number generator (<span class="caps">PRNG</span>) that
+was designed to produce high-quality statistical randomness, whist also being
+cheap to implement in hardware. Having an efficient hardware <span class="caps">RNG</span> means
+randomness can be used frequently: the IPUs generator can produce 64-bits of
+unique randomness from all of its 1,216 tiles every clock cycle. This, for
+example, makes it possible to perform on-the-fly stochastic rounding of
+low-precision floating-point&nbsp;numbers.</p>
+<p>We needed a new <span class="caps">PRNG</span> because typical state-of-the-art generators are designed
+to be performant when run as software routines, but operations that are cheap
+to execute on a processor may not be cheap to implement in hardware as is the
+case for multiplication or division. Our generator <code>xoroshiro128aox</code> is based
+on <a href="https://vigna.di.unimi.it/">Sebastiano Vigna’s</a> <code>xoroshiro128</code>
+linear-feedback shift register (<span class="caps">LFSR</span>), which is attractive because it uses 128
+bits of state and is cheap to implement in hardware. The <span class="caps">LFSR</span> operates by
+performing <span class="caps">XOR</span> and fixed-distance shift and rotate operations on the state.
+Following Vigna’s approach of adding a function to ‘scramble’ the <span class="caps">LFSR</span> state,
+we have devised a function consisting of <span class="caps">AND</span>, <span class="caps">OR</span> and <span class="caps">XOR</span> operations (called <span class="caps">AOX</span>
+for short). An C implementation of <code>xoroshiro128aox</code> is as&nbsp;follows:</p>
+<div class="codehilite"><pre><span></span><span class="nv">uint64_t</span><span class="w"> </span><span class="nv">s0</span>,<span class="w"> </span><span class="nv">s1</span><span class="c1">; // State vectors</span><span class="w"></span>
+
+<span class="nv">uint64_t</span><span class="w"> </span><span class="nv">rotl</span><span class="ss">(</span><span class="nv">uint64_t</span><span class="w"> </span><span class="nv">x</span>,<span class="w"> </span><span class="nv">int</span><span class="w"> </span><span class="nv">k</span><span class="ss">)</span><span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ss">(</span><span class="nv">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="nv">k</span><span class="ss">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">(</span><span class="nv">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="ss">(</span><span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">k</span><span class="ss">))</span><span class="c1">;</span><span class="w"></span>
+}<span class="w"></span>
+
+<span class="nv">uint64_t</span><span class="w"> </span><span class="k">next</span><span class="ss">(</span><span class="nv">void</span><span class="ss">)</span><span class="w"> </span>{<span class="w"></span>
+<span class="w">  </span><span class="nv">uint64_t</span><span class="w"> </span><span class="nv">sx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">s0</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="nv">s1</span><span class="c1">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nv">Calculate</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nb">result</span>,<span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="s1">&#39;AOX&#39;</span><span class="w"> </span><span class="nv">step</span>.<span class="w"></span>
+<span class="w">  </span><span class="nv">uint64_t</span><span class="w"> </span><span class="nv">sa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">s0</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nv">s1</span><span class="c1">;</span><span class="w"></span>
+<span class="w">  </span><span class="nv">uint64_t</span><span class="w"> </span><span class="nv">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">sx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="ss">(</span><span class="nv">rotl</span><span class="ss">(</span><span class="nv">sa</span>,<span class="w"> </span><span class="mi">1</span><span class="ss">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">rotl</span><span class="ss">(</span><span class="nv">sa</span>,<span class="w"> </span><span class="mi">2</span><span class="ss">))</span><span class="c1">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nv">xoroshiro128</span><span class="w"> </span><span class="nv">state</span><span class="w"> </span><span class="nv">update</span><span class="w"></span>
+<span class="w">  </span><span class="nv">s0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">rotl</span><span class="ss">(</span><span class="nv">s0</span>,<span class="w"> </span><span class="mi">55</span><span class="ss">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="nv">sx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="ss">(</span><span class="nv">sx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">14</span><span class="ss">)</span><span class="c1">;</span><span class="w"></span>
+<span class="w">  </span><span class="nv">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">rotl</span><span class="ss">(</span><span class="nv">sx</span>,<span class="w"> </span><span class="mi">36</span><span class="ss">)</span><span class="c1">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nv">res</span><span class="c1">;</span><span class="w"></span>
+}<span class="w"></span>
+</pre></div>
+
+
+<p>To determine that this new <span class="caps">PRNG</span> provides a good source of randomness, we took
+the conventional approach of subjecting the generator to batteries of
+statistical tests, that aim to detect correlations over large portions of the
+generator’s output. Given that any <span class="caps">PRNG</span> is inherently non-random because they
+produce numbers according to a fixed sequence, statistical testing is only as
+good as the tests that they run, and their performance can only be judged on
+their ability to distinguish existing good generators from bad ones. Indeed, a
+novel statistical test could immediately raise the bar for all&nbsp;PRNGs.</p>
+<p>Within the field of <span class="caps">PRNG</span> design,
+<a href="http://simul.iro.umontreal.ca/testu01/tu01.html">TestU01’s</a> BigCrush battery
+is accepted as the gold-standard statistical test, however it is not always
+clear exactly what methodology has been used to obtain a pass/fail result. In
+particular, the choice of initial state (the seed) is important because
+different parts of a sequence may have different properties, and TestU01 has
+known biases in the way it uses bits from a generator’s output. To mitigate
+these issues, we run every generator from 100 unique seeds and supply six
+permutations of the output bits. And as well as running TestU01, we also run
+<a href="http://pracrand.sourceforge.net/">PractRand</a> and
+<a href="http://gjrand.sourceforge.net/">Gjrand</a> with the same 100 seeds, which are the
+two other most well-regarded test sets. This gives us a comprehensive testing
+methodology that goes beyond the typical level of&nbsp;analysis.</p>
+<p>To provide a point of comparison, we include the following&nbsp;PRNGs:</p>
+<ul>
+<li>
+<p>32-bit Mersenne Twister, <code>mt32</code>, since it is one of the most widely used
+    software PRNGs (although it has 19,937 bits of&nbsp;state!).</p>
+</li>
+<li>
+<p><code>xoroshiro128+</code>, which is Vigna’s closest variant of <code>xoroshiro128</code>,
+    using 64-bit addition to scramble 128-bit <span class="caps">LFSR</span>&nbsp;states.</p>
+</li>
+</ul>
+<p>And to represent the current state-of-the-art 128-bit generators, we&nbsp;include:</p>
+<ul>
+<li>
+<p><code>philox4x32-10</code>, a counter-based generator whose transition between states
+    is a 128-bit increment and output scrambling function is 10 rounds of 32-bit
+  multiplications and&nbsp;XORs.</p>
+</li>
+<li>
+<p><code>pcg64</code>, a linear-congruential generator (<span class="caps">LCG</span>) that uses multiplication and
+    addition by 128-bit constants for the state-transition function, and <span class="caps">XOR</span> and
+  variable rotation operations to produce&nbsp;outputs.</p>
+</li>
+</ul>
+<p>The table below summarises the TestU01 BigCrush results, where the six output
+columns correspond to different permutations of the generators bits (eg 1 is
+unchanged, 2 is swapping the most and least significant 32 bits) and the
+numbers are total failures. Since a true random number generator has a
+probability of failing, the expected number of failures can be calculated.
+BigCrush runs 160 individual tests (and consumes approximately 1 <span class="caps">TB</span> of random
+data), so in this case the expected number is 32. A generator is considered to
+fail only when it fails on the same test over all seeds, which can be seen in
+the entries highlighted in red. The Mersenne Twister consistently fails,
+whereas xoroshiro128+ fails on a particular output permutation where the lower
+32 bits are discarded (this is a known deficiency of the&nbsp;generator).</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Generator</th>
+  <th scope="col">Output 1</th>
+  <th scope="col">Output 2</th>
+  <th scope="col">Output 3</th>
+  <th scope="col">Output 4</th>
+  <th scope="col">Output 5</th>
+  <th scope="col">Output 6</th>
+  <th scope="col">Total failures</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>mt32</code></td>
+  <td>236</td>
+  <td>237</td>
+  <td>233</td>
+  <td>238</td>
+  <td>246</td>
+  <td>237</td>
+  <td>1427</td>
+</tr>
+<tr>
+  <td><code>pcg64</code></td>
+  <td>34</td>
+  <td>30</td>
+  <td>38</td>
+  <td>37</td>
+  <td>38</td>
+  <td>27</td>
+  <td>204</td>
+</tr>
+<tr>
+  <td><code>philox4x32-10</code></td>
+  <td>33</td>
+  <td>32</td>
+  <td>32</td>
+  <td>32</td>
+  <td>28</td>
+  <td>38</td>
+  <td>195</td>
+</tr>
+<tr>
+  <td><code>xoroshiro128+</code></td>
+  <td>33</td>
+  <td>29</td>
+  <td>28</td>
+  <td>40</td>
+  <td>353</td>
+  <td>42</td>
+  <td>525</td>
+</tr>
+<tr>
+  <td><code>xoroshiro128aox</code></td>
+  <td>31</td>
+  <td>32</td>
+  <td>41</td>
+  <td>30</td>
+  <td>44</td>
+  <td>32</td>
+  <td>210</td>
+</tr>
+</tbody>
+</table>
+
+<p>The table below summarises the Gjrand results, which just runs 13 tests and by
+default consumes approximately 10 <span class="caps">TB</span> of data. Unlike BigCrush and TestU01,
+xoroshiro128aox fails Gjrand on both versions of its z9 test, which looks for
+dependencies in the Hamming Weight of successive outputs. Although BigCrush and
+PractRand include similar tests that analyse Hamming Weight dependencies, they
+do not detect correlations. What this shows is that the scrambling of the
+xoroshiro128 <span class="caps">LFSR</span>’s state serves to hide correlations due to the linear
+operations only to an extent, and a particular test will be sensitive enough to
+detect them. Given that BigCrush and PractRand did not, xoroshiro128aox
+represents a significant improvement over xoroshiro128+, whilst still being
+cheap to implement in hardware as we show in the next&nbsp;section.</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Generator</th>
+  <th scope="col">Total failures</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>mt32</code></td>
+  <td>107</td>
+</tr>
+<tr>
+  <td><code>pcg64</code></td>
+  <td>15</td>
+</tr>
+<tr>
+  <td><code>philox4x32-10</code></td>
+  <td>7</td>
+</tr>
+<tr>
+  <td><code>xoroshiro128+</code></td>
+  <td>210</td>
+</tr>
+<tr>
+  <td><code>xoroshiro128aox</code></td>
+  <td>205</td>
+</tr>
+</tbody>
+</table>
+
+<p>To demonstrate that xoroshiro128aox is indeed cheap to implement in hardware,
+we compare physical implementations of the generators (excluding Mersenne
+Twister because of its considerable state size) after they have been fully
+synthesised and placed and routed using Graphcore’s 7 nm cell library and a
+target clock period of 1 GHz. The table below summarises the&nbsp;results.</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Generator</th>
+  <th scope="col">Total cells (state update)</th>
+  <th scope="col">Logic depth (state update)</th>
+  <th scope="col">Total cells (output)</th>
+  <th scope="col">Logic depth (output)</th>
+  <th scope="col">Total cells</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>xoroshiro128aox</code></td>
+  <td>331 </td>
+  <td>4   </td>
+  <td>353 </td>
+  <td>4   </td>
+  <td>684 </td>
+</tr>
+<tr>
+  <td><code>xoroshiro128+</code></td>
+  <td>331 </td>
+  <td>3   </td>
+  <td>906 </td>
+  <td>13  </td>
+  <td>1237</td>
+</tr>
+<tr>
+  <td><code>pcg64</code></td>
+  <td>9564 </td>
+  <td>26   </td>
+  <td>658  </td>
+  <td>7    </td>
+  <td>10222</td>
+</tr>
+<tr>
+  <td><code>philox4x32-10</code></td>
+  <td>1003 </td>
+  <td>13   </td>
+  <td>29553</td>
+  <td>89   </td>
+  <td>30556</td>
+</tr>
+</tbody>
+</table>
+
+<p>Key takeaways from these results&nbsp;are:</p>
+<ul>
+<li>
+<p>That <span class="caps">AOX</span> is approximately one third of the cost of a full 64-bit addition and
+  the cheapest option overall by a factor of&nbsp;two.</p>
+</li>
+<li>
+<p>For <code>pcg64</code> the cost is dominated by the 128-bit arithmetic for its state&nbsp;update.</p>
+</li>
+<li>
+<p>For <code>philox4x32-10</code> the cost is dominated by the output function composed of 10
+  stages of 32-bit&nbsp;arithmetic.</p>
+</li>
+</ul>
+<p>The following are illustrations of the four <span class="caps">PRNG</span> circuit floorplans, which make
+clear the differences in implementation complexity (left to right:
+<code>xoroshiro128aox</code>, <code>xoroshiro128+</code>, <code>pcg64</code>, <code>philox4x32-10</code>):</p>
+<table>
+<tbody>
+<tr>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/plus_600x600.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/aox_600x600.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_600x600.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/philox_600x600.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+</tr>
+</table>
+
+<p>And scaled to relative&nbsp;sizes:</p>
+<!--
+%          h      w         Scale
+% plus     25.8   12.992    1
+% aox      23.1   11.648    0.896551724
+% pcg      63.9   32        2.463054187
+% philox   115.8  57.984    4.463054187
+-->
+
+<table>
+<tbody>
+<tr>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/plus_100x100.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/aox_90x90.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_246x246.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+  <td><div class="text-center">
+<figure class="figure">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" data-lightbox="shed">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/philox_446x446.png" alt="">
+  </a>
+  <figcaption class="figure-caption text-left"></figcaption>
+</figure>
+</div>
+</td>
+</tr>
+</table>
+
+<h2>Summary</h2>
+<p>This note has provided an overview of the methodology and results of the
+analysis we conducted into the statistical quality of our novel <span class="caps">PRNG</span>
+xoroshiro128aox. This has established that our generator mitigates known
+existing weaknesses of xoroshiro128plus on which it is based, and delivers
+comparable levels of statistical quality on the gold-standard BigCrush test set
+as two contemporary fast PRNGs : pcg64 and philox4x32-10. Extending our testing
+by using PractRand and Gjrand, we do eventually find that a weakness is
+detectable by Gjrand. Since this is not systematic across the test suites, as
+we have seen for the Mersenne Twister, we can consider xoroshiro128aox to
+provide an excellent tradeoff between quality and implementation cost in&nbsp;hardware.</p>
+<p>Full details of the investigation can be found in the <a href="https://arxiv.org/abs/2203.04058">preprint paper on
+arXiv</a>, and the <a href="https://github.com/jameshanlon/prng-testing">source
+code</a> for the experiments on&nbsp;GitHub.</p>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <!--<p class="float-right" style="padding-left:1em">
+        <a href="https://github.com/jameshanlon">
+        <span>
+          <svg viewBox="0 0 16 16" width="16px" height="16px">
+            <path fill="#828282"
+               d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+               c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+               c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+               c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+               C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+               c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+               c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+               c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+               c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z">
+            </path>
+          </svg>
+        </span>
+        <span>jameshanlon</span><br>
+        </a>
+        <a href="https://twitter.com/jameswhanlon">
+          <span>
+            <svg viewBox="0 0 16 16" width="16px" height="16px">
+              <path fill="#828282"
+                d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z">
+              </path>
+            </svg>
+          </span>
+          <span class="username">@jameswhanlon</span>
+        </a>
+      </p>
+      <p>-->
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./theme/js/jquery-3.6.0.min.js"></script>
+  <script src="./theme/js/lightbox.min.js"></script>
+  <script src="./theme/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
