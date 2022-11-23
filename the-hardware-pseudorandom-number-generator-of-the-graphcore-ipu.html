@@ -435,13 +435,13 @@ clear the differences in implementation complexity (left to right:
 <h2>Summary</h2>
 <p>This note has provided an overview of the methodology and results of the
 analysis we conducted into the statistical quality of our novel <span class="caps">PRNG</span>
-xoroshiro128aox. This has established that our generator mitigates known
-existing weaknesses of xoroshiro128plus on which it is based, and delivers
+<code>xoroshiro128aox</code>. This has established that our generator mitigates known
+existing weaknesses of <code>xoroshiro128+</code> on which it is based, and delivers
 comparable levels of statistical quality on the gold-standard BigCrush test set
-as two contemporary fast PRNGs : pcg64 and philox4x32-10. Extending our testing
-by using PractRand and Gjrand, we do eventually find that a weakness is
+as two contemporary fast PRNGs : <code>pcg64</code> and <code>philox4x32-10</code>. Extending
+testing by using PractRand and Gjrand, we do eventually find that a weakness is
 detectable by Gjrand. Since this is not systematic across the test suites, as
-we have seen for the Mersenne Twister, we can consider xoroshiro128aox to
+we have seen for the Mersenne Twister, we can consider <code>xoroshiro128aox</code> to
 provide an excellent tradeoff between quality and implementation cost in&nbsp;hardware.</p>
 <p>Full details of the investigation can be found in the <a href="https://arxiv.org/abs/2203.04058">preprint paper on
 arXiv</a>, and the <a href="https://github.com/jameshanlon/prng-testing">source
