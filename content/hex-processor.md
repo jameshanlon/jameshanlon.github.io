@@ -839,6 +839,9 @@ processor toolchains.
 - [Luz CPU](https://github.com/eliben/luz-cpu), a simulator, assembler and
   linker for the Luz processor architecture written by Eli Bendersky.
 
+- [Nibbler 4 Bit CPU](https://www.bigmessowires.com/nibbler/) is a complete
+  description of a processor that has been implemented in discreet logic chips.
+
 ## Further reading
 
 - [Processor Design: An
