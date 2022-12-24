@@ -842,6 +842,10 @@ processor toolchains.
 - [Nibbler 4 Bit CPU](https://www.bigmessowires.com/nibbler/) is a complete
   description of a processor that has been implemented in discreet logic chips.
 
+- [Discrete logic IC CPU](https://imihajlov.tk/blog/posts/ccpu/) us an
+  architecture, discrete-logic implemenation and basic tooling including a
+  programming language.
+
 ## Further reading
 
 - [Processor Design: An
