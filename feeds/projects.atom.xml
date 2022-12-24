@@ -865,6 +865,11 @@ processor&amp;nbsp;toolchains.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.bigmessowires.com/nibbler/"&gt;Nibbler 4 Bit &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt; is a complete
   description of a processor that has been implemented in discreet logic&amp;nbsp;chips.&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://imihajlov.tk/blog/posts/ccpu/"&gt;Discrete logic &lt;span class="caps"&gt;IC&lt;/span&gt; &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt; us an
+  architecture, discrete-logic implemenation and basic tooling including a
+  programming&amp;nbsp;language.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Further&amp;nbsp;reading&lt;/h2&gt;
 &lt;ul&gt;
