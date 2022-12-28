@@ -1,5 +1,445 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/all.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2022-11-18T00:00:00+01:00</updated><entry><title>Logic gates to a programming language using the Hex architecture</title><link href="http://jameswhanlon.com/logic-gates-to-a-programming-language-using-the-hex-architecture.html" rel="alternate"></link><published>2022-11-18T00:00:00+01:00</published><updated>2022-11-18T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-11-18:/logic-gates-to-a-programming-language-using-the-hex-architecture.html</id><summary type="html">&lt;p&gt;This note walks through a hardware implementation of a simple processor and
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/all.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2022-12-29T00:00:00+01:00</updated><entry><title>Cornish Unit House retrofit insulation</title><link href="http://jameswhanlon.com/cornish-unit-house-retrofit-insulation.html" rel="alternate"></link><published>2022-12-29T00:00:00+01:00</published><updated>2022-12-29T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-12-29:/cornish-unit-house-retrofit-insulation.html</id><summary type="html">&lt;p&gt;I live in a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit house (Type
+1)&lt;/a&gt;
+and have recently had a heat pump installed to replace an aging gas boiler.
+Having lived in the house for two winters, I was well aware of significant
+thermal issues due to the house being so cold. A non-invasive &lt;a href="home-thermal-imaging-survey.html"&gt;survey of …&lt;/a&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;I live in a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit house (Type
+1)&lt;/a&gt;
+and have recently had a heat pump installed to replace an aging gas boiler.
+Having lived in the house for two winters, I was well aware of significant
+thermal issues due to the house being so cold. A non-invasive &lt;a href="home-thermal-imaging-survey.html"&gt;survey of the
+building&lt;/a&gt; last winter showed up various minor
+issues but didn&amp;#8217;t pinpoint a particular issue. Further investigation into the
+upstairs walls revealed there to be virtually no insulation, only ~50mm of
+glass wool insulation hanging behind the plasterboard, as well as direct routes
+into the floor cavity (along the joists) from the eaves. The effective result
+is a plasterboard tent upstairs with cold air circulating just behind the
+walls, and to an extent the&amp;nbsp;floor/ceiling.&lt;/p&gt;
+&lt;p&gt;The upper part of the house is a timber construction, so the walls have voids
+between the timbers that new insulation can be fitted into. This seemed like an
+easy win given that buildings with masonary walls can only have insulation
+added externally or internally. Insulation is often added to Cornish Unit
+houses when they are retiled since all of the timbers are exposed. However, in
+my case given the roof is fine, installing the insulation internally is simpler
+and much cheaper, albiet a more messy job. The detail below shows the planned
+modification: adding 80 mm of &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board between the joists, and 25
+mm insulated plasterboard on top with a sandwiched breathable vapour membrane,
+providing 105 mm of insulation and an expected U-value of 0.25 W/m$^2$K. The
+full description as submitted to building control is as&amp;nbsp;follows:&lt;/p&gt;
+&lt;p&gt;Upgrading external wall insulation within timber framed wall at first floor
+level, which forms lower section of tiled mansard roof on a Cornish Unit Type 1
+house. Hanging tiles with breather membrane to remain as existing. Replacing
+existing 80mm mineral wool insulation with 80mm rigid &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board
+between studs within the timber frame. Adding a vapour control layer and dry
+lining the internal face with 37.5mm insulated plasterboard, plaster and&amp;nbsp;finish.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Proposed wall build up&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Roof tiles hanging (to remain as&amp;nbsp;existing).&lt;/li&gt;
+&lt;li&gt;Breather membrane (to remain as&amp;nbsp;existing).&lt;/li&gt;
+&lt;li&gt;Ventilated cavity (30mm at high level - 335mm at low&amp;nbsp;level).&lt;/li&gt;
+&lt;li&gt;80mm &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board between studs (Celotex &lt;span class="caps"&gt;GA4000&lt;/span&gt;&amp;nbsp;80mm).&lt;/li&gt;
+&lt;li&gt;Combined vapour control &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; air tightness layer, taped (Procheck Adapt &lt;span class="caps"&gt;VCL&lt;/span&gt; with integral&amp;nbsp;tape).&lt;/li&gt;
+&lt;li&gt;37.5mm insulated plasterboard (Celotex &lt;span class="caps"&gt;PL4025&lt;/span&gt; 25 +&amp;nbsp;12.5mm).&lt;/li&gt;
+&lt;li&gt;Internal finish (plaster and&amp;nbsp;paint).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Method of installation&lt;/strong&gt;: Renovation to be completed from inside the property by
+removing plasterboard and existing mineral wool insulation internally to expose
+the frame. Mineral wool insulation to be replaced by 80mm &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation boards
+between timber studs. Breather membrane and roof tiles to remain as existing.
+Timber battens to be installed at high level to form a 30mm ventilated cavity.
+Continuous vapour control and airtightness layer to be added on the internal face
+of the &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board and taped. 37.5mm layer of insulated plasterboard
+to be installed onto the &lt;span class="caps"&gt;VCL&lt;/span&gt;. Plaster and paint to&amp;nbsp;finish.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;: Insulation at lower eaves to be made continuous with existing cavity
+wall bead insulation to ground floor masonry wall. Similarly, insulation to be
+made continuous at ceiling junction with existing mineral wool insulation
+between ceiling joists in roof void, where possible. Estimated U-value of
+proposed build-up = 0.25 W/m$^2$K (source: Saint Gobain &lt;span class="caps"&gt;UK&lt;/span&gt; U-value&amp;nbsp;calculator).&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/insulation-stack-1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/insulation-stack-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/insulation-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/insulation-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Bedroom&amp;nbsp;1&lt;/h2&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-stripped.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-prepped.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-prepped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-insulation.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-membrane.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-membrane_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-plasterboard-1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-plasterboard-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-plasterboard-2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-plasterboard-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-head-1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-window-head-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-head-2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-window-head-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-detail-1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-window-detail-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-detail-2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed1-window-detail-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Bedroom&amp;nbsp;2&lt;/h1&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-before.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-before_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-stripped.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-stripped-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-stripped-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-baton.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-baton_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-floor-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-floor-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-insulation.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-insulation-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-insulation-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-membrane.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-membrane_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-plasterboard.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-plasterboard_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-plasterboard-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed2-plasterboard-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Bedroom&amp;nbsp;3&lt;/h1&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-stripped.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed3-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-insulation1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed3-insulation1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-insulation2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed3-insulation2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-plasterboard.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bed3-plasterboard_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Hallway&lt;/h1&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hallway-stripped1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hallway-stripped2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-floor-detail.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hallway-floor-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/hallway-stripped2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Thermal&amp;nbsp;images&lt;/h1&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-plasterboard-fixing1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-plasterboard-fixing1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-plasterboard-fixing2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-plasterboard-fixing2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-corner-cold.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-corner-cold_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-missing-loft-insulation.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-missing-loft-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="container"&gt;
+  &lt;div class="row align-items-center"&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-wall1.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-wall1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+    &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-wall2.jpg" data-lightbox="shed"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/TI-wall2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Summary&lt;/h1&gt;
+&lt;p&gt;To&amp;nbsp;do.&lt;/p&gt;</content><category term="projects"></category><category term="construction"></category><category term="retrofit"></category><category term="energy-efficiency"></category></entry><entry><title>Logic gates to a programming language using the Hex architecture</title><link href="http://jameswhanlon.com/logic-gates-to-a-programming-language-using-the-hex-architecture.html" rel="alternate"></link><published>2022-11-18T00:00:00+01:00</published><updated>2022-11-18T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-11-18:/logic-gates-to-a-programming-language-using-the-hex-architecture.html</id><summary type="html">&lt;p&gt;This note walks through a hardware implementation of a simple processor and
 complete compiler for a programming language targeted at it. The processor
 architecture is designed to as simple as possible but provide a sensible target
 for the compilation of complex programs using simple strategies. The
