@@ -21,7 +21,7 @@ def fetch_remote(filepath, size):
         sys.exit(1)
     return Image.open(BytesIO(response.content))
 
-def get_thumbnail(filepath, size, local=False):
+def get_thumbnail(filepath, size):
     # Setup paths
     split_ext = os.path.splitext(os.path.basename(filepath))
     thumb_filename = split_ext[0] + '_' + size + split_ext[1]
@@ -31,16 +31,17 @@ def get_thumbnail(filepath, size, local=False):
     # Create directory if it don't exist.
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
+    if os.path.exists(thumb_path):
+        # Return the thumb if it exists.
+        return thumb_url
     # For development, fetch the images from a local location. Otherwise,
-    # fetch from remote.
-    if local:
-        image = Image.open(os.path.join(LOCAL_PREFIX, filepath))
+    # fetch the remote image.
+    local_path = os.path.join(LOCAL_PREFIX, filepath)
+    if os.path.exists(local_path):
+        image = Image.open(local_path)
+        logging.info(f'Using local image version {local_path}')
     else:
-        if os.path.exists(thumb_path):
-            # Return the thumb if it exists.
-            image = Image.open(thumb_path)
-        else:
-            image = fetch_remote(filepath, size)
+        image = fetch_remote(filepath, size)
     # Rotate if recorded in metadata.
     # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
     if image.format == 'JPEG' or \
