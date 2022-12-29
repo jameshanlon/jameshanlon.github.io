@@ -523,7 +523,8 @@ features made the silicon implementation of the Simple 42 and Transputers small
 enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the &lt;a href="https://en.wikipedia.org/wiki/Occam_(programming_language)"&gt;occam programming
 language&lt;/a&gt; but it
-not dissimilar to a small subset of C, for&amp;nbsp;example.&lt;/p&gt;
+not dissimilar to a small subset of C, for example. I include some more
+historical details &lt;a href="#historical-details"&gt;at the end&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In my &lt;a href="https://github.com/jameshanlon/hex-processor"&gt;implementation&lt;/a&gt;, I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
@@ -1326,6 +1327,30 @@ virtual set as is typical in machines with more&amp;nbsp;registers.&lt;/p&gt;
 and Hex notes &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, with aspects such as the
 calling convention, handling of operators and arithmetic and memory layout
 being shared in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a name="historical-details" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;A historical&amp;nbsp;note&lt;/h2&gt;
+&lt;p&gt;Hex, apart from being related to the Transputer, has some other interesting
+historical roots. David May learned about languages and compilers from &lt;a href="https://www.cl.cam.ac.uk/~mr10/"&gt;Martin
+Richards&lt;/a&gt; who was a young lecturer when David
+completed his final-year Computer Science course as a student at King&amp;#8217;s College
+Cambridge (the first student to do so). Martin was the designer of the
+influential language &lt;span class="caps"&gt;BCPL&lt;/span&gt; and its portable compiler technology. &lt;span class="caps"&gt;BCPL&lt;/span&gt; &lt;a href="https://arstechnica.com/features/2020/12/a-damn-stupid-thing-to-do-the-origins-of-c/"&gt;found its
+way&lt;/a&gt;
+to Bell Labs where &lt;span class="caps"&gt;UNIX&lt;/span&gt; was being developed. &lt;span class="caps"&gt;BCPL&lt;/span&gt; was the direct precursor to C
+and so led to the portability of &lt;span class="caps"&gt;UNIX&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;When David moved from Cambridge to Warwick, the only useful language on the
+Modular One minicomputer that was available was &lt;span class="caps"&gt;BCPL&lt;/span&gt; but the compiler was
+incomplete. So David completed the compiler and ported &lt;span class="caps"&gt;BCPL&lt;/span&gt; to other
+computers, including some microprocessors. Using techniques similar to &lt;span class="caps"&gt;BCPL&lt;/span&gt;&amp;#8217;s
+bootstrapping compiler and interpreter, David designed and implemented a
+concurrent language (&lt;span class="caps"&gt;EPL&lt;/span&gt;), bringing him into contact with Tony Hoare and Iann
+Barron (founder of the company that designed the Modular One and also of&amp;nbsp;Inmos).&lt;/p&gt;
+&lt;p&gt;David employed the same techniques again at Inmos to build the first implementation of
+Occam in the 1980s and then again in 2008 for the project that led to the founding
+of &lt;span class="caps"&gt;XMOS&lt;/span&gt; (incidentally, I used this compiler in my PhD work to demonstrate
+techniques of compiling message-passing programs). Hex and X follow directly from
+the &lt;span class="caps"&gt;BCPL&lt;/span&gt;-derived approaches, used by David as a tool to teach students about
+instruction sets, compilers, bootstrapping&amp;nbsp;etc.&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
@@ -1361,7 +1386,7 @@ processor&amp;nbsp;toolchains.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="https://imihajlov.tk/blog/posts/ccpu/"&gt;Discrete logic &lt;span class="caps"&gt;IC&lt;/span&gt; &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt; us an
-  architecture, discrete-logic implemenation and basic tooling including a
+  architecture, discrete-logic implementation and basic tooling including a
   programming&amp;nbsp;language.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
