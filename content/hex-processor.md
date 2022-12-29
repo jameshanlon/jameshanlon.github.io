@@ -35,7 +35,8 @@ features made the silicon implementation of the Simple 42 and Transputers small
 enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the [occam programming
 language](https://en.wikipedia.org/wiki/Occam_(programming_language)) but it
-not dissimilar to a small subset of C, for example.
+not dissimilar to a small subset of C, for example. I include some more
+historical details [at the end](#historical-details).
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
@@ -809,6 +810,37 @@ calling convention, handling of operators and arithmetic and memory layout
 being shared in ``xcmp``.
 
 
+<a name="historical-details" class="anchor"></a>
+
+## A historical note
+
+Hex, apart from being related to the Transputer, has some other interesting
+historical roots. David May learned about languages and compilers from [Martin
+Richards](https://www.cl.cam.ac.uk/~mr10/) who was a young lecturer when David
+completed his final-year Computer Science course as a student at King's College
+Cambridge (the first student to do so). Martin was the designer of the
+influential language BCPL and its portable compiler technology. BCPL [found its
+way](https://arstechnica.com/features/2020/12/a-damn-stupid-thing-to-do-the-origins-of-c/)
+to Bell Labs where UNIX was being developed. BCPL was the direct precursor to C
+and so led to the portability of UNIX.
+
+When David moved from Cambridge to Warwick, the only useful language on the
+Modular One minicomputer that was available was BCPL but the compiler was
+incomplete. So David completed the compiler and ported BCPL to other
+computers, including some microprocessors. Using techniques similar to BCPL's
+bootstrapping compiler and interpreter, David designed and implemented a
+concurrent language (EPL), bringing him into contact with Tony Hoare and Iann
+Barron (founder of the company that designed the Modular One and also of
+Inmos).
+
+David employed the same techniques again at Inmos to build the first implementation of
+Occam in the 1980s and then again in 2008 for the project that led to the founding
+of XMOS (incidentally, I used this compiler in my PhD work to demonstrate
+techniques of compiling message-passing programs). Hex and X follow directly from
+the BCPL-derived approaches, used by David as a tool to teach students about
+instruction sets, compilers, bootstrapping etc.
+
+
 ## Summary
 
 Modern processors, languages, compilers, and tooling are complex and difficult
@@ -843,7 +875,7 @@ processor toolchains.
   description of a processor that has been implemented in discreet logic chips.
 
 - [Discrete logic IC CPU](https://imihajlov.tk/blog/posts/ccpu/) us an
-  architecture, discrete-logic implemenation and basic tooling including a
+  architecture, discrete-logic implementation and basic tooling including a
   programming language.
 
 ## Further reading
