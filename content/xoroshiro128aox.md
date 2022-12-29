@@ -281,10 +281,10 @@ clear the differences in implementation complexity (left to right:
 <table>
 <tbody>
 <tr>
-  <td>{{ macros.image('prng-quality/plus.png', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/aox.png', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/pcg64.png', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/philox.png', caption='') }}</td>
+  <td>{{ macros.image('prng-quality/plus.png', caption='xoroshiro128+') }}</td>
+  <td>{{ macros.image('prng-quality/aox.png', caption='xoroshiro128aox') }}</td>
+  <td>{{ macros.image('prng-quality/pcg64.png', caption='pcg64') }}</td>
+  <td>{{ macros.image('prng-quality/philox.png', caption='philox4x32-10') }}</td>
 </tr>
 </table>
 
@@ -300,10 +300,10 @@ And scaled to relative sizes:
 <table>
 <tbody>
 <tr>
-  <td>{{ macros.image('prng-quality/plus.png', size='100x100', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/aox.png', size='90x90', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/pcg64.png', size='246x246', caption='') }}</td>
-  <td>{{ macros.image('prng-quality/philox.png', size='446x446', caption='') }}</td>
+  <td>{{ macros.image('prng-quality/plus.png', size='100x100', caption='xoroshiro128+') }}</td>
+  <td>{{ macros.image('prng-quality/aox.png', size='90x90', caption='xoroshiro128aox') }}</td>
+  <td>{{ macros.image('prng-quality/pcg64.png', size='246x246', caption='pcg64') }}</td>
+  <td>{{ macros.image('prng-quality/philox.png', size='446x446', caption='philox4x32-10') }}</td>
 </tr>
 </table>
 
