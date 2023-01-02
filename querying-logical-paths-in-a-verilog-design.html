@@ -93,10 +93,10 @@ Assuming the <code>netlist-paths</code> install <code>bin</code> directory is av
 <code>PATH</code>, then using the <a href="https://github.com/cliffordwolf/picorv32">PicoRV32 processor
 implementation</a> as an example, its
 netlist can be generated as&nbsp;follows:</p>
-<div class="codehilite"><pre><span></span>$ git clone https://github.com/cliffordwolf/picorv32.git
-$ <span class="nb">cd</span> picorv32
-$ verilator --dump-netlist-graph -o netlist.graph picorv32.v --top-module picorv32_axi
-... <span class="c1"># lots of warnings</span>
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cliffordwolf/picorv32.git
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>picorv32
+$<span class="w"> </span>verilator<span class="w"> </span>--dump-netlist-graph<span class="w"> </span>-o<span class="w"> </span>netlist.graph<span class="w"> </span>picorv32.v<span class="w"> </span>--top-module<span class="w"> </span>picorv32_axi
+...<span class="w"> </span><span class="c1"># lots of warnings</span>
 </pre></div>
 
 
@@ -113,20 +113,20 @@ format</a>, and specifies
 the vertices, with their type and source code location information, and the
 edges between them. The analysis tool reads this file and reports on the
 connectivity between&nbsp;points.</p>
-<div class="codehilite"><pre><span></span><span class="nt">digraph</span><span class="w"> </span><span class="nt">netlist</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="err">n0</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n1</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n2</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n3</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n4</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_valid&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">...</span><span class="w"></span>
-<span class="w">  </span><span class="err">n0</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n2</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n1</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n0</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n3</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n5</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n4</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n3</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">n6</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n8</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="err">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="nt">digraph</span><span class="w"> </span><span class="nt">netlist</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="err">n0</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n1</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n2</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2539&quot;</span><span class="cp">]</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n3</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;ASSIGNW&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n4</span><span class="cp">[</span><span class="nx">id</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="o">=</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;picorv32_axi.trace_valid&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="o">=</span><span class="s2">&quot;picorv32.v:2538&quot;</span><span class="cp">]</span><span class="p">;</span>
+<span class="w">  </span><span class="err">...</span>
+<span class="w">  </span><span class="err">n0</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n2</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n1</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n0</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n3</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n5</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n4</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n3</span><span class="p">;</span>
+<span class="w">  </span><span class="err">n6</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">n8</span><span class="p">;</span>
+<span class="w">  </span><span class="err">...</span>
+<span class="p">}</span>
 </pre></div>
 
 
@@ -136,30 +136,30 @@ corresponding to its different uses. To see this, the option <code>--dumpnames</
 prints the names, types and directions of all the vertices in the graph. This
 output can be piped through <code>grep</code> to locate particular signals. For example,
 to see all the output&nbsp;variables:</p>
-<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --dumpnames <span class="p">|</span> grep OUTPUT
-PORT OUTPUT eoi
-PORT OUTPUT mem_axi_araddr
-PORT OUTPUT mem_axi_arprot
-PORT OUTPUT mem_axi_arvalid
-PORT OUTPUT mem_axi_awaddr
-PORT OUTPUT mem_axi_awprot
-PORT OUTPUT mem_axi_awvalid
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OUTPUT
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>eoi
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_araddr
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_arprot
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_arvalid
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awaddr
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awprot
+PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awvalid
 ...
 </pre></div>
 
 
 <p>Or all the&nbsp;registers:</p>
-<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --dumpnames <span class="p">|</span> grep REG_DST
-REG_DST picorv32_axi.axi_adapter.ack_arvalid
-REG_DST picorv32_axi.axi_adapter.ack_awvalid
-REG_DST picorv32_axi.axi_adapter.ack_wvalid
-REG_DST picorv32_axi.axi_adapter.xfer_done
-REG_DST picorv32_axi.picorv32_core.alu_out_0_q
-REG_DST picorv32_axi.picorv32_core.alu_out_q
-REG_DST picorv32_axi.picorv32_core.alu_wait
-REG_DST picorv32_axi.picorv32_core.alu_wait_2
-REG_DST picorv32_axi.picorv32_core.cached_ascii_instr
-REG_DST picorv32_axi.picorv32_core.cached_insn_imm
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>REG_DST
+REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_arvalid
+REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_awvalid
+REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_wvalid
+REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.xfer_done
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.alu_out_0_q
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.alu_out_q
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.alu_wait
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.alu_wait_2
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_ascii_instr
+REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_insn_imm
 ...
 </pre></div>
 
@@ -174,12 +174,12 @@ straight forward to locate the variables I need using <code>grep</code> with
 <code>--dumpnames</code>, but there may be more sophisticated approaches that could be&nbsp;implemented.</p>
 <p>A start or end point can be specified as any named vertex, which is anything
 except logic statements. You can query if a path exists between two&nbsp;points:</p>
-<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state --end picorv32_axi.picorv32_core.dbg_valid_insn
-  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
-  ASSIGNW                                     LOGIC           picorv32.v:1373
-  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
-  ALWAYS                                      LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.dbg_valid_insn   REG_DST         picorv32.v:751
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.picorv32_core.cpu_state<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
+<span class="w">  </span>picorv32_axi.picorv32_core.cpu_state<span class="w">        </span>REG_SRC<span class="w">         </span>picorv32.v:1160
+<span class="w">  </span>ASSIGNW<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:1373
+<span class="w">  </span>picorv32_axi.picorv32_core.launch_next_insn<span class="w"> </span>WIRE<span class="w">            </span>picorv32.v:750
+<span class="w">  </span>ALWAYS<span class="w">                                      </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">   </span>REG_DST<span class="w">         </span>picorv32.v:751
 </pre></div>
 
 
@@ -219,29 +219,29 @@ Found 223 path(s)
 
 
 <p>Or query all the paths that fan in to a particular end&nbsp;point:</p>
-<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --end picorv32_axi.picorv32_core.dbg_valid_insn
-Path <span class="m">1</span>
-  picorv32_axi.picorv32_core.trap           REG_SRC         picorv32.v:86
-  ALWAYS                                    LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.dbg_valid_insn REG_DST         picorv32.v:751
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
+Path<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.trap<span class="w">           </span>REG_SRC<span class="w">         </span>picorv32.v:86
+<span class="w">  </span>ALWAYS<span class="w">                                    </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w"> </span>REG_DST<span class="w">         </span>picorv32.v:751
 
-Path <span class="m">2</span>
-  picorv32_axi.picorv32_core.instr_lui       REG_SRC         picorv32.v:630
-  ALWAYS                                     LOGIC           picorv32.v:684
-  ASSIGN                                     LOGIC           picorv32.v:685
-  picorv32_axi.picorv32_core.new_ascii_instr VAR             picorv32.v:673
-  ALWAYS                                     LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.dbg_valid_insn  REG_DST         picorv32.v:751
+Path<span class="w"> </span><span class="m">2</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.instr_lui<span class="w">       </span>REG_SRC<span class="w">         </span>picorv32.v:630
+<span class="w">  </span>ALWAYS<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:684
+<span class="w">  </span>ASSIGN<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:685
+<span class="w">  </span>picorv32_axi.picorv32_core.new_ascii_instr<span class="w"> </span>VAR<span class="w">             </span>picorv32.v:673
+<span class="w">  </span>ALWAYS<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">  </span>REG_DST<span class="w">         </span>picorv32.v:751
 
-Path <span class="m">3</span>
-  picorv32_axi.picorv32_core.instr_auipc     REG_SRC         picorv32.v:630
-  ALWAYS                                     LOGIC           picorv32.v:684
-  ASSIGN                                     LOGIC           picorv32.v:685
-  picorv32_axi.picorv32_core.new_ascii_instr VAR             picorv32.v:673
-  ALWAYS                                     LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.dbg_valid_insn  REG_DST         picorv32.v:751
+Path<span class="w"> </span><span class="m">3</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.instr_auipc<span class="w">     </span>REG_SRC<span class="w">         </span>picorv32.v:630
+<span class="w">  </span>ALWAYS<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:684
+<span class="w">  </span>ASSIGN<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:685
+<span class="w">  </span>picorv32_axi.picorv32_core.new_ascii_instr<span class="w"> </span>VAR<span class="w">             </span>picorv32.v:673
+<span class="w">  </span>ALWAYS<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">  </span>REG_DST<span class="w">         </span>picorv32.v:751
 ...
-Found <span class="m">74</span> paths
+Found<span class="w"> </span><span class="m">74</span><span class="w"> </span>paths
 </pre></div>
 
 
@@ -256,14 +256,14 @@ done by specifying through points with the <code>--through</code> option. Each t
 argument is taken in order as an intermediate point in the path. The same
 search algorithm is used on each pair of points to build up a composite report.
 For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span>$ netlist-paths netlist.graph --start picorv32_axi.axi_adapter.ack_wvalid --through picorv32_axi.axi_adapter.mem_axi_wvalid --end mem_axi_wvalid
-  picorv32_axi.axi_adapter.ack_wvalid     REG_SRC         picorv32.v:2700
-  ASSIGNW                                 LOGIC           picorv32.v:2711
-  picorv32_axi.axi_adapter.mem_axi_wvalid PORT            picorv32.v:2671
-  ASSIGNW                                 LOGIC           picorv32.v:2556
-  picorv32_axi.mem_axi_wvalid             PORT            picorv32.v:2484
-  ASSIGNW                                 LOGIC           picorv32.v:2484
-  mem_axi_wvalid                          PORT            picorv32.v:2484
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.axi_adapter.ack_wvalid<span class="w"> </span>--through<span class="w"> </span>picorv32_axi.axi_adapter.mem_axi_wvalid<span class="w"> </span>--end<span class="w"> </span>mem_axi_wvalid
+<span class="w">  </span>picorv32_axi.axi_adapter.ack_wvalid<span class="w">     </span>REG_SRC<span class="w">         </span>picorv32.v:2700
+<span class="w">  </span>ASSIGNW<span class="w">                                 </span>LOGIC<span class="w">           </span>picorv32.v:2711
+<span class="w">  </span>picorv32_axi.axi_adapter.mem_axi_wvalid<span class="w"> </span>PORT<span class="w">            </span>picorv32.v:2671
+<span class="w">  </span>ASSIGNW<span class="w">                                 </span>LOGIC<span class="w">           </span>picorv32.v:2556
+<span class="w">  </span>picorv32_axi.mem_axi_wvalid<span class="w">             </span>PORT<span class="w">            </span>picorv32.v:2484
+<span class="w">  </span>ASSIGNW<span class="w">                                 </span>LOGIC<span class="w">           </span>picorv32.v:2484
+<span class="w">  </span>mem_axi_wvalid<span class="w">                          </span>PORT<span class="w">            </span>picorv32.v:2484
 </pre></div>
 
 
@@ -365,5 +365,8 @@ found there were some subtleties in getting this to&nbsp;work.</p>
   <script src="./theme/js/jquery-3.6.0.min.js"></script>
   <script src="./theme/js/lightbox.min.js"></script>
   <script src="./theme/js/bootstrap.bundle.min.js"></script>
+  <!-- Clicky -->
+  <script async src="//static.getclicky.com/101392449.js"></script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101392449ns.gif" /></p></noscript>
 </body>
 </html>

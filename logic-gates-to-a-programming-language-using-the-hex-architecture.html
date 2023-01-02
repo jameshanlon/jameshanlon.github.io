@@ -223,30 +223,30 @@ operations and supervisor&nbsp;calls.</p>
 in <code>oreg</code> larger than the 4-bit instruction immediate. For example, the
 following instructions generate the value 16 in <code>oreg</code> and use <code>LDAC</code> to
 assign it to <code>areg</code> :</p>
-<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">16</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">16</span>
 </pre></div>
 
 
 <p>Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant&nbsp;instruction:</p>
-<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span><span class="w"></span>
-<span class="n">PFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">31</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x0001f0</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">496</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">PFIX</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000010</span><span class="p">)</span>
+<span class="n">PFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">31</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x0001f0</span><span class="p">)</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">496</span>
 </pre></div>
 
 
 <p>Negative values always require a negative prefix to fill the top most <code>oreg</code>
 bits with ones, so to load the value -1 into <code>oreg</code> then <code>areg</code>:</p>
-<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">15</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffff0</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294967295</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">15</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffff0</span><span class="p">)</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">15</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294967295</span>
 </pre></div>
 
 
 <p>And to load -512, a positive prefix is required to scale the negative&nbsp;value:</p>
-<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">14</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">14</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffe0</span><span class="p">)</span><span class="w"></span>
-<span class="n">PFIX</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967264</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffe00</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294966784</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">NFIX</span><span class="w"> </span><span class="mh">14</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">14</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffe0</span><span class="p">)</span>
+<span class="n">PFIX</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967264</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xfffffe00</span><span class="p">)</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">4294966784</span>
 </pre></div>
 
 
@@ -259,9 +259,9 @@ inter-register operations without the need for prefixing, but many more with
 prefixing and the according overhead to form larger immediates. The following
 instruction sequence adds two numbers from fixed locations in memory, with the
 result written to <code>areg</code>:</p>
-<div class="codehilite"><pre><span></span><span class="n">LDAM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDBM</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000002</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"></span>
-<span class="n">OPR</span><span class="w">  </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">ADD</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">16</span><span class="p">)</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">LDAM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000002</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span>
+<span class="n">OPR</span><span class="w">  </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">ADD</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">16</span><span class="p">)</span>
 </pre></div>
 
 
@@ -271,21 +271,21 @@ file, or to halt the program. The supervisor call type is encoded in the
 <code>oreg</code> and arguments and return values specific to the call type are passed
 and returned on the stack using the standard calling convention. An example
 code sequence to invoke the exit supervisor call&nbsp;is:</p>
-<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="w"></span>
-<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">pointer</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">breg</span><span class="p">.</span><span class="w"></span>
-<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">parameter</span><span class="p">.</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="p">.</span><span class="w"></span>
-<span class="n">OPR</span><span class="w"> </span><span class="n">SVC</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">Perform</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">supervisor</span><span class="w"> </span><span class="n">call</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="w"> </span><span class="n">value</span><span class="p">.</span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">pointer</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">breg</span><span class="p">.</span>
+<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">offset</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">parameter</span><span class="p">.</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="n">opcode</span><span class="p">.</span>
+<span class="n">OPR</span><span class="w"> </span><span class="n">SVC</span><span class="w"> </span><span class="p">#</span><span class="w"> </span><span class="n">Perform</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">supervisor</span><span class="w"> </span><span class="n">call</span>
 </pre></div>
 
 
 <p>With the following execution trace, noting that the simulator implements the
 system call directly rather than being handled by a kernel&nbsp;routine:</p>
-<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
-<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span><span class="w"></span>
-<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x004001</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"></span>
-<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
-<span class="n">OPR</span><span class="w">  </span><span class="mh">3</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="mh">0</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span>
+<span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span>
+<span class="n">STAI</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">16383</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x004001</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span>
+<span class="n">LDAC</span><span class="w"> </span><span class="mh">0</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="mh">0</span>
+<span class="n">OPR</span><span class="w">  </span><span class="mh">3</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">exit</span><span class="w"> </span><span class="mh">0</span>
 </pre></div>
 
 
@@ -315,31 +315,31 @@ program addresses, relative to the program counter, such as for branch targets.
 The following instruction sequence performs a call to <code>foo</code> but first loads
 the return (link) address using <code>LDAP</code> to use with <code>BR</code>. The callee <code>foo</code>
 returns to the caller using <code>BRB</code>.</p>
-<div class="codehilite"><pre><span></span><span class="nv">FUNC</span><span class="w"> </span><span class="nv">foo</span><span class="w"></span>
-<span class="nv">LDBM</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="nv">STAI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Save</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span><span class="w"></span>
-...<span class="w"></span>
-<span class="nv">LDBI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Restore</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span><span class="w"></span>
-<span class="nv">OPR</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span>#<span class="w"> </span><span class="k">Return</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">caller</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="nv">FUNC</span><span class="w"> </span><span class="nv">foo</span>
+<span class="nv">LDBM</span><span class="w"> </span><span class="mi">1</span>
+<span class="nv">STAI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Save</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span>
+...
+<span class="nv">LDBI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Restore</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span>
+<span class="nv">OPR</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span>#<span class="w"> </span><span class="k">Return</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">caller</span>
 
-<span class="nv">PROC</span><span class="w"> </span><span class="nv">main</span><span class="w"></span>
-...<span class="w"></span>
-<span class="nv">LDAP</span><span class="w"> </span><span class="nv">lab2</span><span class="w"></span>
-<span class="nv">BR</span><span class="w"> </span><span class="nv">foo</span><span class="w"></span>
-<span class="nv">lab2</span><span class="w"></span>
+<span class="nv">PROC</span><span class="w"> </span><span class="nv">main</span>
+...
+<span class="nv">LDAP</span><span class="w"> </span><span class="nv">lab2</span>
+<span class="nv">BR</span><span class="w"> </span><span class="nv">foo</span>
+<span class="nv">lab2</span>
 </pre></div>
 
 
 <p>These instructions have the following execution&nbsp;trace:</p>
-<div class="codehilite"><pre><span></span><span class="n">main</span><span class="o">+</span><span class="mh">32</span><span class="w">  </span><span class="n">LDAP</span><span class="w"> </span><span class="mh">2</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="p">(</span><span class="mh">60</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="mh">62</span><span class="w"></span>
-<span class="n">main</span><span class="o">+</span><span class="mh">33</span><span class="w">  </span><span class="n">NFIX</span><span class="w"> </span><span class="mh">13</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">13</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffd0</span><span class="p">)</span><span class="w"></span>
-<span class="n">main</span><span class="o">+</span><span class="mh">34</span><span class="w">  </span><span class="n">BR</span><span class="w">   </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967249</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00000f</span><span class="p">)</span><span class="w"></span>
-<span class="n">foo</span><span class="o">+</span><span class="mh">0</span><span class="w">    </span><span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"></span>
-<span class="n">foo</span><span class="o">+</span><span class="mh">1</span><span class="w">    </span><span class="n">STAI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="n">foo</span><span class="o">+</span><span class="mh">10</span><span class="w">   </span><span class="n">LDBI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span><span class="w"></span>
-<span class="n">foo</span><span class="o">+</span><span class="mh">11</span><span class="w">   </span><span class="n">OPR</span><span class="w">  </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">BRB</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00003e</span><span class="p">)</span><span class="w"></span>
-<span class="n">main</span><span class="o">+</span><span class="mh">35</span><span class="w">  </span><span class="p">...</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">main</span><span class="o">+</span><span class="mh">32</span><span class="w">  </span><span class="n">LDAP</span><span class="w"> </span><span class="mh">2</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="p">(</span><span class="mh">60</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">2</span><span class="p">)</span><span class="w"> </span><span class="mh">62</span>
+<span class="n">main</span><span class="o">+</span><span class="mh">33</span><span class="w">  </span><span class="n">NFIX</span><span class="w"> </span><span class="mh">13</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">xFFFFFF00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">13</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">4</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">xffffffd0</span><span class="p">)</span>
+<span class="n">main</span><span class="o">+</span><span class="mh">34</span><span class="w">  </span><span class="n">BR</span><span class="w">   </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">4294967249</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00000f</span><span class="p">)</span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">0</span><span class="w">    </span><span class="n">LDBM</span><span class="w"> </span><span class="mh">1</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">1</span><span class="w">    </span><span class="n">STAI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">10</span><span class="w">   </span><span class="n">LDBI</span><span class="w"> </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">199994</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="n">x030d3a</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="mh">62</span><span class="p">)</span>
+<span class="n">foo</span><span class="o">+</span><span class="mh">11</span><span class="w">   </span><span class="n">OPR</span><span class="w">  </span><span class="mh">0</span><span class="w">   </span><span class="p">#</span><span class="w"> </span><span class="n">BRB</span><span class="w"> </span><span class="n">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x00003e</span><span class="p">)</span>
+<span class="n">main</span><span class="o">+</span><span class="mh">35</span><span class="w">  </span><span class="p">...</span>
 </pre></div>
 
 
@@ -353,36 +353,36 @@ calling, composition of statements, looping and conditional statements,
 expressions including function calls, and representation of memory with
 variables and arrays. To give an indicative example of X programming, the
 following program implements Bubblesort to sort an array of four&nbsp;elements:</p>
-<div class="codehilite"><pre><span></span><span class="n">val</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"></span>
-<span class="nf">var</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">length</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="n">val</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="nf">var</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">length</span><span class="o">]</span><span class="p">;</span>
 
-<span class="k">proc</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">array</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
-<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">tmp</span><span class="p">;</span><span class="w"></span>
-<span class="err">{</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">do</span><span class="w"></span>
-<span class="w">  </span><span class="err">{</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">do</span><span class="w"></span>
-<span class="w">    </span><span class="err">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
-<span class="w">      </span><span class="err">{</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"></span>
-<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"></span>
-<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span><span class="w"></span>
-<span class="w">      </span><span class="err">}</span><span class="w"></span>
-<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="n">skip</span><span class="w"></span>
-<span class="w">    </span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">    </span><span class="err">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">  </span><span class="err">}</span><span class="w"></span>
-<span class="err">}</span><span class="w"></span>
+<span class="k">proc</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">array</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">j</span><span class="p">;</span>
+<span class="w">  </span><span class="nf">var</span><span class="w"> </span><span class="n">tmp</span><span class="p">;</span>
+<span class="err">{</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="n">do</span>
+<span class="w">  </span><span class="err">{</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">do</span>
+<span class="w">    </span><span class="err">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="err">{</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span>
+<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span>
+<span class="w">      </span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="o">[</span><span class="n">j+1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">tmp</span>
+<span class="w">      </span><span class="err">}</span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="n">skip</span>
+<span class="w">    </span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="err">}</span>
+<span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="err">}</span>
+<span class="err">}</span>
 
-<span class="k">proc</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="k">is</span><span class="w"></span>
-<span class="err">{</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
-<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
-<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="p">;</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">)</span><span class="w"></span>
-<span class="err">}</span><span class="w"></span>
+<span class="k">proc</span><span class="w"> </span><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="k">is</span>
+<span class="err">{</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">2</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">;</span><span class="w"> </span><span class="k">data</span><span class="o">[</span><span class="n">3</span><span class="o">]</span><span class="w"> </span><span class="err">:</span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">;</span><span class="w"> </span><span class="n">sort</span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">)</span>
+<span class="err">}</span>
 </pre></div>
 
 
@@ -594,211 +594,211 @@ external dependency on <code>boost::format</code>):</p>
 </ul>
 <h3>A simple&nbsp;example</h3>
 <p>Taking a most basic example of an assembly program that simply&nbsp;exits:</p>
-<div class="codehilite"><pre><span></span>➜ cat tests/asm/exit0.S
-BR start
-DATA <span class="m">16383</span> <span class="c1"># sp</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>cat<span class="w"> </span>tests/asm/exit0.S
+BR<span class="w"> </span>start
+DATA<span class="w"> </span><span class="m">16383</span><span class="w"> </span><span class="c1"># sp</span>
 start
-LDAC <span class="m">0</span> <span class="c1"># areg &lt;- 0</span>
-LDBM <span class="m">1</span> <span class="c1"># breg &lt;- sp</span>
-STAI <span class="m">2</span> <span class="c1"># sp[2] &lt;- areg</span>
-LDAC <span class="m">0</span>
-OPR SVC
+LDAC<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="c1"># areg &lt;- 0</span>
+LDBM<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># breg &lt;- sp</span>
+STAI<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1"># sp[2] &lt;- areg</span>
+LDAC<span class="w"> </span><span class="m">0</span>
+OPR<span class="w"> </span>SVC
 </pre></div>
 
 
 <p>The assembler can display the program layout in memory and computed symbol&nbsp;values:</p>
-<div class="codehilite"><pre><span></span>➜ hexasm tests/asm/exit0.S --instrs
-<span class="m">00000000</span> BR start <span class="o">(</span><span class="m">7</span><span class="o">)</span>         <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-0x000004 DATA <span class="m">16383</span>           <span class="o">(</span><span class="m">4</span> bytes<span class="o">)</span>
-0x000008 start                <span class="o">(</span><span class="m">0</span> bytes<span class="o">)</span>
-0x000008 LDAC <span class="m">0</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-0x000009 LDBM <span class="m">1</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-0x00000a STAI <span class="m">2</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-0x00000b LDAC <span class="m">0</span>               <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-0x00000c OPR SVC              <span class="o">(</span><span class="m">1</span> bytes<span class="o">)</span>
-<span class="m">00000000</span> PADDING <span class="m">3</span>            <span class="o">(</span><span class="m">3</span> bytes<span class="o">)</span>
-<span class="m">13</span> bytes
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>hexasm<span class="w"> </span>tests/asm/exit0.S<span class="w"> </span>--instrs
+<span class="m">00000000</span><span class="w"> </span>BR<span class="w"> </span>start<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="o">)</span><span class="w">         </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+0x000004<span class="w"> </span>DATA<span class="w"> </span><span class="m">16383</span><span class="w">           </span><span class="o">(</span><span class="m">4</span><span class="w"> </span>bytes<span class="o">)</span>
+0x000008<span class="w"> </span>start<span class="w">                </span><span class="o">(</span><span class="m">0</span><span class="w"> </span>bytes<span class="o">)</span>
+0x000008<span class="w"> </span>LDAC<span class="w"> </span><span class="m">0</span><span class="w">               </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+0x000009<span class="w"> </span>LDBM<span class="w"> </span><span class="m">1</span><span class="w">               </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+0x00000a<span class="w"> </span>STAI<span class="w"> </span><span class="m">2</span><span class="w">               </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+0x00000b<span class="w"> </span>LDAC<span class="w"> </span><span class="m">0</span><span class="w">               </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+0x00000c<span class="w"> </span>OPR<span class="w"> </span>SVC<span class="w">              </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>bytes<span class="o">)</span>
+<span class="m">00000000</span><span class="w"> </span>PADDING<span class="w"> </span><span class="m">3</span><span class="w">            </span><span class="o">(</span><span class="m">3</span><span class="w"> </span>bytes<span class="o">)</span>
+<span class="m">13</span><span class="w"> </span>bytes
 </pre></div>
 
 
 <p>And create a 13-byte executable&nbsp;binary:</p>
-<div class="codehilite"><pre><span></span>➜ hexasm tests/asm/exit0.S
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>hexasm<span class="w"> </span>tests/asm/exit0.S
 </pre></div>
 
 
 <p>This binary can then be simulated with tracing to show what&#8217;s going on (the
 first column is the cycle count and the second is the <code>pc</code> value):</p>
-<div class="codehilite"><pre><span></span>➜ hexsim a.out -t
-<span class="m">0</span>      <span class="m">0</span>      BR   <span class="m">7</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">7</span><span class="o">)</span> <span class="o">(</span>0x000008<span class="o">)</span>
-<span class="m">1</span>      <span class="m">8</span>      LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
-<span class="m">2</span>      <span class="m">9</span>      LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">16383</span><span class="o">)</span>
-<span class="m">3</span>      <span class="m">10</span>     STAI <span class="m">2</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">16383</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">2</span><span class="o">)</span> <span class="o">=</span> 0x004001<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">0</span><span class="o">)</span>
-<span class="m">4</span>      <span class="m">11</span>     LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
-<span class="m">5</span>      <span class="m">12</span>     OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>hexsim<span class="w"> </span>a.out<span class="w"> </span>-t
+<span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w">      </span>BR<span class="w">   </span><span class="m">7</span><span class="w">  </span><span class="nv">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pc<span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>0x000008<span class="o">)</span>
+<span class="m">1</span><span class="w">      </span><span class="m">8</span><span class="w">      </span>LDAC<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="nv">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>oreg<span class="w"> </span><span class="m">0</span>
+<span class="m">2</span><span class="w">      </span><span class="m">9</span><span class="w">      </span>LDBM<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mem<span class="o">[</span>oreg<span class="w"> </span><span class="o">(</span>0x000001<span class="o">)]</span><span class="w"> </span><span class="o">(</span><span class="m">16383</span><span class="o">)</span>
+<span class="m">3</span><span class="w">      </span><span class="m">10</span><span class="w">     </span>STAI<span class="w"> </span><span class="m">2</span><span class="w">  </span>mem<span class="o">[</span>breg<span class="w"> </span><span class="o">(</span><span class="m">16383</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x004001<span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>areg<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="m">4</span><span class="w">      </span><span class="m">11</span><span class="w">     </span>LDAC<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="nv">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>oreg<span class="w"> </span><span class="m">0</span>
+<span class="m">5</span><span class="w">      </span><span class="m">12</span><span class="w">     </span>OPR<span class="w">  </span><span class="m">3</span><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 
 
 <p>The X compiler can be used to produce more complex Hex programs. Starting with
 a similar most basic program  written in&nbsp;X:</p>
-<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">skip</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">skip</span>
 </pre></div>
 
 
 <p>This null program is compiled into Hex assembly, where the entry code calls
 <code>main</code> then exits, and <code>main</code> does nothing (apart from saving and restoring
 the link&nbsp;location):</p>
-<div class="codehilite"><pre><span></span>➜ xcmp tests/x/exit.x --insts-lowered
-BR start
-DATA <span class="m">199999</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>xcmp<span class="w"> </span>tests/x/exit.x<span class="w"> </span>--insts-lowered
+BR<span class="w"> </span>start
+DATA<span class="w"> </span><span class="m">199999</span>
 start
-LDAP _exit
-BR main
+LDAP<span class="w"> </span>_exit
+BR<span class="w"> </span>main
 _exit
-LDBM <span class="m">1</span>
-LDAC <span class="m">0</span>
-STAI <span class="m">2</span>
-OPR SVC
+LDBM<span class="w"> </span><span class="m">1</span>
+LDAC<span class="w"> </span><span class="m">0</span>
+STAI<span class="w"> </span><span class="m">2</span>
+OPR<span class="w"> </span>SVC
 
-PROC main
-LDBM <span class="m">1</span>
-STAI <span class="m">0</span>
+PROC<span class="w"> </span>main
+LDBM<span class="w"> </span><span class="m">1</span>
+STAI<span class="w"> </span><span class="m">0</span>
 lab0
-LDBM <span class="m">1</span>
-LDBI <span class="m">0</span>
-OPR BRB
+LDBM<span class="w"> </span><span class="m">1</span>
+LDBI<span class="w"> </span><span class="m">0</span>
+OPR<span class="w"> </span>BRB
 </pre></div>
 
 
 <p>And when simulated produces the following trace where execution through
 <code>main</code> can be seen since it is the only labelled portion of the&nbsp;code:</p>
-<div class="codehilite"><pre><span></span>➜ hexsim a.out -t
-<span class="m">0</span>      <span class="m">0</span>                   BR   <span class="m">7</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">7</span><span class="o">)</span> <span class="o">(</span>0x000008<span class="o">)</span>
-<span class="m">1</span>      <span class="m">8</span>                   LDAP <span class="m">1</span>  <span class="nv">areg</span> <span class="o">=</span> pc <span class="o">(</span><span class="m">9</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">1</span><span class="o">)</span> <span class="m">10</span>
-<span class="m">2</span>      <span class="m">9</span>                   BR   <span class="m">4</span>  <span class="nv">pc</span> <span class="o">=</span> pc + oreg <span class="o">(</span><span class="m">4</span><span class="o">)</span> <span class="o">(</span>0x00000e<span class="o">)</span>
-<span class="m">3</span>      <span class="m">14</span>     main+0       LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
-<span class="m">4</span>      <span class="m">15</span>     main+1       STAI <span class="m">0</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="o">=</span> 0x030d3f<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">10</span><span class="o">)</span>
-<span class="m">5</span>      <span class="m">16</span>     main+2       LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
-<span class="m">6</span>      <span class="m">17</span>     main+3       LDBI <span class="m">0</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">0</span><span class="o">)</span> <span class="o">=</span> 0x030d3f<span class="o">]</span> <span class="o">(</span><span class="m">10</span><span class="o">)</span>
-<span class="m">7</span>      <span class="m">18</span>     main+4       OPR  <span class="m">0</span>  BRB <span class="nv">pc</span> <span class="o">=</span> breg <span class="o">(</span>0x00000a<span class="o">)</span>
-<span class="m">8</span>      <span class="m">10</span>                  LDBM <span class="m">1</span>  <span class="nv">breg</span> <span class="o">=</span> mem<span class="o">[</span>oreg <span class="o">(</span>0x000001<span class="o">)]</span> <span class="o">(</span><span class="m">199999</span><span class="o">)</span>
-<span class="m">9</span>      <span class="m">11</span>                  LDAC <span class="m">0</span>  <span class="nv">areg</span> <span class="o">=</span> oreg <span class="m">0</span>
-<span class="m">10</span>     <span class="m">12</span>                  STAI <span class="m">2</span>  mem<span class="o">[</span>breg <span class="o">(</span><span class="m">199999</span><span class="o">)</span> + oreg <span class="o">(</span><span class="m">2</span><span class="o">)</span> <span class="o">=</span> 0x030d41<span class="o">]</span> <span class="o">=</span> areg <span class="o">(</span><span class="m">0</span><span class="o">)</span>
-<span class="m">11</span>     <span class="m">13</span>                  OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>hexsim<span class="w"> </span>a.out<span class="w"> </span>-t
+<span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w">                   </span>BR<span class="w">   </span><span class="m">7</span><span class="w">  </span><span class="nv">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pc<span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>0x000008<span class="o">)</span>
+<span class="m">1</span><span class="w">      </span><span class="m">8</span><span class="w">                   </span>LDAP<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pc<span class="w"> </span><span class="o">(</span><span class="m">9</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w"> </span><span class="m">10</span>
+<span class="m">2</span><span class="w">      </span><span class="m">9</span><span class="w">                   </span>BR<span class="w">   </span><span class="m">4</span><span class="w">  </span><span class="nv">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pc<span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">4</span><span class="o">)</span><span class="w"> </span><span class="o">(</span>0x00000e<span class="o">)</span>
+<span class="m">3</span><span class="w">      </span><span class="m">14</span><span class="w">     </span>main+0<span class="w">       </span>LDBM<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mem<span class="o">[</span>oreg<span class="w"> </span><span class="o">(</span>0x000001<span class="o">)]</span><span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">4</span><span class="w">      </span><span class="m">15</span><span class="w">     </span>main+1<span class="w">       </span>STAI<span class="w"> </span><span class="m">0</span><span class="w">  </span>mem<span class="o">[</span>breg<span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x030d3f<span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>areg<span class="w"> </span><span class="o">(</span><span class="m">10</span><span class="o">)</span>
+<span class="m">5</span><span class="w">      </span><span class="m">16</span><span class="w">     </span>main+2<span class="w">       </span>LDBM<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mem<span class="o">[</span>oreg<span class="w"> </span><span class="o">(</span>0x000001<span class="o">)]</span><span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">6</span><span class="w">      </span><span class="m">17</span><span class="w">     </span>main+3<span class="w">       </span>LDBI<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="nv">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mem<span class="o">[</span>breg<span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x030d3f<span class="o">]</span><span class="w"> </span><span class="o">(</span><span class="m">10</span><span class="o">)</span>
+<span class="m">7</span><span class="w">      </span><span class="m">18</span><span class="w">     </span>main+4<span class="w">       </span>OPR<span class="w">  </span><span class="m">0</span><span class="w">  </span>BRB<span class="w"> </span><span class="nv">pc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>breg<span class="w"> </span><span class="o">(</span>0x00000a<span class="o">)</span>
+<span class="m">8</span><span class="w">      </span><span class="m">10</span><span class="w">                  </span>LDBM<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="nv">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>mem<span class="o">[</span>oreg<span class="w"> </span><span class="o">(</span>0x000001<span class="o">)]</span><span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span>
+<span class="m">9</span><span class="w">      </span><span class="m">11</span><span class="w">                  </span>LDAC<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="nv">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>oreg<span class="w"> </span><span class="m">0</span>
+<span class="m">10</span><span class="w">     </span><span class="m">12</span><span class="w">                  </span>STAI<span class="w"> </span><span class="m">2</span><span class="w">  </span>mem<span class="o">[</span>breg<span class="w"> </span><span class="o">(</span><span class="m">199999</span><span class="o">)</span><span class="w"> </span>+<span class="w"> </span>oreg<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>0x030d41<span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>areg<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="o">)</span>
+<span class="m">11</span><span class="w">     </span><span class="m">13</span><span class="w">                  </span>OPR<span class="w">  </span><span class="m">3</span><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 
 
 <p>The program can also be run on the Verilog Hex implementation using <code>hextb</code>
 (which doesn&#8217;t provide as rich instruction tracing as <code>hexsim</code>):</p>
-<div class="codehilite"><pre><span></span>➜ hextb a.out -t
-Wrote <span class="m">20</span> bytes to memory
-<span class="o">[</span><span class="m">11</span><span class="o">]</span> <span class="m">8</span>      0x51 LDAP
-<span class="o">[</span><span class="m">13</span><span class="o">]</span> <span class="m">9</span>      0x94 BR
-<span class="o">[</span><span class="m">15</span><span class="o">]</span> <span class="m">14</span>     0x11 LDBM
-<span class="o">[</span><span class="m">17</span><span class="o">]</span> <span class="m">15</span>     0x80 STAI
-<span class="o">[</span><span class="m">19</span><span class="o">]</span> <span class="m">16</span>     0x11 LDBM
-<span class="o">[</span><span class="m">21</span><span class="o">]</span> <span class="m">17</span>     0x70 LDBI
-<span class="o">[</span><span class="m">23</span><span class="o">]</span> <span class="m">18</span>     0xd0 OPR
-<span class="o">[</span><span class="m">25</span><span class="o">]</span> <span class="m">10</span>     0x11 LDBM
-<span class="o">[</span><span class="m">27</span><span class="o">]</span> <span class="m">11</span>     0x30 LDAC
-<span class="o">[</span><span class="m">29</span><span class="o">]</span> <span class="m">12</span>     0x82 STAI
-<span class="o">[</span><span class="m">31</span><span class="o">]</span> <span class="m">13</span>     0xd3 OPR
-<span class="nb">exit</span> <span class="m">0</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>hextb<span class="w"> </span>a.out<span class="w"> </span>-t
+Wrote<span class="w"> </span><span class="m">20</span><span class="w"> </span>bytes<span class="w"> </span>to<span class="w"> </span>memory
+<span class="o">[</span><span class="m">11</span><span class="o">]</span><span class="w"> </span><span class="m">8</span><span class="w">      </span>0x51<span class="w"> </span>LDAP
+<span class="o">[</span><span class="m">13</span><span class="o">]</span><span class="w"> </span><span class="m">9</span><span class="w">      </span>0x94<span class="w"> </span>BR
+<span class="o">[</span><span class="m">15</span><span class="o">]</span><span class="w"> </span><span class="m">14</span><span class="w">     </span>0x11<span class="w"> </span>LDBM
+<span class="o">[</span><span class="m">17</span><span class="o">]</span><span class="w"> </span><span class="m">15</span><span class="w">     </span>0x80<span class="w"> </span>STAI
+<span class="o">[</span><span class="m">19</span><span class="o">]</span><span class="w"> </span><span class="m">16</span><span class="w">     </span>0x11<span class="w"> </span>LDBM
+<span class="o">[</span><span class="m">21</span><span class="o">]</span><span class="w"> </span><span class="m">17</span><span class="w">     </span>0x70<span class="w"> </span>LDBI
+<span class="o">[</span><span class="m">23</span><span class="o">]</span><span class="w"> </span><span class="m">18</span><span class="w">     </span>0xd0<span class="w"> </span>OPR
+<span class="o">[</span><span class="m">25</span><span class="o">]</span><span class="w"> </span><span class="m">10</span><span class="w">     </span>0x11<span class="w"> </span>LDBM
+<span class="o">[</span><span class="m">27</span><span class="o">]</span><span class="w"> </span><span class="m">11</span><span class="w">     </span>0x30<span class="w"> </span>LDAC
+<span class="o">[</span><span class="m">29</span><span class="o">]</span><span class="w"> </span><span class="m">12</span><span class="w">     </span>0x82<span class="w"> </span>STAI
+<span class="o">[</span><span class="m">31</span><span class="o">]</span><span class="w"> </span><span class="m">13</span><span class="w">     </span>0xd3<span class="w"> </span>OPR
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 
 
 <h3>Hello&nbsp;World</h3>
 <p>A more fulsome example is &#8216;Hello World&#8217;, where the main process is&nbsp;simply:</p>
-<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">prints</span><span class="p">(</span><span class="s">&quot;hello world\n&quot;</span><span class="p">)</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><span class="k">proc</span><span class="w"> </span><span class="nv">main</span><span class="p">()</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">prints</span><span class="p">(</span><span class="s">&quot;hello world\n&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>And <code>prints</code> unpacks the bytewise string representation by using routines for
 performing division and remainder by 265. The full program listing&nbsp;is:</p>
-<div class="codehilite"><pre><span></span>➜ cat tests/x/hello_prints.x
-val <span class="nv">put</span> <span class="o">=</span> <span class="m">1</span><span class="p">;</span>
-val <span class="nv">bytesperword</span> <span class="o">=</span> <span class="m">4</span><span class="p">;</span>
-var div_x<span class="p">;</span>
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>cat<span class="w"> </span>tests/x/hello_prints.x
+val<span class="w"> </span><span class="nv">put</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+val<span class="w"> </span><span class="nv">bytesperword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">;</span>
+var<span class="w"> </span>div_x<span class="p">;</span>
 
-proc main<span class="o">()</span> is prints<span class="o">(</span><span class="s2">&quot;hello world\n&quot;</span><span class="o">)</span>
+proc<span class="w"> </span>main<span class="o">()</span><span class="w"> </span>is<span class="w"> </span>prints<span class="o">(</span><span class="s2">&quot;hello world\n&quot;</span><span class="o">)</span>
 
-proc putval<span class="o">(</span>val c<span class="o">)</span> is put<span class="o">(</span>c, <span class="m">0</span><span class="o">)</span>
+proc<span class="w"> </span>putval<span class="o">(</span>val<span class="w"> </span>c<span class="o">)</span><span class="w"> </span>is<span class="w"> </span>put<span class="o">(</span>c,<span class="w"> </span><span class="m">0</span><span class="o">)</span>
 
-func lsu<span class="o">(</span>val x, val y<span class="o">)</span> is
-  <span class="k">if</span> <span class="o">(</span>x &lt; <span class="m">0</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span>y &lt; <span class="m">0</span><span class="o">)</span>
-  <span class="k">then</span>
-    <span class="k">return</span> x &lt; y
-  <span class="k">else</span>
-    <span class="k">return</span> y &lt; <span class="m">0</span>
+func<span class="w"> </span>lsu<span class="o">(</span>val<span class="w"> </span>x,<span class="w"> </span>val<span class="w"> </span>y<span class="o">)</span><span class="w"> </span>is
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span>&lt;<span class="w"> </span><span class="m">0</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span>y<span class="w"> </span>&lt;<span class="w"> </span><span class="m">0</span><span class="o">)</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>x<span class="w"> </span>&lt;<span class="w"> </span>y
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>y<span class="w"> </span>&lt;<span class="w"> </span><span class="m">0</span>
 
-func div_step<span class="o">(</span>val b, val y<span class="o">)</span> is
-  var r<span class="p">;</span>
-<span class="o">{</span> <span class="k">if</span> <span class="o">(</span>y &lt; <span class="m">0</span><span class="o">)</span> or <span class="o">(</span>~lsu<span class="o">(</span>y, div_x<span class="o">))</span>
-  <span class="k">then</span>
-    r :<span class="o">=</span> <span class="m">0</span>
-  <span class="k">else</span>
-    r :<span class="o">=</span> div_step<span class="o">(</span>b + b, y + y<span class="o">)</span><span class="p">;</span>
-  <span class="k">if</span> ~lsu<span class="o">(</span>div_x, y<span class="o">)</span>
-  <span class="k">then</span>
-  <span class="o">{</span> div_x :<span class="o">=</span> div_x - y<span class="p">;</span>
-    r :<span class="o">=</span> r + b
-  <span class="o">}</span>
-  <span class="k">else</span>
-    skip<span class="p">;</span>
-  <span class="k">return</span> r
+func<span class="w"> </span>div_step<span class="o">(</span>val<span class="w"> </span>b,<span class="w"> </span>val<span class="w"> </span>y<span class="o">)</span><span class="w"> </span>is
+<span class="w">  </span>var<span class="w"> </span>r<span class="p">;</span>
+<span class="o">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="o">(</span>y<span class="w"> </span>&lt;<span class="w"> </span><span class="m">0</span><span class="o">)</span><span class="w"> </span>or<span class="w"> </span><span class="o">(</span>~lsu<span class="o">(</span>y,<span class="w"> </span>div_x<span class="o">))</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span>r<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span>r<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>div_step<span class="o">(</span>b<span class="w"> </span>+<span class="w"> </span>b,<span class="w"> </span>y<span class="w"> </span>+<span class="w"> </span>y<span class="o">)</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span>~lsu<span class="o">(</span>div_x,<span class="w"> </span>y<span class="o">)</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">  </span><span class="o">{</span><span class="w"> </span>div_x<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>div_x<span class="w"> </span>-<span class="w"> </span>y<span class="p">;</span>
+<span class="w">    </span>r<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>r<span class="w"> </span>+<span class="w"> </span>b
+<span class="w">  </span><span class="o">}</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span>skip<span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span>r
 <span class="o">}</span>
 
-func div<span class="o">(</span>val n, val m<span class="o">)</span> is
-<span class="o">{</span> div_x :<span class="o">=</span> n<span class="p">;</span>
-  <span class="k">if</span> lsu<span class="o">(</span>n, m<span class="o">)</span>
-  <span class="k">then</span>
-    <span class="k">return</span> <span class="m">0</span>
-  <span class="k">else</span>
-    <span class="k">return</span> div_step<span class="o">(</span><span class="m">1</span>, m<span class="o">)</span>
+func<span class="w"> </span>div<span class="o">(</span>val<span class="w"> </span>n,<span class="w"> </span>val<span class="w"> </span>m<span class="o">)</span><span class="w"> </span>is
+<span class="o">{</span><span class="w"> </span>div_x<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>n<span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span>lsu<span class="o">(</span>n,<span class="w"> </span>m<span class="o">)</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span>div_step<span class="o">(</span><span class="m">1</span>,<span class="w"> </span>m<span class="o">)</span>
 <span class="o">}</span>
 
-func rem<span class="o">(</span>val n, val m<span class="o">)</span> is
-  var x<span class="p">;</span>
-<span class="o">{</span> x :<span class="o">=</span> div<span class="o">(</span>n, m<span class="o">)</span><span class="p">;</span>
-  <span class="k">return</span> div_x
+func<span class="w"> </span>rem<span class="o">(</span>val<span class="w"> </span>n,<span class="w"> </span>val<span class="w"> </span>m<span class="o">)</span><span class="w"> </span>is
+<span class="w">  </span>var<span class="w"> </span>x<span class="p">;</span>
+<span class="o">{</span><span class="w"> </span>x<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>div<span class="o">(</span>n,<span class="w"> </span>m<span class="o">)</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span>div_x
 <span class="o">}</span>
 
-proc prints<span class="o">(</span>array s<span class="o">)</span> is
-  var n<span class="p">;</span>
-  var p<span class="p">;</span>
-  var w<span class="p">;</span>
-  var l<span class="p">;</span>
-  var b<span class="p">;</span>
-<span class="o">{</span> n :<span class="o">=</span> <span class="m">1</span><span class="p">;</span>
-  p :<span class="o">=</span> <span class="m">0</span><span class="p">;</span>
-  w :<span class="o">=</span> s<span class="o">[</span>p<span class="o">]</span><span class="p">;</span>
-  l :<span class="o">=</span> rem<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
-  w :<span class="o">=</span> div<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
-  b :<span class="o">=</span> <span class="m">1</span><span class="p">;</span>
-  <span class="k">while</span> <span class="o">(</span>n &lt;<span class="o">=</span> l<span class="o">)</span> <span class="k">do</span>
-  <span class="o">{</span> putval<span class="o">(</span>rem<span class="o">(</span>w, <span class="m">256</span><span class="o">))</span><span class="p">;</span>
-    w :<span class="o">=</span> div<span class="o">(</span>w, <span class="m">256</span><span class="o">)</span><span class="p">;</span>
-    n :<span class="o">=</span> n + <span class="m">1</span><span class="p">;</span>
-    b :<span class="o">=</span> b + <span class="m">1</span><span class="p">;</span>
-    <span class="k">if</span> <span class="o">(</span><span class="nv">b</span> <span class="o">=</span> bytesperword<span class="o">)</span>
-    <span class="k">then</span>
-    <span class="o">{</span> b :<span class="o">=</span> <span class="m">0</span><span class="p">;</span>
-      p :<span class="o">=</span> p + <span class="m">1</span><span class="p">;</span>
-      w :<span class="o">=</span> s<span class="o">[</span>p<span class="o">]</span>
-    <span class="o">}</span>
-    <span class="k">else</span> skip
-  <span class="o">}</span>
+proc<span class="w"> </span>prints<span class="o">(</span>array<span class="w"> </span>s<span class="o">)</span><span class="w"> </span>is
+<span class="w">  </span>var<span class="w"> </span>n<span class="p">;</span>
+<span class="w">  </span>var<span class="w"> </span>p<span class="p">;</span>
+<span class="w">  </span>var<span class="w"> </span>w<span class="p">;</span>
+<span class="w">  </span>var<span class="w"> </span>l<span class="p">;</span>
+<span class="w">  </span>var<span class="w"> </span>b<span class="p">;</span>
+<span class="o">{</span><span class="w"> </span>n<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span>p<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">  </span>w<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>s<span class="o">[</span>p<span class="o">]</span><span class="p">;</span>
+<span class="w">  </span>l<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>rem<span class="o">(</span>w,<span class="w"> </span><span class="m">256</span><span class="o">)</span><span class="p">;</span>
+<span class="w">  </span>w<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>div<span class="o">(</span>w,<span class="w"> </span><span class="m">256</span><span class="o">)</span><span class="p">;</span>
+<span class="w">  </span>b<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="o">(</span>n<span class="w"> </span>&lt;<span class="o">=</span><span class="w"> </span>l<span class="o">)</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="o">{</span><span class="w"> </span>putval<span class="o">(</span>rem<span class="o">(</span>w,<span class="w"> </span><span class="m">256</span><span class="o">))</span><span class="p">;</span>
+<span class="w">    </span>w<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>div<span class="o">(</span>w,<span class="w"> </span><span class="m">256</span><span class="o">)</span><span class="p">;</span>
+<span class="w">    </span>n<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>n<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">    </span>b<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>b<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="nv">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>bytesperword<span class="o">)</span>
+<span class="w">    </span><span class="k">then</span>
+<span class="w">    </span><span class="o">{</span><span class="w"> </span>b<span class="w"> </span>:<span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">;</span>
+<span class="w">      </span>p<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>p<span class="w"> </span>+<span class="w"> </span><span class="m">1</span><span class="p">;</span>
+<span class="w">      </span>w<span class="w"> </span>:<span class="o">=</span><span class="w"> </span>s<span class="o">[</span>p<span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span>skip
+<span class="w">  </span><span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 
 
 <p>Compiling and running this shows that it takes ~50K cycles to execute and
 inspecting the trace is clear to see that most time is spent in the arithmetic&nbsp;routines.</p>
-<div class="codehilite"><pre><span></span>➜ xcmp tests/x/hello_prints.x
-➜ hexsim a.out
-hello world
-➜ hexsim a.out -t
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>xcmp<span class="w"> </span>tests/x/hello_prints.x
+➜<span class="w"> </span>hexsim<span class="w"> </span>a.out
+hello<span class="w"> </span>world
+➜<span class="w"> </span>hexsim<span class="w"> </span>a.out<span class="w"> </span>-t
 ...
-<span class="m">48902</span>  <span class="m">61</span>                  OPR  <span class="m">3</span>  <span class="nb">exit</span> <span class="m">0</span>
+<span class="m">48902</span><span class="w">  </span><span class="m">61</span><span class="w">                  </span>OPR<span class="w">  </span><span class="m">3</span><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 
 
@@ -809,49 +809,49 @@ written by David May in ~3,000 lines of X. This serves as a challenging program
 to compile, and interesting that it can bootstrap itself. Using the notation
 X(Y) to mean compile source Y using binary X, we can first create an <code>xhexb</code>
 binary by running <code>xcmp</code>(<code>xhexb.x</code>):</p>
-<div class="codehilite"><pre><span></span>➜ xcmp -S tests/x/xhexb.x
+<div class="codehilite"><pre><span></span>➜<span class="w"> </span>xcmp<span class="w"> </span>-S<span class="w"> </span>tests/x/xhexb.x
 ...
-<span class="m">20739</span> bytes
+<span class="m">20739</span><span class="w"> </span>bytes
 </pre></div>
 
 
 <p>We can then use <code>xcmp</code>(<code>xhexb.x</code>) to compile Hello World as
 <code>xcmp</code>(<code>xhexb.x</code>)(<code>hello_prints.x</code>):</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Create an xhexb compiler binary.</span>
-➜ xcmp tests/x/xhexb.x
+➜<span class="w"> </span>xcmp<span class="w"> </span>tests/x/xhexb.x
 
 <span class="c1"># Compile Hello World.</span>
-➜ hexsim a.out &lt; tests/x/hello_prints.x
-tree size: <span class="m">602</span>
-program size: <span class="m">414</span>
-size: <span class="m">414</span>
+➜<span class="w"> </span>hexsim<span class="w"> </span>a.out<span class="w"> </span>&lt;<span class="w"> </span>tests/x/hello_prints.x
+tree<span class="w"> </span>size:<span class="w"> </span><span class="m">602</span>
+program<span class="w"> </span>size:<span class="w"> </span><span class="m">414</span>
+size:<span class="w"> </span><span class="m">414</span>
 
 <span class="c1"># Run it.</span>
-➜ hexsim simout2
-hello world
+➜<span class="w"> </span>hexsim<span class="w"> </span>simout2
+hello<span class="w"> </span>world
 </pre></div>
 
 
 <p>Similarly, we can use <code>xcmp</code>(<code>xhexb.x</code>) to bootstrap itself by running
 <code>xcmp</code>(<code>xhexb.x</code>)(<code>xhexb.x</code>):</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Create an xhexb compiler binary.</span>
-➜ xcmp tests/x/xhexb.x
+➜<span class="w"> </span>xcmp<span class="w"> </span>tests/x/xhexb.x
 
 <span class="c1"># Use xhexb binary to compile xhexb.x.</span>
-➜ hexsim a.out &lt; tests/x/xhexb.x
-tree size: <span class="m">18631</span>
-program size: <span class="m">17093</span>
-size: <span class="m">177097</span>
+➜<span class="w"> </span>hexsim<span class="w"> </span>a.out<span class="w"> </span>&lt;<span class="w"> </span>tests/x/xhexb.x
+tree<span class="w"> </span>size:<span class="w"> </span><span class="m">18631</span>
+program<span class="w"> </span>size:<span class="w"> </span><span class="m">17093</span>
+size:<span class="w"> </span><span class="m">177097</span>
 
 <span class="c1"># Use the bootstrapped xhexb binary to compile Hello World.</span>
-➜ hexsim simout2 &lt; tests/x/hello_prints.x
-tree size: <span class="m">602</span>
-program size: <span class="m">414</span>
-size: <span class="m">414</span>
+➜<span class="w"> </span>hexsim<span class="w"> </span>simout2<span class="w"> </span>&lt;<span class="w"> </span>tests/x/hello_prints.x
+tree<span class="w"> </span>size:<span class="w"> </span><span class="m">602</span>
+program<span class="w"> </span>size:<span class="w"> </span><span class="m">414</span>
+size:<span class="w"> </span><span class="m">414</span>
 
 <span class="c1"># Run it.</span>
-➜ hexsim simout2
-hello world
+➜<span class="w"> </span>hexsim<span class="w"> </span>simout2
+hello<span class="w"> </span>world
 </pre></div>
 
 
@@ -1040,5 +1040,8 @@ processor&nbsp;toolchains.</p>
   <script src="./theme/js/jquery-3.6.0.min.js"></script>
   <script src="./theme/js/lightbox.min.js"></script>
   <script src="./theme/js/bootstrap.bundle.min.js"></script>
+  <!-- Clicky -->
+  <script async src="//static.getclicky.com/101392449.js"></script>
+  <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/101392449ns.gif" /></p></noscript>
 </body>
 </html>
