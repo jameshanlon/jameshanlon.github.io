@@ -1,7 +1,7 @@
 ---
 Title: Cornish Unit House retrofit insulation
 Date: 2022-12-29
-Category: projects
+Category: notes
 Tags: construction, retrofit, energy-efficiency
 Status: published
 ---

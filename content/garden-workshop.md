@@ -1,7 +1,7 @@
 ---
 Title: Garden workshop
 Date: 2021-10-04
-Category: notes
+Category: projects
 Status: published
 Tags: sheds, construction
 ---

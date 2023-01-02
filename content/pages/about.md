@@ -5,25 +5,25 @@ Status: published
 
 # About me
 
-I currently work as an engineer in the Silicon team at
-[Graphcore](http://www.graphcore.ai) in Bristol UK, on the design and
-implementation of new processors for machine intelligence. My work is focussed
-on the logical and physical implementation of aspects of high-performance ASICs.
+Since 2016, I have worked at the UK-based chip company
+[Graphcore](http://www.graphcore.ai), where I lead the Silicon Logical Design
+team. My work is focussed on the design and implementation of high-performance
+chips for accelerating machine-intelligence workloads.
 
- Since 2015, I have been a director of [The CHEESE
-Project](http://www.cheeseproject.co.uk), a not-for-profit enterprise that uses
-thermal imaging to encourage people to reduce their domestic energy losses. For
-those who struggle to heat their homes, it improves their health and well
-being, and for those who have thermally-inefficient homes, it saves them money
-and reduces their carbon emissions. More recently, I have helped to found [First
-Thermal](http://www.first-thermal.co.uk) to socially franchise and replicate
-the work of CHEESE.
+I have been a director of [The CHEESE Project](http://www.cheeseproject.co.uk)
+since 2015, a not-for-profit enterprise that uses thermal imaging to encourage
+people to reduce their domestic energy losses. For those who struggle to heat
+their homes, it improves their health and well being, and for those who have
+thermally-inefficient homes, it saves them money and reduces their carbon
+emissions. As part of the expansion of CHEESE nationwide, I have helped to
+found [First Thermal](http://www.first-thermal.co.uk), a social franchise to
+replicate the approach.
 
-I have previously worked as a software engineer specialising on the compiler
-toolchain at [XMOS](http://www.xmos.com) in Bristol, for their embedded
+I have previously worked as a software engineer specialising in the compiler
+toolchain at [XMOS](http://www.xmos.com) in Bristol for their embedded
 parallel processors, and as a technical consultant at [Red Oak
 Consulting](http://www.redoakconsulting.co.uk) in Cheltenham, who specialise in
-high-performance computing.
+services for high-performance computing.
 
 I completed a PhD at the [University of Bristol](http://www.bris.ac.uk) in the
 [Department of Computer Science](http://www.cs.bris.ac.uk) in 2014, with a
