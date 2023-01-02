@@ -79,7 +79,7 @@ made continuous at ceiling junction with existing mineral wool insulation
 between ceiling joists in roof void, where possible. Estimated U-value of
 proposed build-up = 0.25 W/m$^2$K (source: Saint Gobain UK U-value calculator).
 
-We investigated alternatives to PIR board, such as insulation board constructed
+I investigated alternatives to PIR board, such as insulation board constructed
 from natural fibres, but these generally seemed twice as expensive per square
 metre and offered approximately half the U value. Given that wall depth was
 critical, these weren't good solutions.
