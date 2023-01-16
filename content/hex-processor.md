@@ -868,6 +868,13 @@ processor toolchains.
   Verilog with serial communication, DRAM access and multiprocessing (Niklaus
   Wirth, 2010).
 
+- [Selfie](https://github.com/cksystemsteaching/selfie) is an educational
+  platform for teaching programming languages and runtime systems. It is based
+  on a simplified RISC-V architecture and includes a self-contained self-hosting
+  compiler for a subset of C, an emulator, a hypervisor and a small standard
+  library for the language. These tools are implemented in a single file (~12K
+  lines of code).
+
 - [Luz CPU](https://github.com/eliben/luz-cpu), a simulator, assembler and
   linker for the Luz processor architecture written by Eli Bendersky.
 
