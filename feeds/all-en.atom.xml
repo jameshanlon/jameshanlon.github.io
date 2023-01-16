@@ -1377,6 +1377,14 @@ processor&amp;nbsp;toolchains.&lt;/p&gt;
   Wirth,&amp;nbsp;2010).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/cksystemsteaching/selfie"&gt;Selfie&lt;/a&gt; is an educational
+  platform for teaching programming languages and runtime systems. It is based
+  on a simplified &lt;span class="caps"&gt;RISC&lt;/span&gt;-V architecture and includes a self-contained self-hosting
+  compiler for a subset of C, an emulator, a hypervisor and a small standard
+  library for the language. These tools are implemented in a single file (~12K
+  lines of&amp;nbsp;code).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;&lt;a href="https://github.com/eliben/luz-cpu"&gt;Luz &lt;span class="caps"&gt;CPU&lt;/span&gt;&lt;/a&gt;, a simulator, assembler and
   linker for the Luz processor architecture written by Eli&amp;nbsp;Bendersky.&lt;/p&gt;
 &lt;/li&gt;
