@@ -1,7 +1,16 @@
 Title: Projects
 Status: published
 
-## Netlist Paths
+### Slang Netlist
+
+Slang Netlist is a library and tool leveraging [slang](https://sv-lang.com) to
+analyse the source-level static connectivity of a System Verilog design and is
+intended to be a replacement for Netlist Paths (see below). Slang Netlist is
+included as a tool in the slang project.
+
+- [GitHub](https://github.com/MikePopoloski/slang)
+
+### Netlist Paths
 
 Netlist Paths is a library and command-line tool for querying a Verilog
 netlist. It reads an XML representation of a design's netlist, produced by
@@ -12,7 +21,7 @@ C++ and has a Python interface.
 - [GitHub](https://github.com/jameshanlon/netlist-paths)
 - [Documentation](https://jameshanlon.github.io/netlist-paths)
 
-## Hex processor
+### Hex processor
 
 The Hex Architecture is a very simple processor designed by David May and
 intended for explaining how a computer works. This repository contains an
@@ -24,7 +33,7 @@ hardware implementation.
 - [GitHub](https://github.com/jameshanlon/hex-processor)
 - [Documentation](https://jameshanlon.github.io/hex-processor)
 
-## PRNG testing
+### PRNG testing
 
 This repository contains facilities for comprehensively testing PRNGs using
 statistical test suites. It provides a facility to run a PRNG against TestU01,
