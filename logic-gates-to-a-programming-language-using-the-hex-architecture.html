@@ -311,18 +311,18 @@ program addresses, relative to the program counter, such as for branch targets.
 The following instruction sequence performs a call to <code>foo</code> but first loads
 the return (link) address using <code>LDAP</code> to use with <code>BR</code>. The callee <code>foo</code>
 returns to the caller using <code>BRB</code>.</p>
-<div class="codehilite"><pre><span></span><span class="nv">FUNC</span><span class="w"> </span><span class="nv">foo</span>
-<span class="nv">LDBM</span><span class="w"> </span><span class="mi">1</span>
-<span class="nv">STAI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Save</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span>
-...
-<span class="nv">LDBI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Restore</span><span class="w"> </span><span class="nv">caller</span><span class="w"> </span><span class="nv">address</span>
-<span class="nv">OPR</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span>#<span class="w"> </span><span class="k">Return</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">caller</span>
+<div class="codehilite"><pre><span></span><span class="nx">FUNC</span><span class="w"> </span><span class="nx">foo</span>
+<span class="nx">LDBM</span><span class="w"> </span><span class="mi">1</span>
+<span class="nx">STAI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Save</span><span class="w"> </span><span class="nx">caller</span><span class="w"> </span><span class="nx">address</span>
+<span class="o">...</span>
+<span class="nx">LDBI</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Restore</span><span class="w"> </span><span class="nx">caller</span><span class="w"> </span><span class="nx">address</span>
+<span class="nx">OPR</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Return</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">caller</span>
 
-<span class="nv">PROC</span><span class="w"> </span><span class="nv">main</span>
-...
-<span class="nv">LDAP</span><span class="w"> </span><span class="nv">lab2</span>
-<span class="nv">BR</span><span class="w"> </span><span class="nv">foo</span>
-<span class="nv">lab2</span>
+<span class="nx">PROC</span><span class="w"> </span><span class="nx">main</span>
+<span class="o">...</span>
+<span class="nx">LDAP</span><span class="w"> </span><span class="nx">lab2</span>
+<span class="nx">BR</span><span class="w"> </span><span class="nx">foo</span>
+<span class="nx">lab2</span>
 </pre></div>
 
 
