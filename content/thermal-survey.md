@@ -1,9 +1,9 @@
 ---
 Title: Home thermal-imaging survey
 Date: 2021-03-31
-Category: notes
+Category: non-technical 
 Status: published
-Tags: retrofit, sustainability
+Tags: energy-efficiency, retrofit, sustainability
 ---
 
 {% import 'post-macros.html' as macros %}

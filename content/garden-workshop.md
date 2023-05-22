@@ -1,7 +1,7 @@
 ---
 Title: Garden workshop
 Date: 2021-10-04
-Category: projects
+Category: non-technical 
 Status: published
 Tags: sheds, construction
 ---

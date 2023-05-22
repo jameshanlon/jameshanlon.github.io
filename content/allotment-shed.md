@@ -1,7 +1,7 @@
 ---
 Title: Recycled allotment shed
 Date: 2019-11-10
-Category: projects
+Category: non-technical 
 Tags: sheds, construction
 Status: published 
 ---

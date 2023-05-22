@@ -1,8 +1,8 @@
 ---
 Title: Retrofit shed insulation
 Date: 2018-09-30
-Category: projects
-Tags: sheds, retrofit, energy-efficiency
+Category: non-technical 
+Tags: energy-efficiency, retrofit, sheds, sustainability
 Status: published
 ---
 

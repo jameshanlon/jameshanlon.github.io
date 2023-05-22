@@ -5,24 +5,19 @@
 you'll find notes on subjects of interest and projects I've been working on, as
 well as various archived documents and talks.</p>
 <hr>
-<div class="container article-list">
-{% for article in articles %}
-  {{ macros.render_article_item(article) }}
-{% endfor %}
-</div>
-{#<h3>Notes</h3>
+<h3>Computing / electronics</h3>
 <div class="container article-list">
 {% for article in articles if article.category.name == 'notes' %}
   {{ macros.render_article_item(article) }}
 {% endfor %}
 </div>
 <br>
-<h3>Projects</h3>
+<h3>Sustainability / environment / DIY</h3>
 <div class="container article-list">
-{% for article in articles if article.category.name == 'projects' %}
+{% for article in articles if article.category.name == 'non-technical' %}
   {{ macros.render_article_item(article) }}
 {% endfor %}
-</div>#}
+</div>
 <br>
 <p>Browse: 
 <a href="/categories.html">by catergory</a>,
