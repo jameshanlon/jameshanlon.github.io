@@ -10,7 +10,7 @@
       {{article.title}}
     </a>
     <br>
-    {% for tag in article.tags %}
+    {% for tag in article.tags | sort %}
       <span class="article-tag small">
         <a href="/tag/{{tag}}.html" class="text-decoration-none">{{tag}}</a>
       </span>
