@@ -3,12 +3,12 @@ Status: published
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm">
+    <div class="col-md">
       {% filter markdown %}
         {% include "pages/archive-recent.md" %}
       {% endfilter %}
     </div>
-    <div class="col-sm article-list">
+    <div class="col-md">
       {% filter markdown %}
         {% include "pages/archive-university.md" %}
       {% endfilter %}
