@@ -16,6 +16,9 @@ ASSETS_PREFIX = 'https://jwh.ams3.digitaloceanspaces.com/homepage'
 def get_asset_url(filepath):
     return ASSETS_PREFIX+'/'+filepath
 
+def foo(blah):
+    return blah
+
 JINJA_FILTERS = { 'asset': get_asset_url,
                   'thumbnail': get_thumbnail, }
 
@@ -75,5 +78,5 @@ RELATIVE_URLS = True
 FEED_ATOM = 'reeds/atom.xml'
 FEED_RSS = 'reeds/rss.xml'
 
-PLUGIN_PATHS = ['pelican-plugins', ]
+PLUGIN_PATHS = ['plugins']
 PLUGINS = ['jinja_content']
