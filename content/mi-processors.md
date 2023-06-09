@@ -3,6 +3,8 @@ Title: New chips for machine intelligence
 Date: 2019-10-04
 Category: notes
 Tags: computing, machine-intelligence, computer-architecture
+Summary: Details of new chips that have been built recently to accelerate
+         machine intelligence workloads.
 Status: published
 ---
 

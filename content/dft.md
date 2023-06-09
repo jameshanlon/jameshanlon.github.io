@@ -3,6 +3,8 @@ Title: Silicon design for test structures
 Date: 2019-04-18
 Category: notes
 Tags: microelectronics
+Summary: A description of how digital circuits are modified to allow scan
+         testing to be performed.
 Status: published
 ---
 

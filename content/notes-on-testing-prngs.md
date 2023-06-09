@@ -3,6 +3,7 @@ Title: Notes on testing random number generators
 Date: 2017-4-5
 Category: notes
 Tags: computing, PRNGs
+Summary: Using empirical statistical tests to determine the quality of PRNGs.
 Status: published
 ---
 
@@ -75,7 +76,7 @@ There are two popular empirical test suites:
 - [TestU01](http://simul.iro.umontreal.ca/testu01/tu01.html), a comprehensive C
   library, containing example PRNGs, utilities and a collection of statistical
   tests drawn from the academic literature of RNGs. The statistical tests can
-  be run individually, or as part of test batteries, which have various run
+  be run ggindividually, or as part of test batteries, which have various run
   times and levels of stringency.
 
 - [PractRand](http://pracrand.sourceforge.net/), which provides similar

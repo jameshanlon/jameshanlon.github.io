@@ -1,8 +1,10 @@
 ---
-Title: Logic gates to a programming language using the Hex architecture
+Title: From logic gates to a programming language using the Hex architecture
 Date: 2022-11-18
 Category: notes
 Tags: computing, computer-architecture, microelectronics
+Summary: A hardware implementation of a Hex processor with some basic tooling,
+         including a complete compiler for a simple programming language.
 Status: published
 ---
 

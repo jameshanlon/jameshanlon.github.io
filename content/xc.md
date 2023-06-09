@@ -1,9 +1,11 @@
 ---
-Title: The XC Programming Language 
+Title: The XC Programming Language
 Date: 2014-12-13
-Category: notes 
-Tags: computing, computer-architecture, programming-languages 
-Status: published 
+Category: notes
+Tags: computing, computer-architecture, programming-languages
+Summary: An overview of the key features of the language, many of which derive
+         from occam.
+Status: published
 ---
 
 {% import 'post-macros.html' as macros %}
@@ -35,7 +37,7 @@ including I/O and memory. All tiles are connected by a communication network
 that allows any tile to communicate with any other tile. A given target system
 is specified during compilation and the compiler ensures that a sufficient
 number of tiles, cores and resources are available to execute the program being
-compiled. 
+compiled.
 
 
 ## Features
@@ -99,7 +101,7 @@ the task `f` is placed on any available core of tile 0 and instances of the task
 g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
 main function of an XC program. Conceptually, this is because when an XC
 program is compiled, it is divided up at its top level, into separately
-executable programs for each tile. 
+executable programs for each tile.
 
 ### Communication
 

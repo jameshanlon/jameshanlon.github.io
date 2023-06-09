@@ -3,6 +3,8 @@ Title: Error-correcting codes
 Date: 2020-05-02
 Category: notes
 Tags: computing
+Summary: Using Hamming Codes for single error correction and double error
+         detection.
 Status: published
 ---
 

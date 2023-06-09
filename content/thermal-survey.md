@@ -1,8 +1,9 @@
 ---
 Title: Home thermal-imaging survey
 Date: 2021-03-31
-Category: non-technical 
+Category: non-technical
 Status: published
+Summary: Investigation of thermal faults using a thermal-imaging camera.
 Tags: energy-efficiency, retrofit, sustainability
 ---
 
@@ -194,7 +195,7 @@ The Mansard roof construction means that the interface between the roof and
 masonry walls is at the top of the ground floor walls (rather than more
 conventionally at the top of the upper floor walls). The images below show
 ingress of cold air from the eaves and into the surrounding wall, stairs and
-floor. Note also the shape of the block work in the ground floor wall. 
+floor. Note also the shape of the block work in the ground floor wall.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/ground-wall/blockwork-stairs-1-thermal.jpg'),

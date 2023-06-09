@@ -8,13 +8,13 @@ well as various archived documents and talks.</p>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md article-list">
-    <h3>Computing / electronics</h3>
+    <h2>Computing / electronics</h2>
     {% for article in articles if article.category.name == 'notes' %}
       {{ macros.render_article_item(article) }}
     {% endfor %}
   </div>
   <div class="col-md article-list">
-    <h3>Sustainability / environment / DIY</h3>
+    <h2>Sustainability / environment / DIY</h2>
     {% for article in articles if article.category.name == 'non-technical' %}
       {{ macros.render_article_item(article) }}
     {% endfor %}

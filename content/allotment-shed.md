@@ -1,9 +1,10 @@
 ---
 Title: Recycled allotment shed
 Date: 2019-11-10
-Category: non-technical 
+Category: non-technical
 Tags: sheds, construction
-Status: published 
+Summary: Low-cost construction of a shed out of reclaimed materials.
+Status: published
 ---
 
 {% import 'post-macros.html' as macros %}
@@ -54,7 +55,7 @@ few years.
      caption='Details of the roof notches to sit level on the frame.') }}
 {{ macros.triple_layout(
      macros.image('allotment-shed/cladding-1.jpg'),
-     macros.image('allotment-shed/cladding-3.jpg'), 
+     macros.image('allotment-shed/cladding-3.jpg'),
      macros.image('allotment-shed/cladding-side.jpg'),
      caption='Details of the pallet-wood cladding.') }}
 {{ macros.pair_layout(

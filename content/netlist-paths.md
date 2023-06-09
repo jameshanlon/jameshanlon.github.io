@@ -3,7 +3,8 @@ Title: Querying logical paths in a Verilog design
 Date: 2018-11-20
 Category: notes
 Tags: computing, microelectronics, verilog
-status: published
+Summary: A description of a command-line tool I created.
+Status: published
 ---
 
 I wrote a simple command-line tool for querying logical paths in a Verilog

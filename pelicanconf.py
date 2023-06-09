@@ -78,5 +78,7 @@ RELATIVE_URLS = True
 FEED_ATOM = 'reeds/atom.xml'
 FEED_RSS = 'reeds/rss.xml'
 
+SUMMARY_MAX_LENGTH=25
+
 PLUGIN_PATHS = ['plugins']
 PLUGINS = ['jinja_content']

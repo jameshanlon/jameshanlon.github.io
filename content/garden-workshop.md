@@ -1,8 +1,9 @@
 ---
 Title: Garden workshop
 Date: 2021-10-04
-Category: non-technical 
+Category: non-technical
 Status: published
+Summary: Design and construction of a office and workshop.
 Tags: sheds, construction
 ---
 
@@ -12,8 +13,8 @@ Tags: sheds, construction
 During the summer of 2021 I built a garden workshop. This was a joint endeavour
 with my partner, who designed and specified the form and finish (credit for the
 [CAD drawings](#drawings) goes to her). The basic construction follows the methodology of
-[Oakwood Garden Rooms](https://www.oakwoodgardenrooms.com/) who's [YouTube
-channel](https://www.youtube.com/channel/UChqWFbSX8STP_c8W0RVW1Xw) proved
+[Oakwood Garden Rooms](https://www.oakwoodgardenrooms.com/) who's
+[YouTube channel](https://www.youtube.com/channel/UChqWFbSX8STP_c8W0RVW1Xw) proved
 invaluable guidance through the process. I also bought from them parts for the
 rod system for the footings, and a 'build pack' that crucially
 provided a preliminary materials list.  This note documents the process of the
