@@ -7,8 +7,7 @@
 
 &lt;p&gt;The &amp;#8216;&lt;span class="caps"&gt;RGB&lt;/span&gt; stacks&amp;#8217; lightboxes are an experiment with using high-power LEDs,
 generous volumes and translucent acrylic plastic to create big blocks of
-colour. They are constructed from 12 mm birch ply and each pixel measures 300 x
-300 (outer dimensions). They are built as three columns of three pixels to …&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
+colour. They are …&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" data-lightbox="shed"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-3_800x800.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
@@ -417,9 +416,7 @@ a button panel to switch them on off and control the lighting&amp;nbsp;patterns.
 &lt;/div&gt;
 
 &lt;p&gt;This note describes an &lt;span class="caps"&gt;LED&lt;/span&gt; driver I designed for a lighting project. I decided
-on a custom solution because I couldn&amp;#8217;t find any suitable boards available to
-buy at a reasonable price. The intended application (which I will describe in
-another note) requires 12 high-power (~1W) LEDs to be …&lt;/p&gt;</summary><content type="html">&lt;div class="float-right"&gt;
+on a custom solution because I couldn&amp;#8217;t find any suitable …&lt;/p&gt;</summary><content type="html">&lt;div class="float-right"&gt;
 &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/board-layers.png" data-lightbox="led-driver"&gt;
   &lt;img class="thumbnail rounded" src="thumbs/board-layers_400x400.png" alt="Board silk screen"&gt;
 &lt;/a&gt;

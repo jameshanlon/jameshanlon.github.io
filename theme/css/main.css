@@ -15,40 +15,62 @@ a.no-underline {
   text-decoration: none !important;
 }
 
-.starter-template {
-  padding: 3rem 1.5rem;
-  text-align: center;
+h1 {
+  font-size: 1.8em;
 }
+
+h2 {
+  font-size: 1.55em;
+}
+
+h3 {
+  font-size: 1.35em;
+}
+
 .navbar {
   margin-bottom: 20px;
 }
+
 .article-list ul {
   list-style-type: none;
   padding-left: 0;
 }
+
 .article-list li {
   padding-bottom:0.6em;
 }
+
 .article-tag, .article-tag a {
   color: gray;
 }
+
 .article-info {
   padding: 0.2em;
 }
+
 .article-info-date {
   font-family: arial; sans;
   font-size: 0.9em;
   color: gray;
   padding: 0.2em;
 }
-.article-info-title {
-  font-size:1.1em;
+
+.article-info {
   line-height: 1.15em;
-  padding-bottom: 0.4em;
 }
+
+.article-info-title {
+  font-size: 1.1em;
+}
+
+.article-summary, .article-summary p {
+  margin-top: 0.6em;
+}
+
 .article-body {
   padding-top: 1.4em;
 }
+
 .article-footer {
   margin-top: 1.2em;
 }
