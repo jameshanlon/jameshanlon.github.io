@@ -4,7 +4,7 @@ Date: 2023-06-30
 Category: notes
 Tags: computing, computer-architecture
 Summary: A rationale and strawman for a processor to accelerate
-         dynamic-langauge workloads.
+         dynamic-language workloads.
 Status: published
 ---
 
@@ -13,7 +13,7 @@ Status: published
 I have recently spent some time thinking about how hardware can be architected
 and optimised to better support high-level dynamic languages such as Python and
 JavaScript. There appears to be a significant gap between the way processors
-and memory systems are built, and the characterisitcs of dynamic-language
+and memory systems are built, and the characteristics of dynamic-language
 workloads. This gap presents a huge opportunity for new hardware innovation.
 
 ## Dynamic languages
@@ -29,7 +29,7 @@ government.
 
 Dynamic languages have become popular because they are easy to use when
 compared with their statically-compiled counterparts. There are
-many aspects of the langauges that [contribute to this][dynamic-languages],
+many aspects of the languages that [contribute to this][dynamic-languages],
 such as dynamic typing, high-level features, no requirement for a compilation
 step to produce an executable format, portability between platforms, powerful
 debugging due to runtime introspection, integration with editors and IDEs and
@@ -76,18 +76,18 @@ model development and deployment. PyTorch's third design principle is *Python
 first* meaning that working in Python natively (using the features of the
 language) provides the best experience and results for users, rather than
 deferring to optimised compiled-language libraries. PyTorch's primacy and clear
-prioritastion of ease of use indicates the direction of travel: that Python
+prioritisation of ease of use indicates the direction of travel: that Python
 will continue to become a first-class citizen in AI programming and so its
 performance will be increasingly important.
 
 Since around 2012, AI has undergone a renaissance by scaling the performance of
-deep neural networks with GPUs. Looking foward, there are many ways in which AI
+deep neural networks with GPUs. Looking forward, there are many ways in which AI
 models are expected to develop, requiring programming techniques and hardware to
 develop to provide these capabilities too:
 
 - **Model size** is growing and will continue to grow. Although GPT-3 has 175
   bn parameters, there are an estimated 86 bn neurons in the human brain and an
-  order-of 100 tn parameters (albiet encoded using analog mechanisms). It is
+  order-of 100 tn parameters (albeit encoded using analog mechanisms). It is
   likely that sparsity will increasingly be required to train and access these
   models efficiently.
 
@@ -120,7 +120,7 @@ develop to provide these capabilities too:
 
 Broadly, the performance of Python programs can be improved at three levels:
 
-1. Optimising the application to reduce runtime overhead.
+1. Optimising the application.
 2. Optimising the language implementation.
 3. Optimising the hardware.
 
@@ -128,10 +128,10 @@ There has been significant work on tackling (2) the language implementation.
 Prominent examples include: [PyPy][pypy], an alternative implementation that
 includes a just-in-time (JIT) compiler to dynamically optimise common code
 paths; and [Cython][cython] and [Nuitka][nuitka] that translate Python to C for
-static compilationi.
+static compilation.
 
 The work in *Quantitative Overhead Analysis for Python* [1] provides a detailed
-analysis of overheads in CPython. The different types of ovherhead are
+analysis of overheads in CPython. The different types of overhead are
 described in the following table, which is taken from the paper.
 
 <table class="table table-sm table-striped">
@@ -170,20 +170,30 @@ set of benchmarks. On average, 64.9% of overall execution time is overhead, and
 the remaining 35.1% is used for the execution of the program. Of the language
 features, name resolution and function setup/cleanup dominate. Of the
 interpreter operations, dispatch (reading bytecode and executing the correct
-operations) and C fucntion calls dominate.
+operations) and C function calls dominate.
 
 {{ macros.image('python-processor/measured-overheads.png', size='1000x1000',
-                caption='Python ovherheads measured in various benchmarks, from [1].') }}
+                caption='Python overheads measured in various benchmarks, from [1].') }}
 
 It is worth noting that where the previous examples optimise Python as a
 general-purpose language, some approaches such as [Codon][codon],
 [Numba][numba] and [Triton][triton] compile subsets of Python into machine code
-for host or accelelrator devices, eliminating the runtime overhead alltogether.
+for host or accelerator devices, eliminating the runtime overhead altogether.
 These however focus on accelerating numerical computations and therefore
 sidestep the difficulties of statically-compiling dynamic features such as
-naming and datastructures.
+naming and data structures.
 
-
+Within the scope of (1) optimising the application, a significant issue
+preventing the use of parallelism is Python's [Global Interpreter Lock
+(GIL)][gil]. This lock allows only one thread to execute the interpreter at
+once, which was done originally to make the counting of object references
+simpler. It is possible to work around the constraints imposed by the GIL, such
+as with the ``multiprocessing`` module but this makes it difficult to express
+different types of parallelism and creates an ease-of-use problem. A
+[PEP][pep-gil] submitted by a PyTorch developer makes the case for removing the
+GIL, outlining motivating examples in scientific and numerical computing, and
+tasks using Python for coordination and communication. A decision on adoption
+of this PEP is yet to be made but a [reference implementation][nogil] is available.
 
 [pypy]: https://www.pypy.org
 [cython]: https://cython.org
@@ -191,6 +201,11 @@ naming and datastructures.
 [codon]: https://docs.exaloop.io/codon
 [numba]: https://numba.pydata.org/
 [triton]: https://triton-lang.org
+[gil]: https://wiki.python.org/moin/GlobalInterpreterLock
+[pep-gil]: https://peps.python.org/pep-0703/
+[nogil]: https://github.com/colesbury/nogil-3.12
+
+Finally, hardware ...
 
 ## References
 
