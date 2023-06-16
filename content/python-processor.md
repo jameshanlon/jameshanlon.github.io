@@ -94,10 +94,8 @@ develop to provide these capabilities too:
 - **Conditional sparsity** through conditionality in the structure of a
   network, eg routing of activity based on the data. In a dense network, every
   input interacts with every weight, but our brains don't fire all neurons in
-  response to every stimulus.
-
-- **Unconditional sparsity** that is not dependent on the input, such as from
-  pruning of connections.
+  response to every stimulus, and **unconditional sparsity** that is not
+  dependent on the input, such as from pruning of connections.
 
 - **Symbolic representations**. Symbolic AI programs are based on creating
   explicit structures and behaviour rules. This approach was the dominant
@@ -124,15 +122,10 @@ Broadly, the performance of Python programs can be improved at three levels:
 2. Optimising the language implementation.
 3. Optimising the hardware.
 
-There has been significant work on tackling (2) the language implementation.
-Prominent examples include: [PyPy][pypy], an alternative implementation that
-includes a just-in-time (JIT) compiler to dynamically optimise common code
-paths; and [Cython][cython] and [Nuitka][nuitka] that translate Python to C for
-static compilation.
-
 The work in *Quantitative Overhead Analysis for Python* [1] provides a detailed
 analysis of overheads in CPython. The different types of overhead are
-described in the following table, which is taken from the paper.
+described in the following table, which is taken from the paper. See [2] and [3]
+for other similar analyses that [1] builds on.
 
 <table class="table table-sm table-striped">
   <caption>Sources of performance overhead in Python, from [1].</caption>
@@ -175,13 +168,22 @@ operations) and C function calls dominate.
 {{ macros.image('python-processor/measured-overheads.png', size='1000x1000',
                 caption='Python overheads measured in various benchmarks, from [1].') }}
 
+There has been significant work on tackling (2) the language implementation.
+Prominent examples include: [PyPy][pypy], an alternative implementation that
+includes a just-in-time (JIT) compiler to dynamically optimise common code
+paths; and [Cython][cython] and [Nuitka][nuitka] that translate Python to C for
+static compilation. Approximately, these approaches acheive speedups not larger
+than a factor of 10.
+
 It is worth noting that where the previous examples optimise Python as a
 general-purpose language, some approaches such as [Codon][codon],
 [Numba][numba] and [Triton][triton] compile subsets of Python into machine code
 for host or accelerator devices, eliminating the runtime overhead altogether.
-These however focus on accelerating numerical computations and therefore
-sidestep the difficulties of statically-compiling dynamic features such as
-naming and data structures.
+These approaches can achieve speedups of the order of 100 times for serial
+execution. They do however focus on accelerating numerical computations and
+therefore sidestep the difficulties of statically-compiling dynamic features
+such as naming, large integers and data structures, which are much more
+challenging.
 
 Within the scope of (1) optimising the application, a significant issue
 preventing the use of parallelism is Python's [Global Interpreter Lock
@@ -205,7 +207,16 @@ of this PEP is yet to be made but a [reference implementation][nogil] is availab
 [pep-gil]: https://peps.python.org/pep-0703/
 [nogil]: https://github.com/colesbury/nogil-3.12
 
-Finally, hardware ...
+## Hardware support for Python
+
+Hardware can improve Python performance by:
+
+- Handling garbage collection automatically.
+- Enabling new caching strategies to reduce recomputation.
+- Improving the performance of JIT compilation.
+- Providing more execution parallelism.
+
+
 
 ## References
 
@@ -213,5 +224,17 @@ Finally, hardware ...
    Python*, 2018 IEEE International Symposium on Workload Characterization
    (IISWC). [[IEEE][python-overheads-ieee], [PDF][python-overheads-pdf]]
 
+3. Nagy Mostafa, Chandra Krintz,Calin Cascaval, David Edelsohn, Priya
+   Nagpurkar, Peng Wu, *Understanding the Potential of Interpreter-based
+   Optimizations for Python*. UCSB Technical Report #2010-14 August, 2010.
+   [[PDF][mostafa-ucsb]]
+
+2. Gergö Barany, *Python Interpreter Performance Deconstructed*,
+   Proceedings of the Workshop on Dynamic Languages and Applications, June 2014.
+   [[ACM][barany-acm], [PDF][barany-pdf]]
+
 [python-overheads-ieee]: https://ieeexplore.ieee.org/document/8573512
 [python-overheads-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
+[barany-acm]: https://dl.acm.org/doi/10.1145/2617548.2617552
+[barany-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
+[mostafa-ucsb]: https://cs.ucsb.edu/research/tech-reports/2010-14
