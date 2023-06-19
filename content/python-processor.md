@@ -123,9 +123,10 @@ Broadly, the performance of Python programs can be improved at three levels:
 3. Optimising the hardware.
 
 The work in *Quantitative Overhead Analysis for Python* [1] provides a detailed
-analysis of overheads in CPython. The different types of overhead are
-described in the following table, which is taken from the paper. See [2] and [3]
-for other similar analyses that [1] builds on.
+analysis of overheads in CPython. [^python-overheads] The different types of
+overhead are described in the following table, which is taken from the paper.
+
+[^python-overheads]: See [2] and [3] for other similar analyses that [1] builds on.
 
 <table class="table table-sm table-striped">
   <caption>Sources of performance overhead in Python, from [1].</caption>
@@ -169,21 +170,30 @@ operations) and C function calls dominate.
                 caption='Python overheads measured in various benchmarks, from [1].') }}
 
 There has been significant work on tackling (2) the language implementation.
-Prominent examples include: [PyPy][pypy], an alternative implementation that
-includes a just-in-time (JIT) compiler to dynamically optimise common code
-paths; and [Cython][cython] and [Nuitka][nuitka] that translate Python to C for
-static compilation. Approximately, these approaches acheive speedups not larger
-than a factor of 10.
+Prominent examples include:
+[PyPy][pypy], an alternative [optimised][pypy-opt] implementation written in
+Python that includes a just in-time (JIT) compiler to dynamically optimise
+common code paths;
+[Cinder][cinder] is Meta's internal performance-optimised version of
+CPython that includes various performance optimisations and a per-method JIT;
+[Cython][cython] translates Python to C/C++ for static compilation and
+execution in the CPython runtime environment;
+[Nuitka][nuitka] is similar to Cython, as a compiler from Python to C,
+using the CPython interpreter as a library;
+And not forgetting CPython itself has an active project led by Microsoft and
+Guido van Rossum called [Faster CPython][faster-cpython] to explore
+performance optimisations.
+Approximately, these approaches achieve speedups of up to an order of magnitude
+when compared to the standard CPython implementation.
 
-It is worth noting that where the previous examples optimise Python as a
-general-purpose language, some approaches such as [Codon][codon],
-[Numba][numba] and [Triton][triton] compile subsets of Python into machine code
-for host or accelerator devices, eliminating the runtime overhead altogether.
-These approaches can achieve speedups of the order of 100 times for serial
-execution. They do however focus on accelerating numerical computations and
-therefore sidestep the difficulties of statically-compiling dynamic features
-such as naming, large integers and data structures, which are much more
-challenging.
+Where the previous examples optimise Python as a general-purpose language, some
+approaches such as [Codon][codon], [Numba][numba] and [Triton][triton] compile
+subsets of Python into machine code for host or accelerator devices,
+eliminating the runtime overhead altogether. These approaches can achieve
+speedups of the order of 100 times for serial execution. They focus however
+on accelerating numerical computations and therefore sidestep the difficulties
+of statically-compiling dynamic features such as naming, large integers and
+data structures, which are much more challenging.
 
 Within the scope of (1) optimising the application, a significant issue
 preventing the use of parallelism is Python's [Global Interpreter Lock
@@ -197,9 +207,24 @@ GIL, outlining motivating examples in scientific and numerical computing, and
 tasks using Python for coordination and communication. A decision on adoption
 of this PEP is yet to be made but a [reference implementation][nogil] is available.
 
+There are various sources of overhead in the execution of a Python program that
+can contribute to orders-of-magnitude slower runtime compared to a compiled
+program. Strategies to reduce this overhead are in optimising the sources of
+overhead directly by improving compilation strategies, improving runtime
+strategies (such as caching of accesses or performing JIT compilation to
+machine code of frequent code paths, statically compiling Python code to C code
+including the interpreter, and, for restricted subsets of Python, statically
+compiling Python code to machine code without the interpreter. These approaches
+are all within the software domain, so it is interesting to consider in what
+ways computer hardware could be optimised to further reduce the runtime
+overheads in Python programs.
+
 [pypy]: https://www.pypy.org
+[pypy-opt]: https://doc.pypy.org/en/latest/interpreter-optimizations.html
+[cinder]: https://github.com/facebookincubator/cinder
 [cython]: https://cython.org
 [nuitka]: https://nuitka.net
+[faster-cpython]: https://github.com/faster-cpython/ideas
 [codon]: https://docs.exaloop.io/codon
 [numba]: https://numba.pydata.org/
 [triton]: https://triton-lang.org
@@ -224,7 +249,7 @@ Hardware can improve Python performance by:
    Python*, 2018 IEEE International Symposium on Workload Characterization
    (IISWC). [[IEEE][python-overheads-ieee], [PDF][python-overheads-pdf]]
 
-3. Nagy Mostafa, Chandra Krintz,Calin Cascaval, David Edelsohn, Priya
+3. Nagy Mostafa, Chandra Krintz, Calin Cascaval, David Edelsohn, Priya
    Nagpurkar, Peng Wu, *Understanding the Potential of Interpreter-based
    Optimizations for Python*. UCSB Technical Report #2010-14 August, 2010.
    [[PDF][mostafa-ucsb]]
@@ -238,3 +263,9 @@ Hardware can improve Python performance by:
 [barany-acm]: https://dl.acm.org/doi/10.1145/2617548.2617552
 [barany-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
 [mostafa-ucsb]: https://cs.ucsb.edu/research/tech-reports/2010-14
+
+## Related
+
+- [ePython][epython], Nick Brown.
+
+[epython]: https://github.com/mesham/epython
