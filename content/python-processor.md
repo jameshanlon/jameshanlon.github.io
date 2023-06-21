@@ -78,7 +78,7 @@ language) provides the best experience and results for users, rather than
 deferring to optimised compiled-language libraries. PyTorch's primacy and clear
 prioritisation of ease of use indicates the direction of travel: that Python
 will continue to become a first-class citizen in AI programming and so its
-performance will be increasingly important.
+performance will be increasingly under scrutiny.
 
 Since around 2012, AI has undergone a renaissance by scaling the performance of
 deep neural networks with GPUs. Looking forward, there are many ways in which AI
@@ -234,13 +234,50 @@ overheads in Python programs.
 
 ## Hardware support for Python
 
-Hardware can improve Python performance by:
+In this section, I present some rough ideas on what new computer hardware might
+look like that optimises the execution of Python (or indeed other dynamic
+languages). It is interesting to first outline some of the main findings from
+the microarchitecture investigation in [1] that is based on a range of
+benchmarks run with CPython and PyPy (with and without JIT):
 
+- **ILP**. Both CPython and PyPy exhibit low instruction-level parallelism.
+  This suggests that choosing a deeply-pipelined out-of-order core may not
+  provide good tradeoff between silicon area and performance. Instead a simple,
+  in-order core may be a good choice, particularly when building a parallel
+  processor with many cores.
+
+- **Working memory**. Across all the benchmarks, large caches do not provide a
+  performance benefit, implying that working sets tend to be relatively small.
+
+- **Nursery sizing**. A critical factor related to working memory is an area
+  used for the allocation for short-term objects called a *nursery*. When the
+  nursery does not fit in cache, performance is impacted due to cache thrashing.
+  However, there are two things to consider: reducing the nursery size will
+  increase garbage-collection overheads and the optimal nursery size is dependent
+  on the application.
+
+- **JIT**. When JIT compilation is used, the memory system is put under more
+  pressure, so although the number of instructions executed reduces, the
+  latency of memory operations increases due to cache line misses. This implies
+  the working memory increases and so accordingly the overhead of garbage
+  collection also increases.
+
+Based on the above observations and that the complexity of Python bytecode
+precludes it from sensibly being implemented as hardware instructions, it is
+clear that optimising the memory system will yield a more significant
+performance improvement than optimising the processor microarchitecture.
+Orthogonal to this, providing more execution parallelism at the process level
+is the only other way to significantly scale performance. This gives us the
+basis for a new Python processor.
+
+{#
 - Handling garbage collection automatically.
 - Enabling new caching strategies to reduce recomputation.
 - Improving the performance of JIT compilation.
 - Providing more execution parallelism.
-
+- ASIC accelerators do not prioritise ease of use
+- VyperCore connection
+#}
 
 
 ## References
