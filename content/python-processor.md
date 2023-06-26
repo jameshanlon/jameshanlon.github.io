@@ -13,8 +13,11 @@ Status: published
 I have recently spent some time thinking about how hardware can be architected
 and optimised to better support high-level dynamic languages such as Python and
 JavaScript. There appears to be a significant gap between the way processors
-and memory systems are built, and the characteristics of dynamic-language
-workloads. This gap presents a huge opportunity for new hardware innovation.
+and memory systems are built, which is to prioritise performance,  and the
+characteristics of dynamic-language workloads, which prioritise ease of use. I
+argue that dynamic languages are setting the direction of travel in the way we
+use computers and to this gap presents a huge opportunity for new hardware
+innovation.
 
 ## Dynamic languages
 
@@ -232,13 +235,11 @@ overheads in Python programs.
 [pep-gil]: https://peps.python.org/pep-0703/
 [nogil]: https://github.com/colesbury/nogil-3.12
 
-## Hardware support for Python
+## Hardware impacts on Python performance
 
-In this section, I present some rough ideas on what new computer hardware might
-look like that optimises the execution of Python (or indeed other dynamic
-languages). It is interesting to first outline some of the main findings from
-the microarchitecture investigation in [1] that is based on a range of
-benchmarks run with CPython and PyPy (with and without JIT):
+It is interesting to outline some of the main findings from the
+microarchitecture investigation in [1]. (The study is based on a range of
+benchmarks run with CPython and PyPy with and without JIT).
 
 - **ILP**. Both CPython and PyPy exhibit low instruction-level parallelism.
   This suggests that choosing a deeply-pipelined out-of-order core may not
@@ -262,23 +263,91 @@ benchmarks run with CPython and PyPy (with and without JIT):
   the working memory increases and so accordingly the overhead of garbage
   collection also increases.
 
-Based on the above observations and that the complexity of Python bytecode
-precludes it from sensibly being implemented as hardware instructions, it is
-clear that optimising the memory system will yield a more significant
-performance improvement than optimising the processor microarchitecture.
-Orthogonal to this, providing more execution parallelism at the process level
-is the only other way to significantly scale performance. This gives us the
-basis for a new Python processor.
+Based on the above observations, it is clear that optimising the memory system
+will yield a more significant performance improvement than optimising the
+processor microarchitecture and instruction set design (as is typically the
+focus of new processor designs). Orthogonal to optimisations in the memory
+system, providing more execution parallelism at the process level is the only
+other way to significantly scale performance. This gives us the basis for a new
+Python processor.
+
+## Hardware support for Python
+
+In this section, I present some rough ideas on what new computer hardware might
+look like that optimises the execution of Python (or indeed other dynamic
+languages).
+
+The most strightforward way to deploy a new processor chip is as an
+*accelerator* to a conventional *host* processor via PCIe. The host processor
+can then offload parts or all of the Python workload to the acelerator for
+improved performance. The following diagrams show two ways that this could
+work: one where the host runs the Python interpreter and offloads parts of the
+Python program; the other where the accelerator runs the Python interpreter and
+communicates to the host via a standard set of system calls. The first scenario
+means that execution can fall back onto the host if the Python code was not
+supported by the accelerator, thereby allowing the design of the accelerator to
+be simpler. However, managing the communication of Python objects over this
+boundary is complicated and potentially a significant overhead. In the second
+scenario, the whole Python program is executed by the interpreter running on
+the accelerator. This significantly simplifies the interface between the two
+devices, which would only need to provide basic system calls to the
+interpreter.
+
+{{ macros.pair_layout(
+    macros.image('python-processor/offload-model-fine.png', size='1000x1000',
+                 caption='Fine-grained offload'),
+    macros.image('python-processor/offload-model-coarse.png', size='1000x1000',
+                 caption='Coarse-grained offload')) }}
+
+At a system level, an accelerator device for Python might be integrated between
+the host processor and other accelerators (typically GPUs in data-centre-type
+deployments) since Python will be responsible for coordinating offload of
+computations. Access to external memory can either be to DRAM via the host or
+on DRAM intergrated with the device. The latter has the benefit of bieng lower
+latency and higher bandwidth.
+
+{{ macros.image('python-processor/accelerator.png', size='1000x1000') }}
+
+At the core level, it makes a lot of sense to use RISC-V as the base
+instruction set because it is a general-purpose ISA that is open and easily
+extensible. As previously noted, the RISC-V microarchitecture can be kept
+simple because interpreting Python is not heavily dependent on ILP. The degree
+to which the core microarchitecture is kept simple depends on where the
+tradeoff lies between sequential and parallel performance, which depends on the
+workload. AI for example will be weighted towards highly-parallel execution.
+Extensions to the core can be added to provide optimised support for specific
+operations, control over the memory hierarchy, support for concurrency
+(threading, synchronisation, communication etc).
+
+One way to improve the way memory is managed is to bring some level of control
+of the cache to the processor. In the following diagram, A RISC-V core has
+extensions that allows it interact with a 'smart cache' under software control.
+Such a system could enable agressive caching of computations that are frequently
+recomputed (example?).
+
+{{ macros.image('python-processor/smart-cache.png', size='1000x1000') }}
+
+Another memory-system optimisation is to provide garbage collection (GC) as a
+hardware-managed function. GC is a technique that has been studied for many
+years (it was first introduced in Lisp in the 1950s), including as a hardware
+function. [^gc-survey] Surprisingly, hardware GC has never caught on and this
+is certainly related to the [challenges][gc-hw-hard] of a performant solution
+requiring integration across many levels of abstraction: microarchitecture,
+architecture, tooling, operating systems and languages.
 
 {#
-- Handling garbage collection automatically.
+
 - Enabling new caching strategies to reduce recomputation.
 - Improving the performance of JIT compilation.
 - Providing more execution parallelism.
 - ASIC accelerators do not prioritise ease of use
 - VyperCore connection
+
 #}
 
+[^gc-survey]: See [4] for a literature review of hardware GC techniques and implemenations.
+
+[gc-hw-hard]: https://www.quora.com/Why-dont-modern-CPUs-offer-hardware-assisted-garbage-collection-and-memory-allocation
 
 ## References
 
@@ -286,23 +355,44 @@ basis for a new Python processor.
    Python*, 2018 IEEE International Symposium on Workload Characterization
    (IISWC). [[IEEE][python-overheads-ieee], [PDF][python-overheads-pdf]]
 
-3. Nagy Mostafa, Chandra Krintz, Calin Cascaval, David Edelsohn, Priya
+2. Nagy Mostafa, Chandra Krintz, Calin Cascaval, David Edelsohn, Priya
    Nagpurkar, Peng Wu, *Understanding the Potential of Interpreter-based
    Optimizations for Python*. UCSB Technical Report #2010-14 August, 2010.
    [[PDF][mostafa-ucsb]]
 
-2. Gergö Barany, *Python Interpreter Performance Deconstructed*,
+3. Gergö Barany, *Python Interpreter Performance Deconstructed*,
    Proceedings of the Workshop on Dynamic Languages and Applications, June 2014.
    [[ACM][barany-acm], [PDF][barany-pdf]]
+
+4. Andres Amaya Garcia, Integrated hardware garbage collection for real-time
+   embedded systems, PhD thesis, University of Bristol 2021.
+   [[Univerisy of Bristol][garcia-gc], [PDF][garcia-gc-pdf]]
+
 
 [python-overheads-ieee]: https://ieeexplore.ieee.org/document/8573512
 [python-overheads-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
 [barany-acm]: https://dl.acm.org/doi/10.1145/2617548.2617552
 [barany-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
 [mostafa-ucsb]: https://cs.ucsb.edu/research/tech-reports/2010-14
+[garcia-gc]: https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys
+[garcia-gc-pdf]: https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf
 
+## Acknowledgments
+
+The hardware ideas in this note were developed in conversations with [James
+Pallister][jpallister]. Closely related to some of the ideas explored is an
+exciting new startup [VyperCore][vypercore] (founded by [Ed Nutting][enutting])
+who are building a RISC-V-based processor that includes hardware allocation and
+GC for performance and safety.
+
+[jpallister]: http://www.jpallister.com
+[enutting]: https://ednutting.com
+[vypercore]: https://www.vypercore.com
+
+{#
 ## Related
 
 - [ePython][epython], Nick Brown.
 
 [epython]: https://github.com/mesham/epython
+#}
