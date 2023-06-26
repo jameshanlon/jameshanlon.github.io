@@ -277,9 +277,9 @@ In this section, I present some rough ideas on what new computer hardware might
 look like that optimises the execution of Python (or indeed other dynamic
 languages).
 
-The most strightforward way to deploy a new processor chip is as an
+The most straightforward way to deploy a new processor chip is as an
 *accelerator* to a conventional *host* processor via PCIe. The host processor
-can then offload parts or all of the Python workload to the acelerator for
+can then offload parts or all of the Python workload to the accelerator for
 improved performance. The following diagrams show two ways that this could
 work: one where the host runs the Python interpreter and offloads parts of the
 Python program; the other where the accelerator runs the Python interpreter and
@@ -303,7 +303,7 @@ At a system level, an accelerator device for Python might be integrated between
 the host processor and other accelerators (typically GPUs in data-centre-type
 deployments) since Python will be responsible for coordinating offload of
 computations. Access to external memory can either be to DRAM via the host or
-on DRAM intergrated with the device. The latter has the benefit of bieng lower
+on DRAM integrated with the device. The latter has the benefit of being lower
 latency and higher bandwidth.
 
 {{ macros.image('python-processor/accelerator.png', size='1000x1000') }}
@@ -322,7 +322,7 @@ operations, control over the memory hierarchy, support for concurrency
 One way to improve the way memory is managed is to bring some level of control
 of the cache to the processor. In the following diagram, A RISC-V core has
 extensions that allows it interact with a 'smart cache' under software control.
-Such a system could enable agressive caching of computations that are frequently
+Such a system could enable aggressive caching of computations that are frequently
 recomputed (example?).
 
 {{ macros.image('python-processor/smart-cache.png', size='1000x1000') }}
@@ -337,15 +337,13 @@ architecture, tooling, operating systems and languages.
 
 {#
 
-- Enabling new caching strategies to reduce recomputation.
 - Improving the performance of JIT compilation.
 - Providing more execution parallelism.
 - ASIC accelerators do not prioritise ease of use
-- VyperCore connection
 
 #}
 
-[^gc-survey]: See [4] for a literature review of hardware GC techniques and implemenations.
+[^gc-survey]: See [4] for a literature review of hardware GC techniques and implementations.
 
 [gc-hw-hard]: https://www.quora.com/Why-dont-modern-CPUs-offer-hardware-assisted-garbage-collection-and-memory-allocation
 
@@ -377,7 +375,7 @@ architecture, tooling, operating systems and languages.
 [garcia-gc]: https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys
 [garcia-gc-pdf]: https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf
 
-## Acknowledgments
+## Acknowledgements
 
 The hardware ideas in this note were developed in conversations with [James
 Pallister][jpallister]. Closely related to some of the ideas explored is an
