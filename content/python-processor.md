@@ -277,6 +277,8 @@ In this section, I present some rough ideas on what new computer hardware might
 look like that optimises the execution of Python (or indeed other dynamic
 languages).
 
+### System architecture
+
 The most straightforward way to deploy a new processor chip is as an
 *accelerator* to a conventional *host* processor connected via PCIe. The host
 processor can then offload parts or all of the Python workload to the
@@ -304,41 +306,58 @@ At a system level, an accelerator device for Python might be integrated between
 the host processor and other accelerators (typically GPUs in data-centre-type
 deployments) since Python will be responsible for coordinating offload of
 computations. Access to external memory can either be to DRAM via the host or
-on DRAM integrated with the device. The latter has the benefit of being lower
-latency and higher bandwidth.
+on DRAM integrated with the device. The latter has the benefit of being able to
+supply lower latency and higher bandwidth to the memories.
 
 {{ macros.image('python-processor/accelerator.png', size='1000x1000') }}
 
+## Core architecture
+
 At the core level, it makes a lot of sense to use RISC-V as the base
-instruction set because it is a general-purpose ISA that is open and easily
+architecture because it is a general-purpose ISA that is open and easily
 extensible. As previously noted, the RISC-V microarchitecture can be kept
 simple because interpreting Python is not heavily dependent on ILP. The
 complexity of the microarchitecture depends on the best tradeoff between
 sequential and parallel performance, which in turn depends on the workload. AI
-for example will be weighted towards highly-parallel execution. Extensions to
-the core can be added to provide optimised support for specific operations (eg
-floating-point arithmetic and operations for matrix multiplication), control
-over the memory hierarchy or support for concurrency (threading,
-synchronisation, communication etc).
+for example will be weighted towards highly-parallel execution, so is better
+suited to a large number of simple processor cores. Extensions to the core can
+be added to provide optimised support for specific operations (eg
+floating-point arithmetic and for matrix multiplication), support for
+concurrency (threading, synchronisation, communication etc) or control over the
+memory hierarchy.
+
+## Memory system
 
 One way to improve the way memory is managed is to bring some level of control
 of the cache to the processor. In the following diagram, A RISC-V core has
-extensions that allows it interact with a 'smart cache' under software control.
-Such a system could enable aggressive caching of computations that are frequently
-recomputed, such as in name and function resolution that account for a
-substantial portion of the language overhead. [TODO: example]
+extensions that allows it to control a 'smart cache'. Such a system could
+enable aggressive caching of computations that are frequently recomputed, such
+as in the processes of name and function resolution, or from calling a function
+with the same arguments, which account for a substantial portion of the
+language overhead. A motivating example is caching of the C `strlen` function
+that is used frequently by the Python interpreter in name resolution. A
+difficulty in caching this function entirely in software is that a full string
+comparison is required to determine whether to invalidate the cache or not, and
+this is roughly as expensive as `strlen`. A hardware caching scheme could be
+implemented more simply by snooping memory writes and invalidating the cache
+entry if any part of the string has changed. To support this, hardware
+extensions would be required to place items in the cache, retrieve items in the
+cache, monitor ranges of memory and invalidate items in monitored ranges.
 
 {{ macros.image('python-processor/smart-cache.png', size='1000x1000') }}
 
 Another memory-system optimisation is to provide garbage collection (GC) as a
 hardware-managed function. GC is a technique that has been studied for decades,
-including as a hardware function: it was first introduced in Lisp in the 1950s
-and appeared as a hardware extension in the 1981 [Intel iAPX 432][Intel432]
-(see [4] for a literature review of hardware GC techniques and
-implementations). Surprisingly, hardware GC has never caught on and this is
-certainly related to the [challenges][gc-hw-hard] of a performant solution
-requiring integration across many levels of abstraction: microarchitecture,
-architecture, tooling, operating systems and languages.
+including in hardware: it was first introduced in Lisp in the 1950s and
+appeared as a hardware extension in the 1981 [Intel iAPX 432][Intel432] (see
+[4] for a literature review of hardware GC techniques and implementations).
+Surprisingly, hardware GC has never caught on and this is certainly related to
+the [challenges][gc-hw-hard] of a performant solution requiring integration
+across many levels of abstraction: microarchitecture, architecture, tooling,
+operating systems and languages. However, it seems that this precedent should
+be challenged given that GC is central to the way dynamic languages work.
+
+## Scaling the number of cores
 
 Building a system with multiple processing cores can be done in a conventional
 way by sharing access to higher levels of cache and adding a coherency
@@ -378,7 +397,15 @@ building blocks are a processor-memory tile and a router.
 
 ## Summary
 
-This note ...
+This note makes the argument that ease of use the critical factor in the
+development of new application areas and the adoption of new computer hardware.
+Ease of use has in many regards won as the most important factor in software
+and programming, but new computer hardware prioritises performance. Closing
+this gap would mean that rapidly-developing application areas such as AI would
+benefit by moving the boundary away from optimised low-level libraries, making
+fuller use of languages such as Python. For computer designers, there is a huge
+opportunity for new architectural innovations that support a radically
+different workload from conventional low-level compiled languages.
 
 ## References
 
@@ -412,18 +439,10 @@ This note ...
 
 The hardware ideas in this note were developed in conversations with [James
 Pallister][jpallister]. Closely related to some of the ideas explored is an
-exciting new startup [VyperCore][vypercore] (founded by [Ed Nutting][enutting])
-who are building a RISC-V-based processor that includes hardware allocation and
-GC for performance and safety.
+exciting new UK startup [VyperCore][vypercore] (founded by [Ed
+Nutting][enutting]) who are building a RISC-V-based processor that includes
+facilities for hardware memory allocation and GC for performance and safety.
 
 [jpallister]: http://www.jpallister.com
 [enutting]: https://ednutting.com
 [vypercore]: https://www.vypercore.com
-
-{#
-## Related
-
-- [ePython][epython], Nick Brown.
-
-[epython]: https://github.com/mesham/epython
-#}
