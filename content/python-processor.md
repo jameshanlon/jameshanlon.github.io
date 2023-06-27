@@ -1,11 +1,11 @@
 ---
 Title: Thoughts on a Python processor
-Date: 2023-06-30
+Date: 2023-06-27
 Category: notes
 Tags: computing, computer-architecture
 Summary: A rationale and strawman for a processor to accelerate
          dynamic-language workloads.
-Status: published
+Status: draft 
 ---
 
 {% import 'post-macros.html' as macros %}
