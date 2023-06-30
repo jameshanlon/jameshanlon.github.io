@@ -517,12 +517,21 @@ enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the &lt;a href="https://en.wikipedia.org/wiki/Occam_(programming_language)"&gt;occam programming
 language&lt;/a&gt; but it
 not dissimilar to a small subset of C, for example. I include some more
-historical details &lt;a href="#historical-details"&gt;at the end&lt;/a&gt;.&lt;/p&gt;
+historical details &lt;a href="#a-historical-note"&gt;at the end&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In my &lt;a href="https://github.com/jameshanlon/hex-processor"&gt;implementation&lt;/a&gt;, I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
 next two sections introduce Hex and&amp;nbsp;X.&lt;/p&gt;
-&lt;h2&gt;The Hex&amp;nbsp;architecture&lt;/h2&gt;
+&lt;h2&gt;Table of&amp;nbsp;contents&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="#the-hex-architecture"&gt;The Hex&amp;nbsp;architecture&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#the-x-language"&gt;The X&amp;nbsp;language&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#hex-processor-integrated-circuit"&gt;Hex processor integrated&amp;nbsp;circuit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#hex-tooling"&gt;Hex&amp;nbsp;tooling&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#a-historical-note"&gt;A historical&amp;nbsp;note&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#summary"&gt;Summary&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;The Hex architecture &lt;a name="the-hex-architecture" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The Hex architecture is described in detail in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf"&gt;a separate
 &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, but I will give a brief summary here
 and focus on several important aspects for reference. Hex has four registers:
@@ -763,7 +772,7 @@ returns to the caller using &lt;code&gt;BRB&lt;/code&gt;.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;The X&amp;nbsp;language&lt;/h2&gt;
+&lt;h2&gt;The X language &lt;a name="the-x-language" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The X language is defined in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf"&gt;a separate
 &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;. X is simple enough that it can
 be compiled using simple techniques to the Hex architecture, whilst providing
@@ -855,7 +864,7 @@ following program implements Bubblesort to sort an array of four&amp;nbsp;elemen
   generate values, however it is not implemented in &lt;code&gt;xhexb&lt;/code&gt; or &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Hex processor integrated&amp;nbsp;circuit&lt;/h2&gt;
+&lt;h2&gt;Hex processor integrated circuit &lt;a name="hex-processor-integrated-circuit" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;A hardware implementation of the Hex processor is written in System Verilog,
 &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv"&gt;&lt;code&gt;processor.sv&lt;/code&gt;&lt;/a&gt;,
 in just 150 lines. This implementation is single cycle in that all elements of
@@ -977,7 +986,7 @@ following images are some examples of the different&amp;nbsp;views.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h2&gt;Hex&amp;nbsp;tooling&lt;/h2&gt;
+&lt;h2&gt;Hex tooling &lt;a name="hex-tooling" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;There are three tools provided in the Hex toolchain: a Hex instruction set
 simulator &lt;code&gt;hexsim&lt;/code&gt;, a Hex assembler &lt;code&gt;hexasm&lt;/code&gt; and an X compiler &lt;code&gt;xcmp&lt;/code&gt;.
 Instructions on how to build the tools are included in the
@@ -1320,8 +1329,7 @@ virtual set as is typical in machines with more&amp;nbsp;registers.&lt;/p&gt;
 and Hex notes &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, with aspects such as the
 calling convention, handling of operators and arithmetic and memory layout
 being shared in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a name="historical-details" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;A historical&amp;nbsp;note&lt;/h2&gt;
+&lt;h2&gt;A historical note &lt;a name="a-historical-note" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Hex, apart from being related to the Transputer, has some other interesting
 historical roots. David May learned about languages and compilers from &lt;a href="https://www.cl.cam.ac.uk/~mr10/"&gt;Martin
 Richards&lt;/a&gt; who was a young lecturer when David
@@ -1344,7 +1352,7 @@ of &lt;span class="caps"&gt;XMOS&lt;/span&gt; (incidentally, I used this compile
 techniques of compiling message-passing programs). Hex and X follow directly from
 the &lt;span class="caps"&gt;BCPL&lt;/span&gt;-derived approaches, used by David as a tool to teach students about
 instruction sets, compilers, bootstrapping&amp;nbsp;etc.&lt;/p&gt;
-&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;h2&gt;Summary &lt;a name="summary" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
 architecture that allows a compact implementation of rudimentary tooling and a

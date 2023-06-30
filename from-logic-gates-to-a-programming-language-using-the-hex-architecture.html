@@ -93,12 +93,21 @@ enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the <a href="https://en.wikipedia.org/wiki/Occam_(programming_language)">occam programming
 language</a> but it
 not dissimilar to a small subset of C, for example. I include some more
-historical details <a href="#historical-details">at the end</a>.</p>
+historical details <a href="#a-historical-note">at the end</a>.</p>
 <p>In my <a href="https://github.com/jameshanlon/hex-processor">implementation</a>, I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
 next two sections introduce Hex and&nbsp;X.</p>
-<h2>The Hex&nbsp;architecture</h2>
+<h2>Table of&nbsp;contents</h2>
+<ol>
+<li><a href="#the-hex-architecture">The Hex&nbsp;architecture</a></li>
+<li><a href="#the-x-language">The X&nbsp;language</a></li>
+<li><a href="#hex-processor-integrated-circuit">Hex processor integrated&nbsp;circuit</a></li>
+<li><a href="#hex-tooling">Hex&nbsp;tooling</a></li>
+<li><a href="#a-historical-note">A historical&nbsp;note</a></li>
+<li><a href="#summary">Summary</a></li>
+</ol>
+<h2>The Hex architecture <a name="the-hex-architecture" class="anchor"></a></h2>
 <p>The Hex architecture is described in detail in <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf">a separate
 <span class="caps">PDF</span></a>, but I will give a brief summary here
 and focus on several important aspects for reference. Hex has four registers:
@@ -339,7 +348,7 @@ returns to the caller using <code>BRB</code>.</p>
 </pre></div>
 
 
-<h2>The X&nbsp;language</h2>
+<h2>The X language <a name="the-x-language" class="anchor"></a></h2>
 <p>The X language is defined in <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf">a separate
 <span class="caps">PDF</span></a>. X is simple enough that it can
 be compiled using simple techniques to the Hex architecture, whilst providing
@@ -431,7 +440,7 @@ following program implements Bubblesort to sort an array of four&nbsp;elements:<
   generate values, however it is not implemented in <code>xhexb</code> or <code>xcmp</code>.</p>
 </li>
 </ul>
-<h2>Hex processor integrated&nbsp;circuit</h2>
+<h2>Hex processor integrated circuit <a name="hex-processor-integrated-circuit" class="anchor"></a></h2>
 <p>A hardware implementation of the Hex processor is written in System Verilog,
 <a href="https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv"><code>processor.sv</code></a>,
 in just 150 lines. This implementation is single cycle in that all elements of
@@ -553,7 +562,7 @@ following images are some examples of the different&nbsp;views.</p>
   </div>
 </div>
 
-<h2>Hex&nbsp;tooling</h2>
+<h2>Hex tooling <a name="hex-tooling" class="anchor"></a></h2>
 <p>There are three tools provided in the Hex toolchain: a Hex instruction set
 simulator <code>hexsim</code>, a Hex assembler <code>hexasm</code> and an X compiler <code>xcmp</code>.
 Instructions on how to build the tools are included in the
@@ -896,8 +905,7 @@ virtual set as is typical in machines with more&nbsp;registers.</p>
 and Hex notes <span class="caps">PDF</span></a>, with aspects such as the
 calling convention, handling of operators and arithmetic and memory layout
 being shared in <code>xcmp</code>.</p>
-<p><a name="historical-details" class="anchor"></a></p>
-<h2>A historical&nbsp;note</h2>
+<h2>A historical note <a name="a-historical-note" class="anchor"></a></h2>
 <p>Hex, apart from being related to the Transputer, has some other interesting
 historical roots. David May learned about languages and compilers from <a href="https://www.cl.cam.ac.uk/~mr10/">Martin
 Richards</a> who was a young lecturer when David
@@ -920,7 +928,7 @@ of <span class="caps">XMOS</span> (incidentally, I used this compiler in my PhD 
 techniques of compiling message-passing programs). Hex and X follow directly from
 the <span class="caps">BCPL</span>-derived approaches, used by David as a tool to teach students about
 instruction sets, compilers, bootstrapping&nbsp;etc.</p>
-<h2>Summary</h2>
+<h2>Summary <a name="summary" class="anchor"></a></h2>
 <p>Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
 architecture that allows a compact implementation of rudimentary tooling and a
