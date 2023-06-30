@@ -16,7 +16,7 @@ JavaScript. There appears to be a significant gap between the way processors
 and memory systems are built, which is to prioritise performance,  and the
 characteristics of dynamic-language workloads, which prioritise ease of use. I
 argue that dynamic languages are setting the direction of travel in the way we
-use computers and to this gap presents a huge opportunity for new hardware
+use computers and this gap presents a huge opportunity for new hardware
 innovation.
 
 ## Dynamic languages

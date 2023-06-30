@@ -38,14 +38,23 @@ enough to fit on a single chip in the technology of the day. X draws on the
 basic sequential features of the [occam programming
 language](https://en.wikipedia.org/wiki/Occam_(programming_language)) but it
 not dissimilar to a small subset of C, for example. I include some more
-historical details [at the end](#historical-details).
+historical details [at the end](#a-historical-note).
 
 In my [implementation](https://github.com/jameshanlon/hex-processor), I have
 created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
 next two sections introduce Hex and X.
 
-## The Hex architecture
+## Table of contents
+
+1. [The Hex architecture](#the-hex-architecture)
+2. [The X language](#the-x-language)
+3. [Hex processor integrated circuit](#hex-processor-integrated-circuit)
+4. [Hex tooling](#hex-tooling)
+5. [A historical note](#a-historical-note)
+6. [Summary](#summary)
+
+## The Hex architecture <a name="the-hex-architecture" class="anchor"></a>
 
 The Hex architecture is described in detail in [a separate
 PDF]({{'hex-processor/hexb.pdf'|asset}}), but I will give a brief summary here
@@ -305,7 +314,7 @@ foo+11   OPR  0   # BRB pc = breg (0x00003e)
 main+35  ...
 ```
 
-## The X language
+## The X language <a name="the-x-language" class="anchor"></a>
 
 The X language is defined in [a separate
 PDF]({{'hex-processor/xhexnotes.pdf'|asset}}). X is simple enough that it can
@@ -390,7 +399,7 @@ Other noteworthy features of X are:
   generate values, however it is not implemented in ``xhexb`` or ``xcmp``.
 
 
-## Hex processor integrated circuit
+## Hex processor integrated circuit <a name="hex-processor-integrated-circuit" class="anchor"></a>
 
 A hardware implementation of the Hex processor is written in System Verilog,
 [``processor.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv),
@@ -448,7 +457,7 @@ following images are some examples of the different views.
      macros.image('hex-processor/floorplan-hold-worstpath.png', caption='The same visualisation for the worst (least slack) hold path in the design.')) }}
 
 
-## Hex tooling
+## Hex tooling <a name="hex-tooling" class="anchor"></a>
 
 There are three tools provided in the Hex toolchain: a Hex instruction set
 simulator ``hexsim``, a Hex assembler ``hexasm`` and an X compiler ``xcmp``.
@@ -812,9 +821,7 @@ calling convention, handling of operators and arithmetic and memory layout
 being shared in ``xcmp``.
 
 
-<a name="historical-details" class="anchor"></a>
-
-## A historical note
+## A historical note <a name="a-historical-note" class="anchor"></a>
 
 Hex, apart from being related to the Transputer, has some other interesting
 historical roots. David May learned about languages and compilers from [Martin
@@ -843,7 +850,7 @@ the BCPL-derived approaches, used by David as a tool to teach students about
 instruction sets, compilers, bootstrapping etc.
 
 
-## Summary
+## Summary <a name="summary" class="anchor"></a>
 
 Modern processors, languages, compilers, and tooling are complex and difficult
 to understand. This note walks through possibly the simplest processor
