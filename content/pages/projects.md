@@ -1,25 +1,23 @@
 Title: Projects
 Status: published
 
+### RISC-V processor
+
+**[WIP]** A C++ simulator and SystemVerilog implementation of the RISC-V 32IM
+architecture that I developed to learn about RISC-V.
+
+- [Github](https://github.com/jameshanlon/riscv-processor)
+
 ### Slang Netlist
 
-Slang Netlist is a library and tool leveraging [slang](https://sv-lang.com) to
-analyse the source-level static connectivity of a System Verilog design and is
-intended to be a replacement for Netlist Paths (see below). Slang Netlist is
-included as a tool in the slang project.
+**[WIP]** Slang Netlist is a library and tool leveraging
+[slang](https://sv-lang.com) to analyse the source-level static connectivity of
+a System Verilog design and is intended to be a replacement for Netlist Paths
+(see below). Slang Netlist is included as a tool in the slang project.
 
 - [GitHub](https://github.com/MikePopoloski/slang)
 
-### Netlist Paths
-
-Netlist Paths is a library and command-line tool for querying a Verilog
-netlist. It reads an XML representation of a design's netlist, produced by
-[Verilator](https://www.veripool.org/projects/verilator), and provides
-facilities for inspecting types, variables and paths. The library is written in
-C++ and has a Python interface.
-
-- [GitHub](https://github.com/jameshanlon/netlist-paths)
-- [Documentation](https://jameshanlon.github.io/netlist-paths)
+<hr>
 
 ### Hex processor
 
@@ -32,6 +30,17 @@ hardware implementation.
 
 - [GitHub](https://github.com/jameshanlon/hex-processor)
 - [Documentation](https://jameshanlon.github.io/hex-processor)
+
+### Netlist Paths
+
+Netlist Paths is a library and command-line tool for querying a Verilog
+netlist. It reads an XML representation of a design's netlist, produced by
+[Verilator](https://www.veripool.org/projects/verilator), and provides
+facilities for inspecting types, variables and paths. The library is written in
+C++ and has a Python interface.
+
+- [GitHub](https://github.com/jameshanlon/netlist-paths)
+- [Documentation](https://jameshanlon.github.io/netlist-paths)
 
 ### PRNG testing
 
@@ -48,10 +57,10 @@ paper](https://arxiv.org/abs/2203.04058).
 
 #### Older projects
 
-- [Three-channel, high-power LED driver](https://github.com/jameshanlon/3C-HP-LED-driver),<br>
-  PCB design files and microcontroller code.
 - [Convolutional neural network from scratch](https://github.com/jameshanlon/convolutional-neural-network),<br>
   a simple C++ implementation of a convolutional neural network.
+- [Three-channel, high-power LED driver](https://github.com/jameshanlon/3C-HP-LED-driver),<br>
+  PCB design files and microcontroller code.
 - [Sire compiler v2](https://github.com/jameshanlon/tool_sire),<br>
   a rewrite of the original sire implementation in Python, and this time
   targeting the XMOS XS1 architecture via the
