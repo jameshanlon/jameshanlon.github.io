@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="James W. Hanlon">
-  <title>Silicon design for test structures</title>
+  <title>Testing silicon logic with scan structures</title>
   <link rel="icon" href="./favicon.png" sizes="16x16" type="image/png">
   <link rel="stylesheet" type="text/css" href="./theme/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/lightbox.min.css">
@@ -55,7 +55,7 @@
   <main class="flex-shrink-0">
   <div class="container">
   <h1>
-    Silicon design for test&nbsp;structures
+    Testing silicon logic with scan&nbsp;structures
   </h1>
   <div class="lead">
     <time class="published" datetime="2019-04-18T00:00:00+02:00">
@@ -65,11 +65,12 @@
   </div>
   <div class="article-body">
     <p>Design for test (<span class="caps">DFT</span>) is a methodology for silicon integrated-circuit chips to
-allow the devices to be tested during manufacture. Such testability permits the
-detection of defects due to problems in the manufacturing processes that would
-adversely affect the functional behaviour of the device. This note explains
-some of the concepts of <span class="caps">DFT</span> applied to chip design, particularly focusing on
-the structures that are inserted to functional&nbsp;logic.</p>
+enable devices to be tested during and after manufacture. Such testability
+permits the detection of faults due to problems in the manufacturing processes
+that would adversely affect the functional behaviour of the device. This note
+explains the concepts of a particular <span class="caps">DFT</span> methodology called <em>scan test</em>, which
+modifies the logic of a design in such a way that the functional behaviour is
+preserved but classes of faults become&nbsp;detectable.</p>
 <h2>Scan&nbsp;chains</h2>
 <p>A chip can be viewed as a set of input ports that feed into a series of
 combinatorial and sequential cells, and arrive at a set of output ports. To
@@ -217,6 +218,7 @@ of the&nbsp;circuit.</p>
 <h2>References / further&nbsp;reading</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Design_for_testing">Design for testing&nbsp;(Wikipedia)</a></li>
+<li><a href="https://vlsitutorials.com/dft-scan-and-atpg/"><span class="caps">DFT</span>, Scan and <span class="caps">ATPG</span> (<span class="caps">VLSI</span>&nbsp;Tutorials)</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Automatic_test_pattern_generation">Automatic test pattern generation&nbsp;(Wikipedia)</a></li>
 <li><a href="http://web.stanford.edu/class/archive/ee/ee371/ee371.1066/lectures.html">Stanford <span class="caps">EE371</span>, lecture 14: Design for&nbsp;testability</a></li>
 </ul>

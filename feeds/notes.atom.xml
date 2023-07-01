@@ -2200,13 +2200,14 @@ Brain inspired:
 - Applied Brain Research (ABR) - Nengo "brain" chip
 - Rain Neuromophic
 - GrAI (pronounced "gray") Matter Labs has a fully digital neuromorphic processor
---&gt;</content><category term="notes"></category><category term="computing"></category><category term="machine-intelligence"></category><category term="computer-architecture"></category></entry><entry><title>Silicon design for test structures</title><link href="http://jameswhanlon.com/silicon-design-for-test-structures.html" rel="alternate"></link><published>2019-04-18T00:00:00+02:00</published><updated>2019-04-18T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2019-04-18:/silicon-design-for-test-structures.html</id><summary type="html">&lt;p&gt;A description of how digital circuits are modified to allow scan
+--&gt;</content><category term="notes"></category><category term="computing"></category><category term="machine-intelligence"></category><category term="computer-architecture"></category></entry><entry><title>Testing silicon logic with scan structures</title><link href="http://jameswhanlon.com/testing-silicon-logic-with-scan-structures.html" rel="alternate"></link><published>2019-04-18T00:00:00+02:00</published><updated>2019-04-18T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2019-04-18:/testing-silicon-logic-with-scan-structures.html</id><summary type="html">&lt;p&gt;A description of how digital circuits are modified to allow scan
 testing to be&amp;nbsp;performed.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Design for test (&lt;span class="caps"&gt;DFT&lt;/span&gt;) is a methodology for silicon integrated-circuit chips to
-allow the devices to be tested during manufacture. Such testability permits the
-detection of defects due to problems in the manufacturing processes that would
-adversely affect the functional behaviour of the device. This note explains
-some of the concepts of &lt;span class="caps"&gt;DFT&lt;/span&gt; applied to chip design, particularly focusing on
-the structures that are inserted to functional&amp;nbsp;logic.&lt;/p&gt;
+enable devices to be tested during and after manufacture. Such testability
+permits the detection of faults due to problems in the manufacturing processes
+that would adversely affect the functional behaviour of the device. This note
+explains the concepts of a particular &lt;span class="caps"&gt;DFT&lt;/span&gt; methodology called &lt;em&gt;scan test&lt;/em&gt;, which
+modifies the logic of a design in such a way that the functional behaviour is
+preserved but classes of faults become&amp;nbsp;detectable.&lt;/p&gt;
 &lt;h2&gt;Scan&amp;nbsp;chains&lt;/h2&gt;
 &lt;p&gt;A chip can be viewed as a set of input ports that feed into a series of
 combinatorial and sequential cells, and arrive at a set of output ports. To
@@ -2354,6 +2355,7 @@ of the&amp;nbsp;circuit.&lt;/p&gt;
 &lt;h2&gt;References / further&amp;nbsp;reading&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Design_for_testing"&gt;Design for testing&amp;nbsp;(Wikipedia)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://vlsitutorials.com/dft-scan-and-atpg/"&gt;&lt;span class="caps"&gt;DFT&lt;/span&gt;, Scan and &lt;span class="caps"&gt;ATPG&lt;/span&gt; (&lt;span class="caps"&gt;VLSI&lt;/span&gt;&amp;nbsp;Tutorials)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Automatic_test_pattern_generation"&gt;Automatic test pattern generation&amp;nbsp;(Wikipedia)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://web.stanford.edu/class/archive/ee/ee371/ee371.1066/lectures.html"&gt;Stanford &lt;span class="caps"&gt;EE371&lt;/span&gt;, lecture 14: Design for&amp;nbsp;testability&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
