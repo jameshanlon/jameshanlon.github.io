@@ -1,5 +1,5 @@
 ---
-Title: Silicon design for test structures
+Title: Testing silicon logic with scan structures
 Date: 2019-04-18
 Category: notes
 Tags: microelectronics
@@ -9,11 +9,12 @@ Status: published
 ---
 
 Design for test (DFT) is a methodology for silicon integrated-circuit chips to
-allow the devices to be tested during manufacture. Such testability permits the
-detection of defects due to problems in the manufacturing processes that would
-adversely affect the functional behaviour of the device. This note explains
-some of the concepts of DFT applied to chip design, particularly focusing on
-the structures that are inserted to functional logic.
+enable devices to be tested during and after manufacture. Such testability
+permits the detection of faults due to problems in the manufacturing processes
+that would adversely affect the functional behaviour of the device. This note
+explains the concepts of a particular DFT methodology called *scan test*, which
+modifies the logic of a design in such a way that the functional behaviour is
+preserved but classes of faults become detectable.
 
 ## Scan chains
 
@@ -174,6 +175,7 @@ of the circuit.
 ## References / further reading
 
 - [Design for testing (Wikipedia)](https://en.wikipedia.org/wiki/Design_for_testing)
+- [DFT, Scan and ATPG (VLSI Tutorials)](https://vlsitutorials.com/dft-scan-and-atpg/)
 - [Automatic test pattern generation (Wikipedia)](https://en.wikipedia.org/wiki/Automatic_test_pattern_generation)
 - [Stanford EE371, lecture 14: Design for testability](http://web.stanford.edu/class/archive/ee/ee371/ee371.1066/lectures.html)
 
