@@ -3,7 +3,8 @@ Title: Querying logical paths in a Verilog design
 Date: 2018-11-20
 Category: notes
 Tags: computing, microelectronics, verilog
-Summary: A description of a command-line tool I created.
+Summary: A description of a command-line tool I created for tracing timing
+         paths from a flattened netlist back through the RTL.
 Status: published
 ---
 
