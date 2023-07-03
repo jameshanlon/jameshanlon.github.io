@@ -32,8 +32,11 @@ jobs:
           path: ./output/thumbs
           key: ${{runner.os}}-thumbs
           
+      - name: Run webpack 
+        run: make webpack
+          
       - name: Build the website
-        run: make
+        run: make html 
         
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
