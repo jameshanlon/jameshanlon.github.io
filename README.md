@@ -15,7 +15,8 @@ $ pip install -r requirements.txt
 
 Build the website:
 ```
-$ make
+$ make webpack
+$ make html
 ...
 $ make validate
 ```
