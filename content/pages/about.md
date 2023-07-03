@@ -1,7 +1,9 @@
 Title: About
 Status: published
 
-<img src="/images/mugshot.jpg" width="300" class="img-fluid" alt="mugshot">
+{% import 'post-macros.html' as macros %}
+
+<img class="img-fluid" src="{{'mugshot-beach.jpg'|thumbnail('600x600')}}" alt="James W Hanlon">
 
 # About me
 

@@ -49,7 +49,6 @@ MENU_ITEMS = [
 ]
 
 STATIC_PATHS = [
-    'images',
     'files',
     'CNAME',
 ]
