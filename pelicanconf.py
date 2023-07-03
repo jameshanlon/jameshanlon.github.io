@@ -51,8 +51,6 @@ MENU_ITEMS = [
 STATIC_PATHS = [
     'images',
     'files',
-    'files/favicon.png',
-    'files/robots.txt',
     'CNAME',
 ]
 
@@ -61,8 +59,9 @@ ARTICLE_EXCLUDES = [
 ]
 
 EXTRA_PATH_METADATA = {
-    'files/robots.txt': {'path': 'robots.txt'},
-    'files/favicon.png': {'path': 'favicon.png'},
+    'theme/static/files/robots.txt': {'path': 'robots.txt'},
+    'theme/static/images/favicon-16x16.png': {'path': 'favicon-16x16.png'},
+    'theme/static/images/favicon-32x32.png': {'path': 'favicon-32x32.png'},
 }
 
 DEFAULT_METADATA = {
