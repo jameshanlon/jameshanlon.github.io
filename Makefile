@@ -18,6 +18,7 @@ ifeq ($(RELATIVE), 1)
 endif
 
 webpack:
+	npm install
 	npx webpack
 
 html:
