@@ -17,6 +17,8 @@ ifeq ($(RELATIVE), 1)
 	PELICANOPTS += --relative-urls
 endif
 
+all: webpack html
+
 webpack:
 	npm install
 	npx webpack
