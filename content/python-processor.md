@@ -5,7 +5,7 @@ Category: notes
 Tags: computing, computer-architecture
 Summary: A rationale and strawman for a processor to accelerate
          dynamic-language workloads.
-Status: draft 
+Status: draft
 ---
 
 {% import 'post-macros.html' as macros %}
@@ -60,7 +60,8 @@ has not extended to optimisation of the underlying hardware.
 
 In this remainder of this note I will focus on Python and its application to
 AI, a domain that is is significant enough to cause the development of new
-computer hardware.
+computer hardware and rapid adoption of new process, integration and packaging
+technologies.
 
 Python has established itself as the main programming language in AI, and this
 is due to ease-of-use considerations. Programming in AI is typically done using
@@ -215,12 +216,12 @@ can contribute to orders-of-magnitude slower runtime compared to a compiled
 program. Strategies to reduce this overhead are in optimising the sources of
 overhead directly by improving compilation strategies, improving runtime
 strategies (such as caching of accesses or performing JIT compilation to
-machine code of frequent code paths, statically compiling Python code to C code
-including the interpreter, and, for restricted subsets of Python, statically
-compiling Python code to machine code without the interpreter. These approaches
-are all within the software domain, so it is interesting to consider in what
-ways computer hardware could be optimised to further reduce the runtime
-overheads in Python programs.
+machine code of frequent code paths), statically compiling Python code to C
+code including inline calls to the interpreter, and, for restricted subsets of
+Python, statically compiling Python code to machine code without the
+interpreter. These approaches are all within the software domain, so it is
+interesting to consider in what ways computer hardware could be optimised to
+further reduce the runtime overheads in Python programs.
 
 [pypy]: https://www.pypy.org
 [pypy-opt]: https://doc.pypy.org/en/latest/interpreter-optimizations.html
@@ -237,14 +238,15 @@ overheads in Python programs.
 
 ## Hardware impacts on Python performance
 
-It is interesting to outline some of the main findings from the
-microarchitecture investigation in [1]. (The study is based on a range of
-benchmarks run with CPython and PyPy with and without JIT).
+The main findings from the microarchitecture investigation in [1] summarised
+below provide a useful basis for understanding how Python is limited by current
+computer hardware. The study is based on a range of benchmarks run with CPython
+and PyPy with and without JIT.
 
 - **ILP**. Both CPython and PyPy exhibit low instruction-level parallelism.
   This suggests that choosing a deeply-pipelined out-of-order core may not
-  provide good tradeoff between silicon area and performance. Instead a simple,
-  in-order core may be a good choice, particularly when building a parallel
+  provide good tradeoff between silicon area and performance. A simpler, in-order
+  core may instead be a better choice, particularly when building a parallel
   processor with many cores.
 
 - **Working memory**. Across all the benchmarks, large caches do not provide a
@@ -263,17 +265,17 @@ benchmarks run with CPython and PyPy with and without JIT).
   the working memory increases and so accordingly the overhead of garbage
   collection also increases.
 
-Based on the above observations, it is clear that optimising the memory system
-will yield a more significant performance improvement than optimising the
-processor microarchitecture and instruction set design (as is typically the
-focus of new processor designs). Orthogonal to optimisations in the memory
-system, providing more execution parallelism at the process level is the only
-other way to significantly scale performance. This gives us the basis for a new
-Python processor.
+It is clear from these findings that optimising the memory system will yield a
+more significant performance improvement than optimising the processor
+microarchitecture and instruction set design (as is typically the focus of new
+processor designs). Orthogonal to optimisations in the memory system, providing
+more execution parallelism at the process level is the only other way to
+significantly scale performance. This gives us the basis for a new Python
+processor.
 
 ## Hardware support for Python
 
-In this section, I present some rough ideas on what new computer hardware might
+This section presents some rough ideas on what new computer hardware might
 look like that optimises the execution of Python (or indeed other dynamic
 languages).
 
@@ -372,28 +374,36 @@ used as units of memory or processing dependent on the application. This
 approach generalises the concept of a programmable cache hierarchy by using
 processor-memory pairs as units of memory with the processor providing access
 logic and building arbitrary caching schemes in software, dependent on the
-characteristics of the workload. [^memory-emulation] Alternatively,
-processor-memory pairs can be turned over to processing and used to execute
-parts of an application in parallel, a great example of which would be running
-one or several JIT compiler processes concurrently with the application.
+characteristics of the workload. I have previously written about this idea in
+my work on [emulating large memories](files/emulation.pdf).
+Alternatively, processor-memory pairs can be turned over to processing and used
+to execute parts of an application in parallel, a great example of which would
+be running one or several JIT compiler processes concurrently with the
+application.
 
 The following diagram sketches how such a machine might be built. The main
-building blocks are a processor-memory tile and a router.
+building blocks are a processor-memory *tile* and a *router*. The tile includes
+communication facilities, allowing it to communicate to all other tiles in the
+system and to off-chip communication interfaces via routers. The arrangement of
+routers and tiles is flexible but the routers have enough links that
+high-dimensional topologies can be created to provide communication with
+bounded latency and throughput, which is essential for a general-purpose
+machine. The operation of the communications fabric could be dynamic allocated
+with packet switching, or statically allocated with circuit switching. Special
+packet types can be used for accessing external memory or other off-chip IO, or
+for implementing shared-memory operations such as direct access to remote tile
+memories. Collective operations such as scatters and gathers are likely to be
+frequently used, so could be optimised with supporting hardware in the tile and
+routers. These are the essential ingredients of a  general-purpose fine-grained
+parallel machine. I have previously outlined a similar kind of machine in my
+[PhD thesis][thesis], and I intend to post a note with a revised and fuller
+description at some point soon.
 
 {{ macros.image('python-processor/parallel-microarchitecture-top.png', size='1000x1000') }}
 
-[^memory-emulation]: I have previously written about this idea in my work on
-                    [emulating large memories (PDF)](files/emulation.pdf).
-
-{#
-
-- Improving the performance of JIT compilation.
-- ASIC accelerators do not prioritise ease of use
-
-#}
-
 [intel432]: https://en.wikipedia.org/wiki/Intel_iAPX_432#Garbage_collection
 [gc-hw-hard]: https://www.quora.com/Why-dont-modern-CPUs-offer-hardware-assisted-garbage-collection-and-memory-allocation
+[thesis]: /scalable-abstractions-for-general-purpose-parallel-computation.html
 
 ## Summary
 
@@ -405,7 +415,9 @@ this gap would mean that rapidly-developing application areas such as AI would
 benefit by moving the boundary away from optimised low-level libraries, making
 fuller use of languages such as Python. For computer designers, there is a huge
 opportunity for new architectural innovations that support a radically
-different workload from conventional low-level compiled languages.
+different workload from conventional low-level compiled languages. Contrary to
+conventional wisdom, hardware is easier to innovate rapidly and it is software
+that bears the weight of legacy.
 
 ## References
 
