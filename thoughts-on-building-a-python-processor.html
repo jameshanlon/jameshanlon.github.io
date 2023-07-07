@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="author" content="James W. Hanlon">
-  <title>Thoughts on a Python processor</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="../theme/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../theme/images/favicon-16x16.png">
-  <link rel="stylesheet" type="text/css" href="../theme/css/main.css"/>
+  <title>Thoughts on building a Python processor</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
   <link href="http://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -54,8 +54,8 @@
   <main class="flex-shrink-0">
   <div class="container">
   <h1>
-    Thoughts on a Python&nbsp;processor
-[DRAFT]  </h1>
+    Thoughts on building a Python&nbsp;processor
+  </h1>
   <div class="lead">
     <time class="published" datetime="2023-06-27T00:00:00+02:00">
       27 Jun 2023
@@ -307,7 +307,7 @@ processor can then offload parts or all of the Python workload to the
 accelerator for improved performance. The following diagrams show two ways that
 this could work: one where the host runs the Python interpreter and offloads
 parts of the Python program (similar to the way <em>Eager Mode</em> works in PyTorch
-and Tensorflow); the other where the accelerator runs the Python interpreter
+and TensorFlow); the other where the accelerator runs the Python interpreter
 and communicates to the host via a standard set of system calls. The first
 scenario means that execution can fall back onto the host if the Python code
 was not supported by the accelerator, thereby allowing the design of the
@@ -475,15 +475,15 @@ that bears the weight of&nbsp;legacy.</p>
 <li>
 <p>Andres Amaya Garcia, Integrated hardware garbage collection for real-time
    embedded systems, PhD thesis, University of Bristol 2021.
-   [<a href="https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys">Univerisy of Bristol</a>, <a href="https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf"><span class="caps">PDF</span></a>]</p>
+   [<a href="https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys">University of Bristol</a>, <a href="https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf"><span class="caps">PDF</span></a>]</p>
 </li>
 </ol>
 <h2>Acknowledgements</h2>
 <p>The hardware ideas in this note were developed in conversations with <a href="http://www.jpallister.com">James
-Pallister</a>. Closely related to some of the ideas explored is an
-exciting new <span class="caps">UK</span> startup <a href="https://www.vypercore.com">VyperCore</a> (founded by <a href="https://ednutting.com">Ed
-Nutting</a>) who are building a <span class="caps">RISC</span>-V-based processor that includes
-facilities for hardware memory allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
+Pallister</a>. Closely related to some of the ideas explored is a new
+<span class="caps">UK</span> startup <a href="https://www.vypercore.com">VyperCore</a> co-founded by <a href="https://ednutting.com">Ed Nutting</a> who are
+building a <span class="caps">RISC</span>-V-based processor that includes facilities for hardware memory
+allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
 <div class="footnote">
 <hr />
 <ol>
@@ -516,6 +516,6 @@ facilities for hardware memory allocation and <span class="caps">GC</span> for p
       </div>
     </div>
   </footer>
-  <script src="../theme/js/bundle.js"></script>
+  <script src="./theme/js/bundle.js"></script>
 </body>
 </html>
