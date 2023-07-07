@@ -64,9 +64,13 @@ program counter ``pc``, operand register ``oreg`` and the A and B registers
 agnostic of a particular word size, but it has to be a minimum of a byte and
 multiples of a byte. In the included implementation the word size is 4 bytes.
 Hex has sixteen instructions (hence its name!) that are summarised in the
-following table. The instructions are grouped into memory access with absolute
-or relative addressing modes, loading of constants, branching, inter-register
-operations and supervisor calls.
+following table. Each instruction has a 4-bit opcode and a 4-bit immediate. The
+immediate value can be extended using the prefix instructions to form a wider
+value in the ``oreg``, adding four bits per instruction. Operations beyond the
+16 available encodings are made accessible by the ``OPR`` instruction that
+encodes the operation type with its immediate. The instructions are grouped
+into memory access with absolute or relative addressing modes, loading of
+constants, branching, inter-register operations and supervisor calls.
 
 <table class="table table-striped table-sm">
 <thead>
