@@ -1,11 +1,11 @@
 ---
-Title: Thoughts on a Python processor
+Title: Thoughts on building a Python processor
 Date: 2023-06-27
 Category: notes
 Tags: computing, computer-architecture
 Summary: A rationale and strawman for a processor to accelerate
          dynamic-language workloads.
-Status: draft
+Status: published
 ---
 
 {% import 'post-macros.html' as macros %}
@@ -287,7 +287,7 @@ processor can then offload parts or all of the Python workload to the
 accelerator for improved performance. The following diagrams show two ways that
 this could work: one where the host runs the Python interpreter and offloads
 parts of the Python program (similar to the way *Eager Mode* works in PyTorch
-and Tensorflow); the other where the accelerator runs the Python interpreter
+and TensorFlow); the other where the accelerator runs the Python interpreter
 and communicates to the host via a standard set of system calls. The first
 scenario means that execution can fall back onto the host if the Python code
 was not supported by the accelerator, thereby allowing the design of the
@@ -436,7 +436,7 @@ that bears the weight of legacy.
 
 4. Andres Amaya Garcia, Integrated hardware garbage collection for real-time
    embedded systems, PhD thesis, University of Bristol 2021.
-   [[Univerisy of Bristol][garcia-gc], [PDF][garcia-gc-pdf]]
+   [[University of Bristol][garcia-gc], [PDF][garcia-gc-pdf]]
 
 
 [python-overheads-ieee]: https://ieeexplore.ieee.org/document/8573512
@@ -450,10 +450,10 @@ that bears the weight of legacy.
 ## Acknowledgements
 
 The hardware ideas in this note were developed in conversations with [James
-Pallister][jpallister]. Closely related to some of the ideas explored is an
-exciting new UK startup [VyperCore][vypercore] (founded by [Ed
-Nutting][enutting]) who are building a RISC-V-based processor that includes
-facilities for hardware memory allocation and GC for performance and safety.
+Pallister][jpallister]. Closely related to some of the ideas explored is a new
+UK startup [VyperCore][vypercore] co-founded by [Ed Nutting][enutting] who are
+building a RISC-V-based processor that includes facilities for hardware memory
+allocation and GC for performance and safety.
 
 [jpallister]: http://www.jpallister.com
 [enutting]: https://ednutting.com
