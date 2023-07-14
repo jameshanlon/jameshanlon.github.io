@@ -447,6 +447,12 @@ that bears the weight of legacy.
 [garcia-gc]: https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys
 [garcia-gc-pdf]: https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf
 
+## Related
+
+- [Accelerating Python Today](intel-python-acceleration), Intel technical note.
+
+[intel-python-acceleration]: https://www.intel.com/content/www/us/en/developer/articles/technical/accelerating-python-today.html#gs.35k6hi
+
 ## Acknowledgements
 
 The hardware ideas in this note were developed in conversations with [James
