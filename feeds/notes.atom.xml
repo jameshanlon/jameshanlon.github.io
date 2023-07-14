@@ -414,6 +414,10 @@ that bears the weight of&amp;nbsp;legacy.&lt;/p&gt;
    [&lt;a href="https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys"&gt;University of Bristol&lt;/a&gt;, &lt;a href="https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;]&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2&gt;Related&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="intel-python-acceleration"&gt;Accelerating Python Today&lt;/a&gt;, Intel technical&amp;nbsp;note.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;Acknowledgements&lt;/h2&gt;
 &lt;p&gt;The hardware ideas in this note were developed in conversations with &lt;a href="http://www.jpallister.com"&gt;James
 Pallister&lt;/a&gt;. Closely related to some of the ideas explored is a new
