@@ -7,7 +7,19 @@ and memory systems are built, which is to prioritise performance,  and the
 characteristics of dynamic-language workloads, which prioritise ease of use. I
 argue that dynamic languages are setting the direction of travel in the way we
 use computers and this gap presents a huge opportunity for new hardware&amp;nbsp;innovation.&lt;/p&gt;
-&lt;h2&gt;Dynamic&amp;nbsp;languages&lt;/h2&gt;
+&lt;h3&gt;Table of&amp;nbsp;contents&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="#dynamic-languages"&gt;Dymamic&amp;nbsp;languages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#py-ai"&gt;Python and &lt;span class="caps"&gt;AI&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#py-perf"&gt;Python&amp;nbsp;performance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#py-hw-impacts"&gt;Hardware impacts on Python&amp;nbsp;performance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#py-hw-support"&gt;Hardware support for&amp;nbsp;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#summary"&gt;Summary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#acknowledgements"&gt;Acknowledgements&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#references"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#related-links"&gt;Related&amp;nbsp;links&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Dynamic languages &lt;a name="dynamic-languages" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;According to &lt;a href="https://survey.stackoverflow.co/2023/#technology-most-popular-technologies"&gt;Stack Overflow&amp;#8217;s 2023 developer survey&lt;/a&gt;, JavaScript
 has now been the most commonly-used language for the last 11 years and Python
 has become the third most commonly-used language amongst all developers and the
@@ -36,7 +48,7 @@ overhead is acceptable price to pay for their benefits. Having said this, there
 are ongoing substantial efforts to close the gap by optimising the language
 implementations and compilation strategies. As far as I can see, this effort
 has not extended to optimisation of the underlying&amp;nbsp;hardware.&lt;/p&gt;
-&lt;h2&gt;Python and &lt;span class="caps"&gt;AI&lt;/span&gt;&lt;/h2&gt;
+&lt;h2&gt;Python and &lt;span class="caps"&gt;AI&lt;/span&gt; &lt;a name="py-ai" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;In this remainder of this note I will focus on Python and its application to
 &lt;span class="caps"&gt;AI&lt;/span&gt;, a domain that is is significant enough to cause the development of new
 computer hardware and rapid adoption of new process, integration and packaging&amp;nbsp;technologies.&lt;/p&gt;
@@ -92,7 +104,7 @@ develop to provide these capabilities&amp;nbsp;too:&lt;/p&gt;
   constructed, including our&amp;nbsp;brains.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Python&amp;nbsp;performance&lt;/h2&gt;
+&lt;h2&gt;Python performance &lt;a name="py-perf" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Broadly, the performance of Python programs can be improved at three&amp;nbsp;levels:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Optimising the&amp;nbsp;application.&lt;/li&gt;
@@ -194,7 +206,7 @@ Python, statically compiling Python code to machine code without the
 interpreter. These approaches are all within the software domain, so it is
 interesting to consider in what ways computer hardware could be optimised to
 further reduce the runtime overheads in Python&amp;nbsp;programs.&lt;/p&gt;
-&lt;h2&gt;Hardware impacts on Python&amp;nbsp;performance&lt;/h2&gt;
+&lt;h2&gt;Hardware impacts on Python performance &lt;a name="py-hw-impacts" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The main findings from the microarchitecture investigation in [1] summarised
 below provide a useful basis for understanding how Python is limited by current
 computer hardware. The study is based on a range of benchmarks run with CPython
@@ -233,7 +245,7 @@ microarchitecture and instruction set design (as is typically the focus of new
 processor designs). Orthogonal to optimisations in the memory system, providing
 more execution parallelism at the process level is the only other way to
 significantly scale performance. This gives us the basis for a new Python&amp;nbsp;processor.&lt;/p&gt;
-&lt;h2&gt;Hardware support for&amp;nbsp;Python&lt;/h2&gt;
+&lt;h2&gt;Hardware support for Python &lt;a name="py-hw-support" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This section presents some rough ideas on what new computer hardware might
 look like that optimises the execution of Python (or indeed other dynamic&amp;nbsp;languages).&lt;/p&gt;
 &lt;h3&gt;System&amp;nbsp;architecture&lt;/h3&gt;
@@ -291,7 +303,7 @@ supply lower latency and higher bandwidth to the&amp;nbsp;memories.&lt;/p&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-&lt;h2&gt;Core&amp;nbsp;architecture&lt;/h2&gt;
+&lt;h3&gt;Core&amp;nbsp;architecture&lt;/h3&gt;
 &lt;p&gt;At the core level, it makes a lot of sense to use &lt;span class="caps"&gt;RISC&lt;/span&gt;-V as the base
 architecture because it is a general-purpose &lt;span class="caps"&gt;ISA&lt;/span&gt; that is open and easily
 extensible. As previously noted, the &lt;span class="caps"&gt;RISC&lt;/span&gt;-V microarchitecture can be kept
@@ -304,7 +316,7 @@ be added to provide optimised support for specific operations (eg
 floating-point arithmetic and for matrix multiplication), support for
 concurrency (threading, synchronisation, communication etc) or control over the
 memory&amp;nbsp;hierarchy.&lt;/p&gt;
-&lt;h2&gt;Memory&amp;nbsp;system&lt;/h2&gt;
+&lt;h3&gt;Memory&amp;nbsp;system&lt;/h3&gt;
 &lt;p&gt;One way to improve the way memory is managed is to bring some level of control
 of the cache to the processor. In the following diagram, A &lt;span class="caps"&gt;RISC&lt;/span&gt;-V core has
 extensions that allows it to control a &amp;#8216;smart cache&amp;#8217;. Such a system could
@@ -336,7 +348,7 @@ the &lt;a href="https://www.quora.com/Why-dont-modern-CPUs-offer-hardware-assist
 across many levels of abstraction: microarchitecture, architecture, tooling,
 operating systems and languages. However, it seems that this precedent should
 be challenged given that &lt;span class="caps"&gt;GC&lt;/span&gt; is central to the way dynamic languages&amp;nbsp;work.&lt;/p&gt;
-&lt;h2&gt;Scaling the number of&amp;nbsp;cores&lt;/h2&gt;
+&lt;h3&gt;Scaling the number of&amp;nbsp;cores&lt;/h3&gt;
 &lt;p&gt;Building a system with multiple processing cores can be done in a conventional
 way by sharing access to higher levels of cache and adding a coherency
 mechanism for lower-level private caches, but this does not scale well past a
@@ -378,7 +390,7 @@ description at some point&amp;nbsp;soon.&lt;/p&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;h2&gt;Summary &lt;a name="summary" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This note makes the argument that ease of use the critical factor in the
 development of new application areas and the adoption of new computer hardware.
 Ease of use has in many regards won as the most important factor in software
@@ -390,7 +402,13 @@ opportunity for new architectural innovations that support a radically
 different workload from conventional low-level compiled languages. Contrary to
 conventional wisdom, hardware is easier to innovate rapidly and it is software
 that bears the weight of&amp;nbsp;legacy.&lt;/p&gt;
-&lt;h2&gt;References&lt;/h2&gt;
+&lt;h2&gt;Acknowledgements &lt;a name="acknowledgements" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The hardware ideas in this note were developed in conversations with &lt;a href="http://www.jpallister.com"&gt;James
+Pallister&lt;/a&gt;. Closely related to some of the ideas explored is a new
+&lt;span class="caps"&gt;UK&lt;/span&gt; startup &lt;a href="https://www.vypercore.com"&gt;VyperCore&lt;/a&gt; co-founded by &lt;a href="https://ednutting.com"&gt;Ed Nutting&lt;/a&gt; who are
+building a &lt;span class="caps"&gt;RISC&lt;/span&gt;-V-based processor that includes facilities for hardware memory
+allocation and &lt;span class="caps"&gt;GC&lt;/span&gt; for performance and&amp;nbsp;safety.&lt;/p&gt;
+&lt;h2&gt;References &lt;a name="references" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Mohamed Ismail and G. Edward Suh, &lt;em&gt;Quantitative Overhead Analysis for
@@ -414,16 +432,11 @@ that bears the weight of&amp;nbsp;legacy.&lt;/p&gt;
    [&lt;a href="https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys"&gt;University of Bristol&lt;/a&gt;, &lt;a href="https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;]&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2&gt;Related&lt;/h2&gt;
+&lt;h2&gt;Related links &lt;a name="related-links" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="intel-python-acceleration"&gt;Accelerating Python Today&lt;/a&gt;, Intel technical&amp;nbsp;note.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/"&gt;Why Python is Slow: Looking Under the Hood&lt;/a&gt;, Pythonic Perambulations blog&amp;nbsp;(2014).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.intel.com/content/www/us/en/developer/articles/technical/accelerating-python-today.html#gs.35k6hi"&gt;Accelerating Python Today&lt;/a&gt;, Intel technical note, James&amp;nbsp;Reinders.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Acknowledgements&lt;/h2&gt;
-&lt;p&gt;The hardware ideas in this note were developed in conversations with &lt;a href="http://www.jpallister.com"&gt;James
-Pallister&lt;/a&gt;. Closely related to some of the ideas explored is a new
-&lt;span class="caps"&gt;UK&lt;/span&gt; startup &lt;a href="https://www.vypercore.com"&gt;VyperCore&lt;/a&gt; co-founded by &lt;a href="https://ednutting.com"&gt;Ed Nutting&lt;/a&gt; who are
-building a &lt;span class="caps"&gt;RISC&lt;/span&gt;-V-based processor that includes facilities for hardware memory
-allocation and &lt;span class="caps"&gt;GC&lt;/span&gt; for performance and&amp;nbsp;safety.&lt;/p&gt;
 &lt;div class="footnote"&gt;
 &lt;hr /&gt;
 &lt;ol&gt;
@@ -954,7 +967,7 @@ historical details &lt;a href="#a-historical-note"&gt;at the end&lt;/a&gt;.&lt;/
 created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
 next two sections introduce Hex and&amp;nbsp;X.&lt;/p&gt;
-&lt;h2&gt;Table of&amp;nbsp;contents&lt;/h2&gt;
+&lt;h3&gt;Table of&amp;nbsp;contents&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="#the-hex-architecture"&gt;The Hex&amp;nbsp;architecture&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#the-x-language"&gt;The X&amp;nbsp;language&lt;/a&gt;&lt;/li&gt;
@@ -962,6 +975,8 @@ next two sections introduce Hex and&amp;nbsp;X.&lt;/p&gt;
 &lt;li&gt;&lt;a href="#hex-tooling"&gt;Hex&amp;nbsp;tooling&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#a-historical-note"&gt;A historical&amp;nbsp;note&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="#summary"&gt;Summary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#similar-projects"&gt;Similar&amp;nbsp;projects&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#further-reading"&gt;Further&amp;nbsp;reading&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;The Hex architecture &lt;a name="the-hex-architecture" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The Hex architecture is described in detail in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf"&gt;a separate
@@ -1796,7 +1811,7 @@ complete high-level programming language to be targeted at it. The definitions
 and implementations are contained in a single repository and just a small set
 of source files, making it an excellent project to use to explore processors
 and&amp;nbsp;compilers.&lt;/p&gt;
-&lt;h2&gt;Similar&amp;nbsp;projects&lt;/h2&gt;
+&lt;h2&gt;Similar projects &lt;a name="similar-projects" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The following are some similar projects that include simple implementations of
 processor&amp;nbsp;toolchains.&lt;/p&gt;
 &lt;ul&gt;
@@ -1835,7 +1850,7 @@ processor&amp;nbsp;toolchains.&lt;/p&gt;
   programming&amp;nbsp;language.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Further&amp;nbsp;reading&lt;/h2&gt;
+&lt;h2&gt;Further reading &lt;a name="further-reading" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href="http://www.gamezero.com/team-0/articles/math_magic/micro/"&gt;Processor Design: An

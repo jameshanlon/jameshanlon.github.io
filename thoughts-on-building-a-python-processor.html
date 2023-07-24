@@ -71,7 +71,19 @@ and memory systems are built, which is to prioritise performance,  and the
 characteristics of dynamic-language workloads, which prioritise ease of use. I
 argue that dynamic languages are setting the direction of travel in the way we
 use computers and this gap presents a huge opportunity for new hardware&nbsp;innovation.</p>
-<h2>Dynamic&nbsp;languages</h2>
+<h3>Table of&nbsp;contents</h3>
+<ol>
+<li><a href="#dynamic-languages">Dymamic&nbsp;languages</a></li>
+<li><a href="#py-ai">Python and <span class="caps">AI</span></a></li>
+<li><a href="#py-perf">Python&nbsp;performance</a></li>
+<li><a href="#py-hw-impacts">Hardware impacts on Python&nbsp;performance</a></li>
+<li><a href="#py-hw-support">Hardware support for&nbsp;Python</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#related-links">Related&nbsp;links</a></li>
+</ol>
+<h2>Dynamic languages <a name="dynamic-languages" class="anchor"></a></h2>
 <p>According to <a href="https://survey.stackoverflow.co/2023/#technology-most-popular-technologies">Stack Overflow&#8217;s 2023 developer survey</a>, JavaScript
 has now been the most commonly-used language for the last 11 years and Python
 has become the third most commonly-used language amongst all developers and the
@@ -100,7 +112,7 @@ overhead is acceptable price to pay for their benefits. Having said this, there
 are ongoing substantial efforts to close the gap by optimising the language
 implementations and compilation strategies. As far as I can see, this effort
 has not extended to optimisation of the underlying&nbsp;hardware.</p>
-<h2>Python and <span class="caps">AI</span></h2>
+<h2>Python and <span class="caps">AI</span> <a name="py-ai" class="anchor"></a></h2>
 <p>In this remainder of this note I will focus on Python and its application to
 <span class="caps">AI</span>, a domain that is is significant enough to cause the development of new
 computer hardware and rapid adoption of new process, integration and packaging&nbsp;technologies.</p>
@@ -156,7 +168,7 @@ develop to provide these capabilities&nbsp;too:</p>
   constructed, including our&nbsp;brains.</p>
 </li>
 </ul>
-<h2>Python&nbsp;performance</h2>
+<h2>Python performance <a name="py-perf" class="anchor"></a></h2>
 <p>Broadly, the performance of Python programs can be improved at three&nbsp;levels:</p>
 <ol>
 <li>Optimising the&nbsp;application.</li>
@@ -258,7 +270,7 @@ Python, statically compiling Python code to machine code without the
 interpreter. These approaches are all within the software domain, so it is
 interesting to consider in what ways computer hardware could be optimised to
 further reduce the runtime overheads in Python&nbsp;programs.</p>
-<h2>Hardware impacts on Python&nbsp;performance</h2>
+<h2>Hardware impacts on Python performance <a name="py-hw-impacts" class="anchor"></a></h2>
 <p>The main findings from the microarchitecture investigation in [1] summarised
 below provide a useful basis for understanding how Python is limited by current
 computer hardware. The study is based on a range of benchmarks run with CPython
@@ -297,7 +309,7 @@ microarchitecture and instruction set design (as is typically the focus of new
 processor designs). Orthogonal to optimisations in the memory system, providing
 more execution parallelism at the process level is the only other way to
 significantly scale performance. This gives us the basis for a new Python&nbsp;processor.</p>
-<h2>Hardware support for&nbsp;Python</h2>
+<h2>Hardware support for Python <a name="py-hw-support" class="anchor"></a></h2>
 <p>This section presents some rough ideas on what new computer hardware might
 look like that optimises the execution of Python (or indeed other dynamic&nbsp;languages).</p>
 <h3>System&nbsp;architecture</h3>
@@ -355,7 +367,7 @@ supply lower latency and higher bandwidth to the&nbsp;memories.</p>
   </a>
 </div>
 
-<h2>Core&nbsp;architecture</h2>
+<h3>Core&nbsp;architecture</h3>
 <p>At the core level, it makes a lot of sense to use <span class="caps">RISC</span>-V as the base
 architecture because it is a general-purpose <span class="caps">ISA</span> that is open and easily
 extensible. As previously noted, the <span class="caps">RISC</span>-V microarchitecture can be kept
@@ -368,7 +380,7 @@ be added to provide optimised support for specific operations (eg
 floating-point arithmetic and for matrix multiplication), support for
 concurrency (threading, synchronisation, communication etc) or control over the
 memory&nbsp;hierarchy.</p>
-<h2>Memory&nbsp;system</h2>
+<h3>Memory&nbsp;system</h3>
 <p>One way to improve the way memory is managed is to bring some level of control
 of the cache to the processor. In the following diagram, A <span class="caps">RISC</span>-V core has
 extensions that allows it to control a &#8216;smart cache&#8217;. Such a system could
@@ -400,7 +412,7 @@ the <a href="https://www.quora.com/Why-dont-modern-CPUs-offer-hardware-assisted-
 across many levels of abstraction: microarchitecture, architecture, tooling,
 operating systems and languages. However, it seems that this precedent should
 be challenged given that <span class="caps">GC</span> is central to the way dynamic languages&nbsp;work.</p>
-<h2>Scaling the number of&nbsp;cores</h2>
+<h3>Scaling the number of&nbsp;cores</h3>
 <p>Building a system with multiple processing cores can be done in a conventional
 way by sharing access to higher levels of cache and adding a coherency
 mechanism for lower-level private caches, but this does not scale well past a
@@ -442,7 +454,7 @@ description at some point&nbsp;soon.</p>
   </a>
 </div>
 
-<h2>Summary</h2>
+<h2>Summary <a name="summary" class="anchor"></a></h2>
 <p>This note makes the argument that ease of use the critical factor in the
 development of new application areas and the adoption of new computer hardware.
 Ease of use has in many regards won as the most important factor in software
@@ -454,7 +466,13 @@ opportunity for new architectural innovations that support a radically
 different workload from conventional low-level compiled languages. Contrary to
 conventional wisdom, hardware is easier to innovate rapidly and it is software
 that bears the weight of&nbsp;legacy.</p>
-<h2>References</h2>
+<h2>Acknowledgements <a name="acknowledgements" class="anchor"></a></h2>
+<p>The hardware ideas in this note were developed in conversations with <a href="http://www.jpallister.com">James
+Pallister</a>. Closely related to some of the ideas explored is a new
+<span class="caps">UK</span> startup <a href="https://www.vypercore.com">VyperCore</a> co-founded by <a href="https://ednutting.com">Ed Nutting</a> who are
+building a <span class="caps">RISC</span>-V-based processor that includes facilities for hardware memory
+allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
+<h2>References <a name="references" class="anchor"></a></h2>
 <ol>
 <li>
 <p>Mohamed Ismail and G. Edward Suh, <em>Quantitative Overhead Analysis for
@@ -478,16 +496,11 @@ that bears the weight of&nbsp;legacy.</p>
    [<a href="https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys">University of Bristol</a>, <a href="https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf"><span class="caps">PDF</span></a>]</p>
 </li>
 </ol>
-<h2>Related</h2>
+<h2>Related links <a name="related-links" class="anchor"></a></h2>
 <ul>
-<li><a href="intel-python-acceleration">Accelerating Python Today</a>, Intel technical&nbsp;note.</li>
+<li><a href="http://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/">Why Python is Slow: Looking Under the Hood</a>, Pythonic Perambulations blog&nbsp;(2014).</li>
+<li><a href="https://www.intel.com/content/www/us/en/developer/articles/technical/accelerating-python-today.html#gs.35k6hi">Accelerating Python Today</a>, Intel technical note, James&nbsp;Reinders.</li>
 </ul>
-<h2>Acknowledgements</h2>
-<p>The hardware ideas in this note were developed in conversations with <a href="http://www.jpallister.com">James
-Pallister</a>. Closely related to some of the ideas explored is a new
-<span class="caps">UK</span> startup <a href="https://www.vypercore.com">VyperCore</a> co-founded by <a href="https://ednutting.com">Ed Nutting</a> who are
-building a <span class="caps">RISC</span>-V-based processor that includes facilities for hardware memory
-allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
 <div class="footnote">
 <hr />
 <ol>
