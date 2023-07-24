@@ -14,15 +14,15 @@ Modern ASIC design differs to conventional software engineering in several
 important aspects that require a somewhat different approach to project
 development:
 
-- **Tapeout**. When a design is released for manufacture (known in the
+- **Tappet**. When a design is released for manufacture (known in the
   industry as a *tape out*), there are typically high non-recoverable expenses associated
   with setting up the processes and a long lead time in receiving a (hopefully)
   working device. There are two implications of this situation:
-    (1) chip tapeouts precludes incremental releases, for example to fix trivial bugs, and
+    (1) chip tape outs precludes incremental releases, for example to fix trivial bugs, and
     therefore means that the confidence in the correct functionality of the
     design must be very high;
     (2) post tape out, the design source code is effectively frozen forever more for
-    the purposes of debug and analsys.
+    the purposes of debug and analysis.
 
 - **Tooling**. Compared to software tooling, standard ASIC design tooling
   (known in the industry as *electronic design automation*) :
@@ -45,7 +45,7 @@ and structure of a software infrastructure to build ASIC chips.
 
 1. [Aims](#aims)
 1. [Guiding principles](#principles)
-1. [Infrastructure components](#components)
+1. [Components](#components)
 1. [Flows](#flows)
 1. [Related projects](#related-projects)
 
@@ -69,7 +69,7 @@ philosophy of the approach that is explored in this note:
   work on a taped-out design.
 
 - Support **multiple chips and frozen designs** to keep previous generations
-  alive for debug of silicon issues and/or as a basis for a incremental tapeout
+  alive for debug of silicon issues and/or as a basis for a incremental tape out
   (known as a *respin*), and to allow multiple designs to be built concurrently.
 
 ## Guiding principles <a name="principles" class="anchor"></a>
@@ -82,7 +82,7 @@ alternative foundations can be constructed and argued for.
 
 1. **Simple and explicit**. Build a complex system using simple, well-defined
 components composed and controlled using explicit mechanisms. Conversely, avoid
-easy-to-use high-level interfaces that hide important behvaiours. This borrows
+easy-to-use high-level interfaces that hide important behaviours. This borrows
 from the [Zen of Python](https://peps.python.org/pep-0020/): *explicit is better
 than implicit and simple is better than complex*. Examples include avoiding the
 use of global variables, preferring flat rather than nested, preferring
@@ -96,18 +96,18 @@ benefits](https://en.wikipedia.org/wiki/Monorepo) of a monorepository are the
 ability to reuse code and do large-scale refactoring. A great deal of care must
 be taken to manage dependencies between projects/components within a
 monorepository. Without such care, unexpected interdependencies can cause
-unexpected breakages, prevent refactoring and preclude focussed testing. In
+unexpected breakages, prevent refactoring and preclude focused testing. In
 general: isolate components by restricting them to only be able to access their
 listed dependencies; divide components by function and abstraction level (eg
 don't group by language or technology); and use a standard structure for each
 component (such as ``lib``, ``sources``, ``README`` etc).
 
-1. **Embrace open source**. To save on effort, leaverage freely-available tools
-and libraries whereever possible in the infrastructure, rather than implementing
+1. **Embrace open source**. To save on effort, leverage freely-available tools
+and libraries wherever possible in the infrastructure, rather than implementing
 custom versions. Where open source is used, contributions back upstream benefit
 the community and help to align the project with the way it is being deployed.
 This particularly applies to open source in the ASIC/FPGA domain, where
-[open-source software][oss-hw] is unemcumbered by licensing restrictions.  Often
+[open-source software][oss-hw] is unencumbered by licensing restrictions.  Often
 chip projects will be on tight schedules, so careful judgement of the
 effort-benefit tradeoff must be made.
 
@@ -118,11 +118,11 @@ performant. This can easily become a problem with codebases make extensive use
 of a scripting language such as Python.  Mitigations include writing (or
 rewriting) parts in a lower-level language such as C++, and setting things up in
 such a way that this Python and C++ components can interoperate cleanly (eg
-well-defined boundaries and dependenceis).
+well-defined boundaries and dependencies).
 
 [oss-hw]: https://github.com/aolofsson/awesome-opensource-hardware
 
-## Infrastructure components <a name="components" class="anchor"></a> 
+## Components <a name="components" class="anchor"></a>
 
 What are the components of the infrastructure?
 
