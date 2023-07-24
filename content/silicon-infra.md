@@ -41,7 +41,15 @@ complexity and maintain high standards of code quality, testing and
 integration. This note lays out some thoughts and opinions on the components
 and structure of a software infrastructure to build ASIC chips.
 
-## Aims
+### Table of contents
+
+1. [Aims](#aims)
+1. [Guiding principles](#principles)
+1. [Infrastructure components](#components)
+1. [Flows](#flows)
+1. [Related projects](#related-projects)
+
+## Aims <a name="aims" class="anchor"></a> 
 
 The overall objective of a silicon infrastructure is to **support the
 development of an ASIC design from RTL to GDSII**. To make this more specific, I
@@ -64,7 +72,7 @@ philosophy of the approach that is explored in this note:
   alive for debug of silicon issues and/or as a basis for a incremental tapeout
   (known as a *respin*), and to allow multiple designs to be built concurrently.
 
-## Guiding principles
+## Guiding principles <a name="principles" class="anchor"></a>
 
 I think it is useful to underpin the aims, implementation and operation of an
 ASIC design infrastructure are a set of guiding principles for the project team
@@ -114,13 +122,13 @@ well-defined boundaries and dependenceis).
 
 [oss-hw]: https://github.com/aolofsson/awesome-opensource-hardware
 
-## Infrastructure components
+## Infrastructure components <a name="components" class="anchor"></a> 
 
 What are the components of the infrastructure?
 
 What are some specific useful features?
 
-## Flows
+## Flows <a name="flows" class="anchor"></a> 
 
 What do we need to do with the infrastructure?
 
@@ -130,7 +138,7 @@ What are some specific supporting tools that we need?
 
 ...
 
-## Related projects
+## Related projects <a name="related-projects" class="anchor"></a>
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
