@@ -45,14 +45,16 @@ created a simple C++ toolchain with a simulator, Hex assembler and X language
 compiler, and a Verilog implementation of Hex. Before describing them, the
 next two sections introduce Hex and X.
 
-## Table of contents
+### Table of contents
 
 1. [The Hex architecture](#the-hex-architecture)
-2. [The X language](#the-x-language)
-3. [Hex processor integrated circuit](#hex-processor-integrated-circuit)
-4. [Hex tooling](#hex-tooling)
-5. [A historical note](#a-historical-note)
-6. [Summary](#summary)
+1. [The X language](#the-x-language)
+1. [Hex processor integrated circuit](#hex-processor-integrated-circuit)
+1. [Hex tooling](#hex-tooling)
+1. [A historical note](#a-historical-note)
+1. [Summary](#summary)
+1. [Similar projects](#similar-projects)
+1. [Further reading](#further-reading)
 
 ## The Hex architecture <a name="the-hex-architecture" class="anchor"></a>
 
@@ -865,7 +867,7 @@ of source files, making it an excellent project to use to explore processors
 and compilers.
 
 
-## Similar projects
+## Similar projects <a name="similar-projects" class="anchor"></a>
 
 The following are some similar projects that include simple implementations of
 processor toolchains.
@@ -898,7 +900,7 @@ processor toolchains.
   architecture, discrete-logic implementation and basic tooling including a
   programming language.
 
-## Further reading
+## Further reading <a name="further-reading" class="anchor"></a>
 
 - [Processor Design: An
   Introduction](http://www.gamezero.com/team-0/articles/math_magic/micro/) a
