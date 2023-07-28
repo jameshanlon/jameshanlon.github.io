@@ -14,7 +14,7 @@ Modern ASIC design differs to conventional software engineering in several
 important aspects that require a somewhat different approach to project
 development:
 
-- **Tappet**. When a design is released for manufacture (known in the
+- **Tape out**. When a design is released for manufacture (known in the
   industry as a *tape out*), there are typically high non-recoverable expenses associated
   with setting up the processes and a long lead time in receiving a (hopefully)
   working device. There are two implications of this situation:
@@ -45,16 +45,16 @@ and structure of a software infrastructure to build ASIC chips.
 
 1. [Aims](#aims)
 1. [Guiding principles](#principles)
-1. [Components](#components)
 1. [Flows](#flows)
+1. [Components](#components)
 1. [Related projects](#related-projects)
 
 ## Aims <a name="aims" class="anchor"></a> 
 
 The overall objective of a silicon infrastructure is to **support the
-development of an ASIC design from RTL to GDSII**. To make this more specific, I
-also define the following capabilities that should be supported as an overall
-philosophy of the approach that is explored in this note:
+development of a verified ASIC design from RTL to GDSII**. To make this more
+specific, I also define the following capabilities that should be supported as
+an overall philosophy of the approach that is explored in this note:
 
 - To **rerun everything from scratch** (as far as is possible), requiring full
   automation of an the end-to-end flow. This is intended to: (1) distribute the
@@ -122,17 +122,69 @@ well-defined boundaries and dependencies).
 
 [oss-hw]: https://github.com/aolofsson/awesome-opensource-hardware
 
+## Flows <a name="flows" class="anchor"></a> 
+
+{#
+What do we need to do with the infrastructure?
+What are some specific supporting tools that we need?
+#}
+
+This section outlines the high-level *flows* that an ASIC infrastructure needs
+to support, meaning (typically) a sequence of steps to achieve some *task*.
+Flows can be composed together to create more complex flows.
+
+1. **Generation of RTL sources**. Often, RTL code will need to be generated
+   programatically, for example, using templates or other types of code
+   generators. This task performs all RTL code generation to produce a complete
+   set of sources. 
+
+{{ macros.image('sili-infra/rtl-flow.png', size='1000x1000') }}
+
+2. **Lint checking**. RTL source code can be checked for basic coding issues
+   (referred to as *linting*) by passing it through tools that perform various
+built-in or custom checks. The input to this task is the specification of a
+design and the output is a list of warnings to be reviewed. Example open-source
+tools that can be used for linting are [Verilator][verilator],
+[Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
+
+3. **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
+   automatically with tools that analyse a design, typically with a set of
+   annotations and constraints.
+
+   {{ macros.image('sili-infra/fe-check-flow.png', size='1000x1000') }}
+
+4. **Formal property test bench**. Analysing and proving formal properties of a
+   design is a complementary technique to standard functional coverage.
+
+5. **Formal equivalence check**. 
+
+6. **Simulation testbench**. With and without coverage (functional and structural), RTL
+   and gates, zero delay, SDF.
+
+7. **DFT instrument insertion**.
+
+8. **Physical build**. Synthesis, scan insertion, floorplanning, placement, clock tree
+   synthesis, routing, finishing, checking. See [OpenROAD][OpenROAD] for an
+   example open source physical build flow.
+
+{{ macros.image('sili-infra/phys-build-flow.png', size='1000x1000') }}
+
+9. **Power optimisation**.
+
+10. **Release**.
+
+[verilator]: https://verilator.org/guide/latest/
+[verible]: https://chipsalliance.github.io/verible/
+[slang]: https://sv-lang.com/
+[svlint]: https://github.com/dalance/svlint
+[yosys]: https://yosyshq.net/yosys/
+[OpenROAD]: https://github.com/The-OpenROAD-Project/OpenROAD
+
 ## Components <a name="components" class="anchor"></a>
 
 What are the components of the infrastructure?
 
 What are some specific useful features?
-
-## Flows <a name="flows" class="anchor"></a> 
-
-What do we need to do with the infrastructure?
-
-What are some specific supporting tools that we need?
 
 ## Acknowledgements
 
@@ -142,6 +194,8 @@ What are some specific supporting tools that we need?
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
+- [Blade](https://blu-blade.readthedocs.io) is a tool for autogenerating
+  modules, interconnects and register definitions from an YAML schema.
 - [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) is a modular
   build system for silicon hardware.
 - Berkeley [Chipyard](https://github.com/ucb-bar/chipyard) is an agile framework
