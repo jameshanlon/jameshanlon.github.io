@@ -131,47 +131,75 @@ What are some specific supporting tools that we need?
 
 This section outlines the high-level *flows* that an ASIC infrastructure needs
 to support, meaning (typically) a sequence of steps to achieve some *task*.
-Flows can be composed together to create more complex flows.
+This is not meant to be exhaustive, but characteristic of the types of tasks
+that need to be performed. Flows can be just a single step or can be composed
+together to create different flows.
 
-1. **Generation of RTL sources**. Often, RTL code will need to be generated
-   programatically, for example, using templates or other types of code
-   generators. This task performs all RTL code generation to produce a complete
-   set of sources. 
+1. **Design representation**. To read a design into a tool, it must have a
+   complete representation including tool-agnostic configuration, macro
+defines, library files and RTL sources. Often, RTL code will need to be
+generated programatically using templates or other types of code generators. It
+is also typical that a design will be implemented in a hierarchical fashion, so
+a configuration step must gather together the required modules and package it
+into a single representation. As an example, the open-source
+[Bender](https://github.com/pulp-platform/bender) dependency management tool
+provides very similar functionality.
 
-{{ macros.image('sili-infra/rtl-flow.png', size='1000x1000') }}
+{{ macros.imagenothumb('sili-infra/design-representation.png') }}
+
+2. **Verification representation**. For the purposes of simulation and
+   analysis, a verification representation is a variation of a design
+   representation, adding configuration and macro defines, source files for a test
+   bench, monitors, assertions etc, and possibly substituting parts of the design
+   for fast models or block boxes. These verification components will likely live
+   with the corresponding parts of the design and be collected together as they
+   were for the design representation during a configure step.
+
+{{ macros.imagenothumb('sili-infra/verif-representation.png') }}
 
 2. **Lint checking**. RTL source code can be checked for basic coding issues
    (referred to as *linting*) by passing it through tools that perform various
-built-in or custom checks. The input to this task is the specification of a
-design and the output is a list of warnings to be reviewed. Example open-source
-tools that can be used for linting are [Verilator][verilator],
-[Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
+   built-in or custom checks. The input to this task is the specification of a
+   design and the output is a list of warnings to be reviewed. Example open-source
+   tools that can be used for linting are [Verilator][verilator],
+   [Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
+
+{{ macros.image('sili-infra/lint-check.png', size='1000x1000') }}
 
 3. **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
    automatically with tools that analyse a design, typically with a set of
    annotations and constraints.
 
-   {{ macros.image('sili-infra/fe-check-flow.png', size='1000x1000') }}
+{{ macros.imagenothumb('sili-infra/cdc-rdc-check.png') }}
 
 4. **Formal property test bench**. Analysing and proving formal properties of a
    design is a complementary technique to standard functional coverage.
 
-5. **Formal equivalence check**. 
+{{ macros.imagenothumb('sili-infra/formal-property-check.png') }}
 
 6. **Simulation testbench**. With and without coverage (functional and structural), RTL
    and gates, zero delay, SDF.
 
-7. **DFT instrument insertion**.
+{{ macros.imagenothumb('sili-infra/simulation-flow.png') }}
+
+5. **Formal equivalence check**. 
+
+{{ macros.imagenothumb('sili-infra/equivalence-flow.png') }}
 
 8. **Physical build**. Synthesis, scan insertion, floorplanning, placement, clock tree
    synthesis, routing, finishing, checking. See [OpenROAD][OpenROAD] for an
    example open source physical build flow.
 
-{{ macros.image('sili-infra/phys-build-flow.png', size='1000x1000') }}
+{{ macros.imagenothumb('sili-infra/phys-build-flow.png') }}
 
 9. **Power optimisation**.
 
-10. **Release**.
+---
+**_A note on DFT:_**
+
+Blah...
+
+---
 
 [verilator]: https://verilator.org/guide/latest/
 [verible]: https://chipsalliance.github.io/verible/
@@ -205,3 +233,7 @@ What are some specific useful features?
   management tool for hardware design projects.
 - [Rich Porter's series on digital verification](http://dungspreader.blogspot.com/)
   and [source code](https://github.com/rporter/verilog_integration) for the project.
+- [Melding hardware and software: a story in the making](https://medium.com/enfabrica/melding-hardware-and-software-a-story-in-the-making-bcce28b821a8),
+  a position piece by Enfabrica on their approach to ASIC design.
+- [faketree](https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0)
+  is an Enfabrica open-source tool for managing EDA tools in containers and sandboxes.
