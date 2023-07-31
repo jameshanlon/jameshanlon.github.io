@@ -10,19 +10,17 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-Modern ASIC design differs to conventional software engineering in several
-important aspects that require a somewhat different approach to project
+Modern ASIC design differs to conventional software engineering in two
+fundamental aspects that require a somewhat different approach to project
 development:
 
-- **Tape out**. When a design is released for manufacture (known in the
-  industry as a *tape out*), there are typically high non-recoverable expenses associated
-  with setting up the processes and a long lead time in receiving a (hopefully)
-  working device. There are two implications of this situation:
-    (1) chip tape outs precludes incremental releases, for example to fix trivial bugs, and
-    therefore means that the confidence in the correct functionality of the
-    design must be very high;
-    (2) post tape out, the design source code is effectively frozen forever more for
-    the purposes of debug and analysis.
+- **Transformations and representations**. The creation of an ASIC design from
+  a source-level representation through to a final GDSII description of the
+  layout involves many stages of incremental transformations of the circuit and
+  layout, and then incremental assembly of components into various subsystems
+  before finally the entire chip. At various stages through this process, checks
+  are performed on the design typically using simplified representations to
+  reduce complexity and make run times practical.
 
 - **Tooling**. Compared to software tooling, standard ASIC design tooling
   (known in the industry as *electronic design automation*) :
@@ -34,6 +32,16 @@ development:
     unless absolutely necessary; and
     (3) can be non-deterministic in that rerunning a job with the same set of inputs
     produces a different output.
+
+- **Tape out**. When a design is released for manufacture (known in the
+  industry as a *tape out*), there are typically high non-recoverable expenses associated
+  with setting up the processes and a long lead time in receiving a (hopefully)
+  working device. There are two implications of this situation:
+    (1) chip tape outs precludes incremental releases, for example to fix trivial bugs, and
+    therefore means that the confidence in the correct functionality of the
+    design must be very high;
+    (2) post tape out, the design source code is effectively frozen forever more for
+    the purposes of debug and analysis.
 
 Despite these differences, many of the techniques and tools from software
 engineering can readily be applied to ASIC development, particularly to manage
@@ -56,17 +64,18 @@ development of a verified ASIC design from RTL to GDSII**. To make this more
 specific, I also define the following capabilities that should be supported as
 an overall philosophy of the approach that is explored in this note:
 
-- To **rerun everything from scratch** (as far as is possible), requiring full
+- To **rerun everything from scratch**, requiring full
   automation of an the end-to-end flow. This is intended to: (1) distribute the
   task of integrating components of a design across a team, thereby revealing
   issues at as earlier stage in the project as possible to avoid disruptive
-  changes towards the end; and (2) to enable faster design iteration.
+  changes towards the end; (2) enable faster design iterational; and (3)
+  provide tracability of results, providing a foundation for the next aim.
 
 - Provide a **full audit trail** such that a release of a design for tape out
-  has a set of reports, logs, coverage metrics, documentation and signoffs that
-  are tracable back to the original RTL source files. This is important for
-  building confidence to tape out, as well as providing information for future
-  work on a taped-out design.
+  has data and a set of reports, logs, coverage metrics, documentation and
+  signoffs that are tracable back to the original RTL source files. This is
+  important for building confidence to tape out, as well as providing information
+  for future work on a taped-out design.
 
 - Support **multiple chips and frozen designs** to keep previous generations
   alive for debug of silicon issues and/or as a basis for a incremental tape out
@@ -135,77 +144,97 @@ This is not meant to be exhaustive, but characteristic of the types of tasks
 that need to be performed. Flows can be just a single step or can be composed
 together to create different flows.
 
-1. **Design representation**. To read a design into a tool, it must have a
-   complete representation including tool-agnostic configuration, macro
-defines, library files and RTL sources. Often, RTL code will need to be
-generated programatically using templates or other types of code generators. It
-is also typical that a design will be implemented in a hierarchical fashion, so
-a configuration step must gather together the required modules and package it
-into a single representation. As an example, the open-source
-[Bender](https://github.com/pulp-platform/bender) dependency management tool
-provides very similar functionality.
+- **Design representation**. To read a design into a tool, it must have a
+  complete representation including tool-agnostic configuration, macro defines,
+  library files and RTL sources. Often, RTL code will need to be generated
+  programatically using templates or other types of code generators. It is also
+  typical that a design will be implemented in a hierarchical fashion, so a
+  configuration step must gather together the required modules and package it
+  into a single representation. As an example, the open-source [Bender][bender]
+  dependency management tool provides very similar functionality.
 
 {{ macros.imagenothumb('sili-infra/design-representation.png') }}
 
-2. **Verification representation**. For the purposes of simulation and
-   analysis, a verification representation is a variation of a design
-   representation, adding configuration and macro defines, source files for a test
-   bench, monitors, assertions etc, and possibly substituting parts of the design
-   for fast models or block boxes. These verification components will likely live
-   with the corresponding parts of the design and be collected together as they
-   were for the design representation during a configure step.
+- **Verification representation**. For the purposes of simulation and
+  analysis, a verification representation is a variation of a design
+  representation, adding configuration and macro defines, source files for a test
+  bench, monitors, assertions etc, and possibly substituting parts of the design
+  for fast models or block boxes. These verification components will likely live
+  with the corresponding parts of the design and be collected together as they
+  were for the design representation during a configure step.
 
 {{ macros.imagenothumb('sili-infra/verif-representation.png') }}
 
-2. **Lint checking**. RTL source code can be checked for basic coding issues
-   (referred to as *linting*) by passing it through tools that perform various
-   built-in or custom checks. The input to this task is the specification of a
-   design and the output is a list of warnings to be reviewed. Example open-source
-   tools that can be used for linting are [Verilator][verilator],
-   [Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
+- **Lint checking**. RTL source code can be checked for basic coding issues
+  (referred to as *linting*) by passing it through tools that perform various
+  built-in or custom checks. The input to this task is the specification of a
+  design and the output is a list of warnings to be reviewed. Example open-source
+  tools that can be used for linting are [Verilator][verilator],
+  [Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
 
 {{ macros.image('sili-infra/lint-check.png', size='1000x1000') }}
 
-3. **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
-   automatically with tools that analyse a design, typically with a set of
-   annotations and constraints.
+- **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
+  automatically with tools that analyse a design, typically with a set of
+  annotations and constraints. The output will be warning messages from the
+  checker that need to be investigated.
 
 {{ macros.imagenothumb('sili-infra/cdc-rdc-check.png') }}
 
-4. **Formal property test bench**. Analysing and proving formal properties of a
-   design is a complementary technique to standard functional coverage.
-
-{{ macros.imagenothumb('sili-infra/formal-property-check.png') }}
-
-6. **Simulation testbench**. With and without coverage (functional and structural), RTL
-   and gates, zero delay, SDF.
+- **Simulation testbench**. A simulation test bench requires a representaiton
+  of the design, a verification environment and test stimulus. Test stimulus
+  is often randomly generated. Coverage (structural or functional) can be
+  collected during simulation, and when many test instances are run for a
+  particular test generator or over a larger regression of different test
+  generators, coverage may need to be merged then reported on. Simulation is
+  typically performed on an RTL representation, but is also done on gate-level
+  netlists and with delay annotations.
 
 {{ macros.imagenothumb('sili-infra/simulation-flow.png') }}
 
-5. **Formal equivalence check**. 
+- **Formal property test bench**. Analysing and proving formal properties of a
+  design is a complementary technique to standard functional coverage. Inputs
+  to this are a verification representation of the design and a set of
+  assumptions and properties to be checked.
+
+{{ macros.imagenothumb('sili-infra/formal-property-check.png') }}
+
+- **Formal equivalence check**. As a design is incrementally transformed
+  between RTL and GDSII, it is essential to perform equivalence checks to
+  prove that each transformation maintains the functional behaviour of the
+  design. Inputs to an equivalence check are two representations, typically
+  called a *reference* that is the baseline and an *implementation* to check.
 
 {{ macros.imagenothumb('sili-infra/equivalence-flow.png') }}
 
-8. **Physical build**. Synthesis, scan insertion, floorplanning, placement, clock tree
-   synthesis, routing, finishing, checking. See [OpenROAD][OpenROAD] for an
-   example open source physical build flow.
+- **Physical build**. All flows up to this point have mainly operated on RTL
+  representations of a design. A physical build flow starts off by
+  transforming RTL into gates using a synthesis tool, then progressively
+  transforms the design into a set of two-dimensional layers. Following synthesis
+  are: scan insertion for DFT, floorplanning (placing ports and macros),
+  placement (placing cells), clock tree synthesis, routing (establishing all
+  required connections using the available routing layers, finishing and
+  checking. See [OpenROAD][OpenROAD] for an example open source physical build
+  flow.
 
 {{ macros.imagenothumb('sili-infra/phys-build-flow.png') }}
 
-9. **Power optimisation**.
+> **A note on DFT**. A central aspect of any ASIC design is the DFT (device
+> test) strategy. Testability is achieved by adding logic in the form of
+> *instruments* and *connectivity* to make the the existing logic
+> *controllable* and *observable*. The means by which this is done and the
+> point in the ASIC process is heavily dependent on the design and the tooling
+> used. Typically, DFT logic is inserted using automated tools during the
+> physical build but increasingly it is being added in RTL also using automated
+> tooling - either way adding additional transformation steps to the front- or
+> back-end flows.
 
----
-**_A note on DFT:_**
-
-Blah...
-
----
-
-[verilator]: https://verilator.org/guide/latest/
-[verible]: https://chipsalliance.github.io/verible/
-[slang]: https://sv-lang.com/
+[bender]: https://github.com/pulp-platform/bender
+[verilator]: https://verilator.org/guide/latest
+[verible]: https://chipsalliance.github.io/verible
+[slang]: https://sv-lang.com
 [svlint]: https://github.com/dalance/svlint
-[yosys]: https://yosyshq.net/yosys/
+[yosys]: https://yosyshq.net/yosys
 [OpenROAD]: https://github.com/The-OpenROAD-Project/OpenROAD
 
 ## Components <a name="components" class="anchor"></a>
