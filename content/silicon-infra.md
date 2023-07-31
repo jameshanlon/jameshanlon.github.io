@@ -243,6 +243,36 @@ What are the components of the infrastructure?
 
 What are some specific useful features?
 
+{#
+Orchestration: ability to deploy tools onto compute.
+  Containerisation
+  Queueing system
+Buildsystem: dependencies, inputs, outputs, tasks.
+  Design
+  Flows
+  Messaging/logging
+  Storage
+  Releasing to immutable storage
+  Referencing releases within the repository
+CI
+  Regressions run on patches.
+  Periodic jobs: hourly, nightly, weekly.
+Dashboard
+  Reporting of CI
+  Performance reporting (Grafana)
+Documentation
+Collaboration
+  Code review
+  Issue tracking
+#}
+
+{#
+Laundry list of useful features
+- Stubbing out of dependencies
+- Filtering of tests (a la xpath)
+- Making all functionality available on the command line
+#}
+
 ## Acknowledgements
 
 ...
