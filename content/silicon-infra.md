@@ -262,7 +262,7 @@ A *task* is defined by:
 - A set of configuration options.
 - A set of resource requirements (time, memory, cores).
 - An *action* that that operates only on the inputs and must produce all the
-  outputs. This typically will be running a script or tool.
+  outputs, typically achived by executing a script or separate tool.
 
 A *flow* is defined by:
 
@@ -272,7 +272,17 @@ A *flow* is defined by:
 - A set of resource requirements.
 - A *action* consisting of executing one or more tasks. Tasks can be specified
   using *replication* with static bounds to create arrays, and *conditionality*
-  to exclude or include tasks dependent on the configuration.
+  to exclude or include tasks dependent on the configuration values.
+
+{#
+Configuration options used to parameterise the flow, propagated to tasks
+effectively by additional inputs and outputs. Make available on the command
+line.
+
+Substitution
+
+Reuse
+#}
 
 ## Components <a name="components" class="anchor"></a>
 
