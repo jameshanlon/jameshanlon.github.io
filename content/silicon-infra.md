@@ -54,10 +54,12 @@ and structure of a software infrastructure to build ASIC chips.
 1. [Aims](#aims)
 1. [Guiding principles](#principles)
 1. [Flows](#flows)
+1. [Model](#model)
 1. [Components](#components)
+1. [Acknowledgements](#acknowledgements)
 1. [Related projects](#related-projects)
 
-## Aims <a name="aims" class="anchor"></a> 
+## Aims <a name="aims" class="anchor"></a>
 
 The overall objective of a silicon infrastructure is to **support the
 development of a verified ASIC design from RTL to GDSII**. To make this more
@@ -131,18 +133,15 @@ well-defined boundaries and dependencies).
 
 [oss-hw]: https://github.com/aolofsson/awesome-opensource-hardware
 
-## Flows <a name="flows" class="anchor"></a> 
-
-{#
-What do we need to do with the infrastructure?
-What are some specific supporting tools that we need?
-#}
+## Flows <a name="flows" class="anchor"></a>
 
 This section outlines the high-level *flows* that an ASIC infrastructure needs
 to support, meaning (typically) a sequence of steps to achieve some *task*.
 This is not meant to be exhaustive, but characteristic of the types of tasks
 that need to be performed. Flows can be just a single step or can be composed
-together to create different flows.
+together to create different flows, but always have defined inputs and outputs.
+I use the term *job* to mean a particular program or script that is executed,
+typically corresponding to a step.
 
 - **Design representation**. To read a design into a tool, it must have a
   complete representation including tool-agnostic configuration, macro defines,
@@ -229,6 +228,17 @@ together to create different flows.
 > tooling - either way adding additional transformation steps to the front- or
 > back-end flows.
 
+> **A note on physical builds**. There are two unique aspects of physical
+> builds that present challenges for the infrastructure presented in this note.
+> The first is that physical EDA tools do not always produce the same output
+> given the same inputs due to the nature of the optimisation algorithms they
+> use. The second is that close to the closure of a design component, manual
+> interventions will be made to address localised issues in the design. The
+> combinaion of these issues mean that it is not possible to rerun physical
+> builds from scratch and achive satisfactory results. Therefore, a silicon
+> infrastructure must be able to support frozen data from particular flow
+> stages.
+
 [bender]: https://github.com/pulp-platform/bender
 [verilator]: https://verilator.org/guide/latest
 [verible]: https://chipsalliance.github.io/verible
@@ -237,13 +247,41 @@ together to create different flows.
 [yosys]: https://yosyshq.net/yosys
 [OpenROAD]: https://github.com/The-OpenROAD-Project/OpenROAD
 
+## Model <a name="model" class="anchor"></a>
+
+A conceptual model for the use cases described is a hierarchical collection of
+*tasks* that consume inputs and produce outputs. A task can be dependendent on
+another task by consuming its output and tasks can be composed together into
+*flows*. The set of tasks implementing a flow form a directed graph that is
+determined statically (ie without any dependence on runtime data).
+
+A *task* is defined by:
+
+- A set of inputs.
+- A set of outputs.
+- A set of configuration options.
+- A set of resource requirements (time, memory, cores).
+- An *action* that that operates only on the inputs and must produce all the
+  outputs. This typically will be running a script or tool.
+
+A *flow* is defined by:
+
+- A set of inputs.
+- A set of outputs.
+- A set of configuration options.
+- A set of resource requirements.
+- A *action* consisting of executing one or more tasks. Tasks can be specified
+  using *replication* with static bounds to create arrays, and *conditionality*
+  to exclude or include tasks dependent on the configuration.
+
 ## Components <a name="components" class="anchor"></a>
 
+{#
+What do we need to do with the infrastructure?
+What are some specific supporting tools that we need?
 What are the components of the infrastructure?
-
 What are some specific useful features?
 
-{#
 Orchestration: ability to deploy tools onto compute.
   Containerisation
   Queueing system
@@ -264,18 +302,38 @@ Documentation
 Collaboration
   Code review
   Issue tracking
-#}
 
-{#
 Laundry list of useful features
 - Stubbing out of dependencies
 - Filtering of tests (a la xpath)
 - Making all functionality available on the command line
 #}
 
-## Acknowledgements
+This section sketches out a silicon infrastructure by focussing on the main
+components and their requirements and/or features.
 
-...
+- **Job runner**. The lowest layer of the infrastructure is responsible for
+  providing an execution engine for jobs. This provides:
+
+    - A controlled environment execution environment with specific tool versions for reproducability and legacy support, likely in a container such as [Singularity/Apptainer][singularity];
+
+    - Dispatching of jobs to compute resources, such as a compute cluster, which requires interaction with a queueing system such as [Slurm][slurm];
+
+    - Shepherding of data inputs and outputs of a job;
+
+    - Monitoring of job status, including propagation of statuses and errors, and logging of messages from jobs being run.
+
+- **Buildsystem**.
+
+
+[singularity]: https://apptainer.org
+[slurm]: https://slurm.schedmd.com
+
+## Acknowledgements <a name="acknowledgements" class="anchor"></a>
+
+The motivation for writing this note came from recent disucssions on building a
+from-scratch silicon infrastructure with James Pallister and Peter Birch. This
+note is a synthesis of ideas from those conversations.
 
 ## Related projects <a name="related-projects" class="anchor"></a>
 
