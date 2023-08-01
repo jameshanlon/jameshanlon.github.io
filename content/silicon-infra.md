@@ -10,7 +10,7 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-Modern ASIC design differs to conventional software engineering in two
+Modern ASIC design differs to conventional software engineering in three
 fundamental aspects that require a somewhat different approach to project
 development:
 
@@ -249,38 +249,45 @@ typically corresponding to a step.
 
 ## Model <a name="model" class="anchor"></a>
 
-A conceptual model for the use cases described is a hierarchical collection of
-*tasks* that consume inputs and produce outputs. A task can be dependendent on
-another task by consuming its output and tasks can be composed together into
-*flows*. The set of tasks implementing a flow form a directed graph that is
-determined statically (ie without any dependence on runtime data).
+A model for the use cases described is a hierarchical collection of *tasks*
+that consume inputs and produce outputs. A task can be dependendent on another
+task by consuming that task's output and tasks can be composed together in this
+way into *flows*. The set of tasks implementing a flow form a directed graph
+with nodes representing fixed inputs or jobs and edges corresponding to
+dependencies. The structure of this graph is determined statically (ie without
+any dependence on runtime data).
 
 A *task* is defined by:
 
 - A set of inputs.
 - A set of outputs.
-- A set of configuration options.
+- A set of configuration values.
 - A set of resource requirements (time, memory, cores).
 - An *action* that that operates only on the inputs and must produce all the
-  outputs, typically achived by executing a script or separate tool.
+  of the outputs, typically achieved by executing a script or separate tool.
 
-A *flow* is defined by:
+A *flow* is a hierarchical task and defined by:
 
 - A set of inputs.
 - A set of outputs.
-- A set of configuration options.
+- A set of configuration values.
 - A set of resource requirements.
-- A *action* consisting of executing one or more tasks. Tasks can be specified
-  using *replication* with static bounds to create arrays, and *conditionality*
-  to exclude or include tasks dependent on the configuration values.
+- A *action* consisting of executing one or more tasks according to their
+  dependencies. Tasks can be specified using *replication* with static bounds
+  to create arrays, and *conditionality* to include or exclude tasks dependent on
+  the configuration values.
+
+Inputs and outputs are always files.
+If a task attempts to access an input that is not specified, an error should be
+raised.
+
+Configuration values are used to control the behaviour of a flow or task.
+A flow can propagate configuration into its sub tasks, but it must do so
+explicitly.
 
 {#
-Configuration options used to parameterise the flow, propagated to tasks
-effectively by additional inputs and outputs. Make available on the command
-line.
-
+Examples: filtering tests, multi chip
 Substitution
-
 Reuse
 #}
 
@@ -341,9 +348,12 @@ components and their requirements and/or features.
 
 ## Acknowledgements <a name="acknowledgements" class="anchor"></a>
 
-The motivation for writing this note came from recent disucssions on building a
-from-scratch silicon infrastructure with James Pallister and Peter Birch. This
+The motivation for writing this note came from recent discussions on building a
+from-scratch silicon infrastructure with [James Pallister][jamesp] and [Peter Birch][peterb]. This
 note is a synthesis of ideas from those conversations.
+
+[jamesp]: http://www.jpallister.com
+[peterb]: https://intuity.io
 
 ## Related projects <a name="related-projects" class="anchor"></a>
 
