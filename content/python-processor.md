@@ -1,5 +1,5 @@
 ---
-Title: Thoughts on building a Python processor
+Title: Building a Python processor
 Date: 2023-06-27
 Category: notes
 Tags: computing, computer-architecture

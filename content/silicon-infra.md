@@ -1,10 +1,10 @@
 ---
 Title: Silicon infrastructure
-Date: 2023-07-31
+Date: 2023-08-2
 Category: notes
-Tags: computing, computer-architecture
+Tags: computing, microelectronics, verilog
 Summary: Thoughts on the requirements of software infrastructure
-         to support ASIC design.
+         to support chip design.
 Status: draft
 ---
 
