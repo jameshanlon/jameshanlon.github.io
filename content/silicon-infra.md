@@ -5,7 +5,7 @@ Category: notes
 Tags: computing, computer-architecture
 Summary: Thoughts on the requirements of software infrastructure
          to support ASIC design.
-Status: published
+Status: draft
 ---
 
 {% import 'post-macros.html' as macros %}
