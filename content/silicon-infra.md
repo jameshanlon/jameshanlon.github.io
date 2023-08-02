@@ -152,7 +152,7 @@ typically corresponding to a step.
   into a single representation. As an example, the open-source [Bender][bender]
   dependency management tool provides very similar functionality.
 
-{{ macros.imagenothumb('silicon-infra/design-representation.png') }}
+{{ macros.imagenothumb('sili-infra/design-representation.png') }}
 
 - **Verification representation**. For the purposes of simulation and
   analysis, a verification representation is a variation of a design
@@ -162,7 +162,7 @@ typically corresponding to a step.
   with the corresponding parts of the design and be collected together as they
   were for the design representation during a configure step.
 
-{{ macros.imagenothumb('silicon-infra/verif-representation.png') }}
+{{ macros.imagenothumb('sili-infra/verif-representation.png') }}
 
 - **Lint checking**. RTL source code can be checked for basic coding issues
   (referred to as *linting*) by passing it through tools that perform various
@@ -171,14 +171,14 @@ typically corresponding to a step.
   tools that can be used for linting are [Verilator][verilator],
   [Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
 
-{{ macros.image('silicon-infra/lint-check.png', size='1000x1000') }}
+{{ macros.image('sili-infra/lint-check.png', size='1000x1000') }}
 
 - **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
   automatically with tools that analyse a design, typically with a set of
   annotations and constraints. The output will be warning messages from the
   checker that need to be investigated.
 
-{{ macros.imagenothumb('silicon-infra/cdc-rdc-check.png') }}
+{{ macros.imagenothumb('sili-infra/cdc-rdc-check.png') }}
 
 - **Simulation testbench**. A simulation test bench requires a representaiton
   of the design, a verification environment and test stimulus. Test stimulus
@@ -189,14 +189,14 @@ typically corresponding to a step.
   typically performed on an RTL representation, but is also done on gate-level
   netlists and with delay annotations.
 
-{{ macros.imagenothumb('silicon-infra/simulation-flow.png') }}
+{{ macros.imagenothumb('sili-infra/simulation-flow.png') }}
 
 - **Formal property test bench**. Analysing and proving formal properties of a
   design is a complementary technique to standard functional coverage. Inputs
   to this are a verification representation of the design and a set of
   assumptions and properties to be checked.
 
-{{ macros.imagenothumb('silicon-infra/formal-property-check.png') }}
+{{ macros.imagenothumb('sili-infra/formal-property-check.png') }}
 
 - **Formal equivalence check**. As a design is incrementally transformed
   between RTL and GDSII, it is essential to perform equivalence checks to
@@ -204,7 +204,7 @@ typically corresponding to a step.
   design. Inputs to an equivalence check are two representations, typically
   called a *reference* that is the baseline and an *implementation* to check.
 
-{{ macros.imagenothumb('silicon-infra/equivalence-flow.png') }}
+{{ macros.imagenothumb('sili-infra/equivalence-flow.png') }}
 
 - **Physical build**. All flows up to this point have mainly operated on RTL
   representations of a design. A physical build flow starts off by
@@ -216,7 +216,7 @@ typically corresponding to a step.
   checking. See [OpenROAD][OpenROAD] for an example open source physical build
   flow.
 
-{{ macros.imagenothumb('silicon-infra/phys-build-flow.png') }}
+{{ macros.imagenothumb('sili-infra/phys-build-flow.png') }}
 
 > **A note on DFT**. A central aspect of any ASIC design is the DFT (device
 > test) strategy. Testability is achieved by adding logic in the form of
@@ -349,8 +349,6 @@ note is a synthesis of ideas from those conversations.
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
-- [Blockwork](https://github.com/blockwork-eda/blockwork), is a buildsystem and
-  orchestrator for silicon design.
 - [Blade](https://blu-blade.readthedocs.io) is a tool for autogenerating
   modules, interconnects and register definitions from an YAML schema.
 - [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) is a modular
@@ -364,3 +362,5 @@ note is a synthesis of ideas from those conversations.
   and [source code](https://github.com/rporter/verilog_integration) for the project.
 - [Melding hardware and software: a story in the making](https://medium.com/enfabrica/melding-hardware-and-software-a-story-in-the-making-bcce28b821a8),
   a position piece by Enfabrica on their approach to ASIC design.
+- [faketree](https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0)
+  is an Enfabrica open-source tool for managing EDA tools in containers and sandboxes.
