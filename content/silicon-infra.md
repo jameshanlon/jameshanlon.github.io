@@ -72,13 +72,13 @@ an overall philosophy of the approach that is explored in this note:
   task of integrating components of a design across a team, thereby revealing
   issues at as earlier stage in the project as possible to avoid disruptive
   changes towards the end; (2) enable faster design iteration; and (3)
-  provide traceability of results, providing a foundation for the next aim.
+  provide traceability of results (a foundation for the next aim).
 
 - Provide a **full audit trail** such that a release of a design for tape out
   has data and a set of reports, logs, coverage metrics, documentation and
   signoffs that are traceable back to the original RTL source files. This is
   important for building confidence to tape out, as well as providing information
-  for future work on a taped-out design.
+  for future work on a completed design.
 
 - Support **multiple chips and frozen designs** to keep previous generations
   alive for debug of silicon issues and/or as a basis for a incremental tape out
@@ -144,12 +144,12 @@ together to create different flows, but always have defined inputs and outputs.
 I use the term *job* to mean a particular program or script that is executed,
 typically corresponding to a step.
 
-- **Design representation**. To read a design into a tool, it must have a
-  complete representation including tool-agnostic configuration, macro defines,
-  library files and RTL sources. Often, RTL code will need to be generated
-  programatically using templates or other types of code generators. It is also
-  typical that a design will be implemented in a hierarchical fashion, so a
-  configuration step must gather together the required modules and package it
+- **Design representation**. To read a design into a tool, the design must have
+  a complete representation including tool-agnostic configuration, macro
+  defines, library files and RTL sources. Often, RTL code will need to be
+  generated programatically using templates or other types of code generators. It
+  is also typical that a design will be implemented in a hierarchical fashion, so
+  a configuration step must gather together the required modules and package it
   into a single representation. As an example, the open-source [Bender][bender]
   dependency management tool provides very similar functionality.
 
@@ -161,7 +161,7 @@ typically corresponding to a step.
   bench, monitors, assertions etc, and possibly substituting parts of the design
   for fast models or block boxes. These verification components will likely live
   with the corresponding parts of the design and be collected together as they
-  were for the design representation during a configure step.
+  were for the design representation during a configuration step.
 
 {{ macros.imagenothumb('silicon-infra/verif-representation.png') }}
 
@@ -182,13 +182,13 @@ typically corresponding to a step.
 {{ macros.imagenothumb('silicon-infra/cdc-rdc-check.png') }}
 
 - **Simulation testbench**. A simulation test bench requires a representation
-  of the design, a verification environment and test stimulus. Test stimulus
-  is often randomly generated. Coverage (structural or functional) can be
-  collected during simulation, and when many test instances are run for a
-  particular test generator or over a larger regression of different test
-  generators, coverage may need to be merged then reported on. Simulation is
-  typically performed on an RTL representation, but is also done on gate-level
-  netlists and with delay annotations.
+  of the design, a verification environment and test stimulus. Test stimulus is
+  often randomly generated. Coverage (structural or functional) can be collected
+  during simulation and when many test instances are run for a particular test
+  generator or over a larger regression of different test generators, coverage
+  may need to be merged then reported on. Simulation is typically performed on an
+  RTL representation, but can also be performed on gate-level netlists and with
+  and without delay annotations.
 
 {{ macros.imagenothumb('silicon-infra/simulation-flow.png') }}
 
@@ -210,7 +210,7 @@ typically corresponding to a step.
 - **Physical build**. All flows up to this point have mainly operated on RTL
   representations of a design. A physical build flow starts off by
   transforming RTL into gates using a synthesis tool, then progressively
-  transforms the design into a set of two-dimensional layers. Following synthesis
+  transforming the design into a set of two-dimensional layers. Following synthesis
   are: scan insertion for DFT, floorplanning (placing ports and macros),
   placement (placing cells), clock tree synthesis, routing (establishing all
   required connections using the available routing layers, finishing and
@@ -258,7 +258,8 @@ implementing a flow form a acyclic directed graph (DAG) with nodes representing
 fixed inputs or jobs and edges corresponding to dependencies. The structure of
 this graph is determined statically (ie without any dependence on runtime
 data). Execution proceeds by running tasks whose inputs are ready and letting
-the task run to completion before marking its outputs as available.
+the task run to completion before marking its outputs as available to trigger
+the execution of more tasks or the termination of the flow.
 
 A *task* is defined by:
 
@@ -287,8 +288,8 @@ A *flow* is a hierarchical task and defined by:
 Configuration values are used to control the behaviour of a flow or task.
 A flow can propagate configuration into its sub tasks, but it must do so
 explicitly. Configuration values can be set on the command line. Example use of
-configuration options is to control aspects like debug flags, substitution
-of components of the design for simulation, or controlling the inclusion of
+configuration options is to control features like debug flags, substitution
+of components of the design for simulation, or the inclusion of
 tests to run in a regression.
 
 There are a number of similar programming models that support scalable
@@ -333,8 +334,8 @@ flow, as well as some nice-to-have features.
   tool versions for reproducability and legacy support. Container technology
   supports this requirement very will with implementations such as
   [Singularity/Apptainer][singularity]. A lighter-weight solution is
-  [faketree][faketree], an Enfabrica open-source tool for managing EDA tools in
-  containers and sandboxes.
+  [faketree][faketree] for managing filesystem layout in a dynamic way to meet
+  the constraints of EDA tools.
 
 - **Access to compute**. Dispatching of jobs to compute resources such as a
   compute cluster requires interaction with a queuing system such as
@@ -348,25 +349,25 @@ flow, as well as some nice-to-have features.
 - **Fault tolerance**. Flows should be robust to failures. When an task failure
   does occur, the correct statuses should be propagated up any hierarchy of
   tasks to provides visibility of the issue. The logging infrastructure should
-  record any progress that was made, providing a starting point for debug or a
-  restart. It should be straightforward to rerun part of a job that has failed
-  in a reproducible way.
+  record any progress that was made, providing a starting point for debug or to
+  restart the task. It should be straightforward to rerun part of a job that has
+  failed in a reproducible way.
 
-- **Storage**. The use of a shared filesystem such as NFS is typical in
-  silicon EDA flows, however it creates a single point of failure and has
-  limited scalability. Alternatives are object storage such as [MinIO][minio].
+- **Storage**. The use of a shared filesystem such as NFS is typical in silicon
+  EDA flows, however it creates a single point of failure and has limited
+  scalability. An alternative shared storage system is object storage such as
+  [MinIO][minio].
 
 - **Releasing**. It should be simple to release data from the repository into
-  immutable storage that can be referenced.
+  immutable storage that can then be referenced as a dependency.
 
 - **Periodic jobs**. A mechanism for running periodic jobs is required to
-  implement a continuous-integration (CI) and/or continuous-delivery (CD)
-  system to maintain a high standard of code quality in the repository.
+  implement a continuous-integration (CI) and/or continuous-delivery (CD).
   [Jenkins][jenkins], [GitHub Actions][githubactions] or [GitLab CI/CD][gitlabci]
   are all directly applicable here.
 
 [singularity]: https://apptainer.org
-[faketree]: https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0
+[faketree]: https://github.com/enfabrica/enkit/tree/master/faketree
 [slurm]: https://slurm.schedmd.com
 [minio]: https://min.io
 [jenkins]: https://www.jenkins.io
@@ -379,10 +380,10 @@ This note outlines the principles and requirements for a modern software
 infrastructure to build chips. This is very different to conventional software
 engineering due to fundamental differences in processes, and is likely to be
 quite different from the typical methodologies used in conventional silicon
-design. Based on some simple use cases, a model based on tasks and flows is
-proposed that abstracts the details of resouce allocation and data movement.
-Surprisingly, there already exist a family of tools from data science that
-employ a very similar model.
+design. Based on some simple use cases, a model is proposed that abstracts the
+details of resource allocation and data movement by providing tasks with inputs
+and outputs as primitives. Surprisingly, there already exist a family of tools
+from data science that employ a very similar model.
 
 ## Acknowledgments <a name="acknowledgements" class="anchor"></a>
 
@@ -397,7 +398,7 @@ Birch][peterb]. This note is a synthesis of ideas from those conversations.
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
-- [Blockwork](https://github.com/blockwork-eda/blockwork), is a buildsystem and
+- [Blockwork](https://github.com/blockwork-eda/blockwork), is a build system and
   orchestrator for silicon design.
 - [Blade](https://blu-blade.readthedocs.io) is a tool for autogenerating
   modules, interconnects and register definitions from an YAML schema.
