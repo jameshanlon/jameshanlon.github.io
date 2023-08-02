@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - projects</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/projects.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2018-12-31T00:00:00+01:00</updated><entry><title>RGB lightbox stacks</title><link href="http://jameswhanlon.com/rgb-lightbox-stacks.html" rel="alternate"></link><published>2018-12-31T00:00:00+01:00</published><updated>2018-12-31T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2018-12-31:/rgb-lightbox-stacks.html</id><summary type="html">&lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-3_800x800.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -8,7 +8,7 @@
 &lt;p&gt;The &amp;#8216;&lt;span class="caps"&gt;RGB&lt;/span&gt; stacks&amp;#8217; lightboxes are an experiment with using high-power LEDs,
 generous volumes and translucent acrylic plastic to create big blocks of
 colour. They are …&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-3_800x800.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -33,7 +33,7 @@ transitions between rich colours and interesting&amp;nbsp;combinations.&lt;/p&gt
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-blue.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-blue.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/colour-experiment-blue_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -41,7 +41,7 @@ transitions between rich colours and interesting&amp;nbsp;combinations.&lt;/p&gt
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-red.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-red.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/colour-experiment-red_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -60,7 +60,7 @@ fixings. (I unfortunately don&amp;#8217;t have any pictures of the construction 
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bead-detail-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -68,7 +68,7 @@ fixings. (I unfortunately don&amp;#8217;t have any pictures of the construction 
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-2.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-2.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bead-detail-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -76,7 +76,7 @@ fixings. (I unfortunately don&amp;#8217;t have any pictures of the construction 
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/tape.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/tape.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/tape_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -94,7 +94,7 @@ of the panels was achieved with tight tolerances and narrow double-sided sticky
 tape (pictured above&amp;nbsp;right).&lt;/p&gt;
 &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-1_600x600.jpg" alt="The boxes with all acrylic panels in place."&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;The boxes with all acrylic panels in place.&lt;/figcaption&gt;
@@ -114,7 +114,7 @@ all of the eight cores to wire the four channels. Each channel draws about
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-bar-2.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-bar-2.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/led-bar-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -122,7 +122,7 @@ all of the eight cores to wire the four channels. Each channel draws about
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-heatsinks.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-heatsinks.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/led-heatsinks_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -138,7 +138,7 @@ all of the eight cores to wire the four channels. Each channel draws about
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/skeleton-boxes-with-leds.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/skeleton-boxes-with-leds.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/skeleton-boxes-with-leds_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -146,7 +146,7 @@ all of the eight cores to wire the four channels. Each channel draws about
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/boxes-in-workshop.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/boxes-in-workshop.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boxes-in-workshop_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -165,7 +165,7 @@ other outer&amp;nbsp;boxes.&lt;/p&gt;
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/power-supply.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/power-supply.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/power-supply_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -173,7 +173,7 @@ other outer&amp;nbsp;boxes.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/plug-panel.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/plug-panel.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/plug-panel_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -181,7 +181,7 @@ other outer&amp;nbsp;boxes.&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/slave-box-control-boards.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/slave-box-control-boards.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/slave-box-control-boards_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -198,7 +198,7 @@ power wire (sufficient to carry the required power at 5V) with a another
 dual-core wire for the serial, wrapped in a heatshrink&amp;nbsp;coat.&lt;/p&gt;
 &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/cables.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/cables.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/cables_600x600.jpg" alt="Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two CAT-6 cores for serial data."&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two &lt;span class="caps"&gt;CAT&lt;/span&gt;-6 cores for serial data.&lt;/figcaption&gt;
@@ -304,7 +304,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-and-psu.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-and-psu.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/control-board-and-psu_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -312,7 +312,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/control-board-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -320,7 +320,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-stack-test-with-board.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-stack-test-with-board.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/one-stack-test-with-board_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -338,7 +338,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/back-panels.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/back-panels.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/back-panels_600x600.jpg" alt="Details of the back plates, fastened by M8 Allen key bolts."&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;Details of the back plates, fastened by M8 Allen key bolts.&lt;/figcaption&gt;
@@ -349,7 +349,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-2.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-2.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-2_600x600.jpg" alt="The boxes in a complete state"&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;The boxes in a complete state&lt;/figcaption&gt;
@@ -371,7 +371,7 @@ pixels, right with no blending of the &lt;span class="caps"&gt;RGB&lt;/span&gt;&
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-cell-illuminated.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-cell-illuminated.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/one-cell-illuminated_600x600.jpg" alt="Seeing the effect of the acrylic diffusion with just a lamp in one of the cells."&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;Seeing the effect of the acrylic diffusion with just a lamp in one of the cells.&lt;/figcaption&gt;
@@ -382,7 +382,7 @@ pixels, right with no blending of the &lt;span class="caps"&gt;RGB&lt;/span&gt;&
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
 &lt;figure class="figure"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/rgb-test.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/rgb-test.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/rgb-test_600x600.jpg" alt="The first RGB test of a stack."&gt;
   &lt;/a&gt;
   &lt;figcaption class="figure-caption text-left"&gt;The first &lt;span class="caps"&gt;RGB&lt;/span&gt; test of a stack.&lt;/figcaption&gt;
@@ -718,7 +718,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
 
 &lt;h1&gt;Pictures&lt;/h1&gt;
 &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/unpopulated-boards.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/unpopulated-boards.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/unpopulated-boards_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -727,7 +727,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -735,7 +735,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-2.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-2.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -743,7 +743,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-top.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-top.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-top_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -756,7 +756,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-programmer.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-programmer.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-programmer_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -764,7 +764,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/8up.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/8up.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/8up_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -777,7 +777,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
   &lt;div class="row align-items-center"&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/array-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -785,7 +785,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-2.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-2.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/array-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
@@ -793,7 +793,7 @@ this significantly reduces the throughput. In Python a packet can be sent with
     &lt;/div&gt;
     &lt;div class="col"&gt;
     &lt;div class="text-center"&gt;
-  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/4up-1.jpg" data-lightbox="shed"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/4up-1.jpg" data-lightbox="all"&gt;
     &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/4up-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
