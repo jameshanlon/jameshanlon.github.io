@@ -1,24 +1,3 @@
-{%- macro imagenothumb(filename, caption=None, alt=None) %}
-{% if caption != None %}
-  {% if alt == None %}
-    {% set alt = caption %}
-  {% endif %}
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="/{{filename|image}}" alt="{{alt}}">
-  <figcaption class="figure-caption text-left">{{caption}}</figcaption>
-</figure>
-</div>
-{% else %}
-  {% if alt == None %}
-    {% set alt = 'No alt text' %}
-  {% endif %}
-<div class="text-center">
-  <img class="figure-img img-fluid" src="/{{filename|image}}" alt="{{alt}}">
-</div>
-{% endif %}
-{% endmacro %}
-
 {%- macro image(filename, size='600x600', caption=None, alt=None) %}
 {% if caption != None %}
   {% if alt == None %}
@@ -26,7 +5,7 @@
   {% endif %}
 <div class="text-center">
 <figure class="figure">
-  <a href="{{filename|asset}}" data-lightbox="all">
+  <a href="{{filename|asset}}" data-lightbox="shed">
     <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
   <figcaption class="figure-caption text-left">{{caption}}</figcaption>
@@ -37,7 +16,7 @@
     {% set alt = 'No alt text' %}
   {% endif %}
 <div class="text-center">
-  <a href="{{filename|asset}}" data-lightbox="all">
+  <a href="{{filename|asset}}" data-lightbox="shed">
     <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
 </div>
