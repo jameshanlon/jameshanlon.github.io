@@ -131,14 +131,14 @@ an overall philosophy of the approach that is explored in this&nbsp;note:</p>
   task of integrating components of a design across a team, thereby revealing
   issues at as earlier stage in the project as possible to avoid disruptive
   changes towards the end; (2) enable faster design iteration; and (3)
-  provide traceability of results, providing a foundation for the next&nbsp;aim.</p>
+  provide traceability of results (a foundation for the next&nbsp;aim).</p>
 </li>
 <li>
 <p>Provide a <strong>full audit trail</strong> such that a release of a design for tape out
   has data and a set of reports, logs, coverage metrics, documentation and
   signoffs that are traceable back to the original <span class="caps">RTL</span> source files. This is
   important for building confidence to tape out, as well as providing information
-  for future work on a taped-out&nbsp;design.</p>
+  for future work on a completed&nbsp;design.</p>
 </li>
 <li>
 <p>Support <strong>multiple chips and frozen designs</strong> to keep previous generations
@@ -207,12 +207,12 @@ together to create different flows, but always have defined inputs and outputs.
 I use the term <em>job</em> to mean a particular program or script that is executed,
 typically corresponding to a&nbsp;step.</p>
 <ul>
-<li><strong>Design representation</strong>. To read a design into a tool, it must have a
-  complete representation including tool-agnostic configuration, macro defines,
-  library files and <span class="caps">RTL</span> sources. Often, <span class="caps">RTL</span> code will need to be generated
-  programatically using templates or other types of code generators. It is also
-  typical that a design will be implemented in a hierarchical fashion, so a
-  configuration step must gather together the required modules and package it
+<li><strong>Design representation</strong>. To read a design into a tool, the design must have
+  a complete representation including tool-agnostic configuration, macro
+  defines, library files and <span class="caps">RTL</span> sources. Often, <span class="caps">RTL</span> code will need to be
+  generated programatically using templates or other types of code generators. It
+  is also typical that a design will be implemented in a hierarchical fashion, so
+  a configuration step must gather together the required modules and package it
   into a single representation. As an example, the open-source <a href="https://github.com/pulp-platform/bender">Bender</a>
   dependency management tool provides very similar&nbsp;functionality.</li>
 </ul>
@@ -227,7 +227,7 @@ typically corresponding to a&nbsp;step.</p>
   bench, monitors, assertions etc, and possibly substituting parts of the design
   for fast models or block boxes. These verification components will likely live
   with the corresponding parts of the design and be collected together as they
-  were for the design representation during a configure&nbsp;step.</li>
+  were for the design representation during a configuration&nbsp;step.</li>
 </ul>
 <div class="text-center">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/verif-representation.png" alt="No alt text">
@@ -259,13 +259,13 @@ typically corresponding to a&nbsp;step.</p>
 
 <ul>
 <li><strong>Simulation testbench</strong>. A simulation test bench requires a representation
-  of the design, a verification environment and test stimulus. Test stimulus
-  is often randomly generated. Coverage (structural or functional) can be
-  collected during simulation, and when many test instances are run for a
-  particular test generator or over a larger regression of different test
-  generators, coverage may need to be merged then reported on. Simulation is
-  typically performed on an <span class="caps">RTL</span> representation, but is also done on gate-level
-  netlists and with delay&nbsp;annotations.</li>
+  of the design, a verification environment and test stimulus. Test stimulus is
+  often randomly generated. Coverage (structural or functional) can be collected
+  during simulation and when many test instances are run for a particular test
+  generator or over a larger regression of different test generators, coverage
+  may need to be merged then reported on. Simulation is typically performed on an
+  <span class="caps">RTL</span> representation, but can also be performed on gate-level netlists and with
+  and without delay&nbsp;annotations.</li>
 </ul>
 <div class="text-center">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/simulation-flow.png" alt="No alt text">
@@ -296,7 +296,7 @@ typically corresponding to a&nbsp;step.</p>
 <li><strong>Physical build</strong>. All flows up to this point have mainly operated on <span class="caps">RTL</span>
   representations of a design. A physical build flow starts off by
   transforming <span class="caps">RTL</span> into gates using a synthesis tool, then progressively
-  transforms the design into a set of two-dimensional layers. Following synthesis
+  transforming the design into a set of two-dimensional layers. Following synthesis
   are: scan insertion for <span class="caps">DFT</span>, floorplanning (placing ports and macros),
   placement (placing cells), clock tree synthesis, routing (establishing all
   required connections using the available routing layers, finishing and
@@ -335,7 +335,8 @@ implementing a flow form a acyclic directed graph (<span class="caps">DAG</span>
 fixed inputs or jobs and edges corresponding to dependencies. The structure of
 this graph is determined statically (ie without any dependence on runtime
 data). Execution proceeds by running tasks whose inputs are ready and letting
-the task run to completion before marking its outputs as&nbsp;available.</p>
+the task run to completion before marking its outputs as available to trigger
+the execution of more tasks or the termination of the&nbsp;flow.</p>
 <p>A <em>task</em> is defined&nbsp;by:</p>
 <ul>
 <li>A set of&nbsp;inputs.</li>
@@ -362,8 +363,8 @@ the task run to completion before marking its outputs as&nbsp;available.</p>
 <p>Configuration values are used to control the behaviour of a flow or task.
 A flow can propagate configuration into its sub tasks, but it must do so
 explicitly. Configuration values can be set on the command line. Example use of
-configuration options is to control aspects like debug flags, substitution
-of components of the design for simulation, or controlling the inclusion of
+configuration options is to control features like debug flags, substitution
+of components of the design for simulation, or the inclusion of
 tests to run in a&nbsp;regression.</p>
 <p>There are a number of similar programming models that support scalable
 pipelined data processing. In the field of genomics, the <a href="https://openwdl.org">Workflow Description
@@ -385,8 +386,8 @@ flow, as well as some nice-to-have&nbsp;features.</p>
   tool versions for reproducability and legacy support. Container technology
   supports this requirement very will with implementations such as
   <a href="https://apptainer.org">Singularity/Apptainer</a>. A lighter-weight solution is
-  <a href="https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0">faketree</a>, an Enfabrica open-source tool for managing <span class="caps">EDA</span> tools in
-  containers and&nbsp;sandboxes.</p>
+  <a href="https://github.com/enfabrica/enkit/tree/master/faketree">faketree</a> for managing filesystem layout in a dynamic way to meet
+  the constraints of <span class="caps">EDA</span>&nbsp;tools.</p>
 </li>
 <li>
 <p><strong>Access to compute</strong>. Dispatching of jobs to compute resources such as a
@@ -403,23 +404,23 @@ flow, as well as some nice-to-have&nbsp;features.</p>
 <p><strong>Fault tolerance</strong>. Flows should be robust to failures. When an task failure
   does occur, the correct statuses should be propagated up any hierarchy of
   tasks to provides visibility of the issue. The logging infrastructure should
-  record any progress that was made, providing a starting point for debug or a
-  restart. It should be straightforward to rerun part of a job that has failed
-  in a reproducible&nbsp;way.</p>
+  record any progress that was made, providing a starting point for debug or to
+  restart the task. It should be straightforward to rerun part of a job that has
+  failed in a reproducible&nbsp;way.</p>
 </li>
 <li>
-<p><strong>Storage</strong>. The use of a shared filesystem such as <span class="caps">NFS</span> is typical in
-  silicon <span class="caps">EDA</span> flows, however it creates a single point of failure and has
-  limited scalability. Alternatives are object storage such as <a href="https://min.io">MinIO</a>.</p>
+<p><strong>Storage</strong>. The use of a shared filesystem such as <span class="caps">NFS</span> is typical in silicon
+  <span class="caps">EDA</span> flows, however it creates a single point of failure and has limited
+  scalability. An alternative shared storage system is object storage such as
+  <a href="https://min.io">MinIO</a>.</p>
 </li>
 <li>
 <p><strong>Releasing</strong>. It should be simple to release data from the repository into
-  immutable storage that can be&nbsp;referenced.</p>
+  immutable storage that can then be referenced as a&nbsp;dependency.</p>
 </li>
 <li>
 <p><strong>Periodic jobs</strong>. A mechanism for running periodic jobs is required to
-  implement a continuous-integration (<span class="caps">CI</span>) and/or continuous-delivery (<span class="caps">CD</span>)
-  system to maintain a high standard of code quality in the repository.
+  implement a continuous-integration (<span class="caps">CI</span>) and/or continuous-delivery (<span class="caps">CD</span>).
   <a href="https://www.jenkins.io">Jenkins</a>, <a href="https://github.com/features/actions">GitHub Actions</a> or <a href="https://docs.gitlab.com/ee/ci">GitLab <span class="caps">CI</span>/<span class="caps">CD</span></a>
   are all directly applicable&nbsp;here.</p>
 </li>
@@ -429,10 +430,10 @@ flow, as well as some nice-to-have&nbsp;features.</p>
 infrastructure to build chips. This is very different to conventional software
 engineering due to fundamental differences in processes, and is likely to be
 quite different from the typical methodologies used in conventional silicon
-design. Based on some simple use cases, a model based on tasks and flows is
-proposed that abstracts the details of resouce allocation and data movement.
-Surprisingly, there already exist a family of tools from data science that
-employ a very similar&nbsp;model.</p>
+design. Based on some simple use cases, a model is proposed that abstracts the
+details of resource allocation and data movement by providing tasks with inputs
+and outputs as primitives. Surprisingly, there already exist a family of tools
+from data science that employ a very similar&nbsp;model.</p>
 <h2>Acknowledgments <a name="acknowledgements" class="anchor"></a></h2>
 <p>The motivation for writing this note came from recent discussions on building a
 from-scratch silicon infrastructure with <a href="http://www.jpallister.com">James Pallister</a> and <a href="https://intuity.io">Peter
@@ -441,7 +442,7 @@ Birch</a>. This note is a synthesis of ideas from those&nbsp;conversations.</p>
 <ul>
 <li><a href="https://gator.intuity.io">Gator</a>, a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and&nbsp;artefacts.</li>
-<li><a href="https://github.com/blockwork-eda/blockwork">Blockwork</a>, is a buildsystem and
+<li><a href="https://github.com/blockwork-eda/blockwork">Blockwork</a>, is a build system and
   orchestrator for silicon&nbsp;design.</li>
 <li><a href="https://blu-blade.readthedocs.io">Blade</a> is a tool for autogenerating
   modules, interconnects and register definitions from an <span class="caps">YAML</span>&nbsp;schema.</li>
