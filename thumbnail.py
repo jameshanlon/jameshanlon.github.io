@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import requests
 from PIL import Image, ExifTags
 from io import BytesIO
@@ -9,6 +10,7 @@ import logging
 LOCAL_PREFIX = os.path.join(os.getcwd(), 'content')
 REMOTE_PREFIX = 'https://jwh.ams3.digitaloceanspaces.com/homepage'
 OUT_DIR = os.path.join(os.getcwd(), 'output')
+IMAGE_DIR = 'images'
 THUMB_DIR = 'thumbs'
 
 def fetch_remote(filepath, size):
@@ -20,6 +22,37 @@ def fetch_remote(filepath, size):
         logging.error('Image not found: ' + image_url)
         sys.exit(1)
     return Image.open(BytesIO(response.content))
+
+def get_image(filepath):
+    """
+    Return a URL prefix to an image. If the image is found locally, copy the
+    image to the output directory and return a reference to it there.
+    """
+    local_path = os.path.join(LOCAL_PREFIX, filepath)
+    if os.path.exists(local_path):
+        logging.info(f'Using local image version {local_path}')
+
+        # Setup paths.
+        image_name = os.path.basename(filepath)
+        image_path = os.path.join(OUT_DIR, IMAGE_DIR, image_name)
+        image_dir = os.path.dirname(image_path)
+
+        if os.path.exists(image_path):
+            # Return the image if it exists.
+            return '/images/'+image_name
+
+        if not os.path.exists(image_dir):
+            # Create the image directory if it doesn't exist.
+            os.makedirs(image_dir)
+
+        # Copy the file to the output directory
+        shutil.copyfile(local_path, image_path)
+
+        return '/images/'+image_name
+
+    else:
+        # The image is hosted remotely.
+        return REMOTE_PREFIX+'/'+filepath
 
 def get_thumbnail(filepath, size):
     # Setup paths
