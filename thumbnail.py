@@ -39,7 +39,7 @@ def get_image(filepath):
 
         if os.path.exists(image_path):
             # Return the image if it exists.
-            return 'images/'+image_name
+            return '/images/'+image_name
 
         if not os.path.exists(image_dir):
             # Create the image directory if it doesn't exist.
@@ -48,7 +48,7 @@ def get_image(filepath):
         # Copy the file to the output directory
         shutil.copyfile(local_path, image_path)
 
-        return 'images/'+image_name
+        return '/images/'+image_name
 
     else:
         # The image is hosted remotely.

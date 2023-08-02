@@ -55,7 +55,8 @@ and structure of a software infrastructure to build ASIC chips.
 1. [Guiding principles](#principles)
 1. [Flows](#flows)
 1. [Model](#model)
-1. [details](#details)
+1. [Details](#details)
+1. [Summary](#summary)
 1. [Acknowledgments](#acknowledgements)
 1. [Related projects](#related-projects)
 
@@ -93,7 +94,7 @@ alternative foundations can be constructed and argued for.
 
 1. **Simple and explicit**. Build a complex system using simple, well-defined
 components composed and controlled using explicit mechanisms. Conversely, avoid
-easy-to-use high-level interfaces that hide important behaviors. This borrows
+easy-to-use high-level interfaces that hide important behaviours. This borrows
 from the [Zen of Python](https://peps.python.org/pep-0020/): *explicit is better
 than implicit and simple is better than complex*. Examples include avoiding the
 use of global variables, preferring flat rather than nested, preferring
@@ -152,7 +153,7 @@ typically corresponding to a step.
   into a single representation. As an example, the open-source [Bender][bender]
   dependency management tool provides very similar functionality.
 
-{{ macros.imagenothumb('sili-infra/design-representation.png') }}
+{{ macros.imagenothumb('silicon-infra/design-representation.png') }}
 
 - **Verification representation**. For the purposes of simulation and
   analysis, a verification representation is a variation of a design
@@ -162,7 +163,7 @@ typically corresponding to a step.
   with the corresponding parts of the design and be collected together as they
   were for the design representation during a configure step.
 
-{{ macros.imagenothumb('sili-infra/verif-representation.png') }}
+{{ macros.imagenothumb('silicon-infra/verif-representation.png') }}
 
 - **Lint checking**. RTL source code can be checked for basic coding issues
   (referred to as *linting*) by passing it through tools that perform various
@@ -171,14 +172,14 @@ typically corresponding to a step.
   tools that can be used for linting are [Verilator][verilator],
   [Verible][verible], [Slang][slang], [svlint][svlint] and [Yosys][yosys].
 
-{{ macros.image('sili-infra/lint-check.png', size='1000x1000') }}
+{{ macros.image('silicon-infra/lint-check.png', size='1000x1000') }}
 
 - **CDC and RDC checking**. Clock- and reset-domain crossings can be checked
   automatically with tools that analyse a design, typically with a set of
   annotations and constraints. The output will be warning messages from the
   checker that need to be investigated.
 
-{{ macros.imagenothumb('sili-infra/cdc-rdc-check.png') }}
+{{ macros.imagenothumb('silicon-infra/cdc-rdc-check.png') }}
 
 - **Simulation testbench**. A simulation test bench requires a representation
   of the design, a verification environment and test stimulus. Test stimulus
@@ -189,14 +190,14 @@ typically corresponding to a step.
   typically performed on an RTL representation, but is also done on gate-level
   netlists and with delay annotations.
 
-{{ macros.imagenothumb('sili-infra/simulation-flow.png') }}
+{{ macros.imagenothumb('silicon-infra/simulation-flow.png') }}
 
 - **Formal property test bench**. Analysing and proving formal properties of a
   design is a complementary technique to standard functional coverage. Inputs
   to this are a verification representation of the design and a set of
   assumptions and properties to be checked.
 
-{{ macros.imagenothumb('sili-infra/formal-property-check.png') }}
+{{ macros.imagenothumb('silicon-infra/formal-property-check.png') }}
 
 - **Formal equivalence check**. As a design is incrementally transformed
   between RTL and GDSII, it is essential to perform equivalence checks to
@@ -204,7 +205,7 @@ typically corresponding to a step.
   design. Inputs to an equivalence check are two representations, typically
   called a *reference* that is the baseline and an *implementation* to check.
 
-{{ macros.imagenothumb('sili-infra/equivalence-flow.png') }}
+{{ macros.imagenothumb('silicon-infra/equivalence-flow.png') }}
 
 - **Physical build**. All flows up to this point have mainly operated on RTL
   representations of a design. A physical build flow starts off by
@@ -216,7 +217,7 @@ typically corresponding to a step.
   checking. See [OpenROAD][OpenROAD] for an example open source physical build
   flow.
 
-{{ macros.imagenothumb('sili-infra/phys-build-flow.png') }}
+{{ macros.imagenothumb('silicon-infra/phys-build-flow.png') }}
 
 > **A note on DFT**. A central aspect of any ASIC design is the DFT (device
 > test) strategy. Testability is achieved by adding logic in the form of
@@ -300,7 +301,7 @@ based on a domain-specific language implemented in Groovy. This
 [paper][wf-mgmt-paper] offers a good comparison of WDL, CWL and Nextflow. Also
 worth mentioning are [Snakemake][snakemake], [Apache Airflow][airflow], [Apache
 Beam][beam], [Luigi][luigi] and [Flyte][flyte]. I'm still investigating the
-suitability of any of these tools to implementing a Silicon infrastructure.
+suitability of these tools for Silicon design workloads.
 
 [nextflow]: https://www.nextflow.io
 [openwdl]: https://openwdl.org
@@ -372,7 +373,16 @@ flow, as well as some nice-to-have features.
 [githubactions]: https://github.com/features/actions
 [gitlabci]: https://docs.gitlab.com/ee/ci
 
-## Summary
+## Summary <a name="summary" class="anchor"></a>
+
+This note outlines the principles and requirements for a modern software
+infrastructure to build chips. This is very different to conventional software
+engineering due to fundamental differences in processes, and is likely to be
+quite different from the typical methodologies used in conventional silicon
+design. Based on some simple use cases, a model based on tasks and flows is
+proposed that abstracts the details of resouce allocation and data movement.
+Surprisingly, there already exist a family of tools from data science that
+employ a very similar model.
 
 ## Acknowledgments <a name="acknowledgements" class="anchor"></a>
 

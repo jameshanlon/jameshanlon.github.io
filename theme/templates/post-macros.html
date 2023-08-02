@@ -5,7 +5,7 @@
   {% endif %}
 <div class="text-center">
 <figure class="figure">
-  <img class="figure-img img-fluid" src="/{{filename|image}}" alt="{{alt}}">
+  <img class="figure-img img-fluid" src="{{filename|image}}" alt="{{alt}}">
   <figcaption class="figure-caption text-left">{{caption}}</figcaption>
 </figure>
 </div>
@@ -14,7 +14,7 @@
     {% set alt = 'No alt text' %}
   {% endif %}
 <div class="text-center">
-  <img class="figure-img img-fluid" src="/{{filename|image}}" alt="{{alt}}">
+  <img class="figure-img img-fluid" src="{{filename|image}}" alt="{{alt}}">
 </div>
 {% endif %}
 {% endmacro %}
