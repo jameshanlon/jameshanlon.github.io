@@ -397,6 +397,8 @@ Birch][peterb]. This note is a synthesis of ideas from those conversations.
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
+- [Blockwork](https://github.com/blockwork-eda/blockwork), is a buildsystem and
+  orchestrator for silicon design.
 - [Blade](https://blu-blade.readthedocs.io) is a tool for autogenerating
   modules, interconnects and register definitions from an YAML schema.
 - [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) is a modular
