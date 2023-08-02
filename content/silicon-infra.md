@@ -55,8 +55,8 @@ and structure of a software infrastructure to build ASIC chips.
 1. [Guiding principles](#principles)
 1. [Flows](#flows)
 1. [Model](#model)
-1. [Components](#components)
-1. [Acknowledgements](#acknowledgements)
+1. [details](#details)
+1. [Acknowledgments](#acknowledgements)
 1. [Related projects](#related-projects)
 
 ## Aims <a name="aims" class="anchor"></a>
@@ -70,12 +70,12 @@ an overall philosophy of the approach that is explored in this note:
   automation of an the end-to-end flow. This is intended to: (1) distribute the
   task of integrating components of a design across a team, thereby revealing
   issues at as earlier stage in the project as possible to avoid disruptive
-  changes towards the end; (2) enable faster design iterational; and (3)
-  provide tracability of results, providing a foundation for the next aim.
+  changes towards the end; (2) enable faster design iteration; and (3)
+  provide traceability of results, providing a foundation for the next aim.
 
 - Provide a **full audit trail** such that a release of a design for tape out
   has data and a set of reports, logs, coverage metrics, documentation and
-  signoffs that are tracable back to the original RTL source files. This is
+  signoffs that are traceable back to the original RTL source files. This is
   important for building confidence to tape out, as well as providing information
   for future work on a taped-out design.
 
@@ -93,7 +93,7 @@ alternative foundations can be constructed and argued for.
 
 1. **Simple and explicit**. Build a complex system using simple, well-defined
 components composed and controlled using explicit mechanisms. Conversely, avoid
-easy-to-use high-level interfaces that hide important behaviours. This borrows
+easy-to-use high-level interfaces that hide important behaviors. This borrows
 from the [Zen of Python](https://peps.python.org/pep-0020/): *explicit is better
 than implicit and simple is better than complex*. Examples include avoiding the
 use of global variables, preferring flat rather than nested, preferring
@@ -119,7 +119,7 @@ custom versions. Where open source is used, contributions back upstream benefit
 the community and help to align the project with the way it is being deployed.
 This particularly applies to open source in the ASIC/FPGA domain, where
 [open-source software][oss-hw] is unencumbered by licensing restrictions.  Often
-chip projects will be on tight schedules, so careful judgement of the
+chip projects will be on tight schedules, so careful judgment of the
 effort-benefit tradeoff must be made.
 
 1. **Performance is important**. With the ability to rerun everything from
@@ -180,7 +180,7 @@ typically corresponding to a step.
 
 {{ macros.imagenothumb('sili-infra/cdc-rdc-check.png') }}
 
-- **Simulation testbench**. A simulation test bench requires a representaiton
+- **Simulation testbench**. A simulation test bench requires a representation
   of the design, a verification environment and test stimulus. Test stimulus
   is often randomly generated. Coverage (structural or functional) can be
   collected during simulation, and when many test instances are run for a
@@ -234,8 +234,8 @@ typically corresponding to a step.
 > given the same inputs due to the nature of the optimisation algorithms they
 > use. The second is that close to the closure of a design component, manual
 > interventions will be made to address localised issues in the design. The
-> combinaion of these issues mean that it is not possible to rerun physical
-> builds from scratch and achive satisfactory results. Therefore, a silicon
+> combination of these issues mean that it is not possible to rerun physical
+> builds from scratch and achieve satisfactory results. Therefore, a silicon
 > infrastructure must be able to support frozen data from particular flow
 > stages.
 
@@ -249,13 +249,15 @@ typically corresponding to a step.
 
 ## Model <a name="model" class="anchor"></a>
 
-A model for the use cases described is a hierarchical collection of *tasks*
-that consume inputs and produce outputs. A task can be dependendent on another
-task by consuming that task's output and tasks can be composed together in this
-way into *flows*. The set of tasks implementing a flow form a directed graph
-with nodes representing fixed inputs or jobs and edges corresponding to
-dependencies. The structure of this graph is determined statically (ie without
-any dependence on runtime data).
+A model for a silicon infrastructure that captures the use cases described is a
+hierarchical collection of *tasks* that consume inputs and produce outputs. A
+task can be dependent on another task by consuming that task's output and
+tasks can be composed together in this way into *flows*. The set of tasks
+implementing a flow form a acyclic directed graph (DAG) with nodes representing
+fixed inputs or jobs and edges corresponding to dependencies. The structure of
+this graph is determined statically (ie without any dependence on runtime
+data). Execution proceeds by running tasks whose inputs are ready and letting
+the task run to completion before marking its outputs as available.
 
 A *task* is defined by:
 
@@ -265,6 +267,8 @@ A *task* is defined by:
 - A set of resource requirements (time, memory, cores).
 - An *action* that that operates only on the inputs and must produce all the
   of the outputs, typically achieved by executing a script or separate tool.
+- If a task attempts to access an input that is not specified, then an error is
+  raised.
 
 A *flow* is a hierarchical task and defined by:
 
@@ -273,84 +277,108 @@ A *flow* is a hierarchical task and defined by:
 - A set of configuration values.
 - A set of resource requirements.
 - A *action* consisting of executing one or more tasks according to their
-  dependencies. Tasks can be specified using *replication* with static bounds
+  dependencies. Inputs and outputs of the flow must be connected to the sub
+  tasks and similarly for dependencies between sub tasks.
+- Tasks can be specified using *replication* with static bounds
   to create arrays, and *conditionality* to include or exclude tasks dependent on
-  the configuration values.
-
-Inputs and outputs are always files.
-If a task attempts to access an input that is not specified, an error should be
-raised.
+  configuration values.
 
 Configuration values are used to control the behaviour of a flow or task.
 A flow can propagate configuration into its sub tasks, but it must do so
-explicitly.
+explicitly. Configuration values can be set on the command line. Example use of
+configuration options is to control aspects like debug flags, substitution
+of components of the design for simulation, or controlling the inclusion of
+tests to run in a regression.
 
-{#
-Examples: filtering tests, multi chip
-Substitution
-Reuse
-#}
+There are a number of similar programming models that support scalable
+pipelined data processing. In the field of genomics, the [Workflow Description
+Language][openwdl] (WDL) and [Common Workflow Language][cwl] (CWL) are open
+programming language specifications. Example implementations of WDL are
+[MiniWDL][miniwdl] and [Cromwell][cromwell], and of CWL are [cwltool][cwltool]
+and [Toil][toil]. A [Nextflow][nextflow] offers comparable features but is
+based on a domain-specific language implemented in Groovy. This
+[paper][wf-mgmt-paper] offers a good comparison of WDL, CWL and Nextflow. Also
+worth mentioning are [Snakemake][snakemake], [Apache Airflow][airflow], [Apache
+Beam][beam], [Luigi][luigi] and [Flyte][flyte]. I'm still investigating the
+suitability of any of these tools to implementing a Silicon infrastructure.
 
-## Components <a name="components" class="anchor"></a>
+[nextflow]: https://www.nextflow.io
+[openwdl]: https://openwdl.org
+[cwl]: https://www.commonwl.org
+[miniwdl]: https://github.com/chanzuckerberg/miniwdl
+[cromwell]: https://cromwell.readthedocs.io
+[cwltool]: https://github.com/common-workflow-language/cwltool
+[toil]: http://toil.ucsc-cgl.org
+[wf-mgmt-paper]: https://www.nature.com/articles/s41598-021-99288-8
+[snakemake]: https://snakemake.github.io
+[airflow]: https://airflow.apache.org
+[beam]: https://beam.apache.org
+[luigi]: https://github.com/spotify/luigi
+[flyte]: https://flyte.org
+
+## Implementation details <a name="details" class="anchor"></a>
 
 {#
 What do we need to do with the infrastructure?
 What are some specific supporting tools that we need?
 What are the components of the infrastructure?
 What are some specific useful features?
-
-Orchestration: ability to deploy tools onto compute.
-  Containerisation
-  Queueing system
-Buildsystem: dependencies, inputs, outputs, tasks.
-  Design
-  Flows
-  Messaging/logging
-  Storage
-  Releasing to immutable storage
-  Referencing releases within the repository
-CI
-  Regressions run on patches.
-  Periodic jobs: hourly, nightly, weekly.
-Dashboard
-  Reporting of CI
-  Performance reporting (Grafana)
-Documentation
-Collaboration
-  Code review
-  Issue tracking
-
-Laundry list of useful features
-- Stubbing out of dependencies
-- Filtering of tests (a la xpath)
-- Making all functionality available on the command line
 #}
 
-This section sketches out a silicon infrastructure by focussing on the main
-components and their requirements and/or features.
+This section records some important details to consider when implementing a silicon
+flow, as well as some nice-to-have features.
 
-- **Job runner**. The lowest layer of the infrastructure is responsible for
-  providing an execution engine for jobs. This provides:
+- **Environment**. A controlled environment execution environment with specific
+  tool versions for reproducability and legacy support. Container technology
+  supports this requirement very will with implementations such as
+  [Singularity/Apptainer][singularity]. A lighter-weight solution is
+  [faketree][faketree], an Enfabrica open-source tool for managing EDA tools in
+  containers and sandboxes.
 
-    - A controlled environment execution environment with specific tool versions for reproducability and legacy support, likely in a container such as [Singularity/Apptainer][singularity];
+- **Access to compute**. Dispatching of jobs to compute resources such as a
+  compute cluster requires interaction with a queuing system such as
+  [Slurm][slurm].
 
-    - Dispatching of jobs to compute resources, such as a compute cluster, which requires interaction with a queueing system such as [Slurm][slurm];
+- **Logging**. Extensive logging of job statuses is important for a
+  compute-intensive workload. Straightforward access to these logs for
+  inspection during and after the run should be provided, likely through a
+  web-based dashboard.
 
-    - Shepherding of data inputs and outputs of a job;
+- **Fault tolerance**. Flows should be robust to failures. When an task failure
+  does occur, the correct statuses should be propagated up any hierarchy of
+  tasks to provides visibility of the issue. The logging infrastructure should
+  record any progress that was made, providing a starting point for debug or a
+  restart. It should be straightforward to rerun part of a job that has failed
+  in a reproducible way.
 
-    - Monitoring of job status, including propagation of statuses and errors, and logging of messages from jobs being run.
+- **Storage**. The use of a shared filesystem such as NFS is typical in
+  silicon EDA flows, however it creates a single point of failure and has
+  limited scalability. Alternatives are object storage such as [MinIO][minio].
 
-- **Buildsystem**.
+- **Releasing**. It should be simple to release data from the repository into
+  immutable storage that can be referenced.
 
+- **Periodic jobs**. A mechanism for running periodic jobs is required to
+  implement a continuous-integration (CI) and/or continuous-delivery (CD)
+  system to maintain a high standard of code quality in the repository.
+  [Jenkins][jenkins], [GitHub Actions][githubactions] or [GitLab CI/CD][gitlabci]
+  are all directly applicable here.
 
 [singularity]: https://apptainer.org
+[faketree]: https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0
 [slurm]: https://slurm.schedmd.com
+[minio]: https://min.io
+[jenkins]: https://www.jenkins.io
+[githubactions]: https://github.com/features/actions
+[gitlabci]: https://docs.gitlab.com/ee/ci
 
-## Acknowledgements <a name="acknowledgements" class="anchor"></a>
+## Summary
+
+## Acknowledgments <a name="acknowledgements" class="anchor"></a>
 
 The motivation for writing this note came from recent discussions on building a
-from-scratch silicon infrastructure with [James Pallister][jamesp] and [Peter Birch][peterb]. This
-note is a synthesis of ideas from those conversations.
+from-scratch silicon infrastructure with [James Pallister][jamesp] and [Peter
+Birch][peterb]. This note is a synthesis of ideas from those conversations.
 
 [jamesp]: http://www.jpallister.com
 [peterb]: https://intuity.io
@@ -372,5 +400,3 @@ note is a synthesis of ideas from those conversations.
   and [source code](https://github.com/rporter/verilog_integration) for the project.
 - [Melding hardware and software: a story in the making](https://medium.com/enfabrica/melding-hardware-and-software-a-story-in-the-making-bcce28b821a8),
   a position piece by Enfabrica on their approach to ASIC design.
-- [faketree](https://blog.enfabrica.net/different-file-system-views-for-different-tools-a425f13bb7f0)
-  is an Enfabrica open-source tool for managing EDA tools in containers and sandboxes.
