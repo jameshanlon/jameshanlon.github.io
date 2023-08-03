@@ -68,11 +68,11 @@
       <span class="article-tag small"><a href="/tag/verilog.html">verilog</a></span>
   </div>
   <div class="article-body">
-    <p>Modern <span class="caps">ASIC</span> design differs to conventional software engineering in three
+    <p>Modern chip design differs to conventional software engineering in three
 fundamental aspects that require a somewhat different approach to project&nbsp;development:</p>
 <ul>
 <li>
-<p><strong>Transformations and representations</strong>. The creation of an <span class="caps">ASIC</span> design from
+<p><strong>Transformations and representations</strong>. The creation of a chip design from
   a source-level representation through to a final <span class="caps">GDSII</span> description of the
   layout involves many stages of incremental transformations of the circuit and
   layout, and then incremental assembly of components into various subsystems
@@ -81,7 +81,7 @@ fundamental aspects that require a somewhat different approach to project&nbsp;d
   reduce complexity and make run times&nbsp;practical.</p>
 </li>
 <li>
-<p><strong>Tooling</strong>. Compared to software tooling, standard <span class="caps">ASIC</span> design tooling
+<p><strong>Tooling</strong>. Compared to software tooling, standard chip-design tooling
   (known in the industry as <em>electronic design automation</em>) :
     (1) is almost all proprietary and used under license, meaning that interactive
     and automated use is limited and at odds with a continuous-integration model
@@ -105,10 +105,10 @@ fundamental aspects that require a somewhat different approach to project&nbsp;d
 </li>
 </ul>
 <p>Despite these differences, many of the techniques and tools from software
-engineering can readily be applied to <span class="caps">ASIC</span> development, particularly to manage
+engineering can readily be applied to chip development, particularly to manage
 complexity and maintain high standards of code quality, testing and
 integration. This note lays out some thoughts and opinions on the components
-and structure of a software infrastructure to build <span class="caps">ASIC</span>&nbsp;chips.</p>
+and structure of a software infrastructure to build&nbsp;chips.</p>
 <h3>Table of&nbsp;contents</h3>
 <ol>
 <li><a href="#aims">Aims</a></li>
@@ -122,7 +122,7 @@ and structure of a software infrastructure to build <span class="caps">ASIC</spa
 </ol>
 <h2>Aims <a name="aims" class="anchor"></a></h2>
 <p>The overall objective of a silicon infrastructure is to <strong>support the
-development of a verified <span class="caps">ASIC</span> design from <span class="caps">RTL</span> to <span class="caps">GDSII</span></strong>. To make this more
+development of a verified chip design from <span class="caps">RTL</span> to <span class="caps">GDSII</span></strong>. To make this more
 specific, I also define the following capabilities that should be supported as
 an overall philosophy of the approach that is explored in this&nbsp;note:</p>
 <ul>
@@ -148,8 +148,8 @@ an overall philosophy of the approach that is explored in this&nbsp;note:</p>
 </li>
 </ul>
 <h2>Guiding principles <a name="principles" class="anchor"></a></h2>
-<p>I think it is useful to underpin the aims, implementation and operation of an
-<span class="caps">ASIC</span> design infrastructure are a set of guiding principles for the project team
+<p>I think it is useful to underpin the aims, implementation and operation of a
+chip-design infrastructure are a set of guiding principles for the project team
 to employ when design decisions need to be made.  These principles are formed
 from my own experience and through conversations with others. I am sure that
 alternative foundations can be constructed and argued&nbsp;for.</p>
@@ -184,7 +184,7 @@ and libraries wherever possible in the infrastructure, rather than implementing
 custom versions. Where open source is used, contributions back upstream benefit
 the community and help to align the project with the way it is being deployed.
 This particularly applies to open source in the <span class="caps">ASIC</span>/<span class="caps">FPGA</span> domain, where
-<a href="https://github.com/aolofsson/awesome-opensource-hardware">open-source software</a> is unencumbered by licensing restrictions.  Often
+<a href="https://github.com/aolofsson/awesome-opensource-hardware">open-source software</a> is unencumbered by licensing restrictions. Often
 chip projects will be on tight schedules, so careful judgment of the
 effort-benefit tradeoff must be&nbsp;made.</p>
 </li>
@@ -200,13 +200,13 @@ well-defined boundaries and&nbsp;dependencies).</p>
 </li>
 </ol>
 <h2>Flows <a name="flows" class="anchor"></a></h2>
-<p>This section outlines the high-level <em>flows</em> that an <span class="caps">ASIC</span> infrastructure needs
-to support, meaning (typically) a sequence of steps to achieve some <em>task</em>.
-This is not meant to be exhaustive, but characteristic of the types of tasks
-that need to be performed. Flows can be just a single step or can be composed
-together to create different flows, but always have defined inputs and outputs.
-I use the term <em>job</em> to mean a particular program or script that is executed,
-typically corresponding to a&nbsp;step.</p>
+<p>This section outlines the high-level <em>flows</em> that a chip-design infrastructure
+needs to support, meaning (typically) a sequence of steps to achieve some
+<em>task</em>. This is not meant to be exhaustive, but characteristic of the types of
+tasks that need to be performed. Flows can be just a single step or can be
+composed together to create different flows, but always have defined inputs and
+outputs. I use the term <em>job</em> to mean a particular program or script that is
+executed, typically corresponding to a&nbsp;step.</p>
 <ul>
 <li><strong>Design representation</strong>. To read a design into a tool, the design must have
   a complete representation including tool-agnostic configuration, macro
@@ -308,15 +308,15 @@ typically corresponding to a&nbsp;step.</p>
 </div>
 
 <blockquote>
-<p><strong>A note on <span class="caps">DFT</span></strong>. A central aspect of any <span class="caps">ASIC</span> design is the <span class="caps">DFT</span> (device
+<p><strong>A note on <span class="caps">DFT</span></strong>. A central aspect of any chip design is the <span class="caps">DFT</span> (device
 test) strategy. Testability is achieved by adding logic in the form of
 <em>instruments</em> and <em>connectivity</em> to make the the existing logic
 <em>controllable</em> and <em>observable</em>. The means by which this is done and the
-point in the <span class="caps">ASIC</span> process is heavily dependent on the design and the tooling
-used. Typically, <span class="caps">DFT</span> logic is inserted using automated tools during the
-physical build but increasingly it is being added in <span class="caps">RTL</span> also using automated
-tooling - either way adding additional transformation steps to the front- or
-back-end&nbsp;flows.</p>
+point in the development process is heavily dependent on the design and the
+tooling used. Typically, <span class="caps">DFT</span> logic is inserted using automated tools during
+the physical build but increasingly it is being added in <span class="caps">RTL</span> also using
+automated tooling - either way adding additional transformation steps to the
+front- or back-end&nbsp;flows.</p>
 <p><strong>A note on physical builds</strong>. There are two unique aspects of physical
 builds that present challenges for the infrastructure presented in this note.
 The first is that physical <span class="caps">EDA</span> tools do not always produce the same output
@@ -332,7 +332,7 @@ infrastructure must be able to support frozen data from particular flow&nbsp;sta
 hierarchical collection of <em>tasks</em> that consume inputs and produce outputs. A
 task can be dependent on another task by consuming that task&#8217;s output and
 tasks can be composed together in this way into <em>flows</em>. The set of tasks
-implementing a flow form a acyclic directed graph (<span class="caps">DAG</span>) with nodes representing
+implementing a flow form an acyclic directed graph (<span class="caps">DAG</span>) with nodes representing
 fixed inputs or jobs and edges corresponding to dependencies. The structure of
 this graph is determined statically (ie without any dependence on runtime
 data). Execution proceeds by running tasks whose inputs are ready and letting
