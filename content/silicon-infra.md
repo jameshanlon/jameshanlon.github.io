@@ -10,11 +10,11 @@ Status: draft
 
 {% import 'post-macros.html' as macros %}
 
-Modern ASIC design differs to conventional software engineering in three
+Modern chip design differs to conventional software engineering in three
 fundamental aspects that require a somewhat different approach to project
 development:
 
-- **Transformations and representations**. The creation of an ASIC design from
+- **Transformations and representations**. The creation of a chip design from
   a source-level representation through to a final GDSII description of the
   layout involves many stages of incremental transformations of the circuit and
   layout, and then incremental assembly of components into various subsystems
@@ -22,7 +22,7 @@ development:
   are performed on the design typically using simplified representations to
   reduce complexity and make run times practical.
 
-- **Tooling**. Compared to software tooling, standard ASIC design tooling
+- **Tooling**. Compared to software tooling, standard chip-design tooling
   (known in the industry as *electronic design automation*) :
     (1) is almost all proprietary and used under license, meaning that interactive
     and automated use is limited and at odds with a continuous-integration model
@@ -44,10 +44,10 @@ development:
     the purposes of debug and analysis.
 
 Despite these differences, many of the techniques and tools from software
-engineering can readily be applied to ASIC development, particularly to manage
+engineering can readily be applied to chip development, particularly to manage
 complexity and maintain high standards of code quality, testing and
 integration. This note lays out some thoughts and opinions on the components
-and structure of a software infrastructure to build ASIC chips.
+and structure of a software infrastructure to build chips.
 
 ### Table of contents
 
@@ -63,7 +63,7 @@ and structure of a software infrastructure to build ASIC chips.
 ## Aims <a name="aims" class="anchor"></a>
 
 The overall objective of a silicon infrastructure is to **support the
-development of a verified ASIC design from RTL to GDSII**. To make this more
+development of a verified chip design from RTL to GDSII**. To make this more
 specific, I also define the following capabilities that should be supported as
 an overall philosophy of the approach that is explored in this note:
 
@@ -86,8 +86,8 @@ an overall philosophy of the approach that is explored in this note:
 
 ## Guiding principles <a name="principles" class="anchor"></a>
 
-I think it is useful to underpin the aims, implementation and operation of an
-ASIC design infrastructure are a set of guiding principles for the project team
+I think it is useful to underpin the aims, implementation and operation of a
+chip-design infrastructure are a set of guiding principles for the project team
 to employ when design decisions need to be made.  These principles are formed
 from my own experience and through conversations with others. I am sure that
 alternative foundations can be constructed and argued for.
@@ -119,7 +119,7 @@ and libraries wherever possible in the infrastructure, rather than implementing
 custom versions. Where open source is used, contributions back upstream benefit
 the community and help to align the project with the way it is being deployed.
 This particularly applies to open source in the ASIC/FPGA domain, where
-[open-source software][oss-hw] is unencumbered by licensing restrictions.  Often
+[open-source software][oss-hw] is unencumbered by licensing restrictions. Often
 chip projects will be on tight schedules, so careful judgment of the
 effort-benefit tradeoff must be made.
 
@@ -136,13 +136,13 @@ well-defined boundaries and dependencies).
 
 ## Flows <a name="flows" class="anchor"></a>
 
-This section outlines the high-level *flows* that an ASIC infrastructure needs
-to support, meaning (typically) a sequence of steps to achieve some *task*.
-This is not meant to be exhaustive, but characteristic of the types of tasks
-that need to be performed. Flows can be just a single step or can be composed
-together to create different flows, but always have defined inputs and outputs.
-I use the term *job* to mean a particular program or script that is executed,
-typically corresponding to a step.
+This section outlines the high-level *flows* that a chip-design infrastructure
+needs to support, meaning (typically) a sequence of steps to achieve some
+*task*. This is not meant to be exhaustive, but characteristic of the types of
+tasks that need to be performed. Flows can be just a single step or can be
+composed together to create different flows, but always have defined inputs and
+outputs. I use the term *job* to mean a particular program or script that is
+executed, typically corresponding to a step.
 
 - **Design representation**. To read a design into a tool, the design must have
   a complete representation including tool-agnostic configuration, macro
@@ -219,15 +219,15 @@ typically corresponding to a step.
 
 {{ macros.imagenothumb('silicon-infra/phys-build-flow.png') }}
 
-> **A note on DFT**. A central aspect of any ASIC design is the DFT (device
+> **A note on DFT**. A central aspect of any chip design is the DFT (device
 > test) strategy. Testability is achieved by adding logic in the form of
 > *instruments* and *connectivity* to make the the existing logic
 > *controllable* and *observable*. The means by which this is done and the
-> point in the ASIC process is heavily dependent on the design and the tooling
-> used. Typically, DFT logic is inserted using automated tools during the
-> physical build but increasingly it is being added in RTL also using automated
-> tooling - either way adding additional transformation steps to the front- or
-> back-end flows.
+> point in the development process is heavily dependent on the design and the
+> tooling used. Typically, DFT logic is inserted using automated tools during
+> the physical build but increasingly it is being added in RTL also using
+> automated tooling - either way adding additional transformation steps to the
+> front- or back-end flows.
 
 > **A note on physical builds**. There are two unique aspects of physical
 > builds that present challenges for the infrastructure presented in this note.
@@ -254,7 +254,7 @@ A model for a silicon infrastructure that captures the use cases described is a
 hierarchical collection of *tasks* that consume inputs and produce outputs. A
 task can be dependent on another task by consuming that task's output and
 tasks can be composed together in this way into *flows*. The set of tasks
-implementing a flow form a acyclic directed graph (DAG) with nodes representing
+implementing a flow form an acyclic directed graph (DAG) with nodes representing
 fixed inputs or jobs and edges corresponding to dependencies. The structure of
 this graph is determined statically (ie without any dependence on runtime
 data). Execution proceeds by running tasks whose inputs are ready and letting
