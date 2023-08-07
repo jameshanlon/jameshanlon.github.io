@@ -5,7 +5,7 @@ Category: notes
 Tags: computing, microelectronics, verilog
 Summary: Thoughts on the requirements of software infrastructure
          to support chip design.
-Status: draft
+Status: published
 ---
 
 {% import 'post-macros.html' as macros %}
