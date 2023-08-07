@@ -272,9 +272,9 @@ inter-register operations without the need for prefixing, but many more with
 prefixing and the according overhead to form larger immediates. The following
 instruction sequence adds two numbers from fixed locations in memory, with the
 result written to <code>areg</code>:</p>
-<div class="codehilite"><pre><span></span><span class="n">LDAM</span><span class="w"> </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000001</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span>
-<span class="n">LDBM</span><span class="w"> </span><span class="mh">2</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mem</span><span class="p">[</span><span class="n">oreg</span><span class="w"> </span><span class="p">(</span><span class="mh">0</span><span class="n">x000002</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span>
-<span class="n">OPR</span><span class="w">  </span><span class="mh">1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">ADD</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">areg</span><span class="w"> </span><span class="p">(</span><span class="mh">7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">breg</span><span class="w"> </span><span class="p">(</span><span class="mh">9</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="mh">16</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span>LDAM 1  # areg = mem[oreg (0x000001)] (7)
+LDBM 2  # breg = mem[oreg (0x000002)] (9)
+OPR  1  # ADD areg = areg (7) + breg (9) (16)
 </pre></div>
 
 

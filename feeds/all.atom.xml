@@ -1,5 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/all.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2023-06-27T00:00:00+02:00</updated><entry><title>Building a Python processor</title><link href="http://jameswhanlon.com/building-a-python-processor.html" rel="alternate"></link><published>2023-06-27T00:00:00+02:00</published><updated>2023-06-27T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2023-06-27:/building-a-python-processor.html</id><summary type="html">&lt;p&gt;A rationale and strawman for a processor to accelerate
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="http://jameswhanlon.com/" rel="alternate"></link><link href="http://jameswhanlon.com/feeds/all.atom.xml" rel="self"></link><id>http://jameswhanlon.com/</id><updated>2023-08-02T00:00:00+02:00</updated><entry><title>Silicon infrastructure</title><link href="http://jameswhanlon.com/silicon-infrastructure.html" rel="alternate"></link><published>2023-08-02T00:00:00+02:00</published><updated>2023-08-02T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2023-08-02:/silicon-infrastructure.html</id><summary type="html">&lt;p&gt;Thoughts on the requirements of software infrastructure
+to support chip&amp;nbsp;design.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Modern chip design differs to conventional software engineering in three
+fundamental aspects that require a somewhat different approach to project&amp;nbsp;development:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Transformations and representations&lt;/strong&gt;. The creation of a chip design from
+  a source-level representation through to a final &lt;span class="caps"&gt;GDSII&lt;/span&gt; description of the
+  layout involves many stages of incremental transformations of the circuit and
+  layout, and then incremental assembly of components into various subsystems
+  before finally the entire chip. At various stages through this process, checks
+  are performed on the design typically using simplified representations to
+  reduce complexity and make run times&amp;nbsp;practical.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tooling&lt;/strong&gt;. Compared to software tooling, standard chip-design tooling
+  (known in the industry as &lt;em&gt;electronic design automation&lt;/em&gt;) :
+    (1) is almost all proprietary and used under license, meaning that interactive
+    and automated use is limited and at odds with a continuous-integration model
+    of development; and
+    (2) can have long run times (upwards of 12 hours for a job are not uncommon) and produce
+    vast quantities of data, making it very unattractive to rerun something
+    unless absolutely necessary; and
+    (3) can be non-deterministic in that rerunning a job with the same set of inputs
+    produces a different&amp;nbsp;output.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Tape out&lt;/strong&gt;. When a design is released for manufacture (known in the
+  industry as a &lt;em&gt;tape out&lt;/em&gt;), there are typically high non-recoverable expenses associated
+  with setting up the processes and a long lead time in receiving a (hopefully)
+  working device. There are two implications of this situation:
+    (1) chip tape outs precludes incremental releases, for example to fix trivial bugs, and
+    therefore means that the confidence in the correct functionality of the
+    design must be very high;
+    (2) post tape out, the design source code is effectively frozen forever more for
+    the purposes of debug and&amp;nbsp;analysis.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Despite these differences, many of the techniques and tools from software
+engineering can readily be applied to chip development, particularly to manage
+complexity and maintain high standards of code quality, testing and
+integration. This note lays out some thoughts and opinions on the components
+and structure of a software infrastructure to build&amp;nbsp;chips.&lt;/p&gt;
+&lt;h3&gt;Table of&amp;nbsp;contents&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="#aims"&gt;Aims&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#principles"&gt;Guiding&amp;nbsp;principles&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#flows"&gt;Flows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#model"&gt;Model&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#details"&gt;Details&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#summary"&gt;Summary&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#acknowledgements"&gt;Acknowledgments&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#related-projects"&gt;Related&amp;nbsp;projects&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Aims &lt;a name="aims" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The overall objective of a silicon infrastructure is to &lt;strong&gt;support the
+development of a verified chip design from &lt;span class="caps"&gt;RTL&lt;/span&gt; to &lt;span class="caps"&gt;GDSII&lt;/span&gt;&lt;/strong&gt;. To make this more
+specific, I also define the following capabilities that should be supported as
+an overall philosophy of the approach that is explored in this&amp;nbsp;note:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;To &lt;strong&gt;rerun everything from scratch&lt;/strong&gt;, requiring full
+  automation of an the end-to-end flow. This is intended to: (1) distribute the
+  task of integrating components of a design across a team, thereby revealing
+  issues at as earlier stage in the project as possible to avoid disruptive
+  changes towards the end; (2) enable faster design iteration; and (3)
+  provide traceability of results (a foundation for the next&amp;nbsp;aim).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Provide a &lt;strong&gt;full audit trail&lt;/strong&gt; such that a release of a design for tape out
+  has data and a set of reports, logs, coverage metrics, documentation and
+  signoffs that are traceable back to the original &lt;span class="caps"&gt;RTL&lt;/span&gt; source files. This is
+  important for building confidence to tape out, as well as providing information
+  for future work on a completed&amp;nbsp;design.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Support &lt;strong&gt;multiple chips and frozen designs&lt;/strong&gt; to keep previous generations
+  alive for debug of silicon issues and/or as a basis for a incremental tape out
+  (known as a &lt;em&gt;respin&lt;/em&gt;), and to allow multiple designs to be built&amp;nbsp;concurrently.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Guiding principles &lt;a name="principles" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I think it is useful to underpin the aims, implementation and operation of a
+chip-design infrastructure are a set of guiding principles for the project team
+to employ when design decisions need to be made.  These principles are formed
+from my own experience and through conversations with others. I am sure that
+alternative foundations can be constructed and argued&amp;nbsp;for.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Simple and explicit&lt;/strong&gt;. Build a complex system using simple, well-defined
+components composed and controlled using explicit mechanisms. Conversely, avoid
+easy-to-use high-level interfaces that hide important behaviours. This borrows
+from the &lt;a href="https://peps.python.org/pep-0020/"&gt;Zen of Python&lt;/a&gt;: &lt;em&gt;explicit is better
+than implicit and simple is better than complex&lt;/em&gt;. Examples include avoiding the
+use of global variables, preferring flat rather than nested, preferring
+decisions to be made explicitly and avoiding special cases that break the&amp;nbsp;rules.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Use a monorepository&lt;/strong&gt;. One repository should contain all the code for all
+active projects. This enhances all team members&amp;#8217; ability to integrate their
+changes across projects and removes barriers to interaction between different
+teams and/or areas of the design. Other &lt;a href="https://en.wikipedia.org/wiki/Monorepo"&gt;general
+benefits&lt;/a&gt; of a monorepository are the
+ability to reuse code and do large-scale refactoring. A great deal of care must
+be taken to manage dependencies between projects/components within a
+monorepository. Without such care, unexpected interdependencies can cause
+unexpected breakages, prevent refactoring and preclude focused testing. In
+general: isolate components by restricting them to only be able to access their
+listed dependencies; divide components by function and abstraction level (eg
+don&amp;#8217;t group by language or technology); and use a standard structure for each
+component (such as &lt;code&gt;lib&lt;/code&gt;, &lt;code&gt;sources&lt;/code&gt;, &lt;code&gt;README&lt;/code&gt; etc).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Embrace open source&lt;/strong&gt;. To save on effort, leverage freely-available tools
+and libraries wherever possible in the infrastructure, rather than implementing
+custom versions. Where open source is used, contributions back upstream benefit
+the community and help to align the project with the way it is being deployed.
+This particularly applies to open source in the &lt;span class="caps"&gt;ASIC&lt;/span&gt;/&lt;span class="caps"&gt;FPGA&lt;/span&gt; domain, where
+&lt;a href="https://github.com/aolofsson/awesome-opensource-hardware"&gt;open-source software&lt;/a&gt; is unencumbered by licensing restrictions. Often
+chip projects will be on tight schedules, so careful judgment of the
+effort-benefit tradeoff must be&amp;nbsp;made.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Performance is important&lt;/strong&gt;. With the ability to rerun everything from
+scratch coupled with a multi-chip and monorepository approach, the compute
+demands can scale quickly so it is crucial that the infrastructure is
+performant. This can easily become a problem with codebases make extensive use
+of a scripting language such as Python.  Mitigations include writing (or
+rewriting) parts in a lower-level language such as C++, and setting things up in
+such a way that this Python and C++ components can interoperate cleanly (eg
+well-defined boundaries and&amp;nbsp;dependencies).&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Flows &lt;a name="flows" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This section outlines the high-level &lt;em&gt;flows&lt;/em&gt; that a chip-design infrastructure
+needs to support, meaning (typically) a sequence of steps to achieve some
+&lt;em&gt;task&lt;/em&gt;. This is not meant to be exhaustive, but characteristic of the types of
+tasks that need to be performed. Flows can be just a single step or can be
+composed together to create different flows, but always have defined inputs and
+outputs. I use the term &lt;em&gt;job&lt;/em&gt; to mean a particular program or script that is
+executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Design representation&lt;/strong&gt;. To read a design into a tool, the design must have
+  a complete representation including tool-agnostic configuration, macro
+  defines, library files and &lt;span class="caps"&gt;RTL&lt;/span&gt; sources. Often, &lt;span class="caps"&gt;RTL&lt;/span&gt; code will need to be
+  generated programatically using templates or other types of code generators. It
+  is also typical that a design will be implemented in a hierarchical fashion, so
+  a configuration step must gather together the required modules and package it
+  into a single representation. As an example, the open-source &lt;a href="https://github.com/pulp-platform/bender"&gt;Bender&lt;/a&gt;
+  dependency management tool provides very similar&amp;nbsp;functionality.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/design-representation.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Verification representation&lt;/strong&gt;. For the purposes of simulation and
+  analysis, a verification representation is a variation of a design
+  representation, adding configuration and macro defines, source files for a test
+  bench, monitors, assertions etc, and possibly substituting parts of the design
+  for fast models or block boxes. These verification components will likely live
+  with the corresponding parts of the design and be collected together as they
+  were for the design representation during a configuration&amp;nbsp;step.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/verif-representation.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lint checking&lt;/strong&gt;. &lt;span class="caps"&gt;RTL&lt;/span&gt; source code can be checked for basic coding issues
+  (referred to as &lt;em&gt;linting&lt;/em&gt;) by passing it through tools that perform various
+  built-in or custom checks. The input to this task is the specification of a
+  design and the output is a list of warnings to be reviewed. Example open-source
+  tools that can be used for linting are &lt;a href="https://verilator.org/guide/latest"&gt;Verilator&lt;/a&gt;,
+  &lt;a href="https://chipsalliance.github.io/verible"&gt;Verible&lt;/a&gt;, &lt;a href="https://sv-lang.com"&gt;Slang&lt;/a&gt;, &lt;a href="https://github.com/dalance/svlint"&gt;svlint&lt;/a&gt; and &lt;a href="https://yosyshq.net/yosys"&gt;Yosys&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/lint-check.png" data-lightbox="all"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/lint-check_1000x1000.png" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;span class="caps"&gt;CDC&lt;/span&gt; and &lt;span class="caps"&gt;RDC&lt;/span&gt; checking&lt;/strong&gt;. Clock- and reset-domain crossings can be checked
+  automatically with tools that analyse a design, typically with a set of
+  annotations and constraints. The output will be warning messages from the
+  checker that need to be&amp;nbsp;investigated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/cdc-rdc-check.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Simulation testbench&lt;/strong&gt;. A simulation test bench requires a representation
+  of the design, a verification environment and test stimulus. Test stimulus is
+  often randomly generated. Coverage (structural or functional) can be collected
+  during simulation and when many test instances are run for a particular test
+  generator or over a larger regression of different test generators, coverage
+  may need to be merged then reported on. Simulation is typically performed on an
+  &lt;span class="caps"&gt;RTL&lt;/span&gt; representation, but can also be performed on gate-level netlists and with
+  and without delay&amp;nbsp;annotations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/simulation-flow.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Formal property test bench&lt;/strong&gt;. Analysing and proving formal properties of a
+  design is a complementary technique to standard functional coverage. Inputs
+  to this are a verification representation of the design and a set of
+  assumptions and properties to be&amp;nbsp;checked.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/formal-property-check.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Formal equivalence check&lt;/strong&gt;. As a design is incrementally transformed
+  between &lt;span class="caps"&gt;RTL&lt;/span&gt; and &lt;span class="caps"&gt;GDSII&lt;/span&gt;, it is essential to perform equivalence checks to
+  prove that each transformation maintains the functional behaviour of the
+  design. Inputs to an equivalence check are two representations, typically
+  called a &lt;em&gt;reference&lt;/em&gt; that is the baseline and an &lt;em&gt;implementation&lt;/em&gt; to&amp;nbsp;check.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/equivalence-flow.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Physical build&lt;/strong&gt;. All flows up to this point have mainly operated on &lt;span class="caps"&gt;RTL&lt;/span&gt;
+  representations of a design. A physical build flow starts off by
+  transforming &lt;span class="caps"&gt;RTL&lt;/span&gt; into gates using a synthesis tool, then progressively
+  transforming the design into a set of two-dimensional layers. Following synthesis
+  are: scan insertion for &lt;span class="caps"&gt;DFT&lt;/span&gt;, floorplanning (placing ports and macros),
+  placement (placing cells), clock tree synthesis, routing (establishing all
+  required connections using the available routing layers, finishing and
+  checking. See &lt;a href="https://github.com/The-OpenROAD-Project/OpenROAD"&gt;OpenROAD&lt;/a&gt; for an example open source physical build&amp;nbsp;flow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="text-center"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/phys-build-flow.png" alt="No alt text"&gt;
+&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;A note on &lt;span class="caps"&gt;DFT&lt;/span&gt;&lt;/strong&gt;. A central aspect of any chip design is the &lt;span class="caps"&gt;DFT&lt;/span&gt; (device
+test) strategy. Testability is achieved by adding logic in the form of
+&lt;em&gt;instruments&lt;/em&gt; and &lt;em&gt;connectivity&lt;/em&gt; to make the the existing logic
+&lt;em&gt;controllable&lt;/em&gt; and &lt;em&gt;observable&lt;/em&gt;. The means by which this is done and the
+point in the development process is heavily dependent on the design and the
+tooling used. Typically, &lt;span class="caps"&gt;DFT&lt;/span&gt; logic is inserted using automated tools during
+the physical build but increasingly it is being added in &lt;span class="caps"&gt;RTL&lt;/span&gt; also using
+automated tooling - either way adding additional transformation steps to the
+front- or back-end&amp;nbsp;flows.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A note on physical builds&lt;/strong&gt;. There are two unique aspects of physical
+builds that present challenges for the infrastructure presented in this note.
+The first is that physical &lt;span class="caps"&gt;EDA&lt;/span&gt; tools do not always produce the same output
+given the same inputs due to the nature of the optimisation algorithms they
+use. The second is that close to the closure of a design component, manual
+interventions will be made to address localised issues in the design. The
+combination of these issues mean that it is not possible to rerun physical
+builds from scratch and achieve satisfactory results. Therefore, a silicon
+infrastructure must be able to support frozen data from particular flow&amp;nbsp;stages.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Model &lt;a name="model" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;A model for a silicon infrastructure that captures the use cases described is a
+hierarchical collection of &lt;em&gt;tasks&lt;/em&gt; that consume inputs and produce outputs. A
+task can be dependent on another task by consuming that task&amp;#8217;s output and
+tasks can be composed together in this way into &lt;em&gt;flows&lt;/em&gt;. The set of tasks
+implementing a flow form an acyclic directed graph (&lt;span class="caps"&gt;DAG&lt;/span&gt;) with nodes representing
+fixed inputs or jobs and edges corresponding to dependencies. The structure of
+this graph is determined statically (ie without any dependence on runtime
+data). Execution proceeds by running tasks whose inputs are ready and letting
+the task run to completion before marking its outputs as available to trigger
+the execution of more tasks or the termination of the&amp;nbsp;flow.&lt;/p&gt;
+&lt;p&gt;A &lt;em&gt;task&lt;/em&gt; is defined&amp;nbsp;by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A set of&amp;nbsp;inputs.&lt;/li&gt;
+&lt;li&gt;A set of&amp;nbsp;outputs.&lt;/li&gt;
+&lt;li&gt;A set of configuration&amp;nbsp;values.&lt;/li&gt;
+&lt;li&gt;A set of resource requirements (time, memory,&amp;nbsp;cores).&lt;/li&gt;
+&lt;li&gt;An &lt;em&gt;action&lt;/em&gt; that that operates only on the inputs and must produce all the
+  of the outputs, typically achieved by executing a script or separate&amp;nbsp;tool.&lt;/li&gt;
+&lt;li&gt;If a task attempts to access an input that is not specified, then an error is&amp;nbsp;raised.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A &lt;em&gt;flow&lt;/em&gt; is a hierarchical task and defined&amp;nbsp;by:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A set of&amp;nbsp;inputs.&lt;/li&gt;
+&lt;li&gt;A set of&amp;nbsp;outputs.&lt;/li&gt;
+&lt;li&gt;A set of configuration&amp;nbsp;values.&lt;/li&gt;
+&lt;li&gt;A set of resource&amp;nbsp;requirements.&lt;/li&gt;
+&lt;li&gt;A &lt;em&gt;action&lt;/em&gt; consisting of executing one or more tasks according to their
+  dependencies. Inputs and outputs of the flow must be connected to the sub
+  tasks and similarly for dependencies between sub&amp;nbsp;tasks.&lt;/li&gt;
+&lt;li&gt;Tasks can be specified using &lt;em&gt;replication&lt;/em&gt; with static bounds
+  to create arrays, and &lt;em&gt;conditionality&lt;/em&gt; to include or exclude tasks dependent on
+  configuration&amp;nbsp;values.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Configuration values are used to control the behaviour of a flow or task.
+A flow can propagate configuration into its sub tasks, but it must do so
+explicitly. Configuration values can be set on the command line. Example use of
+configuration options is to control features like debug flags, substitution
+of components of the design for simulation, or the inclusion of
+tests to run in a&amp;nbsp;regression.&lt;/p&gt;
+&lt;p&gt;There are a number of similar programming models that support scalable
+pipelined data processing. In the field of genomics, the &lt;a href="https://openwdl.org"&gt;Workflow Description
+Language&lt;/a&gt; (&lt;span class="caps"&gt;WDL&lt;/span&gt;) and &lt;a href="https://www.commonwl.org"&gt;Common Workflow Language&lt;/a&gt; (&lt;span class="caps"&gt;CWL&lt;/span&gt;) are open
+programming language specifications. Example implementations of &lt;span class="caps"&gt;WDL&lt;/span&gt; are
+&lt;a href="https://github.com/chanzuckerberg/miniwdl"&gt;MiniWDL&lt;/a&gt; and &lt;a href="https://cromwell.readthedocs.io"&gt;Cromwell&lt;/a&gt;, and of &lt;span class="caps"&gt;CWL&lt;/span&gt; are &lt;a href="https://github.com/common-workflow-language/cwltool"&gt;cwltool&lt;/a&gt;
+and &lt;a href="http://toil.ucsc-cgl.org"&gt;Toil&lt;/a&gt;. A &lt;a href="https://www.nextflow.io"&gt;Nextflow&lt;/a&gt; offers comparable features but is
+based on a domain-specific language implemented in Groovy. This
+&lt;a href="https://www.nature.com/articles/s41598-021-99288-8"&gt;paper&lt;/a&gt; offers a good comparison of &lt;span class="caps"&gt;WDL&lt;/span&gt;, &lt;span class="caps"&gt;CWL&lt;/span&gt; and Nextflow. Also
+worth mentioning are &lt;a href="https://snakemake.github.io"&gt;Snakemake&lt;/a&gt;, &lt;a href="https://airflow.apache.org"&gt;Apache Airflow&lt;/a&gt;, &lt;a href="https://beam.apache.org"&gt;Apache
+Beam&lt;/a&gt;, &lt;a href="https://github.com/spotify/luigi"&gt;Luigi&lt;/a&gt; and &lt;a href="https://flyte.org"&gt;Flyte&lt;/a&gt;. I&amp;#8217;m still investigating the
+suitability of these tools for Silicon design&amp;nbsp;workloads.&lt;/p&gt;
+&lt;h2&gt;Implementation details &lt;a name="details" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This section records some important details to consider when implementing a silicon
+flow, as well as some nice-to-have&amp;nbsp;features.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Environment&lt;/strong&gt;. A controlled environment execution environment with specific
+  tool versions for reproducability and legacy support. Container technology
+  supports this requirement very will with implementations such as
+  &lt;a href="https://apptainer.org"&gt;Singularity/Apptainer&lt;/a&gt;. A lighter-weight solution is
+  &lt;a href="https://github.com/enfabrica/enkit/tree/master/faketree"&gt;faketree&lt;/a&gt; for managing filesystem layout in a dynamic way to meet
+  the constraints of &lt;span class="caps"&gt;EDA&lt;/span&gt;&amp;nbsp;tools.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Access to compute&lt;/strong&gt;. Dispatching of jobs to compute resources such as a
+  compute cluster requires interaction with a queuing system such as
+  &lt;a href="https://slurm.schedmd.com"&gt;Slurm&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Logging&lt;/strong&gt;. Extensive logging of job statuses is important for a
+  compute-intensive workload. Straightforward access to these logs for
+  inspection during and after the run should be provided, likely through a
+  web-based&amp;nbsp;dashboard.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;. Flows should be robust to failures. When an task failure
+  does occur, the correct statuses should be propagated up any hierarchy of
+  tasks to provides visibility of the issue. The logging infrastructure should
+  record any progress that was made, providing a starting point for debug or to
+  restart the task. It should be straightforward to rerun part of a job that has
+  failed in a reproducible&amp;nbsp;way.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Storage&lt;/strong&gt;. The use of a shared filesystem such as &lt;span class="caps"&gt;NFS&lt;/span&gt; is typical in silicon
+  &lt;span class="caps"&gt;EDA&lt;/span&gt; flows, however it creates a single point of failure and has limited
+  scalability. An alternative shared storage system is object storage such as
+  &lt;a href="https://min.io"&gt;MinIO&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Releasing&lt;/strong&gt;. It should be simple to release data from the repository into
+  immutable storage that can then be referenced as a&amp;nbsp;dependency.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Periodic jobs&lt;/strong&gt;. A mechanism for running periodic jobs is required to
+  implement a continuous-integration (&lt;span class="caps"&gt;CI&lt;/span&gt;) and/or continuous-delivery (&lt;span class="caps"&gt;CD&lt;/span&gt;).
+  &lt;a href="https://www.jenkins.io"&gt;Jenkins&lt;/a&gt;, &lt;a href="https://github.com/features/actions"&gt;GitHub Actions&lt;/a&gt; or &lt;a href="https://docs.gitlab.com/ee/ci"&gt;GitLab &lt;span class="caps"&gt;CI&lt;/span&gt;/&lt;span class="caps"&gt;CD&lt;/span&gt;&lt;/a&gt;
+  are all directly applicable&amp;nbsp;here.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Summary &lt;a name="summary" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This note outlines the principles and requirements for a modern software
+infrastructure to build chips. This is very different to conventional software
+engineering due to fundamental differences in processes, and is likely to be
+quite different from the typical methodologies used in conventional silicon
+design. Based on some simple use cases, a model is proposed that abstracts the
+details of resource allocation and data movement by providing tasks with inputs
+and outputs as primitives. Surprisingly, there already exist a family of tools
+from data science that employ a very similar&amp;nbsp;model.&lt;/p&gt;
+&lt;h2&gt;Acknowledgments &lt;a name="acknowledgements" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The motivation for writing this note came from recent discussions on building a
+from-scratch silicon infrastructure with &lt;a href="http://www.jpallister.com"&gt;James Pallister&lt;/a&gt; and &lt;a href="https://intuity.io"&gt;Peter
+Birch&lt;/a&gt;. This note is a synthesis of ideas from those&amp;nbsp;conversations.&lt;/p&gt;
+&lt;h2&gt;Related projects &lt;a name="related-projects" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gator.intuity.io"&gt;Gator&lt;/a&gt;, a framework for running a hierarchy of
+  jobs and aggregating logs, metrics, resource utilisation, and&amp;nbsp;artefacts.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/blockwork-eda/blockwork"&gt;Blockwork&lt;/a&gt;, is a build system and
+  orchestrator for silicon&amp;nbsp;design.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blu-blade.readthedocs.io"&gt;Blade&lt;/a&gt; is a tool for autogenerating
+  modules, interconnects and register definitions from an &lt;span class="caps"&gt;YAML&lt;/span&gt;&amp;nbsp;schema.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/siliconcompiler/siliconcompiler"&gt;Siliconcompiler&lt;/a&gt; is a modular
+  build system for silicon&amp;nbsp;hardware.&lt;/li&gt;
+&lt;li&gt;Berkeley &lt;a href="https://github.com/ucb-bar/chipyard"&gt;Chipyard&lt;/a&gt; is an agile framework
+  for hardware design, using Chisel for &lt;span class="caps"&gt;RTL&lt;/span&gt;&amp;nbsp;specification.&lt;/li&gt;
+&lt;li&gt;Berkeley &lt;a href="https://github.com/ucb-bar/hammer"&gt;Hammer&lt;/a&gt; is a physical design&amp;nbsp;framework.&lt;/li&gt;
+&lt;li&gt;Pulp Platform &lt;a href="https://github.com/pulp-platform/bender"&gt;Bender&lt;/a&gt; is a dependency
+  management tool for hardware design&amp;nbsp;projects.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://dungspreader.blogspot.com/"&gt;Rich Porter&amp;#8217;s series on digital verification&lt;/a&gt;
+  and &lt;a href="https://github.com/rporter/verilog_integration"&gt;source code&lt;/a&gt; for the&amp;nbsp;project.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://medium.com/enfabrica/melding-hardware-and-software-a-story-in-the-making-bcce28b821a8"&gt;Melding hardware and software: a story in the making&lt;/a&gt;,
+  a position piece by Enfabrica on their approach to &lt;span class="caps"&gt;ASIC&lt;/span&gt;&amp;nbsp;design.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category><category term="microelectronics"></category><category term="verilog"></category></entry><entry><title>Building a Python processor</title><link href="http://jameswhanlon.com/building-a-python-processor.html" rel="alternate"></link><published>2023-06-27T00:00:00+02:00</published><updated>2023-06-27T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2023-06-27:/building-a-python-processor.html</id><summary type="html">&lt;p&gt;A rationale and strawman for a processor to accelerate
 dynamic-language&amp;nbsp;workloads.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I have recently spent some time thinking about how hardware can be architected
 and optimised to better support high-level dynamic languages such as Python and
 JavaScript. There appears to be a significant gap between the way processors
@@ -1139,9 +1530,9 @@ inter-register operations without the need for prefixing, but many more with
 prefixing and the according overhead to form larger immediates. The following
 instruction sequence adds two numbers from fixed locations in memory, with the
 result written to &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;LDAM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000001&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;LDBM&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mem&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;oreg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="n"&gt;x000002&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;9&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;OPR&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p"&gt;#&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ADD&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;breg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;9&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;LDAM 1  # areg = mem[oreg (0x000001)] (7)
+LDBM 2  # breg = mem[oreg (0x000002)] (9)
+OPR  1  # ADD areg = areg (7) + breg (9) (16)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1885,23 +2276,23 @@ performing &lt;span class="caps"&gt;XOR&lt;/span&gt; and fixed-distance shift an
 Following Vigna’s approach of adding a function to ‘scramble’ the &lt;span class="caps"&gt;LFSR&lt;/span&gt; state,
 we have devised a function consisting of &lt;span class="caps"&gt;AND&lt;/span&gt;, &lt;span class="caps"&gt;OR&lt;/span&gt; and &lt;span class="caps"&gt;XOR&lt;/span&gt; operations (called &lt;span class="caps"&gt;AOX&lt;/span&gt;
 for short). An C implementation of &lt;code&gt;xoroshiro128aox&lt;/code&gt; is as&amp;nbsp;follows:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s0&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s1&lt;/span&gt;&lt;span class="c1"&gt;; // State vectors&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;uint64_t s0, s1; // State vectors
 
-&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;rotl&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;k&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;{
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;k&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;k&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+uint64_t rotl(uint64_t x, int k) {
+  return (x &amp;lt;&amp;lt; k) | (x &amp;gt;&amp;gt; (64 - k));
 }
 
-&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;next&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;void&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;{
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;sx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s1&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+uint64_t next(void) {
+  uint64_t sx = s0 ^ s1;
 
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;Calculate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;result&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;the&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;AOX&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;step&lt;/span&gt;.
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;sa&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;s1&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;res&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;sx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;rotl&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sa&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;rotl&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sa&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="ss"&gt;))&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+  // Calculate the result, the &amp;#39;AOX&amp;#39; step.
+  uint64_t sa = s0 &amp;amp; s1;
+  uint64_t res = sx ^ (rotl(sa, 1) | rotl(sa, 2));
 
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;xoroshiro128&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;state&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;update&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;s0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;rotl&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;s0&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;55&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;sx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sx&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;s1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;rotl&lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;sx&lt;/span&gt;,&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;36&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;res&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+  // xoroshiro128 state update
+  s0 = rotl(s0, 55) ^ sx ^ (sx &amp;lt;&amp;lt; 14);
+  s1 = rotl(sx, 36);
+  return res;
 }
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -7476,17 +7867,17 @@ control-flow path in which a value of a signal is not set. Since &lt;code&gt;alw
 specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
 latch since there is no assignment to &lt;code&gt;foo&lt;/code&gt; when the condition is not&amp;nbsp;true.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;always_comb
+  if (condition)
+    foo = 1&amp;#39;b1;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Instead, always provide an initial&amp;nbsp;value:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;always_comb&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
-&lt;span class="err"&gt;  if (condition)&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;always_comb
+  foo = 1&amp;#39;b0;
+  if (condition)
+    foo = 1&amp;#39;b1;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -7638,22 +8029,22 @@ particularly when clock gates are&amp;nbsp;used.&lt;/p&gt;
 &lt;p&gt;A typical pattern when implementing combinatorial logic and registers is to
 define the set and clear conditions in an &lt;code&gt;always_comb&lt;/code&gt; and register the value
 in an accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="nv"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;logic bit;
+logic bit_q;
 
-&lt;span class="nv"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;begin&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;set_condition&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b1;&lt;/span&gt;
-&lt;span class="err"&gt;  if (clear_condition)&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
-&lt;span class="err"&gt;end&lt;/span&gt;
+always_comb begin
+  bit &amp;lt;= bit_q;
+  if (set_condition)
+    bit = 1&amp;#39;b1;
+  if (clear_condition)
+    bit = 1&amp;#39;b0;
+end
 
-&lt;span class="err"&gt;always_ff @(posedge i_clk or posedge i_rst)&lt;/span&gt;
-&lt;span class="err"&gt;  if (i_rst)&lt;/span&gt;
-&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;bit_q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;b0;&lt;/span&gt;
-&lt;span class="err"&gt;  else&lt;/span&gt;
-&lt;span class="err"&gt;    bit_q &amp;lt;= bit;&lt;/span&gt;
+always_ff @(posedge i_clk or posedge i_rst)
+  if (i_rst)
+    bit_q &amp;lt;= 1&amp;#39;b0;
+  else
+    bit_q &amp;lt;= bit;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -7679,23 +8070,23 @@ statements for additional checking and guidance to&amp;nbsp;synthesis:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;For example, when the conditions are mutually exclusive, so evaluation order is
 not&amp;nbsp;important:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_b&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_c&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;unique if (condition_a) statement;
+else if (condition_b) statement;
+else if (condition_c) statement;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;A violation warning is given in the above when no condition or multiple conditions are
 selected. Changing to &lt;code&gt;unique0&lt;/code&gt; will only check for multiple conditions being&amp;nbsp;selected:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;unique0 if (condition_a) statement;
 ...
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And adding an &lt;code&gt;else&lt;/code&gt; will suppress violation warnings all&amp;nbsp;together:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;unique0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="ss"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;condition_a&lt;/span&gt;&lt;span class="ss"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;unique0 if (condition_a) statement;
 ...
-&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;statement&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+else statement;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -7816,15 +8207,15 @@ the ordering of operators. In particular, always bracket the condition of a
 ternary/conditional expression (&lt;code&gt;?:&lt;/code&gt;), especially if you are nesting them,
 since they associate left to right, and all other arithmetic and logical
 operators associate right to&amp;nbsp;left.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;... = (a &amp;amp;&amp;amp; b) ||
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;...&lt;/span&gt; = (a &amp;amp;&amp;amp; b) ||
       (c &amp;amp;&amp;amp; d)
-... = |(a[7:0] &amp;amp; b[7:0])
-... = valid &amp;amp;&amp;amp; (|a[3:0])
-... = (a == b) ? c : d
-... = cond_a              ? e1 :
+&lt;span class="k"&gt;...&lt;/span&gt; = |(a[7:0] &amp;amp; b[7:0])
+&lt;span class="k"&gt;...&lt;/span&gt; = valid &amp;amp;&amp;amp; (|a[3:0])
+&lt;span class="k"&gt;...&lt;/span&gt; = (a == b) ? c : d
+&lt;span class="k"&gt;...&lt;/span&gt; = cond_a              ? e1 :
       (cond_b &amp;amp;&amp;amp; !cond_c) ? e2 :
                             e3
-... = !(a[1:0] inside {2&amp;#39;b00, 2&amp;#39;b01}) &amp;amp;&amp;amp;
+&lt;span class="k"&gt;...&lt;/span&gt; = !(a[1:0] inside {2&amp;#39;b00, 2&amp;#39;b01}) &amp;amp;&amp;amp;
       ^(b[31:0])
 &lt;/pre&gt;&lt;/div&gt;
 
