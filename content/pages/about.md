@@ -61,6 +61,5 @@ You can find me elsewhere on the internet:
 * [Github](https://github.com/jameshanlon)
 * [Wikipedia](http://en.wikipedia.org/wiki/User:JamieHanlon)
 * [Strava](https://www.strava.com/athletes/5351937)
-* [Twitter](https://twitter.com/jameswhanlon)
 
 If you'd like to get in touch, then please email me at *mail @ this domain*.
