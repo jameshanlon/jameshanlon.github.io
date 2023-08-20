@@ -47,6 +47,7 @@ MENU_ITEMS = [
     ('projects', 'projects.html'),
     ('archive',  'archive.html'),
     ('about',    'about.html'),
+    ('links',    'links.html'),
 ]
 
 STATIC_PATHS = [
