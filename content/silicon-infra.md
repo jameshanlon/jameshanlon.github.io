@@ -26,7 +26,7 @@ development:
   (known in the industry as *electronic design automation*) :
     (1) is almost all proprietary and used under license, meaning that interactive
     and automated use is limited and at odds with a continuous-integration model
-    of development; and
+    of development;
     (2) can have long run times (upwards of 12 hours for a job are not uncommon) and produce
     vast quantities of data, making it very unattractive to rerun something
     unless absolutely necessary; and

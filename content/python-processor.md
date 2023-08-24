@@ -71,7 +71,7 @@ has not extended to optimisation of the underlying hardware.
 ## Python and AI <a name="py-ai" class="anchor"></a>
 
 In this remainder of this note I will focus on Python and its application to
-AI, a domain that is is significant enough to cause the development of new
+AI, a domain that is significant enough to cause the development of new
 computer hardware and rapid adoption of new process, integration and packaging
 technologies.
 
