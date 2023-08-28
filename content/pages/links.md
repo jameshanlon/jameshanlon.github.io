@@ -1,19 +1,27 @@
 Title: Links
 Status: published
 
-### Friends / colleagues
+### Personal websites of friends and colleagues
 
-[James Pallister](),
-[Michael Boulton](),
-[Peter Birch]()
+- [Andrew Holme](http://www.aholme.co.uk)
+- [Ashley Robinson](http://www.ajrobinson.org)
+- [David May](http://people.cs.bris.ac.uk/~dave)
+- [James Pallister](http://www.jpallister.com)
+- [Michael Boulton](https://boulton.xyz)
+- [Peter Birch](https://intuity.io)
 
-### Blogs / news
+### Other blogs
 
-[Real World Tech](),
-[Chips and Cheese](),
-[Muxup](),
-[Eli Benderski]()
+- [Eli Bendersky](https://eli.thegreenplace.net)
+
+### Other analysis
+
+- [Chips and Cheese](https://chipsandcheese.com)
+- [Real World Tech](https://www.realworldtech.com)
 
 ### Companies
 
-### Curiosities
+- [Graphcore](https://www.graphcore.ai)
+- [XMOS](https://www.xmos.ai)
+
+### Resources
