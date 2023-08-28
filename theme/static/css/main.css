@@ -97,3 +97,7 @@ a.anchor {
   top: -80px;
   visibility: hidden;
 }
+
+footer .container {
+  margin-bottom: 2em;
+}
