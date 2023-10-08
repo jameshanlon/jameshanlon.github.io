@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Three-channel high-power LED driver</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <!-- MathJax -->
+  <script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+              svg: { fontCache: 'global' } };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <script src="./theme/js/bundle.js"></script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    Three-channel high-power <span class="caps">LED</span>&nbsp;driver
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2018-12-30T00:00:00+01:00">
+      30 Dec 2018
+    </time><br>
+      <span class="article-tag small"><a href="/tag/lighting.html">lighting</a></span>
+      <span class="article-tag small"><a href="/tag/electronics.html">electronics</a></span>
+  </div>
+  <div class="article-body">
+    <div class="float-right">
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/board-layers.png" data-lightbox="led-driver">
+  <img class="thumbnail rounded" src="thumbs/board-layers_400x400.png" alt="Board silk screen">
+</a>
+</div>
+
+<p>This note describes an <span class="caps">LED</span> driver I designed for a lighting project. I decided
+on a custom solution because I couldn&#8217;t find any suitable boards available to
+buy at a reasonable price. The intended application (which I will describe in
+another note) requires 12 high-power (~1W) LEDs to be driven individually a 3 by 3
+grid measuring approximately 1 metre square, with each of the nine cell
+containing a red, green, blue and white <span class="caps">LED</span>.</p>
+<p>I embarked on this project without any experience of designing PCBs, and with
+relatively little knowledge of electronics, so it was a steep but fantastic
+learning experience. I wanted to record some of the details of this project for
+others who may find them useful, as I did with some of the resources I&#8217;ve
+linked to at the end. All of the <span class="caps">PCB</span> design files and processor firmware are
+<a href="https://github.com/jameshanlon/3C-HP-LED-driver">available on GitHub</a>.</p>
+<h1>Design</h1>
+<p>The board is designed around the following main <span class="caps">IC</span>&nbsp;components:</p>
+<ul>
+<li>
+<p>Microchip <span class="caps">PIC12F1572</span> for <span class="caps">PWM</span> <span class="caps">LED</span> control and serial communication. This was
+  the simplest <span class="caps">PIC</span> I could find that had multiple <span class="caps">PWM</span> outputs and <span class="caps">UART</span> serial
+communication capability. It&#8217;s an 8-bit device with 16-bit PWMs and 3.5 KBs of
+program&nbsp;memory.</p>
+</li>
+<li>
+<p>Maxim <span class="caps">MAX485</span> for communication to multiple of these boards. This <span class="caps">IC</span> provides
+  half-duplex communication over a 2-wire differential pair using the <span class="caps">RS485</span>
+protocol, allowing communication over long distances. Importantly it supports
+multiple drops, so a number of boards can be wired together with a bus. I chose
+this as it is very simple to integrate, with no additional components required,
+compared to the capacitors necessary for the <span class="caps">MAX232</span>. Talking to the <span class="caps">PIC</span>, this
+can support a baud rate of 115,200&nbsp;bps.</p>
+</li>
+<li>
+<p><span class="caps">ON</span> Semiconductor <span class="caps">CAT4101</span> for driving LEDs with a constant-current up to 1A
+with <span class="caps">PWM</span> control. Because the temperature fluctuations of high-power LEDs
+affects their forward voltage, driving them with a constant current is
+important to avoid damage due to over voltage. These chips neatly integrate
+this with the <span class="caps">PWM</span> control ability. Their only downsides were their cost (~£2
+each - with 36 of them needed for my lighting project, they were the greatest
+single expense) and package which isn&#8217;t designed to be hand&nbsp;soldered.</p>
+</li>
+</ul>
+<p>Other&nbsp;features:</p>
+<ul>
+<li>
+<p>Header for in-circuit <span class="caps">PIC</span> programming. To disconnect the <span class="caps">UART</span> pins (required
+  for programming) and to attach a 10K pull up resistor, I included three
+  jumper headers. However, I found connecting the pull up wasn&#8217;t necessary for&nbsp;programming.</p>
+</li>
+<li>
+<p>Screw terminals for all installation&nbsp;connections.</p>
+</li>
+<li>
+<p>Indicator LEDs for <span class="caps">UART</span> <span class="caps">TX</span> and <span class="caps">RX</span> directions, and&nbsp;power.</p>
+</li>
+</ul>
+<p>I designed the <span class="caps">PCB</span> using the excellent <a href="http://kicad-pcb.org/">KiCAD</a> and had
+it manufactured very cheaply by <a href="https://www.seeedstudio.com/fusion_pcb.html">Seeed Studio</a>
+in Shenzhen,&nbsp;China.</p>
+<p>Here&#8217;s the&nbsp;schematic:</p>
+<div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/schematic.png" data-lightbox="led-driver">
+    <img class="rounded" src="thumbs/schematic_800x800.png" alt="Board circuit schematic">
+  </a>
+</div>
+
+<h1>Parts&nbsp;list</h1>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Quantity</th>
+      <th scope="col">Package</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td><span class="caps">TO</span>-263</td>
+      <td><span class="caps">CAT4101</span> <span class="caps">LED</span> drivers 5.5V</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><span class="caps">DIP</span>-8</td>
+      <td><span class="caps">PIC12F1572</span> microcontroller</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><span class="caps">DIP</span>-8</td>
+      <td><span class="caps">MAX485</span> serial interface</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Green LEDs</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 10K</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 1.4K</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0805</td>
+      <td>Resistor 510</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0805</td>
+      <td>Capacitor 0.1 uF</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><span class="caps">SOT</span>-23</td>
+      <td>2N7002 N-channel <span class="caps">MOSFET</span> 300 mA</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>-</td>
+      <td>2 way 5mm pitch terminal blocks</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>-</td>
+      <td>3 way 5mm pitch terminal blocks</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>-</td>
+      <td>2.54mm pitch pin headers</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>-</td>
+      <td>2.54mm pin header jumper caps</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <span class="caps">CAT4101</span> sense resistors are chosen to give a constant current close to 300
+mA, at 1.4 KOhms. See the <span class="caps">CAT4101</span> <a href="https://www.onsemi.com/pub/Collateral/CAT4101-D.PDF">datasheet</a> for more&nbsp;details.</p>
+<p>For reference, I have assumed the following parameters of the LEDs I
+used (you should however check the datasheet for a particular <span class="caps">LED</span>):</p>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Colour</th>
+      <th scope="col">Typical forward voltage<br>(@ 350 mA)</th>
+      <th scope="col">Part</th>
+      <th scope="col">Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Red</td>
+      <td>2.4</td>
+      <td>3W <span class="caps">RGB</span> module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (<span class="caps">PDF</span>)</a></td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>3.4</td>
+      <td>3W <span class="caps">RGB</span> module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (<span class="caps">PDF</span>)</a></td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>3.5</td>
+      <td>3W <span class="caps">RGB</span> module</td>
+      <td><a href="https://www.sparkfun.com/datasheets/Components/LED/COM-08718-datasheet.pdf">Datasheet (<span class="caps">PDF</span>)</a></td>
+    </tr>
+    <tr>
+      <td>White</td>
+      <td>2.8-3.4</td>
+      <td>1W Ice White <span class="caps">LED</span> (Bridgelux 9000-15000k)</td>
+      <td><a href="https://futureeden.co.uk/collections/ice-white-bridgelux-power-led-9000-15000k/products/1w-ice-white-led-bridgelux-12000k-with-pcb">Future Eden</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <span class="caps">CAT4101</span> is a <a href="https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver">linear driver</a>, so it effectively acts as a
+variable resistor to deliver constant current, with an efficiency of
+$V_{led}/V_{supply}$. A disadvantage of driving each <span class="caps">LED</span> individually is that
+its efficiency can be low, down to 50%. The power delivered to the <span class="caps">LED</span> is
+$I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
+\times V_{supply}$ (not including quiescent&nbsp;power).</p>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Channel</th>
+      <th scope="col">Voltage (V)</th>
+      <th scope="col">Current (A)</th>
+      <th scope="col"><span class="caps">LED</span> power (W)</th>
+      <th scope="col"><span class="caps">CAT4101</span> efficiency</th>
+      <th scope="col">Driver power (W)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Red</td>
+      <td>2.4</td>
+      <td>0.3</td>
+      <td>0.72</td>
+      <td>0.48</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Green</td>
+      <td>3.4</td>
+      <td>0.3</td>
+      <td>1.02</td>
+      <td>0.68</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>Blue</td>
+      <td>3.5</td>
+      <td>0.3</td>
+      <td>1.05</td>
+      <td>0.7</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>White</td>
+      <td>3.2</td>
+      <td>0.3</td>
+      <td>0.96</td>
+      <td>0.64</td>
+      <td>1.5</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Measurements of each of the <span class="caps">LED</span> channels using a current clamp meter showed
+that the current drawn ranges from 357 mA to 370&nbsp;mA.</p>
+<h1>Programming</h1>
+<p>The intention of the <span class="caps">PIC</span> microcontrollers is to react to a simple set of
+commands sent via the serial interface. In deployment, an array of these driver
+boards would be controlled by another processor broadcasting on the <span class="caps">RS485</span> bus.
+I used a Raspberry Pi with an <span class="caps">RS485</span> shield to do&nbsp;this.</p>
+<p>At a minimum, the PICs need to set the intensity of each <span class="caps">LED</span> they control,
+which is the current operation of the firmware. They could however be triggered
+to perform more complex modulations. This would reduce the data transmission
+requirements on the <span class="caps">RS485</span> bus, potentially improving the quality of animations
+produced by an&nbsp;array.</p>
+<p>The <span class="caps">PIC</span> microcontrollers are programmed in C, which I did using Microchip&#8217;s <span class="caps">XC</span>
+compiler and MPLab <span class="caps">IDE</span> software. In order that each board can uniquely identify
+it&#8217;s control data, they are compiled with a unique <span class="caps">ID</span>. With a deployment of 12
+boards, firmware updates are a little arduous, particularly since the two
+jumpers need to be removed as&nbsp;well.</p>
+<p>I found that an efficient communication protocol between an array of boards
+and the main controller (Raspberry Pi) is a sequence of bytes with the first
+uniquely determining the header and the following 36 determining the intensity
+of each of the individual LEDs. Each board uses its <span class="caps">ID</span> to choose three values
+in the payload. At 115,200 bps, this in theory allows up to 389 commands to
+be sent per second. Note that the boards do not send an acknowledgement, since
+this significantly reduces the throughput. In Python a packet can be sent with
+(<a href="https://github.com/jameshanlon/rgb-stacks/blob/master/rgbstacks.py">snippet from here</a>):</p>
+<div class="codehilite"><pre><span></span><span class="n">def</span><span class="w"> </span><span class="n">set_colour</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">assert</span><span class="w"> </span><span class="n">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+<span class="w">    </span><span class="n">usart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">bytearray</span><span class="p">([</span><span class="n">chr</span><span class="p">(</span><span class="mi">255</span><span class="p">)]</span><span class="o">+</span><span class="n">payload</span><span class="p">))</span>
+<span class="w">    </span><span class="n">usart</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+
+
+<p>The PICs receive <span class="caps">UART</span> data and set the output PWMs thus
+(<a href="https://github.com/jameshanlon/rgb-stacks/blob/master/PIC/main.c">snippet from here</a>):</p>
+<div class="codehilite"><pre><span></span><span class="o">...</span>
+<span class="o">//</span><span class="w"> </span><span class="n">Reset</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">see</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">packet</span><span class="w"> </span><span class="n">marker</span><span class="o">.</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">START_PACKET</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">uart_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Packet</span><span class="w"> </span><span class="n">payload</span><span class="o">.</span>
+<span class="w">  </span><span class="n">uart_data</span><span class="p">[</span><span class="n">uart_count</span><span class="o">++</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RCREGbits</span><span class="o">.</span><span class="n">RCREG</span><span class="p">;</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">When</span><span class="w"> </span><span class="n">we</span><span class="s1">&#39;ve received the payload, update PWMs and setup for next packet.</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">uart_count</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">PAYLOAD_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">duty</span><span class="w"> </span><span class="n">cycles</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="n">bit</span><span class="w"> </span><span class="nb">range</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="n">bits</span><span class="o">.</span>
+<span class="w">    </span><span class="n">PWM1DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PWM2DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PWM3DC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_data</span><span class="p">[</span><span class="n">DRIVER_OFFSET</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">256</span><span class="p">;</span>
+<span class="w">    </span><span class="o">//</span><span class="w"> </span><span class="n">Reload</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">PWMs</span><span class="o">.</span>
+<span class="w">    </span><span class="n">PWM1LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PWM2LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">PWM3LD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">uart_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</pre></div>
+
+
+<h1>Pictures</h1>
+<div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/unpopulated-boards.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/unpopulated-boards_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-1.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-1_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-2.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-2_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-top.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-top_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-programmer.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-programmer_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/8up.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/8up_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-1.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/array-1_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-2.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/array-2_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+    <div class="col">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/4up-1.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/4up-1_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<h1>Improvements</h1>
+<ul>
+<li>Adjust the <span class="caps">CAT4101</span> sense resistor to deliver closer to 300 mA (1.5-1.6&nbsp;KOhm).</li>
+<li>Remove the 10K pull up resistor for programming the <span class="caps">PIC</span> since it is&nbsp;unnecessary.</li>
+<li>Update the defunct silk screen <span class="caps">URL</span> to my new jameswhanlon.com&nbsp;domain.</li>
+</ul>
+<h1>References</h1>
+<ul>
+<li><a href="https://github.com/jameshanlon/3C-HP-LED-driver">Board design and microcontroller source code on&nbsp;GitHub</a></li>
+<li><a href="http://thecustomgeek.com/2013/12/28/rgbw31/"><span class="caps">RGBW</span> <span class="caps">LED</span> Controller v3.1 (The Custom Geek)</a>.</li>
+<li><a href="http://www.bigclive.com/newrgb.htm">Make an <span class="caps">RGB</span> lighting controller&nbsp;(Bigclivedotcom)</a></li>
+<li><a href="https://www.instructables.com/id/Easy-CAT4101-LED-Driver/">Easy <span class="caps">CAT4101</span> <span class="caps">LED</span> Driver&nbsp;(Instructables)</a></li>
+<li><a href="https://www.instructables.com/id/Circuits-for-using-High-Power-LED-s/">High power <span class="caps">LED</span> driver circuits&nbsp;(Instructables)</a></li>
+<li><a href="https://www.instructables.com/id/Power-LED-s---simplest-light-with-constant-current/">Power <span class="caps">LED</span>&#8217;s - Simplest Light With Constant-current Circuit&nbsp;(Instructables)</a></li>
+<li><a href="https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver">Re: Help understanding electrical efficiency of LEDs with <span class="caps">PWM</span> dimming (Candle Power&nbsp;Forums)</a></li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        The views expressed on this website are the author’s personal views and should not be
+        attributed to any other person, including that of their employer.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
