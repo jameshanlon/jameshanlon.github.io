@@ -112,7 +112,7 @@ def get_thumbnail(filepath, size):
     else:
         logging.error('Invalid size: '+size)
         sys.exit(1)
-    image.thumbnail(size, Image.ANTIALIAS)
+    image.thumbnail(size, Image.LANCZOS)
     # Resize the image upto a maximum x OR y dimension.
     image.save(thumb_path)
     logging.info('Wrote '+thumb_path)
