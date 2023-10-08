@@ -26,4 +26,4 @@ Run the development server:
 $ pelican --listen
 ...
 ```
-Then visit ``http://0.0.0.0:8000``.
+Then visit ``http://0.0.0.0:8000`` (or similar).
