@@ -3,7 +3,7 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-<img class="img-fluid" src="{{'mugshot-beach.jpg'|thumbnail('600x600')}}" alt="James W Hanlon">
+<img class="img-fluid" src="{{'mugshot-trees.jpg'|thumbnail('600x600')}}" alt="James W Hanlon">
 
 # About me
 
