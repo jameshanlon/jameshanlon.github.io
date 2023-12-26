@@ -50,7 +50,8 @@ This website is built using [Pelican](https://blog.getpelican.com), a static
 website generator written in Python. The theme is simply derived from
 [Bootstrap](https://getbootstrap.com) and it is hosted on GitHub Pages. The
 source code is available for
-[reuse](https://github.com/jameshanlon/jameshanlon.github.io).
+[reuse](https://github.com/jameshanlon/jameshanlon.github.io). I track visitors
+using the excellent [GoatCounter](https://www.goatcounter.com).
 
 # Related links
 
