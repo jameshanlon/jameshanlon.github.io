@@ -21,9 +21,10 @@ A collection of links to other places on the internet I find interesting.
 - [The Chip Letter](https://thechipletter.substack.com)
 - [WikiChip](https://en.wikichip.org/wiki/WikiChip)
 
-### Compilers
+### Resources
 
 - [Awesome Compilers](http://aalhour.com/awesome-compilers)
+- [Per Brinch Hansen Archive](http://brinch-hansen.net)
 
 ### Sustainability
 
