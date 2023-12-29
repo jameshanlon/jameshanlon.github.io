@@ -9,6 +9,7 @@ A collection of links to other places on the internet I find interesting.
 - [Eli Bendersky](https://eli.thegreenplace.net)
 - [Muxup](https://muxup.com)
 - [Protons for Breakfast](https://protonsforbreakfast.wordpress.com)
+- [Stratechery](https://stratechery.com)
 - [Zip CPU](http://zipcpu.com)
 
 ### Chips
@@ -24,15 +25,16 @@ A collection of links to other places on the internet I find interesting.
 
 - [Awesome Compilers](http://aalhour.com/awesome-compilers)
 
-### Technology and engineering
-
-- [Stratechery](https://stratechery.com)
-
 ### Sustainability
 
 - [Bristol Energy Cooperative](https://bristolenergy.coop)
 - [Bristol Energy Network](https://bristolenergynetwork.org)
 - [Carbon Commentary](https://www.carboncommentary.com/blog)
+
+### Books
+
+- [Deep Learning](https://www.deeplearningbook.org/)
+- [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip)
 
 ### Friends and colleagues
 
@@ -41,5 +43,6 @@ A collection of links to other places on the internet I find interesting.
 - [David May](http://people.cs.bris.ac.uk/~dave)
 - [Graham Markall](https://big-grey.co.uk)
 - [James Pallister](http://www.jpallister.com)
+- [Jeremy Morse](https://jmorse.net)
 - [Michael Boulton](https://boulton.xyz)
 - [Peter Birch](https://intuity.io)
