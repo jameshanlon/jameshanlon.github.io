@@ -34,8 +34,11 @@ A collection of links to other places on the internet I find interesting.
 
 ### Books
 
+- [Communicating Sequential Processes](http://www.usingcsp.com)
 - [Deep Learning](https://www.deeplearningbook.org/)
+- [Information Theory, Inference, and Learning Algorithms](http://www.inference.org.uk/mackay/itila)
 - [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip)
+- [Sustainable Energy without the Hot Air](https://www.withouthotair.com)
 
 ### Friends and colleagues
 
