@@ -7,6 +7,7 @@ A collection of links to other places on the internet I find interesting.
 
 - [Dan Lu](https://danluu.com)
 - [Eli Bendersky](https://eli.thegreenplace.net)
+- [Ken Sherriff](https://www.righto.com)
 - [Muxup](https://muxup.com)
 - [Protons for Breakfast](https://protonsforbreakfast.wordpress.com)
 - [Stratechery](https://stratechery.com)
