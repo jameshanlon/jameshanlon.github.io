@@ -17,8 +17,6 @@ a System Verilog design and is intended to be a replacement for Netlist Paths
 
 - [GitHub](https://github.com/MikePopoloski/slang)
 
-<hr>
-
 ### Hex processor
 
 The Hex Architecture is a very simple processor designed by David May and
@@ -31,17 +29,6 @@ hardware implementation.
 - [GitHub](https://github.com/jameshanlon/hex-processor)
 - [Documentation](https://jameshanlon.github.io/hex-processor)
 
-### Netlist Paths
-
-Netlist Paths is a library and command-line tool for querying a Verilog
-netlist. It reads an XML representation of a design's netlist, produced by
-[Verilator](https://www.veripool.org/projects/verilator), and provides
-facilities for inspecting types, variables and paths. The library is written in
-C++ and has a Python interface.
-
-- [GitHub](https://github.com/jameshanlon/netlist-paths)
-- [Documentation](https://jameshanlon.github.io/netlist-paths)
-
 ### PRNG testing
 
 This repository contains facilities for comprehensively testing PRNGs using
@@ -52,6 +39,17 @@ This testing methodology was used for the investigation in [this
 paper](https://arxiv.org/abs/2203.04058).
 
 - [GitHub](https://github.com/jameshanlon/prng-testing)
+
+### Netlist Paths
+
+Netlist Paths is a library and command-line tool for querying a Verilog
+netlist. It reads an XML representation of a design's netlist, produced by
+[Verilator](https://www.veripool.org/projects/verilator), and provides
+facilities for inspecting types, variables and paths. The library is written in
+C++ and has a Python interface.
+
+- [GitHub](https://github.com/jameshanlon/netlist-paths)
+- [Documentation](https://jameshanlon.github.io/netlist-paths)
 
 <hr>
 
