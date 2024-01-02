@@ -1,0 +1,27 @@
+Title: Links right
+
+### Sustainability
+
+- [Bristol Energy Cooperative](https://bristolenergy.coop)
+- [Bristol Energy Network](https://bristolenergynetwork.org)
+- [Carbon Commentary](https://www.carboncommentary.com/blog)
+
+### Books
+
+- [Communicating Sequential Processes](http://www.usingcsp.com)
+- [Deep Learning](https://www.deeplearningbook.org/)
+- [Information Theory, Inference, and Learning Algorithms](http://www.inference.org.uk/mackay/itila)
+- [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip)
+- [Sustainable Energy without the Hot Air](https://www.withouthotair.com)
+
+### Friends and colleagues
+
+- [Andrew Holme](http://www.aholme.co.uk)
+- [Ashley Robinson](http://www.ajrobinson.org)
+- [David May](http://people.cs.bris.ac.uk/~dave)
+- [Graham Markall](https://big-grey.co.uk)
+- [James Pallister](http://www.jpallister.com)
+- [Jeremy Morse](https://jmorse.net)
+- [Kate Hodesdon](https://hodesdon.substack.com/)
+- [Michael Boulton](https://boulton.xyz)
+- [Peter Birch](https://intuity.io)
