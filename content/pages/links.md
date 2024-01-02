@@ -49,5 +49,6 @@ A collection of links to other places on the internet I find interesting.
 - [Graham Markall](https://big-grey.co.uk)
 - [James Pallister](http://www.jpallister.com)
 - [Jeremy Morse](https://jmorse.net)
+- [Kate Hodesdon](https://hodesdon.substack.com/)
 - [Michael Boulton](https://boulton.xyz)
 - [Peter Birch](https://intuity.io)
