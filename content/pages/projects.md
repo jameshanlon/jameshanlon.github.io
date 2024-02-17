@@ -1,13 +1,6 @@
 Title: Projects
 Status: published
 
-### RISC-V processor
-
-**[WIP]** A C++ simulator and SystemVerilog implementation of the RISC-V 32IM
-architecture that I developed to learn about RISC-V.
-
-- [Github](https://github.com/jameshanlon/riscv-processor)
-
 ### Slang Netlist
 
 **[WIP]** Slang Netlist is a library and tool leveraging
@@ -16,6 +9,13 @@ a System Verilog design and is intended to be a replacement for Netlist Paths
 (see below). Slang Netlist is included as a tool in the slang project.
 
 - [GitHub](https://github.com/MikePopoloski/slang)
+
+### RISC-V processor
+
+A C++ simulator and SystemVerilog implementation (the latter is still a WIP) of
+the RISC-V 32IM architecture that I developed to learn about RISC-V.
+
+- [GitHub](https://github.com/jameshanlon/riscv-processor)
 
 ### Hex processor
 
@@ -40,13 +40,21 @@ paper](https://arxiv.org/abs/2203.04058).
 
 - [GitHub](https://github.com/jameshanlon/prng-testing)
 
+### Personal finances
+
+A Python-based project that I use fetch personal finance data from Google
+Sheets and then generate a set of summary HTML reports.
+
+- [GitHub](https://github.com/jameshanlon/finances)
+
 ### Netlist Paths
 
 Netlist Paths is a library and command-line tool for querying a Verilog
 netlist. It reads an XML representation of a design's netlist, produced by
 [Verilator](https://www.veripool.org/projects/verilator), and provides
 facilities for inspecting types, variables and paths. The library is written in
-C++ and has a Python interface.
+C++ and has a Python interface. This project has now been superseded by Slang
+Netlist (see above).
 
 - [GitHub](https://github.com/jameshanlon/netlist-paths)
 - [Documentation](https://jameshanlon.github.io/netlist-paths)
