@@ -7,24 +7,27 @@ Summary: Coding style for RTL design using Verilog / SystemVerilog.
 Status: published
 ---
 
-In the last year, I've started from scratch writing Verilog for hardware
+> **_NOTE:_**  Updated Feburary 2024 with new guidance.
+
+In the last year, I've started from scratch writing SystemVerilog for hardware
 design. Coming from a software background where I was mainly using C/C++ and
 Python, it has been interesting to experience the contrasting philosophy and
 mindset associated with using a language to describe hardware circuits. Much of
-this is because Verilog provides little abstraction of hardware structures, and
-only through disciplined/idiomatic use, can efficient designs be implemented. A
-compounding issue is that complex hardware designs rely on a complex
-ecosystem of proprietary tooling.
+this is because SystemVerilog provides little abstraction of hardware
+structures, and only through disciplined/idiomatic use, can efficient designs
+be implemented. A compounding issue is that complex hardware designs rely on a
+complex ecosystem of proprietary tooling.
 
-As I see it, there are three aspects to writing synthesizable Verilog code: the
-particular features of the language to use, the style and idioms employed in
-using those features, and the tooling support for a design.
+As I see it, there are three aspects to writing synthesizable SystemVerilog
+code: the particular features of the language to use, the style and idioms
+employed in using those features, and the tooling support for a design.
 
-### The language
+### The SystemVerilog language
 
-A subset of Verilog is used for specifying synthesizable circuits. Verilog
-(which subsumed SystemVerilog as of the 2009 standardisation) is a unified
-language, serving distinct purposes of modern hardware design. These are:
+A subset of SysemVerilog is used for specifying synthesizable circuits.
+SystemVerilog (which subsumed Verilog as of the 2009 standardisation) is a
+unified language, serving distinct purposes of modern hardware design. These
+are:
 
 - circuit design/specification at different levels of abstraction:
     * behavioural
@@ -35,24 +38,17 @@ language, serving distinct purposes of modern hardware design. These are:
 - specification of formal properties; and
 - specification of functional coverage.
 
-The language provides specific features to serve each of these purposes. For
-hardware synthesis, each level of abstraction uses a different language subset,
-generally with fewer features at lower levels. Behavioural design uses the
-procedural features of Verilog (with little regard for the structural
-realisation of the circuit). RTL design specifies a circuit in terms of data
-flow through registers and logical operations. Gate- and switch-level design
-use only primitive operations. Typical modern hardware design uses a mix of
-register-transfer- and gate-level design.
+The SystemVerilog language provides specific features to serve each of these
+purposes. For hardware synthesis, each level of abstraction uses a different
+language subset, generally with fewer features at lower levels. Behavioural
+design uses the procedural features of SystemVerilog (with little regard for the
+structural realisation of the circuit). RTL design specifies a circuit in terms
+of data flow through registers and logical operations. Gate- and switch-level
+design use only primitive operations. Typical modern hardware design uses a mix
+of register-transfer- and gate-level design.
 
-It is interesting to note however that the specification of Verilog does not
-specify which features are synthesizable; that depends on the tooling used.
-
-### Coding style
-
-Good coding style can help achieve better results in synthesis and simulation,
-as well as producing code that contains less errors and is understandable,
-reusable, and easily modifiable. Many of the observations in this note relate
-to coding style.
+It is interesting to note however that the specification of SystemVerilog does
+not specify which features are synthesizable; that depends on the tooling used.
 
 ### Tooling
 
@@ -76,21 +72,26 @@ proprietary EDA tools do so conservatively, sticking to a lowest common
 denominator of the language features (within their chosen synthesizable
 subset), to ensure compatibility and good results.
 
+### Coding style
+
+Good coding style can help achieve better results in synthesis and simulation,
+as well as producing code that contains less errors and is understandable,
+reusable, and easily modifiable. Many of the observations in this note relate
+to coding style.
+
 ## Overview
 
-This note records some interesting Verilog approaches and coding styles that
-I've observed that are used to interact well with the supporting tooling and to
-produce good synthesis results. I've written it as a note to myself, so it has
-the caveats that it assumes a familiarity with Verilog programming and that
-it's not a comprehensive guide to Verilog programming practices; some of the
-references at the end will serve those purposes better.
+This note records rules, conventions and guidance for writing SystemVerilog
+approaches that I have observed interact well with the supporting tooling and
+to encourage good coding style and produce good synthesis results. They can be
+followed by anyone writing synthesizable SystemVerilog. I owe many of these
+insights to the guidance from my colleagues.
 
-My observations here are in the context of work on an implementation of a
-pipelined processor, as such different approaches may be taken with other types
-of electronic design. I also owe many of these insights to the guidance from my
-colleagues.
+This note assumes familiarity with SystemVerilog. As such it is not a
+comprehensive guide to programming practices. Some of the references at the end
+will serve those purposes better.
 
-The remaining sections are as follows:
+The guidance is presented in the following sections::
 
 - [Combinatorial logic](#comb-logic)
 - [Sequential logic](#seq-logic)
@@ -99,6 +100,8 @@ The remaining sections are as follows:
 - [Expressions](#expressions)
 - [Code structure](#code-structure)
 - [Signal naming](#signal-naming)
+- [Formatting](#formatting)
+
 
 <a name="comb-logic" class="anchor"></a>
 ## Combinatorial logic
@@ -589,16 +592,18 @@ expression:
 <a name="code-structure" class="anchor"></a>
 ## Code structure
 
-**Place parameters and variables at the top of their containing scope.** Doing
-this gives and overview of the state and complexity of a block, particularly a
-module. Declarations of combinatorial and sequential nets should be separated
-into different sections for clarity. Note also that variables declared in
-unnamed scopes are not accessible via the design hierarchy and will not appear
-in wave viewers. To separate a module into sections without making signals
-inaccessible, a named scope can be introduced. The following example of a
-ripple-carry adder with registered outputs gives an idea of this style of
-structuring:
+**Place parameters and variables at the top of their containing scope.**
+Nets/variables/parameters should be declared in the minimum scope in which they
+will be used to avoid polluting namespaces. For example, nets global to a
+module should be declared at the top of the module for use in the code that
+follows.
 
+**Separate combinatorial and sequential nets.** Declarations of combinatorial
+and sequential nets should be separated into different sections for clarity.
+This allows the flip-flops in the design to be seen clearly providing a feel
+for the size and complexity of the block.
+
+The following ripple-carry adder with registered outputs illustrates this structuring:
 ```
 module ripple_carry_adder
   #(parameter p_WIDTH = 8)
@@ -637,12 +642,17 @@ module ripple_carry_adder
 endmodule
 ```
 
-**Use `.*` and `.name()` syntax to simplify port lists in module
-instantiations.** This reduces the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. `.*` also provides additional checks: it
-requires all nets be connected, it requires all nets to be the same size and it
-prevents implicit nets from being inferred. Named connections with `.name()` can
-be used to add specific exceptions. For example:
+**Use `.*` and `.name()` syntax in some circumstances to simplify port lists in module
+instantiations.** Doing so can reduce the amount of boilerplate code and thus the
+scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:
+
+- It requires all nets be connected.
+- It requires all nets to be the same size.
+- It prevents implicit nets from being inferred.
+
+Named connections with `.name()` can be used with wildcards to add specific
+exceptions, such as when names do not match or for unconnected or tied-off
+ports. For example:
 
 ```
 module foo (input logic i_clk,
@@ -657,9 +667,16 @@ u_module foo (.*,
               .out(out));
 ```
 
+Bear in mind that implicit hookups wuth wildcards may obscure module
+connectivity when navigating source code during debug. It is up to the designer
+to make the right tradeoff. Specific exampls of where wildcard hookups are
+useful are in wrapper modules and testbenches.
+
 **Avoid logic in module instantiations.** By instantiating a module with a set
-of named signals, it is easier to inspect the port hookups and the widths of
-the signals for correctness.
+of named signals, mapping one-to-one with ports, it is easier to inspect the
+port hookups and the widths of the signals for correctness. Not doing so
+obscures functionality in the design.
+
 
 <a name="signal-naming" class="anchor"></a>
 ## Signal naming
@@ -696,6 +713,28 @@ a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
 
+<a name="formatting" class="anchor"></a>
+## Formatting
+
+Rules for formatting are not mandated so to provide some flexibility to
+designer's own tastes and the inevitable exceptions to rules. Above all, the
+most important issue with formatting is to maintain consistency within a
+logical part of the design.
+
+**Use spaces instead of tabs**, consitent with the accepted approach in other
+programming languages for compatability with version control and editors etc.
+
+**Split long lines or complex expressions with continuations or across
+statements.** Apply indent as appropriate  for clarity. In this context, 'long'
+is a reasonable value chosen by the author, but typically between 80 and 120
+characters.
+
+**Use begin and end to wrap `if`/`else`, `always_ff` and `always_comb`
+blocks.** This adds consistency to the code and can help to prevent statements
+from unintentionally being excluded from a block. Only use begin and end in
+case alternatives when they contain multiple statements.
+
+
 <a name="summary" class="anchor"></a>
 ## Summary
 
@@ -708,6 +747,7 @@ conservative way for specifying synthesizable designs. The rules and rationale
 given in this note outline some of the important aspects of a coding style for
 hardware design. There are many more details of Verilog's features that are
 relevant; the references below are a good place to find out more.
+
 
 <a name="refs" class="anchor"></a>
 ## References/further reading
