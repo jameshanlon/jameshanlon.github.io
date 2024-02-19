@@ -7,7 +7,7 @@ Summary: Coding style for RTL design using Verilog / SystemVerilog.
 Status: published
 ---
 
-> **_NOTE:_**  Updated Feburary 2024 with new guidance.
+> **_NOTE:_**  Updated Feburary 2024 with improvements and new guidance.
 
 In the last year, I've started from scratch writing SystemVerilog for hardware
 design. Coming from a software background where I was mainly using C/C++ and
@@ -20,26 +20,32 @@ complex ecosystem of proprietary tooling.
 
 As I see it, there are three aspects to writing synthesizable SystemVerilog
 code: the particular features of the language to use, the style and idioms
-employed in using those features, and the tooling support for a design.
+employed in using those features, and the tooling support for a design. Good
+coding style can help achieve better results in synthesis and simulation, as
+well as producing code that contains less errors and is understandable,
+reusable, and easily modifiable. Many of the observations in this note relate
+to coding style. The next secitons give some context around the use of
+SystemVerilog in digital design, or you can [skip ahead](#guidance) to the
+guidance.
+
 
 ### The SystemVerilog language
 
-A subset of SysemVerilog is used for specifying synthesizable circuits.
 SystemVerilog (which subsumed Verilog as of the 2009 standardisation) is a
 unified language, serving distinct purposes of modern hardware design. These
-are:
+can be enumerated as:
 
-- circuit design/specification at different levels of abstraction:
-    * behavioural
-    * structural/register-transfer level (RTL)
-    * gate
-    * switch/transistor;
-- testbench-based verification;
-- specification of formal properties; and
-- specification of functional coverage.
+- Circuit design/specification at different levels of abstraction:
+    * Behavioural.
+    * Structural/register-transfer level (RTL).
+    * Gate.
+    * Switch/transistor.
+- Testbench-based verification.
+- Specification of formal properties.
+- Specification of functional coverage.
 
-The SystemVerilog language provides specific features to serve each of these
-purposes. For hardware synthesis, each level of abstraction uses a different
+SystemVerilog provides specific features to serve each of these
+purposes. For circuit specification, each level of abstraction uses a different
 language subset, generally with fewer features at lower levels. Behavioural
 design uses the procedural features of SystemVerilog (with little regard for the
 structural realisation of the circuit). RTL design specifies a circuit in terms
@@ -47,17 +53,18 @@ of data flow through registers and logical operations. Gate- and switch-level
 design use only primitive operations. Typical modern hardware design uses a mix
 of register-transfer- and gate-level design.
 
-It is interesting to note however that the specification of SystemVerilog does
-not specify which features are synthesizable; that depends on the tooling used.
+It is interesting to note that the SystemVerilog specification does not specify
+which features are synthesizable; that depends on the tooling used.
+
 
 ### Tooling
 
-There is a variety of standard tooling that is used with Verilog, and indeed
-other hardware description languages (HDLs). This includes simulation, formal
-analysis/model checking, formal equivalence checking, coverage analysis,
+There is a variety of standard tooling that is used with SystemVerilog, and
+indeed other hardware description languages (HDLs). This includes simulation,
+formal analysis/model checking, formal equivalence checking, coverage analysis,
 synthesis and physical layout, known collectively as electronic design
 automation tools (EDA). Since standard EDA tooling is developed and maintained
-as proprietary and closed-source software by companies like Cadence, Synopsis
+as proprietary and closed-source software by companies like Cadence, Synopsys
 and Mentor, the tooling options are multiplied.
 
 In contrast with the open-source software ecosystems of programming languages
@@ -65,20 +72,15 @@ In contrast with the open-source software ecosystems of programming languages
 momentum of open projects, in the way that conventional software languages do,
 with a one (or perhaps two) compilers and associated tooling such as debuggers
 and program analysers. Such a fragmented ecosystem inevitably has a larger
-variability in precisely how features of the Verilog language are implemented
+variability in precisely how features of SystemVerilog language are implemented
 and which features are not supported, particularly since there is no standard
-synthesizable subset. Consequently, engineers using Verilog/HDLs with
+synthesizable subset. Consequently, engineers using SystemVerilog/HDLs with
 proprietary EDA tools do so conservatively, sticking to a lowest common
 denominator of the language features (within their chosen synthesizable
 subset), to ensure compatibility and good results.
 
-### Coding style
 
-Good coding style can help achieve better results in synthesis and simulation,
-as well as producing code that contains less errors and is understandable,
-reusable, and easily modifiable. Many of the observations in this note relate
-to coding style.
-
+<a name="guidance" class="anchor"></a>
 ## Overview
 
 This note records rules, conventions and guidance for writing SystemVerilog
@@ -99,7 +101,7 @@ The guidance is presented in the following sections::
 - [Case statements](#case-statements)
 - [Expressions](#expressions)
 - [Code structure](#code-structure)
-- [Signal naming](#signal-naming)
+- [Naming](#naming)
 - [Formatting](#formatting)
 
 
@@ -592,6 +594,9 @@ expression:
 <a name="code-structure" class="anchor"></a>
 ## Code structure
 
+<a name="modules" class="anchor"></a>
+### Modules
+
 **Place parameters and variables at the top of their containing scope.**
 Nets/variables/parameters should be declared in the minimum scope in which they
 will be used to avoid polluting namespaces. For example, nets global to a
@@ -603,7 +608,9 @@ and sequential nets should be separated into different sections for clarity.
 This allows the flip-flops in the design to be seen clearly providing a feel
 for the size and complexity of the block.
 
-The following ripple-carry adder with registered outputs illustrates this structuring:
+The following ripple-carry adder with registered outputs illustrates this
+structuring:
+
 ```
 module ripple_carry_adder
   #(parameter p_WIDTH = 8)
@@ -677,12 +684,183 @@ of named signals, mapping one-to-one with ports, it is easier to inspect the
 port hookups and the widths of the signals for correctness. Not doing so
 obscures functionality in the design.
 
+<a name="packages" class="anchor"></a>
+### Packages
+
+Packages should be defined as appropriate to maintain scoping and to share
+definitions (types, constants, tasks, functions etc) betweenmultiple modules or
+IPs.
+
+<a name="assertions" class="anchor"></a>
+### Assertions
+
+**Assertions should be written in a separate file that is bound in to the
+appropriate scope.** Verification tests must be written to specifically ensure
+that the assertions are present in simulation.
+
+**Assertion files must be named after the block they apply to, with an
+`_assert.sv` suffix.** Where assertions have been split into different groups
+to allow use in gate-level simulations (or other environments), the file name
+may have a `_ports_assert.sv`, `_regs_assert.sv` or `_nets_assert.sv` suffix as
+appropriate.
+
+
+<a name="naming" class="anchor"></a>
+## Naming
+
+<a name="naming-general" class="anchor"></a>
+### General
+
+**Names should be meaningful, whilst avoiding excessive verbosity.** For example,
+`n3` should be avoided as it lacks meaning whereas `floating_point_opcode_bus` is
+excessively long. `fp_opcode` is a reasonable compromise.
+
+**Avoid using C/C++/Verilog/SystemVerilog/VHDL keywords as names.** Even if
+they are not reserved names in the language being used in that file. For
+example: `auto`, `unsigned`, `task`, `register` or `asm`.
+
+
+<a name="naming-prefixes-suffixes" class="anchor"></a>
+### Prefixes and suffices
+
+Name prefixes are generally used to indicate object types (such as module
+instances, flip flops, ports etc), and suffixes are generally used to convey
+semantic information. A good standard set of prefixes and suffixes are
+enumerated below:
+
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Prefix</th>
+  <th scope="col">Usage</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>i_</code></td>
+  <td>Input port</td>
+</tr>
+<tr>
+  <td><code>o_</code></td>
+  <td>Output port</td>
+</tr>
+<tr>
+  <td><code>io_</code></td>
+  <td>Bidirecitonal (inout) port</td>
+</tr>
+<tr>
+  <td><code>u_</code></td>
+  <td>Module instance</td>
+</tr>
+<tr>
+  <td><code>m_</code></td>
+  <td>Module definition</td>
+</tr>
+<tr>
+  <td><code>p_</code></td>
+  <td>Parameter/localparam</td>
+</tr>
+<tr>
+  <td><code>g_</code></td>
+  <td>Generate block</td>
+</tr>
+<tr>
+  <td><code>unused_</code></td>
+  <td>Unused signal for lint signoff</td>
+</tr>
+</tbody>
+</table>
+
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">Suffix</th>
+  <th scope="col">Usage</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>_clk</code></td>
+  <td>Clock signal</td>
+</tr>
+<tr>
+  <td><code>_gclk</code></td>
+  <td>Gated clock signal</td>
+</tr>
+<tr>
+  <td><code>_rst</code></td>
+  <td>Reset signal</td>
+</tr>
+<tr>
+  <td><code>_q</code></td>
+  <td>Signal driven from a flip flop</td>
+</tr>
+<tr>
+  <td><code>_n</code></td>
+  <td>Active-low signal</code></td>
+</tr>
+<tr>
+  <td><code>_t</code></td>
+  <td>Type via a typedef</td>
+</tr>
+<tr>
+  <td><code>_pkg</code></td>
+  <td>Package</td>
+</tr>
+<tr>
+  <td><code>_if</code></td>
+  <td>Interface</td>
+</tr>
+</tbody>
+</table>
+
+Where signals are both active-low and require a suffix from elsewhere in the
+table, the `_n` suffix should be appended without an extra underscore. For
+example, `_q` becomes `_qn` for an active-low flop output, and `_clk` becomes
+`_clkn` for an inverted clock.
+
+The following code example shows appropriate usage of the above prefix and
+suffix guidelines:
+
+```
+module xm_ctrl_fsm (
+  input logic         i_clk,
+  input logic         i_rst,
+  input logic         i_ready,
+  input logic         i_done,
+  output logic [2:0]  o_control
+);
+
+  enum logic [2:0] {
+    IDLE = 3'b000,
+    LOAD = 3'b110,
+    DONE = 3'b001
+  } state_q, next;
+
+  assign o_control = state_q;
+
+  always_ff @(posedge i_clk or posedge i_rst) begin
+    if(i_rst) begin
+      state_q <= IDLE;
+    end else begin
+      state_q <= next;
+    end
+  end
+
+  always_comb begin
+    unique case(state_q)
+      IDLE: if(i_ready) next = LOAD;
+            else        next = IDLE;
+      LOAD: if(i_done)  next = DONE;
+            else        next = LOAD;
+      DONE:             next = IDLE;
+    endcase
+  end
+
+endmodule
+```
 
 <a name="signal-naming" class="anchor"></a>
-## Signal naming
+### Signal naming
 
-A strict approach to naming should be taken to make it easier to understand and
-navigate a design:
+A strict approach to signal naming should be taken to make it easier to
+understand and navigate a design:
 
 **To make clear their relationship to the structure of a module**. Prefixes and
 suffices can denote, for example, whether a signal is an input or output, the
@@ -712,6 +890,8 @@ naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
+
+
 
 <a name="formatting" class="anchor"></a>
 ## Formatting
