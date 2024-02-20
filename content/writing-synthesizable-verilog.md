@@ -102,6 +102,7 @@ The guidance is presented in the following sections::
 - [Expressions](#expressions)
 - [Code structure](#code-structure)
 - [Naming](#naming)
+- [Preprocessor](#preprocessor)
 - [Formatting](#formatting)
 
 
@@ -721,7 +722,7 @@ example: `auto`, `unsigned`, `task`, `register` or `asm`.
 
 
 <a name="naming-prefixes-suffixes" class="anchor"></a>
-### Prefixes and suffices
+### Prefixes and suffixes
 
 Name prefixes are generally used to indicate object types (such as module
 instances, flip flops, ports etc), and suffixes are generally used to convey
@@ -730,7 +731,7 @@ enumerated below:
 
 <table class="table table-striped table-sm">
 <thead>
-  <th scope="col">Prefix</th>
+  <th scope="col" style="width:20%">Prefix</th>
   <th scope="col">Usage</th>
 </thead>
 <tbody>
@@ -763,6 +764,10 @@ enumerated below:
   <td>Generate block</td>
 </tr>
 <tr>
+  <td><code>[a-z][0-9]_</code></td>
+  <td>Pipeline stage</td>
+</tr>
+<tr>
   <td><code>unused_</code></td>
   <td>Unused signal for lint signoff</td>
 </tr>
@@ -771,7 +776,7 @@ enumerated below:
 
 <table class="table table-striped table-sm">
 <thead>
-  <th scope="col">Suffix</th>
+  <th scope="col" style="width:20%">Suffix</th>
   <th scope="col">Usage</th>
 </thead>
 <tbody>
@@ -827,16 +832,19 @@ module xm_ctrl_fsm (
   output logic [2:0]  o_control
 );
 
-  enum logic [2:0] {
+  typedef enum logic [2:0] {
     IDLE = 3'b000,
     LOAD = 3'b110,
     DONE = 3'b001
-  } state_q, next;
+  } state_t;
+
+  state_t state_q;
+  state_t next;
 
   assign o_control = state_q;
 
   always_ff @(posedge i_clk or posedge i_rst) begin
-    if(i_rst) begin
+    if (i_rst) begin
       state_q <= IDLE;
     end else begin
       state_q <= next;
@@ -844,16 +852,47 @@ module xm_ctrl_fsm (
   end
 
   always_comb begin
-    unique case(state_q)
-      IDLE: if(i_ready) next = LOAD;
-            else        next = IDLE;
-      LOAD: if(i_done)  next = DONE;
-            else        next = LOAD;
-      DONE:             next = IDLE;
+    unique case (state_q)
+      IDLE: if (i_ready) next = LOAD;
+            else         next = IDLE;
+      LOAD: if (i_done)  next = DONE;
+            else         next = LOAD;
+      DONE:              next = IDLE;
     endcase
   end
 
 endmodule
+```
+
+Another example illustrates the use of the pipeline prefix, using `e` to denote
+an external signal and `p` an internal one:
+
+```
+module m_mempipe (
+  input  logic        i_clk,
+  input  logic        i_rst,
+  input  logic        i_e1_valid,
+  input  logic [18:2] i_e1_addr,
+  output logic [31:0] o_e2_data
+);
+  ...
+  logic        p2_valid_q;
+  logic [31:0] p2_data;
+  logic [31:0] p3_data_q;
+  ...
+
+  always_ff @(posedge i_clk or posedge i_rst) begin
+    if (i_rst) begin
+      p3_data_q <= 32'h00000000;
+    end else if (e2_valid_q) begin
+      p3_data_q <= p2_data;
+    end
+  end
+
+  assign o_e2_data = p3_data_q;
+
+endmodule
+
 ```
 
 <a name="signal-naming" class="anchor"></a>
@@ -891,6 +930,55 @@ a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
 
+
+<a name="preprocessor" class="anchor"></a>
+## Preprocessor
+
+**In general, it should be possible to avoid any preprocessing of code.** Other
+built-in language structures such as parameters and generate statements should
+be used instead. Don't use local `define statements in modules unless
+absolutely necessary, use localparam instead of `define`:
+
+```
+// Avoid
+`define CONSTANT 1
+
+// Prefer
+localparam p_constant = 1;
+```
+
+This is because SystemVerilog macro definitions are not scoped within a module,
+which can easily lead to them 'leaking' between files in a filelist, making the
+elaboration dependnet on the ordering.
+
+For similar reasons, **use generate-if blocks instead of `ifdef`.**
+
+```
+// Avoid
+`ifdef FLAG
+...
+`endif
+
+// Prefer
+generate
+  if (p_flag) begin
+  ...
+  end
+endgenerate
+```
+
+**If a local define is needed, then a corresponding `undef` must be included
+before the end of the file.** This is to avoid macro definitions polluting the
+global namespace.
+
+```
+`define LOCAL_DEFINE
+
+...
+
+// End of the file or use of LOCAL_DEFINE
+`undef LOCAL_DEFINE
+```
 
 
 <a name="formatting" class="anchor"></a>
