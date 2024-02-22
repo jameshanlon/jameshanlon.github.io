@@ -96,6 +96,7 @@ will serve those purposes better.
 
 The guidance is presented in the following sections:
 
+- [Logic, wire and reg](#logic-wire-reg)
 - [Combinatorial logic](#comb-logic)
 - [Sequential logic](#seq-logic)
 - [If statements](#if-statements)
@@ -107,6 +108,45 @@ The guidance is presented in the following sections:
 - [Preprocessor](#preprocessor)
 - [Formatting](#formatting)
 
+
+<a name="logic-wire-reg" class="anchor"></a>
+## Logic, wire, reg
+
+**`logic` should be used to declare point-to-point nets, variables and ports.**
+This is because logic is checked at compile time for multiple drivers. Note
+that variables are entities driven by procedural assignments (in always
+blocks), whereas nets occur in any other forms of assignment (continuous,
+primitive outputs and module ports). An exception to this is when integrating
+external IP that uses wire types. It is permitted to make sparing use of wire
+type for consistency.[^logic-wire-reg]
+
+[^logic-wire-reg]: More details on these types is given
+  [here](https://blogs.sw.siemens.com/verificationhorizons/2013/05/03/wire-vs-reg).
+
+**Multiply-driven nets should be declared using wire.** This is because wire
+data types permit multiple drivers.
+
+**Combined logic declarations and assignment statements are not allowed.** The behaviour of these is to assign
+a value at time 0, which is not synthesizable. Continuous assignment after time 0, which is the typical intention,
+requires a separate assignment. Note that a combined assignment with a wire declaration behaves differently
+and is equivalent to a separate continuous assignment.
+
+```
+// Assignment of a logic net at time 0, not allowed.
+logic [31:0] data = 32'b0;
+
+// Correct way to continuously drive a logic net.
+logic [31:0] data;
+assign data = 32'b0;
+
+// Wire declarations can use an initial value to specify a continuous
+// assignment.
+wire value = 0;
+
+// Same behaviour as above declaration.
+wire value;
+assign value = 0;
+```
 
 <a name="comb-logic" class="anchor"></a>
 ## Combinatorial logic
@@ -637,6 +677,52 @@ module m_bar (...);
 endmodule
 ```
 
+**Be explicit when assigning values to nets and variables.** For example:
+
+```
+logic [127:0] data_a;
+
+// Explicitly 32 bits wide, decimal 0 assigment.
+assign data_a = 128'd0;
+
+// Explicitly 32 bits wide, binary 0 assignment.
+assign data_a = 128'b0;
+
+// Avoid.
+assign data_a = 'd5;
+
+// A user-defined type.
+foo_pkg::bar data_b;
+
+// An implicit cast is acceptable.
+assign data_b = 'd5;
+
+// But an explicit one is best.
+assign data_b = foo_pkg::bar'(5);
+```
+
+With the exception of `'0`, unsized literal single-bit values (unsigned and without a radix) in assignments should not be used in combinational logic, since they can be
+misinterpreted. They appear similar to explicit assigments with a
+radix, yet represent very different values. For example, `'1` looks similar to `'d1`
+but encodes the value $2^n - 1$ where $n$ is the width of the
+variable being assigned to. 
+
+```
+logic [15:0] data;
+
+// Sets data to 16'hFFFF, not 16'h0001.
+assign data = '1;
+
+// Clearer and harder to misinterpret.
+assign data = 16'hFFFF;
+
+// The replication operator should be used to set all bits to a value.
+assign data = { 16 {1'b1} }; // Equivalent to above assigment
+
+// Acceptable since repeated zeroes are still zero.
+assign data = '0;
+assign data = 16'h0; // Equivalent
+```
 
 <a name="code-structure" class="anchor"></a>
 ## Code structure
@@ -699,7 +785,7 @@ endmodule
 
 **Use `.*` and `.name()` syntax in some circumstances to simplify port lists in module
 instantiations.** Doing so can reduce the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:
+scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:[^wildcards]
 
 - It requires all nets be connected.
 - It requires all nets to be the same size.
@@ -727,6 +813,9 @@ connectivity when navigating source code during debug. It is up to the designer
 to make the right tradeoff. Specific exampls of where wildcard hookups are
 useful are in wrapper modules and testbenches.
 
+[^wildcards]: See Section 7 of 'Synthesizing SystemVerilog: Busting the Myth
+  that SystemVerilog is only for Verification (linked in the references).
+
 **Avoid logic in module instantiations.** By instantiating a module with a set
 of named signals, mapping one-to-one with ports, it is easier to inspect the
 port hookups and the widths of the signals for correctness. Not doing so
@@ -752,6 +841,19 @@ module m_rf
 );
 ```
 
+**Name scopes that contain local variables.** For similar reasons to the naming
+of generate blocks, if a variable is declared in a local scope, that scope must
+be named. It may be useful to introduce named local scopes to separate a large
+module into sections. For example:
+
+```
+begin : p0
+  ...
+end
+begin : p1
+  ...
+end
+```
 
 <a name="packages" class="anchor"></a>
 ### Packages
@@ -1037,9 +1139,115 @@ a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
 `u_toplevel/u_submodule/p0_signal_q[17]`.
 
+<a name="generate-naming" class="anchor"></a>
+### Generate block naming
+
+**All scopes of a generate block should be named.** This avoids
+automatically-assigned names being created by the elaboration tool, making it
+hard to understand the structure of the code. This applies to branches of
+conditional and loop statements. For example, with named conditions:
+
+```
+module m_gen_cond #(
+    parameter p_gen_diff = 0)();
+  logic gen_op0;
+  logic gen_op1;
+  logic gen_op2;
+  generate
+    if (p_gen_diff == 1) begin
+      assign gen_op0 = 1'b1;
+    end else begin
+      assign gen_op0 = 1'b0;
+    end
+    if (p_gen_diff == 1) begin
+      assign gen_op1 = 1'b1;
+    end else begin
+      assign gen_op1 = 1'b0;
+    end
+    if (p_gen_diff == 1) begin : g_eq_1
+      assign gen_op2 = 1'b1;
+    end else begin : g_eq_0
+      assign gen_op2 = 1'b0;
+    end
+  endgenerate
+endmodule
+```
+
+In the resulting hierarchy, the first two conditionals are not easily
+distinguishable, nor are the branches that are chosen:
+
+```
+m_gen_cond
+  g_eq_0
+  genblk1
+  genblk2
+```
+
+With named loops, a similar situation arises:
+
+```
+module m_gen_loop #(
+    parameter p_gen_diff = 0)();
+  logic [2:0] gen_op0;
+  logic [2:0] gen_op1;
+  logic [2:0] gen_op2;
+  generate
+    for (genvar i=0; i<3; i++) begin
+      assign gen_op0[i] = 1'b0;
+    end
+    for (genvar i=0; i<3; i++) begin
+      assign gen_op1[i] = 1'b0;
+    end
+    for (genvar i=0; i<3; i++) begin : g_loop
+      assign gen_op2[i] = 1'b0;
+    end
+  endgenerate
+endmodule
+```
+
+In the resulting hierarchy, there is no correspondence to the blocks assigning
+to gen_op0 or gen_op1, indeed these could be switched with no visibility in the
+hierarchy:
+
+```
+m_gen_loop
+  g_loop[0]
+  g_loop[1]
+  g_loop[2]
+  genblk1[0]
+  genblk1[1]
+  genblk1[2]
+  genblk2[0]
+  genblk2[1]
+  genblk2[2]
+```
+
+Using a `g_` prefix for named generate blocks, clearly distinguishes with
+instantiations of modules, for example:
+
+```
+module m_foo (
+...
+);
+  m_child u_child (...);
+  generate
+    for (genvar i-0; i < 3; i++) begin : g_loop
+      ...
+    end
+  endgenerate
+endmodule
+```
+
+Has the hierarchy:
+
+```
+m_foo
+u_child
+g_loop
+```
 
 <a name="preprocessor" class="anchor"></a>
-## Preprocessor
+### Preprocessor
 
 **In general, it should be possible to avoid any preprocessing of code.** Other
 built-in language structures such as parameters and generate statements should
