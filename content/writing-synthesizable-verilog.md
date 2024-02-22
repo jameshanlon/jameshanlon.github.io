@@ -3,7 +3,7 @@ Title: Writing synthesizable Verilog
 Date: 2018-5-4
 Category: notes
 Tags: computing, microelectronics, programming-languages, verilog
-Summary: Coding style for RTL design using Verilog / SystemVerilog.
+Summary: Coding style for RTL design using Verilog / SystemVerilog. Updated 2024.
 Status: published
 ---
 
@@ -24,7 +24,7 @@ employed in using those features, and the tooling support for a design. Good
 coding style can help achieve better results in synthesis and simulation, as
 well as producing code that contains less errors and is understandable,
 reusable, and easily modifiable. Many of the observations in this note relate
-to coding style. The next secitons give some context around the use of
+to coding style. The next sections give some context around the use of
 SystemVerilog in digital design, or you can [skip ahead](#guidance) to the
 guidance.
 
@@ -79,6 +79,7 @@ proprietary EDA tools do so conservatively, sticking to a lowest common
 denominator of the language features (within their chosen synthesizable
 subset), to ensure compatibility and good results.
 
+<hr>
 
 <a name="guidance" class="anchor"></a>
 ## Overview
@@ -93,13 +94,14 @@ This note assumes familiarity with SystemVerilog. As such it is not a
 comprehensive guide to programming practices. Some of the references at the end
 will serve those purposes better.
 
-The guidance is presented in the following sections::
+The guidance is presented in the following sections:
 
 - [Combinatorial logic](#comb-logic)
 - [Sequential logic](#seq-logic)
 - [If statements](#if-statements)
 - [Case statements](#case-statements)
 - [Expressions](#expressions)
+- [Constants](#constants)
 - [Code structure](#code-structure)
 - [Naming](#naming)
 - [Preprocessor](#preprocessor)
@@ -166,14 +168,14 @@ always_comb
 
 **Where possible extract logic into `assign` statements.** Extract single
 assignments to a variable into a separate `assign` statement, where it is
-possible to do so. This approach uses the features of Verilog consistently,
-rather than using two mechanisms to achieve the same effect. This makes it
-clear that an `always_comb` is used to introduce sequentiality. Another
-opportunity to move logic into separate `assign` statements is with complex
-expressions, such as the Boolean value for a conditional statement. Doing this
-makes the control flow structure clearer, potentially provide opportunities for
-reuse, and provides a separate signal when inspecting the signals in a waveform
-viewer.
+possible to do so. This approach uses the features of SystemVerilog
+consistently, rather than using two mechanisms to achieve the same effect. This
+makes it clear that an `always_comb` is used to introduce sequentiality.
+Another opportunity to move logic into separate `assign` statements is with
+complex expressions, such as the Boolean value for a conditional statement.
+Doing this makes the control flow structure clearer, potentially provide
+opportunities for reuse, and provides a separate signal when inspecting the
+signals in a waveform viewer.
 
 **Avoid unnecessary sequentiality.** It is easy to add statements to an
 `always_comb` to expand its behaviour, but this should only be done when there
@@ -502,7 +504,7 @@ operators associate right to left.
       ^(b[31:0])
 ```
 
-**Make expression bit lengths explicit.** Although the Verilog language
+**Make expression bit lengths explicit.** Although the SystemVerilog
 specification provides rules for the extension of operands as inputs to binary
 operations and assignments, these are complicated and not always obvious. In
 particular, the extension is determined either by the operands or by the
@@ -592,6 +594,50 @@ expression:
 {unused_co, sum} = a + b + c;
 ```
 
+<a name="constants" class="anchor"></a>
+## Constants
+
+**Avoid magic numbers.** All numeric constants, with the exception of zero and
+one (for incrementing) should be defined symbolically. All assignment to
+constants must be sized correctly to avoid width-mismatch warnings that must be
+signed off later in the flow.
+
+**Constants should be declared inside packages.** Derived constants with a
+meaning specific to a module should be defined in the appropriate scope of the
+module.
+
+**Constants assigned to an `enum` port must be of the same `enum` type.** Not
+doing so relies on an implicit conversion, which can have inconsistent
+behaviour between tools. Assign an enum value directly, or by using a static
+cast. For example:
+
+```
+package m_foo_pkg;
+  typedef logic [1:0] {
+    A, B, C, D
+  } enum_t;
+endpackage
+
+module m_foo (
+  input xm_foo_pkg::enum_t in,
+  ...
+);
+...
+endmodule
+
+module m_bar (...);
+  ...
+  m_foo u_foo (
+    // Tie the input to a constant value using the enum type, rather than
+    // via a value of any other type.
+    .in(xm_foo_pkg::D),
+    ...
+  );
+  ...
+endmodule
+```
+
+
 <a name="code-structure" class="anchor"></a>
 ## Code structure
 
@@ -613,39 +659,40 @@ The following ripple-carry adder with registered outputs illustrates this
 structuring:
 
 ```
-module ripple_carry_adder
-  #(parameter p_WIDTH = 8)
+module m_rca
+  #(parameter p_width = 8)
   ( input  logic               i_clk,
     input  logic               i_rst,
-    input  logic [p_WIDTH-1:0] i_op1,
-    input  logic [p_WIDTH-1:0] i_op2,
+    input  logic [p_width-1:0] i_op1,
+    input  logic [p_width-1:0] i_op2,
     output logic               o_co,
-    output logic [p_WIDTH-1:0] o_sum );
+    output logic [p_width-1:0] o_sum );
 
   // Wires.
-  logic [p_WIDTH-1:0] carry;
+  logic [p_width-1:0] carry;
   // Registers.
-  logic [p_WIDTH-1:0] sum_q;
+  logic [p_width-1:0] sum_q;
   logic               co_q;
   // Variables.
-  genvar i;
+  genvar              i;
 
   assign carry[0] = 1'b0;
   assign {o_co, o_sum} = {co_q, sum_q};
 
   // Named generate block for per-bit continuous assignments.
-  for (i = 0; i < p_WIDTH; i = i + 1) begin: bit
+  for (i = 0; i < p_width; i = i + 1) begin: bit
     assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];
   end
 
-  always_ff @(posedge i_clk or posedge i_rst)
+  always_ff @(posedge i_clk or posedge i_rst) begin
     if (i_rst) begin
-      sum_q <= {p_WIDTH{1'b0}};
+      sum_q <= {p_width{1'b0}};
       co_q  <= 1'b0;
     end else begin
       sum_q <= sum;
-      co_q  <= carry[p_WIDTH-1];
+      co_q  <= carry[p_width-1];
     end
+  end
 
 endmodule
 ```
@@ -685,12 +732,47 @@ of named signals, mapping one-to-one with ports, it is easier to inspect the
 port hookups and the widths of the signals for correctness. Not doing so
 obscures functionality in the design.
 
+**In parameter lists, separate parameters that are intended to be set
+externally from secondary parameters that are only used internally.** There is
+no way to prevent some parameters being set externally, ie with `localparam`,
+so a comment can be used to do this, for example:
+
+```
+module m_rf
+#(parameter
+  p_entry_width = 32,
+  p_num_entries = 64,
+  // Internal parameter(s) - do not set.
+  p_idx_width = $clog2(p_num_entries-1))
+( ...,
+  input logic [p_entry_width-1:0] wr_data,
+  input logic [p_idx_width-1:0] wr_idx,
+  input logic wr_en,
+...
+);
+```
+
+
 <a name="packages" class="anchor"></a>
 ### Packages
 
-Packages should be defined as appropriate to maintain scoping and to share
-definitions (types, constants, tasks, functions etc) betweenmultiple modules or
-IPs.
+**Define packages to share definitions (types, constants, tasks, functions etc)
+between multiple modules or IPs.**
+
+**Qualify types, constants, tasks or functions with their package name and
+avoid \* imports.** This resolves any potential ambiguity in the providence of
+symbols to the designer and avoids polluting the current scope with all names
+defined by the package. For example:
+
+```
+// Avoid
+import m_core_pkg::*;
+
+// Prefer
+m_core_pkg::FIFO_RAM_WIDTH
+m_core_pkg::grey_code(...)
+```
+
 
 <a name="assertions" class="anchor"></a>
 ### Assertions
@@ -709,8 +791,23 @@ appropriate.
 <a name="naming" class="anchor"></a>
 ## Naming
 
-<a name="naming-general" class="anchor"></a>
-### General
+Clear and consistent naming is important for a design to be easily understood
+and maintainability by a designer, but naming must facilitate easy manipulation
+by various tools in the Frontend and Backend flows.
+
+During Frontend debug, names should allow simple sorting and searching in a
+wave viewer. By using common prefixes for related signals, sorting will place
+them together. Similarly, common substrings are useful to filter a subset of
+signals over, for example to select a set of registers or similar signals
+different in pipeline stages.
+
+Throughout the Backend flows, names must allow sensible flattening. It is
+typical for synthesis to flatten the hierarchical structure and consequently
+symbol names are derived from their place in the module hierarchy. A suitable
+naming scheme really only requires consistency across a design. As an example,
+a flip-flop clock pin might be named
+`u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
+`u_toplevel/u_submodule/p0_signal_q[17]`.
 
 **Names should be meaningful, whilst avoiding excessive verbosity.** For example,
 `n3` should be avoided as it lacks meaning whereas `floating_point_opcode_bus` is
@@ -720,6 +817,16 @@ excessively long. `fp_opcode` is a reasonable compromise.
 they are not reserved names in the language being used in that file. For
 example: `auto`, `unsigned`, `task`, `register` or `asm`.
 
+**All names must be all lower case and underscore separated.**
+For example:
+```
+module m_cpu;
+module m_cpu_pkg;
+logic unused_co
+logic p3_ctrl
+logic p4_prod_q
+begin : ecc_encode
+```
 
 <a name="naming-prefixes-suffixes" class="anchor"></a>
 ### Prefixes and suffixes
@@ -923,7 +1030,7 @@ common substrings are useful to filter a subset of signals over, for example to
 select a set of registers or similar signals different in pipeline stages.
 
 **To be flattened sensibly by downstream tools**. It is typical for synthesis
-to flatten the hierarchical structure of a Verilog design. Consequently
+to flatten the hierarchical structure of a SystemVerilog design. Consequently
 symbols names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
@@ -936,8 +1043,8 @@ a flip-flop clock pin might be named
 
 **In general, it should be possible to avoid any preprocessing of code.** Other
 built-in language structures such as parameters and generate statements should
-be used instead. Don't use local `define statements in modules unless
-absolutely necessary, use localparam instead of `define`:
+be used instead. Don't use local `define` statements in modules unless
+absolutely necessary, use `localparam` instead of `define`:
 
 ```
 // Avoid
@@ -949,7 +1056,7 @@ localparam p_constant = 1;
 
 This is because SystemVerilog macro definitions are not scoped within a module,
 which can easily lead to them 'leaking' between files in a filelist, making the
-elaboration dependnet on the ordering.
+elaboration dependent on the ordering of the list.
 
 For similar reasons, **use generate-if blocks instead of `ifdef`.**
 
@@ -967,7 +1074,7 @@ generate
 endgenerate
 ```
 
-**If a local define is needed, then a corresponding `undef` must be included
+**If a local define is unavoidable, then a corresponding `undef` must be included
 before the end of the file.** This is to avoid macro definitions polluting the
 global namespace.
 
@@ -1010,10 +1117,10 @@ Verilog is a large language with features supporting different purposes. It is
 used as a standard in hardware design but its specification does not define a
 synthesizable subset. Although there is a general consensus on which features
 can be used for synthesis, the fine details are determined by the particular
-EDA tooling flow used by a design team. Verilog is consequently used in a
+EDA tooling flow used by a design team. SystemVerilog is consequently used in a
 conservative way for specifying synthesizable designs. The rules and rationale
 given in this note outline some of the important aspects of a coding style for
-hardware design. There are many more details of Verilog's features that are
+hardware design. There are many more details of SystemVerilog's features that are
 relevant; the references below are a good place to find out more.
 
 
@@ -1021,22 +1128,31 @@ relevant; the references below are a good place to find out more.
 ## References/further reading
 
 - IEEE Standard for SystemVerilog (IEEE 1800-2012 and 1800-2017).
-- [Sutherland HDL papers](http://www.sutherland-hdl.com/papers.html) on Verilog, in particular:
+
+- [Sutherland HDL papers](http://www.sutherland-hdl.com/papers.html) on
+  Verilog/SystemVerilog, in particular:
+
     * Stuart Sutherland and Don Mills, Standard gotchas subtleties in the
       Verilog and SystemVerilog standards that every engineer should know. SNUG 2006.
       ([PDF](http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_paper.pdf))
+
     * Stuart Sutherland, A Proposal for a Standard Synthesizable SystemVerilog Subset. DVCon 2006.
       ([PDF](http://www.sutherland-hdl.com/papers/2006-DVCon_SystemVerilog_synthesis_subset_paper.pdf))
+
     * Stuart Sutherland and Don Mills, Synthesizing SystemVerilog: Busting the
       myth that SystemVerilog is only for verification, SNUG 2013.
       ([PDF](http://www.sutherland-hdl.com/papers/2013-SNUG-SV_Synthesizable-SystemVerilog_paper.pdf)).
+
     * Stuart Sutherland and Don Mills, Can my synthesis compiler do that? What ASIC
       and FPGA synthesis compilers support in the SystemVerilog-2012 standard, DVCon 2014
       ([PDF](http://www.sutherland-hdl.com/papers/2014-DVCon_ASIC-FPGA_SV_Synthesis_paper.pdf)).
+
 - SystemVerilog's priority & unique - A Solution to Verilog's "full_case" & "parallel_case" Evil Twins!,
   Clifford E. Cummings, SNUG 2005
   ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf)).
+
 - Verilog HDL Coding, Semiconductor Reuse Standard, Freescale Semiconductor
   ([PDF](https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf)).
+
 - Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides,
   ([PDF](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf)).
