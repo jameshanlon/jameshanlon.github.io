@@ -103,9 +103,16 @@ sections:
     * [Case statements](#case-statements)
 - [Expressions](#expressions)
 - [Constants](#constants)
-- [Code structure](#code-structure)
+- [X values](#x-values)
 - [Naming](#naming)
-- [Preprocessor](#preprocessor)
+    * [Prefixes and suffixes](#naming-prefixes-suffixes)
+    * [Signal naming](#signal-naming)
+    * [Generate block naming](#generate-naming)
+- [Code structure](#code-structure)
+    * [Modules](#modules)
+    * [Packages](#packages)
+    * [Assertions](#assertions)
+    * [Preprocessor](#preprocessor)
 - [Formatting](#formatting)
 
 
@@ -150,12 +157,12 @@ assign value = 0;
 ```
 
 **Structures and unions must always be fully packed.** This applies
-recursively. For example:
+to their members recursively. For example:
 
 ```
-typedef struct packed {
+typedef struct packed { // Packed structure.
   valid_t             valid;
-  logic [p_width-1:0] data;
+  logic [p_width-1:0] data; // Packed array.
   logic               parity;
 } bus_t;
 ```
@@ -452,9 +459,9 @@ to initialise the contents to a known state.
 <a name="if-statements" class="anchor"></a>
 ### If statements
 
-**Avoid mixing block control flow with boolean expressions.** This is because
+**Avoid mixing block control flow with Boolean expressions.** This is because
 it make it harder for structural coverage analysis tools to break down complex
-conditions into manageable subterms, or even that analysis will ignore
+conditions into manageable sub terms, or even that analysis will ignore
 important conditional context of expressions.
 
 ```
@@ -876,6 +883,7 @@ Special care should be taken with sub expressions, since their result length is
 determined automatically by the width of the largest operand. For example,
 without an explicit type cast to a 17-bit result around `a + b`, the carry out
 bit would be lost:
+
 ```
 logic [15:0] result, a b;
 typedef logic [16:0] sum_t;
@@ -886,26 +894,27 @@ Capture carry out bits (even if they are unused) so the left-hand-side
 assignment width matches the full width of the right hand side. Using a prefix
 like `unused_` makes the process of signing off any related warnings with the
 downstream synthesis and physical build simpler:
+
 ```
 assign {unused_co, result} = a + b;
 ```
 
 Exceptions to this rule can be made for the common constants 0, 1 and -1 to be
 specified as `integer` literals, for example:
+
 ```
 assign result = 0;
 assign sum = value - 1;
 ```
 
-**Use `signed` types for signed arithmetic,** and avoid implementing signed
-arithmetic with manual sign extensions. Verilog uses the signedness of an
-expression to determine how to extend its width (as well as inferring
+**Use `signed` types for signed arithmetic, and avoid implementing signed
+arithmetic with manual sign extensions.** SystemVerilog uses the signedness of
+an expression to determine how to extend its width (as well as inferring
 signedness of parent expressions). Since the rules for sign determination is
 similar to expression size but not the same, making it explicit avoids errors.
 It also facilitates the use of optimised arithmetic implementations in
 synthesis, particularly with multipliers. The following example (adapted from
-[this presentation][arithmetic-gotcha])
-shows how these rules can be confusing:
+[this presentation][arithmetic-gotcha]) shows how these rules can be confusing:
 
 ```
 logic signed [3:0] a, b;
@@ -923,9 +932,11 @@ signed, and that literal values can be specified as signed, for example:
 
 [arithmetic-gotcha]: http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_presentation.pdf
 
-**Avoid splitting arithmetic** between statements or modules. This facilitates
+**Avoid splitting arithmetic between statements or modules.** This facilitates
 optimisation during synthesis, for example, to choose or generate an optimised
-adder implementation for the given set of operands and carry ins/outs. Instead of:
+adder implementation for the given set of operands and carry ins/outs. Instead
+of:
+
 ```
 logic [3:0] a, b, c;
 logic [4:0] int_sum, sum;
@@ -935,9 +946,16 @@ int_sum = a + b;
 
 All of the arithmetic contributing to `sum` can be written in a single
 expression:
+
 ```
 {unused_co, sum} = a + b + c;
 ```
+
+**Do not mix bitwise and logical operator in the same expression.** There are
+different precedence rules for the types, so the behaviour may not be what is
+expected. Instead, break up the expression to make it explicit what the
+intended behaviour is.
+
 
 <a name="constants" class="anchor"></a>
 ## Constants
@@ -1030,180 +1048,17 @@ assign data = '0;
 assign data = 16'h0; // Equivalent
 ```
 
-<a name="code-structure" class="anchor"></a>
-## Code structure
 
-<a name="modules" class="anchor"></a>
-### Modules
+<a name="x-values" class="anchor"></a>
+## X values
 
-**Place parameters and variables at the top of their containing scope.**
-Nets/variables/parameters should be declared in the minimum scope in which they
-will be used to avoid polluting namespaces. For example, nets global to a
-module should be declared at the top of the module for use in the code that
-follows.
+**Assignment of `X` values as don't care values should be avoided.** This is
+for similar reasons for not using non-reset registers, which can lead to
+simulation-versus-synthesis mismatches, potentially obscuring bugs. However, if
+it can be demonstrated that use of X values can provide better QoR in the
+physical build of a block, specific and limited use of `X` values can be
+justified.
 
-**Separate combinatorial and sequential nets.** Declarations of combinatorial
-and sequential nets should be separated into different sections for clarity.
-This allows the flip-flops in the design to be seen clearly providing a feel
-for the size and complexity of the block. The following ripple-carry adder with
-registered outputs illustrates this kind of structuring:
-
-```
-module m_rca
-  #(parameter p_width = 8)
-  ( input  logic               i_clk,
-    input  logic               i_rst,
-    input  logic [p_width-1:0] i_op1,
-    input  logic [p_width-1:0] i_op2,
-    output logic               o_co,
-    output logic [p_width-1:0] o_sum );
-
-  // Wires.
-  logic [p_width-1:0] carry;
-  // Registers.
-  logic [p_width-1:0] sum_q;
-  logic               co_q;
-  // Variables.
-  genvar              i;
-
-  assign carry[0] = 1'b0;
-  assign {o_co, o_sum} = {co_q, sum_q};
-
-  // Named generate block for per-bit continuous assignments.
-  for (i = 0; i < p_width; i = i + 1) begin: bit
-    assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];
-  end
-
-  always_ff @(posedge i_clk or posedge i_rst) begin
-    if (i_rst) begin
-      sum_q <= {p_width{1'b0}};
-      co_q  <= 1'b0;
-    end else begin
-      sum_q <= sum;
-      co_q  <= carry[p_width-1];
-    end
-  end
-
-endmodule
-```
-
-**Use `.*` and `.name()` syntax in some circumstances to simplify port lists in module
-instantiations.** Doing so can reduce the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:[^wildcards]
-
-- It requires all nets be connected.
-- It requires all nets to be the same size.
-- It prevents implicit nets from being inferred.
-
-Named connections with `.name()` can be used with wildcards to add specific
-exceptions, such as when names do not match or for unconnected or tied-off
-ports. For example:
-
-```
-module foo (input logic i_clk,
-            input logic i_rst,
-            input logic in,
-            output logic out);
-  ...
-endmodule
-
-u_module foo (.*,
-              .in(in),
-              .out(out));
-```
-
-Bear in mind that implicit hookups with wildcards may obscure module
-connectivity when navigating source code during debug. It is up to the designer
-to make the right tradeoff. Specific examples of where wildcard hookups are
-useful are in wrapper modules and testbenches.
-
-[^wildcards]: See Section 7 of 'Synthesizing SystemVerilog: Busting the Myth
-  that SystemVerilog is only for Verification (linked in the references).
-
-**Avoid logic in module instantiations.** By instantiating a module with a set
-of named signals, mapping one-to-one with ports, it is easier to inspect the
-port hookups and the widths of the signals for correctness. Not doing so
-obscures functionality in the design.
-
-**In parameter lists, separate parameters that are intended to be set
-externally from secondary parameters that are only used internally.** There is
-no way to prevent some parameters being set externally, ie with `localparam`,
-so a comment can be used to do this, for example:
-
-```
-module m_rf
-#(parameter
-  p_entry_width = 32,
-  p_num_entries = 64,
-  // Internal parameter(s) - do not set.
-  p_idx_width = $clog2(p_num_entries-1))
-( ...,
-  input logic [p_entry_width-1:0] wr_data,
-  input logic [p_idx_width-1:0] wr_idx,
-  input logic wr_en,
-...
-);
-```
-
-**Name scopes that contain local variables.** For similar reasons to the naming
-of generate blocks, if a variable is declared in a local scope, that scope must
-be named. It may be useful to introduce named local scopes to separate a large
-module into sections. For example:
-
-```
-begin : p0
-  ...
-end
-begin : p1
-  ...
-end
-```
-
-**Any unused or dangling signals/ports within a block must be terminated with a
-signal prefixed with `unused_`.** These signals can be AND-reduced to make a
-single-bit signal. The AND-reduction with constant zeros guarantees the result
-is always zero, so it can be safely optimised away. For example:
-
-```
-logic _unused_ok = &{1'b0,
-                     sig_not_used_a,
-                     sig_not_used_yet_b // To be fixed
-                     };
-```
-
-<a name="packages" class="anchor"></a>
-### Packages
-
-**Define packages to share definitions (types, constants, tasks, functions etc)
-between multiple modules or IPs.**
-
-**Qualify types, constants, tasks or functions with their package name and
-avoid \* imports.** This resolves any potential ambiguity in the providence of
-symbols to the designer and avoids polluting the current scope with all names
-defined by the package. For example:
-
-```
-// Avoid
-import m_core_pkg::*;
-
-// Prefer
-m_core_pkg::FIFO_RAM_WIDTH
-m_core_pkg::grey_code(...)
-```
-
-
-<a name="assertions" class="anchor"></a>
-### Assertions
-
-**Assertions should be written in a separate file that is bound in to the
-appropriate scope.** Verification tests must be written to specifically ensure
-that the assertions are present in simulation.
-
-**Assertion files must be named after the block they apply to, with an
-`_assert.sv` suffix.** Where assertions have been split into different groups
-to allow use in gate-level simulations (or other environments), the file name
-may have a `_ports_assert.sv`, `_regs_assert.sv` or `_nets_assert.sv` suffix as
-appropriate.
 
 
 <a name="naming" class="anchor"></a>
@@ -1562,6 +1417,183 @@ u_child
 g_loop
 ```
 
+
+<a name="code-structure" class="anchor"></a>
+## Code structure
+
+<a name="modules" class="anchor"></a>
+### Modules
+
+**Place parameters and variables at the top of their containing scope.**
+Nets/variables/parameters should be declared in the minimum scope in which they
+will be used to avoid polluting namespaces. For example, nets global to a
+module should be declared at the top of the module for use in the code that
+follows.
+
+**Separate combinatorial and sequential nets.** Declarations of combinatorial
+and sequential nets should be separated into different sections for clarity.
+This allows the flip-flops in the design to be seen clearly providing a feel
+for the size and complexity of the block. The following ripple-carry adder with
+registered outputs illustrates this kind of structuring:
+
+```
+module m_rca
+  #(parameter p_width = 8)
+  ( input  logic               i_clk,
+    input  logic               i_rst,
+    input  logic [p_width-1:0] i_op1,
+    input  logic [p_width-1:0] i_op2,
+    output logic               o_co,
+    output logic [p_width-1:0] o_sum );
+
+  // Wires.
+  logic [p_width-1:0] carry;
+  // Registers.
+  logic [p_width-1:0] sum_q;
+  logic               co_q;
+  // Variables.
+  genvar              i;
+
+  assign carry[0] = 1'b0;
+  assign {o_co, o_sum} = {co_q, sum_q};
+
+  // Named generate block for per-bit continuous assignments.
+  for (i = 0; i < p_width; i = i + 1) begin: bit
+    assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];
+  end
+
+  always_ff @(posedge i_clk or posedge i_rst) begin
+    if (i_rst) begin
+      sum_q <= {p_width{1'b0}};
+      co_q  <= 1'b0;
+    end else begin
+      sum_q <= sum;
+      co_q  <= carry[p_width-1];
+    end
+  end
+
+endmodule
+```
+
+**Use `.*` and `.name()` syntax in some circumstances to simplify port lists in module
+instantiations.** Doing so can reduce the amount of boilerplate code and thus the
+scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:[^wildcards]
+
+- It requires all nets be connected.
+- It requires all nets to be the same size.
+- It prevents implicit nets from being inferred.
+
+Named connections with `.name()` can be used with wildcards to add specific
+exceptions, such as when names do not match or for unconnected or tied-off
+ports. For example:
+
+```
+module foo (input logic i_clk,
+            input logic i_rst,
+            input logic in,
+            output logic out);
+  ...
+endmodule
+
+u_module foo (.*,
+              .in(in),
+              .out(out));
+```
+
+Bear in mind that implicit hookups with wildcards may obscure module
+connectivity when navigating source code during debug. It is up to the designer
+to make the right tradeoff. Specific examples of where wildcard hookups are
+useful are in wrapper modules and testbenches.
+
+[^wildcards]: See Section 7 of 'Synthesizing SystemVerilog: Busting the Myth
+  that SystemVerilog is only for Verification (linked in the references).
+
+**Avoid logic in module instantiations.** By instantiating a module with a set
+of named signals, mapping one-to-one with ports, it is easier to inspect the
+port hookups and the widths of the signals for correctness. Not doing so
+obscures functionality in the design.
+
+**In parameter lists, separate parameters that are intended to be set
+externally from secondary parameters that are only used internally.** There is
+no way to prevent some parameters being set externally, ie with `localparam`,
+so a comment can be used to do this, for example:
+
+```
+module m_rf
+#(parameter
+  p_entry_width = 32,
+  p_num_entries = 64,
+  // Internal parameter(s) - do not set.
+  p_idx_width = $clog2(p_num_entries-1))
+( ...,
+  input logic [p_entry_width-1:0] wr_data,
+  input logic [p_idx_width-1:0] wr_idx,
+  input logic wr_en,
+...
+);
+```
+
+**Name scopes that contain local variables.** For similar reasons to the naming
+of generate blocks, if a variable is declared in a local scope, that scope must
+be named. It may be useful to introduce named local scopes to separate a large
+module into sections. For example:
+
+```
+begin : p0
+  ...
+end
+begin : p1
+  ...
+end
+```
+
+**Any unused or dangling signals/ports within a block must be terminated with a
+signal prefixed with `unused_`.** These signals can be AND-reduced to make a
+single-bit signal. The AND-reduction with constant zeros guarantees the result
+is always zero, so it can be safely optimised away. For example:
+
+```
+logic _unused_ok = &{1'b0,
+                     sig_not_used_a,
+                     sig_not_used_yet_b // To be fixed
+                     };
+```
+
+<a name="packages" class="anchor"></a>
+### Packages
+
+**Define packages to share definitions (types, constants, tasks, functions etc)
+between multiple modules or IPs.**
+
+**Qualify types, constants, tasks or functions with their package name and
+avoid \* imports.** This resolves any potential ambiguity in the providence of
+symbols to the designer and avoids polluting the current scope with all names
+defined by the package. For example:
+
+```
+// Avoid
+import m_core_pkg::*;
+
+// Prefer
+m_core_pkg::FIFO_RAM_WIDTH
+m_core_pkg::grey_code(...)
+```
+
+
+<a name="assertions" class="anchor"></a>
+### Assertions
+
+**Assertions should be written in a separate file that is bound in to the
+appropriate scope.** Verification tests must be written to specifically ensure
+that the assertions are present in simulation.
+
+**Assertion files must be named after the block they apply to, with an
+`_assert.sv` suffix.** Where assertions have been split into different groups
+to allow use in gate-level simulations (or other environments), the file name
+may have a `_ports_assert.sv`, `_regs_assert.sv` or `_nets_assert.sv` suffix as
+appropriate.
+
+
 <a name="preprocessor" class="anchor"></a>
 ### Preprocessor
 
@@ -1610,6 +1642,7 @@ global namespace.
 // End of the file or use of LOCAL_DEFINE
 `undef LOCAL_DEFINE
 ```
+
 
 
 <a name="formatting" class="anchor"></a>
