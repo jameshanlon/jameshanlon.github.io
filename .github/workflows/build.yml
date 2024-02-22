@@ -20,24 +20,24 @@ jobs:
       - name: Upgrade pip
         run: |
           python3 -m pip install --upgrade pip
-        
+
       - name: Install dependencies
         run: |
           python3 -m pip install -r ./requirements.txt
-          
+
       - name: Cache thumbs
         id: cache-thumbs
         uses: actions/cache@v2
         with:
           path: ./output/thumbs
           key: ${{runner.os}}-thumbs
-          
-      - name: Run webpack 
+
+      - name: Run webpack
         run: make webpack
-          
+
       - name: Build the website
-        run: make html 
-        
+        run: make html
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

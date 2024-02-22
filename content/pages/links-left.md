@@ -24,5 +24,3 @@ Title: Links left
 - [Awesome Compilers](http://aalhour.com/awesome-compilers)
 - [Per Brinch Hansen Archive](http://brinch-hansen.net)
 - [Transputer.net](https://www.transputer.net)
-
-

@@ -429,7 +429,7 @@ where area and power are constrained, non-reset flip flops can instead be
 deployed for better savings.
 
 In certain circumstances when it is appropriate to use synchronous-reset registers, then
-**avoid mixing synchronous and asynchronous reset signals**. 
+**avoid mixing synchronous and asynchronous reset signals**.
 A reset signal (eg `i_rst`) should not be used as a
 synchronous reset for one set of registers and an asynchronous reset for another set. This is because the resets
 must be controlled differently by DFT control logic, and use of a single signal may obscure the designer intent.

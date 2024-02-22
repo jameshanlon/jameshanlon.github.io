@@ -17,4 +17,3 @@ A collection of links to other places on the internet I find interesting.
     </div>
   </div>
 </div>
-

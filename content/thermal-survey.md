@@ -314,4 +314,3 @@ iPhone and Flir camera attachment.
 {{ macros.pair_layout(
      macros.image('thermal-survey/kit/blower-door.jpg'),
      macros.image('thermal-survey/kit/cheese-camera-kit.jpg'), ) }}
-

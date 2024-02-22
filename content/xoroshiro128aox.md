@@ -327,4 +327,3 @@ Full details of the investigation can be found in the [preprint paper on
 arXiv](https://arxiv.org/abs/2203.04058), and the [source
 code](https://github.com/jameshanlon/prng-testing) for the experiments on
 GitHub.
-

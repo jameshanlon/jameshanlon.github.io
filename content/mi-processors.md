@@ -254,7 +254,7 @@ General details (per chip):
 - Announced May 2017.
 - Likely to be 20nm.
 - 200-250W estimated TDP.
-- 45 TFLOPs of BFloat16. 
+- 45 TFLOPs of BFloat16.
 - Two cores with scalar and matrix units.
 - Also supports FP32.
 - Integrated in four-chip modules (pictured), 180 TFLOPs peak performance.

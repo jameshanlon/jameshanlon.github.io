@@ -66,4 +66,3 @@ few years.
      macros.image('allotment-shed/back.jpg'),
      macros.image('allotment-shed/complete-door-and-window.jpg'),
      caption='The completed shed, with window and door installed. One final job is to install guttering on the back edge of the roof, which can feed a water butt.') }}
-
