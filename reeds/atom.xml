@@ -5397,7 +5397,7 @@ with floating point arithmetic and enhanced memory capacity and bandwidth with
 &lt;li&gt;Announced May&amp;nbsp;2017.&lt;/li&gt;
 &lt;li&gt;Likely to be&amp;nbsp;20nm.&lt;/li&gt;
 &lt;li&gt;200-250W estimated &lt;span class="caps"&gt;TDP&lt;/span&gt;.&lt;/li&gt;
-&lt;li&gt;45 TFLOPs of&amp;nbsp;BFloat16. &lt;/li&gt;
+&lt;li&gt;45 TFLOPs of&amp;nbsp;BFloat16.&lt;/li&gt;
 &lt;li&gt;Two cores with scalar and matrix&amp;nbsp;units.&lt;/li&gt;
 &lt;li&gt;Also supports &lt;span class="caps"&gt;FP32&lt;/span&gt;.&lt;/li&gt;
 &lt;li&gt;Integrated in four-chip modules (pictured), 180 TFLOPs peak&amp;nbsp;performance.&lt;/li&gt;
@@ -8147,7 +8147,7 @@ and reset-to-clock paths are not timed in the physical implementation. In cases
 where area and power are constrained, non-reset flip flops can instead be
 deployed for better&amp;nbsp;savings.&lt;/p&gt;
 &lt;p&gt;In certain circumstances when it is appropriate to use synchronous-reset registers, then
-&lt;strong&gt;avoid mixing synchronous and asynchronous reset signals&lt;/strong&gt;. 
+&lt;strong&gt;avoid mixing synchronous and asynchronous reset signals&lt;/strong&gt;.
 A reset signal (eg &lt;code&gt;i_rst&lt;/code&gt;) should not be used as a
 synchronous reset for one set of registers and an asynchronous reset for another set. This is because the resets
 must be controlled differently by &lt;span class="caps"&gt;DFT&lt;/span&gt; control logic, and use of a single signal may obscure the designer&amp;nbsp;intent.&lt;/p&gt;
