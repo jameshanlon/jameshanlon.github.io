@@ -72,146 +72,223 @@
       <span class="article-tag small"><a href="/tag/verilog.html">verilog</a></span>
   </div>
   <div class="article-body">
-    <p>In the last year, I&#8217;ve started from scratch writing Verilog for hardware
+    <blockquote>
+<p><strong><em><span class="caps">NOTE</span>:</em></strong>  Updated February 2024 with improvements and new&nbsp;guidance.</p>
+</blockquote>
+<p>In the last year, I&#8217;ve started from scratch writing SystemVerilog for hardware
 design. Coming from a software background where I was mainly using C/C++ and
 Python, it has been interesting to experience the contrasting philosophy and
 mindset associated with using a language to describe hardware circuits. Much of
-this is because Verilog provides little abstraction of hardware structures, and
-only through disciplined/idiomatic use, can efficient designs be implemented. A
-compounding issue is that complex hardware designs rely on a complex
-ecosystem of proprietary&nbsp;tooling.</p>
-<p>As I see it, there are three aspects to writing synthesizable Verilog code: the
-particular features of the language to use, the style and idioms employed in
-using those features, and the tooling support for a&nbsp;design.</p>
-<h3>The&nbsp;language</h3>
-<p>A subset of Verilog is used for specifying synthesizable circuits. Verilog
-(which subsumed SystemVerilog as of the 2009 standardisation) is a unified
-language, serving distinct purposes of modern hardware design. These&nbsp;are:</p>
+this is because SystemVerilog provides little abstraction of hardware
+structures, and only through disciplined/idiomatic use, can efficient designs
+be implemented. A compounding issue is that complex hardware designs rely on a
+complex ecosystem of proprietary&nbsp;tooling.</p>
+<p>As I see it, there are three aspects to writing synthesizable SystemVerilog
+code: the particular features of the language to use, the style and idioms
+employed in using those features, and the tooling support for a design. Good
+coding style can help achieve better results in synthesis and simulation, as
+well as producing code that contains less errors and is understandable,
+reusable, and easily modifiable. Many of the observations in this note relate
+to coding style. The next sections give some context around the use of
+SystemVerilog in digital design, or you can <a href="#guidance">skip ahead</a> to the&nbsp;guidance.</p>
+<h3>The SystemVerilog&nbsp;language</h3>
+<p>SystemVerilog (which subsumed Verilog as of the 2009 standardisation) is a
+unified language, serving distinct purposes of modern hardware design. These
+can be enumerated&nbsp;as:</p>
 <ul>
-<li>circuit design/specification at different levels of abstraction:<ul>
-<li>behavioural</li>
-<li>structural/register-transfer level (<span class="caps">RTL</span>)</li>
-<li>gate</li>
-<li>switch/transistor;</li>
+<li>Circuit design/specification at different levels of abstraction:<ul>
+<li>Behavioural.</li>
+<li>Structural/register-transfer level (<span class="caps">RTL</span>).</li>
+<li>Gate.</li>
+<li>Switch/transistor.</li>
 </ul>
 </li>
-<li>testbench-based&nbsp;verification;</li>
-<li>specification of formal properties;&nbsp;and</li>
-<li>specification of functional&nbsp;coverage.</li>
+<li>Testbench-based&nbsp;verification.</li>
+<li>Specification of formal&nbsp;properties.</li>
+<li>Specification of functional&nbsp;coverage.</li>
 </ul>
-<p>The language provides specific features to serve each of these purposes. For
-hardware synthesis, each level of abstraction uses a different language subset,
-generally with fewer features at lower levels. Behavioural design uses the
-procedural features of Verilog (with little regard for the structural
-realisation of the circuit). <span class="caps">RTL</span> design specifies a circuit in terms of data
-flow through registers and logical operations. Gate- and switch-level design
-use only primitive operations. Typical modern hardware design uses a mix of
-register-transfer- and gate-level&nbsp;design.</p>
-<p>It is interesting to note however that the specification of Verilog does not
-specify which features are synthesizable; that depends on the tooling&nbsp;used.</p>
-<h3>Coding&nbsp;style</h3>
-<p>Good coding style can help achieve better results in synthesis and simulation,
-as well as producing code that contains less errors and is understandable,
-reusable, and easily modifiable. Many of the observations in this note relate
-to coding&nbsp;style.</p>
+<p>SystemVerilog provides specific features to serve each of these
+purposes. For circuit specification, each level of abstraction uses a different
+language subset, generally with fewer features at lower levels. Behavioural
+design uses the procedural features of SystemVerilog (with little regard for the
+structural realisation of the circuit). <span class="caps">RTL</span> design specifies a circuit in terms
+of data flow through registers and logical operations. Gate- and switch-level
+design use only primitive operations. Typical modern hardware design uses a mix
+of register-transfer- and gate-level&nbsp;design.</p>
+<p>It is interesting to note that the SystemVerilog specification does not specify
+which features are synthesizable; that depends on the tooling&nbsp;used.</p>
 <h3>Tooling</h3>
-<p>There is a variety of standard tooling that is used with Verilog, and indeed
-other hardware description languages (HDLs). This includes simulation, formal
-analysis/model checking, formal equivalence checking, coverage analysis,
+<p>There is a variety of standard tooling that is used with SystemVerilog, and
+indeed other hardware description languages (HDLs). This includes simulation,
+formal analysis/model checking, formal equivalence checking, coverage analysis,
 synthesis and physical layout, known collectively as electronic design
 automation tools (<span class="caps">EDA</span>). Since standard <span class="caps">EDA</span> tooling is developed and maintained
-as proprietary and closed-source software by companies like Cadence, Synopsis
+as proprietary and closed-source software by companies like Cadence, Synopsys
 and Mentor, the tooling options are&nbsp;multiplied.</p>
 <p>In contrast with the open-source software ecosystems of programming languages
 (for example), closed-source <span class="caps">EDA</span> tools do not benefit from the scale and
 momentum of open projects, in the way that conventional software languages do,
 with a one (or perhaps two) compilers and associated tooling such as debuggers
 and program analysers. Such a fragmented ecosystem inevitably has a larger
-variability in precisely how features of the Verilog language are implemented
+variability in precisely how features of SystemVerilog language are implemented
 and which features are not supported, particularly since there is no standard
-synthesizable subset. Consequently, engineers using Verilog/HDLs with
+synthesizable subset. Consequently, engineers using SystemVerilog/HDLs with
 proprietary <span class="caps">EDA</span> tools do so conservatively, sticking to a lowest common
 denominator of the language features (within their chosen synthesizable
 subset), to ensure compatibility and good&nbsp;results.</p>
+<hr>
+
+<p><a name="guidance" class="anchor"></a></p>
 <h2>Overview</h2>
-<p>This note records some interesting Verilog approaches and coding styles that
-I&#8217;ve observed that are used to interact well with the supporting tooling and to
-produce good synthesis results. I&#8217;ve written it as a note to myself, so it has
-the caveats that it assumes a familiarity with Verilog programming and that
-it&#8217;s not a comprehensive guide to Verilog programming practices; some of the
-references at the end will serve those purposes&nbsp;better.</p>
-<p>My observations here are in the context of work on an implementation of a
-pipelined processor, as such different approaches may be taken with other types
-of electronic design. I also owe many of these insights to the guidance from my&nbsp;colleagues.</p>
-<p>The remaining sections are as&nbsp;follows:</p>
+<p>This note records rules, conventions and guidance for writing SystemVerilog
+approaches that I have been observed to interact well with the supporting
+tooling and to encourage good coding style and produce good synthesis results.
+I owe many of these insights to the guidance of my&nbsp;colleagues.</p>
+<p>This note assumes familiarity with SystemVerilog. As such it is not a
+comprehensive guide to programming practices. Some of the references at the end
+will serve those purposes better. The remainder is organised in the following&nbsp;sections:</p>
 <ul>
-<li><a href="#comb-logic">Combinatorial&nbsp;logic</a></li>
-<li><a href="#seq-logic">Sequential&nbsp;logic</a></li>
+<li><a href="#types">Types</a></li>
+<li><a href="#always-blocks">Always blocks</a><ul>
+<li><a href="#always_comb">always_comb</a></li>
+<li><a href="#always_comb">always_ff</a></li>
+</ul>
+</li>
+<li><a href="#control-flow">Control flow</a><ul>
 <li><a href="#if-statements">If&nbsp;statements</a></li>
 <li><a href="#case-statements">Case&nbsp;statements</a></li>
-<li><a href="#expressions">Expressions</a></li>
-<li><a href="#code-structure">Code&nbsp;structure</a></li>
-<li><a href="#signal-naming">Signal&nbsp;naming</a></li>
 </ul>
-<p><a name="comb-logic" class="anchor"></a></p>
-<h2>Combinatorial&nbsp;logic</h2>
+</li>
+<li><a href="#expressions">Expressions</a></li>
+<li><a href="#constants">Constants</a></li>
+<li><a href="#x-values">X&nbsp;values</a></li>
+<li><a href="#naming">Naming</a><ul>
+<li><a href="#naming-prefixes-suffixes">Prefixes and&nbsp;suffixes</a></li>
+<li><a href="#signal-naming">Signal&nbsp;naming</a></li>
+<li><a href="#generate-naming">Generate block&nbsp;naming</a></li>
+</ul>
+</li>
+<li><a href="#code-structure">Code structure</a><ul>
+<li><a href="#modules">Modules</a></li>
+<li><a href="#packages">Packages</a></li>
+<li><a href="#assertions">Assertions</a></li>
+<li><a href="#preprocessor">Preprocessor</a></li>
+</ul>
+</li>
+<li><a href="#formatting">Formatting</a></li>
+</ul>
+<p><a name="types" class="anchor"></a></p>
+<h2>Types</h2>
+<p><strong><code>logic</code> should be used to declare point-to-point nets, variables and ports.</strong>
+This is because logic is checked at compile time for multiple drivers. Note
+that variables are entities driven by procedural assignments (in always
+blocks), whereas nets occur in any other forms of assignment (continuous,
+primitive outputs and module ports). An exception to this is when integrating
+external <span class="caps">IP</span> that uses wire types where some sparing use of the <code>wire</code> type may
+be required for consistency.<sup id="fnref:logic-wire-reg"><a class="footnote-ref" href="#fn:logic-wire-reg">1</a></sup></p>
+<p><strong>Multiply-driven nets should be declared using wire.</strong> This is because <code>wire</code>
+data types permit multiple&nbsp;drivers.</p>
+<p><strong>Combined logic declarations and assignment statements are not allowed.</strong> The behaviour of these is to assign
+a value at time 0, which is not synthesizable. Continuous assignment after time 0, which is the typical intention,
+requires a separate assignment. Note that a combined assignment with a wire declaration behaves differently
+and is equivalent to a separate continuous&nbsp;assignment.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Assignment of a logic net at time 0, not allowed.</span>
+<span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">32</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="c1">// Correct way to continuously drive a logic net.</span>
+<span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">32</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="c1">// Wire declarations can use an initial value to specify a continuous</span>
+<span class="c1">// assignment.</span>
+<span class="kt">wire</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+
+<span class="c1">// Same behaviour as above declaration.</span>
+<span class="kt">wire</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+</pre></div>
+
+
+<p><strong>Structures and unions must always be fully packed.</strong> This applies
+to their members recursively. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="nx">typedef</span><span class="w"> </span><span class="nx">struct</span><span class="w"> </span><span class="nx">packed</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// Packed structure.</span>
+<span class="w">  </span><span class="nx">valid_t</span><span class="w">             </span><span class="nx">valid</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="nx">p_width</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span><span class="w"> </span><span class="c1">// Packed array.</span>
+<span class="w">  </span><span class="nx">logic</span><span class="w">               </span><span class="nx">parity</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="nx">bus_t</span><span class="p">;</span>
+</pre></div>
+
+
+<p><a name="always-blocks" class="anchor"></a></p>
+<h2>Always&nbsp;blocks</h2>
+<p>The <code>always_ff</code>, <code>always_latch</code> and <code>always_comb</code> constructs should be used instead of the old-style always statement
+since they provide extra compile-time checking.<sup id="fnref:always-blocks"><a class="footnote-ref" href="#fn:always-blocks">2</a></sup></p>
+<p><a name="always_comb" class="anchor"></a></p>
+<h3><code>always_comb</code></h3>
 <p><strong>Use <code>always_comb</code> instead of <code>always</code> for combinatorial logic.</strong> The
-<code>always_comb</code> procedure allows tools to check that it does not contain any
+<code>always_comb</code> statement allows tools to check that it does not contain any
 latched state and that no other processes assign to variables appearing on the
-left-hand side. (It&#8217;s worth checking the language reference manual (<span class="caps">LRM</span>) for
-details of of the other differences.) The use of an <code>always_comb</code> block is also
-a much clearer indication of a combinatorial block that the use of <code>=</code> as
-opposed to <code>&lt;=</code>.</p>
+left-hand side. (It&#8217;s worth checking the <span class="caps">LRM</span> for details of of the other
+differences.) The use of an <code>always_comb</code> block is also a much clearer
+indication of a combinatorial block that the use of <code>=</code> as opposed to <code>&lt;=</code>.</p>
 <p><strong>Always provide an initial value.</strong> A latch will be inferred if there exists a
 control-flow path in which a value of a signal is not set. Since <code>always_comb</code>
 specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
 latch since there is no assignment to <code>foo</code> when the condition is not&nbsp;true.</p>
-<div class="codehilite"><pre><span></span>always_comb
-  if (condition)
+<div class="codehilite"><pre><span></span>always_comb begin
+  if (condition) begin
     foo = 1&#39;b1;
+  end
+end
 </pre></div>
 
 
-<p>Instead, always provide an initial&nbsp;value:</p>
-<div class="codehilite"><pre><span></span>always_comb
+<p>To prevent this, always provide an initial value as the first line of a&nbsp;block:</p>
+<div class="codehilite"><pre><span></span>always_comb begin
   foo = 1&#39;b0;
-  if (condition)
+  if (condition) begin
     foo = 1&#39;b1;
+  end
+end
 </pre></div>
 
 
-<p><strong>Avoid reading and writing a signal in an <code>always_comb</code> block.</strong> The
-sensitivity list includes variables and expressions
-but it excludes variables that occur on the right-hand side of assignments.
-According to these restrictions, a variable that is read and written in a block
-only causes the block to be reevaluated when the left-hand-side instance
-changes. However, this style can cause some tools to warn of a
-simulation-synthesis mismatch (presumably because they apply conservative rules
-from older versions of the language&nbsp;standard).</p>
+<p><strong>Avoid reading and writing a signal in an <code>always_comb</code> block.</strong>
+Avoid reading and writing a signal in an <code>always_comb</code> block. The sensitivity
+list only includes variables that are read in expressions or functions and it
+excludes variables that are also written to. According to these restrictions, a
+variable that is read and written in a block is excluded from the sensitivity
+list, and activation of the block will be dependent on other variables.
+However, this style can cause some tools to warn of a simulation-synthesis
+mismatch (presumably because they apply conservative rules from older versions
+of the language&nbsp;standard).</p>
 <p>In the following code, the block is triggered only when the the right-hand-side
 <code>foo</code> changes, rather than entering a feedback loop where it shifts&nbsp;continuously:</p>
-<div class="codehilite"><pre><span></span>always_comb
+<div class="codehilite"><pre><span></span>always_comb begin
   foo = foo &lt;&lt; 1;
+end
 </pre></div>
 
 
-<p>To avoid reading and writing foo in the same block and possible warnings
+<p>To avoid reading and writing <code>foo</code> in the same block and possible warnings
 from tools, a new signal can be&nbsp;introduced:</p>
-<div class="codehilite"><pre><span></span>always_comb
+<div class="codehilite"><pre><span></span>always_comb begin
   next_foo = foo &lt;&lt; 1;
+end
 </pre></div>
 
 
 <p><strong>Where possible extract logic into <code>assign</code> statements.</strong> Extract single
 assignments to a variable into a separate <code>assign</code> statement, where it is
-possible to do so. This approach uses the features of Verilog consistently,
-rather than using two mechanisms to achieve the same effect. This makes it
-clear that an <code>always_comb</code> is used to introduce sequentiality. Another
-opportunity to move logic into separate <code>assign</code> statements is with complex
-expressions, such as the Boolean value for a conditional statement. Doing this
-makes the control flow structure clearer, potentially provide opportunities for
-reuse, and provides a separate signal when inspecting the signals in a waveform&nbsp;viewer.</p>
+possible to do so. This approach uses the features of SystemVerilog
+consistently, rather than using two mechanisms to achieve the same effect. This
+makes it clear that an <code>always_comb</code> is used to introduce sequentiality.
+Another opportunity to move logic into separate <code>assign</code> statements is with
+complex expressions, such as the Boolean value for a conditional statement.
+Doing this makes the control flow structure clearer, potentially provide
+opportunities for reuse, and provides a separate signal when inspecting the
+signals in a waveform&nbsp;viewer.</p>
 <p><strong>Avoid unnecessary sequentiality.</strong> It is easy to add statements to an
 <code>always_comb</code> to expand its behaviour, but this should only be done when there
 are true sequential dependencies between statements in the block. In general,
@@ -221,13 +298,16 @@ independently on the various&nbsp;conditions:</p>
 <div class="codehilite"><pre><span></span><span class="n">always_comb</span><span class="w"> </span><span class="n">begin</span>
 <span class="w">  </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_a</span><span class="w"> </span><span class="o">&amp;&amp;</span>
-<span class="w">      </span><span class="n">signal_b</span><span class="p">)</span>
+<span class="w">      </span><span class="n">signal_b</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
 <span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="w">  </span><span class="n">end</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_c</span><span class="w"> </span><span class="o">||</span>
-<span class="w">      </span><span class="n">signal_d</span><span class="p">)</span>
+<span class="w">      </span><span class="n">signal_d</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
 <span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_e</span><span class="p">)</span>
+<span class="w">  </span><span class="n">end</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">signal_e</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
 <span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="w">  </span><span class="n">end</span>
 <span class="n">end</span>
 </pre></div>
 
@@ -242,8 +322,9 @@ explicitly combine them with the implied logical disjunction of the original&nbs
 <span class="w">  </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">condition_a</span><span class="w"> </span><span class="o">||</span>
 <span class="w">      </span><span class="n">condition_b</span><span class="w"> </span><span class="o">||</span>
-<span class="w">      </span><span class="n">signal_e</span><span class="p">)</span>
+<span class="w">      </span><span class="n">signal_e</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
 <span class="w">    </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b1;</span>
+<span class="w">  </span><span class="n">end</span>
 <span class="n">end</span>
 </pre></div>
 
@@ -251,21 +332,22 @@ explicitly combine them with the implied logical disjunction of the original&nbs
 <p>It is <a href="https://www.veripool.org/papers/verilator_philips_internals.pdf">recommended</a> by the author of Verilator to split up
 <code>always</code> blocks (combinatorial or sequential) so they contain as few
 statements as possible. This allows Verilator the most freedom to order the
-code to improve execution&nbsp;performance.</p>
-<p><strong>Drive one signal per block.</strong>
-With complex control flow statements, it is tempting to use a single
-<code>always_comb</code> block to drive multiple signals. In some circumstances, there may
-be good reasons to do this, such as when many output signals are used in a
-similar way, but in the general case, splitting each signal into a separate
-block makes it clear what logic involved in driving that signal, and as such,
-facilitates further&nbsp;simplification.</p>
+code to improve execution performance. Presumably, this provides similar
+freedoms to other&nbsp;simulators.</p>
+<p><strong>Drive one signal per block.</strong> With complex control flow statements, it is
+tempting to use a single <code>always_comb</code> block to drive multiple signals. In some
+circumstances, there may be good reasons to do this, such as when many output
+signals are used in a similar way, but in the general case, splitting each
+signal into a separate block makes it clear what logic involved in driving that
+signal, and as such, facilitates further&nbsp;simplification.</p>
 <p>An additional reason to avoid driving multiple signals per <code>always_comb</code> block
 is that <a href="https://www.veripool.org/wiki/verilator">Verilator</a> can infer a dependence between two signals,
 leading to false circular combinatorial loops. In these cases, it issues an
 <a href="https://www.embecosm.com/appnotes/ean6/html/ch07s02s07.html"><code>UPOPTFLAT</code> warning</a> and cannot optimise the path, leading to
-reduced emulation performance. Generally, fixing warnings pertaning to
+reduced emulation performance. Generally, fixing warnings pertaining to
 unoptimisable constructs can improve Verilator&#8217;s simulation performance by <a href="https://www.veripool.org/papers/verilator_philips_internals.pdf">up
 to a factor of two</a>.</p>
+<p>The&nbsp;process:</p>
 <div class="codehilite"><pre><span></span><span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">  </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">foo_q</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">bar_q</span><span class="o">;</span>
@@ -273,8 +355,9 @@ to a factor of two</a>.</p>
 <span class="w">    </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
 <span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">        </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
-<span class="w">        </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_c</span><span class="o">)</span>
+<span class="w">        </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_c</span><span class="o">)</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">          </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
+<span class="w">        </span><span class="nt">end</span>
 <span class="w">      </span><span class="nt">end</span>
 <span class="w">      </span><span class="nt">1</span><span class="o">:</span><span class="w"> </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
 <span class="w">      </span><span class="nt">2</span><span class="o">:</span><span class="w"> </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
@@ -284,7 +367,7 @@ to a factor of two</a>.</p>
 </pre></div>
 
 
-<p>The above block could be split into two&nbsp;processes:</p>
+<p>Can be written as two independent&nbsp;processes:</p>
 <div class="codehilite"><pre><span></span><span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">  </span><span class="nt">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">foo_q</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span>
@@ -299,8 +382,9 @@ to a factor of two</a>.</p>
 <span class="w">  </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">bar_q</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_a</span><span class="o">)</span>
 <span class="w">    </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
-<span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span>
+<span class="w">      </span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="o">(</span><span class="nt">condition_b</span><span class="o">)</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">           </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
+<span class="w">         </span><span class="nt">end</span>
 <span class="w">      </span><span class="nt">2</span><span class="o">:</span><span class="w"> </span><span class="nt">bar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">...;</span>
 <span class="w">      </span><span class="nt">default</span><span class="o">:;</span>
 <span class="w">    </span><span class="nt">endcase</span>
@@ -308,9 +392,9 @@ to a factor of two</a>.</p>
 </pre></div>
 
 
-<p><a name="seq-logic" class="anchor"></a></p>
-<h2>Sequential&nbsp;logic</h2>
-<p><strong>Use <code>always_ff</code> instead of <code>always</code> for sequential logic</strong> Similarly to
+<p><a name="always_ff" class="anchor"></a></p>
+<h3><code>always_ff</code></h3>
+<p><strong>Use <code>always_ff</code> instead of <code>always</code> for sequential logic.</strong> Similarly to
 <code>always_comb</code>, use of <code>always_ff</code> permits tools to check that the procedure
 only contains sequential logic behaviour (no timing controls and only one event
 control) that variables on the left-hand side are not written to by any other
@@ -322,7 +406,7 @@ logic signal name, rather than a logical expression, keeps the block simple and
 limits combinatorial logic to <code>always_comb</code> blocks and <code>assign</code> statements
 elsewhere in the module. Since synthesizable <code>always_ff</code>s are additionally
 restricted in that variables assigned to must have a reset condition of a
-constant value, maintaining this clarity aids the programmer. Having separate
+constant value, maintaining this clarity aids the designer. Having separate
 combinatorial blocks is also useful since it allows the logic signal driving a
 flip-flop as well as the registered value to be apparent in a waveform viewer,
 particularly when clock gates are&nbsp;used.</p>
@@ -334,110 +418,318 @@ logic bit_q;
 
 always_comb begin
   bit &lt;= bit_q;
-  if (set_condition)
+  if (set_condition) begin
     bit = 1&#39;b1;
-  if (clear_condition)
+  end
+  if (clear_condition) begin
     bit = 1&#39;b0;
+  end
 end
 
-always_ff @(posedge i_clk or posedge i_rst)
-  if (i_rst)
+always_ff @(posedge i_clk or posedge i_rst) begin
+  if (i_rst) begin
     bit_q &lt;= 1&#39;b0;
-  else
+  end else begin
     bit_q &lt;= bit;
+  end
+end
 </pre></div>
 
 
+<p><strong>Registers should always be reset to a constant value.</strong> Without being reset,
+a flip flop will drive X on its output, which can lead to
+simulation-versus-synthesis mismatches, potentially obscuring bugs. Having
+registers initialised with a defined value precludes these kinds of mismatches.
+In the above example, <code>bit_q</code> is correctly initialised to&nbsp;0.</p>
+<p><strong>Avoid using synchronous-reset registers.</strong> These type of flip flops are not
+typically used because there are circumstances when a clock is not available
+and reset-to-clock paths are not timed in the physical implementation. In cases
+where area and power are constrained, non-reset flip flops can instead be
+deployed for better&nbsp;savings.</p>
+<p>In certain circumstances when it is appropriate to use synchronous-reset registers, then
+<strong>avoid mixing synchronous and asynchronous reset signals</strong>. 
+A reset signal (eg <code>i_rst</code>) should not be used as a
+synchronous reset for one set of registers and an asynchronous reset for another set. This is because the resets
+must be controlled differently by <span class="caps">DFT</span> control logic, and use of a single signal may obscure the designer&nbsp;intent.</p>
+<p><strong>Avoid using non-reset registers.</strong> To avoid issues with X values in a design
+as far as possible, non-reset registers should only be used when specifically
+required to save area and power, such as for the storage elements of a register
+file. In certain circumstances when it is appropriate to use non-reset
+registers, then <strong>define non-reset registers in a separate <code>always_ff</code> block</strong>.
+For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// A non-reset register.</span>
+<span class="n">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="n">posedge</span><span class="w"> </span><span class="n">i_clk</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">bit_q</span><span class="w"> </span><span class="o">&lt;</span><span class="p">=</span><span class="w"> </span><span class="n">bit</span><span class="p">;</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p><strong>When non-reset registers are used, a separate form of reset must be
+provided.</strong> In the example of a register file, a broadcast write could be used
+to initialise the contents to a known&nbsp;state.</p>
+<p><a name="control-flow" class="anchor"></a></p>
+<h2>Control&nbsp;flow</h2>
 <p><a name="if-statements" class="anchor"></a></p>
-<h2>If&nbsp;statements</h2>
-<p><strong>Use <code>if</code> qualifiers</strong> for single <code>if</code> and chained <code>if-else</code>
-statements for additional checking and guidance to&nbsp;synthesis:</p>
-<ul>
-<li><code>unique</code> to ensure exactly one condition is matched and to indicate the
-   conditions can be checked in&nbsp;parallel.</li>
-<li><code>unique0</code> to ensure one or no conditions match and to indicate the
-   conditions can be checked in&nbsp;parallel.</li>
-<li><code>priority</code> to ensure one condition is matched and to indicate the conditions
-   should be evaluated in sequence and only the body of the first matching
-   condition is&nbsp;evaluated.</li>
-</ul>
-<p>Note&nbsp;that:</p>
-<ul>
-<li>The use of an <code>else</code> precludes violation reports for non-existing matches in
-  <code>unique</code> and <code>priority</code>.</li>
-<li>The default behaviour of a chained <code>if-else</code> block is <code>priority</code> but without
-  any violation&nbsp;checks.</li>
-</ul>
-<p>For example, when the conditions are mutually exclusive, so evaluation order is
-not&nbsp;important:</p>
-<div class="codehilite"><pre><span></span>unique if (condition_a) statement;
-else if (condition_b) statement;
-else if (condition_c) statement;
+<h3>If&nbsp;statements</h3>
+<p><strong>Avoid mixing block control flow with Boolean expressions.</strong> This is because
+it make it harder for structural coverage analysis tools to break down complex
+conditions into manageable sub terms, or even that analysis will ignore
+important conditional context of&nbsp;expressions.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Replace mixed block control flow and boolean expressions:</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">flag</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">flag</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">// With a pure control flow approach:</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">// Or even better collapsed into a single Boolean expression:</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enable</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">out</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="k">end</span>
 </pre></div>
 
 
-<p>A violation warning is given in the above when no condition or multiple conditions are
-selected. Changing to <code>unique0</code> will only check for multiple conditions being&nbsp;selected:</p>
-<div class="codehilite"><pre><span></span>unique0 if (condition_a) statement;
-...
+<p><strong>Use if-else-if statements to implement priority encoders.</strong> Although a
+<code>priority case</code> statement can be used to do this, it is easier for designers to
+recognise a priority encoder when it is written as an if-else-if statement. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Replace an unqualified case:</span>
+<span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b1</span><span class="p">)</span>
+<span class="w">  </span><span class="n">hold</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">error</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="n">endcase</span>
+
+<span class="c1">// With an if-else statement:</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">hold</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">error</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="k">end</span>
 </pre></div>
 
 
-<p>And adding an <code>else</code> will suppress violation warnings all&nbsp;together:</p>
-<div class="codehilite"><pre><span></span>unique0 if (condition_a) statement;
-...
-else statement;
+<p><strong>Do not use qualifiers with <code>if</code>-<code>else</code>-<code>if</code> statements.</strong> The default
+behaviour of if statements is that of <code>priority</code>, meaning that one condition is
+matched, the conditions are evaluated in sequence and only the body of the
+first matching condition is evaluated. For <code>unique</code> and <code>unique0</code> variants of
+<code>if</code> statements (one or no matching conditions, which can be evaluated in
+parallel), use a <code>unique</code>-qualified case statement instead. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Replace a unique if:</span>
+<span class="nb">unique</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ctrl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="o">&#39;</span><span class="n">b01</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ctrl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="o">&#39;</span><span class="n">b10</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="c1">// With a unique case:</span>
+<span class="nb">unique</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">ctrl</span><span class="p">)</span>
+<span class="w">  </span><span class="mi">2</span><span class="o">&#39;</span><span class="n">b01</span><span class="p">:</span><span class="w">   </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">2</span><span class="o">&#39;</span><span class="n">b10</span><span class="p">:</span><span class="w">   </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">  </span><span class="n">default</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="n">endcase</span>
 </pre></div>
 
 
+<p>Note that <code>if</code> statements are X-optimistic in that a condition that evaluates
+to an X is treated as if it were a zero. This behaviour has drawbacks and
+benefits, but should be carefully considered since it can be a cause of
+divergence in behaviour between simulation and synthesis. In contrast, case
+statements do not select conditions with an input X&nbsp;value.</p>
 <p><a name="case-statements" class="anchor"></a></p>
-<h2>Case&nbsp;statements</h2>
-<p><strong>Use case qualifiers</strong> for additional checking and guidance to&nbsp;synthesis:</p>
+<h3>Case&nbsp;statements</h3>
+<p>All case statements should include a qualifier for additional checking and guidance to synthesis. The qualifiers&nbsp;are:</p>
 <ul>
-<li><code>unique</code> to ensure exactly one condition is matched and to indicate the
-   conditions can be checked in&nbsp;parallel.</li>
-<li><code>unique0</code> to ensure that one or no conditions are matched and to indicate
-   the conditions can be checked in&nbsp;parallel.</li>
-<li><code>priority</code> to ensure one condition is matched and to indicate the conditions
-   should be evaluated in sequence and only the body of the first matching case
-   is&nbsp;evaluated.</li>
+<li>
+<p><code>unique</code> to specify that all valid conditions have been listed, exactly one
+  condition will always match and the conditions can be evaluated in parallel.
+  A violation is reported in a given cycle if no case conditions match or more
+  than one case condition is&nbsp;matched.</p>
+</li>
+<li>
+<p><code>priority</code> to specify that all valid conditions have been listed, that they
+  are evaluated in sequence and only the body of the first matching case is
+  evaluated. A violation is only reported if no case conditions match in a given&nbsp;cycle.</p>
+</li>
 </ul>
-<p>Note&nbsp;that:</p>
-<ul>
-<li>The use of a <code>default</code> case precludes violation reports for non-existing matches in <code>unique</code> and <code>priority</code>.</li>
-<li>The default behaviour of a <code>case</code> statement is that of <code>priority</code>, but without violation&nbsp;checks.</li>
-</ul>
-<p><strong>Use <code>case (...) inside</code> instead of <code>casex</code> or <code>casez</code> for matching don&#8217;t care
-bits.</strong> Since set-membership <code>case (...) inside</code> matches <code>?</code> don&#8217;t care bits in
-the same way <code>casez</code> does, it should be used for clarity unless matching <code>x</code>s
-or <code>z</code>s is specifically required. For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span>
-<span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">state_q</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span>
-<span class="w">  </span><span class="nt">4</span><span class="s1">&#39;b000?: statement;</span>
-<span class="s1">  4&#39;</span><span class="nt">b01</span><span class="o">?</span><span class="nt">0</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span>
-<span class="w">  </span><span class="nt">4</span><span class="err">&#39;</span><span class="nt">b110</span><span class="o">?:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span>
+<p>The behaviour of an unqualified case statement is that of priority, but without
+the requirement for any case item expressions to match and the corresponding
+violation check. Because case statements are typically used to represent
+parallel choices, an unqualified case does not clearly indicate whether the
+designer has intended the case be priority or parallel. Adding a qualifier
+makes this explicit (leading to the right synthesis result) and adds&nbsp;checking.</p>
+<p>It is important to have checking of case behaviour: if a violation is reported
+during simulation, then this indicates a mismatch between the behaviour of
+simulation and synthesis, which means the synthesized design will not
+necessarily be the same as the <span class="caps">RTL</span> design being simulated, thereby invalidating
+the&nbsp;verification.</p>
+<p>Note that if a case condition contains a list of expressions, it is not a
+violation of uniqueness if more than one expression matches since they are
+selecting the same&nbsp;statement.</p>
+<p><strong>Do not use <code>unique0</code> as a case qualifier.</strong> Despite this qualifier being in
+the SystemVerilog <span class="caps">LRM</span> for more than a decade, tool support for <code>unique0</code> is
+patchy and sometimes absent. This suggests that adoption of <code>unique0</code> is low, so
+the <span class="caps">EDA</span> companies have not needed to support it comprehensively. As such,
+<code>unique0</code> should not be used, and instead a unique case with an empty default
+should be used, for&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Replace a unique0 case:</span>
+<span class="n">unique0</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b1</span><span class="p">)</span>
+<span class="w">  </span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b0</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b1</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="n">endcase</span>
+
+<span class="c1">// With a unique case and empty default:</span>
+<span class="nb">unique</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b1</span><span class="p">)</span>
+<span class="w">  </span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b0</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">1</span><span class="o">&#39;</span><span class="n">b1</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">  </span><span class="n">default</span><span class="p">:</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="c1">// Empty default disables the no-matching-condition violation</span>
+<span class="w">             </span><span class="c1">// check, making the unique case statement behave like a unique0</span>
+<span class="w">             </span><span class="c1">// case.</span>
+<span class="n">endcase</span>
+</pre></div>
+
+
+<p><strong>If in doubt, use priority case with a default.</strong> If a designer is not completely sure whether the case conditions
+are always matches and/or are parallel, then they should use a priority case with a default. This way, the
+logic simulated results will always match the synthesized&nbsp;logic.</p>
+<p><strong>The Synopsys full_case/parallel_case compiler directives should not be
+used.</strong> Instead, use either the <code>unique</code> or <code>priority</code> qualifiers, as
+shown in the table&nbsp;below:</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col">SystemVerilog construct</th>
+  <th scope="col">Approximate Synopsys pragma equivalent</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>unique case</code> without default</td>
+  <td><code>full_case</code> and <code>parallel_case</code></td>
+</tr>
+<tr>
+  <td><code>priority case</code> without default</td>
+  <td><code>full_case</code></td>
+</tr>
+<tr>
+  <td><code>unique case</code> with default</td>
+  <td><code>parallel_case</code></td>
+</tr>
+<tr>
+  <td><code>priority case</code> with default</td>
+  <td>No equivalent</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>The use of defaults in case statements should be used sparingly since they
+can obscure designer intent, prevent violation checks from being performed and
+change synthesis&nbsp;results.</strong></p>
+<p>Note that default conditions are matched only if no case condition matches, so
+they can be used to cover all other case conditions that are not explicitly
+specified. Their inclusion in a case statement must be considered&nbsp;carefully.</p>
+<p>Defaults can be used to assign a value to a combinatorial signal to avoid
+latches from being inferred, however it is clearer to provide a default value
+at the beginning of an <code>always_comb</code> block (see above). This is because it is
+conventional to add a <code>default</code> at the end of a <code>case</code> statement, which obscures
+the effect of a default, possibly leading to bugs. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Assign a default at the top of the block.</span>
+<span class="n">always_comb</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="n">next_state</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">state_q</span><span class="p">;</span>
+<span class="w">  </span><span class="nb">unique</span><span class="w"> </span><span class="k">case</span><span class="p">(</span><span class="n">state_q</span><span class="p">)</span>
+<span class="w">    </span><span class="n">STATE_A</span><span class="p">:</span><span class="w"> </span><span class="n">next_state</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">STATE_B</span><span class="p">;</span>
+<span class="w">    </span><span class="n">STATE_B</span><span class="p">:</span><span class="w"> </span><span class="n">next_state</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">STATE_C</span><span class="p">;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="w">    </span><span class="n">STATE_Z</span><span class="p">:</span><span class="w"> </span><span class="n">next_state</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">STATE_A</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">// No need for a default here.</span>
+<span class="w">  </span><span class="n">endcase</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>If a condition were to be added around the above case statement, the default
+value assignment of <code>next_state</code> would remain at the top of the block. On the
+other hand, if the default value assignment were done in a default of the case,
+and not moved out, a latch would be&nbsp;inferred.</p>
+<p>Defaults can be used to trap unexpected case values. However, by specifying
+<code>unique</code> or <code>priority</code>, unexpected case values will cause either of the
+no-matching-condition or multiple-conditions matching violation checks to fire.
+For example, with a one-hot case select, it is not necessary to add a
+<code>default: $error(...);</code> case condition to trap values that are not one&nbsp;hot.</p>
+<p>There is no <code>priority0</code> case statement qualifier, so it is reasonable to
+include an empty <code>default</code> with a <code>priority case</code> to disable the
+no-matching-condition violation check, similarly to <code>unique case</code>. However, it
+is more conventional to use an <code>if</code>-<code>else</code>-<code>if</code> to implement a priority
+encoder. Example of a case-based priority&nbsp;encoder:</p>
+<div class="codehilite"><pre><span></span><span class="nt">priority</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">cond</span><span class="o">)</span>
+<span class="w">  </span><span class="nt">VALUE_A</span><span class="o">:</span><span class="w"> </span><span class="o">...</span>
+<span class="w">  </span><span class="nt">VALUE_B</span><span class="o">:</span><span class="w"> </span><span class="o">...</span>
+<span class="w">  </span><span class="nt">VALUE_C</span><span class="o">:</span><span class="w"> </span><span class="o">...</span>
+<span class="w">  </span><span class="nt">default</span><span class="o">:</span><span class="w"> </span><span class="o">;</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="nt">Use</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">empty</span><span class="w"> </span><span class="nt">default</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">priority</span><span class="w"> </span><span class="nt">when</span><span class="w"> </span><span class="nt">there</span><span class="w"> </span><span class="nt">are</span><span class="w"> </span><span class="nt">no</span><span class="w"> </span><span class="nt">matching</span>
+<span class="w">             </span><span class="o">//</span><span class="w"> </span><span class="nt">conditions</span><span class="o">,</span><span class="w"> </span><span class="nt">but</span><span class="w"> </span><span class="nt">could</span><span class="w"> </span><span class="nt">the</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="nt">equally</span><span class="w"> </span><span class="nt">be</span><span class="w"> </span><span class="nt">written</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">an</span>
+<span class="w">             </span><span class="o">//</span><span class="w"> </span><span class="nt">if-then-if</span><span class="w"> </span><span class="nt">statement</span><span class="o">?</span>
 <span class="nt">endcase</span>
 </pre></div>
 
 
-<p><strong>Use <code>case (1'b1)</code> for one-hot conditions.</strong> For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span>
-<span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span>
-<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span>
-<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span>
-<span class="w">  </span><span class="nt">status_q</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">statement</span><span class="o">;</span>
-<span class="nt">endcase</span>
+<p>Empty defaults might also be used to plug coverage holes. This can occur when
+the coverage tool expects to see all input combinations and does not understand
+when these are prevented by design, eg with one-hot encoding. Adding an empty
+default may plug this coverage hole, however doing this will typically change
+the synthesis results because it implies an additional decode/control signal to
+select the default block, which is probably not what the designer intended. In
+such a situation, designers should add coverage waivers where a lack of a
+default case creates a coverage hole rather than changing the <span class="caps">RTL</span> to add an
+empty default&nbsp;case.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Since the case is unique, the empty default is not necessary and will be</span>
+<span class="c1">// dead code, and may change the synthesis results.</span>
+<span class="nb">unique</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">four_bit_one_hot_select</span><span class="p">)</span>
+<span class="w">  </span><span class="mi">4</span><span class="o">&#39;</span><span class="n">b0001</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">i_a</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">4</span><span class="o">&#39;</span><span class="n">b0010</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">i_b</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">4</span><span class="o">&#39;</span><span class="n">b0100</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">i_c</span><span class="p">;</span>
+<span class="w">  </span><span class="mi">4</span><span class="o">&#39;</span><span class="n">b1000</span><span class="p">:</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">i_d</span><span class="p">;</span>
+<span class="w">  </span><span class="n">default</span><span class="p">:</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="c1">// This default is not necessary if the case conditions are</span>
+<span class="w">             </span><span class="c1">// activated every cycle.</span>
+<span class="n">endcase</span>
 </pre></div>
 
 
-<p>As an aside, it is convenient to define a one-hot encoding in a union type with
-another struct to provide named access to each member. For example, <code>status_q</code>
-above could be redefined&nbsp;as:</p>
+<p><strong>Use <code>unique case (1'b1)</code> for one-hot conditions.</strong> For example, a one-hot
+multiplexer can be&nbsp;written:</p>
+<div class="codehilite"><pre><span></span><span class="nt">module</span><span class="w"> </span><span class="nt">m_one_hot_mux3</span><span class="w"> </span><span class="o">(</span>
+<span class="w">    </span><span class="nt">input</span><span class="w">  </span><span class="nt">logic</span><span class="w">       </span><span class="nt">i_a</span><span class="o">,</span>
+<span class="w">    </span><span class="nt">input</span><span class="w">  </span><span class="nt">logic</span><span class="w">       </span><span class="nt">i_b</span><span class="o">,</span>
+<span class="w">    </span><span class="nt">input</span><span class="w">  </span><span class="nt">logic</span><span class="w">       </span><span class="nt">i_c</span><span class="o">,</span>
+<span class="w">    </span><span class="nt">input</span><span class="w">  </span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">i_sel</span><span class="o">,</span>
+<span class="w">    </span><span class="nt">output</span><span class="w"> </span><span class="nt">logic</span><span class="w">       </span><span class="nt">o_out</span>
+<span class="w">  </span><span class="o">);</span>
+
+<span class="w">  </span><span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
+<span class="w">    </span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span>
+<span class="w">      </span><span class="nt">i_sel</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">o_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">i_a</span><span class="o">;</span>
+<span class="w">      </span><span class="nt">i_sel</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">o_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">i_b</span><span class="o">;</span>
+<span class="w">      </span><span class="nt">i_sel</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">o_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">i_c</span><span class="o">;</span>
+<span class="w">    </span><span class="nt">endcase</span>
+<span class="w">  </span><span class="nt">end</span>
+<span class="nt">endmodule</span>
+</pre></div>
+
+
+<p>As an aside, it is convenient to define a one-hot encoding in a <code>union</code> type
+with another <code>struct</code> to provide named access to each member. For example,
+<code>status_q</code> above could be redefined&nbsp;as:</p>
 <div class="codehilite"><pre><span></span><span class="n">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">STATUS_START</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b001,</span>
 <span class="w">  </span><span class="n">STATUS_END</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b010,</span>
 <span class="w">  </span><span class="n">STATUS_ERROR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b100</span>
 <span class="p">}</span><span class="w"> </span><span class="n">status_enum_t</span><span class="p">;</span>
+
 <span class="n">typedef</span><span class="w"> </span><span class="n">union</span><span class="w"> </span><span class="n">packed</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">status_enum_t</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
 <span class="w">  </span><span class="n">struct</span><span class="w"> </span><span class="n">packed</span><span class="w"> </span><span class="p">{</span>
@@ -446,10 +738,13 @@ above could be redefined&nbsp;as:</p>
 <span class="w">    </span><span class="n">logic</span><span class="w"> </span><span class="n">status_error</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">ctrl</span><span class="p">;</span>
 <span class="p">}</span><span class="w"> </span><span class="n">status_t</span><span class="p">;</span>
+
 <span class="n">status_t</span><span class="w"> </span><span class="n">status_q</span><span class="p">;</span>
 </pre></div>
 
 
+<p>Bear in mind however that this union introduces potential for the control structure to correspond incorrectly with
+the enumeration, which may introduce bugs into the&nbsp;design.</p>
 <p><strong>Minimise the amount of logic inside a case statement.</strong> The rationale for
 this is similar to extracting logic from <code>always_comb</code> blocks into <code>assign</code>
 statements where possible: to make the control flow structure clearer to the
@@ -458,6 +753,7 @@ further simplification. For example, avoid nesting <code>case</code> statements:
 <div class="codehilite"><pre><span></span><span class="nt">status_t</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span>
 <span class="nt">status_t</span><span class="w"> </span><span class="nt">next_status</span><span class="o">;</span>
 <span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">mode_q</span><span class="o">;</span>
+
 <span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">  </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="s1">&#39;b1)</span>
@@ -480,6 +776,7 @@ result signal to use in the parent&nbsp;case:</p>
 <span class="nt">status_t</span><span class="w"> </span><span class="nt">next_status</span><span class="o">;</span>
 <span class="nt">status_t</span><span class="w"> </span><span class="nt">start_next_status</span><span class="o">;</span>
 <span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">mode_q</span><span class="o">;</span>
+
 <span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">  </span><span class="nt">start_next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">state_q</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">mode_q</span><span class="o">)</span><span class="w"> </span><span class="nt">inside</span>
@@ -488,6 +785,7 @@ result signal to use in the parent&nbsp;case:</p>
 <span class="w">    </span><span class="nt">default</span><span class="o">:</span><span class="w"> </span><span class="nt">start_next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">STATUS_END</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">endcase</span>
 <span class="nt">end</span>
+
 <span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
 <span class="w">  </span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">1</span><span class="err">&#39;</span><span class="nt">b1</span><span class="o">)</span>
 <span class="w">    </span><span class="nt">status_q</span><span class="p">.</span><span class="nc">ctrl</span><span class="p">.</span><span class="nc">status_start</span><span class="o">:</span><span class="w"> </span><span class="nt">next_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">start_next_status</span><span class="o">;</span>
@@ -500,6 +798,29 @@ result signal to use in the parent&nbsp;case:</p>
 
 <p>Although this example seems simple, the <code>case</code>-based logic driving a state
 machine can quickly become&nbsp;complicated.</p>
+<p><strong>Use <code>case inside</code> for matching with don&#8217;t cares.</strong> For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="nt">localparam</span><span class="w"> </span><span class="nt">p_done</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="s1">&#39;d0,</span>
+<span class="s1">           p_init  = 4&#39;</span><span class="nt">d1</span><span class="o">,</span>
+<span class="w">           </span><span class="nt">p_end</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nt">4</span><span class="s1">&#39;d2,</span>
+<span class="s1">           p_error = 4&#39;</span><span class="nt">d3</span><span class="o">;</span>
+
+<span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">status</span><span class="o">;</span>
+<span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">next_state</span><span class="o">;</span>
+
+<span class="nt">always_comb</span><span class="w"> </span><span class="nt">begin</span>
+<span class="w">  </span><span class="nt">priority</span><span class="w"> </span><span class="nt">case</span><span class="w"> </span><span class="o">(</span><span class="nt">status</span><span class="o">)</span>
+<span class="w">    </span><span class="nt">3</span><span class="s1">&#39;b00?: next_state = p_done;</span>
+<span class="s1">    3&#39;</span><span class="nt">b01</span><span class="o">?:</span><span class="w"> </span><span class="nt">next_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">p_init</span><span class="o">;</span>
+<span class="w">    </span><span class="nt">3</span><span class="s1">&#39;b1?0: next_state = p_end;</span>
+<span class="s1">    3&#39;</span><span class="nt">b1</span><span class="o">?</span><span class="nt">1</span><span class="o">:</span><span class="w"> </span><span class="nt">next_state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">p_error</span><span class="o">;</span>
+<span class="w">  </span><span class="nt">endcase</span>
+<span class="nt">end</span>
+</pre></div>
+
+
+<p><strong>Unless matching upon <code>'bX</code> or <code>'bZ</code> is genuinely required, then <code>casex</code> or
+<code>casez</code> should not be used.</strong> Instead, the <code>case inside</code> construct should be
+used to indicate don&#8217;t-care bits in the case select as per the previous&nbsp;example.</p>
 <p><a name="expressions" class="anchor"></a></p>
 <h2>Expressions</h2>
 <p><strong>Make operator associativity explicit.</strong> This is to avoid any ambiguity over
@@ -520,7 +841,7 @@ operators associate right to&nbsp;left.</p>
 </pre></div>
 
 
-<p><strong>Make expression bit lengths explicit.</strong> Although the Verilog language
+<p><strong>Make expression bit lengths explicit.</strong> Although the SystemVerilog
 specification provides rules for the extension of operands as inputs to binary
 operations and assignments, these are complicated and not always obvious. In
 particular, the extension is determined either by the operands or by the
@@ -566,15 +887,14 @@ specified as <code>integer</code> literals, for&nbsp;example:</p>
 </pre></div>
 
 
-<p><strong>Use <code>signed</code> types for signed arithmetic,</strong> and avoid implementing signed
-arithmetic with manual sign extensions. Verilog uses the signedness of an
-expression to determine how to extend its width (as well as inferring
+<p><strong>Use <code>signed</code> types for signed arithmetic, and avoid implementing signed
+arithmetic with manual sign extensions.</strong> SystemVerilog uses the signedness of
+an expression to determine how to extend its width (as well as inferring
 signedness of parent expressions). Since the rules for sign determination is
 similar to expression size but not the same, making it explicit avoids errors.
 It also facilitates the use of optimised arithmetic implementations in
 synthesis, particularly with multipliers. The following example (adapted from
-<a href="http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_presentation.pdf">this presentation</a>)
-shows how these rules can be&nbsp;confusing:</p>
+<a href="http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_presentation.pdf">this presentation</a>) shows how these rules can be&nbsp;confusing:</p>
 <div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="nt">signed</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">a</span><span class="o">,</span><span class="w"> </span><span class="nt">b</span><span class="o">;</span>
 <span class="nt">logic</span><span class="w"> </span><span class="nt">signed</span><span class="w"> </span><span class="cp">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">sum</span><span class="o">;</span>
 <span class="nt">logic</span><span class="w"> </span><span class="nt">ci</span><span class="o">;</span>
@@ -588,7 +908,7 @@ shows how these rules can be&nbsp;confusing:</p>
 <p>Note that an operation is only considered signed if all of the operands are
 signed, and that literal values can be specified as signed, for example:
 <code>2'sb11</code> is -1 in 2&nbsp;bits.</p>
-<p><strong>Avoid splitting arithmetic</strong> between statements or modules. This facilitates
+<p><strong>Avoid splitting arithmetic between statements or modules.</strong> This facilitates
 optimisation during synthesis, for example, to choose or generate an optimised
 adder implementation for the given set of operands and carry ins/outs. Instead&nbsp;of:</p>
 <div class="codehilite"><pre><span></span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">a</span><span class="o">,</span><span class="w"> </span><span class="nt">b</span><span class="o">,</span><span class="w"> </span><span class="nt">c</span><span class="o">;</span>
@@ -603,80 +923,307 @@ adder implementation for the given set of operands and carry ins/outs. Instead&n
 </pre></div>
 
 
-<p><a name="code-structure" class="anchor"></a></p>
-<h2>Code&nbsp;structure</h2>
-<p><strong>Place parameters and variables at the top of their containing scope.</strong> Doing
-this gives and overview of the state and complexity of a block, particularly a
-module. Declarations of combinatorial and sequential nets should be separated
-into different sections for clarity. Note also that variables declared in
-unnamed scopes are not accessible via the design hierarchy and will not appear
-in wave viewers. To separate a module into sections without making signals
-inaccessible, a named scope can be introduced. The following example of a
-ripple-carry adder with registered outputs gives an idea of this style of&nbsp;structuring:</p>
-<div class="codehilite"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">ripple_carry_adder</span>
-<span class="w">  </span><span class="err">#</span><span class="p">(</span><span class="k">parameter</span><span class="w"> </span><span class="n">p_WIDTH</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">i_clk</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">i_rst</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_WIDTH-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">i_op1</span><span class="p">,</span>
-<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_WIDTH-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">i_op2</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">logic</span><span class="w">               </span><span class="n">o_co</span><span class="p">,</span>
-<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_WIDTH-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">o_sum</span><span class="w"> </span><span class="p">);</span>
+<p><strong>Do not mix bitwise and logical operator in the same expression.</strong> There are
+different precedence rules for the types, so the behaviour may not be what is
+expected. Instead, break up the expression to make it explicit what the
+intended behaviour&nbsp;is.</p>
+<p><a name="constants" class="anchor"></a></p>
+<h2>Constants</h2>
+<p><strong>Avoid magic numbers.</strong> All numeric constants, with the exception of zero and
+one (for incrementing) should be defined symbolically. All assignment to
+constants must be sized correctly to avoid width-mismatch warnings that must be
+signed off later in the&nbsp;flow.</p>
+<p><strong>Constants should be declared inside packages.</strong> Derived constants with a
+meaning specific to a module should be defined in the appropriate scope of the&nbsp;module.</p>
+<p><strong>Constants assigned to an <code>enum</code> port must be of the same <code>enum</code> type.</strong> Not
+doing so relies on an implicit conversion, which can have inconsistent
+behaviour between tools. Assign an <code>enum</code> value directly, or by using a static
+cast. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="kn">package</span><span class="w"> </span><span class="nx">m_foo_pkg</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">typedef</span><span class="w"> </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">B</span><span class="p">,</span><span class="w"> </span><span class="nx">C</span><span class="p">,</span><span class="w"> </span><span class="nx">D</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="nx">enum_t</span><span class="p">;</span>
+<span class="nx">endpackage</span>
 
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Wires</span><span class="p">.</span>
-<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_WIDTH-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">carry</span><span class="p">;</span>
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Registers</span><span class="p">.</span>
-<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_WIDTH-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">sum_q</span><span class="p">;</span>
-<span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">co_q</span><span class="p">;</span>
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Variables</span><span class="p">.</span>
-<span class="w">  </span><span class="n">genvar</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="nx">module</span><span class="w"> </span><span class="nx">m_foo</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="nx">input</span><span class="w"> </span><span class="nx">m_foo_pkg</span><span class="o">::</span><span class="nx">enum_t</span><span class="w"> </span><span class="k">in</span><span class="p">,</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="p">);</span>
+<span class="o">...</span>
+<span class="nx">endmodule</span>
 
-<span class="w">  </span><span class="n">assign</span><span class="w"> </span><span class="n">carry</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
-<span class="s1">  assign {o_co, o_sum} = {co_q, sum_q};</span>
+<span class="nx">module</span><span class="w"> </span><span class="nx">m_bar</span><span class="w"> </span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="w">  </span><span class="nx">m_foo</span><span class="w"> </span><span class="nx">u_foo</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">// Tie the input to a constant value using the enum type, rather than</span>
+<span class="w">    </span><span class="c1">// via a value of any other type.</span>
+<span class="w">    </span><span class="p">.</span><span class="k">in</span><span class="p">(</span><span class="nx">m_foo_pkg</span><span class="o">::</span><span class="nx">D</span><span class="p">),</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="nx">endmodule</span>
+</pre></div>
 
-<span class="s1">  // Named generate block for per-bit continuous assignments.</span>
-<span class="s1">  for (i = 0; i &lt; p_WIDTH; i = i + 1) begin: bit</span>
-<span class="s1">    assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];</span>
-<span class="s1">  end</span>
 
-<span class="s1">  always_ff @(posedge i_clk or posedge i_rst)</span>
-<span class="s1">    if (i_rst) begin</span>
-<span class="s1">      sum_q &lt;= {p_WIDTH{1&#39;</span><span class="n">b0</span><span class="err">}}</span><span class="p">;</span>
-<span class="w">      </span><span class="n">co_q</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
-<span class="w">      </span><span class="n">sum_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nf">sum</span><span class="p">;</span>
-<span class="w">      </span><span class="n">co_q</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">carry</span><span class="o">[</span><span class="n">p_WIDTH-1</span><span class="o">]</span><span class="p">;</span>
-<span class="w">    </span><span class="k">end</span>
+<p><strong>Be explicit when assigning values to nets and variables.</strong> For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">127</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="nx">data_a</span><span class="p">;</span>
+
+<span class="c1">// Explicitly 32 bits wide, decimal 0 assigment.</span>
+<span class="nx">assign</span><span class="w"> </span><span class="nx">data_a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">128</span><span class="err">&#39;</span><span class="nx">d0</span><span class="p">;</span>
+
+<span class="c1">// Explicitly 32 bits wide, binary 0 assignment.</span>
+<span class="nx">assign</span><span class="w"> </span><span class="nx">data_a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">128</span><span class="err">&#39;</span><span class="nx">b0</span><span class="p">;</span>
+
+<span class="c1">// Avoid.</span>
+<span class="nx">assign</span><span class="w"> </span><span class="nx">data_a</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">d5</span><span class="p">;</span>
+
+<span class="c1">// A user-defined type.</span>
+<span class="nx">foo_pkg</span><span class="o">::</span><span class="nx">bar</span><span class="w"> </span><span class="nx">data_b</span><span class="p">;</span>
+
+<span class="c1">// An implicit cast is acceptable.</span>
+<span class="nx">assign</span><span class="w"> </span><span class="nx">data_b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">&#39;</span><span class="nx">d5</span><span class="p">;</span>
+
+<span class="c1">// But an explicit one is best.</span>
+<span class="nx">assign</span><span class="w"> </span><span class="nx">data_b</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">foo_pkg</span><span class="o">::</span><span class="nx">bar</span><span class="err">&#39;</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</pre></div>
+
+
+<p>With the exception of <code>'0</code>, unsized literal single-bit values (unsigned and
+without a radix) in assignments should not be used in combinatorial logic,
+since they can be misinterpreted. They appear similar to explicit assignments
+with a radix, yet represent very different values. For example, <code>'1</code> looks
+similar to <code>'d1</code> but encodes the value $2^n - 1$ where $n$ is the width of the
+variable being assigned&nbsp;to.</p>
+<div class="codehilite"><pre><span></span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+
+<span class="c1">// Sets data to 16&#39;hFFFF, not 16&#39;h0001.</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">&#39;1</span><span class="p">;</span>
+
+<span class="c1">// Clearer and harder to misinterpret.</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">16&#39;hFFFF</span><span class="p">;</span>
+
+<span class="c1">// The replication operator should be used to set all bits to a value.</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">16</span><span class="w"> </span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">}</span><span class="w"> </span><span class="p">};</span><span class="w"> </span><span class="c1">// Equivalent to above assigment</span>
+
+<span class="c1">// Acceptable since repeated zeroes are still zero.</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">&#39;0</span><span class="p">;</span>
+<span class="k">assign</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">16&#39;h0</span><span class="p">;</span><span class="w"> </span><span class="c1">// Equivalent</span>
+</pre></div>
+
+
+<p><a name="x-values" class="anchor"></a></p>
+<h2>X&nbsp;values</h2>
+<p><strong>Assignment of <code>X</code> values as don&#8217;t care values should be avoided.</strong> This is
+for similar reasons for not using non-reset registers, which can lead to
+simulation-versus-synthesis mismatches, potentially obscuring bugs. However, if
+it can be demonstrated that use of X values can provide better QoR in the
+physical build of a block, specific and limited use of <code>X</code> values can be&nbsp;justified.</p>
+<p><a name="naming" class="anchor"></a></p>
+<h2>Naming</h2>
+<p>Clear and consistent naming is important for a design to be easily understood
+and maintainability by a designer, but naming must facilitate easy manipulation
+by various tools in the <span class="caps">RTL</span> and physical design&nbsp;flows.</p>
+<p>During <span class="caps">RTL</span> debug, names should allow simple sorting and searching in a
+wave viewer. By using common prefixes for related signals, sorting will place
+them together. Similarly, common substrings are useful to filter a subset of
+signals over, for example to select a set of registers or similar signals
+different in pipeline&nbsp;stages.</p>
+<p>Throughout the physical design flows, names must allow sensible flattening. It
+is typical for synthesis to flatten the hierarchical structure and consequently
+symbol names are derived from their place in the module hierarchy. A suitable
+naming scheme really only requires consistency across a design. As an example,
+a flip-flop clock pin might be named
+<code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the register
+<code>u_toplevel/u_submodule/p0_signal_q[17]</code>.</p>
+<p><strong>Names should be meaningful, whilst avoiding excessive verbosity.</strong> For example,
+<code>n3</code> should be avoided as it lacks meaning whereas <code>floating_point_opcode_bus</code> is
+excessively long. <code>fp_opcode</code> is a reasonable&nbsp;compromise.</p>
+<p><strong>Avoid using C/C++/Verilog/SystemVerilog/<span class="caps">VHDL</span> keywords as names.</strong> Even if
+they are not reserved names in the language being used in that file. For
+example: <code>auto</code>, <code>unsigned</code>, <code>task</code>, <code>register</code> or <code>asm</code>.</p>
+<p><strong>All names must be all lower case and underscore separated.</strong>
+For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">m_cpu</span>;
+<span class="k">module</span> <span class="n">m_cpu_pkg</span>;
+<span class="n">logic</span> <span class="n">unused_co</span>
+<span class="n">logic</span> <span class="n">p3_ctrl</span>
+<span class="n">logic</span> <span class="n">p4_prod_q</span>
+<span class="n">begin</span> : <span class="n">ecc_encode</span>
+</pre></div>
+
+
+<p><a name="naming-prefixes-suffixes" class="anchor"></a></p>
+<h3>Prefixes and&nbsp;suffixes</h3>
+<p>Name prefixes are generally used to indicate object types (such as module
+instances, flip flops, ports etc), and suffixes are generally used to convey
+semantic information. A good standard set of prefixes and suffixes are
+enumerated&nbsp;below:</p>
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col" style="width:20%">Prefix</th>
+  <th scope="col">Usage</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>i_</code></td>
+  <td>Input port</td>
+</tr>
+<tr>
+  <td><code>o_</code></td>
+  <td>Output port</td>
+</tr>
+<tr>
+  <td><code>io_</code></td>
+  <td>Bidirecitonal (inout) port</td>
+</tr>
+<tr>
+  <td><code>u_</code></td>
+  <td>Module instance</td>
+</tr>
+<tr>
+  <td><code>m_</code></td>
+  <td>Module definition</td>
+</tr>
+<tr>
+  <td><code>p_</code></td>
+  <td>Parameter/localparam</td>
+</tr>
+<tr>
+  <td><code>g_</code></td>
+  <td>Generate block</td>
+</tr>
+<tr>
+  <td><code>[a-z][0-9]_</code></td>
+  <td>Pipeline stage</td>
+</tr>
+<tr>
+  <td><code>unused_</code></td>
+  <td>Unused signal for lint signoff</td>
+</tr>
+</tbody>
+</table>
+
+<table class="table table-striped table-sm">
+<thead>
+  <th scope="col" style="width:20%">Suffix</th>
+  <th scope="col">Usage</th>
+</thead>
+<tbody>
+<tr>
+  <td><code>_clk</code></td>
+  <td>Clock signal</td>
+</tr>
+<tr>
+  <td><code>_gclk</code></td>
+  <td>Gated clock signal</td>
+</tr>
+<tr>
+  <td><code>_rst</code></td>
+  <td>Reset signal</td>
+</tr>
+<tr>
+  <td><code>_q</code></td>
+  <td>Signal driven from a flip flop</td>
+</tr>
+<tr>
+  <td><code>_n</code></td>
+  <td>Active-low signal</code></td>
+</tr>
+<tr>
+  <td><code>_t</code></td>
+  <td>Type via a typedef</td>
+</tr>
+<tr>
+  <td><code>_pkg</code></td>
+  <td>Package</td>
+</tr>
+<tr>
+  <td><code>_if</code></td>
+  <td>Interface</td>
+</tr>
+</tbody>
+</table>
+
+<p>Where signals are both active-low and require a suffix from elsewhere in the
+table, the <code>_n</code> suffix should be appended without an extra underscore. For
+example, <code>_q</code> becomes <code>_qn</code> for an active-low flop output, and <code>_clk</code> becomes
+<code>_clkn</code> for an inverted&nbsp;clock.</p>
+<p>The following code example shows appropriate usage of the above prefix and
+suffix&nbsp;guidelines:</p>
+<div class="codehilite"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="n">m_ctrl_fsm</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">logic</span><span class="w">         </span><span class="n">i_clk</span><span class="p">,</span>
+<span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">logic</span><span class="w">         </span><span class="n">i_rst</span><span class="p">,</span>
+<span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">logic</span><span class="w">         </span><span class="n">i_ready</span><span class="p">,</span>
+<span class="w">  </span><span class="n">input</span><span class="w"> </span><span class="n">logic</span><span class="w">         </span><span class="n">i_done</span><span class="p">,</span>
+<span class="w">  </span><span class="n">output</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">o_control</span>
+<span class="p">);</span>
+
+<span class="w">  </span><span class="n">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">IDLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b000,</span>
+<span class="w">    </span><span class="n">LOAD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b110,</span>
+<span class="w">    </span><span class="n">DONE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="s1">&#39;b001</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="n">state_t</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">state_t</span><span class="w"> </span><span class="n">state_q</span><span class="p">;</span>
+<span class="w">  </span><span class="n">state_t</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">assign</span><span class="w"> </span><span class="n">o_control</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">state_q</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">always_ff</span><span class="w"> </span><span class="err">@</span><span class="p">(</span><span class="n">posedge</span><span class="w"> </span><span class="n">i_clk</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">posedge</span><span class="w"> </span><span class="n">i_rst</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_rst</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">      </span><span class="n">state_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">IDLE</span><span class="p">;</span>
+<span class="w">    </span><span class="n">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">      </span><span class="n">state_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="n">end</span>
+<span class="w">  </span><span class="n">end</span>
+
+<span class="w">  </span><span class="n">always_comb</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">    </span><span class="n">unique</span><span class="w"> </span><span class="n">case</span><span class="w"> </span><span class="p">(</span><span class="n">state_q</span><span class="p">)</span>
+<span class="w">      </span><span class="n">IDLE</span><span class="p">:</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_ready</span><span class="p">)</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOAD</span><span class="p">;</span>
+<span class="w">            </span><span class="k">else</span><span class="w">         </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDLE</span><span class="p">;</span>
+<span class="w">      </span><span class="n">LOAD</span><span class="p">:</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i_done</span><span class="p">)</span><span class="w">  </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DONE</span><span class="p">;</span>
+<span class="w">            </span><span class="k">else</span><span class="w">         </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOAD</span><span class="p">;</span>
+<span class="w">      </span><span class="n">DONE</span><span class="p">:</span><span class="w">              </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDLE</span><span class="p">;</span>
+<span class="w">    </span><span class="n">endcase</span>
+<span class="w">  </span><span class="n">end</span>
 
 <span class="n">endmodule</span>
 </pre></div>
 
 
-<p><strong>Use <code>.*</code> and <code>.name()</code> syntax to simplify port lists in module
-instantiations.</strong> This reduces the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. <code>.*</code> also provides additional checks: it
-requires all nets be connected, it requires all nets to be the same size and it
-prevents implicit nets from being inferred. Named connections with <code>.name()</code> can
-be used to add specific exceptions. For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">foo</span> (<span class="n">input</span> <span class="n">logic</span> <span class="n">i_clk</span>,
-            <span class="n">input</span> <span class="n">logic</span> <span class="n">i_rst</span>,
-            <span class="n">input</span> <span class="n">logic</span> <span class="nb">in</span>,
-            <span class="n">output</span> <span class="n">logic</span> <span class="n">out</span>);
-  ...
-<span class="n">endmodule</span>
+<p>Another example illustrates the use of the pipeline prefix, using <code>e</code> to denote
+an external signal and <code>p</code> an internal&nbsp;one:</p>
+<div class="codehilite"><pre><span></span><span class="nx">module</span><span class="w"> </span><span class="nx">m_mempipe</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="nx">input</span><span class="w">  </span><span class="nx">logic</span><span class="w">        </span><span class="nx">i_clk</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">input</span><span class="w">  </span><span class="nx">logic</span><span class="w">        </span><span class="nx">i_rst</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">input</span><span class="w">  </span><span class="nx">logic</span><span class="w">        </span><span class="nx">i_e1_valid</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">input</span><span class="w">  </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">18</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="nx">i_e1_addr</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">output</span><span class="w"> </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="nx">o_e2_data</span>
+<span class="p">);</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="w">  </span><span class="nx">logic</span><span class="w">        </span><span class="nx">p2_valid_q</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="nx">p2_data</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">logic</span><span class="w"> </span><span class="p">[</span><span class="mi">31</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="nx">p3_data_q</span><span class="p">;</span>
+<span class="w">  </span><span class="o">...</span>
 
-<span class="n">u_module</span> <span class="n">foo</span> (.*,
-              .<span class="nb">in</span>(<span class="nb">in</span>),
-              .<span class="n">out</span>(<span class="n">out</span>));
+<span class="w">  </span><span class="nx">always_ff</span><span class="w"> </span><span class="err">@</span><span class="p">(</span><span class="nx">posedge</span><span class="w"> </span><span class="nx">i_clk</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">posedge</span><span class="w"> </span><span class="nx">i_rst</span><span class="p">)</span><span class="w"> </span><span class="nx">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">i_rst</span><span class="p">)</span><span class="w"> </span><span class="nx">begin</span>
+<span class="w">      </span><span class="nx">p3_data_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">32</span><span class="err">&#39;</span><span class="nx">h00000000</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e2_valid_q</span><span class="p">)</span><span class="w"> </span><span class="nx">begin</span>
+<span class="w">      </span><span class="nx">p3_data_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">p2_data</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">end</span>
+<span class="w">  </span><span class="nx">end</span>
+
+<span class="w">  </span><span class="nx">assign</span><span class="w"> </span><span class="nx">o_e2_data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">p3_data_q</span><span class="p">;</span>
+
+<span class="nx">endmodule</span>
 </pre></div>
 
 
-<p><strong>Avoid logic in module instantiations.</strong> By instantiating a module with a set
-of named signals, it is easier to inspect the port hookups and the widths of
-the signals for&nbsp;correctness.</p>
 <p><a name="signal-naming" class="anchor"></a></p>
-<h2>Signal&nbsp;naming</h2>
-<p>A strict approach to naming should be taken to make it easier to understand and
-navigate a&nbsp;design:</p>
+<h3>Signal&nbsp;naming</h3>
+<p>A strict approach to signal naming should be taken to make it easier to
+understand and navigate a&nbsp;design:</p>
 <p><strong>To make clear their relationship to the structure of a module</strong>. Prefixes and
 suffices can denote, for example, whether a signal is an input or output, the
 pipeline stage it corresponds to and whether it is driven by logic or directly
@@ -697,49 +1244,420 @@ prefixes for related signals, sorting will place them together. Similarly,
 common substrings are useful to filter a subset of signals over, for example to
 select a set of registers or similar signals different in pipeline&nbsp;stages.</p>
 <p><strong>To be flattened sensibly by downstream tools</strong>. It is typical for synthesis
-to flatten the hierarchical structure of a Verilog design. Consequently
+to flatten the hierarchical structure of a SystemVerilog design. Consequently
 symbols names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
 <code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the register
 <code>u_toplevel/u_submodule/p0_signal_q[17]</code>.</p>
+<p><a name="generate-naming" class="anchor"></a></p>
+<h3>Generate block&nbsp;naming</h3>
+<p><strong>All scopes of a generate block should be named.</strong> This avoids
+automatically-assigned names being created by the elaboration tool, making it
+hard to understand the structure of the code. This applies to branches of
+conditional and loop statements. For example, with named&nbsp;conditions:</p>
+<div class="codehilite"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">m_gen_cond</span><span class="w"> </span><span class="p">#(</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">p_gen_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">)();</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">gen_op0</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">gen_op1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">gen_op2</span><span class="p">;</span>
+<span class="w">  </span><span class="k">generate</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p_gen_diff</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p_gen_diff</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p_gen_diff</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g_eq_1</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g_eq_0</span>
+<span class="w">      </span><span class="k">assign</span><span class="w"> </span><span class="n">gen_op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">endgenerate</span>
+<span class="k">endmodule</span>
+</pre></div>
+
+
+<p>In the resulting hierarchy, the first two conditionals are not easily
+distinguishable, nor are the branches that are&nbsp;chosen:</p>
+<div class="codehilite"><pre><span></span>m_gen_cond
+  g_eq_0
+  genblk1
+  genblk2
+</pre></div>
+
+
+<p>With named loops, a similar situation&nbsp;arises:</p>
+<div class="codehilite"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">m_gen_loop</span><span class="w"> </span><span class="err">#</span><span class="p">(</span>
+<span class="w">    </span><span class="k">parameter</span><span class="w"> </span><span class="n">p_gen_diff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)();</span>
+<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">2:0</span><span class="o">]</span><span class="w"> </span><span class="n">gen_op0</span><span class="p">;</span>
+<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">2:0</span><span class="o">]</span><span class="w"> </span><span class="n">gen_op1</span><span class="p">;</span>
+<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">2:0</span><span class="o">]</span><span class="w"> </span><span class="n">gen_op2</span><span class="p">;</span>
+<span class="w">  </span><span class="n">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">genvar</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">assign</span><span class="w"> </span><span class="n">gen_op0</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
+<span class="s1">    end</span>
+<span class="s1">    for (genvar i=0; i&lt;3; i++) begin</span>
+<span class="s1">      assign gen_op1[i] = 1&#39;</span><span class="n">b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">genvar</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="n">g_loop</span>
+<span class="w">      </span><span class="n">assign</span><span class="w"> </span><span class="n">gen_op2</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="n">endgenerate</span>
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p>In the resulting hierarchy, there is no correspondence to the blocks assigning
+to gen_op0 or gen_op1, indeed these could be switched with no visibility in the&nbsp;hierarchy:</p>
+<div class="codehilite"><pre><span></span>m_gen_loop
+  g_loop[0]
+  g_loop[1]
+  g_loop[2]
+  genblk1[0]
+  genblk1[1]
+  genblk1[2]
+  genblk2[0]
+  genblk2[1]
+  genblk2[2]
+</pre></div>
+
+
+<p>Using a <code>g_</code> prefix for named generate blocks, clearly distinguishes with
+instantiations of modules, for&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">module</span><span class="w"> </span><span class="n">m_foo</span><span class="w"> </span><span class="p">(</span>
+<span class="o">...</span>
+<span class="p">);</span>
+<span class="w">  </span><span class="n">m_child</span><span class="w"> </span><span class="n">u_child</span><span class="w"> </span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+<span class="w">  </span><span class="n">generate</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">genvar</span><span class="w"> </span><span class="n">i</span><span class="o">-</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">g_loop</span>
+<span class="w">      </span><span class="o">...</span>
+<span class="w">    </span><span class="n">end</span>
+<span class="w">  </span><span class="n">endgenerate</span>
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p>Has the&nbsp;hierarchy:</p>
+<div class="codehilite"><pre><span></span>m_foo
+u_child
+g_loop
+</pre></div>
+
+
+<p><a name="code-structure" class="anchor"></a></p>
+<h2>Code&nbsp;structure</h2>
+<p><a name="modules" class="anchor"></a></p>
+<h3>Modules</h3>
+<p><strong>Place parameters and variables at the top of their containing scope.</strong>
+Nets/variables/parameters should be declared in the minimum scope in which they
+will be used to avoid polluting namespaces. For example, nets global to a
+module should be declared at the top of the module for use in the code that&nbsp;follows.</p>
+<p><strong>Separate combinatorial and sequential nets.</strong> Declarations of combinatorial
+and sequential nets should be separated into different sections for clarity.
+This allows the flip-flops in the design to be seen clearly providing a feel
+for the size and complexity of the block. The following ripple-carry adder with
+registered outputs illustrates this kind of&nbsp;structuring:</p>
+<div class="codehilite"><pre><span></span><span class="k">module</span><span class="w"> </span><span class="n">m_rca</span>
+<span class="w">  </span><span class="err">#</span><span class="p">(</span><span class="k">parameter</span><span class="w"> </span><span class="n">p_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="w"> </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">i_clk</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">i_rst</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_width-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">i_op1</span><span class="p">,</span>
+<span class="w">    </span><span class="k">input</span><span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_width-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">i_op2</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">logic</span><span class="w">               </span><span class="n">o_co</span><span class="p">,</span>
+<span class="w">    </span><span class="k">output</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_width-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">o_sum</span><span class="w"> </span><span class="p">);</span>
+
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Wires</span><span class="p">.</span>
+<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_width-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">carry</span><span class="p">;</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Registers</span><span class="p">.</span>
+<span class="w">  </span><span class="n">logic</span><span class="w"> </span><span class="o">[</span><span class="n">p_width-1:0</span><span class="o">]</span><span class="w"> </span><span class="n">sum_q</span><span class="p">;</span>
+<span class="w">  </span><span class="n">logic</span><span class="w">               </span><span class="n">co_q</span><span class="p">;</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Variables</span><span class="p">.</span>
+<span class="w">  </span><span class="n">genvar</span><span class="w">              </span><span class="n">i</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">assign</span><span class="w"> </span><span class="n">carry</span><span class="o">[</span><span class="n">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="s1">&#39;b0;</span>
+<span class="s1">  assign {o_co, o_sum} = {co_q, sum_q};</span>
+
+<span class="s1">  // Named generate block for per-bit continuous assignments.</span>
+<span class="s1">  for (i = 0; i &lt; p_width; i = i + 1) begin: bit</span>
+<span class="s1">    assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];</span>
+<span class="s1">  end</span>
+
+<span class="s1">  always_ff @(posedge i_clk or posedge i_rst) begin</span>
+<span class="s1">    if (i_rst) begin</span>
+<span class="s1">      sum_q &lt;= {p_width{1&#39;</span><span class="n">b0</span><span class="err">}}</span><span class="p">;</span>
+<span class="w">      </span><span class="n">co_q</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="err">&#39;</span><span class="n">b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">sum_q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nf">sum</span><span class="p">;</span>
+<span class="w">      </span><span class="n">co_q</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">carry</span><span class="o">[</span><span class="n">p_width-1</span><span class="o">]</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+
+<span class="n">endmodule</span>
+</pre></div>
+
+
+<p><strong>Use <code>.*</code> and <code>.name()</code> syntax in some circumstances to simplify port lists in module
+instantiations.</strong> Doing so can reduce the amount of boilerplate code and thus the
+scope for typing or copy-paste errors. The wildcard <code>.*</code> also provides additional checks:<sup id="fnref:wildcards"><a class="footnote-ref" href="#fn:wildcards">3</a></sup></p>
+<ul>
+<li>It requires all nets be&nbsp;connected.</li>
+<li>It requires all nets to be the same&nbsp;size.</li>
+<li>It prevents implicit nets from being&nbsp;inferred.</li>
+</ul>
+<p>Named connections with <code>.name()</code> can be used with wildcards to add specific
+exceptions, such as when names do not match or for unconnected or tied-off
+ports. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="k">module</span> <span class="n">foo</span> (<span class="n">input</span> <span class="n">logic</span> <span class="n">i_clk</span>,
+            <span class="n">input</span> <span class="n">logic</span> <span class="n">i_rst</span>,
+            <span class="n">input</span> <span class="n">logic</span> <span class="nb">in</span>,
+            <span class="n">output</span> <span class="n">logic</span> <span class="n">out</span>);
+  ...
+<span class="n">endmodule</span>
+
+<span class="n">u_module</span> <span class="n">foo</span> (.*,
+              .<span class="nb">in</span>(<span class="nb">in</span>),
+              .<span class="n">out</span>(<span class="n">out</span>));
+</pre></div>
+
+
+<p>Bear in mind that implicit hookups with wildcards may obscure module
+connectivity when navigating source code during debug. It is up to the designer
+to make the right tradeoff. Specific examples of where wildcard hookups are
+useful are in wrapper modules and&nbsp;testbenches.</p>
+<p><strong>Avoid logic in module instantiations.</strong> By instantiating a module with a set
+of named signals, mapping one-to-one with ports, it is easier to inspect the
+port hookups and the widths of the signals for correctness. Not doing so
+obscures functionality in the&nbsp;design.</p>
+<p><strong>In parameter lists, separate parameters that are intended to be set
+externally from secondary parameters that are only used internally.</strong> There is
+no way to prevent some parameters being set externally, ie with <code>localparam</code>,
+so a comment can be used to do this, for&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="nt">module</span><span class="w"> </span><span class="nt">m_rf</span>
+<span class="err">#</span><span class="o">(</span><span class="nt">parameter</span>
+<span class="w">  </span><span class="nt">p_entry_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">32</span><span class="o">,</span>
+<span class="w">  </span><span class="nt">p_num_entries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">64</span><span class="o">,</span>
+<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nt">Internal</span><span class="w"> </span><span class="nt">parameter</span><span class="o">(</span><span class="nt">s</span><span class="o">)</span><span class="w"> </span><span class="nt">-</span><span class="w"> </span><span class="nt">do</span><span class="w"> </span><span class="nt">not</span><span class="w"> </span><span class="nt">set</span><span class="o">.</span>
+<span class="w">  </span><span class="nt">p_idx_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">$</span><span class="nt">clog2</span><span class="o">(</span><span class="nt">p_num_entries-1</span><span class="o">))</span>
+<span class="o">(</span><span class="w"> </span><span class="o">...,</span>
+<span class="w">  </span><span class="nt">input</span><span class="w"> </span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="nx">p_entry_width</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">wr_data</span><span class="o">,</span>
+<span class="w">  </span><span class="nt">input</span><span class="w"> </span><span class="nt">logic</span><span class="w"> </span><span class="cp">[</span><span class="nx">p_idx_width</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="nt">wr_idx</span><span class="o">,</span>
+<span class="w">  </span><span class="nt">input</span><span class="w"> </span><span class="nt">logic</span><span class="w"> </span><span class="nt">wr_en</span><span class="o">,</span>
+<span class="o">...</span>
+<span class="o">);</span>
+</pre></div>
+
+
+<p><strong>Name scopes that contain local variables.</strong> For similar reasons to the naming
+of generate blocks, if a variable is declared in a local scope, that scope must
+be named. It may be useful to introduce named local scopes to separate a large
+module into sections. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="n">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">p0</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="n">end</span>
+<span class="n">begin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">p1</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="n">end</span>
+</pre></div>
+
+
+<p><strong>Any unused or dangling signals/ports within a block must be terminated with a
+signal prefixed with <code>unused_</code>.</strong> These signals can be <span class="caps">AND</span>-reduced to make a
+single-bit signal. The <span class="caps">AND</span>-reduction with constant zeros guarantees the result
+is always zero, so it can be safely optimised away. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span>logic _unused_ok = &amp;{1&#39;b0,
+                     sig_not_used_a,
+                     sig_not_used_yet_b // To be fixed
+                     };
+</pre></div>
+
+
+<p><a name="packages" class="anchor"></a></p>
+<h3>Packages</h3>
+<p><strong>Define packages to share definitions (types, constants, tasks, functions etc)
+between multiple modules or&nbsp;IPs.</strong></p>
+<p><strong>Qualify types, constants, tasks or functions with their package name and
+avoid * imports.</strong> This resolves any potential ambiguity in the providence of
+symbols to the designer and avoids polluting the current scope with all names
+defined by the package. For&nbsp;example:</p>
+<div class="codehilite"><pre><span></span><span class="o">//</span> <span class="n">Avoid</span>
+<span class="kn">import</span> <span class="nn">m_core_pkg</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">Prefer</span>
+<span class="n">m_core_pkg</span><span class="p">::</span><span class="n">FIFO_RAM_WIDTH</span>
+<span class="n">m_core_pkg</span><span class="p">::</span><span class="n">grey_code</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+
+
+<p><a name="assertions" class="anchor"></a></p>
+<h3>Assertions</h3>
+<p><strong>Assertions should be written in a separate file that is bound in to the
+appropriate scope.</strong> Verification tests must be written to specifically ensure
+that the assertions are present in&nbsp;simulation.</p>
+<p><strong>Assertion files must be named after the block they apply to, with an
+<code>_assert.sv</code> suffix.</strong> Where assertions have been split into different groups
+to allow use in gate-level simulations (or other environments), the file name
+may have a <code>_ports_assert.sv</code>, <code>_regs_assert.sv</code> or <code>_nets_assert.sv</code> suffix as&nbsp;appropriate.</p>
+<p><a name="preprocessor" class="anchor"></a></p>
+<h3>Preprocessor</h3>
+<p><strong>In general, it should be possible to avoid any preprocessing of code.</strong> Other
+built-in language structures such as parameters and generate statements should
+be used instead. Don&#8217;t use local <code>define</code> statements in modules unless
+absolutely necessary, use <code>localparam</code> instead of <code>define</code>:</p>
+<div class="codehilite"><pre><span></span><span class="o">//</span><span class="w"> </span><span class="n">Avoid</span>
+<span class="err">`</span><span class="n">define</span><span class="w"> </span><span class="n">CONSTANT</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="o">//</span><span class="w"> </span><span class="n">Prefer</span>
+<span class="n">localparam</span><span class="w"> </span><span class="n">p_constant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+
+
+<p>This is because SystemVerilog macro definitions are not scoped within a module,
+which can easily lead to them &#8216;leaking&#8217; between files in a filelist, making the
+elaboration dependent on the ordering of the&nbsp;list.</p>
+<p>For similar reasons, <strong>use generate-if blocks instead of <code>ifdef</code>.</strong></p>
+<div class="codehilite"><pre><span></span><span class="c1">// Avoid</span>
+`<span class="n">ifdef</span><span class="w"> </span><span class="n">FLAG</span>
+<span class="p">...</span>
+`<span class="k">endif</span>
+
+<span class="c1">// Prefer</span>
+<span class="n">generate</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p_flag</span><span class="p">)</span><span class="w"> </span><span class="n">begin</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="n">endgenerate</span>
+</pre></div>
+
+
+<p><strong>If a local define is unavoidable, then a corresponding <code>undef</code> must be included
+before the end of the file.</strong> This is to avoid macro definitions polluting the
+global&nbsp;namespace.</p>
+<div class="codehilite"><pre><span></span><span class="sb">`define LOCAL_DEFINE</span>
+
+<span class="sb">...</span>
+
+<span class="sb">// End of the file or use of LOCAL_DEFINE</span>
+<span class="sb">`</span>undef LOCAL_DEFINE
+</pre></div>
+
+
+<p><a name="formatting" class="anchor"></a></p>
+<h2>Formatting</h2>
+<p>Rules for formatting are not mandated so to provide some flexibility to
+designer&#8217;s own tastes and the inevitable exceptions to rules. Above all, the
+most important issue with formatting is to maintain consistency within a
+logical part of the&nbsp;design.</p>
+<p><strong>Use spaces instead of tabs</strong>, consistent with the accepted approach in other
+programming languages for compatibility with version control and editors&nbsp;etc.</p>
+<p><strong>Split long lines or complex expressions with continuations or across
+statements.</strong> Apply indent as appropriate  for clarity. In this context, &#8216;long&#8217;
+is a reasonable value chosen by the author, but typically between 80 and 120&nbsp;characters.</p>
+<p><strong>Use begin and end to wrap <code>if</code>/<code>else</code>, <code>always_ff</code> and <code>always_comb</code>
+blocks.</strong> This adds consistency to the code and can help to prevent statements
+from unintentionally being excluded from a block. Only use begin and end in
+case alternatives when they contain multiple&nbsp;statements.</p>
 <p><a name="summary" class="anchor"></a></p>
 <h2>Summary</h2>
-<p>Verilog is a large language with features supporting different purposes. It is
-used as a standard in hardware design but its specification does not define a
-synthesizable subset. Although there is a general consensus on which features
-can be used for synthesis, the fine details are determined by the particular
-<span class="caps">EDA</span> tooling flow used by a design team. Verilog is consequently used in a
-conservative way for specifying synthesizable designs. The rules and rationale
-given in this note outline some of the important aspects of a coding style for
-hardware design. There are many more details of Verilog&#8217;s features that are
-relevant; the references below are a good place to find out&nbsp;more.</p>
+<p>SystemVerilog is a large language with many features supporting different
+purposes. It is used as a standard in hardware design but its specification
+does not define a synthesizable subset. Although there is a general consensus
+on which features can be used for synthesis, the fine details are determined by
+the particular <span class="caps">EDA</span> tooling flow used by a design team. SystemVerilog is
+consequently used in a conservative way for specifying synthesizable designs.
+The rules and rationale given in this note outline some of the important
+aspects of a coding style for hardware design. There are many more details of
+SystemVerilog&#8217;s features that are relevant; the references below are a good
+place to find out&nbsp;more.</p>
 <p><a name="refs" class="anchor"></a></p>
 <h2>References/further&nbsp;reading</h2>
 <ul>
-<li><span class="caps">IEEE</span> Standard for SystemVerilog (<span class="caps">IEEE</span> 1800-2012 and&nbsp;1800-2017).</li>
-<li><a href="http://www.sutherland-hdl.com/papers.html">Sutherland <span class="caps">HDL</span> papers</a> on Verilog, in particular:<ul>
-<li>Stuart Sutherland and Don Mills, Standard gotchas subtleties in the
+<li>
+<p><span class="caps">IEEE</span> Standard for SystemVerilog (<span class="caps">IEEE</span> 1800-2012 and&nbsp;1800-2017).</p>
+</li>
+<li>
+<p><a href="http://www.sutherland-hdl.com/papers.html">Sutherland <span class="caps">HDL</span> papers</a> on
+  Verilog/SystemVerilog, in&nbsp;particular:</p>
+<ul>
+<li>
+<p>Stuart Sutherland and Don Mills, Standard gotchas subtleties in the
   Verilog and SystemVerilog standards that every engineer should know. <span class="caps">SNUG</span> 2006.
-  (<a href="http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_paper.pdf"><span class="caps">PDF</span></a>)</li>
-<li>Stuart Sutherland, A Proposal for a Standard Synthesizable SystemVerilog Subset. DVCon 2006.
-  (<a href="http://www.sutherland-hdl.com/papers/2006-DVCon_SystemVerilog_synthesis_subset_paper.pdf"><span class="caps">PDF</span></a>)</li>
-<li>Stuart Sutherland and Don Mills, Synthesizing SystemVerilog: Busting the
+  (<a href="http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_paper.pdf"><span class="caps">PDF</span></a>)</p>
+</li>
+<li>
+<p>Stuart Sutherland, A Proposal for a Standard Synthesizable SystemVerilog Subset. DVCon 2006.
+  (<a href="http://www.sutherland-hdl.com/papers/2006-DVCon_SystemVerilog_synthesis_subset_paper.pdf"><span class="caps">PDF</span></a>)</p>
+</li>
+<li>
+<p>Stuart Sutherland and Don Mills, Synthesizing SystemVerilog: Busting the
   myth that SystemVerilog is only for verification, <span class="caps">SNUG</span> 2013.
-  (<a href="http://www.sutherland-hdl.com/papers/2013-SNUG-SV_Synthesizable-SystemVerilog_paper.pdf"><span class="caps">PDF</span></a>).</li>
-<li>Stuart Sutherland and Don Mills, Can my synthesis compiler do that? What <span class="caps">ASIC</span>
+  (<a href="http://www.sutherland-hdl.com/papers/2013-SNUG-SV_Synthesizable-SystemVerilog_paper.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Stuart Sutherland and Don Mills, Can my synthesis compiler do that? What <span class="caps">ASIC</span>
   and <span class="caps">FPGA</span> synthesis compilers support in the SystemVerilog-2012 standard, DVCon 2014
-  (<a href="http://www.sutherland-hdl.com/papers/2014-DVCon_ASIC-FPGA_SV_Synthesis_paper.pdf"><span class="caps">PDF</span></a>).</li>
+  (<a href="http://www.sutherland-hdl.com/papers/2014-DVCon_ASIC-FPGA_SV_Synthesis_paper.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Stuart Sutherland, I&#8217;m Still In Love With My X! (but, do I want my X to
+  be an optimist, a pessimist, or eliminated?), DVCon 2013,
+  (<a href="https://sutherland-hdl.com/papers/2013-DVCon_In-love-with-my-X_paper.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
 </ul>
 </li>
-<li>SystemVerilog&#8217;s priority <span class="amp">&amp;</span> unique - A Solution to Verilog&#8217;s &#8220;full_case&#8221; <span class="amp">&amp;</span> &#8220;parallel_case&#8221; Evil Twins!,
+<li>
+<p>Clifford E. Cummings and Don Mills. Synchronous Resets? Asynchronous Resets?
+  I am so confused! How will I ever know which to use?
+  (<a href="http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf"><span class="caps">PDF</span></a>.</p>
+</li>
+<li>
+<p>SystemVerilog&#8217;s priority <span class="amp">&amp;</span> unique - A Solution to Verilog&#8217;s &#8220;full_case&#8221; <span class="amp">&amp;</span> &#8220;parallel_case&#8221; Evil Twins!,
   Clifford E. Cummings, <span class="caps">SNUG</span> 2005
-  (<a href="http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf"><span class="caps">PDF</span></a>).</li>
-<li>Verilog <span class="caps">HDL</span> Coding, Semiconductor Reuse Standard, Freescale Semiconductor
-  (<a href="https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf"><span class="caps">PDF</span></a>).</li>
-<li>Complex Digital Systems, Synthesis, <span class="caps">MIT</span> <span class="caps">OCW</span>, 2005 (presentation slides,
-  (<a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf"><span class="caps">PDF</span></a>).</li>
+  (<a href="http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Verilog <span class="caps">HDL</span> Coding, Semiconductor Reuse Standard, Freescale Semiconductor
+  (<a href="https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Complex Digital Systems, Synthesis, <span class="caps">MIT</span> <span class="caps">OCW</span>, 2005 (presentation slides,
+  (<a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Datapath Synthesis for Standard-Cell Design, Reto Zimmermann, 2009
+  (<a href="http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
+<li>
+<p>Getting the Most from Synthesis to Improve your Datapath QoR, Reto
+  Zimmermann, Principal R&amp;D Engineer, DesignWare <span class="caps">IP</span>
+  (<a href="http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf"><span class="caps">PDF</span></a>).</p>
+</li>
 </ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:logic-wire-reg">
+<p>More details on these types is given
+  <a href="https://blogs.sw.siemens.com/verificationhorizons/2013/05/03/wire-vs-reg">here</a> and
+  <a href="https://www.verilogpro.com/verilog-reg-verilog-wire-systemverilog-logic">here</a>.&#160;<a class="footnote-backref" href="#fnref:logic-wire-reg" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:always-blocks">
+<p>With one exception of memory structures that require
+  initialisation via an external hierarchical reference. If the memory array is
+  written by an <code>always_</code> block, the memory cannot be driven by another process.
+  Support for <code>$deposit</code> is patchy in tooling, so this cannot always be relied
+  on.&#160;<a class="footnote-backref" href="#fnref:always-blocks" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:wildcards">
+<p>See Section 7 of &#8216;Synthesizing SystemVerilog: Busting the Myth
+  that SystemVerilog is only for Verification (linked in the references).&#160;<a class="footnote-backref" href="#fnref:wildcards" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
   </div>
   <div class="article-footer">
     <p>Please get in touch (mail @ this domain) with any
