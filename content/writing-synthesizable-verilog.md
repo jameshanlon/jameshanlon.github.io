@@ -1670,15 +1670,16 @@ case alternatives when they contain multiple statements.
 <a name="summary" class="anchor"></a>
 ## Summary
 
-Verilog is a large language with features supporting different purposes. It is
-used as a standard in hardware design but its specification does not define a
-synthesizable subset. Although there is a general consensus on which features
-can be used for synthesis, the fine details are determined by the particular
-EDA tooling flow used by a design team. SystemVerilog is consequently used in a
-conservative way for specifying synthesizable designs. The rules and rationale
-given in this note outline some of the important aspects of a coding style for
-hardware design. There are many more details of SystemVerilog's features that are
-relevant; the references below are a good place to find out more.
+SystemVerilog is a large language with many features supporting different
+purposes. It is used as a standard in hardware design but its specification
+does not define a synthesizable subset. Although there is a general consensus
+on which features can be used for synthesis, the fine details are determined by
+the particular EDA tooling flow used by a design team. SystemVerilog is
+consequently used in a conservative way for specifying synthesizable designs.
+The rules and rationale given in this note outline some of the important
+aspects of a coding style for hardware design. There are many more details of
+SystemVerilog's features that are relevant; the references below are a good
+place to find out more.
 
 
 <a name="refs" class="anchor"></a>
@@ -1704,6 +1705,14 @@ relevant; the references below are a good place to find out more.
       and FPGA synthesis compilers support in the SystemVerilog-2012 standard, DVCon 2014
       ([PDF](http://www.sutherland-hdl.com/papers/2014-DVCon_ASIC-FPGA_SV_Synthesis_paper.pdf)).
 
+    * Stuart Sutherland, I'm Still In Love With My X! (but, do I want my X to
+      be an optimist, a pessimist, or eliminated?), DVCon 2013,
+      ([PDF](https://sutherland-hdl.com/papers/2013-DVCon_In-love-with-my-X_paper.pdf)).
+
+- Clifford E. Cummings and Don Mills. Synchronous Resets? Asynchronous Resets?
+  I am so confused! How will I ever know which to use?
+  ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf).
+
 - SystemVerilog's priority & unique - A Solution to Verilog's "full_case" & "parallel_case" Evil Twins!,
   Clifford E. Cummings, SNUG 2005
   ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf)).
@@ -1713,3 +1722,10 @@ relevant; the references below are a good place to find out more.
 
 - Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides,
   ([PDF](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf)).
+
+- Datapath Synthesis for Standard-Cell Design, Reto Zimmermann, 2009
+  ([PDF](http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf)).
+
+- Getting the Most from Synthesis to Improve your Datapath QoR, Reto
+  Zimmermann, Principal R&D Engineer, DesignWare IP
+  ([PDF](http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf)).
