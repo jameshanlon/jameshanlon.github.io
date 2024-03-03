@@ -9320,6 +9320,9 @@ place to find out&amp;nbsp;more.&lt;/p&gt;
   (&lt;a href="http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;&lt;a href="https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md"&gt;lowRISC Verilog style guide&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;Verilog &lt;span class="caps"&gt;HDL&lt;/span&gt; Coding, Semiconductor Reuse Standard, Freescale Semiconductor
   (&lt;a href="https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf"&gt;&lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;).&lt;/p&gt;
 &lt;/li&gt;
