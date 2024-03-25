@@ -79,15 +79,15 @@ The results are summarised in the following table:
   </thead>
   <tbody>
     <tr>
-      <th>Scheme A</th>
+      <td>Scheme A</td>
       <td>10</td>
       <td>256 MB</td>
       <td><code>DC6</code>, <code>FPF</code></td>
     </tr>
     <tr>
-      <th>Scheme A</th>
+      <td>Scheme A</td>
       <td>100</td>
-      <td>512 MB</td>td>
+      <td>512 MB</td>
       <td><code>DC6</code>, <code>FPF</code></td>
     </tr>
     <tr>
@@ -100,7 +100,7 @@ The results are summarised in the following table:
       <td>Scheme B</td>
       <td>10</td>
       <td>256 MB</td>
-      <td>FPF</td>
+      <td><code>FPF</code></td>
     </tr>
     <tr>
       <td>Scheme B</td>
@@ -114,7 +114,6 @@ The results are summarised in the following table:
       <td>32 GB</td>
       <td><code>BCFN</code></td>
     </tr>
-
   </tbody>
 </table>
 
