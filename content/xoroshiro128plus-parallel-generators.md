@@ -12,7 +12,7 @@ As part of the [statistical quality
 analysis](/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu) I
 did of the of the `xoroshiro128aox` PRNG, I looked at interleaved parallel
 generators (where a single generator is created by round-robin interleaving the
-output $n$ identical generators with different seeds) as a way to test it's
+output $n$ identical generators with different seeds) as a way to test its
 suitability for parallel processing. Against my intuition, I found that simple
 seeding schemes produce poor interleaved generators, and even when the
 subsequences are disjoint. These findings equally apply to `xoroshiro128+` as
@@ -23,7 +23,7 @@ function](https://prng.di.unimi.it) to seed parallel generators to
 deterministically move to disjoint parts of the sequence. However, computing
 jumps is expensive to do in hardware because it involves 128-bit arithmetic and
 so it is preferrable to compute seed values based on a simpler function of a
-machine's state, such as an integer identifier for a process. Since the
+machine's state, such as an integer identifier for a process/thread. Since the
 probability of any two randomly-chosen sequences overlap is very small even
 with a large number of sequences, it seems reasonable to assume that a simple
 seed generator will perform okay in practice. Note also that the creators
@@ -36,8 +36,8 @@ To investigate the use of simple seeding schemes, I ran tests against
 interleaved generators with three representative options (the source code is
 available on [GitHub](https://github.com/jameshanlon/prng-testing)):
 
-With equidistant intervals from 1 in the integer sequence [Scheme A], defined
-in Python notation as:
+With equidistant intervals from 1 in the natural number sequence [Scheme A],
+defined in Python notation as:
 ```
 for i in range(NUM_SEEDS):
     seed[i] = int(1 + i * ((2**128) // NUM_SEEDS))
@@ -58,14 +58,69 @@ for i in range(NUM_SEEDS):
 And, as baselines:
 
 - Using the `xoroshiro128` jump function, jumping $2^{64}$ steps [Scheme D].
-- Using a minimum-size jump for the number of generators to pass PractRand [Scheme E].
+- Using a minimum-size jump for the number of generators to pass PractRand [Scheme E]
+  (for example, the distance for 1000 generators is 4398046511 = (32 * 1024**4) / (8 * 1000)
 - Using a non-linear PRNG to choose seeds (PCG64) [Scheme F].
 
 To test these seeding schemes, I ran each generator against the standard
-PractRand test battery, which consumes up to 32 TB of data. A pass is achieved
-if no overtly suspicious $p$-values are flagged.
+PractRand test battery. PractRand is a good choice for these tests since it reports
+results at intermediate points and consumes much more output than Big Crush or Gjrand:
+32 TB by default. A pass is achieved if no overtly suspicious $p$-values are flagged.
 
 The results are summarised in the following table:
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Seeding scheme</th>
+      <th scope="col">Number of generators</th>
+      <th scope="col">Failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Scheme A</th>
+      <td>10</td>
+      <td>256 MB</td>
+      <td><code>DC6</code>, <code>FPF</code></td>
+    </tr>
+    <tr>
+      <th>Scheme A</th>
+      <td>100</td>
+      <td>512 MB</td>td>
+      <td><code>DC6</code>, <code>FPF</code></td>
+    </tr>
+    <tr>
+      <td>Scheme A</td>
+      <td>1000</td>
+      <td>16 GB</td>
+      <td><code>BCFN</code></td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>10</td>
+      <td>256 MB</td>
+      <td>FPF</td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>100</td>
+      <td>2 GB</td>
+      <td><code>DC6</code></td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>1000</td>
+      <td>32 GB</td>
+      <td><code>BCFN</code></td>
+    </tr>
+
+  </tbody>
+</table>
+
+Note that DC6 and BCFN are both tests for linearity.
+
+All tests failing within the first 1 GB are checked for dupilicate values between the different generators to establish that no two sequences overlap.
 
 Sample output for Scheme A with 10 parallel generators that fails convincingly
 within the first 256 MB of output:
@@ -170,3 +225,17 @@ length= 256 megabytes (2^28 bytes), time= 2.3 seconds
   [Low1/64]mod3n(5):(8,9-6)         R=  +2.3  p = 0.111     normal
   [Low1/64]mod3n(5):(9,9-6)         R=  +2.2  p = 0.125     normal
 ```
+
+## Conclusion
+
+Inter-sequence correlations exist in PRNGs based on the `xoroshiro128` linear engine.
+It is likely that these correlations manifest when sequences are chosen by a linear generator.
+Use the jump function to traverse the state space or use a non-linear function to generate  
+
+## References
+
+- My [PRNG testing](https://github.com/jameshanlon/prng-testing) source code.
+- [xoshiro / xoroshiro generators and the PRNG shootout](https://prng.di.unimi.it/).
+- Makoto Matsumoto, Isaku Wada, Ai Kuramoto, and Hyo Ashihara. 2007.
+  Common defects in initialization of pseudorandom number generators.
+  [ACM Transactions on Modelling and Computer Simulation](https://doi.org/10.1145/1276927.1276928).
