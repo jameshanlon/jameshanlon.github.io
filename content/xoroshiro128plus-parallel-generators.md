@@ -74,7 +74,8 @@ The results are summarised in the following table:
     <tr>
       <th scope="col">Seeding scheme</th>
       <th scope="col">Number of generators</th>
-      <th scope="col">Failures</th>
+      <th scope="col">Output seen</th>
+      <th scope="col">Failing tests</th>
     </tr>
   </thead>
   <tbody>
@@ -114,12 +115,49 @@ The results are summarised in the following table:
       <td>32 GB</td>
       <td><code>BCFN</code></td>
     </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>10</td>
+      <td>256 MB</td>
+      <td><code>?</code></td>
+    </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>100</td>
+      <td>256 MB</td>
+      <td><code>?</code></td>
+    </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>1000</td>
+      <td>256 MB</td>
+      <td><code>?</code></td>
+    </tr>
+    <tr>
+      <td>Scheme D</td>
+      <td>10,100,1000</td>
+      <td>32 TB</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>Scheme E</td>
+      <td>10,100,1000</td>
+      <td>32 TB</td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>Scheme F</td>
+      <td>10,100,1000</td>
+      <td>32 TB</td>
+      <td>Pass</td>
+    </tr>
   </tbody>
 </table>
 
-Note that DC6 and BCFN are both tests for linearity.
-
-All tests failing within the first 1 GB are checked for dupilicate values between the different generators to establish that no two sequences overlap.
+Note that `DC6` and `BCFN` are both tests for linearity.
+For the failing generators, I checked there are no dupilicate values between
+the different generators to establish that no two sequences overlap. This means
+that the above failures are due to correlations between disjoint sequences.
 
 Sample output for Scheme A with 10 parallel generators that fails convincingly
 within the first 256 MB of output:
@@ -227,14 +265,17 @@ length= 256 megabytes (2^28 bytes), time= 2.3 seconds
 
 ## Conclusion
 
-Inter-sequence correlations exist in PRNGs based on the `xoroshiro128` linear engine.
-It is likely that these correlations manifest when sequences are chosen by a linear generator.
-Use the jump function to traverse the state space or use a non-linear function to generate  
+Correlations between disjoint exist in PRNGs based on the `xoroshiro128` linear engine.
+These correlations can manifest when sequences are chosen by a linear generator, but based
+on the results in this note, do also occur when seeds are created using addition.
+To avoid these kind of correlations, use the jump function to traverse the state space or use
+a non-linear function to generate pick random seeds.
 
 ## References
 
 - My [PRNG testing](https://github.com/jameshanlon/prng-testing) source code.
 - [xoshiro / xoroshiro generators and the PRNG shootout](https://prng.di.unimi.it/).
+- [PractRand](https://pracrand.sourceforge.net).
 - Makoto Matsumoto, Isaku Wada, Ai Kuramoto, and Hyo Ashihara. 2007.
   Common defects in initialization of pseudorandom number generators.
   [ACM Transactions on Modelling and Computer Simulation](https://doi.org/10.1145/1276927.1276928).
