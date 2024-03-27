@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Seeding parallel xoroshiro128+ generators</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="http://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="http://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <!-- MathJax -->
+  <script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+              svg: { fontCache: 'global' } };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <script src="./theme/js/bundle.js"></script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/links.html">links</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    Seeding parallel xoroshiro128+&nbsp;generators
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2022-10-01T00:00:00+02:00">
+      01 Oct 2022
+    </time><br>
+      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag small"><a href="/tag/PRNGs.html">PRNGs</a></span>
+  </div>
+  <div class="article-body">
+    <p>As part of the <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu">statistical quality
+analysis</a> I
+did of the of the <code>xoroshiro128aox</code> <span class="caps">PRNG</span>, I looked at interleaved parallel
+generators (where a single generator is created by round-robin interleaving the
+output $n$ identical generators with different seeds) as a way to test its
+suitability for parallel processing. Against my intuition, I found that simple
+seeding schemes produce poor interleaved generators, and even when the
+subsequences are disjoint. These findings equally apply to <code>xoroshiro128+</code> as
+we will&nbsp;see.</p>
+<p>The <code>xoroshiro128+</code> creators <a href="https://prng.di.unimi.it">recommend using a jump
+function</a> to seed parallel generators to
+deterministically move to disjoint parts of the sequence. However, computing
+jumps is expensive to do in hardware because it involves 128-bit arithmetic and
+so it is preferable to compute seed values based on a simpler function of a
+machine&#8217;s state, such as an integer identifier for a process/thread. Since the
+probability of any two randomly-chosen sequences overlap is very small even
+with a large number of sequences, it seems reasonable to assume that a simple
+seed generator will perform okay in practice. Note also that the creators
+separately recommend &#8220;that initialization must be performed with a generator
+radically different in nature from the one initialized to avoid correlation on
+similar seeds&#8221;, based on <a href="https://dl.acm.org/citation.cfm?doid=1276927.1276928">research from
+2007</a>.</p>
+<p>To investigate the use of simple seeding schemes, I ran tests against
+interleaved generators with three representative options (the source code is
+available on <a href="https://github.com/jameshanlon/prng-testing">GitHub</a>):</p>
+<p>With equidistant intervals from 1 in the natural number sequence [Scheme A],
+defined in Python notation&nbsp;as:</p>
+<div class="codehilite"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">NUM_SEEDS</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">seed</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="mi">2</span><span class="o">**</span><span class="mi">128</span><span class="p">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">NUM_SEEDS</span><span class="p">))</span>
+</pre></div>
+
+
+<p>With equidistant intervals starting from a random offset [Scheme&nbsp;B]:</p>
+<div class="codehilite"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">NUM_SEEDS</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">seed</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">int</span><span class="p">(</span><span class="nf">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">128</span><span class="p">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">NUM_SEEDS</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">((</span><span class="mi">2</span><span class="o">**</span><span class="mi">128</span><span class="p">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="n">NUM_SEEDS</span><span class="p">))</span>
+</pre></div>
+
+
+<p>By adding a fixed offset to a initial state of balanced 0s and 1s [Scheme&nbsp;C]:</p>
+<div class="codehilite"><pre><span></span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">NUM_SEEDS</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">seed</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x55555555555555555555555555555555</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span>
+</pre></div>
+
+
+<p>And, as&nbsp;baselines:</p>
+<ul>
+<li>Using the <code>xoroshiro128</code> jump function, jumping $2^{64}$ steps [Scheme&nbsp;D].</li>
+<li>Using a minimum-size jump for the number of generators to pass PractRand [Scheme E]
+  (for example, the distance for 1000 generators is 4398046511 = <code>(32 * 1024**4) / (8 * 1000)</code>).</li>
+<li>Using a non-linear <span class="caps">PRNG</span> to choose seeds (<span class="caps">PCG64</span>) [Scheme&nbsp;F].</li>
+</ul>
+<p>To test these seeding schemes, I ran each generator against the standard
+PractRand test battery. PractRand is a good choice for these tests since it reports
+results at intermediate points and consumes much more output than Big Crush or Gjrand:
+32 <span class="caps">TB</span> by default. A pass is achieved if no overtly suspicious $p$-values are&nbsp;flagged.</p>
+<p>The results are summarised in the following&nbsp;table:</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Seeding scheme</th>
+      <th scope="col">Number of generators</th>
+      <th scope="col">Output seen</th>
+      <th scope="col">Failing tests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Scheme A</td>
+      <td>10</td>
+      <td>256 <span class="caps">MB</span></td>
+      <td><code>DC6</code>, <code>FPF</code></td>
+    </tr>
+    <tr>
+      <td>Scheme A</td>
+      <td>100</td>
+      <td>512 <span class="caps">MB</span></td>
+      <td><code>DC6</code>, <code>FPF</code></td>
+    </tr>
+    <tr>
+      <td>Scheme A</td>
+      <td>1000</td>
+      <td>16 <span class="caps">GB</span></td>
+      <td><code>BCFN</code></td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>10</td>
+      <td>256 <span class="caps">MB</span></td>
+      <td><code>FPF</code></td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>100</td>
+      <td>2 <span class="caps">GB</span></td>
+      <td><code>DC6</code></td>
+    </tr>
+    <tr>
+      <td>Scheme B</td>
+      <td>1000</td>
+      <td>32 <span class="caps">GB</span></td>
+      <td><code>BCFN</code></td>
+    </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>10</td>
+      <td>256 <span class="caps">MB</span></td>
+      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3</code></td>
+    </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>100</td>
+      <td>256 <span class="caps">MB</span></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3n</code></td>
+    </tr>
+    <tr>
+      <td>Scheme C</td>
+      <td>1000</td>
+      <td>256 <span class="caps">MB</span></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>Brank</code>, <code>FPF</code>, <code>mod3n</code></td>
+    </tr>
+    <tr>
+      <td>Scheme D</td>
+      <td>10,100,1000</td>
+      <td>32 <span class="caps">TB</span></td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>Scheme E</td>
+      <td>10,100,1000</td>
+      <td>32 <span class="caps">TB</span></td>
+      <td>Pass</td>
+    </tr>
+    <tr>
+      <td>Scheme F</td>
+      <td>10,100,1000</td>
+      <td>32 <span class="caps">TB</span></td>
+      <td>Pass</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note that <code>DC6</code> and <code>BCFN</code> are both tests for linearity. For the failing
+generators (schemes A-C), I checked there are no duplicate values between the
+different generators to establish that no two sequences overlap (using the
+<code>analyse</code> mode). This means that the above failures are due to correlations
+between disjoint&nbsp;sequences.</p>
+<p>For reference, below is sample output for running the Scheme A generator with
+10 parallel streams against PractRand. There are comprehensive failures within
+the first 256 <span class="caps">MB</span> of&nbsp;output.</p>
+<div class="codehilite"><pre><span></span>$<span class="w"> </span>./build/xoroshiro128plus_il_equia_10<span class="w"> </span>stdout<span class="w"> </span>std64<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./install/PractRand-pre0.95/RNG_test<span class="w"> </span>stdin64<span class="w"> </span>-a
+RNG_test<span class="w"> </span>using<span class="w"> </span>PractRand<span class="w"> </span>version<span class="w"> </span><span class="m">0</span>.95
+<span class="nv">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>RNG_stdin64,<span class="w"> </span><span class="nv">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>unknown
+<span class="nb">test</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>core,<span class="w"> </span><span class="nv">folding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>standard<span class="w"> </span><span class="o">(</span><span class="m">64</span><span class="w"> </span>bit<span class="o">)</span>
+
+<span class="nv">rng</span><span class="o">=</span>RNG_stdin64,<span class="w"> </span><span class="nv">seed</span><span class="o">=</span>unknown
+<span class="nv">length</span><span class="o">=</span><span class="w"> </span><span class="m">256</span><span class="w"> </span>megabytes<span class="w"> </span><span class="o">(</span><span class="m">2</span>^28<span class="w"> </span>bytes<span class="o">)</span>,<span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="w"> </span><span class="m">2</span>.3<span class="w"> </span>seconds
+<span class="w">  </span>Test<span class="w"> </span>Name<span class="w">                         </span>Raw<span class="w">       </span>Processed<span class="w">     </span>Evaluation
+<span class="w">  </span>BCFN<span class="o">(</span><span class="m">2</span>+0,13-2,T<span class="o">)</span><span class="w">                  </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.494<span class="w">     </span>normal
+<span class="w">  </span>BCFN<span class="o">(</span><span class="m">2</span>+1,13-2,T<span class="o">)</span><span class="w">                  </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+4.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.050<span class="w">     </span>normal
+<span class="w">  </span>BCFN<span class="o">(</span><span class="m">2</span>+2,13-3,T<span class="o">)</span><span class="w">                  </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.484<span class="w">     </span>normal
+<span class="w">  </span>BCFN<span class="o">(</span><span class="m">2</span>+3,13-3,T<span class="o">)</span><span class="w">                  </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.292<span class="w">     </span>normal
+...
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+12,13-9,T<span class="o">)</span><span class="w">       </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-2.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.849<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>DC6-9x1Bytes-1<span class="w">          </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.332<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>Gap-16:A<span class="w">                </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.523<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>Gap-16:B<span class="w">                </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+4.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">1</span>.3e-3<span class="w">   </span>normalish
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">0</span>,14-0<span class="o">)</span><span class="w">    </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.434<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low16/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">1</span>,14-0<span class="o">)</span><span class="w">    </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.061<span class="w">     </span>normal
+...
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+9,13-9,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.310<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+10,13-9,T<span class="o">)</span><span class="w">        </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.372<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>DC6-9x1Bytes-1<span class="w">           </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+88.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">5</span>.9e-51<span class="w">    </span>FAIL<span class="w"> </span>!!!!
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>Gap-16:A<span class="w">                 </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+4.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">4</span>.6e-3<span class="w">   </span>normalish
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>Gap-16:B<span class="w">                 </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.656<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">0</span>,14-1<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.759<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">1</span>,14-2<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-3.7<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="m">1</span>-4.2e-3<span class="w">   </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">2</span>,14-2<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.9<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.738<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">3</span>,14-3<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.189<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">4</span>,14-4<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.134<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">5</span>,14-5<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.206<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">6</span>,14-5<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.166<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">7</span>,14-6<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.877<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">8</span>,14-7<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.7<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.681<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">9</span>,14-8<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.187<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">10</span>,14-8<span class="o">)</span><span class="w">    </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+19.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">5</span>.5e-14<span class="w">    </span>FAIL
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">11</span>,14-9<span class="o">)</span><span class="w">    </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+12.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">4</span>.0e-8<span class="w">   </span>suspicious
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">12</span>,14-10<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+12.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">3</span>.0e-7<span class="w">   </span>mildly<span class="w"> </span>suspicious
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">13</span>,14-11<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+5.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">4</span>.8e-3<span class="w">   </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">14</span>,14-11<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+8.8<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">1</span>.1e-4<span class="w">   </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:all<span class="w">          </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.435<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>FPF-14+6/16:cross<span class="w">        </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.032<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:128<span class="o">(</span><span class="m">4</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.8<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.670<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:256<span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.6<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.168<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:384<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.8<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.146<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:512<span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.2<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.554<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:768<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.7<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.689<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">0</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+14.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">1</span>.3e-5<span class="w">   </span>mildly<span class="w"> </span>suspicious
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">1</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.451<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">2</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.492<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">3</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.781<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">4</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.433<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">5</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.353<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">6</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.742<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">7</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.9<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.152<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">8</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.731<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">9</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.540<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">10</span>,9-6<span class="o">)</span><span class="w">        </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.585<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low4/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">11</span>,9-6<span class="o">)</span><span class="w">        </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.322<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+0,13-6,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+7.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">6</span>.5e-3<span class="w">   </span>normalish
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+1,13-6,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-3.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.926<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+2,13-6,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.716<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+3,13-6,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.6<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.238<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+4,13-7,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.7<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.212<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+5,13-8,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.8<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.304<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+6,13-8,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.403<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+7,13-9,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.257<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BCFN<span class="o">(</span><span class="m">2</span>+8,13-9,T<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.8<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.790<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>DC6-9x1Bytes-1<span class="w">           </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+1379<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">3</span>.6e-777<span class="w">   </span>FAIL<span class="w"> </span>!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>Gap-16:A<span class="w">                 </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+4863<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>5e-3914<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>Gap-16:B<span class="w">                 </span><span class="nv">R</span><span class="o">=</span>+11222<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>6e-8467<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">0</span>,14-2<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span>+10120<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>5e-8851<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">1</span>,14-3<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+7164<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>2e-6279<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">2</span>,14-4<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+5071<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>9e-4144<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">3</span>,14-5<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+3567<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>1e-2956<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">4</span>,14-5<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+2180<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>7e-1807<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">5</span>,14-6<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+1535<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>1e-1174<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">6</span>,14-7<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span>+350.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">9</span>.0e-279<span class="w">   </span>FAIL<span class="w"> </span>!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">7</span>,14-8<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span>+255.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">1</span>.1e-183<span class="w">   </span>FAIL<span class="w"> </span>!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">8</span>,14-8<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span>+235.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">1</span>.7e-169<span class="w">   </span>FAIL<span class="w"> </span>!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">9</span>,14-9<span class="o">)</span><span class="w">     </span><span class="nv">R</span><span class="o">=</span>+152.7<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">2</span>.0e-96<span class="w">    </span>FAIL<span class="w"> </span>!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">10</span>,14-10<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+87.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">6</span>.7e-47<span class="w">    </span>FAIL<span class="w"> </span>!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">11</span>,14-11<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+58.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">2</span>.6e-26<span class="w">    </span>FAIL<span class="w"> </span>!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:<span class="o">(</span><span class="m">12</span>,14-11<span class="o">)</span><span class="w">   </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+58.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">3</span>.9e-26<span class="w">    </span>FAIL<span class="w"> </span>!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:all<span class="w">          </span><span class="nv">R</span><span class="o">=</span>+14029<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="w">           </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>FPF-14+6/16:cross<span class="w">        </span><span class="nv">R</span><span class="o">=</span><span class="w"> </span>+3119<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span>3e-2681<span class="w">    </span>FAIL<span class="w"> </span>!!!!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:128<span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.2<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.554<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:256<span class="o">(</span><span class="m">2</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.0<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.744<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:384<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.7<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.689<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>BRank<span class="o">(</span><span class="m">12</span><span class="o">)</span>:512<span class="o">(</span><span class="m">1</span><span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+0.4<span class="w">  </span>p~<span class="o">=</span><span class="w"> </span><span class="m">0</span>.366<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">0</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span>+322.9<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="m">4</span>.1e-111<span class="w">   </span>FAIL<span class="w"> </span>!!!!!
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">1</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.563<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">2</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.1<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.129<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">3</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+5.0<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.016<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">4</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.5<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.099<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">5</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-0.8<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.614<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">6</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>-1.4<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.757<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">7</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+1.7<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.167<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">8</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.3<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.111<span class="w">     </span>normal
+<span class="w">  </span><span class="o">[</span>Low1/64<span class="o">]</span>mod3n<span class="o">(</span><span class="m">5</span><span class="o">)</span>:<span class="o">(</span><span class="m">9</span>,9-6<span class="o">)</span><span class="w">         </span><span class="nv">R</span><span class="o">=</span><span class="w">  </span>+2.2<span class="w">  </span><span class="nv">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>.125<span class="w">     </span>normal
+</pre></div>
+
+
+<h2>Conclusion</h2>
+<p>When choosing seeds for PRNGs operating in parallel, it might seem sufficient
+to ensure that the sequences they range over are disjoint, provably or with
+high probability. However, correlations between disjoint subsequences do exist
+in PRNGs based on the <code>xoroshiro128</code> linear engine. It is known that these
+correlations can manifest when sequences are chosen by a linear generator.
+Based on the findings in this note, these correlations also occur when seeds
+are created using non-linear operations such as addition. The safest course of
+action to take is to follow the guidance of the <code>xoroshiro128</code> authors and
+either use the jump function to traverse the state space or use a high-quality
+non-linear <span class="caps">PRNG</span> to generate random&nbsp;seeds.</p>
+<h2>References</h2>
+<ul>
+<li>My <a href="https://github.com/jameshanlon/prng-testing"><span class="caps">PRNG</span> testing</a> source&nbsp;code.</li>
+<li><a href="https://prng.di.unimi.it/">xoshiro / xoroshiro generators and the <span class="caps">PRNG</span> shootout</a>.</li>
+<li><a href="https://pracrand.sourceforge.net">PractRand</a>.</li>
+<li>Makoto Matsumoto, Isaku Wada, Ai Kuramoto, and Hyo Ashihara. 2007.
+  Common defects in initialization of pseudorandom number generators.
+  <a href="https://doi.org/10.1145/1276927.1276928"><span class="caps">ACM</span> Transactions on Modeling and Computer Simulation</a>.</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a><br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        The views expressed on this website are the author’s personal views and should not be
+        attributed to any other person, including that of their employer.<br>
+        Subscribe: <a href="http://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="http://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
