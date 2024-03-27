@@ -1,10 +1,10 @@
 ---
 Title: Seeding parallel xoroshiro128+ generators
-Date: 2022-7-1
+Date: 2022-10-1
 Category: notes
 Tags: computing, PRNGs
 Summary: Choosing seeds for parallel xoroshiro128+ generators using fixed
-         offsets produces correleated outputs
+         offsets produces correlated outputs.
 Status: published
 ---
 
@@ -22,7 +22,7 @@ The `xoroshiro128+` creators [recommend using a jump
 function](https://prng.di.unimi.it) to seed parallel generators to
 deterministically move to disjoint parts of the sequence. However, computing
 jumps is expensive to do in hardware because it involves 128-bit arithmetic and
-so it is preferrable to compute seed values based on a simpler function of a
+so it is preferable to compute seed values based on a simpler function of a
 machine's state, such as an integer identifier for a process/thread. Since the
 probability of any two randomly-chosen sequences overlap is very small even
 with a large number of sequences, it seems reasonable to assume that a simple
@@ -59,7 +59,7 @@ And, as baselines:
 
 - Using the `xoroshiro128` jump function, jumping $2^{64}$ steps [Scheme D].
 - Using a minimum-size jump for the number of generators to pass PractRand [Scheme E]
-  (for example, the distance for 1000 generators is 4398046511 = (32 * 1024**4) / (8 * 1000)
+  (for example, the distance for 1000 generators is 4398046511 = `(32 * 1024**4) / (8 * 1000)`).
 - Using a non-linear PRNG to choose seeds (PCG64) [Scheme F].
 
 To test these seeding schemes, I ran each generator against the standard
@@ -119,19 +119,19 @@ The results are summarised in the following table:
       <td>Scheme C</td>
       <td>10</td>
       <td>256 MB</td>
-      <td><code>?</code></td>
+      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3</code></td>
     </tr>
     <tr>
       <td>Scheme C</td>
       <td>100</td>
       <td>256 MB</td>
-      <td><code>?</code></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme C</td>
       <td>1000</td>
       <td>256 MB</td>
-      <td><code>?</code></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>Brank</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme D</td>
@@ -154,14 +154,18 @@ The results are summarised in the following table:
   </tbody>
 </table>
 
-Note that `DC6` and `BCFN` are both tests for linearity.
-For the failing generators, I checked there are no dupilicate values between
-the different generators to establish that no two sequences overlap. This means
-that the above failures are due to correlations between disjoint sequences.
+Note that `DC6` and `BCFN` are both tests for linearity. For the failing
+generators (schemes A-C), I checked there are no duplicate values between the
+different generators to establish that no two sequences overlap (using the
+`analyse` mode). This means that the above failures are due to correlations
+between disjoint sequences.
 
-Sample output for Scheme A with 10 parallel generators that fails convincingly
-within the first 256 MB of output:
+For reference, below is sample output for running the Scheme A generator with
+10 parallel streams against PractRand. There are comprehensive failures within
+the first 256 MB of output.
+
 ```
+$ ./build/xoroshiro128plus_il_equia_10 stdout std64 0 0 | ./install/PractRand-pre0.95/RNG_test stdin64 -a
 RNG_test using PractRand version 0.95
 RNG = RNG_stdin64, seed = unknown
 test set = core, folding = standard (64 bit)
@@ -265,11 +269,16 @@ length= 256 megabytes (2^28 bytes), time= 2.3 seconds
 
 ## Conclusion
 
-Correlations between disjoint exist in PRNGs based on the `xoroshiro128` linear engine.
-These correlations can manifest when sequences are chosen by a linear generator, but based
-on the results in this note, do also occur when seeds are created using addition.
-To avoid these kind of correlations, use the jump function to traverse the state space or use
-a non-linear function to generate pick random seeds.
+When choosing seeds for PRNGs operating in parallel, it might seem sufficient
+to ensure that the sequences they range over are disjoint, provably or with
+high probability. However, correlations between disjoint subsequences do exist
+in PRNGs based on the `xoroshiro128` linear engine. It is known that these
+correlations can manifest when sequences are chosen by a linear generator.
+Based on the findings in this note, these correlations also occur when seeds
+are created using non-linear operations such as addition. The safest course of
+action to take is to follow the guidance of the `xoroshiro128` authors and
+either use the jump function to traverse the state space or use a high-quality
+non-linear PRNG to generate random seeds.
 
 ## References
 
@@ -278,4 +287,4 @@ a non-linear function to generate pick random seeds.
 - [PractRand](https://pracrand.sourceforge.net).
 - Makoto Matsumoto, Isaku Wada, Ai Kuramoto, and Hyo Ashihara. 2007.
   Common defects in initialization of pseudorandom number generators.
-  [ACM Transactions on Modelling and Computer Simulation](https://doi.org/10.1145/1276927.1276928).
+  [ACM Transactions on Modeling and Computer Simulation](https://doi.org/10.1145/1276927.1276928).
