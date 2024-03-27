@@ -5,6 +5,7 @@ Title: Links right
 - [Bristol Energy Cooperative](https://bristolenergy.coop)
 - [Bristol Energy Network](https://bristolenergynetwork.org)
 - [Carbon Commentary](https://www.carboncommentary.com/blog)
+- [Climate Change Tracker](https://climatechangetracker.org)
 
 ### Books
 
@@ -13,6 +14,7 @@ Title: Links right
 - [Information Theory, Inference, and Learning Algorithms](http://www.inference.org.uk/mackay/itila)
 - [Structure and Interpretation of Computer Programs](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip)
 - [Sustainable Energy without the Hot Air](https://www.withouthotair.com)
+- [Standard Ebooks](https://standardebooks.org)
 
 ### Friends and colleagues
 

@@ -1717,6 +1717,8 @@ place to find out more.
   Clifford E. Cummings, SNUG 2005
   ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2005Israel_SystemVerilog_UniquePriority.pdf)).
 
+- [lowRISC Verilog style guide](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md).
+
 - Verilog HDL Coding, Semiconductor Reuse Standard, Freescale Semiconductor
   ([PDF](https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf)).
 
