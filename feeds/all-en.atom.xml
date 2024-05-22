@@ -9443,10 +9443,10 @@ between multiple modules or&amp;nbsp;IPs.&lt;/strong&gt;&lt;/p&gt;
 avoid * imports.&lt;/strong&gt; This resolves any potential ambiguity in the providence of
 symbols to the designer and avoids polluting the current scope with all names
 defined by the package. For&amp;nbsp;example:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;Avoid&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;m_core_pkg&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Avoid&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;m_core_pkg&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;Prefer&lt;/span&gt;
+&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Prefer&lt;/span&gt;
 &lt;span class="n"&gt;m_core_pkg&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;FIFO_RAM_WIDTH&lt;/span&gt;
 &lt;span class="n"&gt;m_core_pkg&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;grey_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;

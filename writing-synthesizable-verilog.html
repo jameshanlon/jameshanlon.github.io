@@ -1484,10 +1484,10 @@ between multiple modules or&nbsp;IPs.</strong></p>
 avoid * imports.</strong> This resolves any potential ambiguity in the providence of
 symbols to the designer and avoids polluting the current scope with all names
 defined by the package. For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="o">//</span> <span class="n">Avoid</span>
-<span class="kn">import</span> <span class="nn">m_core_pkg</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="o">//</span><span class="w"> </span><span class="n">Avoid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">m_core_pkg</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 
-<span class="o">//</span> <span class="n">Prefer</span>
+<span class="o">//</span><span class="w"> </span><span class="n">Prefer</span>
 <span class="n">m_core_pkg</span><span class="p">::</span><span class="n">FIFO_RAM_WIDTH</span>
 <span class="n">m_core_pkg</span><span class="p">::</span><span class="n">grey_code</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </pre></div>
