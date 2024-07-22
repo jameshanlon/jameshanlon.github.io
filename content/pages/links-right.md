@@ -5,8 +5,10 @@ Title: Links right
 - [Bristol Energy Cooperative](https://bristolenergy.coop)
 - [Bristol Energy Network](https://bristolenergynetwork.org)
 - [Carbon Commentary](https://www.carboncommentary.com/blog)
+- [Carbon Brief](https://www.carbonbrief.org)
 - [Climate Change Tracker](https://climatechangetracker.org)
 - [Earth Notes](http://www.earth.org.uk)
+- [Shrink That Footprint](https://shrinkthatfootprint.com)
 
 ### Books
 
