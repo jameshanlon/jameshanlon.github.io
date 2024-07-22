@@ -22,5 +22,7 @@ Title: Links left
 ### Resources
 
 - [Awesome Compilers](http://aalhour.com/awesome-compilers)
+- [Niklaus Wirth Archive](https://people.inf.ethz.ch/wirth)
 - [Per Brinch Hansen Archive](http://brinch-hansen.net)
+- [Ram's Transputer Page](http://transputer.classiccmp.org)
 - [Transputer.net](https://www.transputer.net)
