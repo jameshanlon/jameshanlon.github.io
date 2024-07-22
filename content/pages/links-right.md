@@ -6,6 +6,7 @@ Title: Links right
 - [Bristol Energy Network](https://bristolenergynetwork.org)
 - [Carbon Commentary](https://www.carboncommentary.com/blog)
 - [Climate Change Tracker](https://climatechangetracker.org)
+- [Earth Notes](http://www.earth.org.uk)
 
 ### Books
 
