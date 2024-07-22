@@ -14,3 +14,4 @@ Useful:
 - http://www.ryanjuckett.com/programming/printing-floating-point-numbers/
 - https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
 - https://randomascii.wordpress.com/2012/01/11/tricks-with-the-floating-point-format
+- http://lemire.me/blog/2017/02/28/how-many-floating-point-numbers-are-in-the-interval-01/
