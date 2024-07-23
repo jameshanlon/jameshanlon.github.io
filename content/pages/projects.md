@@ -3,10 +3,10 @@ Status: published
 
 ### Slang Netlist
 
-**[WIP]** Slang Netlist is a library and tool leveraging
-[slang](https://sv-lang.com) to analyse the source-level static connectivity of
-a System Verilog design and is intended to be a replacement for Netlist Paths
-(see below). Slang Netlist is included as a tool in the slang project.
+Slang Netlist is a library and tool leveraging [slang](https://sv-lang.com) to
+analyse the source-level static connectivity of a System Verilog design and is
+intended to be a replacement for Netlist Paths (see below). Slang Netlist is
+included as a tool in the slang project.
 
 - [GitHub](https://github.com/MikePopoloski/slang)
 
@@ -19,12 +19,11 @@ the RISC-V 32IM architecture that I developed to learn about RISC-V.
 
 ### Hex processor
 
-The Hex Architecture is a very simple processor designed by David May and
-intended for explaining how a computer works. This repository contains an
-implementation in Verilog and basic tooling written in C++ for developing
-programs (a compiler, assembler and simulator). It was written out of curiosity
-and to serve as an example of how high-level programs relate to the underlying
-hardware implementation.
+The Hex Architecture is a very simple processor intended for explaining how a
+computer works. This repository contains an implementation in Verilog and basic
+tooling written in C++ for developing programs (a compiler, assembler and
+simulator). It was written out of curiosity and to serve as an example of how
+high-level programs relate to the underlying hardware implementation.
 
 - [GitHub](https://github.com/jameshanlon/hex-processor)
 - [Documentation](https://jameshanlon.github.io/hex-processor)
