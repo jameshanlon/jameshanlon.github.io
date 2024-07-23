@@ -31,9 +31,9 @@ regenerate:
 
 serve:
 ifdef PORT
-	cd $(OUTPUTDIR) && pelican --listen $(PORT)
+	pelican -r --listen -b 0.0.0.0 -p $(PORT)
 else
-	cd $(OUTPUTDIR) && pelican --listen
+	pelican -r --listen -b 0.0.0.0
 endif
 
 clean:
