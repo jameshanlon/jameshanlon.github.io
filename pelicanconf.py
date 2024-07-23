@@ -10,7 +10,7 @@ from thumbnail import get_thumbnail, get_image
 
 AUTHOR = "James W. Hanlon"
 SITENAME = "James W. Hanlon"
-SITEURL = "http://jameswhanlon.com"
+SITEURL = "https://jameswhanlon.com"
 
 REMOTE_PREFIX = "https://jwh.ams3.digitaloceanspaces.com/homepage"
 
