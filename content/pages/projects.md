@@ -58,18 +58,31 @@ Netlist (see above).
 - [GitHub](https://github.com/jameshanlon/netlist-paths)
 - [Documentation](https://jameshanlon.github.io/netlist-paths)
 
-<hr>
 
-#### Older projects
+### Convolutional neural network
 
-- [Convolutional neural network from scratch](https://github.com/jameshanlon/convolutional-neural-network),<br>
-  a simple C++ implementation of a convolutional neural network.
-- [Three-channel, high-power LED driver](https://github.com/jameshanlon/3C-HP-LED-driver),<br>
-  PCB design files and microcontroller code.
-- [Sire compiler v2](https://github.com/jameshanlon/tool_sire),<br>
-  a rewrite of the original sire implementation in Python, and this time
-  targeting the XMOS XS1 architecture via the
-  [XC language](/the-xc-programming-language.html).
-- [Sire compiler v1](https://github.com/jameshanlon/sire),<br>
-  a first version of the sire language and runtime system for dynamic process
-  creation, directly targeting the XMOS XS1 architecture.
+A C++ implementation of a convolutional neural network.
+
+- [Github](https://github.com/jameshanlon/convolutional-neural-network)
+
+
+### Three-channel, high-power LED driver
+
+PCB design files and microcontroller code.
+
+- [Github](https://github.com/jameshanlon/3C-HP-LED-driver)
+
+### Sire compiler v2
+
+A rewrite of the original sire implementation in Python, and this time
+targeting the XMOS XS1 architecture via the [XC
+language](/the-xc-programming-language.html).
+
+- [Github](https://github.com/jameshanlon/tool_sire)
+
+### Sire compiler v1
+
+A first version of the sire language and runtime system for dynamic process
+creation, directly targeting the XMOS XS1 architecture.
+
+- [Github](https://github.com/jameshanlon/sire)
