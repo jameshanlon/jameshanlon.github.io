@@ -16,3 +16,9 @@ Status: published
 {{ macros.imagenothumb('heat-pump/water-temperature.png') }}
 {{ macros.imagenothumb('heat-pump/internal-external-temperature.png') }}
 {{ macros.imagenothumb('heat-pump/Grafana-Octopus-electricity-use.png') }}
+
+## References
+
+https://energy-stats.uk/
+https://www.guylipman.com/octopus/
+https://octopus.energy/blog/agile-smart-home-diy/
