@@ -72,17 +72,12 @@ PCB design files and microcontroller code.
 
 - [Github](https://github.com/jameshanlon/3C-HP-LED-driver)
 
-### Sire compiler v2
+### Sire compiler
 
-A rewrite of the original sire implementation in Python, and this time
-targeting the XMOS XS1 architecture via the [XC
-language](/the-xc-programming-language.html).
+An implementation of a language and runtime system for dynamic process
+creation. There are two versions: an initial one written in C that
+directly targeted the XMOS XS1 architecture, and a rewrite in Python
+targeting XS1 via the [XC language](/the-xc-programming-language.html).
 
-- [Github](https://github.com/jameshanlon/tool_sire)
-
-### Sire compiler v1
-
-A first version of the sire language and runtime system for dynamic process
-creation, directly targeting the XMOS XS1 architecture.
-
-- [Github](https://github.com/jameshanlon/sire)
+- [Revised version](https://github.com/jameshanlon/tool_sire)
+- [Original version](https://github.com/jameshanlon/sire)
