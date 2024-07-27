@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -52,6 +52,9 @@
           </li>
         </ul>
         <a class="navbar-brand" href="#">James W. Hanlon</a>
+        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
+          <i class="bi bi-brightness-high-fill"></i>
+        </button>
       </div>
     </div>
   </nav>
@@ -75,16 +78,30 @@
         <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
           <img alt="Creative Commons Licence" style="border-width:0"
                src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a><br>
+        </a>
+        <br>
         Unless otherwise noted, all content is freely available under a
         <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
           Creative Commons Attribution 4.0 International License</a>.<br>
         The views expressed on this website are the author’s personal views and should not be
         attributed to any other person, including that of their employer.<br>
+        <br>
         Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
         <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
       </div>
     </div>
   </footer>
+  <script>
+    function toggleMode(x) {
+      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+        document.documentElement.setAttribute('data-bs-theme','light')
+      }
+      else {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+      }
+      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
+      x.firstElementChild.classList.toggle('bi-moon-fill');
+    }
+  </script>
 </body>
 </html>
