@@ -16,6 +16,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "css-loader": "^6.8.1",
     "jquery": "^3.7.0",
     "lightbox2": "^2.11.4",
