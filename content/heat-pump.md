@@ -24,14 +24,21 @@ house of approximately 90 square meters. I have previously posted about the buil
 [energy efficiency](home-thermal-imaging-survey.html) and
 [additional insulation](cornish-unit-house-retrofit-insulation.html) added. This
 pump's capacity the current requirements of the house, but we are planning an
-extension in the near future.
+extension in the near future. In terms of the operation of the heat pump, it is set to
+run consinuously with a fixed temperature of 19 celcius is set in the downstairs hallway.
 
 The myVaillant app usefully provides a button to download all logged data per year
 in a set of CSV files. I have summarised the year period from July 2023 to July 2024
 in the following charts. Having read this [review][pfb-vailiant-app]) of the myVaillant
 app, I am aware that there may be accuracy/quantization issues but without any other
 means of measuring the metrics, I don't have a point of comparison. It is likely though
-in the last year or so that Vaillant have improved the reported measurements.
+in the last year or so that Vaillant have improved the reported measurements, but I will
+outline some other potential inaccuracies.
+
+The first chart shows the consumption of electrical energy for heating and hot water. Most
+obviously, electricity consumption during the winter months rockets when the heat pump is 
+using around 10 kWh per day. There are two spikes in November and Januaray where temperatures
+went below zero, with consumption going up close to 30 kWh per day.
 
 {{ macros.imagenothumb('heat-pump/consumed.png',
                        caption="Electrical energy consumed in kWh.") }}
