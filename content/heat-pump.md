@@ -1,6 +1,6 @@
 ---
 Title: Review of heat pump use and performance
-Date: 2024-07-27
+Date: 2024-07-31
 Category: non-technical
 Tags: sustainability
 Summary: A review of one year's worth of data from my home heat pump.
