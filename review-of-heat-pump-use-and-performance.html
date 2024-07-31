@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Review of heat pump use and performance</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="https://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="https://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <!-- MathJax -->
+  <script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+              svg: { fontCache: 'global' } };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <script src="./theme/js/bundle.js"></script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/links.html">links</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
+          <i class="bi bi-brightness-high-fill"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    Review of heat pump use and&nbsp;performance
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2024-07-31T00:00:00+02:00">
+      31 Jul 2024
+    </time><br>
+      <span class="article-tag small"><a href="/tag/sustainability.html">sustainability</a></span>
+  </div>
+  <div class="article-body">
+    <p>I had a heat pump installed in my house in July 2022, and a year later a
+<a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway">Vaillant gateway</a>, which provides monitoring and logging services
+via a &#8216;myVaillant&#8217; smartphone app. Since I now have a year&#8217;s worth of data,
+this note reviews what has been logged to see how the system is&nbsp;performing.</p>
+<div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/heat-pump_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+<p>The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
+house of approximately 90 square meters internal area. I have previously posted
+about the building&#8217;s <a href="home-thermal-imaging-survey.html">energy efficiency</a> and
+<a href="cornish-unit-house-retrofit-insulation.html">additional first floor insulation</a> added.
+This pump&#8217;s capacity the current requirements of the house, but we are planning
+an extension in the near future. In terms of the operation of the heat pump, heating
+is set to run continuously with a fixed temperature of 19 degrees C is set in the
+downstairs hallway, and hot water is fixed and continuous at 50 degrees&nbsp;C.</p>
+<p>The <em>myVaillant</em> app usefully provides a button to download all logged data per
+year in a set of <span class="caps">CSV</span> files. I have summarised the year period from July 2023 to
+July 2024 in the following charts. Having read this <a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review">review</a>
+by Michael de Podesta of the <em>myVaillant</em> app and the quality of the logged
+data, I am aware that there are accuracy/quantisation issues. The review
+measured a ~10% error in electricity consumed and a ~20% error in the heat
+energy produced, as well as pointing out many logged values are quantised to
+kWh units, which I also observe in the data. Unfortunately I don&#8217;t have a point
+of comparison with with no other means of measuring the metrics. I hold out
+some hope that Vaillant have improved the reported measurements in the last
+year, but even with these errors the data is still useful for a high-level
+review of the&nbsp;system.</p>
+<p>Diving into the data, the first chart below shows the consumption of electrical
+energy for heating (red) and hot water&nbsp;(blue).</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/consumed.png" alt="Electrical energy consumed in kWh.">
+  <figcaption class="figure-caption text-left">Electrical energy consumed in kWh.</figcaption>
+</figure>
+</div>
+
+<p>Most obviously, electricity consumption during the winter months increases
+significantly when the heat pump is using around 10 kWh per day. There are two
+spikes in November and January where temperatures went below zero, with
+consumption going up close to 30 kWh per day. As expected, electricity
+consumption for hot water is more consistent throughout the year with an
+increase through the winter months. The short periods where both drop to zero
+are due either to a holiday and the system being in &#8216;absence&#8217; mode or a
+technical issue. Regarding the latter, these have only been due to a loss of
+pressure in the system, requiring a manual top up from the mains. The total
+electrical energy for heating for the year is 1.35 MWh and 1.04 MWh for hot&nbsp;water.</p>
+<p>The next chart is the heat energy generated, which is tightly correlated with
+the consumption&nbsp;graph.</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/generated.png" alt="Heat energy generated (hot water and heating) in kWh.">
+  <figcaption class="figure-caption text-left">Heat energy generated (hot water and heating) in kWh.</figcaption>
+</figure>
+</div>
+
+<p>Combining the previous two charts by calculating the ratio between generated and
+consumed, gives the coefficient of performance (<span class="caps">COP</span>). The average <span class="caps">COP</span> in this
+period is 3.3 (the red line). The Vaillant app reports 3.4, which may be taking
+into account the quiescent periods, which broadly means the system is
+functioning well. However, caution is <a href="https://protonsforbreakfast.wordpress.com/2024/03/13/can-i-believe-my-vaillant-heat-pump-cop">again advised</a> by Michael de
+Podesta because of the inaccuracies in the Vaillant data, but noting that he
+found that the Vaillant data underestimated <span class="caps">COP</span>.</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed.">
+  <figcaption class="figure-caption text-left"><span class="caps">COP</span> calculated by dividing heat generated by electrical energy consumed.</figcaption>
+</figure>
+</div>
+
+<p>The following chart shows the temperature of the contents of the hot water
+tank. As expected, this stays constant, with a few exceptions: when I changed
+the temperature from 45 to 50 degrees C in October 2023; when the system has
+been off or out of order; and when every week on a Monday the immersion heater
+kicks in to perform a Legionella purge (which curiously it has stopped since
+March 2024, something I need to&nbsp;investigate).</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius.">
+  <figcaption class="figure-caption text-left">Hot water temperature in degrees Celsius.</figcaption>
+</figure>
+</div>
+
+<p>Finally, we have a plot of internal (red) vs external (blue) temperature in
+degrees C. This clearly shows that the 19 degrees C target was maintained
+throughout the year, notwithstanding the periods of absence/downtime and on
+particular hot days when the temperature rose above the target. Given how
+quickly our summers are changing in terms of heat waves, having a system that
+can also perform cooling would be a big&nbsp;benefit.</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius.">
+  <figcaption class="figure-caption text-left">Internal and external temperatures in degrees Celsius.</figcaption>
+</figure>
+</div>
+
+<p>For the same period I obtained the electricity use and cost data from Octopus
+using their excellent <span class="caps">API</span> via the <a href="https://github.com/Yanson/octograph">Octograph tool</a>, visualised below
+on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
+MWh of energy, which is only 32% of the total electricity use. I am suspicious
+that this is incorrect, even factoring in a 10% underestimate from the Vaillant
+system. I would expect the heat pump to be using more like 50-60% of total
+electricity on average. Otherwise the usage profile matches between the two
+data&nbsp;sets.</p>
+<div class="text-center">
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/Grafana-Octopus-electricity-use.png" alt="Electricity use from Octopus data.">
+  <figcaption class="figure-caption text-left">Electricity use from Octopus data.</figcaption>
+</figure>
+</div>
+
+<h2>References and further&nbsp;reading</h2>
+<ul>
+<li><a href="https://protonsforbreakfast.wordpress.com/heat-pump-articles/">Protons for Breakfast, articles about heat
+  pumps</a> is a
+  fantastic set of articles by physicist Michael de&nbsp;Podesta.</li>
+<li><a href="https://energy-stats.uk">Energy Stats</a> provides pricing data for various
+  Octopus Energy&nbsp;tariffs.</li>
+<li><a href="https://www.guylipman.com/octopus">Guy Lipman&#8217;s Octopus Energy resources</a> is
+  a collection of notes focusing on using the Octopus <span class="caps">API</span> to access energy&nbsp;data.</li>
+<li><a href="https://octopus.energy/blog/agile-smart-home-diy">Octopus Energy <span class="caps">API</span></a> is the
+  landing page for using their <span class="caps">API</span>.</li>
+<li><a href="https://github.com/Yanson/octograph">Octograph (Github)</a> A Python tool for
+  extracting Octopus Energy meter readings to InfluxDB and&nbsp;Grafana.</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a>
+        <br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        The views expressed on this website are the author’s personal views and should not be
+        attributed to any other person, including that of their employer.<br>
+        <br>
+        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    function toggleMode(x) {
+      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+        document.documentElement.setAttribute('data-bs-theme','light')
+      }
+      else {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+      }
+      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
+      x.firstElementChild.classList.toggle('bi-moon-fill');
+    }
+  </script>
+</body>
+</html>

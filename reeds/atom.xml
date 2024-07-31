@@ -1,5 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2023-08-02T00:00:00+02:00</updated><entry><title>Silicon infrastructure</title><link href="https://jameswhanlon.com/silicon-infrastructure.html" rel="alternate"></link><published>2023-08-02T00:00:00+02:00</published><updated>2023-08-02T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2023-08-02:/silicon-infrastructure.html</id><summary type="html">&lt;p&gt;Thoughts on the requirements of software infrastructure
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2024-07-31T00:00:00+02:00</updated><entry><title>Review of heat pump use and performance</title><link href="https://jameswhanlon.com/review-of-heat-pump-use-and-performance.html" rel="alternate"></link><published>2024-07-31T00:00:00+02:00</published><updated>2024-07-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-07-31:/review-of-heat-pump-use-and-performance.html</id><summary type="html">&lt;p&gt;A review of one year&amp;#8217;s worth of data from my home heat&amp;nbsp;pump.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I had a heat pump installed in my house in July 2022, and a year later a
+&lt;a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway"&gt;Vaillant gateway&lt;/a&gt;, which provides monitoring and logging services
+via a &amp;#8216;myVaillant&amp;#8217; smartphone app. Since I now have a year&amp;#8217;s worth of data,
+this note reviews what has been logged to see how the system is&amp;nbsp;performing.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump.jpg" data-lightbox="all"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/heat-pump_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
+house of approximately 90 square meters internal area. I have previously posted
+about the building&amp;#8217;s &lt;a href="home-thermal-imaging-survey.html"&gt;energy efficiency&lt;/a&gt; and
+&lt;a href="cornish-unit-house-retrofit-insulation.html"&gt;additional first floor insulation&lt;/a&gt; added.
+This pump&amp;#8217;s capacity the current requirements of the house, but we are planning
+an extension in the near future. In terms of the operation of the heat pump, heating
+is set to run continuously with a fixed temperature of 19 degrees C is set in the
+downstairs hallway, and hot water is fixed and continuous at 50 degrees&amp;nbsp;C.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;myVaillant&lt;/em&gt; app usefully provides a button to download all logged data per
+year in a set of &lt;span class="caps"&gt;CSV&lt;/span&gt; files. I have summarised the year period from July 2023 to
+July 2024 in the following charts. Having read this &lt;a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review"&gt;review&lt;/a&gt;
+by Michael de Podesta of the &lt;em&gt;myVaillant&lt;/em&gt; app and the quality of the logged
+data, I am aware that there are accuracy/quantisation issues. The review
+measured a ~10% error in electricity consumed and a ~20% error in the heat
+energy produced, as well as pointing out many logged values are quantised to
+kWh units, which I also observe in the data. Unfortunately I don&amp;#8217;t have a point
+of comparison with with no other means of measuring the metrics. I hold out
+some hope that Vaillant have improved the reported measurements in the last
+year, but even with these errors the data is still useful for a high-level
+review of the&amp;nbsp;system.&lt;/p&gt;
+&lt;p&gt;Diving into the data, the first chart below shows the consumption of electrical
+energy for heating (red) and hot water&amp;nbsp;(blue).&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/consumed.png" alt="Electrical energy consumed in kWh."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Electrical energy consumed in kWh.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Most obviously, electricity consumption during the winter months increases
+significantly when the heat pump is using around 10 kWh per day. There are two
+spikes in November and January where temperatures went below zero, with
+consumption going up close to 30 kWh per day. As expected, electricity
+consumption for hot water is more consistent throughout the year with an
+increase through the winter months. The short periods where both drop to zero
+are due either to a holiday and the system being in &amp;#8216;absence&amp;#8217; mode or a
+technical issue. Regarding the latter, these have only been due to a loss of
+pressure in the system, requiring a manual top up from the mains. The total
+electrical energy for heating for the year is 1.35 MWh and 1.04 MWh for hot&amp;nbsp;water.&lt;/p&gt;
+&lt;p&gt;The next chart is the heat energy generated, which is tightly correlated with
+the consumption&amp;nbsp;graph.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/generated.png" alt="Heat energy generated (hot water and heating) in kWh."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Heat energy generated (hot water and heating) in kWh.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Combining the previous two charts by calculating the ratio between generated and
+consumed, gives the coefficient of performance (&lt;span class="caps"&gt;COP&lt;/span&gt;). The average &lt;span class="caps"&gt;COP&lt;/span&gt; in this
+period is 3.3 (the red line). The Vaillant app reports 3.4, which may be taking
+into account the quiescent periods, which broadly means the system is
+functioning well. However, caution is &lt;a href="https://protonsforbreakfast.wordpress.com/2024/03/13/can-i-believe-my-vaillant-heat-pump-cop"&gt;again advised&lt;/a&gt; by Michael de
+Podesta because of the inaccuracies in the Vaillant data, but noting that he
+found that the Vaillant data underestimated &lt;span class="caps"&gt;COP&lt;/span&gt;.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;&lt;span class="caps"&gt;COP&lt;/span&gt; calculated by dividing heat generated by electrical energy consumed.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The following chart shows the temperature of the contents of the hot water
+tank. As expected, this stays constant, with a few exceptions: when I changed
+the temperature from 45 to 50 degrees C in October 2023; when the system has
+been off or out of order; and when every week on a Monday the immersion heater
+kicks in to perform a Legionella purge (which curiously it has stopped since
+March 2024, something I need to&amp;nbsp;investigate).&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Hot water temperature in degrees Celsius.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Finally, we have a plot of internal (red) vs external (blue) temperature in
+degrees C. This clearly shows that the 19 degrees C target was maintained
+throughout the year, notwithstanding the periods of absence/downtime and on
+particular hot days when the temperature rose above the target. Given how
+quickly our summers are changing in terms of heat waves, having a system that
+can also perform cooling would be a big&amp;nbsp;benefit.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Internal and external temperatures in degrees Celsius.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For the same period I obtained the electricity use and cost data from Octopus
+using their excellent &lt;span class="caps"&gt;API&lt;/span&gt; via the &lt;a href="https://github.com/Yanson/octograph"&gt;Octograph tool&lt;/a&gt;, visualised below
+on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
+MWh of energy, which is only 32% of the total electricity use. I am suspicious
+that this is incorrect, even factoring in a 10% underestimate from the Vaillant
+system. I would expect the heat pump to be using more like 50-60% of total
+electricity on average. Otherwise the usage profile matches between the two
+data&amp;nbsp;sets.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/Grafana-Octopus-electricity-use.png" alt="Electricity use from Octopus data."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;Electricity use from Octopus data.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;References and further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://protonsforbreakfast.wordpress.com/heat-pump-articles/"&gt;Protons for Breakfast, articles about heat
+  pumps&lt;/a&gt; is a
+  fantastic set of articles by physicist Michael de&amp;nbsp;Podesta.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://energy-stats.uk"&gt;Energy Stats&lt;/a&gt; provides pricing data for various
+  Octopus Energy&amp;nbsp;tariffs.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.guylipman.com/octopus"&gt;Guy Lipman&amp;#8217;s Octopus Energy resources&lt;/a&gt; is
+  a collection of notes focusing on using the Octopus &lt;span class="caps"&gt;API&lt;/span&gt; to access energy&amp;nbsp;data.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://octopus.energy/blog/agile-smart-home-diy"&gt;Octopus Energy &lt;span class="caps"&gt;API&lt;/span&gt;&lt;/a&gt; is the
+  landing page for using their &lt;span class="caps"&gt;API&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Yanson/octograph"&gt;Octograph (Github)&lt;/a&gt; A Python tool for
+  extracting Octopus Energy meter readings to InfluxDB and&amp;nbsp;Grafana.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="non-technical"></category><category term="sustainability"></category></entry><entry><title>Silicon infrastructure</title><link href="https://jameswhanlon.com/silicon-infrastructure.html" rel="alternate"></link><published>2023-08-02T00:00:00+02:00</published><updated>2023-08-02T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2023-08-02:/silicon-infrastructure.html</id><summary type="html">&lt;p&gt;Thoughts on the requirements of software infrastructure
 to support chip&amp;nbsp;design.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Modern chip design differs to conventional software engineering in three
 fundamental aspects that require a somewhat different approach to project&amp;nbsp;development:&lt;/p&gt;
 &lt;ul&gt;
