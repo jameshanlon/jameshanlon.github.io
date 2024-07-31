@@ -18,67 +18,91 @@ this note reviews what has been logged to see how the system is performing.
 
 {{ macros.image('heat-pump/heat-pump.jpg') }}
 
-The heatpump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
+The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
 house of approximately 90 square meters internal area. I have previously posted
 about the building's [energy efficiency](home-thermal-imaging-survey.html) and
 [additional first floor insulation](cornish-unit-house-retrofit-insulation.html) added.
 This pump's capacity the current requirements of the house, but we are planning
 an extension in the near future. In terms of the operation of the heat pump, heating
-is set to run consinuously with a fixed temperature of 19 degrees C is set in the
+is set to run continuously with a fixed temperature of 19 degrees C is set in the
 downstairs hallway, and hot water is fixed and continuous at 50 degrees C.
 
-The myVaillant app usefully provides a button to download all logged data per
+The *myVaillant* app usefully provides a button to download all logged data per
 year in a set of CSV files. I have summarised the year period from July 2023 to
 July 2024 in the following charts. Having read this [review][pfb-vaillant-app]
-of the myVaillant app, I am aware that there may be accuracy/quantization
-issues. The review measured a ~10% error in electricity consumed and a ~20% error
-in the heat energy produced, as well as pointing out many logged values are a multiple of
-1000 Wh, which I also observe. Unlike the review, with no other means of measuring
-the metrics, I don't have a point of comparison. Hopefully since the review Vaillant
-have improved the reported measurements.
+by Michael de Podesta of the *myVaillant* app and the quality of the logged
+data, I am aware that there are accuracy/quantisation issues. The review
+measured a ~10% error in electricity consumed and a ~20% error in the heat
+energy produced, as well as pointing out many logged values are quantised to
+kWh units, which I also observe in the data. Unfortunately I don't have a point
+of comparison with with no other means of measuring the metrics. I hold out
+some hope that Vaillant have improved the reported measurements in the last
+year, but even with these errors the data is still useful for a high-level
+review of the system.
 
-The first chart shows the consumption of electrical energy for heating (red)
-and hot water (blue). Most obviously, electricity consumption during the winter
-months rockets when the heat pump is using around 10 kWh per day. There are two
-spikes in November and Janurary where temperatures went below zero, with
-consumption going up close to 30 kWh per day. As expected, hot water is more
-consistent thoughout the year with an increase through the winter months. The
-total electrical energy for heating for the year is 1.35 MWh and 1.04 MWh for
-hot water.
+Diving into the data, the first chart below shows the consumption of electrical
+energy for heating (red) and hot water (blue).
 
 {{ macros.imagenothumb('heat-pump/consumed.png',
                        caption="Electrical energy consumed in kWh.") }}
 
-The short periods where both drop to zero are due either to a holiday and the
-system being in 'absence' mode or a technical issue. Regarding the latter, these
-have only been due to a loss of pressure in the system, requiring a manual topup
-from the mains.
+Most obviously, electricity consumption during the winter months increases
+significantly when the heat pump is using around 10 kWh per day. There are two
+spikes in November and January where temperatures went below zero, with
+consumption going up close to 30 kWh per day. As expected, electricity
+consumption for hot water is more consistent throughout the year with an
+increase through the winter months. The short periods where both drop to zero
+are due either to a holiday and the system being in 'absence' mode or a
+technical issue. Regarding the latter, these have only been due to a loss of
+pressure in the system, requiring a manual top up from the mains. The total
+electrical energy for heating for the year is 1.35 MWh and 1.04 MWh for hot
+water.
 
-The next chart is the heat energy generated and the one after is the ratio
-between generated and consumed, or the coefficient of performance (COP).
+The next chart is the heat energy generated, which is tightly correlated with
+the consumption graph.
 
 {{ macros.imagenothumb('heat-pump/generated.png',
                        caption="Heat energy generated (hot water and heating) in kWh.") }}
 
-The average COP in this period is 3.3. The Vaillant app reports 3.4, which may
-be taking into account the quiescent periods, which broadly means the system is functioning well.
-However, caution is [again advised][pfb-cop] because of the inaccuracies in the Vaillant data.
+Combining the previous two charts by calculating the ratio between generated and
+consumed, gives the coefficient of performance (COP). The average COP in this
+period is 3.3 (the red line). The Vaillant app reports 3.4, which may be taking
+into account the quiescent periods, which broadly means the system is
+functioning well. However, caution is [again advised][pfb-cop] by Michael de
+Podesta because of the inaccuracies in the Vaillant data, but noting that he
+found that the Vaillant data underestimated COP.
 
 {{ macros.imagenothumb('heat-pump/COP.png',
                        caption="COP calculated by dividing heat generated by electrical energy consumed.") }}
 
-The following chart shows the temperature of the contents of the hot water tank. As expected,
-this stays constant, with a few execptions: when I changed the temperature from 45 to 50 degrees C,
-when the system has been off or out of order and when every week on a Monday the immersion heater kicks
-in to perform a Legionella purge.
+The following chart shows the temperature of the contents of the hot water
+tank. As expected, this stays constant, with a few exceptions: when I changed
+the temperature from 45 to 50 degrees C in October 2023; when the system has
+been off or out of order; and when every week on a Monday the immersion heater
+kicks in to perform a Legionella purge (which curiously it has stopped since
+March 2024, something I need to investigate).
 
 {{ macros.imagenothumb('heat-pump/water-temperature.png',
-                       caption="Hot water temperature in degrees celcius.") }}
+                       caption="Hot water temperature in degrees Celsius.") }}
 
-My favourite chart is internal vs external temperature in degrees C.
+Finally, we have a plot of internal (red) vs external (blue) temperature in
+degrees C. This clearly shows that the 19 degrees C target was maintained
+throughout the year, notwithstanding the periods of absence/downtime and on
+particular hot days when the temperature rose above the target. Given how
+quickly our summers are changing in terms of heat waves, having a system that
+can also perform cooling would be a big benefit.
 
 {{ macros.imagenothumb('heat-pump/internal-external-temperature.png',
-                       caption="Internal and external temperatures in degrees celcius.") }}
+                       caption="Internal and external temperatures in degrees Celsius.") }}
+
+For the same period I obtained the electricity use and cost data from Octopus
+using their excellent API via the [Octograph tool][octograph], visualised below
+on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
+MWh of energy, which is only 32% of the total electricity use. I am suspicious
+that this is incorrect, even factoring in a 10% underestimate from the Vaillant
+system. I would expect the heat pump to be using more like 50-60% of total
+electricity on average. Otherwise the usage profile matches between the two
+data sets.
 
 {{ macros.imagenothumb('heat-pump/Grafana-Octopus-electricity-use.png',
                        caption="Electricity use from Octopus data.") }}
@@ -86,14 +110,15 @@ My favourite chart is internal vs external temperature in degrees C.
 [pfb-vaillant-app]: https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review
 [pfb-vaillant-arotherm]: https://protonsforbreakfast.wordpress.com/2022/10/19/vaillant-arotherm-plus-heat-pump-the-good-the-bad-and-the-ugly
 [pfb-cop]: https://protonsforbreakfast.wordpress.com/2024/03/13/can-i-believe-my-vaillant-heat-pump-cop
+[octograph]: https://github.com/Yanson/octograph
 
 ## References and further reading
 
 - [Protons for Breakfast, articles about heat
   pumps](https://protonsforbreakfast.wordpress.com/heat-pump-articles/) is a
-  fantasitic set of articles by physicist Michael de Podesta.
+  fantastic set of articles by physicist Michael de Podesta.
 - [Energy Stats](https://energy-stats.uk) provides pricing data for various
-  Octopus Energy tarrifs.
+  Octopus Energy tariffs.
 - [Guy Lipman's Octopus Energy resources](https://www.guylipman.com/octopus) is
   a collection of notes focusing on using the Octopus API to access energy
   data.
