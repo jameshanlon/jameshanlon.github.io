@@ -21,11 +21,20 @@ this note reviews what has been logged to see how the system is performing.
 The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
 house of approximately 90 square meters internal area. I have previously posted
 about the building's [energy efficiency](home-thermal-imaging-survey.html) and
-[additional first floor insulation](cornish-unit-house-retrofit-insulation.html) added.
-This pump's capacity the current requirements of the house, but we are planning
-an extension in the near future. In terms of the operation of the heat pump, heating
-is set to run continuously with a fixed temperature of 19 degrees C is set in the
-downstairs hallway, and hot water is fixed and continuous at 50 degrees C.
+[additional first floor
+insulation](cornish-unit-house-retrofit-insulation.html) added. This pump's
+capacity exceeds the current requirements of the house, but we are planning an
+extension in the near future. In terms of the operation of the heating and hot
+water system, space heating is set to run continuously with a fixed temperature
+of 19 degrees C is set in the downstairs hallway (a central point in the
+house), and hot water is set to run continuously at 50 degrees C. In the first
+year of running the system, I experimented with running heating and hot water
+for set periods during each day of the week, but I found that the heat pump had
+to work hard to bring the system back up to temperature, particularly with the
+heating during the winter where the not only is the system heating the water
+but also the fabric of the building. I was advised that continuous operation
+was more efficient and since the house is almost always occupied, this matched
+our use.
 
 The *myVaillant* app usefully provides a button to download all logged data per
 year in a set of CSV files. I have summarised the year period from July 2023 to
@@ -47,14 +56,14 @@ energy for heating (red) and hot water (blue).
                        caption="Electrical energy consumed in kWh.") }}
 
 Most obviously, electricity consumption during the winter months increases
-significantly when the heat pump is using around 10 kWh per day. There are two
-spikes in November and January where temperatures went below zero, with
-consumption going up close to 30 kWh per day. As expected, electricity
-consumption for hot water is more consistent throughout the year with an
-increase through the winter months. The short periods where both drop to zero
-are due either to a holiday and the system being in 'absence' mode or a
-technical issue. Regarding the latter, these have only been due to a loss of
-pressure in the system, requiring a manual top up from the mains. The total
+significantly when the heat pump is using approximately 10 kWh per day. There
+are two spikes in November and January where temperatures went below zero, and
+at these times consumption went up close to 30 kWh per day. As expected,
+electricity consumption for hot water is more consistent throughout the year
+with a lesser increase through the winter months. The short periods where both
+drop to zero are due either to a holiday and the system being in 'absence' mode
+or a technical issue. Regarding the latter, these have only been due to a loss
+of pressure in the system, requiring a manual top up from the mains. The total
 electrical energy for heating for the year is 1.35 MWh and 1.04 MWh for hot
 water.
 
@@ -90,7 +99,10 @@ degrees C. This clearly shows that the 19 degrees C target was maintained
 throughout the year, notwithstanding the periods of absence/downtime and on
 particular hot days when the temperature rose above the target. Given how
 quickly our summers are changing in terms of heat waves, having a system that
-can also perform cooling would be a big benefit.
+can also perform cooling would be a big benefit. I think this chart represents
+well the benefit of having a heat pump, and a home with a continuous temperature
+throughout the year.
+
 
 {{ macros.imagenothumb('heat-pump/internal-external-temperature.png',
                        caption="Internal and external temperatures in degrees Celsius.") }}
@@ -101,7 +113,8 @@ on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
 MWh of energy, which is only 32% of the total electricity use. I am suspicious
 that this is incorrect, even factoring in a 10% underestimate from the Vaillant
 system. I would expect the heat pump to be using more like 50-60% of total
-electricity on average. Otherwise the usage profile matches between the two
+electricity on average, given that other electricity use is cooking and
+appliances etc. Otherwise the usage profile matches between the two
 data sets.
 
 {{ macros.imagenothumb('heat-pump/Grafana-Octopus-electricity-use.png',
