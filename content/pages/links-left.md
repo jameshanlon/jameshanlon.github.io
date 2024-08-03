@@ -29,5 +29,5 @@ Title: Links left
 
 - [Picol (TCL, 500 lines)](http://antirez.com/picol/picol.c.txt)
 - [500 Lines or Less: A Python Interpreter Written in Python](https://aosabook.org/en/500L/a-python-interpreter-written-in-python.html)
-- [Pocket Py: a Python Interpreter in 1 File](ttps://github.com/pocketpy/pocketpy)
+- [Pocket Py: a Python Interpreter in 1 File](https://github.com/pocketpy/pocketpy)
 - [SmallC](https://github.com/ncb85/SmallC-85)
