@@ -1,6 +1,6 @@
 ---
 Title: Self hosted setup
-Date: 2024-07-26
+Date: 2024-08-01
 Category: non-technical
 Tags: self-hosted
 Summary: Some details of services I self host.
