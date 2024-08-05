@@ -1,0 +1,7 @@
+- name: Slang Netlist
+  desc: |
+    Slang Netlist is a library and tool leveraging [slang](https://sv-lang.com)
+    to analyse the source-level static connectivity of a System Verilog design
+    and is intended to be a replacement for Netlist Paths (see below). Slang
+    Netlist is included as a tool in the slang project.
+  github: https://github.com/MikePopoloski/slang

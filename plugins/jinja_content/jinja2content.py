@@ -37,6 +37,8 @@ class JinjaMarkdownReader(MarkdownReader):
         if "JINJA_FILTERS" in self.settings:
             for key, value in self.settings["JINJA_FILTERS"].items():
                 self.env.filters[key] = value
+        # Setup context to pass to the render function.
+        self.context = self.settings["JINJA_CONTEXT"]
 
     def markdown(self, text):
         """
@@ -53,7 +55,7 @@ class JinjaMarkdownReader(MarkdownReader):
         self._source_path = source_path
         self._md = Markdown(extensions=self.settings["MARKDOWN"]["extensions"])
         with pelican_open(source_path) as text:
-            text = self.env.from_string(text).render()
+            text = self.env.from_string(text).render(self.context)
             content = self._md.convert(text)
         metadata = self._parse_metadata(self._md.Meta)
         return content, metadata

@@ -1,6 +1,17 @@
 Title: Projects
 Status: published
 
+{% for project in projects %}
+<div class="card">
+<div class="card-body">
+ <h5 class="card-title">{{project.name}}</h5>
+{{project.desc|markdown}}
+<a href="{{project.github}}" class="card-link">Github</a>
+</div>
+</div>
+{% endfor %}
+
+
 ### Slang Netlist
 
 Slang Netlist is a library and tool leveraging [slang](https://sv-lang.com) to
