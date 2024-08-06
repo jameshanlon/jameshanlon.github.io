@@ -4,4 +4,89 @@
     to analyse the source-level static connectivity of a System Verilog design
     and is intended to be a replacement for Netlist Paths (see below). Slang
     Netlist is included as a tool in the slang project.
-  github: https://github.com/MikePopoloski/slang
+  links:
+    - name: Github
+      href: https://github.com/MikePopoloski/slang
+
+- name: RISC-V processor
+  desc: |
+    A C++ simulator and SystemVerilog implementation (the latter is still a
+    WIP) of the RISC-V 32IM architecture that I developed to learn about
+    RISC-V.
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/riscv-processor
+
+- name: Hex processor
+  desc: |
+    The Hex Architecture is a very simple processor intended for explaining how
+    a computer works. This repository contains an implementation in Verilog and
+    basic tooling written in C++ for developing programs (a compiler, assembler
+    and simulator). It was written out of curiosity and to serve as an example
+    of how high-level programs relate to the underlying hardware
+    implementation.
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/hex-processor
+    - name: Documentation
+      href: https://jameshanlon.github.io/hex-processor
+
+- name: PRNG testing
+  desc: |
+    This repository contains facilities for comprehensively testing PRNGs using
+    statistical test suites. It provides a facility to run a PRNG against
+    TestU01, PractRand and Gjrand, with parallel runs from different seeds and
+    permutations of the output bits, and a script for summarising results
+    across all the runs. This testing methodology was used for the
+    investigation in [this paper](https://arxiv.org/abs/2203.04058).
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/prng-testing
+
+- name: Personal finances
+  desc: |
+    A Python-based project that I use fetch personal finance data from Google
+    Sheets and then generate a set of summary HTML reports.
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/finances
+
+- name: Netlist Paths
+  desc: |
+    Netlist Paths is a library and command-line tool for querying a Verilog
+    netlist. It reads an XML representation of a design's netlist, produced by
+    [Verilator](https://www.veripool.org/projects/verilator), and provides
+    facilities for inspecting types, variables and paths. The library is
+    written in C++ and has a Python interface. This project has now been
+    superseded by Slang Netlist (see above).
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/netlist-paths
+    - name: Documentation
+      href: https://jameshanlon.github.io/netlist-paths
+
+- name: Convolutional neural network
+  desc: |
+    A C++ implementation of a convolutional neural network.
+  links:
+    - name: Github
+      href: https://github.com/jameshanlon/convolutional-neural-network
+
+- name: Three-channel, high-power LED driver
+  desc: |
+    PCB design files and microcontroller code.
+  links:
+    - name: Github
+      href: https://github.com/jameshanlon/3C-HP-LED-driver
+
+- name: Sire compiler
+  desc: |
+    An implementation of a language and runtime system for dynamic process
+    creation. There are two versions: an initial one written in C that directly
+    targeted the XMOS XS1 architecture, and a rewrite in Python targeting XS1
+    via the [XC language](/the-xc-programming-language.html).
+  links:
+    - name: Revised version
+      href: https://github.com/jameshanlon/tool_sire
+    - name: Original version
+      href: https://github.com/jameshanlon/sire
