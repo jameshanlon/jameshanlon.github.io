@@ -62,76 +62,103 @@
 
   <main class="flex-shrink-0">
   <div class="container">
-  <h3>Slang&nbsp;Netlist</h3>
-<p>Slang Netlist is a library and tool leveraging <a href="https://sv-lang.com">slang</a> to
-analyse the source-level static connectivity of a System Verilog design and is
-intended to be a replacement for Netlist Paths (see below). Slang Netlist is
-included as a tool in the slang&nbsp;project.</p>
-<ul>
-<li><a href="https://github.com/MikePopoloski/slang">GitHub</a></li>
-</ul>
-<h3><span class="caps">RISC</span>-V&nbsp;processor</h3>
-<p>A C++ simulator and SystemVerilog implementation (the latter is still a <span class="caps">WIP</span>) of
-the <span class="caps">RISC</span>-V <span class="caps">32IM</span> architecture that I developed to learn about <span class="caps">RISC</span>-V.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/riscv-processor">GitHub</a></li>
-</ul>
-<h3>Hex&nbsp;processor</h3>
-<p>The Hex Architecture is a very simple processor intended for explaining how a
-computer works. This repository contains an implementation in Verilog and basic
-tooling written in C++ for developing programs (a compiler, assembler and
-simulator). It was written out of curiosity and to serve as an example of how
-high-level programs relate to the underlying hardware&nbsp;implementation.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/hex-processor">GitHub</a></li>
-<li><a href="https://jameshanlon.github.io/hex-processor">Documentation</a></li>
-</ul>
-<h3><span class="caps">PRNG</span>&nbsp;testing</h3>
+  <div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Slang&nbsp;Netlist</h5>
+<p>Slang Netlist is a library and tool leveraging <a href="https://sv-lang.com">slang</a>
+to analyse the source-level static connectivity of a System Verilog design
+and is intended to be a replacement for Netlist Paths (see below). Slang
+Netlist is included as a tool in the slang&nbsp;project.</p>
+<a href="https://github.com/MikePopoloski/slang" class="card-link">Github</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title"><span class="caps">RISC</span>-V&nbsp;processor</h5>
+<p>A C++ simulator and SystemVerilog implementation (the latter is still a
+<span class="caps">WIP</span>) of the <span class="caps">RISC</span>-V <span class="caps">32IM</span> architecture that I developed to learn about
+<span class="caps">RISC</span>-V.</p>
+<a href="https://github.com/jameshanlon/riscv-processor" class="card-link">GitHub</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Hex&nbsp;processor</h5>
+<p>The Hex Architecture is a very simple processor intended for explaining how
+a computer works. This repository contains an implementation in Verilog and
+basic tooling written in C++ for developing programs (a compiler, assembler
+and simulator). It was written out of curiosity and to serve as an example
+of how high-level programs relate to the underlying hardware&nbsp;implementation.</p>
+<a href="https://github.com/jameshanlon/hex-processor" class="card-link">GitHub</a>
+<a href="https://jameshanlon.github.io/hex-processor" class="card-link">Documentation</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title"><span class="caps">PRNG</span>&nbsp;testing</h5>
 <p>This repository contains facilities for comprehensively testing PRNGs using
-statistical test suites. It provides a facility to run a <span class="caps">PRNG</span> against TestU01,
-PractRand and Gjrand, with parallel runs from different seeds and permutations
-of the output bits, and a script for summarising results across all the runs.
-This testing methodology was used for the investigation in <a href="https://arxiv.org/abs/2203.04058">this
-paper</a>.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/prng-testing">GitHub</a></li>
-</ul>
-<h3>Personal&nbsp;finances</h3>
+statistical test suites. It provides a facility to run a <span class="caps">PRNG</span> against
+TestU01, PractRand and Gjrand, with parallel runs from different seeds and
+permutations of the output bits, and a script for summarising results
+across all the runs. This testing methodology was used for the
+investigation in <a href="https://arxiv.org/abs/2203.04058">this paper</a>.</p>
+<a href="https://github.com/jameshanlon/prng-testing" class="card-link">GitHub</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Personal&nbsp;finances</h5>
 <p>A Python-based project that I use fetch personal finance data from Google
 Sheets and then generate a set of summary <span class="caps">HTML</span>&nbsp;reports.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/finances">GitHub</a></li>
-</ul>
-<h3>Netlist&nbsp;Paths</h3>
+<a href="https://github.com/jameshanlon/finances" class="card-link">GitHub</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Netlist&nbsp;Paths</h5>
 <p>Netlist Paths is a library and command-line tool for querying a Verilog
 netlist. It reads an <span class="caps">XML</span> representation of a design&#8217;s netlist, produced by
 <a href="https://www.veripool.org/projects/verilator">Verilator</a>, and provides
-facilities for inspecting types, variables and paths. The library is written in
-C++ and has a Python interface. This project has now been superseded by Slang
-Netlist (see&nbsp;above).</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/netlist-paths">GitHub</a></li>
-<li><a href="https://jameshanlon.github.io/netlist-paths">Documentation</a></li>
-</ul>
-<h3>Convolutional neural&nbsp;network</h3>
+facilities for inspecting types, variables and paths. The library is
+written in C++ and has a Python interface. This project has now been
+superseded by Slang Netlist (see&nbsp;above).</p>
+<a href="https://github.com/jameshanlon/netlist-paths" class="card-link">GitHub</a>
+<a href="https://jameshanlon.github.io/netlist-paths" class="card-link">Documentation</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Convolutional neural&nbsp;network</h5>
 <p>A C++ implementation of a convolutional neural&nbsp;network.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/convolutional-neural-network">Github</a></li>
-</ul>
-<h3>Three-channel, high-power <span class="caps">LED</span>&nbsp;driver</h3>
+<a href="https://github.com/jameshanlon/convolutional-neural-network" class="card-link">Github</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Three-channel, high-power <span class="caps">LED</span>&nbsp;driver</h5>
 <p><span class="caps">PCB</span> design files and microcontroller&nbsp;code.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/3C-HP-LED-driver">Github</a></li>
-</ul>
-<h3>Sire&nbsp;compiler</h3>
+<a href="https://github.com/jameshanlon/3C-HP-LED-driver" class="card-link">Github</a>
+</div>
+</div>
+
+<div class="card mb-3">
+<div class="card-body">
+ <h5 class="card-title">Sire&nbsp;compiler</h5>
 <p>An implementation of a language and runtime system for dynamic process
-creation. There are two versions: an initial one written in C that
-directly targeted the <span class="caps">XMOS</span> <span class="caps">XS1</span> architecture, and a rewrite in Python
-targeting <span class="caps">XS1</span> via the <a href="/the-xc-programming-language.html"><span class="caps">XC</span> language</a>.</p>
-<ul>
-<li><a href="https://github.com/jameshanlon/tool_sire">Revised&nbsp;version</a></li>
-<li><a href="https://github.com/jameshanlon/sire">Original&nbsp;version</a></li>
-</ul>
+creation. There are two versions: an initial one written in C that directly
+targeted the <span class="caps">XMOS</span> <span class="caps">XS1</span> architecture, and a rewrite in Python targeting <span class="caps">XS1</span>
+via the <a href="/the-xc-programming-language.html"><span class="caps">XC</span> language</a>.</p>
+<a href="https://github.com/jameshanlon/tool_sire" class="card-link">Revised version</a>
+<a href="https://github.com/jameshanlon/sire" class="card-link">Original version</a>
+</div>
+</div>
   </div>
   </main>
 
