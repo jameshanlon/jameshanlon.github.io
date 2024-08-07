@@ -185,11 +185,10 @@ in ``oreg`` larger than the 4-bit instruction immediate. For example, the
 following instructions generate the value 16 in ``oreg`` and use ``LDAC`` to
 assign it to ``areg`` :
 
-
-    :::python
-    PFIX 1  # oreg = oreg (1) << 4 (0x000010)
-    LDAC 0  # areg = oreg 16
-
+```
+PFIX 1  # oreg = oreg (1) << 4 (0x000010)
+LDAC 0  # areg = oreg 16
+```
 
 Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant instruction:

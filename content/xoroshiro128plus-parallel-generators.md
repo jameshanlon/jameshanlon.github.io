@@ -39,7 +39,7 @@ available on [GitHub](https://github.com/jameshanlon/prng-testing)):
 With equidistant intervals from 1 in the natural number sequence [Scheme A],
 defined in Python notation as:
 
-``` python
+```  python
 for i in range(NUM_SEEDS):
     seed[i] = int(1 + i * ((2**128) // NUM_SEEDS))
 ```
