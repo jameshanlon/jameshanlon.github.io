@@ -4,13 +4,14 @@ from __future__ import unicode_literals
 import sys
 import os
 import logging
+import yaml
 
 sys.path.insert(0, os.getcwd())
 from thumbnail import get_thumbnail, get_image
 
 AUTHOR = "James W. Hanlon"
 SITENAME = "James W. Hanlon"
-SITEURL = "http://jameswhanlon.com"
+SITEURL = "https://jameswhanlon.com"
 
 REMOTE_PREFIX = "https://jwh.ams3.digitaloceanspaces.com/homepage"
 
@@ -19,14 +20,20 @@ def get_asset_url(filepath):
     return REMOTE_PREFIX + "/" + filepath
 
 
-def foo(blah):
-    return blah
+def load_yaml(filename: str):
+    with open(filename, "r") as f:
+        return yaml.safe_load(f)
 
+
+JINJA_CONTEXT = {
+    "projects": load_yaml("content/pages/projects.yml"),
+}
 
 JINJA_FILTERS = {
     "asset": get_asset_url,
     "thumbnail": get_thumbnail,
     "image": get_image,
+    "load_yaml": load_yaml,
 }
 
 PATH = "content"

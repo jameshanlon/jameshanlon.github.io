@@ -1,8 +1,10 @@
 ---
 Title: Three-channel high-power LED driver
 Date: 2018-12-30
-Category: projects
+Category: notes
 Tags: lighting, electronics
+Summary: An LED driver module controlled by a PIC12F1572 and with CAT4101
+         drivers, deployable in an array via a RS485 interface.
 Status: published
 ---
 
@@ -81,7 +83,7 @@ Here's the schematic:
 <table class="table table-sm">
   <thead>
     <tr>
-      <th scope="col">Quantity</th>
+      <th cope="col">Quantity</th>
       <th scope="col">Package</th>
       <th scope="col">Description</th>
     </tr>

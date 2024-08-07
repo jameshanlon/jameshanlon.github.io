@@ -19,10 +19,15 @@ Title: Links left
 - [The Chip Letter](https://thechipletter.substack.com)
 - [WikiChip](https://en.wikichip.org/wiki/WikiChip)
 
-### Resources
+### Computing resources
 
 - [Awesome Compilers](http://aalhour.com/awesome-compilers)
+- [Niklaus Wirth Archive](https://people.inf.ethz.ch/wirth)
 - [Per Brinch Hansen Archive](http://brinch-hansen.net)
+
+### Occam and transputers
+
+- [Ram's Transputer Page](http://transputer.classiccmp.org)
 - [Transputer.net](https://www.transputer.net)
 
 ### Simple compilers and interpreters

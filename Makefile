@@ -29,23 +29,12 @@ html:
 regenerate:
 	$(PELICAN) -r $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
 
-runserver:
+serve:
 ifdef PORT
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server $(PORT)
+	pelican -r --listen -b 0.0.0.0 -p $(PORT)
 else
-	cd $(OUTPUTDIR) && $(PY) -m pelican.server
+	pelican -r --listen -b 0.0.0.0
 endif
-
-rundevserver:
-ifdef PORT
-	$(BASEDIR)/develop_server.sh restart $(PORT)
-else
-	$(BASEDIR)/develop_server.sh restart
-endif
-
-stopserver:
-	$(BASEDIR)/develop_server.sh stop
-	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
@@ -53,4 +42,4 @@ clean:
 validate: html
 	html5validator --root $(OUTPUTDIR)
 
-.PHONY: html help clean regenerate serve devserver stopserver
+.PHONY: html help clean regenerate serve
