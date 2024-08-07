@@ -97,3 +97,4 @@ SUMMARY_MAX_LENGTH = 25
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = ["jinja_content"]
+MARKDOWN = {"extensions": ["codehilite", "fenced_code"]}
