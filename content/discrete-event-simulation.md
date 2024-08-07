@@ -10,11 +10,11 @@ Status: published
 {% import 'post-macros.html' as macros %}
 
 Discrete event simulation (DES) is a methodology for modelling dynamic systems
-as a sequence of events in time. DES is widely used where analytical solutions
-are difficult (see wikipedia article). In this note I am focussing on its use
-in modelling computer systems and I want to outline how it is very simple to
-implement provided special care is taken to maintain particular properties of
-the simulation.
+as a sequence of events in time. There are plenty of places to read about DES,
+but in this note I want to outline how it works and can be simply implement,
+recognising several subtulties. DES is widely used in different areas where
+analytical solutions are difficult. I am focussing on its use in modelling
+clocked computer systems.
 
 In a DES, each event is scheduled to occur at a particular point in time and
 represents a change in the state of the system and the possible generation of
@@ -29,12 +29,14 @@ maintain a centralised event list.
 
 The main components of a DES are:
 
-- The state, representing the components of the system.
-- Events, that can update the system state and create new future events.
-- A clock, that records the simulation time.
-- A list of future events.
+- A **state** (or set of states) representing the components of the system.
+- **Events**, that can update the system state and create new future events.
+- A **clock**, that records the simulation time.
+- A **list of future events** (the event list). This is most often implemented
+  as a priority queue with events queued in chronological order, soonest at
+  the front.
 
-The DES algorithm is as follows:
+An outline of the DES algorithm is as follows:
 
 - Create one or more initial events and add them to the event list.
 - While the event list not empty:
@@ -44,7 +46,8 @@ The DES algorithm is as follows:
     - State updates are committed immediately.
     - New events are added to the event queue.
 
-Simulation proceeds until there are no more events to process, or a maximum time is reached.
+Simulation proceeds until there are no more events to process, or a maximum
+time is reached.
 
 During the simulation the following must be ensured:
 
