@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{SITEURL}}/theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{SITEURL}}/theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments-dark.css" id="pygments-style"/>
   {% if FEED_ATOM %}
   <link href="{{FEED_DOMAIN}}/{{FEED_ATOM}}"
         type="application/atom+xml" rel="alternate"
@@ -86,14 +87,23 @@
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

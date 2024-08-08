@@ -38,18 +38,21 @@ available on [GitHub](https://github.com/jameshanlon/prng-testing)):
 
 With equidistant intervals from 1 in the natural number sequence [Scheme A],
 defined in Python notation as:
+
 ```
 for i in range(NUM_SEEDS):
     seed[i] = int(1 + i * ((2**128) // NUM_SEEDS))
 ```
 
 With equidistant intervals starting from a random offset [Scheme B]:
+
 ```
 for i in range(NUM_SEEDS):
     seed[i] = int(rand(0, (2**128) // NUM_SEEDS) + i * ((2**128) // NUM_SEEDS))
 ```
 
 By adding a fixed offset to a initial state of balanced 0s and 1s [Scheme C]:
+
 ```
 for i in range(NUM_SEEDS):
     seed[i] = 0x55555555555555555555555555555555 + i
