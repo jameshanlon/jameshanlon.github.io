@@ -34,7 +34,7 @@ Following Vigna’s approach of adding a function to ‘scramble’ the LFSR sta
 we have devised a function consisting of AND, OR and XOR operations (called AOX
 for short). An C implementation of ``xoroshiro128aox`` is as follows:
 
-``` C
+```
 uint64_t s0, s1; // State vectors
 
 uint64_t rotl(uint64_t x, int k) {
