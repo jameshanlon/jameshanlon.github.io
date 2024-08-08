@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -442,14 +443,23 @@ developed by …</p></span>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -102,16 +103,14 @@ number of tiles, cores and resources are available to execute the program being&
 <h3>Parallelism</h3>
 <p>Statements in <span class="caps">XC</span> are executed in sequence (as they are in C), so that in the
 execution&nbsp;of:</p>
-<div class="codehilite"><pre><span></span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span>
+</code></pre></div>
 
 <p>the function <code>g</code> is only executed once the execution of the function <code>f</code> has
 completed. A set of statements can be made to execute in parallel using a <code>par</code>
 statement, so that the&nbsp;statement</p>
-<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
 
 <p>causes <code>f</code> and <code>g</code> to be executed simultaneously. The execution of parallel
 statement only completes when each of the component statements have completed.
@@ -123,26 +122,23 @@ not be used in any other&nbsp;statement.</p>
 <p>Parallel statements can be written with a replicator, in a similar fashion to a
 for loop, so that many similar instances of a task can be created without
 having to write each one separately, so that the&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="w">  </span><span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>is equivalent&nbsp;to:</p>
-<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
 
 <p>The tasks in a parallel statement are executed by creating threads on the
 processor executing the statement. Tasks can be placed on different tiles by
 using an <code>on</code> prefix. In following&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="n">par</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">f</span><span class="p">();</span>
 <span class="w">  </span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
 <span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">core</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="p">();</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>the task <code>f</code> is placed on any available core of tile 0 and instances of the task
 g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
@@ -157,7 +153,7 @@ an interface, one operates as a server and the other as a client. The client is
 able to initiate a transaction with the corresponding server, with syntax
 similar to a conventional function call. This interaction can be seen as a
 remote procedure call. For example, in the parallel&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="p">};</span>
+<div class="highlight"><pre><span></span><code><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span><span class="w"> </span><span class="p">};</span>
 <span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 <span class="n">par</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">select</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// server</span>
@@ -167,8 +163,7 @@ remote procedure call. For example, in the parallel&nbsp;statement:</p>
 <span class="w">  </span><span class="p">}</span>
 <span class="w">  </span><span class="n">i</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// client</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>the client initiates the transaction <code>f</code>, with the parameter value 42, from the
 interface <code>i</code>. The server waits on the transaction (as a case in the select
@@ -181,15 +176,14 @@ be connected to one server. The types of either end of an interface connection
 of type <code>T</code> are server interface <code>T</code> and client interface <code>T</code>. Therefore, when
 interface types are passed as parameters, the type of connection must also be
 specified, for&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">s</span><span class="p">(</span><span class="n">server</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">client</span><span class="w"> </span><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">}</span>
 <span class="n">par</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">s</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 <span class="w">  </span><span class="n">c</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Transaction functions in an interface restrict servers to reacting only in
 response to client requests, but in some circumstances it is useful for a
@@ -199,7 +193,7 @@ type, with <code>[[notification]]</code> slave. The client waits on the notifica
 transaction in a select statement for the server to initiate it. A
 corresponding function can be annotated with <code>[[clears_notification]]</code>, which is
 called by the slave to clear the notification. In the following simple&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="err">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="err">{</span>
 <span class="w">  </span><span class="n">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="nc">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
 <span class="w">  </span><span class="o">[</span><span class="n">[notification</span><span class="o">]</span><span class="err">]</span><span class="w"> </span><span class="n">slave</span><span class="w"> </span><span class="n">void</span><span class="w"> </span><span class="n">isReady</span><span class="p">();</span>
 <span class="w">  </span><span class="o">[</span><span class="n">[clears_notification</span><span class="o">]</span><span class="err">]</span><span class="w"> </span><span class="nc">int</span><span class="w"> </span><span class="n">getValue</span><span class="p">();</span>
@@ -225,8 +219,7 @@ called by the slave to clear the notification. In the following simple&nbsp;exam
 <span class="w">  </span><span class="err">}</span>
 <span class="w">  </span><span class="n">i2</span><span class="p">.</span><span class="n">f</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w">                    </span><span class="o">//</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="mi">2</span>
 <span class="err">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>when client 2 initiates the transaction function <code>f</code>, the server notifies client
 1 via the transaction function <code>isReady</code>. Client 1 waits for the server
@@ -245,14 +238,13 @@ receive data, using the in <code>&lt;:</code> and out <code>:&gt;</code> operato
 communication only occurs when an input is matched with an output, and because
 either side waits for the other to be ready, this also causes the tasks to
 synchronise. In the&nbsp;following:</p>
-<div class="codehilite"><pre><span></span><span class="n">chan</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">chan</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <span class="n">par</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
 <span class="w">  </span><span class="nl">c</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>the value 42 is sent over the channel <code>c</code> and assigned to the variable <code>x</code>.</p>
 <h3>Streaming&nbsp;channels</h3>
@@ -264,7 +256,7 @@ alternation process in occam. Each component of a select is an event, such as
 an interface transaction, channel input or port input (see #<span class="caps">IO</span>), and an
 associated action. When a select is executed, it waits until the first event is
 enabled and then executes that event&#8217;s action. In the following&nbsp;example:</p>
-<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">select</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
@@ -272,17 +264,15 @@ enabled and then executes that event&#8217;s action. In the following&nbsp;examp
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>the select statement merges data from left and right channels on to an out&nbsp;channel.</p>
 <p>A select case can be guarded, so that the case is only selected if the guard
 expression is true at the same time the event is enabled. For example, with a&nbsp;guard:</p>
-<div class="codehilite"><pre><span></span><span class="k">case</span><span class="w"> </span><span class="no">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span>
+<div class="highlight"><pre><span></span><code><span class="k">case</span><span class="w"> </span><span class="no">enable</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span>
 <span class="w">  </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="w">  </span><span class="k">break</span><span class="p">;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>the left-hand channel of the above example can only input data when the
 variable enable is&nbsp;true.</p>
@@ -292,7 +282,7 @@ events occur earlier in the body of the&nbsp;statement.</p>
 <p>To aid in creating reusable components and libraries, select functions can be
 used to abstract multiple cases of a select into a single unit. The following
 select function encapsulates the cases of the above select&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">chanend</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">select</span><span class="w"> </span><span class="nf">merge</span><span class="p">(</span><span class="n">chanend</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">left</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="o">:</span>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
@@ -300,33 +290,30 @@ select function encapsulates the cases of the above select&nbsp;statement:</p>
 <span class="w">    </span><span class="n">out</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>so that the select statement can be&nbsp;written:</p>
-<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">select</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">merge</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <h3>Timing</h3>
 <p>Every tile has a reference clock that can be accessed via timer variables.
 Performing an output operation on a timer reads the current time in cycles. For
 example, to calculate the elapsed execution time of a function <code>f</code>:</p>
-<div class="codehilite"><pre><span></span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
 <span class="nl">t</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
 <span class="n">f</span><span class="p">();</span>
 <span class="nl">t</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Elapsed time %u s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="n">CYCLES_PER_SEC</span><span class="p">);</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>where <code>CYCLES_PER_SEC</code> is defined to be the number of cycles per&nbsp;second.</p>
 <p>Timers can also be used in select statements to trigger events. For example,
 the select&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="n">select</span><span class="w"> </span><span class="p">{</span>
@@ -335,8 +322,7 @@ the select&nbsp;statement:</p>
 <span class="w">    </span><span class="p">...</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>waits for the timer <code>t</code> to exceed the value of time before reacting to it. The
 value of <code>t</code> is discarded with the syntax <code>:&gt; void</code>, but it can be assigned to a
@@ -348,7 +334,7 @@ input or output every cycle. The same channel input and output operators <code>&
 and <code>&gt;</code> respectively are used for&nbsp;this.</p>
 <p>The following program continuously reads the value on one port and outputs it
 on&nbsp;another:</p>
-<div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;xs1.h&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;xs1.h&gt;</span>
 <span class="n">in</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XS1_PORT_1A</span><span class="p">;</span>
 <span class="n">out</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XS1_PORT_1B</span><span class="p">;</span>
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -358,8 +344,7 @@ on&nbsp;another:</p>
 <span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>The declaration of ports must have global scope and each port must specify
 whether it is inputting or outputting, and is assigned a fixed value to specify
@@ -372,29 +357,26 @@ further configured to use buffering and to synchronise with other ports. This
 configuration is performed using library functions. Port&nbsp;events</p>
 <p>Ports can generate events, which can be handled in select statements. For
 example, the&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">select</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="n">select</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="no">p</span><span class="w"> </span><span class="no">when</span><span class="w"> </span><span class="no">pinseq</span><span class="p">(</span><span class="no">v</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="o">:</span>
 <span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Received input %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 <span class="w">    </span><span class="k">break</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>uses the predicate when <code>pinseq</code> to wait for the value on the port <code>p</code> to equal <code>v</code>
 before triggering the response to print a&nbsp;notification.</p>
 <h3>Port&nbsp;timing</h3>
 <p>To be able to control when outputs on a port occur with respect to the port&#8217;s
 clock, outputs can be timestamped or timed. The timestamped&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+</code></pre></div>
 
 <p>causes the value <code>v</code> to be output on the port <code>p</code> and for count to be set to the
 value of the port&#8217;s counter (incremented by one each reference clock cycle).
 The timed output&nbsp;statement:</p>
-<div class="codehilite"><pre><span></span><span class="n">p</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+</code></pre></div>
 
 <p>causes the port to wait until its counter reaches the value of count before the
 value v is&nbsp;output.</p>
@@ -436,9 +418,8 @@ structure and can be used as parameters to regular and transaction&nbsp;function
 have a valid value. The nullable qualifier allows these types to have no value,
 which is specified with the <code>?</code> symbol. For example, a nullable channel is
 declared&nbsp;with:</p>
-<div class="codehilite"><pre><span></span><span class="n">chan</span><span class="w"> </span><span class="o">?</span><span class="n">c</span><span class="p">;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">chan</span><span class="w"> </span><span class="o">?</span><span class="n">c</span><span class="p">;</span>
+</code></pre></div>
 
 <p>Nullable resource types can also be used to implement optional resource
 arguments for functions. The <code>isnull()</code> builtin function can be used to check
@@ -446,20 +427,18 @@ if a resource is&nbsp;null.</p>
 <h4>Multiple&nbsp;returns</h4>
 <p>In <span class="caps">XC</span>, functions can return multiple values. For example, the following
 function implements the swap&nbsp;operation:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">}</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">}</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">};</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>The function swap is called with a multiple&nbsp;assignment:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+</code></pre></div>
 
 <h2>Multicore Hello&nbsp;World</h2>
 <p>The following program prints <code>Hello World</code> on four&nbsp;processors:</p>
-<div class="codehilite"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;platform.h&gt;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cin</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">cout</span><span class="p">){</span>
@@ -474,8 +453,7 @@ function implements the swap&nbsp;operation:</p>
 <span class="w">    </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">hello</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">c</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">4</span><span class="p">]);</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <h2>References and further&nbsp;reading</h2>
 <ul>
@@ -520,14 +498,23 @@ function implements the swap&nbsp;operation:</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

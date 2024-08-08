@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -511,7 +512,7 @@ allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
 <li><a href="https://www.intel.com/content/www/us/en/developer/articles/technical/accelerating-python-today.html#gs.35k6hi">Accelerating Python Today</a>, Intel technical note, James&nbsp;Reinders.</li>
 </ul>
 <div class="footnote">
-<hr />
+<hr>
 <ol>
 <li id="fn:python-overheads">
 <p>See [2] and [3] for other similar analyses that [1] builds on.&#160;<a class="footnote-backref" href="#fnref:python-overheads" title="Jump back to footnote 1 in the text">&#8617;</a></p>
@@ -548,14 +549,23 @@ allocation and <span class="caps">GC</span> for performance and&nbsp;safety.</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -116,7 +117,7 @@ language based on
 target the features of the <span class="caps">XS1</span> architecture. The program uses a ring topology
 of communication channels to connect one thread on each chip. As a token is
 passed around, the <span class="caps">LED</span> connected to each G4 is switched on for a short&nbsp;period.</p>
-<div class="codehilite"><pre><span></span><span class="err">#</span><span class="nx">include</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">platform</span><span class="p">.</span><span class="nx">h</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="nx">include</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">platform</span><span class="p">.</span><span class="nx">h</span><span class="o">&gt;</span>
 <span class="err">#</span><span class="nx">include</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">xs1</span><span class="p">.</span><span class="nx">h</span><span class="o">&gt;</span>
 
 <span class="err">#</span><span class="nx">define</span><span class="w"> </span><span class="nx">NUM_CHIPS</span><span class="w"> </span><span class="p">(</span><span class="mf">16</span><span class="p">)</span>
@@ -164,8 +165,7 @@ passed around, the <span class="caps">LED</span> connected to each G4 is switche
 <span class="w">  </span><span class="p">}</span>
 <span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>As an intern at <span class="caps">XMOS</span> in 2009, I did some work to investigate the performance of
 the <span class="caps">XMP</span>-64. This is written up in the document linked below. It looks at the
@@ -229,14 +229,23 @@ paper</a> (ArXiv) for more&nbsp;details.</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

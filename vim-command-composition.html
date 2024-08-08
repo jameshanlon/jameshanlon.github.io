@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -95,11 +96,10 @@ documentation</a>, or use the <code>:help</code> tags that I&#8217;ve&nbsp;given
 <h2>Motions</h2>
 <p>Motions change the position of the cursor and can be combined with a count to
 repeat the&nbsp;motion.</p>
-<div class="codehilite"><pre><span></span><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span>
 <span class="nv">motion</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
 <span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -121,10 +121,9 @@ cursor. Compared to motions, text objects on a whole object, regardless of the
 specific cursor position. The <code>a</code> and <code>i</code> modifiers augment text objects,
 specifying whether the surrounding context should be included. The context may
 be whitespace or delimiting&nbsp;characters.</p>
-<div class="codehilite"><pre><span></span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
 <span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -148,10 +147,9 @@ be whitespace or delimiting&nbsp;characters.</p>
 <h2>Operators on text&nbsp;objects</h2>
 <p>Operators can be applied to text objects. In some circumstances, a count can be
 applied to the text object to repeat its&nbsp;effect.</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span>
 <span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -180,9 +178,8 @@ applied to the text object to repeat its&nbsp;effect.</p>
 <h2>Operators on&nbsp;motions</h2>
 <p>A motion can be applied after an operator to apply the operator on the text
 that was moved&nbsp;over.</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span>
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -206,9 +203,8 @@ that was moved&nbsp;over.</p>
 </ul>
 <h2>Duplicate&nbsp;operators</h2>
 <p>Operators applied twice affect the entire line, a synonym for <code>&lt;operator&gt;_</code>,</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span>
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -233,9 +229,8 @@ that was moved&nbsp;over.</p>
 </ul>
 <h2>Filtering</h2>
 <p>Text lines can be filtered through an external program (see <code>:help filter</code>).</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span>
+</code></pre></div>
 
 <p>Examples, using some basic utilities found on Unix&nbsp;platforms:</p>
 <ul>
@@ -259,14 +254,13 @@ are additional ones that can (see <code>:help visual-operators</code>). A visual
 created by entering a visual mode, then providing a motion or text object to
 set the selection, or alternatively by any sequence of movement commands
 (referred to by <code>{move-around}</code>).</p>
-<div class="codehilite"><pre><span></span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="nv">move</span><span class="o">-</span><span class="nv">around</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="nv">move</span><span class="o">-</span><span class="nv">around</span><span class="p">}</span>
 <span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span>
 <span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span>
 <span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">operator</span><span class="o">&gt;</span>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="o">&gt;</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Examples:</p>
 <ul>
@@ -290,9 +284,8 @@ set the selection, or alternatively by any sequence of movement commands
 <p>Beyond the above rules, there are further command keys and more restricted
 combination with motions, operators and text&nbsp;objects.</p>
 <p>The <code>.</code> command repeats the last change that was&nbsp;made.</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">.</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">.</span>
+</code></pre></div>
 
 <ul>
 <li><code>db.</code> - delete the previous two&nbsp;words</li>
@@ -301,10 +294,9 @@ combination with motions, operators and text&nbsp;objects.</p>
 </ul>
 <p>The <code>gn</code> and <code>gN</code> motions can be used with operators to move between matching
 search&nbsp;patterns.</p>
-<div class="codehilite"><pre><span></span><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gn</span>
+<div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gn</span>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gN</span>
-</pre></div>
-
+</code></pre></div>
 
 <ul>
 <li><code>cgn</code> - change the next search&nbsp;match</li>
@@ -327,7 +319,7 @@ in the Vim&nbsp;help:</p>
 <li><code>r{char}</code> - replace character under cursor with <code>{char}</code></li>
 <li><code>10r{char}</code> - replace the next 10 characters with <code>{char}</code></li>
 </ul>
-<hr />
+<hr>
 <h2>Summary of&nbsp;rules</h2>
 <div class="container">
 <div class="row">
@@ -609,7 +601,7 @@ in the Vim&nbsp;help:</p>
 </div>
 </div>
 
-<div class="codehilite"><pre><span></span><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span>
 
 <span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
 <span class="w">             </span><span class="o">|</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">modifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
@@ -632,10 +624,9 @@ in the Vim&nbsp;help:</p>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">.</span>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gn</span>
 <span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">gN</span>
-</pre></div>
+</code></pre></div>
 
-
-<hr />
+<hr>
 <h2>Some random&nbsp;commands</h2>
 <p>Just for fun, here are some random commands using the above rules to show the
 variety of actions you can perform. Some might not make sense or not work, but
@@ -674,7 +665,6 @@ they might give you some&nbsp;ideas.</p>
     </div>
   </div>
 </div>
-
 <p><a name="references" class="anchor"></a></p>
 <h2>References/further&nbsp;reading</h2>
 <ul>
@@ -722,14 +712,23 @@ they might give you some&nbsp;ideas.</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

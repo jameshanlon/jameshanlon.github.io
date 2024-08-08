@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -94,7 +95,7 @@ performing <span class="caps">XOR</span> and fixed-distance shift and rotate ope
 Following Vigna’s approach of adding a function to ‘scramble’ the <span class="caps">LFSR</span> state,
 we have devised a function consisting of <span class="caps">AND</span>, <span class="caps">OR</span> and <span class="caps">XOR</span> operations (called <span class="caps">AOX</span>
 for short). An C implementation of <code>xoroshiro128aox</code> is as&nbsp;follows:</p>
-<div class="codehilite"><pre><span></span>uint64_t s0, s1; // State vectors
+<div class="highlight"><pre><span></span><code>uint64_t s0, s1; // State vectors
 
 uint64_t rotl(uint64_t x, int k) {
   return (x &lt;&lt; k) | (x &gt;&gt; (64 - k));
@@ -112,8 +113,7 @@ uint64_t next(void) {
   s1 = rotl(sx, 36);
   return res;
 }
-</pre></div>
-
+</code></pre></div>
 
 <p>To determine that this new <span class="caps">PRNG</span> provides a good source of randomness, we took
 the conventional approach of subjecting the generator to batteries of
@@ -393,7 +393,6 @@ clear the differences in implementation complexity (left to right:
 % pcg      63.9   32        2.463054187
 % philox   115.8  57.984    4.463054187
 -->
-
 <table>
 <tbody>
 <tr>
@@ -480,14 +479,23 @@ code</a> for the experiments on&nbsp;GitHub.</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -97,12 +98,11 @@ Assuming the <code>netlist-paths</code> install <code>bin</code> directory is av
 <code>PATH</code>, then using the <a href="https://github.com/cliffordwolf/picorv32">PicoRV32 processor
 implementation</a> as an example, its
 netlist can be generated as&nbsp;follows:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cliffordwolf/picorv32.git
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cliffordwolf/picorv32.git
 $<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>picorv32
 $<span class="w"> </span>verilator<span class="w"> </span>--dump-netlist-graph<span class="w"> </span>-o<span class="w"> </span>netlist.graph<span class="w"> </span>picorv32.v<span class="w"> </span>--top-module<span class="w"> </span>picorv32_axi
 ...<span class="w"> </span><span class="c1"># lots of warnings</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Here a modified version of <a href="https://www.veripool.org/wiki/verilator">Verilator</a>
 is used to generate the netlist. (Note that <code>netlist-paths</code> can invoke
@@ -117,7 +117,7 @@ format</a>, and specifies
 the vertices, with their type and source code location information, and the
 edges between them. The analysis tool reads this file and reports on the
 connectivity between&nbsp;points.</p>
-<div class="codehilite"><pre><span></span><span class="nx">digraph</span><span class="w"> </span><span class="nx">netlist</span><span class="w"> </span><span class="p">{</span>
+<div class="highlight"><pre><span></span><code><span class="nx">digraph</span><span class="w"> </span><span class="nx">netlist</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="nx">n0</span><span class="p">[</span><span class="nx">id</span><span class="p">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="s">&quot;ASSIGNW&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="p">=</span><span class="s">&quot;picorv32.v:2539&quot;</span><span class="p">];</span>
 <span class="w">  </span><span class="nx">n1</span><span class="p">[</span><span class="nx">id</span><span class="p">=</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="s">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">dir</span><span class="p">=</span><span class="s">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">=</span><span class="s">&quot;picorv32_axi.trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="p">=</span><span class="s">&quot;picorv32.v:2539&quot;</span><span class="p">];</span>
 <span class="w">  </span><span class="nx">n2</span><span class="p">[</span><span class="nx">id</span><span class="p">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">=</span><span class="s">&quot;PORT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">dir</span><span class="p">=</span><span class="s">&quot;OUTPUT&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="p">=</span><span class="s">&quot;trace_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">loc</span><span class="p">=</span><span class="s">&quot;picorv32.v:2539&quot;</span><span class="p">];</span>
@@ -131,8 +131,7 @@ connectivity between&nbsp;points.</p>
 <span class="w">  </span><span class="nx">n6</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">n8</span><span class="p">;</span>
 <span class="w">  </span><span class="o">...</span>
 <span class="p">}</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>A vertex in this netlist corresponds to the occurrence of a variable (ie a
 symbolic name). A given symbolic name can appear in different vertices,
@@ -140,7 +139,7 @@ corresponding to its different uses. To see this, the option <code>--dumpnames</
 prints the names, types and directions of all the vertices in the graph. This
 output can be piped through <code>grep</code> to locate particular signals. For example,
 to see all the output&nbsp;variables:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OUTPUT
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OUTPUT
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>eoi
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_araddr
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_arprot
@@ -149,11 +148,10 @@ PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awaddr
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awprot
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>mem_axi_awvalid
 ...
-</pre></div>
-
+</code></pre></div>
 
 <p>Or all the&nbsp;registers:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>REG_DST
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>REG_DST
 REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_arvalid
 REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_awvalid
 REG_DST<span class="w"> </span>picorv32_axi.axi_adapter.ack_wvalid
@@ -165,8 +163,7 @@ REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.alu_wait_2
 REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_ascii_instr
 REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_insn_imm
 ...
-</pre></div>
-
+</code></pre></div>
 
 <p>Here, the <code>REG_DST</code> type corresponds to a variable that is the left-hand side
 of a non-blocking assignment <code>&lt;=</code>. Conversely, the <code>REG_SRC</code> type is where the
@@ -178,14 +175,13 @@ straight forward to locate the variables I need using <code>grep</code> with
 <code>--dumpnames</code>, but there may be more sophisticated approaches that could be&nbsp;implemented.</p>
 <p>A start or end point can be specified as any named vertex, which is anything
 except logic statements. You can query if a path exists between two&nbsp;points:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.picorv32_core.cpu_state<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.picorv32_core.cpu_state<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
 <span class="w">  </span>picorv32_axi.picorv32_core.cpu_state<span class="w">        </span>REG_SRC<span class="w">         </span>picorv32.v:1160
 <span class="w">  </span>ASSIGNW<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:1373
 <span class="w">  </span>picorv32_axi.picorv32_core.launch_next_insn<span class="w"> </span>WIRE<span class="w">            </span>picorv32.v:750
 <span class="w">  </span>ALWAYS<span class="w">                                      </span>LOGIC<span class="w">           </span>picorv32.v:760
 <span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">   </span>REG_DST<span class="w">         </span>picorv32.v:751
-</pre></div>
-
+</code></pre></div>
 
 <p>In this path report, it lists the sequential dependencies from the start point
 to the end point, through a sequence of zero or more combinatorial logic
@@ -196,7 +192,7 @@ and end points, the register version is preferentially located (<code>SRC</code>
 start point and <code>DST</code> for an end point), followed by <code>VAR</code>, <code>WIRE</code> and
 <code>PORT</code> types.</p>
 <p>You can also query all the paths that fan out from a particular start&nbsp;point:</p>
-<div class="codehilite"><pre><span></span>netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
+<div class="highlight"><pre><span></span><code>netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
 Path 1
   picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
   ASSIGNW                                     LOGIC           picorv32.v:1373
@@ -219,11 +215,10 @@ Path 3
   picorv32_axi.picorv32_core.q_insn_opcode    REG_DST         picorv32.v:744
 ...
 Found 223 path(s)
-</pre></div>
-
+</code></pre></div>
 
 <p>Or query all the paths that fan in to a particular end&nbsp;point:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--end<span class="w"> </span>picorv32_axi.picorv32_core.dbg_valid_insn
 Path<span class="w"> </span><span class="m">1</span>
 <span class="w">  </span>picorv32_axi.picorv32_core.trap<span class="w">           </span>REG_SRC<span class="w">         </span>picorv32.v:86
 <span class="w">  </span>ALWAYS<span class="w">                                    </span>LOGIC<span class="w">           </span>picorv32.v:760
@@ -246,8 +241,7 @@ Path<span class="w"> </span><span class="m">3</span>
 <span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">  </span>REG_DST<span class="w">         </span>picorv32.v:751
 ...
 Found<span class="w"> </span><span class="m">74</span><span class="w"> </span>paths
-</pre></div>
-
+</code></pre></div>
 
 <p>Since the number of paths between any two points in an arbitrary graph grows
 exponentially with the size of the graph, it infeasible to report all paths
@@ -260,7 +254,7 @@ done by specifying through points with the <code>--through</code> option. Each t
 argument is taken in order as an intermediate point in the path. The same
 search algorithm is used on each pair of points to build up a composite report.
 For&nbsp;example:</p>
-<div class="codehilite"><pre><span></span>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.axi_adapter.ack_wvalid<span class="w"> </span>--through<span class="w"> </span>picorv32_axi.axi_adapter.mem_axi_wvalid<span class="w"> </span>--end<span class="w"> </span>mem_axi_wvalid
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.axi_adapter.ack_wvalid<span class="w"> </span>--through<span class="w"> </span>picorv32_axi.axi_adapter.mem_axi_wvalid<span class="w"> </span>--end<span class="w"> </span>mem_axi_wvalid
 <span class="w">  </span>picorv32_axi.axi_adapter.ack_wvalid<span class="w">     </span>REG_SRC<span class="w">         </span>picorv32.v:2700
 <span class="w">  </span>ASSIGNW<span class="w">                                 </span>LOGIC<span class="w">           </span>picorv32.v:2711
 <span class="w">  </span>picorv32_axi.axi_adapter.mem_axi_wvalid<span class="w"> </span>PORT<span class="w">            </span>picorv32.v:2671
@@ -268,8 +262,7 @@ For&nbsp;example:</p>
 <span class="w">  </span>picorv32_axi.mem_axi_wvalid<span class="w">             </span>PORT<span class="w">            </span>picorv32.v:2484
 <span class="w">  </span>ASSIGNW<span class="w">                                 </span>LOGIC<span class="w">           </span>picorv32.v:2484
 <span class="w">  </span>mem_axi_wvalid<span class="w">                          </span>PORT<span class="w">            </span>picorv32.v:2484
-</pre></div>
-
+</code></pre></div>
 
 <h2>Implementation</h2>
 <p>To avoid writing a preprocessor and parser for Verilog, I modified
@@ -336,14 +329,23 @@ found there were some subtleties in getting this to&nbsp;work.</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

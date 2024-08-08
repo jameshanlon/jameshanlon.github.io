@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -116,28 +117,26 @@ codewords <code>01</code> and <code>10</code>. If either of the invalid words is
 has occurred, but neither can be associated with a valid codeword. Two bit
 flips are undetectable since they always map to a valid codeword. Note that
 parity encoding is an example of a distance-two Hamming&nbsp;code.</p>
-<div class="codehilite"><pre><span></span><span class="mf">00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
+<div class="highlight"><pre><span></span><code><span class="mf">00</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
 <span class="err">|</span>
 <span class="mf">10</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">Invalid</span><span class="w"> </span><span class="n">codeword</span><span class="w"> </span><span class="p">(</span><span class="n">obtained</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">exactly</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="n">flip</span><span class="p">)</span>
 <span class="err">|</span>
 <span class="mf">11</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>With Hamming distance three, any single bit flip in a valid codeword makes an
 invalid one, and the invalid codeword is Hamming distance one from exactly one
 valid codeword. Using this, the valid codeword can be restored, enabling single
 error correction. Any two bit flips map to an invalid codeword, which would
 cause correction to the wrong valid&nbsp;codeword.</p>
-<div class="codehilite"><pre><span></span><span class="mf">000</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
+<div class="highlight"><pre><span></span><code><span class="mf">000</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
 <span class="w"> </span><span class="err">|</span>
 <span class="mf">001</span>
 <span class="w"> </span><span class="err">|</span>
 <span class="mf">011</span>
 <span class="w"> </span><span class="err">|</span>
 <span class="mf">111</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>With Hamming distance four, two bit flips moves any valid codeword Hamming
 distance two from exactly two valid codewords, allowing detection of two flips
@@ -146,7 +145,7 @@ three. Distance-four codes are widely used in computing, where is it often the
 case where single errors are frequent, double errors are rare and triple errors
 occur so rarely they can be ignored. These codes are referred to as &#8216;<span class="caps">SECDED</span>
 <span class="caps">ECC</span>&#8217; (single error correction, double error&nbsp;detection).</p>
-<div class="codehilite"><pre><span></span><span class="mf">0000</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
+<div class="highlight"><pre><span></span><code><span class="mf">0000</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
 <span class="w"> </span><span class="err">|</span>
 <span class="mf">0001</span>
 <span class="w"> </span><span class="err">|</span>
@@ -155,8 +154,7 @@ occur so rarely they can be ignored. These codes are referred to as &#8216;<span
 <span class="mf">0111</span>
 <span class="w"> </span><span class="err">|</span>
 <span class="mf">1111</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nb">Val</span><span class="n">id</span><span class="w"> </span><span class="n">codeword</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>Double errors can be corrected with a distance-five code, as well as enabling
 the detection of triple errors. In general, if a Hamming code can detect $d$
@@ -252,7 +250,7 @@ codewords, it is necessary&nbsp;for:</p>
   flipped bits, giving a total of four different bits. For&nbsp;example:</p>
 </li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="k">Check</span><span class="w"> </span><span class="nl">bits</span><span class="p">:</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span>
+<div class="highlight"><pre><span></span><code><span class="k">Check</span><span class="w"> </span><span class="nl">bits</span><span class="p">:</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span>
 <span class="k">data</span><span class="o">[</span><span class="n">a</span><span class="o">]</span><span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="k">data</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="o">-----------</span><span class="w">  </span><span class="o">--------</span>
@@ -263,15 +261,14 @@ codewords, it is necessary&nbsp;for:</p>
 <span class="k">data</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="o">----------</span><span class="w">   </span><span class="o">---------</span>
 <span class="n">Flips</span><span class="w">              </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
-</pre></div>
-
+</code></pre></div>
 
 <ul>
 <li><strong>3 bits</strong> flip check bits in three patterns, and this time it is possible to
   overlap odd-length patterns in such a way that a minimum of 1 bit is flipped.
   For&nbsp;example:</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="k">Check</span><span class="w"> </span><span class="nl">bits</span><span class="p">:</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span>
+<div class="highlight"><pre><span></span><code><span class="k">Check</span><span class="w"> </span><span class="nl">bits</span><span class="p">:</span><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span>
 <span class="k">data</span><span class="o">[</span><span class="n">a</span><span class="o">]</span><span class="w">      </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="k">data</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="k">data</span><span class="o">[</span><span class="n">c</span><span class="o">]</span><span class="w">      </span><span class="n">x</span><span class="w">     </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
@@ -284,14 +281,13 @@ codewords, it is necessary&nbsp;for:</p>
 <span class="k">data</span><span class="o">[</span><span class="n">c</span><span class="o">]</span><span class="w">      </span><span class="n">x</span><span class="w">     </span><span class="n">x</span><span class="w"> </span><span class="n">x</span>
 <span class="o">-----------</span><span class="w">  </span><span class="o">---------</span>
 <span class="n">Flips</span><span class="w">        </span><span class="n">x</span>
-</pre></div>
-
+</code></pre></div>
 
 <ul>
 <li><strong>4 bits</strong> is already sufficient to provide a Hamming distance of&nbsp;four.</li>
 </ul>
 <p>An example <span class="caps">SEC</span> code for eight data bits with four parity&nbsp;bits:</p>
-<div class="codehilite"><pre><span></span>Check bits:  0 1 2 3
+<div class="highlight"><pre><span></span><code>Check bits:  0 1 2 3
 data[0]      x x x
 data[1]        x x x
 data[2]      x   x x
@@ -300,11 +296,10 @@ data[4]      x x
 data[5]        x x
 data[6]          x x
 data[7]      x     x
-</pre></div>
-
+</code></pre></div>
 
 <p>An example <span class="caps">SECDED</span> code for eight data bits with five parity&nbsp;bits:</p>
-<div class="codehilite"><pre><span></span>Check bits:  0 1 2 3 4
+<div class="highlight"><pre><span></span><code>Check bits:  0 1 2 3 4
 data[0]      x x x
 data[1]      x x   x
 data[2]      x   x x
@@ -313,8 +308,7 @@ data[4]      x x     x
 data[5]      x   x   x
 data[6]        x x   x
 data[7]      x     x x
-</pre></div>
-
+</code></pre></div>
 
 <p>Note that mappings of data bits to check bits can be chosen flexibly, providing
 they maintain the rules that set the Hamming distance. This flexibility is
@@ -337,33 +331,30 @@ syndrome, it is possible to determine whether there has been an error,
 whether it is correctable, and how to correct&nbsp;it.</p>
 <p>Using the <span class="caps">SEC</span> check-bit encoding above, creating a codeword from <code>data[7:0]</code>,
 the check bits are calculated as follows (using Verilog&nbsp;syntax):</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">5</span><span class="p">];</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">5</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">6</span><span class="p">];</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">6</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>And the codeword formed by concatenating the check bits and&nbsp;data:</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="n">codeword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">check</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]};</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">codeword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">check</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]};</span>
+</code></pre></div>
 
 <p>Decoding of a codeword, splits it into the checkword and data bits, recomputes
 the check bits and calculates the&nbsp;syndrome:</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">old_check_word</span><span class="p">,</span><span class="w"> </span><span class="n">old_data</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">codeword</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">old_check_word</span><span class="p">,</span><span class="w"> </span><span class="n">old_data</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">codeword</span><span class="p">;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">new_check_word</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">new_check_word</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">new_check_word</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">new_check_word</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">syndrome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_check_word</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">old_check_word</span><span class="p">;</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>When single bit errors occur, the syndrome will have the bit pattern
 corresponding to a particular data bit, so a correction can be applied by
 creating a mask to flip the bit in that&nbsp;position:</p>
-<div class="codehilite"><pre><span></span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">syndrome</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">syndrome</span><span class="o">)</span>
 <span class="w">  </span><span class="nt">4</span><span class="s1">&#39;b1110: correction = 1&lt;&lt;0;</span>
 <span class="s1">  4&#39;</span><span class="nt">b0111</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">1</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">4</span><span class="s1">&#39;b1011: correction = 1&lt;&lt;2;</span>
@@ -374,13 +365,11 @@ creating a mask to flip the bit in that&nbsp;position:</p>
 <span class="s1">  4&#39;</span><span class="nt">b1001</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">7</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">default</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">0</span><span class="o">;</span>
 <span class="nt">endcase</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>And using it to generate the corrected&nbsp;data:</p>
-<div class="codehilite"><pre><span></span><span class="k">assign</span><span class="w"> </span><span class="n">corrected_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">correction</span><span class="p">;</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">corrected_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">correction</span><span class="p">;</span>
+</code></pre></div>
 
 <p>The value of the syndrome can be further inspected to signal what action has
 been taken. If the syndrome&nbsp;is:</p>
@@ -393,7 +382,7 @@ been taken. If the syndrome&nbsp;is:</p>
 <p>The above <span class="caps">SECDED</span> check-bit encoding can be implemented in a similar way, but
 since it uses only three-bit patterns, mapping syndromes to correction masks
 can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
-<div class="codehilite"><pre><span></span><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">syndrome</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code><span class="nt">unique</span><span class="w"> </span><span class="nt">case</span><span class="o">(</span><span class="nt">syndrome</span><span class="o">)</span>
 <span class="w">  </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">0</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">3</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">1</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">2</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">3</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">2</span><span class="o">;</span>
@@ -404,8 +393,7 @@ can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
 <span class="w">  </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">3</span><span class="cp">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nt">syndrome</span><span class="cp">[</span><span class="mi">4</span><span class="cp">]</span><span class="o">:</span><span class="w"> </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">1</span><span class="o">&lt;&lt;</span><span class="nt">7</span><span class="o">;</span>
 <span class="w">  </span><span class="nt">default</span><span class="o">:</span><span class="w">                                   </span><span class="nt">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nt">0</span><span class="o">;</span>
 <span class="nt">endcase</span>
-</pre></div>
-
+</code></pre></div>
 
 <p>And any syndromes with one or two bits set are correctable, and otherwise&nbsp;uncorrectable.</p>
 <h2>References / further&nbsp;reading</h2>
@@ -448,14 +436,23 @@ can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>

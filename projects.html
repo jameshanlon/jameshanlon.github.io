@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -72,7 +73,6 @@ Netlist is included as a tool in the slang&nbsp;project.</p>
 <a href="https://github.com/MikePopoloski/slang" class="card-link">Github</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title"><span class="caps">RISC</span>-V&nbsp;processor</h5>
@@ -82,7 +82,6 @@ Netlist is included as a tool in the slang&nbsp;project.</p>
 <a href="https://github.com/jameshanlon/riscv-processor" class="card-link">GitHub</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Hex&nbsp;processor</h5>
@@ -95,7 +94,6 @@ of how high-level programs relate to the underlying hardware&nbsp;implementation
 <a href="https://jameshanlon.github.io/hex-processor" class="card-link">Documentation</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title"><span class="caps">PRNG</span>&nbsp;testing</h5>
@@ -108,7 +106,6 @@ investigation in <a href="https://arxiv.org/abs/2203.04058">this paper</a>.</p>
 <a href="https://github.com/jameshanlon/prng-testing" class="card-link">GitHub</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Personal&nbsp;finances</h5>
@@ -117,7 +114,6 @@ Sheets and then generate a set of summary <span class="caps">HTML</span>&nbsp;re
 <a href="https://github.com/jameshanlon/finances" class="card-link">GitHub</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Netlist&nbsp;Paths</h5>
@@ -131,7 +127,6 @@ superseded by Slang Netlist (see&nbsp;above).</p>
 <a href="https://jameshanlon.github.io/netlist-paths" class="card-link">Documentation</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Convolutional neural&nbsp;network</h5>
@@ -139,7 +134,6 @@ superseded by Slang Netlist (see&nbsp;above).</p>
 <a href="https://github.com/jameshanlon/convolutional-neural-network" class="card-link">Github</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Three-channel, high-power <span class="caps">LED</span>&nbsp;driver</h5>
@@ -147,7 +141,6 @@ superseded by Slang Netlist (see&nbsp;above).</p>
 <a href="https://github.com/jameshanlon/3C-HP-LED-driver" class="card-link">Github</a>
 </div>
 </div>
-
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">Sire&nbsp;compiler</h5>
@@ -184,14 +177,23 @@ via the <a href="/the-xc-programming-language.html"><span class="caps">XC</span>
   </footer>
   <script>
     function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
       if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         document.documentElement.setAttribute('data-bs-theme','light')
       }
       else {
         document.documentElement.setAttribute('data-bs-theme','dark')
       }
+      // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == 'pygments-dark.css') {
+        elem.setAttribute('href', 'pygments-light.css');
+      } else {
+        elem.setAttribute('href', 'pygments-dark.css');
+      }
     }
   </script>
 </body>
