@@ -11,6 +11,7 @@ from tempfile import NamedTemporaryFile
 
 from jinja2 import ChoiceLoader, Environment, FileSystemLoader
 
+from markdown import Markdown
 from pelican import signals
 from pelican.readers import HTMLReader, MarkdownReader, RstReader
 from pelican.utils import pelican_open
@@ -39,6 +40,7 @@ class JinjaContentMixin:
             }
         self.env = Environment(loader=ChoiceLoader(loaders), **jinja_environment)
         if "JINJA_FILTERS" in self.settings:
+            self.env.filters["markdown"] = self.markdown
             self.env.filters.update(self.settings["JINJA_FILTERS"])
         if "JINJA_GLOBALS" in self.settings:
             self.env.globals.update(self.settings["JINJA_GLOBALS"])
@@ -46,6 +48,13 @@ class JinjaContentMixin:
             self.env.tests.update(self.settings["JINJA_TESTS"])
         if "JINJA_CONTEXT" in self.settings:
             self.context = self.settings["JINJA_CONTEXT"]
+
+    def markdown(self, text):
+        """
+        A Jinja filter for translating Markdown.
+        """
+        md = Markdown(**self.settings["MARKDOWN"])
+        return md.convert(text)
 
     def read(self, source_path):
         with pelican_open(source_path) as text:

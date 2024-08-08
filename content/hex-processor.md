@@ -193,7 +193,7 @@ LDAC 0  # areg = oreg 16
 Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant instruction:
 
-``` python
+```
 PFIX 1  # oreg = oreg (1) << 4 (0x000010)
 PFIX 15 # oreg = oreg (31) << 4 (0x0001f0)
 LDAC 0  # areg = oreg 496
