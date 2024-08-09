@@ -30,7 +30,8 @@ maintain a centralised event list.
 The main components of a DES are:
 
 - A **state** (or set of states) representing the components of the system.
-- **Events**, that can update the system state and create new future events.
+- **Events**, that occur atomically at a particular instant and can update
+  the system state and create new future events.
 - A **clock**, that records the simulation time.
 - A **list of future events** (the event list). This is most often implemented
   as a priority queue with events queued in chronological order, soonest at
@@ -51,24 +52,37 @@ time is reached.
 
 During the simulation the following must be ensured:
 
-- For events that occur at the same time, it must be possible to execute them
+1. For events that occur at the same time, it must be possible to execute them
   in any order, without affecting the correctness of the simulation. In other
   words, the outcome of the simulation must not depend on any ordering of
   simultaneous events.
 
-- Care must be taken to not create duplicate events. For example, if a
+2. Care must be taken to not create duplicate events. For example, if a
   component of the system is servicing some kind of input queue, when an item
   is added to the queue a corresponding 'service' event must be created, but only
   when the queue is empty. As such, delegation of responsibility for event
   creation must be clear.
 
-For modelling of a synchronsied system, it can be useful to subdivide each time
-step into several phases. For example, two phases can be used to separate
-actions of producing...
+To avoid violating point 1 above, it can be useful to subdivide each time
+step into several phases to impose an ordering of events.
 
-C++ example
+A simple case is to divide each timestep into two phases: a *read* phase where
+system state can be retrieved and a *write* phase where system state can be
+updated. By separating access in this way, there can be no dependencies between
+the serialisation of reads and writes as the events are fetched from the queue.
+As an example, given a node in a ring network that can receive incoming
+messages and forward them to a next node, it must be ensured that receiving
+always occurs after a previous write has committed. This avoids a read being
+scheduled before a write.
 
-Parallelisation
+.. Diagram
+
+Extending this concept, a timestep can be divided into an arbitrary number of
+sub phases to model complex behaviours within one timestep.
+
+.. Rust example
+
+.. Parallelisation strategies
 
 
 
@@ -79,3 +93,4 @@ Parallelisation
 - [List of DES software](https://en.wikipedia.org/wiki/List_of_discrete_event_simulation_software), Wikipedia.
 - [Introduction to discrete event simulation](https://www.cs.cmu.edu/~music/cmsip/readings/intro-discrete-event-sim.html), CMU lecture notes.
 - [Distributed discrete event simulation](https://dl.acm.org/doi/pdf/10.1145/6462.6485)
+- Principles and Practices of Interconnection Networks, Chapter 24, William Dally, Brian Towles (2004).
