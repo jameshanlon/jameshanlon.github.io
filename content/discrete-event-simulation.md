@@ -22,10 +22,11 @@ more future events. Because there are no state changes between events, the
 simulation jumps through time from one event to the next. These variable time
 steps are in contrast with a discrete-event scheme with fixed timesteps. Fixed
 timesteps are particularly suited to digital systems with clocked logic, where
-each time increment corresponds to cycle. Fixed-time simulation has the
+each time increment corresponds to clock cycle. Fixed-time simulation has the
 drawback that all time steps are evaluated regardless of whether anything
-happens. However, DES can be harder to parallelise because of the need to
-maintain a centralised event list.
+happens, although it is easier to reason about since everything proceeds in
+lockstep. DES is inherently more flexible but can be harder to parallelise
+because of the need to maintain a centralised event list.
 
 The main components of a DES are:
 
@@ -88,11 +89,74 @@ and there may be many steps of evaluation to produce a final output for the
 time step. The timestep is divided into a fixed set of ordered regions in order
 to provide predictable interactions with a design.
 
-.. Rust example
+Using the above example of a ring of nodes passing a token, I will walk through some Rust
+code that implements a DES of the system. The main component is a `Simulator`
+object that maintains the event queue and the system state:
+
+``` Rust
+struct Simulator {
+    max_cycles: usize,
+    current_time: usize,
+    event_queue: BinaryHeap<Event>,
+    state: State,
+}
+```
+
+The main simulation loop pops events off of the queue and dispatches them to a
+handler function:
+
+```
+fn run(&mut self) {
+        while let Some(event) = self.event_queue.pop() {
+            if self.max_cycles > 0 && self.current_time >= self.max_cycles {
+                break;
+            }
+            self.current_time = event.time;
+            self.handle_event(event);
+        }
+    }
+```
+
+The event handler function implements the behaviour for each event:
+
+```
+fn handle_event(&mut self, event: Event) {
+        match event.event_type {
+            EventType::Transmit => {
+                // Deactivate.
+                self.state.nodes[event.node_id].active = false;
+                println!("Node {} inactive", event.node_id);
+                // Schedule receive at next node.
+                let recv_event = Event {
+                    event_type: EventType::Receive,
+                    time: self.current_time + 1,
+                    node_id: self.state.next_node(event.node_id),
+                };
+                self.schedule_event(recv_event);
+            }
+            EventType::Receive => {
+                // Activate.
+                self.state.nodes[event.node_id].active = true;
+                println!("Node {} active", event.node_id);
+                // Schedule transmit.
+                let send_event = Event {
+                    event_type: EventType::Transmit,
+                    time: self.next_timestep(self.current_time),
+                    node_id: event.node_id,
+                };
+                self.schedule_event(send_event);
+            }
+        }
+    }
+```
+
+The complete source code can be found in [this repository]().
 
 .. Parallelisation strategies
 
+## Summary
 
+Blah
 
 ## References / further reading
 
