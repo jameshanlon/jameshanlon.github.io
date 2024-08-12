@@ -13,12 +13,12 @@ Discrete event simulation (DES) is a methodology for modelling dynamic systems
 as a sequence of events in time. There are plenty of places to read about DES,
 but in this note I want to outline how it works and can be simply implement,
 recognising several subtleties. DES is widely used in different areas where
-analytical solutions are difficult. I am focusing on its use in modelling
-clocked computer systems.
+analytical solutions are difficult; I am focusing on its use in modelling
+digital logic and computer systems.
 
 In a DES, each event is scheduled to occur at a particular point in time and
 represents a change in the state of the system and the possible generation of
-more future events. Because there are no state changes between events, the
+future events. Because there are no state changes between events, the
 simulation jumps through time from one event to the next. These variable time
 steps are in contrast with a discrete-event scheme with fixed timesteps. Fixed
 timesteps are particularly suited to digital systems with clocked logic, where
@@ -89,8 +89,9 @@ and there may be many steps of evaluation to produce a final output for the
 time step. The timestep is divided into a fixed set of ordered regions in order
 to provide predictable interactions with a design.
 
-Using the above example of a ring of nodes passing a token, I will walk through some Rust
-code that implements a DES of the system. The main component is a `Simulator`
+Using the above example of a ring of nodes passing a token around them, the following Rust
+code implements a DES of the system. This is a very simple DES example, but enough to illustrate the main concepts. 
+The main component is a `Simulator`
 object that maintains the event queue and the system state:
 
 ``` Rust
