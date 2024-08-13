@@ -64,21 +64,18 @@ During the simulation the following must be ensured:
   when the queue is empty. As such, delegation of responsibility for event
   creation must be clear.
 
-To avoid violating point 1 above, each time step can be divided into several
-phases to impose an ordering of events. A simple case is to divide each
-timestep into two phases: a *read* phase where system state can be read and a
-*write* phase where system state can be updated. By separating access in this
-way, there can be no dependencies between the serialisation of reads and writes
-as the events are fetched from the queue. As an example, consider a set of
-nodes connected in a ring topology and they pass a token around in a fixed
-direction.
+To avoid violating point 1 above, each time step can be divided into
+phases to impose an ordering of events. 
 
-{{ macros.imagenothumb('discrete-event-simulation/DES-ring.png',
-                       caption="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.") }}
-
-In simulating this system, receiving always occurs after a previous write has
-committed. This avoids a dependent receive from ever being scheduled before a
-transmit.
+The simplest case is to divide each timestep into two phases to searialise the
+handling of two dependent events. As an example, consider nodes in a directed
+graph that can pass tokens between themselves, with it taking one timestep to
+for a token to traverse one node. Each node has two associated events: *transmit*
+and *receive*. Given a particular node *A*, if receive events are scheduled by all
+upstream nodes to *A*, then the transmit event for *A* must be scheduled after all
+receive events have been processed. By separating access in this
+way, there can be no dependencies between the serialisation of transmit and receive
+events as they are fetched from the queue.
 
 Extending this concept of phases, a timestep can be divided into an arbitrary
 number of sub phases to model more complex behaviours. This is how the
@@ -86,15 +83,21 @@ SystemVerliog execution semantics are defined, with a set of stateful processes
 that respond to changes on their inputs to product outputs. Every change in
 state of a net or variable causes processes sensitive to them to be evaluated
 and there may be many steps of evaluation to produce a final output for the
-time step. The timestep is divided into a fixed set of ordered regions in order
+time step. The timestep is divided into a fixed set of ordered regions
 to provide predictable interactions with a design.
 
-Using the above example of a ring of nodes passing a token around them, the following Rust
-code implements a DES of the system. This is a very simple DES example, but enough to illustrate the main concepts. 
-The main component is a `Simulator`
-object that maintains the event queue and the system state:
+## Example implementation
 
-``` Rust
+Consider a set of nodes connected in a ring topology and they pass a token around in a fixed
+direction. This is a simple system but enough to illustrate the main concepts of a DES.
+
+{{ macros.imagenothumb('discrete-event-simulation/DES-ring.png',
+                       caption="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.") }}
+
+The following Rust code implements a DES of the system.
+The main component is a `Simulator` object that maintains the event queue and the system state:
+
+```
 struct Simulator {
     max_cycles: usize,
     current_time: usize,
@@ -103,7 +106,22 @@ struct Simulator {
 }
 ```
 
-The main simulation loop pops events off of the queue and dispatches them to a
+Events have a type, a time at which they occur and node in the system that they
+belong to. The `node_id` is used for directing state updates.
+
+```
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+enum EventType {Transmit, Receive }
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+struct Event {
+    event_type: EventType,
+    time: usize,
+    node_id: usize,
+}
+```
+
+The main simulation loop pops events off of the queue while it is not empty and dispatches them to a
 handler function:
 
 ```
@@ -118,6 +136,7 @@ fn run(&mut self) {
     }
 ```
 
+The simulation `current_time` is updated to the time of the current event being processed.
 The event handler function implements the behaviour for each event:
 
 ```
@@ -149,6 +168,33 @@ fn handle_event(&mut self, event: Event) {
             }
         }
     }
+```
+
+Each event action updates the node state and creates a new event corresponding to the
+passing of the token to the next node of the ring.
+
+The simulation is setup with a initial receive event at node 0:
+
+```
+let mut sim = Simulator::new(20);
+for _ in 0..10 {
+    sim.state.add_node();
+}
+let initial_event = Event { event_type: EventType::Receive, time: 0, node_id: 0 };
+sim.schedule_event(initial_event);
+sim.run();
+```
+
+Running it produces the output:
+
+```
+Node 0 inactive
+Node 0 active
+Node 1 inactive
+Node 1 active
+Node 2 inactive
+Node 2 active
+...
 ```
 
 The complete source code can be found in [this repository]().
