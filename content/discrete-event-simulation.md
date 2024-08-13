@@ -68,33 +68,31 @@ To avoid violating point 1 above, each time step can be divided into
 phases to impose an ordering of events. 
 
 The simplest case is to divide each timestep into two phases to searialise the
-handling of two dependent events. As an example, consider nodes in a directed
-graph that can pass tokens between themselves, with it taking one timestep to
+handling of two dependent events. As an example, consider nodes in a
+ring topology that can pass tokens between themselves in one direction, with it taking one timestep to
 for a token to traverse one node. Each node has two associated events: *transmit*
-and *receive*. Given a particular node *A*, if receive events are scheduled by all
-upstream nodes to *A*, then the transmit event for *A* must be scheduled after all
-receive events have been processed. By separating access in this
+and *receive*. It must hold that a transmit event for a node must be scheduled any
+receive events for that node have been processed. By separating event processing in this
 way, there can be no dependencies between the serialisation of transmit and receive
-events as they are fetched from the queue.
-
-Extending this concept of phases, a timestep can be divided into an arbitrary
-number of sub phases to model more complex behaviours. This is how the
-SystemVerliog execution semantics are defined, with a set of stateful processes
-that respond to changes on their inputs to product outputs. Every change in
-state of a net or variable causes processes sensitive to them to be evaluated
-and there may be many steps of evaluation to produce a final output for the
-time step. The timestep is divided into a fixed set of ordered regions
-to provide predictable interactions with a design.
-
-## Example implementation
-
-Consider a set of nodes connected in a ring topology and they pass a token around in a fixed
-direction. This is a simple system but enough to illustrate the main concepts of a DES.
+events as they are fetched from the simulation queue.
 
 {{ macros.imagenothumb('discrete-event-simulation/DES-ring.png',
                        caption="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.") }}
 
-The following Rust code implements a DES of the system.
+Extending this concept of phases, a timestep can be divided into an arbitrary
+number of sub phases to model more complex behaviours. An interesting example of this is
+SystemVerliog, which defines its execution semantics in terms of multi-phase discrete event simulation. Roughly, a design or test bench defines a set of stateful processes
+that respond to changes on their inputs to product outputs. Every change in
+state of a net or variable causes processes sensitive to them to be evaluated.
+There may be many steps of evaluation to produce a final output for the
+timestep. The timestep is divided into a fixed set of ordered regions (17 in total)
+to provide predictable interactions with a design. Within a region, many events may be processed and further ones scheduled to resolve sensitivity dependencies.
+
+## Example implementation
+
+Using the above example of a ring of nodes passing a token around them, the following Rust
+code implements a DES of the system. This is a very simple DES example, but enough to illustrate the main concepts. 
+
 The main component is a `Simulator` object that maintains the event queue and the system state:
 
 ```
