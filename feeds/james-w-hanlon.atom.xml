@@ -60,7 +60,7 @@ time is&amp;nbsp;reached.&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;To avoid violating point 1 above, each time step can be divided into
 phases to impose an ordering of&amp;nbsp;events.&lt;/p&gt;
-&lt;p&gt;The simplest case is to divide each timestep into two phases to searialise the
+&lt;p&gt;The simplest case is to divide each timestep into two phases to serialise the
 handling of two dependent events. As an example, consider nodes in a ring
 topology that can pass tokens between themselves in one direction, with it
 taking one timestep to for a token to traverse one node. Each node has two
@@ -206,7 +206,7 @@ being&amp;nbsp;simulated.&lt;/p&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;This note explains how &lt;span class="caps"&gt;DES&lt;/span&gt; simulation works and how it simple to implement. &lt;span class="caps"&gt;DES&lt;/span&gt;
 is well suited to modelling synchronous and asynchronous digital systems, but
-care must be taken to ensure that simutaneous events are scheduled without
+care must be taken to ensure that simultaneous events are scheduled without
 dependencies and events are not&amp;nbsp;duplicated.&lt;/p&gt;
 &lt;h2&gt;References / further&amp;nbsp;reading&lt;/h2&gt;
 &lt;ul&gt;
