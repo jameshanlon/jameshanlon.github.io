@@ -9,13 +9,13 @@
   <title>{% block title %}{{SITENAME}}{% endblock title %}</title>
   <link rel="icon" type="image/png" sizes="32x32" href="{{SITEURL}}/theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{SITEURL}}/theme/images/favicon-16x16.png">
-  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/main.css"/>
   <!-- Default Pygments style -->
   {% if article %}
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments.css" id="pygments-style"/>
   {% else %}
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments-dark.css" id="pygments-style"/>
   {%endif%}
+  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/main.css"/>
   {% if FEED_ATOM %}
   <link href="{{FEED_DOMAIN}}/{{FEED_ATOM}}"
         type="application/atom+xml" rel="alternate"
