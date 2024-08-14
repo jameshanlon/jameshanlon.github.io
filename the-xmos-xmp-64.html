@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<!-- Make light mode the default for articles since this works better with
+    images with a white background and code highlighting. -->
+<html lang="en" data-bs-theme=light>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +10,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
-  <link rel="stylesheet" type="text/css" href="./theme/css/pygments-dark.css" id="pygments-style"/>
+  <!-- Default Pygments style -->
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css" id="pygments-style"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
         title="James W. Hanlon Atom Feed" />
@@ -54,7 +57,8 @@
         </ul>
         <a class="navbar-brand" href="#">James W. Hanlon</a>
         <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <i class="bi bi-brightness-high-fill"></i>
+          <!-- Initial button state -->
+            <i class="bi bi-moon-fill"></i>
         </button>
       </div>
     </div>
@@ -242,7 +246,7 @@ paper</a> (ArXiv) for more&nbsp;details.</p>
       // Toggle the Pygments style.
       var elem = document.getElementById('pygments-style');
       if (elem.getAttribute('href') == 'pygments-dark.css') {
-        elem.setAttribute('href', 'pygments-light.css');
+        elem.setAttribute('href', 'pygments.css');
       } else {
         elem.setAttribute('href', 'pygments-dark.css');
       }
