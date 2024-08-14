@@ -28,6 +28,9 @@ happens, although it is easier to reason about since everything proceeds in
 lockstep. DES is inherently more flexible but can be harder to parallelise
 because of the need to maintain a centralised event list.
 
+
+## Operation
+
 The main components of a DES are:
 
 - A **state** (or set of states) representing the components of the system.
@@ -58,11 +61,11 @@ During the simulation the following must be ensured:
    words, the outcome of the simulation must not depend on any ordering of
    simultaneous events.
 
-2. Care must be taken to not create duplicate events. For example, if a
-  component of the system is servicing some kind of input queue, when an item
-  is added to the queue a corresponding 'service' event must be created, but only
-  when the queue is empty. As such, delegation of responsibility for event
-  creation must be clear.
+2. Duplicate events must not be created. For example, if a component of the
+   system is servicing some kind of input queue, when an item is added to the
+   queue a corresponding 'service' event must be created, but only when the queue
+   is empty. As such, delegation of responsibility for event creation must be
+   clear.
 
 To avoid violating point 1 above, each time step can be divided into
 phases to impose an ordering of events.
@@ -84,7 +87,7 @@ Extending this concept of phases, a timestep can be divided into an arbitrary
 number of sub phases to model more complex behaviours. An interesting example
 of this is SystemVerliog, which defines its execution semantics in terms of
 multi-phase discrete event simulation. Roughly, a design or test bench defines
-a set of stateful processes that respond to changes on their inputs to product
+a set of stateful processes that respond to changes on their inputs to produce
 outputs. Every change in state of a net or variable causes processes sensitive
 to them to be evaluated. There may be many steps of evaluation to produce a
 final output for the timestep. The timestep is divided into a fixed set of
@@ -96,11 +99,13 @@ scheduled to resolve sensitivity dependencies.
 
 Using the above example of a ring of nodes passing a token around them, the
 following Rust code implements a DES of the system. This is a very simple DES
-example, but enough to illustrate the main concepts.
+example and only one possible implementation, but sufficient to illustrate the
+main concepts.
 
-The main component is a `Simulator` object that maintains the event queue and the system state:
+The main component is a `Simulator` object that maintains the event queue and
+the system state:
 
-```
+``` Rust
 struct Simulator {
     max_cycles: usize,
     current_time: usize,
@@ -112,7 +117,7 @@ struct Simulator {
 Events have a type, a time at which they occur and node in the system that they
 belong to. The `node_id` is used for directing state updates.
 
-```
+``` Rust
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum EventType {Transmit, Receive }
 
@@ -124,10 +129,10 @@ struct Event {
 }
 ```
 
-The main simulation loop pops events off of the queue while it is not empty and dispatches them to a
-handler function:
+The main simulation loop pops events off of the queue while it is not empty and
+dispatches them to a handler function:
 
-```
+``` Rust
 fn run(&mut self) {
         while let Some(event) = self.event_queue.pop() {
             if self.max_cycles > 0 && self.current_time >= self.max_cycles {
@@ -139,10 +144,10 @@ fn run(&mut self) {
     }
 ```
 
-The simulation `current_time` is updated to the time of the current event being processed.
-The event handler function implements the behaviour for each event:
+The simulation `current_time` is updated to the time of the current event being
+processed. The event handler function implements the behaviour for each event:
 
-```
+``` Rust
 fn handle_event(&mut self, event: Event) {
         match event.event_type {
             EventType::Transmit => {
@@ -173,12 +178,12 @@ fn handle_event(&mut self, event: Event) {
     }
 ```
 
-Each event action updates the node state and creates a new event corresponding to the
-passing of the token to the next node of the ring.
+Each event action updates the node state and creates a new event corresponding
+to the passing of the token to the next node of the ring.
 
 The simulation is setup with a initial receive event at node 0:
 
-```
+``` Rust
 let mut sim = Simulator::new(20);
 for _ in 0..10 {
     sim.state.add_node();
@@ -188,25 +193,48 @@ sim.schedule_event(initial_event);
 sim.run();
 ```
 
-Running it produces the output:
+And running it produces the output:
 
 ```
-Node 0 inactive
 Node 0 active
-Node 1 inactive
+Node 0 inactive
 Node 1 active
-Node 2 inactive
+Node 1 inactive
 Node 2 active
-...
+Node 2 inactive
+Node 3 active
+Node 3 inactive
+Node 4 active
+Node 4 inactive
+Node 5 active
+Node 5 inactive
+Node 6 active
+Node 6 inactive
+Node 7 active
+Node 7 inactive
+Node 8 active
+Node 8 inactive
+Node 9 active
+Node 9 inactive
 ```
 
-The complete source code can be found in [this repository]().
+The complete source code for the example can be found in [this
+Gist](https://gist.github.com/jameshanlon/a14685408f8b0f44919610d7f7cfa4a6).
 
-.. Parallelisation strategies
+There are many libraries for implementing DES such as
+[SystemC](https://systemc.org) and
+[SimPy](https://simpy.readthedocs.io/en/latest/). Different libraries provide
+varying approaches for creating and managing events with supporting
+infrastructure, and their applicability depends on the application and system
+being simulated.
+
 
 ## Summary
 
-Blah
+This note explains how DES simulation works and how it simple to implement. DES
+is well suited to modelling synchronous and asynchronous digital systems, but
+care must be taken to ensure that simutaneous events are scheduled without
+dependencies and events are not duplicated.
 
 ## References / further reading
 
