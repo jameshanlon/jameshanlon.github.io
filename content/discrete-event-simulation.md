@@ -1,6 +1,6 @@
 ---
 Title: Discrete-event simulation
-Date: 2024-08-07
+Date: 2024-08-14
 Category: notes
 Tags: computing
 Summary: How to build a simple discrete-event simulation with an example in Rust
