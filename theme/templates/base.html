@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{DEFAULT_LANG}}" data-bs-theme="dark">
+<!-- Make light mode the default for articles since this works better with
+    images with a white background and code highlighting. -->
+<html lang="{{DEFAULT_LANG}}" data-bs-theme={{ "light" if article else "dark" }}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,7 +10,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{SITEURL}}/theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{SITEURL}}/theme/images/favicon-16x16.png">
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/main.css"/>
+  <!-- Default Pygments style -->
+  {% if article %}
+  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments.css" id="pygments-style"/>
+  {% else %}
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments-dark.css" id="pygments-style"/>
+  {%endif%}
   {% if FEED_ATOM %}
   <link href="{{FEED_DOMAIN}}/{{FEED_ATOM}}"
         type="application/atom+xml" rel="alternate"
@@ -52,7 +59,12 @@
         </ul>
         <a class="navbar-brand" href="#">James W. Hanlon</a>
         <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <i class="bi bi-brightness-high-fill"></i>
+          <!-- Initial button state -->
+          {% if article %}
+            <i class="bi bi-moon-fill"></i>
+          {% else %}
+            <i class="bi bi-brightness-high-fill"></i>
+          {%endif%}
         </button>
       </div>
     </div>
@@ -100,7 +112,7 @@
       // Toggle the Pygments style.
       var elem = document.getElementById('pygments-style');
       if (elem.getAttribute('href') == 'pygments-dark.css') {
-        elem.setAttribute('href', 'pygments-light.css');
+        elem.setAttribute('href', 'pygments.css');
       } else {
         elem.setAttribute('href', 'pygments-dark.css');
       }
