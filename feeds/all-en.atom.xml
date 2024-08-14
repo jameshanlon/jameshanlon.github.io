@@ -1,5 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/feeds/all-en.atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2024-07-31T00:00:00+02:00</updated><entry><title>Review of heat pump use and performance</title><link href="https://jameswhanlon.com/review-of-heat-pump-use-and-performance.html" rel="alternate"></link><published>2024-07-31T00:00:00+02:00</published><updated>2024-07-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-07-31:/review-of-heat-pump-use-and-performance.html</id><summary type="html">&lt;p&gt;A review of one year&amp;#8217;s worth of data from my home heat&amp;nbsp;pump.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I had a heat pump installed in my house in July 2022, and a year later a
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/feeds/all-en.atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2024-08-07T00:00:00+02:00</updated><entry><title>Discrete-event simulation</title><link href="https://jameswhanlon.com/discrete-event-simulation.html" rel="alternate"></link><published>2024-08-07T00:00:00+02:00</published><updated>2024-08-07T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-07:/discrete-event-simulation.html</id><summary type="html">&lt;p&gt;How to build a simple discrete-event simulation with an example in&amp;nbsp;Rust&lt;/p&gt;</summary><content type="html">&lt;p&gt;Discrete event simulation (&lt;span class="caps"&gt;DES&lt;/span&gt;) is a methodology for modelling dynamic systems
+as a sequence of events in time. There are plenty of places to read about &lt;span class="caps"&gt;DES&lt;/span&gt;,
+but in this note I want to outline how it works and can be simply implement,
+recognising several subtleties. &lt;span class="caps"&gt;DES&lt;/span&gt; is widely used in different areas where
+analytical solutions are difficult; I am focusing on its use in modelling
+digital logic and computer&amp;nbsp;systems.&lt;/p&gt;
+&lt;p&gt;In a &lt;span class="caps"&gt;DES&lt;/span&gt;, each event is scheduled to occur at a particular point in time and
+represents a change in the state of the system and the possible generation of
+future events. Because there are no state changes between events, the
+simulation jumps through time from one event to the next. These variable time
+steps are in contrast with a discrete-event scheme with fixed timesteps. Fixed
+timesteps are particularly suited to digital systems with clocked logic, where
+each time increment corresponds to clock cycle. Fixed-time simulation has the
+drawback that all time steps are evaluated regardless of whether anything
+happens, although it is easier to reason about since everything proceeds in
+lockstep. &lt;span class="caps"&gt;DES&lt;/span&gt; is inherently more flexible but can be harder to parallelise
+because of the need to maintain a centralised event&amp;nbsp;list.&lt;/p&gt;
+&lt;h2&gt;Operation&lt;/h2&gt;
+&lt;p&gt;The main components of a &lt;span class="caps"&gt;DES&lt;/span&gt;&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;state&lt;/strong&gt; (or set of states) representing the components of the&amp;nbsp;system.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Events&lt;/strong&gt;, that occur atomically at a particular instant and can update
+  the system state and create new future&amp;nbsp;events.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;clock&lt;/strong&gt;, that records the simulation&amp;nbsp;time.&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;list of future events&lt;/strong&gt; (the &lt;em&gt;event list&lt;/em&gt;). This is most often implemented
+  as a priority queue with events queued in chronological order, soonest at
+  the&amp;nbsp;front.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;An outline of the &lt;span class="caps"&gt;DES&lt;/span&gt; algorithm is as&amp;nbsp;follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create one or more initial events and add them to the event&amp;nbsp;list.&lt;/li&gt;
+&lt;li&gt;While the event list not empty:&lt;ul&gt;
+&lt;li&gt;Choose a next event with the earliest&amp;nbsp;time.&lt;/li&gt;
+&lt;li&gt;Advance simulation clock to time of&amp;nbsp;event.&lt;/li&gt;
+&lt;li&gt;Execute the event.&lt;ul&gt;
+&lt;li&gt;State updates are committed&amp;nbsp;immediately.&lt;/li&gt;
+&lt;li&gt;New events are added to the event&amp;nbsp;queue.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Simulation proceeds until there are no more events to process, or a maximum
+time is&amp;nbsp;reached.&lt;/p&gt;
+&lt;p&gt;During the simulation the following must be&amp;nbsp;ensured:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;For events that occur at the same time, it must be possible to execute them
+   in any order, without affecting the behaviour of the simulation. In other
+   words, the outcome of the simulation must not depend on any ordering of
+   simultaneous&amp;nbsp;events.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Duplicate events must not be created. For example, if a component of the
+   system is servicing some kind of input queue, when an item is added to the
+   queue a corresponding &amp;#8216;service&amp;#8217; event must be created, but only when the queue
+   is empty. As such, delegation of responsibility for event creation must be&amp;nbsp;clear.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To avoid violating point 1 above, each time step can be divided into
+phases to impose an ordering of&amp;nbsp;events.&lt;/p&gt;
+&lt;p&gt;The simplest case is to divide each timestep into two phases to searialise the
+handling of two dependent events. As an example, consider nodes in a ring
+topology that can pass tokens between themselves in one direction, with it
+taking one timestep to for a token to traverse one node. Each node has two
+associated events: &lt;em&gt;transmit&lt;/em&gt; and &lt;em&gt;receive&lt;/em&gt;. It must hold that a transmit event
+for a node must be scheduled any receive events for that node have been
+processed. By separating event processing in this way, there can be no
+dependencies between the serialisation of transmit and receive events as they
+are fetched from the simulation&amp;nbsp;queue.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+&lt;figure class="figure"&gt;
+  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/discrete-event-simulation/DES-ring.png" alt="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep."&gt;
+  &lt;figcaption class="figure-caption text-left"&gt;&lt;span class="caps"&gt;DES&lt;/span&gt; of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Extending this concept of phases, a timestep can be divided into an arbitrary
+number of sub phases to model more complex behaviours. An interesting example
+of this is SystemVerliog, which defines its execution semantics in terms of
+multi-phase discrete event simulation. Roughly, a design or test bench defines
+a set of stateful processes that respond to changes on their inputs to produce
+outputs. Every change in state of a net or variable causes processes sensitive
+to them to be evaluated. There may be many steps of evaluation to produce a
+final output for the timestep. The timestep is divided into a fixed set of
+ordered regions (17 in total) to provide predictable interactions with a
+design. Within a region, many events may be processed and further ones
+scheduled to resolve sensitivity&amp;nbsp;dependencies.&lt;/p&gt;
+&lt;h2&gt;Example&amp;nbsp;implementation&lt;/h2&gt;
+&lt;p&gt;Using the above example of a ring of nodes passing a token around them, the
+following Rust code implements a &lt;span class="caps"&gt;DES&lt;/span&gt; of the system. This is a very simple &lt;span class="caps"&gt;DES&lt;/span&gt;
+example and only one possible implementation, but sufficient to illustrate the
+main&amp;nbsp;concepts.&lt;/p&gt;
+&lt;p&gt;The main component is a &lt;code&gt;Simulator&lt;/code&gt; object that maintains the event queue and
+the system&amp;nbsp;state:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Simulator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;max_cycles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;event_queue&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;BinaryHeap&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Event&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Events have a type, a time at which they occur and node in the system that they
+belong to. The &lt;code&gt;node_id&lt;/code&gt; is used for directing state&amp;nbsp;updates.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]&lt;/span&gt;
+&lt;span class="k"&gt;enum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Transmit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="cp"&gt;#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]&lt;/span&gt;
+&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The main simulation loop pops events off of the queue while it is not empty and
+dispatches them to a handler&amp;nbsp;function:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;event_queue&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_cycles&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;max_cycles&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The simulation &lt;code&gt;current_time&lt;/code&gt; is updated to the time of the current event being
+processed. The event handler function implements the behaviour for each&amp;nbsp;event:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;handle_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Transmit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;// Deactivate.&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;active&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Node {} inactive&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;// Schedule receive at next node.&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;recv_event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next_node&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schedule_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;recv_event&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;// Activate.&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nodes&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;active&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="fm"&gt;println!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Node {} active&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;// Schedule transmit.&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;send_event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Transmit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next_timestep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;current_time&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schedule_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;send_event&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Each event action updates the node state and creates a new event corresponding
+to the passing of the token to the next node of the&amp;nbsp;ring.&lt;/p&gt;
+&lt;p&gt;The simulation is setup with a initial receive event at node&amp;nbsp;0:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sim&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Simulator&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;..&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;sim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_node&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;initial_event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="p"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;node_id&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
+&lt;span class="n"&gt;sim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;schedule_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;initial_event&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;sim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And running it produces the&amp;nbsp;output:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Node 0 active
+Node 0 inactive
+Node 1 active
+Node 1 inactive
+Node 2 active
+Node 2 inactive
+Node 3 active
+Node 3 inactive
+Node 4 active
+Node 4 inactive
+Node 5 active
+Node 5 inactive
+Node 6 active
+Node 6 inactive
+Node 7 active
+Node 7 inactive
+Node 8 active
+Node 8 inactive
+Node 9 active
+Node 9 inactive
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The complete source code for the example can be found in &lt;a href="https://gist.github.com/jameshanlon/a14685408f8b0f44919610d7f7cfa4a6"&gt;this
+Gist&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There are many libraries for implementing &lt;span class="caps"&gt;DES&lt;/span&gt; such as
+&lt;a href="https://systemc.org"&gt;SystemC&lt;/a&gt; and
+&lt;a href="https://simpy.readthedocs.io/en/latest/"&gt;SimPy&lt;/a&gt;. Different libraries provide
+varying approaches for creating and managing events with supporting
+infrastructure, and their applicability depends on the application and system
+being&amp;nbsp;simulated.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This note explains how &lt;span class="caps"&gt;DES&lt;/span&gt; simulation works and how it simple to implement. &lt;span class="caps"&gt;DES&lt;/span&gt;
+is well suited to modelling synchronous and asynchronous digital systems, but
+care must be taken to ensure that simutaneous events are scheduled without
+dependencies and events are not&amp;nbsp;duplicated.&lt;/p&gt;
+&lt;h2&gt;References / further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/jameshanlon/discrete-event-simulator"&gt;GitHub&amp;nbsp;repository&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/Discrete-event_simulation"&gt;Discrete-event simulation&lt;/a&gt;,&amp;nbsp;Wikipedia.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://en.wikipedia.org/wiki/List_of_discrete_event_simulation_software"&gt;List of &lt;span class="caps"&gt;DES&lt;/span&gt; software&lt;/a&gt;,&amp;nbsp;Wikipedia.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cs.cmu.edu/~music/cmsip/readings/intro-discrete-event-sim.html"&gt;Introduction to discrete event simulation&lt;/a&gt;, &lt;span class="caps"&gt;CMU&lt;/span&gt; lecture&amp;nbsp;notes.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://dl.acm.org/doi/pdf/10.1145/6462.6485"&gt;Distributed discrete event simulation&lt;/a&gt;, Jayadev Misra&amp;nbsp;(1986).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://dl.acm.org/doi/10.1145/84537.84545"&gt;Parallel discrete event simulation&lt;/a&gt;, Richard M. Fujimoto&amp;nbsp;(1990).&lt;/li&gt;
+&lt;li&gt;Principles and Practices of Interconnection Networks, Chapter 24, William Dally, Brian Towles&amp;nbsp;(2004).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://ieeexplore.ieee.org/document/8299595"&gt;1800-2017 SystemVerilog &lt;span class="caps"&gt;LRM&lt;/span&gt;&lt;/a&gt;,  section 4 &amp;#8216;Scheduling&amp;nbsp;semantics&amp;#8217;.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category></entry><entry><title>Review of heat pump use and performance</title><link href="https://jameswhanlon.com/review-of-heat-pump-use-and-performance.html" rel="alternate"></link><published>2024-07-31T00:00:00+02:00</published><updated>2024-07-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-07-31:/review-of-heat-pump-use-and-performance.html</id><summary type="html">&lt;p&gt;A review of one year&amp;#8217;s worth of data from my home heat&amp;nbsp;pump.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I had a heat pump installed in my house in July 2022, and a year later a
 &lt;a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway"&gt;Vaillant gateway&lt;/a&gt;, which provides monitoring and logging services
 via a &amp;#8216;myVaillant&amp;#8217; smartphone app. Since I now have a year&amp;#8217;s worth of data,
 this note reviews what has been logged to see how the system is&amp;nbsp;performing.&lt;/p&gt;
