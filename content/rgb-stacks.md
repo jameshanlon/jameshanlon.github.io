@@ -230,3 +230,8 @@ reducing the number of updates required.
 
 As I mentioned, these boxes are not yet complete. To finish them, I want to add
 a button panel to switch them on off and control the lighting patterns.
+
+## References
+
+- [PIC12F1572 PWM example](https://github.com/jameshanlon/PIC12F1572-pwm)
+- [PIC12F1572 UART example](https://github.com/jameshanlon/PIC12F1572-uart)

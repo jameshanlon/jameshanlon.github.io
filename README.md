@@ -28,3 +28,9 @@ $ pelican --listen
 ...
 ```
 Then visit ``http://0.0.0.0:8000`` (or similar).
+
+Regenerate the Pygments styles:
+```
+pygmentize -S default -f html  > theme/static/css/pygments.css
+pygmentize -S monokai -f html  > theme/static/css/pygments-dark.css
+```
