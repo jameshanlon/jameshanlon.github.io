@@ -87,7 +87,7 @@ not yet been necessary.
 The second box in the picture above is a Lenovo ThinkCentre M75q Tiny PC that I
 got to plug the gap in the Synology's capabilities, namely in running
 additional services and providing a Linux host that I can use for development
-etc, rather than paying for an underpowered VPS. The machine has a Ryzen 5
+etc, rather than paying for an under powered VPS. The machine has a Ryzen 5
 3400GE processor with 16GB DDR3 RAM  and a 500 GB NVMe SSD. You can pick these
 machines up very cheaply.
 
@@ -122,7 +122,7 @@ use. The key ones are:
 - [Digital Ocean](https://www.digitalocean.com) for object storage with Spaces.
 - [Google Sheets](https://docs.google.com) for word processing and spreadsheets.
 - [Standard notes](https://standardnotes.com) for note taking, since they have
-  recently been aquired by Proton.
+  recently been acquired by Proton.
 - [Apple iCloud](https://www.icloud.com) for contacts and reminders.
 - [Strava](https://www.strava.com) and [Garmin](https://connect.garmin.com) for fitness data.
 
