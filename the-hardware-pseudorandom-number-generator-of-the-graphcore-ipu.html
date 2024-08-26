@@ -99,24 +99,24 @@ performing <span class="caps">XOR</span> and fixed-distance shift and rotate ope
 Following Vigna’s approach of adding a function to ‘scramble’ the <span class="caps">LFSR</span> state,
 we have devised a function consisting of <span class="caps">AND</span>, <span class="caps">OR</span> and <span class="caps">XOR</span> operations (called <span class="caps">AOX</span>
 for short). An C implementation of <code>xoroshiro128aox</code> is as&nbsp;follows:</p>
-<div class="highlight"><pre><span></span><code>uint64_t s0, s1; // State vectors
+<div class="highlight"><pre><span></span><code><span class="kt">uint64_t</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w"> </span><span class="c1">// State vectors</span>
 
-uint64_t rotl(uint64_t x, int k) {
-  return (x &lt;&lt; k) | (x &gt;&gt; (64 - k));
-}
+<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">rotl</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">(</span><span class="mi">64</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">k</span><span class="p">));</span>
+<span class="p">}</span>
 
-uint64_t next(void) {
-  uint64_t sx = s0 ^ s1;
+<span class="kt">uint64_t</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">sx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s0</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span>
 
-  // Calculate the result, the &#39;AOX&#39; step.
-  uint64_t sa = s0 &amp; s1;
-  uint64_t res = sx ^ (rotl(sa, 1) | rotl(sa, 2));
+<span class="w">  </span><span class="c1">// Calculate the result, the &#39;AOX&#39; step.</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">sa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s0</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">rotl</span><span class="p">(</span><span class="n">sa</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">sa</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
 
-  // xoroshiro128 state update
-  s0 = rotl(s0, 55) ^ sx ^ (sx &lt;&lt; 14);
-  s1 = rotl(sx, 36);
-  return res;
-}
+<span class="w">  </span><span class="c1">// xoroshiro128 state update</span>
+<span class="w">  </span><span class="n">s0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="mi">55</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">sx</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="p">(</span><span class="n">sx</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">14</span><span class="p">);</span>
+<span class="w">  </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotl</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">res</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>To determine that this new <span class="caps">PRNG</span> provides a good source of randomness, we took
