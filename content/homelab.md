@@ -139,7 +139,8 @@ To do.
 
 ## Related links
 
-There are many great blog posts about self hosting of computing services.
+There are many great blog posts about self hosting of computing services. These
+are a few that I have come across.
 
 - [Awesome-Selfhosted](https://awesome-selfhosted.net)
 - [How I Computer in 2024](https://jnsgr.uk/2024/07/how-i-computer-in-2024), blog post by Jon Seager.
