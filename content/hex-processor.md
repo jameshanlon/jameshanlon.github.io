@@ -185,7 +185,7 @@ in ``oreg`` larger than the 4-bit instruction immediate. For example, the
 following instructions generate the value 16 in ``oreg`` and use ``LDAC`` to
 assign it to ``areg`` :
 
-```
+``` bash
 PFIX 1  # oreg = oreg (1) << 4 (0x000010)
 LDAC 0  # areg = oreg 16
 ```
@@ -193,7 +193,7 @@ LDAC 0  # areg = oreg 16
 Prefixes can be chained to extend the operand range, for example, generating the
 value 496 requires two positive prefixes before a load constant instruction:
 
-```
+``` bash
 PFIX 1  # oreg = oreg (1) << 4 (0x000010)
 PFIX 15 # oreg = oreg (31) << 4 (0x0001f0)
 LDAC 0  # areg = oreg 496
@@ -202,14 +202,14 @@ LDAC 0  # areg = oreg 496
 Negative values always require a negative prefix to fill the top most ``oreg``
 bits with ones, so to load the value -1 into ``oreg`` then ``areg``:
 
-```
+``` bash
 NFIX 15 # oreg = 0xFFFFFF00 | oreg (15) << 4 (0xfffffff0)
 LDAC 15 # areg = oreg 4294967295
 ```
 
 And to load -512, a positive prefix is required to scale the negative value:
 
-```
+``` bash
 NFIX 14 # oreg = 0xFFFFFF00 | oreg (14) << 4 (0xffffffe0)
 PFIX 0  # oreg = oreg (4294967264) << 4 (0xfffffe00)
 LDAC 0  # areg = oreg 4294966784
@@ -226,7 +226,7 @@ prefixing and the according overhead to form larger immediates. The following
 instruction sequence adds two numbers from fixed locations in memory, with the
 result written to ``areg``:
 
-```
+``` bash
 LDAM 1  # areg = mem[oreg (0x000001)] (7)
 LDBM 2  # breg = mem[oreg (0x000002)] (9)
 OPR  1  # ADD areg = areg (7) + breg (9) (16)
@@ -239,7 +239,7 @@ file, or to halt the program. The supervisor call type is encoded in the
 and returned on the stack using the standard calling convention. An example
 code sequence to invoke the exit supervisor call is:
 
-```
+``` bash
 LDAC 0  # Set areg to 0, the exit opcode value.
 LDBM 1  # Load the stack pointer in breg.
 STAI 2  # Store areg into stack offset two as a parameter.
@@ -250,7 +250,7 @@ OPR SVC # Perform the supervisor call
 With the following execution trace, noting that the simulator implements the
 system call directly rather than being handled by a kernel routine:
 
-```
+``` bash
 LDAC 0  # areg = oreg 0
 LDBM 1  # breg = mem[oreg (0x000001)] (16383)
 STAI 2  # mem[breg (16383) + oreg (2) = 0x004001] = areg (0)
@@ -291,7 +291,7 @@ The following instruction sequence performs a call to ``foo`` but first loads
 the return (link) address using ``LDAP`` to use with ``BR``. The callee ``foo``
 returns to the caller using ``BRB``.
 
-```
+``` bash
 FUNC foo
 LDBM 1
 STAI 0 # Save caller address
@@ -308,7 +308,7 @@ lab2
 
 These instructions have the following execution trace:
 
-```
+``` bash
 main+32  LDAP 2   # areg = pc (60) + oreg (2) 62
 main+33  NFIX 13  # oreg = 0xFFFFFF00 | oreg (13) << 4 (0xffffffd0)
 main+34  BR   1   # pc = pc + oreg (4294967249) (0x00000f)
@@ -332,7 +332,7 @@ expressions including function calls, and representation of memory with
 variables and arrays. To give an indicative example of X programming, the
 following program implements Bubblesort to sort an array of four elements:
 
-```
+``` C
 val length = 4;
 var data[length];
 

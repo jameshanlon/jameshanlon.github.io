@@ -60,7 +60,7 @@ has occurred, but neither can be associated with a valid codeword. Two bit
 flips are undetectable since they always map to a valid codeword. Note that
 parity encoding is an example of a distance-two Hamming code.
 
-```
+``` text
 00 < Valid codeword
 |
 10 < Invalid codeword (obtained by exactly 1 bit flip)
@@ -74,7 +74,7 @@ valid codeword. Using this, the valid codeword can be restored, enabling single
 error correction. Any two bit flips map to an invalid codeword, which would
 cause correction to the wrong valid codeword.
 
-```
+``` text
 000 < Valid codeword
  |
 001
@@ -92,7 +92,7 @@ case where single errors are frequent, double errors are rare and triple errors
 occur so rarely they can be ignored. These codes are referred to as 'SECDED
 ECC' (single error correction, double error detection).
 
-```
+``` text
 0000 < Valid codeword
  |
 0001
@@ -197,7 +197,7 @@ by:
   must have at least two non-overlapping bits, the results is at least two
   flipped bits, giving a total of four different bits. For example:
 
-```
+``` text
 Check bits:  0 1 2 3
 data[a]      x x x
 data[b]        x x x
@@ -215,7 +215,7 @@ Flips              x x
   overlap odd-length patterns in such a way that a minimum of 1 bit is flipped.
   For example:
 
-```
+``` text
 Check bits:  0 1 2 3 4
 data[a]      x x x
 data[b]        x x x
@@ -234,7 +234,8 @@ Flips        x
 - **4 bits** is already sufficient to provide a Hamming distance of four.
 
 An example SEC code for eight data bits with four parity bits:
-```
+
+``` text
 Check bits:  0 1 2 3
 data[0]      x x x
 data[1]        x x x
@@ -247,7 +248,8 @@ data[7]      x     x
 ```
 
 An example SECDED code for eight data bits with five parity bits:
-```
+
+``` text
 Check bits:  0 1 2 3 4
 data[0]      x x x
 data[1]      x x   x
@@ -285,7 +287,7 @@ whether it is correctable, and how to correct it.
 Using the SEC check-bit encoding above, creating a codeword from `data[7:0]`,
 the check bits are calculated as follows (using Verilog syntax):
 
-```
+``` verilog
 assign check_word[0] = data[0] ^ data[2] ^ data[3] ^ data[4] ^ data[7];
 assign check_word[1] = data[0] ^ data[1] ^ data[3] ^ data[4] ^ data[5];
 assign check_word[2] = data[0] ^ data[1] ^ data[2] ^ data[5] ^ data[6];
@@ -294,14 +296,14 @@ assign check_word[3] = data[1] ^ data[2] ^ data[3] ^ data[6] ^ data[7];
 
 And the codeword formed by concatenating the check bits and data:
 
-```
+``` verilog
 assign codeword = {check[3:0], data[7:0]};
 ```
 
 Decoding of a codeword, splits it into the checkword and data bits, recomputes
 the check bits and calculates the syndrome:
 
-```
+``` verilog
 assign {old_check_word, old_data} = codeword;
 assign new_check_word[0] = ...;
 assign new_check_word[1] = ...;
@@ -314,7 +316,7 @@ When single bit errors occur, the syndrome will have the bit pattern
 corresponding to a particular data bit, so a correction can be applied by
 creating a mask to flip the bit in that position:
 
-```
+``` verilog
 unique case(syndrome)
   4'b1110: correction = 1<<0;
   4'b0111: correction = 1<<1;
@@ -329,7 +331,8 @@ endcase
 ```
 
 And using it to generate the corrected data:
-```
+
+``` verilog
 assign corrected_data = data ^ correction;
 ```
 
@@ -345,7 +348,7 @@ The above SECDED check-bit encoding can be implemented in a similar way, but
 since it uses only three-bit patterns, mapping syndromes to correction masks
 can be done with three-input AND gates:
 
-```
+``` verilog
 unique case(syndrome)
   syndrome[0] && syndrome[1] && syndrome[2]: correction = 1<<0;
   syndrome[0] && syndrome[1] && syndrome[3]: correction = 1<<1;

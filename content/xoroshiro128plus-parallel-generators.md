@@ -39,21 +39,21 @@ available on [GitHub](https://github.com/jameshanlon/prng-testing)):
 With equidistant intervals from 1 in the natural number sequence [Scheme A],
 defined in Python notation as:
 
-```
+``` python
 for i in range(NUM_SEEDS):
     seed[i] = int(1 + i * ((2**128) // NUM_SEEDS))
 ```
 
 With equidistant intervals starting from a random offset [Scheme B]:
 
-```
+``` python
 for i in range(NUM_SEEDS):
     seed[i] = int(rand(0, (2**128) // NUM_SEEDS) + i * ((2**128) // NUM_SEEDS))
 ```
 
 By adding a fixed offset to a initial state of balanced 0s and 1s [Scheme C]:
 
-```
+``` python
 for i in range(NUM_SEEDS):
     seed[i] = 0x55555555555555555555555555555555 + i
 ```
@@ -167,7 +167,7 @@ For reference, below is sample output for running the Scheme A generator with
 10 parallel streams against PractRand. There are comprehensive failures within
 the first 256 MB of output.
 
-```
+``` bash
 $ ./build/xoroshiro128plus_il_equia_10 stdout std64 0 0 | ./install/PractRand-pre0.95/RNG_test stdin64 -a
 RNG_test using PractRand version 0.95
 RNG = RNG_stdin64, seed = unknown

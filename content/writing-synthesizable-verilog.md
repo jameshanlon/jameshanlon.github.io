@@ -139,7 +139,7 @@ a value at time 0, which is not synthesizable. Continuous assignment after time 
 requires a separate assignment. Note that a combined assignment with a wire declaration behaves differently
 and is equivalent to a separate continuous assignment.
 
-```
+``` verilog
 // Assignment of a logic net at time 0, not allowed.
 logic [31:0] data = 32'b0;
 
@@ -159,7 +159,7 @@ assign value = 0;
 **Structures and unions must always be fully packed.** This applies
 to their members recursively. For example:
 
-```
+``` verilog
 typedef struct packed { // Packed structure.
   valid_t             valid;
   logic [p_width-1:0] data; // Packed array.
@@ -195,7 +195,7 @@ specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
 latch since there is no assignment to `foo` when the condition is not true.
 
-```
+``` verilog
 always_comb begin
   if (condition) begin
     foo = 1'b1;
@@ -205,7 +205,7 @@ end
 
 To prevent this, always provide an initial value as the first line of a block:
 
-```
+``` verilog
 always_comb begin
   foo = 1'b0;
   if (condition) begin
@@ -227,7 +227,7 @@ of the language standard).
 In the following code, the block is triggered only when the the right-hand-side
 `foo` changes, rather than entering a feedback loop where it shifts continuously:
 
-```
+``` verilog
 always_comb begin
   foo = foo << 1;
 end
@@ -236,7 +236,7 @@ end
 To avoid reading and writing `foo` in the same block and possible warnings
 from tools, a new signal can be introduced:
 
-```
+``` verilog
 always_comb begin
   next_foo = foo << 1;
 end
@@ -260,7 +260,7 @@ parallelism should be exposed where ever possible. In the the following
 example, the sequentiality is not necessary since the output `set_foo` depends
 independently on the various conditions:
 
-```
+``` verilog
 always_comb begin
   set_foo = 1'b0;
   if (signal_a &&
@@ -283,7 +283,7 @@ processes (extracting into `assign` statements as per the rule above) and
 explicitly combine them with the implied logical disjunction of the original
 block:
 
-```
+``` verilog
 assign condition_a = signal_a && signal_b;
 assign condition_b = signal_c || signal_d;
 always_comb begin
@@ -323,7 +323,7 @@ to a factor of two][verilator-internals].
 
 The process:
 
-```
+``` verilog
 always_comb begin
   foo = foo_q;
   bar = bar_q;
@@ -344,7 +344,7 @@ end
 
 Can be written as two independent processes:
 
-```
+``` verilog
 always_comb begin
   foo = foo_q;
   if (condition_a)
@@ -393,7 +393,7 @@ A typical pattern when implementing combinatorial logic and registers is to
 define the set and clear conditions in an `always_comb` and register the value
 in an accompanying `always_ff`, for example:
 
-```
+``` verilog
 logic bit;
 logic bit_q;
 
@@ -441,7 +441,7 @@ file. In certain circumstances when it is appropriate to use non-reset
 registers, then **define non-reset registers in a separate `always_ff` block**.
 For example:
 
-```
+``` verilog
 // A non-reset register.
 always_ff @(posedge i_clk) begin
   bit_q <= bit;
@@ -464,7 +464,7 @@ it make it harder for structural coverage analysis tools to break down complex
 conditions into manageable sub terms, or even that analysis will ignore
 important conditional context of expressions.
 
-```
+``` verilog
 // Replace mixed block control flow and boolean expressions:
 if (enabled) begin
   flag = x && y;
@@ -491,7 +491,7 @@ end
 recognise a priority encoder when it is written as an if-else-if statement. For
 example:
 
-```
+``` verilog
 // Replace an unqualified case:
 case (1'b1)
   hold: output = a;
@@ -513,7 +513,7 @@ first matching condition is evaluated. For `unique` and `unique0` variants of
 `if` statements (one or no matching conditions, which can be evaluated in
 parallel), use a `unique`-qualified case statement instead. For example:
 
-```
+``` verilog
 // Replace a unique if:
 unique if (ctrl == 2'b01) begin
   output = a;
@@ -576,7 +576,7 @@ the EDA companies have not needed to support it comprehensively. As such,
 `unique0` should not be used, and instead a unique case with an empty default
 should be used, for example:
 
-```
+``` verilog
 // Replace a unique0 case:
 unique0 case (1'b1)
   1'b0: output = a;
@@ -640,7 +640,7 @@ at the beginning of an `always_comb` block (see above). This is because it is
 conventional to add a `default` at the end of a `case` statement, which obscures
 the effect of a default, possibly leading to bugs. For example:
 
-```
+``` verilog
 // Assign a default at the top of the block.
 always_comb begin
   next_state = state_q;
@@ -671,7 +671,7 @@ no-matching-condition violation check, similarly to `unique case`. However, it
 is more conventional to use an `if`-`else`-`if` to implement a priority
 encoder. Example of a case-based priority encoder:
 
-```
+``` verilog
 priority case (cond)
   VALUE_A: ...
   VALUE_B: ...
@@ -692,7 +692,7 @@ such a situation, designers should add coverage waivers where a lack of a
 default case creates a coverage hole rather than changing the RTL to add an
 empty default case.
 
-```
+``` verilog
 // Since the case is unique, the empty default is not necessary and will be
 // dead code, and may change the synthesis results.
 unique case (four_bit_one_hot_select)
@@ -708,7 +708,7 @@ endcase
 **Use `unique case (1'b1)` for one-hot conditions.** For example, a one-hot
 multiplexer can be written:
 
-```
+``` verilog
 module m_one_hot_mux3 (
     input  logic       i_a,
     input  logic       i_b,
@@ -731,7 +731,7 @@ As an aside, it is convenient to define a one-hot encoding in a `union` type
 with another `struct` to provide named access to each member. For example,
 `status_q` above could be redefined as:
 
-```
+``` verilog
 typedef enum logic [2:0] {
   STATUS_START = 3'b001,
   STATUS_END   = 3'b010,
@@ -759,7 +759,7 @@ statements where possible: to make the control flow structure clearer to the
 designer and tooling, and to provide opportunities for reuse or
 further simplification. For example, avoid nesting `case` statements:
 
-```
+``` verilog
 status_t status_q;
 status_t next_status;
 logic [3:0] mode_q;
@@ -810,7 +810,7 @@ machine can quickly become complicated.
 
 **Use `case inside` for matching with don't cares.** For example:
 
-```
+``` verilog
 localparam p_done  = 4'd0,
            p_init  = 4'd1,
            p_end   = 4'd2,
@@ -843,7 +843,7 @@ ternary/conditional expression (`?:`), especially if you are nesting them,
 since they associate left to right, and all other arithmetic and logical
 operators associate right to left.
 
-```
+``` verilog
 ... = (a && b) ||
       (c && d)
 ... = |(a[7:0] & b[7:0])
@@ -865,7 +865,7 @@ particularly between simulation and synthesis, explicitly specifying expression
 bit widths avoids these issues and makes the intent obvious. For example, pad
 the result of a narrower expression for assignment:
 
-```
+``` verilog
 logic [31:0] result;
 logic [7:0] op1, op2;
 assign result = {24'b0, {op1 & op2}};
@@ -874,7 +874,7 @@ assign result = {24'b0, {op1 & op2}};
 Use an explicit type cast to specify the width of an intermediate expression
 (note that integer literals are interpreted as 32-bit integers):
 
-```
+``` verilog
 always_ff @(posedge i_clk or posedge i_rst)
   value_q <= i_rst ? value_t'(42) : value;
 ```
@@ -884,7 +884,7 @@ determined automatically by the width of the largest operand. For example,
 without an explicit type cast to a 17-bit result around `a + b`, the carry out
 bit would be lost:
 
-```
+``` verilog
 logic [15:0] result, a b;
 typedef logic [16:0] sum_t;
 assign result = sum_t'(a + b) >> 1;
@@ -895,14 +895,14 @@ assignment width matches the full width of the right hand side. Using a prefix
 like `unused_` makes the process of signing off any related warnings with the
 downstream synthesis and physical build simpler:
 
-```
+``` verilog
 assign {unused_co, result} = a + b;
 ```
 
 Exceptions to this rule can be made for the common constants 0, 1 and -1 to be
 specified as `integer` literals, for example:
 
-```
+``` verilog
 assign result = 0;
 assign sum = value - 1;
 ```
@@ -916,7 +916,7 @@ It also facilitates the use of optimised arithmetic implementations in
 synthesis, particularly with multipliers. The following example (adapted from
 [this presentation][arithmetic-gotcha]) shows how these rules can be confusing:
 
-```
+``` verilog
 logic signed [3:0] a, b;
 logic signed [4:0] sum;
 logic ci;
@@ -937,7 +937,7 @@ optimisation during synthesis, for example, to choose or generate an optimised
 adder implementation for the given set of operands and carry ins/outs. Instead
 of:
 
-```
+``` verilog
 logic [3:0] a, b, c;
 logic [4:0] int_sum, sum;
 int_sum = a + b;
@@ -947,7 +947,7 @@ int_sum = a + b;
 All of the arithmetic contributing to `sum` can be written in a single
 expression:
 
-```
+``` verilog
 {unused_co, sum} = a + b + c;
 ```
 
@@ -974,7 +974,7 @@ doing so relies on an implicit conversion, which can have inconsistent
 behaviour between tools. Assign an `enum` value directly, or by using a static
 cast. For example:
 
-```
+``` verilog
 package m_foo_pkg;
   typedef logic [1:0] {
     A, B, C, D
@@ -1002,7 +1002,7 @@ endmodule
 
 **Be explicit when assigning values to nets and variables.** For example:
 
-```
+``` verilog
 logic [127:0] data_a;
 
 // Explicitly 32 bits wide, decimal 0 assigment.
@@ -1031,7 +1031,7 @@ with a radix, yet represent very different values. For example, `'1` looks
 similar to `'d1` but encodes the value $2^n - 1$ where $n$ is the width of the
 variable being assigned to.
 
-```
+``` verilog
 logic [15:0] data;
 
 // Sets data to 16'hFFFF, not 16'h0001.
@@ -1203,7 +1203,7 @@ example, `_q` becomes `_qn` for an active-low flop output, and `_clk` becomes
 The following code example shows appropriate usage of the above prefix and
 suffix guidelines:
 
-```
+``` verilog
 module m_ctrl_fsm (
   input logic         i_clk,
   input logic         i_rst,
@@ -1247,7 +1247,7 @@ endmodule
 Another example illustrates the use of the pipeline prefix, using `e` to denote
 an external signal and `p` an internal one:
 
-```
+``` verilog
 module m_mempipe (
   input  logic        i_clk,
   input  logic        i_rst,
@@ -1273,7 +1273,7 @@ module m_mempipe (
 
 endmodule
 
-```
+``` verilog
 
 <a name="signal-naming" class="anchor"></a>
 ### Signal naming
@@ -1287,7 +1287,7 @@ pipeline stage it corresponds to and whether it is driven by logic or directly
 from a flip-flop. The exact naming convention will be tailored to a project,
 but here are some examples:
 
-```
+``` verilog
 i_p0_operand     // Input into pipeline stage 0.
 p1_state         // A current state of a state machine.
 p1_state_ns      // The next state.
@@ -1318,7 +1318,7 @@ automatically-assigned names being created by the elaboration tool, making it
 hard to understand the structure of the code. This applies to branches of
 conditional and loop statements. For example, with named conditions:
 
-```
+``` verilog
 module m_gen_cond #(
     parameter p_gen_diff = 0)();
   logic gen_op0;
@@ -1347,7 +1347,7 @@ endmodule
 In the resulting hierarchy, the first two conditionals are not easily
 distinguishable, nor are the branches that are chosen:
 
-```
+``` verilog
 m_gen_cond
   g_eq_0
   genblk1
@@ -1356,7 +1356,7 @@ m_gen_cond
 
 With named loops, a similar situation arises:
 
-```
+``` verilog
 module m_gen_loop #(
     parameter p_gen_diff = 0)();
   logic [2:0] gen_op0;
@@ -1380,7 +1380,7 @@ In the resulting hierarchy, there is no correspondence to the blocks assigning
 to gen_op0 or gen_op1, indeed these could be switched with no visibility in the
 hierarchy:
 
-```
+``` verilog
 m_gen_loop
   g_loop[0]
   g_loop[1]
@@ -1396,7 +1396,7 @@ m_gen_loop
 Using a `g_` prefix for named generate blocks, clearly distinguishes with
 instantiations of modules, for example:
 
-```
+``` verilog
 module m_foo (
 ...
 );
@@ -1411,7 +1411,7 @@ endmodule
 
 Has the hierarchy:
 
-```
+``` verilog
 m_foo
 u_child
 g_loop
@@ -1436,7 +1436,7 @@ This allows the flip-flops in the design to be seen clearly providing a feel
 for the size and complexity of the block. The following ripple-carry adder with
 registered outputs illustrates this kind of structuring:
 
-```
+``` verilog
 module m_rca
   #(parameter p_width = 8)
   ( input  logic               i_clk,
@@ -1487,7 +1487,7 @@ Named connections with `.name()` can be used with wildcards to add specific
 exceptions, such as when names do not match or for unconnected or tied-off
 ports. For example:
 
-```
+``` verilog
 module foo (input logic i_clk,
             input logic i_rst,
             input logic in,
@@ -1518,7 +1518,7 @@ externally from secondary parameters that are only used internally.** There is
 no way to prevent some parameters being set externally, ie with `localparam`,
 so a comment can be used to do this, for example:
 
-```
+``` verilog
 module m_rf
 #(parameter
   p_entry_width = 32,
@@ -1538,7 +1538,7 @@ of generate blocks, if a variable is declared in a local scope, that scope must
 be named. It may be useful to introduce named local scopes to separate a large
 module into sections. For example:
 
-```
+``` verilog
 begin : p0
   ...
 end
@@ -1552,7 +1552,7 @@ signal prefixed with `unused_`.** These signals can be AND-reduced to make a
 single-bit signal. The AND-reduction with constant zeros guarantees the result
 is always zero, so it can be safely optimised away. For example:
 
-```
+``` verilog
 logic _unused_ok = &{1'b0,
                      sig_not_used_a,
                      sig_not_used_yet_b // To be fixed
@@ -1570,7 +1570,7 @@ avoid \* imports.** This resolves any potential ambiguity in the providence of
 symbols to the designer and avoids polluting the current scope with all names
 defined by the package. For example:
 
-```
+``` verilog
 // Avoid
 import m_core_pkg::*;
 
@@ -1602,7 +1602,7 @@ built-in language structures such as parameters and generate statements should
 be used instead. Don't use local `define` statements in modules unless
 absolutely necessary, use `localparam` instead of `define`:
 
-```
+``` verilog
 // Avoid
 `define CONSTANT 1
 
@@ -1616,7 +1616,7 @@ elaboration dependent on the ordering of the list.
 
 For similar reasons, **use generate-if blocks instead of `ifdef`.**
 
-```
+``` verilog
 // Avoid
 `ifdef FLAG
 ...
@@ -1634,7 +1634,7 @@ endgenerate
 before the end of the file.** This is to avoid macro definitions polluting the
 global namespace.
 
-```
+``` verilog
 `define LOCAL_DEFINE
 
 ...
