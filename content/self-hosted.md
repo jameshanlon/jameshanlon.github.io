@@ -39,17 +39,17 @@ The goals for my personal computing are:
   This is because accessing volumes of data this large through cloud services can be
   expensive when you factor in monthly charges and transfer costs.
 
-
-## Details
-
 The main philosophy of my approach is to minimise maintenance effort whilst
 still achieving the above goals, so my setup is very vanilla. Many more exotic
 and interesting self hosted systems can be found (I’ve linked to a few
-resources at [the end][#links]).
+resources at [the end](#links)).
+
+
+## Synology Disktstation
 
 The main machine is a Synology Diskstation DS220+, a two-bay network-attached-storage (NAS) box.
 I have this running with two 8 TB disks in RAID 1 configuration (two-way redundant
-using one disk as a mirror), and I upgraded it with 16GB of memory in addition to the
+using one disk as a mirror), and I upgraded it with 16 GB of memory in addition to the
 2 GB it comes with. There are many applications that Synology provide, but the main ones
 I use are:
 
@@ -60,7 +60,7 @@ I use are:
 - VPN server.
 - DNS server.
 
-The big advantage of a Synology system is good hardware complemented
+The advantage of a Synology system is good hardware complemented
 by their ecosystem of applications, spanning iPhone and Android too. The catch
 is that this ecosystem is closed source and managed by Synology. As such, support for old
 hardware is eventually dropped and some software packages are deprecated.
@@ -70,7 +70,7 @@ a Synology device using Docker, however I've had problems doing this with consta
 accesses caused by
 [container health checks](https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite).
 
-A neat feature of Synology is their [Quickconnect](https://quickconnect.to)
+A neat feature of Synology hardware is their [Quickconnect](https://quickconnect.to)
 remote access, without needing a VPN or having an open port. This works with
 the web interface and phone apps.
 
