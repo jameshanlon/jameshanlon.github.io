@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- Make light mode the default for articles since this works better with
+    images with a white background and code highlighting. -->
+<html lang="en" data-bs-theme=light>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="James W. Hanlon">
+  <title>Personal data and self hosting</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <!-- Default Pygments style -->
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css" id="pygments-style"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="https://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="https://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <!-- MathJax -->
+  <script>
+  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+              svg: { fontCache: 'global' } };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <script src="./theme/js/bundle.js"></script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
+          <li class="nav-item">
+              <a class="nav-link" href="/index.html">notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/projects.html">projects</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/archive.html">archive</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/about.html">about</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/links.html">links</a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="#">James W. Hanlon</a>
+        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
+          <!-- Initial button state -->
+            <i class="bi bi-moon-fill"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  </header>
+
+  <main class="flex-shrink-0">
+  <div class="container">
+  <h1>
+    Personal data and self&nbsp;hosting
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2024-08-26T00:00:00+02:00">
+      26 Aug 2024
+    </time><br>
+      <span class="article-tag small"><a href="/tag/self-hosted.html">self-hosted</a></span>
+  </div>
+  <div class="article-body">
+    <div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/boxes.jpg" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/boxes_600x600.jpg" alt="No alt text">
+  </a>
+</div>
+
+<p>As part of a conscious effort to reduce or remove my dependence on cloud
+services for storing my data, I have been running a modest self-hosted setup
+for quite a few years, which has worked well and required very little ongoing
+maintenance. I haven’t attempted to self-host services like email, opting
+instead for trusted providers. This short note goes over the main&nbsp;details.</p>
+<p>The goals for my personal computing&nbsp;are:</p>
+<ul>
+<li>
+<p>To have complete control over my personal data, giving me flexibility over
+  how to manage and access it. Even with <span class="caps">GDPR</span>, this would be an ambitious goal for
+  all personal data, so I really mean files and media created on personal
+  computing devices. Anything that I can download from a cloud service, I aim
+  backup on my own storage, or master it there if I no longer require access via
+  the cloud&nbsp;service.</p>
+</li>
+<li>
+<p>To have independence from companies that (a) offer free services in return
+  for collecting profiling data or to target adverts at me, (b) lock me in as a
+  user so it is hard to move to another service and (c) to avoid services that I
+  come to rely on being&nbsp;end-of-lifed.</p>
+</li>
+<li>
+<p>To have a system that is simple to set up, maintain, use, upgrade and
+  possibly/eventually to migrate&nbsp;from.</p>
+</li>
+<li>
+<p>To provide a significant amount of storage (in personal data terms, ~tens of TBs).
+  This is because accessing volumes of data this large through cloud services can be
+  expensive when you factor in monthly charges and transfer&nbsp;costs.</p>
+</li>
+</ul>
+<h2>Details</h2>
+<p>The main philosophy of my approach is to minimise maintenance effort whilst
+still achieving the above goals, so my setup is very vanilla. Many more exotic
+and interesting self hosted systems can be found (I’ve linked to a few
+resources at [the&nbsp;end][#links]).</p>
+<p>The main machine is a Synology Diskstation <span class="caps">DS220</span>+, a two-bay network-attached-storage (<span class="caps">NAS</span>) box.
+I have this running with two 8 <span class="caps">TB</span> disks in <span class="caps">RAID</span> 1 configuration (two-way redundant
+using one disk as a mirror), and I upgraded it with <span class="caps">16GB</span> of memory in addition to the
+2 <span class="caps">GB</span> it comes with. There are many applications that Synology provide, but the main ones
+I use&nbsp;are:</p>
+<ul>
+<li>Fileserver (<span class="caps">SMB</span> for access via Windows and Mac machines, and the Drive app for accessing and syncing&nbsp;files).</li>
+<li>Photos (in particular the photos mobile app automatically syncs photos to the <span class="caps">NAS</span> for&nbsp;backup).</li>
+<li>Music.</li>
+<li>Hyperbackup.</li>
+<li><span class="caps">VPN</span>&nbsp;server.</li>
+<li><span class="caps">DNS</span>&nbsp;server.</li>
+</ul>
+<p>The big advantage of a Synology system is good hardware complemented
+by their ecosystem of applications, spanning iPhone and Android too. The catch
+is that this ecosystem is closed source and managed by Synology. As such, support for old
+hardware is eventually dropped and some software packages are deprecated.
+To mitigate these problems, an alternative is TrueNAS (formerly FreeNAS), running on
+some suitable hardware. Other non-Synology software can be run on
+a Synology device using Docker, however I&#8217;ve had problems doing this with constant disk
+accesses caused by
+<a href="https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite">container health checks</a>.</p>
+<p>A neat feature of Synology is their <a href="https://quickconnect.to">Quickconnect</a>
+remote access, without needing a <span class="caps">VPN</span> or having an open port. This works with
+the web interface and phone&nbsp;apps.</p>
+<p>The single most important aspect of managing personal data is ensuring it is
+robustly backed up. <span class="caps">RAID</span> 1 provides protection against loss of a single disk
+(and Synology handles this well), but not against damage to the system such as would
+happen in an accident or fire. To mitigate this, I have setup an off-site backup
+using another Synology Diskstation <span class="caps">NAS</span>. A full incremental backup
+is performed nightly using Synology&#8217;s Hyperbackup. I have checked that files
+are retrievable but I admit I have not tried a full system restore since it has
+not yet been&nbsp;necessary.</p>
+<h2>Linux&nbsp;host</h2>
+<p>The second box in the picture above is a Lenovo ThinkCentre M75q Tiny <span class="caps">PC</span> that I
+got to plug the gap in the Synology&#8217;s capabilities, namely in running
+additional services and providing a Linux host that I can use for development
+etc, rather than paying for an under powered <span class="caps">VPS</span>. The machine has a Ryzen 5
+<span class="caps">3400GE</span> processor with <span class="caps">16GB</span> <span class="caps">DDR3</span> <span class="caps">RAM</span>  and a 500 <span class="caps">GB</span> NVMe <span class="caps">SSD</span>. You can pick these
+machines up very&nbsp;cheaply.</p>
+<div class="text-center">
+  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/homepage.png" data-lightbox="all">
+    <img class="figure-img img-fluid thumbnail" src="/thumbs/homepage_600x600.png" alt="No alt text">
+  </a>
+</div>
+
+<p>Currently it&nbsp;runs:</p>
+<ul>
+<li><a href="https://gethomepage.dev">Homepage</a> providing a general internal landing page for statuses and convenient&nbsp;links.</li>
+<li><a href="https://freshrss.org">FreshRSS</a> for aggregating and reading <span class="caps">RSS</span>&nbsp;feeds.</li>
+<li><a href="https://speedtest-tracker.dev">Speedtest Tracker</a> for monitoring my internet&nbsp;connection.</li>
+<li><a href="https://github.com/Yanson/octograph">Octograph</a> for monitoring my home electricity use and&nbsp;pricing.</li>
+</ul>
+<h2>Access</h2>
+<p>Using Synology <span class="caps">VPN</span> server on the <span class="caps">DS220</span>+, I have an OpenVPN service setup that
+allows me to access my home network remotely. This gives me access to the
+various services, as well as to machines via <span class="caps">RDP</span> and <span class="caps">SSH</span>. Within the network, I
+have a local <span class="caps">DNS</span> service (also running on the <span class="caps">DS220</span>+) to provide convenient
+names for&nbsp;devices.</p>
+<h2>Other&nbsp;services</h2>
+<p>As I mentioned at the start, there are a number of third-party services that I
+use. The key ones&nbsp;are:</p>
+<ul>
+<li><a href="https://proton.me">Proton</a> primarily for email, calendar and&nbsp;passwords.</li>
+<li><a href="https://github.com">Github</a> for code and Github pages for hosting this website (at the time of&nbsp;writing).</li>
+<li><a href="https://www.digitalocean.com">Digital Ocean</a> for object storage with&nbsp;Spaces.</li>
+<li><a href="https://docs.google.com">Google Sheets</a> for word processing and&nbsp;spreadsheets.</li>
+<li><a href="https://standardnotes.com">Standard notes</a> for note taking, since they have
+  recently been acquired by&nbsp;Proton.</li>
+<li><a href="https://www.icloud.com">Apple iCloud</a> for contacts and&nbsp;reminders.</li>
+<li><a href="https://www.strava.com">Strava</a> and <a href="https://connect.garmin.com">Garmin</a> for fitness&nbsp;data.</li>
+</ul>
+<p>This list is not exhaustive but these services all hold valuable data that I
+would not want to lose in the event the provider loses the data or I get
+locked out of my account. Although these scenarios is unlikely, I mitigate the
+risks by taking manual backups, albeit on a less frequent basis that I&nbsp;should.</p>
+<h2>Summary</h2>
+<p>This note details hardware and software alternatives for operating personal services
+that are east to setup and maintain, with scope to add much more functionality. This
+approach provides a strong alternative to entrusting a third party to hold your data.
+Moreover, it can be done cheaply too, with the cost of <span class="caps">NAS</span> setups being dominated by the
+price of disks themselves and many great open-source software&nbsp;options.</p>
+<p><a name="links"></a></p>
+<h2>Related&nbsp;links</h2>
+<p>There are many great blog posts about self hosting of computing services. These
+are a few that I have come&nbsp;across.</p>
+<ul>
+<li><a href="https://awesome-selfhosted.net">Awesome-Selfhosted</a></li>
+<li><a href="https://jnsgr.uk/2024/07/how-i-computer-in-2024">How I Computer in 2024</a>, blog post by Jon&nbsp;Seager.</li>
+<li><a href="https://blog.fidelramos.net/software/homelab">My homelab setup</a>, blog post by Fidel&nbsp;Ramos.</li>
+<li><a href="https://www.devroom.io/2020/02/28/building-a-diy-home-server-with-freenas">Building a <span class="caps">DIY</span> Home Server with FreeNAS</a>,&nbsp;devroom.io.</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer class="text-muted">
+    <div class="container">
+      <div class="small">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons Licence" style="border-width:0"
+               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+        </a>
+        <br>
+        Unless otherwise noted, all content is freely available under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License</a>.<br>
+        The views expressed on this website are the author’s personal views and should not be
+        attributed to any other person, including that of their employer.<br>
+        <br>
+        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    function toggleMode(x) {
+      // Toggle the colour mode in Bootstrap.
+      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+        document.documentElement.setAttribute('data-bs-theme','light')
+      }
+      else {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+      }
+      // Toggle the light/dark icon.
+      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
+      x.firstElementChild.classList.toggle('bi-moon-fill');
+      // Toggle the Pygments style.
+      var elem = document.getElementById('pygments-style');
+      if (elem.getAttribute('href') == './theme/css/pygments-dark.css') {
+        elem.setAttribute('href', './theme/css/pygments.css');
+      } else {
+        elem.setAttribute('href', './theme/css/pygments-dark.css');
+      }
+    }
+  </script>
+</body>
+</html>

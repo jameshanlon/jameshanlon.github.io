@@ -1,5 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2024-08-14T00:00:00+02:00</updated><entry><title>Discrete-event simulation</title><link href="https://jameswhanlon.com/discrete-event-simulation.html" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-14:/discrete-event-simulation.html</id><summary type="html">&lt;p&gt;How to build a simple discrete-event simulation with an example in&amp;nbsp;Rust&lt;/p&gt;</summary><content type="html">&lt;p&gt;Discrete event simulation (&lt;span class="caps"&gt;DES&lt;/span&gt;) is a methodology for modelling dynamic systems
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"></link><link href="https://jameswhanlon.com/reeds/atom.xml" rel="self"></link><id>https://jameswhanlon.com/</id><updated>2024-08-26T00:00:00+02:00</updated><entry><title>Personal data and self hosting</title><link href="https://jameswhanlon.com/personal-data-and-self-hosting.html" rel="alternate"></link><published>2024-08-26T00:00:00+02:00</published><updated>2024-08-26T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-26:/personal-data-and-self-hosting.html</id><summary type="html">&lt;p&gt;Details of how I how self host services to maintain a degree of
+digital privacy and&amp;nbsp;freedom.&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/boxes.jpg" data-lightbox="all"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boxes_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As part of a conscious effort to reduce or remove my dependence on cloud
+services for storing my data, I have been running a modest self-hosted setup
+for quite a few years, which has worked well and required very little ongoing
+maintenance. I haven’t attempted to self-host services like email, opting
+instead for trusted providers. This short note goes over the main&amp;nbsp;details.&lt;/p&gt;
+&lt;p&gt;The goals for my personal computing&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;To have complete control over my personal data, giving me flexibility over
+  how to manage and access it. Even with &lt;span class="caps"&gt;GDPR&lt;/span&gt;, this would be an ambitious goal for
+  all personal data, so I really mean files and media created on personal
+  computing devices. Anything that I can download from a cloud service, I aim
+  backup on my own storage, or master it there if I no longer require access via
+  the cloud&amp;nbsp;service.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To have independence from companies that (a) offer free services in return
+  for collecting profiling data or to target adverts at me, (b) lock me in as a
+  user so it is hard to move to another service and (c) to avoid services that I
+  come to rely on being&amp;nbsp;end-of-lifed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To have a system that is simple to set up, maintain, use, upgrade and
+  possibly/eventually to migrate&amp;nbsp;from.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To provide a significant amount of storage (in personal data terms, ~tens of TBs).
+  This is because accessing volumes of data this large through cloud services can be
+  expensive when you factor in monthly charges and transfer&amp;nbsp;costs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Details&lt;/h2&gt;
+&lt;p&gt;The main philosophy of my approach is to minimise maintenance effort whilst
+still achieving the above goals, so my setup is very vanilla. Many more exotic
+and interesting self hosted systems can be found (I’ve linked to a few
+resources at [the&amp;nbsp;end][#links]).&lt;/p&gt;
+&lt;p&gt;The main machine is a Synology Diskstation &lt;span class="caps"&gt;DS220&lt;/span&gt;+, a two-bay network-attached-storage (&lt;span class="caps"&gt;NAS&lt;/span&gt;) box.
+I have this running with two 8 &lt;span class="caps"&gt;TB&lt;/span&gt; disks in &lt;span class="caps"&gt;RAID&lt;/span&gt; 1 configuration (two-way redundant
+using one disk as a mirror), and I upgraded it with &lt;span class="caps"&gt;16GB&lt;/span&gt; of memory in addition to the
+2 &lt;span class="caps"&gt;GB&lt;/span&gt; it comes with. There are many applications that Synology provide, but the main ones
+I use&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fileserver (&lt;span class="caps"&gt;SMB&lt;/span&gt; for access via Windows and Mac machines, and the Drive app for accessing and syncing&amp;nbsp;files).&lt;/li&gt;
+&lt;li&gt;Photos (in particular the photos mobile app automatically syncs photos to the &lt;span class="caps"&gt;NAS&lt;/span&gt; for&amp;nbsp;backup).&lt;/li&gt;
+&lt;li&gt;Music.&lt;/li&gt;
+&lt;li&gt;Hyperbackup.&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;VPN&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;DNS&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The big advantage of a Synology system is good hardware complemented
+by their ecosystem of applications, spanning iPhone and Android too. The catch
+is that this ecosystem is closed source and managed by Synology. As such, support for old
+hardware is eventually dropped and some software packages are deprecated.
+To mitigate these problems, an alternative is TrueNAS (formerly FreeNAS), running on
+some suitable hardware. Other non-Synology software can be run on
+a Synology device using Docker, however I&amp;#8217;ve had problems doing this with constant disk
+accesses caused by
+&lt;a href="https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite"&gt;container health checks&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A neat feature of Synology is their &lt;a href="https://quickconnect.to"&gt;Quickconnect&lt;/a&gt;
+remote access, without needing a &lt;span class="caps"&gt;VPN&lt;/span&gt; or having an open port. This works with
+the web interface and phone&amp;nbsp;apps.&lt;/p&gt;
+&lt;p&gt;The single most important aspect of managing personal data is ensuring it is
+robustly backed up. &lt;span class="caps"&gt;RAID&lt;/span&gt; 1 provides protection against loss of a single disk
+(and Synology handles this well), but not against damage to the system such as would
+happen in an accident or fire. To mitigate this, I have setup an off-site backup
+using another Synology Diskstation &lt;span class="caps"&gt;NAS&lt;/span&gt;. A full incremental backup
+is performed nightly using Synology&amp;#8217;s Hyperbackup. I have checked that files
+are retrievable but I admit I have not tried a full system restore since it has
+not yet been&amp;nbsp;necessary.&lt;/p&gt;
+&lt;h2&gt;Linux&amp;nbsp;host&lt;/h2&gt;
+&lt;p&gt;The second box in the picture above is a Lenovo ThinkCentre M75q Tiny &lt;span class="caps"&gt;PC&lt;/span&gt; that I
+got to plug the gap in the Synology&amp;#8217;s capabilities, namely in running
+additional services and providing a Linux host that I can use for development
+etc, rather than paying for an under powered &lt;span class="caps"&gt;VPS&lt;/span&gt;. The machine has a Ryzen 5
+&lt;span class="caps"&gt;3400GE&lt;/span&gt; processor with &lt;span class="caps"&gt;16GB&lt;/span&gt; &lt;span class="caps"&gt;DDR3&lt;/span&gt; &lt;span class="caps"&gt;RAM&lt;/span&gt;  and a 500 &lt;span class="caps"&gt;GB&lt;/span&gt; NVMe &lt;span class="caps"&gt;SSD&lt;/span&gt;. You can pick these
+machines up very&amp;nbsp;cheaply.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/homepage.png" data-lightbox="all"&gt;
+    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/homepage_600x600.png" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Currently it&amp;nbsp;runs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gethomepage.dev"&gt;Homepage&lt;/a&gt; providing a general internal landing page for statuses and convenient&amp;nbsp;links.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://freshrss.org"&gt;FreshRSS&lt;/a&gt; for aggregating and reading &lt;span class="caps"&gt;RSS&lt;/span&gt;&amp;nbsp;feeds.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://speedtest-tracker.dev"&gt;Speedtest Tracker&lt;/a&gt; for monitoring my internet&amp;nbsp;connection.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Yanson/octograph"&gt;Octograph&lt;/a&gt; for monitoring my home electricity use and&amp;nbsp;pricing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Access&lt;/h2&gt;
+&lt;p&gt;Using Synology &lt;span class="caps"&gt;VPN&lt;/span&gt; server on the &lt;span class="caps"&gt;DS220&lt;/span&gt;+, I have an OpenVPN service setup that
+allows me to access my home network remotely. This gives me access to the
+various services, as well as to machines via &lt;span class="caps"&gt;RDP&lt;/span&gt; and &lt;span class="caps"&gt;SSH&lt;/span&gt;. Within the network, I
+have a local &lt;span class="caps"&gt;DNS&lt;/span&gt; service (also running on the &lt;span class="caps"&gt;DS220&lt;/span&gt;+) to provide convenient
+names for&amp;nbsp;devices.&lt;/p&gt;
+&lt;h2&gt;Other&amp;nbsp;services&lt;/h2&gt;
+&lt;p&gt;As I mentioned at the start, there are a number of third-party services that I
+use. The key ones&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://proton.me"&gt;Proton&lt;/a&gt; primarily for email, calendar and&amp;nbsp;passwords.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com"&gt;Github&lt;/a&gt; for code and Github pages for hosting this website (at the time of&amp;nbsp;writing).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.digitalocean.com"&gt;Digital Ocean&lt;/a&gt; for object storage with&amp;nbsp;Spaces.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.google.com"&gt;Google Sheets&lt;/a&gt; for word processing and&amp;nbsp;spreadsheets.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://standardnotes.com"&gt;Standard notes&lt;/a&gt; for note taking, since they have
+  recently been acquired by&amp;nbsp;Proton.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.icloud.com"&gt;Apple iCloud&lt;/a&gt; for contacts and&amp;nbsp;reminders.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.strava.com"&gt;Strava&lt;/a&gt; and &lt;a href="https://connect.garmin.com"&gt;Garmin&lt;/a&gt; for fitness&amp;nbsp;data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This list is not exhaustive but these services all hold valuable data that I
+would not want to lose in the event the provider loses the data or I get
+locked out of my account. Although these scenarios is unlikely, I mitigate the
+risks by taking manual backups, albeit on a less frequent basis that I&amp;nbsp;should.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This note details hardware and software alternatives for operating personal services
+that are east to setup and maintain, with scope to add much more functionality. This
+approach provides a strong alternative to entrusting a third party to hold your data.
+Moreover, it can be done cheaply too, with the cost of &lt;span class="caps"&gt;NAS&lt;/span&gt; setups being dominated by the
+price of disks themselves and many great open-source software&amp;nbsp;options.&lt;/p&gt;
+&lt;p&gt;&lt;a name="links"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Related&amp;nbsp;links&lt;/h2&gt;
+&lt;p&gt;There are many great blog posts about self hosting of computing services. These
+are a few that I have come&amp;nbsp;across.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://awesome-selfhosted.net"&gt;Awesome-Selfhosted&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jnsgr.uk/2024/07/how-i-computer-in-2024"&gt;How I Computer in 2024&lt;/a&gt;, blog post by Jon&amp;nbsp;Seager.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.fidelramos.net/software/homelab"&gt;My homelab setup&lt;/a&gt;, blog post by Fidel&amp;nbsp;Ramos.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.devroom.io/2020/02/28/building-a-diy-home-server-with-freenas"&gt;Building a &lt;span class="caps"&gt;DIY&lt;/span&gt; Home Server with FreeNAS&lt;/a&gt;,&amp;nbsp;devroom.io.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="technical"></category><category term="self-hosted"></category></entry><entry><title>Discrete-event simulation</title><link href="https://jameswhanlon.com/discrete-event-simulation.html" rel="alternate"></link><published>2024-08-14T00:00:00+02:00</published><updated>2024-08-14T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-14:/discrete-event-simulation.html</id><summary type="html">&lt;p&gt;How to build a simple discrete-event simulation with an example in&amp;nbsp;Rust&lt;/p&gt;</summary><content type="html">&lt;p&gt;Discrete event simulation (&lt;span class="caps"&gt;DES&lt;/span&gt;) is a methodology for modelling dynamic systems
 as a sequence of events in time. There are plenty of places to read about &lt;span class="caps"&gt;DES&lt;/span&gt;,
 but in this note I want to outline how it works and can be simply implement,
 recognising several subtleties. &lt;span class="caps"&gt;DES&lt;/span&gt; is widely used in different areas where
