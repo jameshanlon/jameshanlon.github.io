@@ -21,9 +21,9 @@ instead for trusted providers. This short note goes over the main details.
 The goals for my personal computing are:
 
 - To have complete control over my personal data, giving me flexibility over
-  how to manage and access it. Even with GDPR, this would be a lofty goal for
+  how to manage and access it. Even with GDPR, this would be an ambitious goal for
   all personal data, so I really mean files and media created on personal
-  computing devices. Anything that I can download from a cloud service, I will
+  computing devices. Anything that I can download from a cloud service, I aim
   backup on my own storage, or master it there if I no longer require access via
   the cloud service.
 
@@ -33,25 +33,25 @@ The goals for my personal computing are:
   come to rely on being end-of-lifed.
 
 - To have a system that is simple to set up, maintain, use, upgrade and
-  eventually to migrate from.
+  possibly/eventually to migrate from.
 
-- To provide a significant amount of storage (tens of TBs). Accessing this
-  volume of data through cloud services can be expensive when you factor in
-  monthly charges and transfer costs.
+- To provide a significant amount of storage (in personal data terms, ~tens of TBs).
+  This is because accessing volumes of data this large through cloud services can be
+  expensive when you factor in monthly charges and transfer costs.
 
 
 ## Details
 
 The main philosophy of my approach is to minimise maintenance effort whilst
-still achieving the goals, so this is a very vanilla setup. Many more exotic
+still achieving the above goals, so my setup is very vanilla. Many more exotic
 and interesting self hosted systems can be found (I’ve linked to a few
-resources at the end).
+resources at [the end][#links]).
 
-The main machine is a Synology DS220+, a two-bay NAS box. I have this running
-with two 8 TB disks in RAID 1 configuration (two-way redundant using one disk
-as a mirror), and I upgraded it with 16GB of memory in addition to the 2 GB it
-comes with. There are many apps that Synology provide, but the main ones I use
-are:
+The main machine is a Synology Diskstation DS220+, a two-bay network-attached-storage (NAS) box.
+I have this running with two 8 TB disks in RAID 1 configuration (two-way redundant
+using one disk as a mirror), and I upgraded it with 16GB of memory in addition to the
+2 GB it comes with. There are many applications that Synology provide, but the main ones
+I use are:
 
 - Fileserver (SMB for access via Windows and Mac machines, and the Drive app for accessing and syncing files).
 - Photos (in particular the photos mobile app automatically syncs photos to the NAS for backup).
@@ -60,24 +60,25 @@ are:
 - VPN server.
 - DNS server.
 
-The big advantage of a Synology system is good hardware complemented by their
-ecosystem of applications, spanning iPhone and Android too. The catch though is
-that these are closed source, and managed by Synology. Indeed, support for old
-systems and some packages does get phased out. An alternative is TrueNAS
-(formerly FreeNAS), running on some suitable hardware. Other non-Synology
-software can be run on a Synology device using Docker, however I've had
-problems doing this with constant disk accesses caused by [container health
-checks](https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite).
+The big advantage of a Synology system is good hardware complemented
+by their ecosystem of applications, spanning iPhone and Android too. The catch
+is that this ecosystem is closed source and managed by Synology. As such, support for old
+hardware is eventually dropped and some software packages are deprecated.
+To mitigate these problems, an alternative is TrueNAS (formerly FreeNAS), running on
+some suitable hardware. Other non-Synology software can be run on
+a Synology device using Docker, however I've had problems doing this with constant disk
+accesses caused by
+[container health checks](https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite).
 
 A neat feature of Synology is their [Quickconnect](https://quickconnect.to)
 remote access, without needing a VPN or having an open port. This works with
 the web interface and phone apps.
 
-In my mind the single most important aspect of managing personal data is
-ensuring it is robustly backed up. RAID 1 provides protection against loss of a
-single disk (and Synology handles this well), but not against damage to the
-system such as would happen in an accident or fire. To mitigate this, I
-have an off-site backup using another Synology NAS. A full incremental backup
+The single most important aspect of managing personal data is ensuring it is
+robustly backed up. RAID 1 provides protection against loss of a single disk
+(and Synology handles this well), but not against damage to the system such as would
+happen in an accident or fire. To mitigate this, I have setup an off-site backup
+using another Synology Diskstation NAS. A full incremental backup
 is performed nightly using Synology's Hyperbackup. I have checked that files
 are retrievable but I admit I have not tried a full system restore since it has
 not yet been necessary.
@@ -99,8 +100,6 @@ Currently it runs:
 - [FreshRSS](https://freshrss.org) for aggregating and reading RSS feeds.
 - [Speedtest Tracker](https://speedtest-tracker.dev) for monitoring my internet connection.
 - [Octograph](https://github.com/Yanson/octograph) for monitoring my home electricity use and pricing.
-
-On my list to try are Pi Hole, …
 
 
 ## Access
@@ -127,16 +126,20 @@ use. The key ones are:
 - [Strava](https://www.strava.com) and [Garmin](https://connect.garmin.com) for fitness data.
 
 This list is not exhaustive but these services all hold valuable data that I
-would not want to lose (in the event the provider loses the data or I get
-locked out of my account). Although these scenarios is unlikely, I mitigate the
-risk by taking manual backups on a less frequent basis that I should.
+would not want to lose in the event the provider loses the data or I get
+locked out of my account. Although these scenarios is unlikely, I mitigate the
+risks by taking manual backups, albeit on a less frequent basis that I should.
 
 
 ## Summary
 
-To do.
+This note details hardware and software alternatives for operating personal services
+that are east to setup and maintain, with scope to add much more functionality. This
+self-hosting method presents itself as a robust option against relying on third-party
+data custodians. Moreover, adopting this approach can be quite cost-effective, as the
+biggest expense associated with NAS systems is the cost of the disks themselves.
 
-
+<a name="links"></a>
 ## Related links
 
 There are many great blog posts about self hosting of computing services. These
