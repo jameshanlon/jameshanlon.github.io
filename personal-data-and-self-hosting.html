@@ -114,14 +114,14 @@ instead for trusted providers. This short note goes over the main&nbsp;details.<
   expensive when you factor in monthly charges and transfer&nbsp;costs.</p>
 </li>
 </ul>
-<h2>Details</h2>
 <p>The main philosophy of my approach is to minimise maintenance effort whilst
 still achieving the above goals, so my setup is very vanilla. Many more exotic
 and interesting self hosted systems can be found (I’ve linked to a few
-resources at [the&nbsp;end][#links]).</p>
+resources at <a href="#links">the end</a>).</p>
+<h2>Synology&nbsp;Disktstation</h2>
 <p>The main machine is a Synology Diskstation <span class="caps">DS220</span>+, a two-bay network-attached-storage (<span class="caps">NAS</span>) box.
 I have this running with two 8 <span class="caps">TB</span> disks in <span class="caps">RAID</span> 1 configuration (two-way redundant
-using one disk as a mirror), and I upgraded it with <span class="caps">16GB</span> of memory in addition to the
+using one disk as a mirror), and I upgraded it with 16 <span class="caps">GB</span> of memory in addition to the
 2 <span class="caps">GB</span> it comes with. There are many applications that Synology provide, but the main ones
 I use&nbsp;are:</p>
 <ul>
@@ -132,7 +132,7 @@ I use&nbsp;are:</p>
 <li><span class="caps">VPN</span>&nbsp;server.</li>
 <li><span class="caps">DNS</span>&nbsp;server.</li>
 </ul>
-<p>The big advantage of a Synology system is good hardware complemented
+<p>The advantage of a Synology system is good hardware complemented
 by their ecosystem of applications, spanning iPhone and Android too. The catch
 is that this ecosystem is closed source and managed by Synology. As such, support for old
 hardware is eventually dropped and some software packages are deprecated.
@@ -141,7 +141,7 @@ some suitable hardware. Other non-Synology software can be run on
 a Synology device using Docker, however I&#8217;ve had problems doing this with constant disk
 accesses caused by
 <a href="https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite">container health checks</a>.</p>
-<p>A neat feature of Synology is their <a href="https://quickconnect.to">Quickconnect</a>
+<p>A neat feature of Synology hardware is their <a href="https://quickconnect.to">Quickconnect</a>
 remote access, without needing a <span class="caps">VPN</span> or having an open port. This works with
 the web interface and phone&nbsp;apps.</p>
 <p>The single most important aspect of managing personal data is ensuring it is

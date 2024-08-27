@@ -37,14 +37,14 @@ instead for trusted providers. This short note goes over the main&amp;nbsp;detai
   expensive when you factor in monthly charges and transfer&amp;nbsp;costs.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;Details&lt;/h2&gt;
 &lt;p&gt;The main philosophy of my approach is to minimise maintenance effort whilst
 still achieving the above goals, so my setup is very vanilla. Many more exotic
 and interesting self hosted systems can be found (I’ve linked to a few
-resources at [the&amp;nbsp;end][#links]).&lt;/p&gt;
+resources at &lt;a href="#links"&gt;the end&lt;/a&gt;).&lt;/p&gt;
+&lt;h2&gt;Synology&amp;nbsp;Disktstation&lt;/h2&gt;
 &lt;p&gt;The main machine is a Synology Diskstation &lt;span class="caps"&gt;DS220&lt;/span&gt;+, a two-bay network-attached-storage (&lt;span class="caps"&gt;NAS&lt;/span&gt;) box.
 I have this running with two 8 &lt;span class="caps"&gt;TB&lt;/span&gt; disks in &lt;span class="caps"&gt;RAID&lt;/span&gt; 1 configuration (two-way redundant
-using one disk as a mirror), and I upgraded it with &lt;span class="caps"&gt;16GB&lt;/span&gt; of memory in addition to the
+using one disk as a mirror), and I upgraded it with 16 &lt;span class="caps"&gt;GB&lt;/span&gt; of memory in addition to the
 2 &lt;span class="caps"&gt;GB&lt;/span&gt; it comes with. There are many applications that Synology provide, but the main ones
 I use&amp;nbsp;are:&lt;/p&gt;
 &lt;ul&gt;
@@ -55,7 +55,7 @@ I use&amp;nbsp;are:&lt;/p&gt;
 &lt;li&gt;&lt;span class="caps"&gt;VPN&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
 &lt;li&gt;&lt;span class="caps"&gt;DNS&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The big advantage of a Synology system is good hardware complemented
+&lt;p&gt;The advantage of a Synology system is good hardware complemented
 by their ecosystem of applications, spanning iPhone and Android too. The catch
 is that this ecosystem is closed source and managed by Synology. As such, support for old
 hardware is eventually dropped and some software packages are deprecated.
@@ -64,7 +64,7 @@ some suitable hardware. Other non-Synology software can be run on
 a Synology device using Docker, however I&amp;#8217;ve had problems doing this with constant disk
 accesses caused by
 &lt;a href="https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite"&gt;container health checks&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;A neat feature of Synology is their &lt;a href="https://quickconnect.to"&gt;Quickconnect&lt;/a&gt;
+&lt;p&gt;A neat feature of Synology hardware is their &lt;a href="https://quickconnect.to"&gt;Quickconnect&lt;/a&gt;
 remote access, without needing a &lt;span class="caps"&gt;VPN&lt;/span&gt; or having an open port. This works with
 the web interface and phone&amp;nbsp;apps.&lt;/p&gt;
 &lt;p&gt;The single most important aspect of managing personal data is ensuring it is
