@@ -135,9 +135,9 @@ risks by taking manual backups, albeit on a less frequent basis that I should.
 
 This note details hardware and software alternatives for operating personal services
 that are east to setup and maintain, with scope to add much more functionality. This
-self-hosting method presents itself as a robust option against relying on third-party
-data custodians. Moreover, adopting this approach can be quite cost-effective, as the
-biggest expense associated with NAS systems is the cost of the disks themselves.
+approach provides a strong alternative to entrusting a third party to hold your data.
+Moreover, it can be done cheaply too, with the cost of NAS setups being dominated by the
+price of disks themselves and many great open-source software options.
 
 <a name="links"></a>
 ## Related links
