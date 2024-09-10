@@ -45,7 +45,7 @@ and interesting self hosted systems can be found (I’ve linked to a few
 resources at [the end](#links)).
 
 
-## Synology Disktstation
+## Synology Diskstation
 
 The main machine is a Synology Diskstation DS220+, a two-bay network-attached-storage (NAS) box.
 I have this running with two 8 TB disks in RAID 1 configuration (two-way redundant
