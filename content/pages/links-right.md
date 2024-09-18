@@ -31,3 +31,4 @@ Title: Links right
 - [Kate Hodesdon](https://hodesdon.substack.com/)
 - [Michael Boulton](https://boulton.xyz)
 - [Peter Birch](https://intuity.io)
+- [Evan Griffiths](https://evangriffiths.org)
