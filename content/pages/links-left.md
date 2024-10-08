@@ -17,6 +17,7 @@ Title: Links left
 - [Real World Tech](https://www.realworldtech.com)
 - [Semi Analysis](https://www.semianalysis.com)
 - [The Chip Letter](https://thechipletter.substack.com)
+- [When Silicon Fails](https://whensiliconfails.wordpress.com)
 - [WikiChip](https://en.wikichip.org/wiki/WikiChip)
 
 ### Computing resources
