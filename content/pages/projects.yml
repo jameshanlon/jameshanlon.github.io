@@ -43,10 +43,20 @@
     - name: GitHub
       href: https://github.com/jameshanlon/prng-testing
 
+- name: Home energy data
+  desc: |
+    A Python-based project that I use to analyse data exported from my Vaillant
+    heat pump monitoring. It reads in the raw CSV files produced by the Vaillant
+    smartphone app and renders a set of charts and statistics in HTML.
+  links:
+    - name: GitHub
+      href: https://github.com/jameshanlon/home-energy-data
+
 - name: Personal finances
   desc: |
-    A Python-based project that I use fetch personal finance data from Google
-    Sheets and then generate a set of summary HTML reports.
+    A Python-based project that I use to fetch personal finance data (collected
+    transactions from bank accounts and credit cards etc) held in Google
+    Sheets and then generate a set of summary HTML reports including tables and charts.
   links:
     - name: GitHub
       href: https://github.com/jameshanlon/finances
