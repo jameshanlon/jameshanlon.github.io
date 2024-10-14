@@ -1,3 +1,10 @@
+{%- macro plotcanvas(id, caption=None) %}
+<canvas id="{{id}}"></canvas>
+<figure class="figure">
+  <figcaption class="figure-caption text-left">{{caption}}</figcaption>
+</figure>
+{% endmacro %}
+
 {%- macro imagenothumb(filename, caption=None, alt=None) %}
 {% if caption != None %}
   {% if alt == None %}
