@@ -9,9 +9,11 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-I had a heat pump installed in my house in July 2022, and a year later a
-[Vaillant gateway][gateway], which provides monitoring and logging services
-via a 'myVaillant' smartphone app. Since I now have a year's worth of data,
+> **_NOTE:_**  Updated October 2024 with improved charts.
+
+I had a Vaillant heat pump installed in my house in July 2022, and a year later
+a [Vaillant gateway][gateway], which provides monitoring and logging services
+via the 'myVaillant' smartphone app. Since I now have a year's worth of data,
 this note reviews what has been logged to see how the system is performing.
 
 [gateway]: https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway
@@ -24,33 +26,105 @@ about the building's [energy efficiency](home-thermal-imaging-survey.html) and
 [additional first floor
 insulation](cornish-unit-house-retrofit-insulation.html) added. This pump's
 capacity exceeds the current requirements of the house, but we are planning an
-extension in the near future. In terms of the operation of the heating and hot
-water system, space heating is set to run continuously with a fixed temperature
-of 19 degrees C is set in the downstairs hallway (a central point in the
-house), and hot water is set to run continuously at 50 degrees C. In the first
-year of running the system, I experimented with running heating and hot water
-for set periods during each day of the week, but I found that the heat pump had
-to work hard to bring the system back up to temperature, particularly with the
-heating during the winter where the not only is the system heating the water
-but also the fabric of the building. I was advised that continuous operation
-was more efficient and since the house is almost always occupied, this matched
-our use.
+extension in the near future.
+
+In terms of the operation of the heating and hot water system, space heating is
+set to run continuously with a fixed temperature of 19 degrees C is set in the
+downstairs hallway (a central point in the house), and hot water is set to run
+continuously at 50 degrees C. In the first year of running the system, I
+experimented with running heating and hot water for set periods during each day
+of the week, but I found that the heat pump had to work hard to bring the
+system back up to temperature, particularly with the heating during the winter
+where the not only is the system heating the water but also the fabric of the
+building. I was advised that continuous operation was more efficient and since
+the house is almost always occupied, this matched our use. At that point I
+hadn't taken a close look at the measured performance and was just ad hoc
+monitoring the electricity demand, so it is not to say that running the system
+with setback temperatures would not be effective and may better match occupancy
+(see analysis in [this Heatgeek article][heatgeek-setback], but having a
+continuous temperature is the most comfortable and works well in my case.
+
+[heatgeek-setback]: https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not
 
 The *myVaillant* app usefully provides a button to download all logged data per
-year in a set of CSV files. I have summarised the year period from July 2023 to
+year in a set of CSV files and this code is [available on
+Github][home-energy-data]. I have summarised the year period from July 2023 to
 July 2024 in the following charts. Having read this [review][pfb-vaillant-app]
 by Michael de Podesta of the *myVaillant* app and the quality of the logged
 data, I am aware that there are accuracy/quantisation issues. The review
-measured a ~10% error in electricity consumed and a ~20% error in the heat
+measured a ~8% error in electricity consumed and a ~20% error in the heat
 energy produced, as well as pointing out many logged values are quantised to
-kWh units, which I also observe in the data. Unfortunately I don't have a point
-of comparison with with no other means of measuring the metrics. I hold out
-some hope that Vaillant have improved the reported measurements in the last
-year, but even with these errors the data is still useful for a high-level
-review of the system.
+kWh units, which I also observe in the data. Significantly, this means that the
+raw Vaillant data under reports COP. I don't have a point of comparison with
+with another way to measuring the consumed and generated energy (although I
+would like to install an [OpenEnergyMonitor][OpenEnergyMonitor] to do this). I
+hope that Vaillant have improved the reported measurements in the last year,
+but even with these errors the data is still useful for a high-level review of
+the system.
+
+[home-energy-data]: https://github.com/jameshanlon/home-energy-data
+[OpenEnergyMonitor]: https://openenergymonitor.org
+
+# Analysis
+
+The overall performance of the system for the year from July 2023 is summarised in the following table.
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Metric</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+ <tbody>
+    <tr>
+      <td>Consumed electricity heating</td>
+      <td>1.34 MWh</td>
+    </tr>
+    <tr>
+      <td>Consumed electricity hot water</td>
+      <td>1.01 MWh</td>
+    </tr>
+    <tr>
+      <td>Total consumed electricity</td>
+      <td>2.36 MWh</td>
+    </tr>
+    <tr>
+      <td>Average daily electicity consumption</td>
+      <td>6.65 kWh</td>
+    </tr>
+    <tr>
+      <td>Heat generated heating</td>
+      <td>4.91 MWh</td>
+    </tr>
+    <tr>
+      <td>Heat generated hot water</td>
+      <td>3.13 MWh</td>
+    </tr>
+    <tr>
+      <td>Total heat generated</td>
+      <td>8.04 MWh</td>
+    </tr>
+    <tr>
+      <td>Heating SCOP</td>
+      <td>3.65</td>
+    </tr>
+    <tr>
+      <td>Hot water SCOP</td>
+      <td>3.09</td>
+    </tr>
+    <tr>
+      <td>Total SCOP</td>
+      <td>3.41</td>
+    </tr>
+  </tbody>
+</table>
+
+Note that when scaling consumed electricity by 8% and generated electicity by
+20%, heating SCOP is 4.06, hot water SCOP is 3.43 and combined at 3.79.
 
 Diving into the data, the first chart below shows the consumption of electrical
-energy for heating (red) and hot water (blue).
+energy for heating, hot water and them combined.
 
 {{ macros.imagenothumb('heat-pump/consumed.png',
                        caption="Electrical energy consumed in kWh.") }}
