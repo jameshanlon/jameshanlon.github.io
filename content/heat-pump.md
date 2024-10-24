@@ -40,16 +40,17 @@ the house is almost always occupied, this matched our use. At that point I
 hadn't taken a close look at the measured performance and was just ad-hoc
 monitoring the electricity demand, so it is not to say that running the system
 with setback temperatures would not be effective and may better match occupancy
-(see analysis in [this Heatgeek article][heatgeek-setback], but having a
-continuous temperature is the most comfortable and works well in my case.
+(see analysis from [Heatgeek][heatgeek-setback] or [Protons for Breakfast][pfb-setback]),
+but having a continuous temperature is the most comfortable and works well in my case.
 
 [heatgeek-setback]: https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not
+[pfb-setback]: https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight
 
 The *myVaillant* app usefully provides a button to download all logged data per
 year in a set of CSV files and this code is [available on
 Github][home-energy-data]. I have summarised the year period from July 2023 to
-July 2024 in the following charts. Having read this [review][pfb-vaillant-app]
-by Michael de Podesta, I am aware that there are issues with the quality of the logged data.
+July 2024 in the following charts. Having read this [PFB review][pfb-vaillant-app],
+I am aware that there are issues with the quality of the logged data.
 The review measured a ~8% error in electricity consumed and a ~20% error in the heat
 energy produced, as well as pointing out many logged values are quantised to
 kWh units, which I also observe in my data. Significantly, this means that the
