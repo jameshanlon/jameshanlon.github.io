@@ -31,13 +31,13 @@ the house is almost always occupied, this matched our use. At that point I
 hadn&amp;#8217;t taken a close look at the measured performance and was just ad-hoc
 monitoring the electricity demand, so it is not to say that running the system
 with setback temperatures would not be effective and may better match occupancy
-(see analysis in &lt;a href="https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not"&gt;this Heatgeek article&lt;/a&gt;, but having a
-continuous temperature is the most comfortable and works well in my&amp;nbsp;case.&lt;/p&gt;
+(see analysis from &lt;a href="https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not"&gt;Heatgeek&lt;/a&gt; or &lt;a href="https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight"&gt;Protons for Breakfast&lt;/a&gt;),
+but having a continuous temperature is the most comfortable and works well in my&amp;nbsp;case.&lt;/p&gt;
 &lt;p&gt;The &lt;em&gt;myVaillant&lt;/em&gt; app usefully provides a button to download all logged data per
 year in a set of &lt;span class="caps"&gt;CSV&lt;/span&gt; files and this code is &lt;a href="https://github.com/jameshanlon/home-energy-data"&gt;available on
 Github&lt;/a&gt;. I have summarised the year period from July 2023 to
-July 2024 in the following charts. Having read this &lt;a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review"&gt;review&lt;/a&gt;
-by Michael de Podesta, I am aware that there are issues with the quality of the logged data.
+July 2024 in the following charts. Having read this &lt;a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review"&gt;&lt;span class="caps"&gt;PFB&lt;/span&gt; review&lt;/a&gt;,
+I am aware that there are issues with the quality of the logged data.
 The review measured a ~8% error in electricity consumed and a ~20% error in the heat
 energy produced, as well as pointing out many logged values are quantised to
 kWh units, which I also observe in my data. Significantly, this means that the
