@@ -11,40 +11,47 @@ Status: published
 
 > **_NOTE:_**  Updated October 2024 with improved charts.
 
-I had a Vaillant heat pump installed in my house in July 2022, and a year later
-a [Vaillant gateway][gateway], which provides monitoring and logging services
-via the 'myVaillant' smartphone app. Since I now have a year's worth of data,
-this note reviews what has been logged to see how the system is performing.
+{{ macros.imagenothumb('heat-pump/heat-pump-cropped.jpg', caption="My 10kW Vaillant Arotherm
+Plus.") }}
+
+I had a 10 kW Vaillant Arotherm heat pump installed in July 2022, and a year
+later a [Vaillant Sensonet gateway][gateway], which provides monitoring and
+logging services via the 'myVaillant' smartphone app. Since I now have a year's
+worth of data, this note reviews what has been logged to see how the system is
+performing.
 
 [gateway]: https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway
 
-{{ macros.image('heat-pump/heat-pump.jpg') }}
-
-The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
-house of approximately 90 square meters internal area. I have previously posted
-about the building's [energy efficiency](home-thermal-imaging-survey.html) and
-[additional first floor
+The heat pump serves my house of approximately 90 square meters internal area.
+I have previously posted about the building's [energy
+efficiency](home-thermal-imaging-survey.html) and [additional first floor
 insulation](cornish-unit-house-retrofit-insulation.html) added. This pump's
 capacity exceeds the current requirements of the house, but we are planning an
 extension in the near future.
 
-In terms of the operation of the heating and hot water system, space heating is
-set to run continuously with a fixed temperature of 19 degrees C is set in the
-downstairs hallway (a central point in the house), and hot water is set to run
-continuously at 50 degrees C. In the first year of running the system, I
-experimented with running heating and hot water for set periods during each day
-of the week, but I found that the heat pump had to work hard to bring the
-system and the fabric of the house back up to temperature.  
-I was advised that continuous operation was more efficient and since
-the house is almost always occupied, this matched our use. At that point I
-hadn't taken a close look at the measured performance and was just ad-hoc
-monitoring the electricity demand, so it is not to say that running the system
-with setback temperatures would not be effective and may better match occupancy
-(see analysis from [Heatgeek][heatgeek-setback] or [Protons for Breakfast][pfb-setback]),
-but having a continuous temperature is the most comfortable and works well in my case.
+## System operation
+
+The way I run the system is for space heating to run continuously with a fixed
+temperature of 19 degrees C is set in the downstairs hallway (a central point
+in the house), and hot water to run continuously at 50 degrees C. In the first
+year of running the system, I experimented with running heating and hot water
+for set periods during each day of the week, but I found that the heat pump had
+to work hard to bring the system and the fabric of the house back up to
+temperature.
+
+I was advised that continuous operation was more efficient and since the house
+is almost always occupied, this matched our use. At that point I hadn't taken a
+close look at the measured performance and was just monitoring the electricity
+demand ad hoc. It is not to say that running the system with setback
+temperatures would not be effective and may better match occupancy: see
+analysis from [Heatgeek][heatgeek-setback] or [Protons for
+Breakfast][pfb-setback] on this subject, But for me, having a continuous
+temperature is the most comfortable and seems to work well.
 
 [heatgeek-setback]: https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not
 [pfb-setback]: https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight
+
+## The *myViallant* app
 
 The *myVaillant* app usefully provides a button to download all logged data per
 year in a set of CSV files and this code is [available on
@@ -56,14 +63,14 @@ energy produced, as well as pointing out many logged values are quantised to
 kWh units, which I also observe in my data. Significantly, this means that the
 raw Vaillant data under reports COP. I don't have a point of comparison with
 with an alternative measurement of the consumed and generated energy (although I
-would like to install an [OpenEnergyMonitor][OpenEnergyMonitor] to do this). 
+would like to install an [OpenEnergyMonitor][OpenEnergyMonitor] to do this).
 Despite the potential inaccuracies of the Vaillant data, it remains useful for
 a high-level review of the system.
 
 [home-energy-data]: https://github.com/jameshanlon/home-energy-data
 [OpenEnergyMonitor]: https://openenergymonitor.org
 
-# Analysis
+## Analysis
 
 The overall performance of the system for the year from July 2023 to July 2024
 is summarised in the following table.
@@ -89,7 +96,7 @@ is summarised in the following table.
       <td>2.36 MWh</td>
     </tr>
     <tr>
-      <td>Average daily electicity consumption</td>
+      <td>Average daily electricity consumption</td>
       <td>6.65 kWh</td>
     </tr>
     <tr>
@@ -119,10 +126,10 @@ is summarised in the following table.
   </tbody>
 </table>
 
-Note that when scaling consumed electricity by 8% and generated electicity by
+Note that when scaling consumed electricity by 8% and generated electricity by
 20% to adjust for possible inaccuracy, heating SCOP is 4.06, hot water SCOP is
 3.43 and they are combined at 3.79. Note also, that these figures do not include
-the electicity used for the weekly Legionella purge performed by an immersion
+the electricity used for the weekly Legionella purge performed by an immersion
 heater I have installed in my system.
 
 Looking more closely at consumption, the chart below shows all measurements
@@ -138,8 +145,8 @@ at these times consumption went up close to 30 kWh per day. As expected,
 electricity consumption for hot water is more consistent throughout the year
 with a lesser increase through the winter months. The short periods where both
 drop to zero are due either to a holiday and the system being in 'absence' mode
-or a technical issue. Regarding the latter, these have only been due to a loss
-of pressure in the system, requiring a manual top up from the mains water supply.
+or a technical issue. The technical issue has been due to a loss of pressure in
+the system, requiring a manual top up from the mains water supply.
 
 The next chart is the heat energy generated, which is tightly correlated with
 the consumption graph.
@@ -148,28 +155,33 @@ the consumption graph.
                        caption="Heat energy generated (hot water and heating) in kWh.") }}
 
 Combining the previous two charts by calculating the ratio between generated and
-consumed, gives the coefficient of performance (COP).
+consumed, gives the coefficient of performance (COP). A handful of measurements
+produced very large COP values, that are unrealistic, so I have clipped these
+with a maximum COP of 6.
 
 {{ macros.imagenothumb('heat-pump/COP.png',
                        caption="COP calculated by dividing heat generated by electrical energy consumed.") }}
 
-And perhaps more digestably, COP averaged over weekly intervals.
+This is the same COP data averaged over weekly intervals.
 
 {{ macros.imagenothumb('heat-pump/weekly-COP.png',
                        caption="Weekly averaged COP.") }}
 
-The next chart is a different presentation of the data, with COP plotted as a function of heat
-output. I would expect there to be an output level that achieves peak efficiency, but there is
-little reduction in efficiency between that and the highest recorded output.
+The next chart is a different presentation of the COP data, with COP plotted as
+a function of heat output. It's clear that peak COP is at ~10 kW heat output,
+but there is little penalty in efficiency between that and the highest recorded
+output.
 
 {{ macros.imagenothumb('heat-pump/heat-output-vs-COP.png',
-                       caption="Heat output versus weeekly averaged COP.") }}
+                       caption="Heat output versus weekly averaged COP.") }}
 
 Looking at the temperature of the hot water tank, this stays constant as expected
 but with a few exceptions: when I changed the temperature from 45 to 50 degrees C
 in October 2023; when the system has been off or out of order; and when every week
 on a Monday the immersion heater kicks in to perform a Legionella purge (which
-curiously it has stopped since March 2024, something I need to investigate).
+curiously it has stopped since March 2024. After later investigation this
+appears to be a faulty timer or immersion heater, so I switched to performing
+the purge using the heat pump itself).
 
 {{ macros.imagenothumb('heat-pump/water-temperature.png',
                        caption="Hot water temperature in degrees Celsius.") }}
@@ -178,10 +190,10 @@ Finally, we have a plot of internal (red) vs external (blue) temperature in
 degrees C. This clearly shows that the 19 degrees C target was maintained
 throughout the year, notwithstanding the periods of absence/downtime and on
 particular hot days when the temperature rose above the target. Given how
-quickly our summers are changing in terms of heat waves, having a system that
-can also perform cooling would be a big benefit. I think this chart well represents
-the benefit of having a heat pump, and a home with a continuous temperature
-throughout the year.
+quickly our summers are changing with more intense heat, having a system that
+can also perform cooling would be a big benefit. But overall, I think this
+chart well represents the benefit of having a heat pump, providing a home
+environment with a continuous temperature throughout the year.
 
 {{ macros.imagenothumb('heat-pump/internal-external-temperature.png',
                        caption="Internal and external temperatures in degrees Celsius.") }}
@@ -190,7 +202,7 @@ For the same period I obtained the electricity use and cost data from Octopus
 using their excellent API via the [Octograph tool][octograph], visualised below
 on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
 MWh of energy, which is only 32% of the total electricity use. I am suspicious
-that this is incorrect, even factoring in an 8% underestimate from the Vaillant
+that this is inaccurate, even factoring in an 8% underestimate from the Vaillant
 measurements. I would expect the heat pump to be using more like half of total
 electricity on average, given that other electricity use is cooking and
 appliances etc, but perhaps I am wrong. Otherwise the usage profile matches between
@@ -198,6 +210,16 @@ the two data sets.
 
 {{ macros.imagenothumb('heat-pump/Grafana-Octopus-electricity-use.png',
                        caption="Electricity use from Octopus data.") }}
+
+## Summary
+
+The data collected by the Vaillant heat pump control system appears to be
+somewhat inaccurate but nevertheless provides a high-level overview of the
+performance of the system. I've been very pleased with how it has performed
+over the last year, and this is backed up by the statistics I have collated.
+With work planned on the house, there are more thermal-efficiency gains to be
+made, so hopefully I can further improve it's running efficiency.
+
 
 [pfb-vaillant-app]: https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review
 [pfb-vaillant-arotherm]: https://protonsforbreakfast.wordpress.com/2022/10/19/vaillant-arotherm-plus-heat-pump-the-good-the-bad-and-the-ugly
