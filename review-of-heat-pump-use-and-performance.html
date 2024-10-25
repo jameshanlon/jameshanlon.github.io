@@ -80,37 +80,41 @@
     <blockquote>
 <p><strong><em><span class="caps">NOTE</span>:</em></strong>  Updated October 2024 with improved&nbsp;charts.</p>
 </blockquote>
-<p>I had a Vaillant heat pump installed in my house in July 2022, and a year later
-a <a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway">Vaillant gateway</a>, which provides monitoring and logging services
-via the &#8216;myVaillant&#8217; smartphone app. Since I now have a year&#8217;s worth of data,
-this note reviews what has been logged to see how the system is&nbsp;performing.</p>
 <div class="text-center">
-  <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump.jpg" data-lightbox="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/heat-pump_600x600.jpg" alt="No alt text">
-  </a>
+<figure class="figure">
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump-cropped.jpg" alt="My 10kW Vaillant Arotherm
+Plus.">
+  <figcaption class="figure-caption text-left">My 10kW Vaillant Arotherm
+Plus.</figcaption>
+</figure>
 </div>
 
-<p>The heat pump is a 10 kW Vaillant Arotherm plus (pictured above), serving my
-house of approximately 90 square meters internal area. I have previously posted
-about the building&#8217;s <a href="home-thermal-imaging-survey.html">energy efficiency</a> and
-<a href="cornish-unit-house-retrofit-insulation.html">additional first floor
+<p>I had a 10 kW Vaillant Arotherm heat pump installed in July 2022, and a year
+later a <a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway">Vaillant Sensonet gateway</a>, which provides monitoring and
+logging services via the &#8216;myVaillant&#8217; smartphone app. Since I now have a year&#8217;s
+worth of data, this note reviews what has been logged to see how the system is&nbsp;performing.</p>
+<p>The heat pump serves my house of approximately 90 square meters internal area.
+I have previously posted about the building&#8217;s <a href="home-thermal-imaging-survey.html">energy
+efficiency</a> and <a href="cornish-unit-house-retrofit-insulation.html">additional first floor
 insulation</a> added. This pump&#8217;s
 capacity exceeds the current requirements of the house, but we are planning an
 extension in the near&nbsp;future.</p>
-<p>In terms of the operation of the heating and hot water system, space heating is
-set to run continuously with a fixed temperature of 19 degrees C is set in the
-downstairs hallway (a central point in the house), and hot water is set to run
-continuously at 50 degrees C. In the first year of running the system, I
-experimented with running heating and hot water for set periods during each day
-of the week, but I found that the heat pump had to work hard to bring the
-system and the fabric of the house back up to temperature.<br>
-I was advised that continuous operation was more efficient and since
-the house is almost always occupied, this matched our use. At that point I
-hadn&#8217;t taken a close look at the measured performance and was just ad-hoc
-monitoring the electricity demand, so it is not to say that running the system
-with setback temperatures would not be effective and may better match occupancy
-(see analysis from <a href="https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not">Heatgeek</a> or <a href="https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight">Protons for Breakfast</a>),
-but having a continuous temperature is the most comfortable and works well in my&nbsp;case.</p>
+<h2>System&nbsp;operation</h2>
+<p>The way I run the system is for space heating to run continuously with a fixed
+temperature of 19 degrees C is set in the downstairs hallway (a central point
+in the house), and hot water to run continuously at 50 degrees C. In the first
+year of running the system, I experimented with running heating and hot water
+for set periods during each day of the week, but I found that the heat pump had
+to work hard to bring the system and the fabric of the house back up to&nbsp;temperature.</p>
+<p>I was advised that continuous operation was more efficient and since the house
+is almost always occupied, this matched our use. At that point I hadn&#8217;t taken a
+close look at the measured performance and was just monitoring the electricity
+demand ad hoc. It is not to say that running the system with setback
+temperatures would not be effective and may better match occupancy: see
+analysis from <a href="https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not">Heatgeek</a> or <a href="https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight">Protons for
+Breakfast</a> on this subject, But for me, having a continuous
+temperature is the most comfortable and seems to work&nbsp;well.</p>
+<h2>The <em>myViallant</em>&nbsp;app</h2>
 <p>The <em>myVaillant</em> app usefully provides a button to download all logged data per
 year in a set of <span class="caps">CSV</span> files and this code is <a href="https://github.com/jameshanlon/home-energy-data">available on
 Github</a>. I have summarised the year period from July 2023 to
@@ -121,10 +125,10 @@ energy produced, as well as pointing out many logged values are quantised to
 kWh units, which I also observe in my data. Significantly, this means that the
 raw Vaillant data under reports <span class="caps">COP</span>. I don&#8217;t have a point of comparison with
 with an alternative measurement of the consumed and generated energy (although I
-would like to install an <a href="https://openenergymonitor.org">OpenEnergyMonitor</a> to do this). 
+would like to install an <a href="https://openenergymonitor.org">OpenEnergyMonitor</a> to do this).
 Despite the potential inaccuracies of the Vaillant data, it remains useful for
 a high-level review of the&nbsp;system.</p>
-<h1>Analysis</h1>
+<h2>Analysis</h2>
 <p>The overall performance of the system for the year from July 2023 to July 2024
 is summarised in the following&nbsp;table.</p>
 <table class="table">
@@ -148,7 +152,7 @@ is summarised in the following&nbsp;table.</p>
       <td>2.36 MWh</td>
     </tr>
     <tr>
-      <td>Average daily electicity consumption</td>
+      <td>Average daily electricity consumption</td>
       <td>6.65 kWh</td>
     </tr>
     <tr>
@@ -178,10 +182,10 @@ is summarised in the following&nbsp;table.</p>
   </tbody>
 </table>
 
-<p>Note that when scaling consumed electricity by 8% and generated electicity by
+<p>Note that when scaling consumed electricity by 8% and generated electricity by
 20% to adjust for possible inaccuracy, heating <span class="caps">SCOP</span> is 4.06, hot water <span class="caps">SCOP</span> is
 3.43 and they are combined at 3.79. Note also, that these figures do not include
-the electicity used for the weekly Legionella purge performed by an immersion
+the electricity used for the weekly Legionella purge performed by an immersion
 heater I have installed in my&nbsp;system.</p>
 <p>Looking more closely at consumption, the chart below shows all measurements
 over this period for heating, hot water and their&nbsp;combination.</p>
@@ -199,8 +203,8 @@ at these times consumption went up close to 30 kWh per day. As expected,
 electricity consumption for hot water is more consistent throughout the year
 with a lesser increase through the winter months. The short periods where both
 drop to zero are due either to a holiday and the system being in &#8216;absence&#8217; mode
-or a technical issue. Regarding the latter, these have only been due to a loss
-of pressure in the system, requiring a manual top up from the mains water&nbsp;supply.</p>
+or a technical issue. The technical issue has been due to a loss of pressure in
+the system, requiring a manual top up from the mains water&nbsp;supply.</p>
 <p>The next chart is the heat energy generated, which is tightly correlated with
 the consumption&nbsp;graph.</p>
 <div class="text-center">
@@ -211,7 +215,9 @@ the consumption&nbsp;graph.</p>
 </div>
 
 <p>Combining the previous two charts by calculating the ratio between generated and
-consumed, gives the coefficient of performance (<span class="caps">COP</span>).</p>
+consumed, gives the coefficient of performance (<span class="caps">COP</span>). A handful of measurements
+produced very large <span class="caps">COP</span> values, that are unrealistic, so I have clipped these
+with a maximum <span class="caps">COP</span> of&nbsp;6.</p>
 <div class="text-center">
 <figure class="figure">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed.">
@@ -219,7 +225,7 @@ consumed, gives the coefficient of performance (<span class="caps">COP</span>).<
 </figure>
 </div>
 
-<p>And perhaps more digestably, <span class="caps">COP</span> averaged over weekly&nbsp;intervals.</p>
+<p>This is the same <span class="caps">COP</span> data averaged over weekly&nbsp;intervals.</p>
 <div class="text-center">
 <figure class="figure">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/weekly-COP.png" alt="Weekly averaged COP.">
@@ -227,13 +233,13 @@ consumed, gives the coefficient of performance (<span class="caps">COP</span>).<
 </figure>
 </div>
 
-<p>The next chart is a different presentation of the data, with <span class="caps">COP</span> plotted as a function of heat
-output. I would expect there to be an output level that achieves peak efficiency, but there is
-little reduction in efficiency between that and the highest recorded&nbsp;output.</p>
+<p>The next chart is a different presentation of the <span class="caps">COP</span> data, with <span class="caps">COP</span> plotted as
+a function of heat output. It&#8217;s clear that peak <span class="caps">COP</span> is at ~10 kW heat output,
+but there is little penalty in efficiency between that and the highest recorded&nbsp;output.</p>
 <div class="text-center">
 <figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-output-vs-COP.png" alt="Heat output versus weeekly averaged COP.">
-  <figcaption class="figure-caption text-left">Heat output versus weeekly averaged <span class="caps">COP</span>.</figcaption>
+  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-output-vs-COP.png" alt="Heat output versus weekly averaged COP.">
+  <figcaption class="figure-caption text-left">Heat output versus weekly averaged <span class="caps">COP</span>.</figcaption>
 </figure>
 </div>
 
@@ -241,7 +247,9 @@ little reduction in efficiency between that and the highest recorded&nbsp;output
 but with a few exceptions: when I changed the temperature from 45 to 50 degrees C
 in October 2023; when the system has been off or out of order; and when every week
 on a Monday the immersion heater kicks in to perform a Legionella purge (which
-curiously it has stopped since March 2024, something I need to&nbsp;investigate).</p>
+curiously it has stopped since March 2024. After later investigation this
+appears to be a faulty timer or immersion heater, so I switched to performing
+the purge using the heat pump&nbsp;itself).</p>
 <div class="text-center">
 <figure class="figure">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius.">
@@ -253,10 +261,10 @@ curiously it has stopped since March 2024, something I need to&nbsp;investigate)
 degrees C. This clearly shows that the 19 degrees C target was maintained
 throughout the year, notwithstanding the periods of absence/downtime and on
 particular hot days when the temperature rose above the target. Given how
-quickly our summers are changing in terms of heat waves, having a system that
-can also perform cooling would be a big benefit. I think this chart well represents
-the benefit of having a heat pump, and a home with a continuous temperature
-throughout the&nbsp;year.</p>
+quickly our summers are changing with more intense heat, having a system that
+can also perform cooling would be a big benefit. But overall, I think this
+chart well represents the benefit of having a heat pump, providing a home
+environment with a continuous temperature throughout the&nbsp;year.</p>
 <div class="text-center">
 <figure class="figure">
   <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius.">
@@ -268,7 +276,7 @@ throughout the&nbsp;year.</p>
 using their excellent <span class="caps">API</span> via the <a href="https://github.com/Yanson/octograph">Octograph tool</a>, visualised below
 on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
 MWh of energy, which is only 32% of the total electricity use. I am suspicious
-that this is incorrect, even factoring in an 8% underestimate from the Vaillant
+that this is inaccurate, even factoring in an 8% underestimate from the Vaillant
 measurements. I would expect the heat pump to be using more like half of total
 electricity on average, given that other electricity use is cooking and
 appliances etc, but perhaps I am wrong. Otherwise the usage profile matches between
@@ -280,6 +288,13 @@ the two data&nbsp;sets.</p>
 </figure>
 </div>
 
+<h2>Summary</h2>
+<p>The data collected by the Vaillant heat pump control system appears to be
+somewhat inaccurate but nevertheless provides a high-level overview of the
+performance of the system. I&#8217;ve been very pleased with how it has performed
+over the last year, and this is backed up by the statistics I have collated.
+With work planned on the house, there are more thermal-efficiency gains to be
+made, so hopefully I can further improve it&#8217;s running&nbsp;efficiency.</p>
 <h2>References and further&nbsp;reading</h2>
 <ul>
 <li><a href="https://protonsforbreakfast.wordpress.com/heat-pump-articles/">Protons for Breakfast, articles about heat
