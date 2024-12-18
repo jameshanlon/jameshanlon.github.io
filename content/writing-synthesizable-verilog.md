@@ -1272,8 +1272,7 @@ module m_mempipe (
   assign o_e2_data = p3_data_q;
 
 endmodule
-
-``` verilog
+```
 
 <a name="signal-naming" class="anchor"></a>
 ### Signal naming
