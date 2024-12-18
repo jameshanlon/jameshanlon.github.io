@@ -1187,23 +1187,18 @@ an external signal and <code>p</code> an internal&nbsp;one:</p>
 <span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">o_e2_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p3_data_q</span><span class="p">;</span>
 
 <span class="k">endmodule</span>
+</code></pre></div>
 
-<span class="err">```</span><span class="w"> </span><span class="n">verilog</span>
-
-<span class="o">&lt;</span><span class="n">a</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;signal-naming&quot;</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;anchor&quot;</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="p">###</span><span class="w"> </span><span class="n">Signal</span><span class="w"> </span><span class="n">naming</span>
-
-<span class="n">A</span><span class="w"> </span><span class="n">strict</span><span class="w"> </span><span class="n">approach</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">signal</span><span class="w"> </span><span class="n">naming</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">taken</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">easier</span><span class="w"> </span><span class="n">to</span>
-<span class="n">understand</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">navigate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nl">design:</span>
-
-<span class="o">**</span><span class="n">To</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">clear</span><span class="w"> </span><span class="n">their</span><span class="w"> </span><span class="n">relationship</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">structure</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">module</span><span class="o">**</span><span class="p">.</span><span class="w"> </span><span class="n">Prefixes</span><span class="w"> </span><span class="k">and</span>
-<span class="n">suffices</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">denote</span><span class="p">,</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">example</span><span class="p">,</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">signal</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">output</span><span class="p">,</span><span class="w"> </span><span class="n">the</span>
-<span class="n">pipeline</span><span class="w"> </span><span class="n">stage</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">corresponds</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">whether</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">driven</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">directly</span>
-<span class="n">from</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">flip</span><span class="o">-</span><span class="n">flop</span><span class="p">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">exact</span><span class="w"> </span><span class="n">naming</span><span class="w"> </span><span class="n">convention</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">tailored</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">project</span><span class="p">,</span>
-<span class="n">but</span><span class="w"> </span><span class="n">here</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">some</span><span class="w"> </span><span class="nl">examples:</span>
-
-<span class="err">```</span><span class="w"> </span><span class="n">verilog</span>
-<span class="n">i_p0_operand</span><span class="w">     </span><span class="c1">// Input into pipeline stage 0.</span>
+<p><a name="signal-naming" class="anchor"></a></p>
+<h3>Signal&nbsp;naming</h3>
+<p>A strict approach to signal naming should be taken to make it easier to
+understand and navigate a&nbsp;design:</p>
+<p><strong>To make clear their relationship to the structure of a module</strong>. Prefixes and
+suffices can denote, for example, whether a signal is an input or output, the
+pipeline stage it corresponds to and whether it is driven by logic or directly
+from a flip-flop. The exact naming convention will be tailored to a project,
+but here are some&nbsp;examples:</p>
+<div class="highlight"><pre><span></span><code><span class="n">i_p0_operand</span><span class="w">     </span><span class="c1">// Input into pipeline stage 0.</span>
 <span class="n">p1_state</span><span class="w">         </span><span class="c1">// A current state of a state machine.</span>
 <span class="n">p1_state_ns</span><span class="w">      </span><span class="c1">// The next state.</span>
 <span class="n">state_clk</span><span class="w">        </span><span class="c1">// A clock signal.</span>
