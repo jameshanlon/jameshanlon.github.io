@@ -8,6 +8,7 @@ Title: Links left
 - [Muxup](https://muxup.com)
 - [Protons for Breakfast](https://protonsforbreakfast.wordpress.com)
 - [Stratechery](https://stratechery.com)
+- [The blog at the bottom of the sea](https://blog.demofox.org)
 - [Zip CPU](http://zipcpu.com)
 
 ### Chips
