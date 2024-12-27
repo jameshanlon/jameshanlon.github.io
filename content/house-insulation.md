@@ -206,3 +206,7 @@ was relatively straightforward and a cheap way to substantially improve the
 thermal performance of the building. The effects of this work are significant,
 making the house a much more comfortable and stable environment, and a great
 deal more suitable environment to heat using an air-source heat pump.
+
+# Related links
+
+- [Mansard Roof, EPC Works](https://www.epcworks.co.uk/improve-your-epc/mansard-roof)
