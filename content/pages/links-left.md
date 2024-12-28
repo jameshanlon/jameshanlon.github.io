@@ -7,6 +7,7 @@ Title: Links left
 - [Ken Sherriff](https://www.righto.com)
 - [Muxup](https://muxup.com)
 - [Protons for Breakfast](https://protonsforbreakfast.wordpress.com)
+- [Random ASCII](https://randomascii.wordpress.com)
 - [Stratechery](https://stratechery.com)
 - [The blog at the bottom of the sea](https://blog.demofox.org)
 - [Zip CPU](http://zipcpu.com)
