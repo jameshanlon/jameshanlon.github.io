@@ -21,7 +21,7 @@ Title: Links right
 - [Sustainable Energy without the Hot Air](https://www.withouthotair.com)
 - [Standard Ebooks](https://standardebooks.org)
 
-### Friends and colleagues
+### People
 
 - [Andrew Holme](http://www.aholme.co.uk)
 - [Ashley Robinson](http://www.ajrobinson.org)
@@ -32,4 +32,5 @@ Title: Links right
 - [Kate Hodesdon](https://hodesdon.substack.com/)
 - [Michael Boulton](https://boulton.xyz)
 - [Peter Birch](https://intuity.io)
+- [Peter Hanlon](https://www.youtube.com/@PPPE1957)
 - [Evan Griffiths](https://evangriffiths.org)
