@@ -13,6 +13,7 @@ Title: Links right
 
 ### Books
 
+- [A Practical Introduction to Computer Architecture](https://www.phoo.org/book/pica)
 - [Communicating Sequential Processes](http://www.usingcsp.com)
 - [Deep Learning](https://www.deeplearningbook.org/)
 - [Information Theory, Inference, and Learning Algorithms](http://www.inference.org.uk/mackay/itila)
