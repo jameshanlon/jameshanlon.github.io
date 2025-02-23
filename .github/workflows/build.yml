@@ -27,7 +27,7 @@ jobs:
 
       - name: Cache thumbs
         id: cache-thumbs
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./output/thumbs
           key: ${{runner.os}}-thumbs
