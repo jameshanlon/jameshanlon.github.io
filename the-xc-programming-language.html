@@ -110,8 +110,8 @@ execution&nbsp;of:</p>
 <div class="highlight"><pre><span></span><code><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span>
 </code></pre></div>
 
-<p>the function <code>g</code> is only executed once the execution of the function <code>f</code> has
-completed. A set of statements can be made to execute in parallel using a <code>par</code>
+<p>the&nbsp;function <code>g</code> is only executed once the execution of the&nbsp;function <code>f</code> has
+completed. A set of statements can be made to execute in parallel using&nbsp;a <code>par</code>
 statement, so that the&nbsp;statement</p>
 <div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">f</span><span class="p">();</span><span class="w"> </span><span class="n">g</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
@@ -136,7 +136,7 @@ having to write each one separately, so that the&nbsp;statement:</p>
 
 <p>The tasks in a parallel statement are executed by creating threads on the
 processor executing the statement. Tasks can be placed on different tiles by
-using an <code>on</code> prefix. In following&nbsp;example:</p>
+using&nbsp;an <code>on</code> prefix. In following&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">par</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">tile</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">f</span><span class="p">();</span>
 <span class="w">  </span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span>
@@ -144,7 +144,7 @@ using an <code>on</code> prefix. In following&nbsp;example:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>the task <code>f</code> is placed on any available core of tile 0 and instances of the task
+<p>the&nbsp;task <code>f</code> is placed on any available core of tile 0 and instances of the task
 g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
 main function of an <span class="caps">XC</span> program. Conceptually, this is because when an <span class="caps">XC</span>
 program is compiled, it is divided up at its top level, into separately
@@ -169,15 +169,14 @@ remote procedure call. For example, in the parallel&nbsp;statement:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>the client initiates the transaction <code>f</code>, with the parameter value 42, from the
-interface <code>i</code>. The server waits on the transaction (as a case in the select
+<p>the client initiates the&nbsp;transaction <code>f</code>, with the parameter value 42, from the&nbsp;interface <code>i</code>. The server waits on the transaction (as a case in the select
 statement) and responds when the client initiates it by printing out a message
 with the received parameter value. Transaction functions can also be used for
 two-way communication by using reference parameters, allowing data to be
 transferred from a client to a server, and then back&nbsp;again.</p>
 <p>Interfaces can only be used by two tasks; they do not allow multiple clients to
 be connected to one server. The types of either end of an interface connection
-of type <code>T</code> are server interface <code>T</code> and client interface <code>T</code>. Therefore, when
+of&nbsp;type <code>T</code> are server&nbsp;interface <code>T</code> and client&nbsp;interface <code>T</code>. Therefore, when
 interface types are passed as parameters, the type of connection must also be
 specified, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">interface</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
@@ -193,9 +192,9 @@ specified, for&nbsp;example:</p>
 response to client requests, but in some circumstances it is useful for a
 server to be able to trigger a response from the client. This can be achieved
 by annotating a function in the interface with no parameters and a void return
-type, with <code>[[notification]]</code> slave. The client waits on the notification
+type,&nbsp;with <code>[[notification]]</code> slave. The client waits on the notification
 transaction in a select statement for the server to initiate it. A
-corresponding function can be annotated with <code>[[clears_notification]]</code>, which is
+corresponding function can be annotated&nbsp;with <code>[[clears_notification]]</code>, which is
 called by the slave to clear the notification. In the following simple&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">interface</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="err">{</span>
 <span class="w">  </span><span class="n">void</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="nc">int</span><span class="w"> </span><span class="n">x</span><span class="p">);</span>
@@ -225,9 +224,9 @@ called by the slave to clear the notification. In the following simple&nbsp;exam
 <span class="err">}</span>
 </code></pre></div>
 
-<p>when client 2 initiates the transaction function <code>f</code>, the server notifies client
-1 via the transaction function <code>isReady</code>. Client 1 waits for the server
-notification, and then initiates <code>getValue</code> when it is&nbsp;received.</p>
+<p>when client 2 initiates the transaction&nbsp;function <code>f</code>, the server notifies client
+1 via the transaction&nbsp;function <code>isReady</code>. Client 1 waits for the server
+notification, and then&nbsp;initiates <code>getValue</code> when it is&nbsp;received.</p>
 <p>So that it is easier to connect many clients to one server, interfaces can also
 be declared as arrays. A server can select over an interface array using an
 index&nbsp;variable.</p>
@@ -238,7 +237,7 @@ additional&nbsp;complexity.</p>
 <h3>Channels</h3>
 <p>Communication channels provide a more primitive way of communicating between
 tasks than interfaces. A channel connects two tasks and allows them to send and
-receive data, using the in <code>&lt;:</code> and out <code>:&gt;</code> operators respectively. A
+receive data, using the&nbsp;in <code>&lt;:</code> and&nbsp;out <code>:&gt;</code> operators respectively. A
 communication only occurs when an input is matched with an output, and because
 either side waits for the other to be ready, this also causes the tasks to
 synchronise. In the&nbsp;following:</p>
@@ -250,7 +249,7 @@ synchronise. In the&nbsp;following:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>the value 42 is sent over the channel <code>c</code> and assigned to the variable <code>x</code>.</p>
+<p>the value 42 is sent over the&nbsp;channel <code>c</code> and assigned to the&nbsp;variable <code>x</code>.</p>
 <h3>Streaming&nbsp;channels</h3>
 <p>A streaming channel does not require each input and matching output to
 synchronise, so communication can occur&nbsp;asynchronously.</p>
@@ -280,8 +279,7 @@ expression is true at the same time the event is enabled. For example, with a&nb
 
 <p>the left-hand channel of the above example can only input data when the
 variable enable is&nbsp;true.</p>
-<p>The selection of events is arbitrary, but event priority can be enforced with
-the <code>[[ordered]]</code> attribute for selects. The effect is that higher-priority
+<p>The selection of events is arbitrary, but event priority can be enforced with&nbsp;the <code>[[ordered]]</code> attribute for selects. The effect is that higher-priority
 events occur earlier in the body of the&nbsp;statement.</p>
 <p>To aid in creating reusable components and libraries, select functions can be
 used to abstract multiple cases of a select into a single unit. The following
@@ -305,7 +303,7 @@ select function encapsulates the cases of the above select&nbsp;statement:</p>
 <h3>Timing</h3>
 <p>Every tile has a reference clock that can be accessed via timer variables.
 Performing an output operation on a timer reads the current time in cycles. For
-example, to calculate the elapsed execution time of a function <code>f</code>:</p>
+example, to calculate the elapsed execution time of a&nbsp;function <code>f</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
 <span class="kt">uint32_t</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
 <span class="nl">t</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
@@ -328,13 +326,12 @@ the select&nbsp;statement:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>waits for the timer <code>t</code> to exceed the value of time before reacting to it. The
-value of <code>t</code> is discarded with the syntax <code>:&gt; void</code>, but it can be assigned to a
-variable <code>x</code> with the syntax <code>:&gt; int x</code>.</p>
+<p>waits for the&nbsp;timer <code>t</code> to exceed the value of time before reacting to it. The
+value&nbsp;of <code>t</code> is discarded with the&nbsp;syntax <code>:&gt; void</code>, but it can be assigned to a&nbsp;variable <code>x</code> with the&nbsp;syntax <code>:&gt; int x</code>.</p>
 <h3><span class="caps">IO</span></h3>
 <p>Variables of the type port provide access to <span class="caps">IO</span> pins on an XCore device in <span class="caps">XC</span>.
 Ports can have power-of-two widths, allowing the same number of bits to be
-input or output every cycle. The same channel input and output operators <code>&lt;</code>
+input or output every cycle. The same channel input and output&nbsp;operators <code>&lt;</code>
 and <code>&gt;</code> respectively are used for&nbsp;this.</p>
 <p>The following program continuously reads the value on one port and outputs it
 on&nbsp;another:</p>
@@ -353,7 +350,7 @@ on&nbsp;another:</p>
 <p>The declaration of ports must have global scope and each port must specify
 whether it is inputting or outputting, and is assigned a fixed value to specify
 which pins it corresponds to. These values are defined as macros in a system
-header file (<code>xs1.h</code>).</p>
+header file&nbsp;(<code>xs1.h</code>).</p>
 <p>By default, ports are driven at the tile&#8217;s reference clock. However, clock
 block resources can be used to provide different clock signals, either by
 dividing the reference clock, or based on an external signal. Ports can be
@@ -368,7 +365,7 @@ example, the&nbsp;statement:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>uses the predicate when <code>pinseq</code> to wait for the value on the port <code>p</code> to equal <code>v</code>
+<p>uses the predicate&nbsp;when <code>pinseq</code> to wait for the value on the&nbsp;port <code>p</code> to&nbsp;equal <code>v</code>
 before triggering the response to print a&nbsp;notification.</p>
 <h3>Port&nbsp;timing</h3>
 <p>To be able to control when outputs on a port occur with respect to the port&#8217;s
@@ -376,7 +373,7 @@ clock, outputs can be timestamped or timed. The timestamped&nbsp;statement:</p>
 <div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
 </code></pre></div>
 
-<p>causes the value <code>v</code> to be output on the port <code>p</code> and for count to be set to the
+<p>causes the&nbsp;value <code>v</code> to be output on the&nbsp;port <code>p</code> and for count to be set to the
 value of the port&#8217;s counter (incremented by one each reference clock cycle).
 The timed output&nbsp;statement:</p>
 <div class="highlight"><pre><span></span><code><span class="n">p</span><span class="w"> </span><span class="err">@</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
@@ -389,11 +386,11 @@ value v is&nbsp;output.</p>
 is limited (eight in current XCore devices), <span class="caps">XC</span> provides two ways to map
 multiple tasks to cores and better exploit the available&nbsp;cores.</p>
 <p>Server tasks that are composed of a never-ending loop containing a select
-statement can be marked as combinable with the attribute <code>[[combinable]]</code>. This
+statement can be marked as combinable with the&nbsp;attribute <code>[[combinable]]</code>. This
 allows the compiler to combine two or more combinable tasks to run on the same
 core, by merging the cases into a single&nbsp;select.</p>
 <p>Tasks of the same form as combinable ones, except that each case of the select
-handles a transaction function, can be marked with the attribute
+handles a transaction function, can be marked with the&nbsp;attribute
 <code>[[distributable]]</code>. This allows the compiler to convert the select cases into
 local function&nbsp;calls.</p>
 <h3>Memory&nbsp;access</h3>
@@ -408,7 +405,7 @@ in which checks are made to ensure&nbsp;that:</p>
 pointers (restricted, aliasing, movable), static checking during compilation
 and run-time&nbsp;checks.</p>
 <p>Unsafe pointers provide the same behaviour as pointers in C. An unsafe pointer
-must be declared with the unsafe keyword, and they can only be used within
+must be declared with the unsafe keyword, and they can only be used&nbsp;within
 <code>unsafe { ... }</code> regions.</p>
 <h3>Additional&nbsp;features</h3>
 <h4>References</h4>
@@ -420,13 +417,13 @@ structure and can be used as parameters to regular and transaction&nbsp;function
 <h4>Nullable&nbsp;types</h4>
 <p>Resource types such as interfaces, channel ends, ports and clocks must always
 have a valid value. The nullable qualifier allows these types to have no value,
-which is specified with the <code>?</code> symbol. For example, a nullable channel is
+which is specified with&nbsp;the <code>?</code> symbol. For example, a nullable channel is
 declared&nbsp;with:</p>
 <div class="highlight"><pre><span></span><code><span class="n">chan</span><span class="w"> </span><span class="o">?</span><span class="n">c</span><span class="p">;</span>
 </code></pre></div>
 
 <p>Nullable resource types can also be used to implement optional resource
-arguments for functions. The <code>isnull()</code> builtin function can be used to check
+arguments for functions.&nbsp;The <code>isnull()</code> builtin function can be used to check
 if a resource is&nbsp;null.</p>
 <h4>Multiple&nbsp;returns</h4>
 <p>In <span class="caps">XC</span>, functions can return multiple values. For example, the following
@@ -441,7 +438,7 @@ function implements the swap&nbsp;operation:</p>
 </code></pre></div>
 
 <h2>Multicore Hello&nbsp;World</h2>
-<p>The following program prints <code>Hello World</code> on four&nbsp;processors:</p>
+<p>The following program&nbsp;prints <code>Hello World</code> on four&nbsp;processors:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;platform.h&gt;</span>
 

@@ -104,7 +104,7 @@ which helped me to derive the convolutional equations for back&nbsp;propagation.
 <h1>The source&nbsp;code</h1>
 <p>The <a href="https://github.com/jameshanlon/convolutional-neural-network">repository</a>
 contains several example programs with different network
-configurations. They are instantiated from a generic header <code>Network.hpp</code>,
+configurations. They are instantiated from a generic&nbsp;header <code>Network.hpp</code>,
 which contains classes for fully-connected, softmax, convolutional and
 max-pooling layer types, and a network class that performs the stochastic
 gradient descent, minibatching and training over multiple epochs with
@@ -114,13 +114,13 @@ activation functions, which are specified as template parameters to the
 network. The code is written primarily primarily to be clear and
 understandable, as such there will be many opportunities for optimisations and
 other improvements (please let me know if you have any&nbsp;suggestions).</p>
-<p>For instructions on how to build and run the examples, see the <code>README.md</code>
-file. Note that Boost is required for <code>multi_array</code> and Threading Building
+<p>For instructions on how to build and run the examples, see&nbsp;the <code>README.md</code>
+file. Note that Boost is required&nbsp;for <code>multi_array</code> and Threading Building
 Blocks to parallelise the training over minibatches and accuracy evaluation by
 performing inferences in parallel, up to the minibatch size.  It should be
 straightforward to build other network configurations or to modify the
 implementations or to experiment with new&nbsp;features.</p>
-<p>Included in the <code>extra</code> folder, are implementations of the example programs
+<p>Included in&nbsp;the <code>extra</code> folder, are implementations of the example programs
 in <a href="https://www.tensorflow.org/">TensorFlow</a>, adapted from the <a href="https://www.tensorflow.org/tutorials/mnist/pros/"><span class="caps">MNIST</span>
 tutorial</a>. I found these
 useful as a point of comparison to validate the behaviour of the&nbsp;networks.</p>

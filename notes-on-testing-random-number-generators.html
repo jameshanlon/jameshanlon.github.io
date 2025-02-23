@@ -169,8 +169,8 @@ also some interesting discussion from 2010 between the authors of PractRand and
 RaBiGete <a href="http://mathforum.org/kb/message.jspa?messageID=7152033">here</a>.</p>
 <h1>Testing with&nbsp;TestU01</h1>
 <p>TestU01 provides an interface to test external generators written in C. The
-interface requires a method, <code>GetU01</code>, to generate numbers in the unit interval
-$[0, 1)$ as a <code>double</code> and a method, <code>GetBits</code>, to return 32 random bits as an
+interface requires a&nbsp;method, <code>GetU01</code>, to generate numbers in the unit interval
+$[0, 1)$ as&nbsp;a <code>double</code> and a&nbsp;method, <code>GetBits</code>, to return 32 random bits as&nbsp;an
 <code>unsigned int</code>. Some tests will use random bits and some will use random floats.
 Just one function can be provided, with the other defined by TestU01 with
 the relationship&nbsp;$\texttt{GetU01}=\texttt{GetBits}/2^{32}$.</p>
@@ -181,12 +181,12 @@ errors. For this reason, it is considered good practice to also test the
 reversed output of generator, to expose the lowest bits. To test generators
 with a larger output, say 64 bits, it is important that all the bits are
 exposed to the tests. One way to do this is to alternately use the high and low
-bits of a 64-bit value each call to <code>GetBits</code> or <code>GetU01</code>. A further reason to
+bits of a 64-bit value each call&nbsp;to <code>GetBits</code> or <code>GetU01</code>. A further reason to
 run the reverse of a generator is that the Crush test battery are defined to
 ignore the bottom-most bit of the generator&#8217;s output, and most tests also
 ignore the second bit (see the <a href="http://simul.iro.umontreal.ca/testu01/guideshorttestu01.pdf">TestU01
 documentation</a>).</p>
-<p>In his testing of the <code>xorshift</code> family of generators, <a href="http://vigna.di.unimi.it/">Sebastiano
+<p>In his testing of&nbsp;the <code>xorshift</code> family of generators, <a href="http://vigna.di.unimi.it/">Sebastiano
 Vigna</a> takes the following approach to measuring
 quality with TestU01: for a particular generator, run it with 100 different
 seeds, which are spaced at regular intervals in the state space, i.e.  for a
@@ -200,7 +200,7 @@ $2^{38}$ random values in 106 tests), potential generators can be assessed by
 running the smaller test batteries SmallCrush (10 tests) and Crush (96 tests),
 continuing based on the number of&nbsp;failures.</p>
 <p>Through my own experiments, I found that the reverse of a generator won&#8217;t
-always catch weak lower bits.  <code>xoroshiro128+</code> is currently the <a href="http://xoroshiro.di.unimi.it/#shootout">highest
+always catch weak lower&nbsp;bits.  <code>xoroshiro128+</code> is currently the <a href="http://xoroshiro.di.unimi.it/#shootout">highest
 quality and fastest known generator</a>,
 as measured by the above process, with 31 failures and 27 failures when
 reversed, but it has a known weak bit 0 that follows a <a href="https://en.wikipedia.org/wiki/Linearity#Boolean_functions">linear
@@ -209,18 +209,18 @@ not detected by BigCrush, even when reversed.  However, the weak bit is
 detectable with the matrix rank test with parameters $N=1$, $n=80$, $r=15$,
 $s=15$, $L=k=5000$, or more simply by swapping the high and low 16-bit portions
 of each 32-bit word to move the bottom bit into the middle. I didn&#8217;t discover
-anything new about <code>xoroshiro128+</code> here, but what this does highlight is that
+anything new&nbsp;about <code>xoroshiro128+</code> here, but what this does highlight is that
 comprehensive test sets like TestU01 are by no means exhaustive, and it
 therefore worth testing some of their assumptions, particularly in this case if
 you are interested in the quality of bit&nbsp;0.</p>
 <p>Incidentally, TestU01 includes a battery of nine tests called Alphabit, which
 is allows specific bits or ranges of bits from a generator to be tested. It was
-not stringent enough however to detect the correlation of <code>xoroshirt128+</code><span class="quo">&#8216;</span>s bit&nbsp;0.</p>
+not stringent enough however to detect the correlation&nbsp;of <code>xoroshirt128+</code><span class="quo">&#8216;</span>s bit&nbsp;0.</p>
 <h1>An&nbsp;example</h1>
 <p>I&#8217;ve put together a simple example, <a href="https://github.com/jameshanlon/prng-testing/tree/2017-blog">available on
 Github</a>, of using
-TestU01 to assess the quality of a <span class="caps">PRNG</span>, which replicates Vigna&#8217;s testing of
-<code>xoroshiro128+</code>.  The code includes a C program to test <code>xoroshiro128+</code> with
+TestU01 to assess the quality of a <span class="caps">PRNG</span>, which replicates Vigna&#8217;s testing&nbsp;of
+<code>xoroshiro128+</code>.  The code includes a C program to&nbsp;test <code>xoroshiro128+</code> with
 the Crush batteries and Python scripts to run the test over different seeds and
 to summarise the output of&nbsp;TestU01.</p>
 <h1>Further reading and&nbsp;links</h1>

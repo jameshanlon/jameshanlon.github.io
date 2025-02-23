@@ -105,14 +105,14 @@ sequential elements, in turn driving output ports.
 <p>To avoid an intractable state space, the design is changed so that inputs and
 observable outputs are separated only by combinatorial logic. This is done by
 adding new controllable <strong>primary inputs</strong> and <strong>observable outputs</strong>, called
-<strong>scan chains</strong>. A scan chain adds three ports to the chip: a scan chain input,
-<code>scan_in</code>, a scan chain output <code>scan_out</code> and an enable <code>scan_enable</code>.
+<strong>scan chains</strong>. A scan chain adds three ports to the chip: a scan chain&nbsp;input,
+<code>scan_in</code>, a scan chain&nbsp;output <code>scan_out</code> and an&nbsp;enable <code>scan_enable</code>.
 All registers are converted by adding a multiplexer on the D pin, with one
 input connected to the data signal. The first scan-chain register has it’s
-other multiplexer input connected to <code>scan_in</code>. Subsequent scan registers
+other multiplexer input connected&nbsp;to <code>scan_in</code>. Subsequent scan registers
 take their other multiplexer inputs from the output of the previous register in
-the chain. The final register in the chain drives <code>scan_out</code> from it’s D pin.
-All multiplexers are controlled by <code>scan_enable</code>.</p>
+the chain. The final register in the chain&nbsp;drives <code>scan_out</code> from it’s D pin.
+All multiplexers are controlled&nbsp;by <code>scan_enable</code>.</p>
 <figure class="figure d-block text-center">
   <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-flop.png" class="figure-img img-fluid rounded">
   <figcaption class="figure-caption">
@@ -144,7 +144,7 @@ inputs allow a simple test procedure to be&nbsp;implemented:</p>
 <p>Since typical tests will contain large numbers of patterns, the time to test
 one pattern is critical. It is determined by the length of the chain, to shift
 in and out data. To reduce test time, additional scan chains can be introduced
-to allow shifting to be performed in parallel. Each chain adds <code>scan_in</code> and
+to allow shifting to be performed in parallel. Each chain&nbsp;adds <code>scan_in</code> and
 <code>scan_out</code> ports to the chip. The number of scan chains is chosen to trade
 off the physical requirements of the additional ports and routing with test
 time and coverage. To avoid many additional ports at the top level, a set of
@@ -194,15 +194,15 @@ additional scan chains may be connected to sequential elements of the core logic
 inputs to the core, with their D inputs corresponding to each input of the test
 core. Some inputs may be omitted from the wrapper chain, such as clock, reset
 and test-related signals. Input wrapper chains are different to regular scan
-chains only in the way that their <code>scan_enable</code> is controlled. During test mode,
-the scan enable of the input wrapper is held high when the regular <code>scan_enable</code>
+chains only in the way that&nbsp;their <code>scan_enable</code> is controlled. During test mode,
+the scan enable of the input wrapper is held high when the&nbsp;regular <code>scan_enable</code>
 is low and all other registers are in functional mode. The effect of this is
 that the input wrapper chain continues to shift in known values, rather than Xs
 from outside of the test core. When the input wrapper registers are not shared
 with any other test core, the captured values can be shifted out with the other
 test pattern results to ensure all of the registers are functioning&nbsp;correctly.</p>
 <p>An <strong>output wrapper chain</strong> behaves exactly as an internal scan chain during test
-mode. However, when they are shared with an adjacent test core, their
+mode. However, when they are shared with an adjacent test core,&nbsp;their
 <code>scan_enable</code> is controlled differently since they will function as an input
 wrapper chain for that core, with the behaviour described&nbsp;above.</p>
 <figure class="figure d-block text-center">
@@ -218,7 +218,7 @@ In this case, to prevent Xs from propagating into the logic during test, all
 sources of Xs must be masked with known values. This is done by inserting a
 multiplexer to take the Q pin as input, with the other input as an alternative
 known value, typically from a register on a scan chain. The multiplexer is
-controlled by an <code>xbnd_enable</code> signal, which when set high will prevent X
+controlled by&nbsp;an <code>xbnd_enable</code> signal, which when set high will prevent X
 propagation during test mode, and otherwise maintains the functional behaviour
 of the&nbsp;circuit.</p>
 <figure class="figure d-block text-center">

@@ -267,7 +267,7 @@ preventing the use of parallelism is Python&#8217;s <a href="https://wiki.python
 (<span class="caps">GIL</span>)</a>. This lock allows only one thread to execute the interpreter at
 once, which was done originally to make the counting of object references
 simpler. It is possible to work around the constraints imposed by the <span class="caps">GIL</span>, such
-as with the <code>multiprocessing</code> module but this makes it difficult to express
+as with&nbsp;the <code>multiprocessing</code> module but this makes it difficult to express
 different types of parallelism and creates an ease-of-use problem. A
 <a href="https://peps.python.org/pep-0703/"><span class="caps">PEP</span></a> submitted by a PyTorch developer makes the case for removing the
 <span class="caps">GIL</span>, outlining motivating examples in scientific and numerical computing, and
@@ -401,11 +401,11 @@ extensions that allows it to control a &#8216;smart cache&#8217;. Such a system 
 enable aggressive caching of computations that are frequently recomputed, such
 as in the processes of name and function resolution, or from calling a function
 with the same arguments, which account for a substantial portion of the
-language overhead. A motivating example is caching of the C <code>strlen</code> function
+language overhead. A motivating example is caching of the&nbsp;C <code>strlen</code> function
 that is used frequently by the Python interpreter in name resolution. A
 difficulty in caching this function entirely in software is that a full string
 comparison is required to determine whether to invalidate the cache or not, and
-this is roughly as expensive as <code>strlen</code>. A hardware caching scheme could be
+this is roughly as expensive&nbsp;as <code>strlen</code>. A hardware caching scheme could be
 implemented more simply by snooping memory writes and invalidating the cache
 entry if any part of the string has changed. To support this, hardware
 extensions would be required to place items in the cache, retrieve items in the

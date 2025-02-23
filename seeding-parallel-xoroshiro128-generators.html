@@ -80,12 +80,12 @@
   <div class="article-body">
     <p>As part of the <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu">statistical quality
 analysis</a> I
-did of the of the <code>xoroshiro128aox</code> <span class="caps">PRNG</span>, I looked at interleaved parallel
+did of the of&nbsp;the <code>xoroshiro128aox</code> <span class="caps">PRNG</span>, I looked at interleaved parallel
 generators (where a single generator is created by round-robin interleaving the
 output $n$ identical generators with different seeds) as a way to test its
 suitability for parallel processing. Against my intuition, I found that simple
 seeding schemes produce poor interleaved generators, and even when the
-subsequences are disjoint. These findings equally apply to <code>xoroshiro128+</code> as
+subsequences are disjoint. These findings equally apply&nbsp;to <code>xoroshiro128+</code> as
 we will&nbsp;see.</p>
 <p>The <code>xoroshiro128+</code> creators <a href="https://prng.di.unimi.it">recommend using a jump
 function</a> to seed parallel generators to
@@ -121,9 +121,9 @@ defined in Python notation&nbsp;as:</p>
 
 <p>And, as&nbsp;baselines:</p>
 <ul>
-<li>Using the <code>xoroshiro128</code> jump function, jumping $2^{64}$ steps [Scheme&nbsp;D].</li>
+<li>Using&nbsp;the <code>xoroshiro128</code> jump function, jumping $2^{64}$ steps [Scheme&nbsp;D].</li>
 <li>Using a minimum-size jump for the number of generators to pass PractRand [Scheme E]
-  (for example, the distance for 1000 generators is 4398046511 = <code>(32 * 1024**4) / (8 * 1000)</code>).</li>
+  (for example, the distance for 1000 generators is 4398046511&nbsp;= <code>(32 * 1024**4) / (8 * 1000)</code>).</li>
 <li>Using a non-linear <span class="caps">PRNG</span> to choose seeds (<span class="caps">PCG64</span>) [Scheme&nbsp;F].</li>
 </ul>
 <p>To test these seeding schemes, I ran each generator against the standard
@@ -216,9 +216,9 @@ results at intermediate points and consumes much more output than Big Crush or G
   </tbody>
 </table>
 
-<p>Note that <code>DC6</code> and <code>BCFN</code> are both tests for linearity. For the failing
+<p>Note&nbsp;that <code>DC6</code> and <code>BCFN</code> are both tests for linearity. For the failing
 generators (schemes A-C), I checked there are no duplicate values between the
-different generators to establish that no two sequences overlap (using the
+different generators to establish that no two sequences overlap (using&nbsp;the
 <code>analyse</code> mode). This means that the above failures are due to correlations
 between disjoint&nbsp;sequences.</p>
 <p>For reference, below is sample output for running the Scheme A generator with
@@ -330,11 +330,11 @@ RNG_test<span class="w"> </span>using<span class="w"> </span>PractRand<span clas
 <p>When choosing seeds for PRNGs operating in parallel, it might seem sufficient
 to ensure that the sequences they range over are disjoint, provably or with
 high probability. However, correlations between disjoint subsequences do exist
-in PRNGs based on the <code>xoroshiro128</code> linear engine. It is known that these
+in PRNGs based on&nbsp;the <code>xoroshiro128</code> linear engine. It is known that these
 correlations can manifest when sequences are chosen by a linear generator.
 Based on the findings in this note, these correlations also occur when seeds
 are created using non-linear operations such as addition. The safest course of
-action to take is to follow the guidance of the <code>xoroshiro128</code> authors and
+action to take is to follow the guidance of&nbsp;the <code>xoroshiro128</code> authors and
 either use the jump function to traverse the state space or use a high-quality
 non-linear <span class="caps">PRNG</span> to generate random&nbsp;seeds.</p>
 <h2>References</h2>

@@ -98,7 +98,7 @@ could be&nbsp;extended.</p>
 <h2>Use</h2>
 <p>Instructions to build the tool are in the <span class="caps">README</span> in the <a href="https://github.com/jameshanlon/netlist-paths/blob/master/README.md">GitHub
 repository</a>.
-Assuming the <code>netlist-paths</code> install <code>bin</code> directory is available in your
+Assuming&nbsp;the <code>netlist-paths</code> install <code>bin</code> directory is available in&nbsp;your
 <code>PATH</code>, then using the <a href="https://github.com/cliffordwolf/picorv32">PicoRV32 processor
 implementation</a> as an example, its
 netlist can be generated as&nbsp;follows:</p>
@@ -109,8 +109,8 @@ $<span class="w"> </span>verilator<span class="w"> </span>--dump-netlist-graph<s
 </code></pre></div>
 
 <p>Here a modified version of <a href="https://www.veripool.org/wiki/verilator">Verilator</a>
-is used to generate the netlist. (Note that <code>netlist-paths</code> can invoke
-Verilator but with the <code>--compile</code> option, but PicoRV32 requires Verilator&#8217;s
+is used to generate the netlist. (Note&nbsp;that <code>netlist-paths</code> can invoke
+Verilator but with&nbsp;the <code>--compile</code> option, but PicoRV32 requires&nbsp;Verilator&#8217;s
 <code>--top-module</code> option. It may be useful to extend the command line arguments to
 allow arbitrary arguments to be passed to Verilator.) Verilator performs the
 generation by traversing the abstract syntax tree of the design and constructs
@@ -139,9 +139,9 @@ connectivity between&nbsp;points.</p>
 
 <p>A vertex in this netlist corresponds to the occurrence of a variable (ie a
 symbolic name). A given symbolic name can appear in different vertices,
-corresponding to its different uses. To see this, the option <code>--dumpnames</code>
+corresponding to its different uses. To see this, the&nbsp;option <code>--dumpnames</code>
 prints the names, types and directions of all the vertices in the graph. This
-output can be piped through <code>grep</code> to locate particular signals. For example,
+output can be piped&nbsp;through <code>grep</code> to locate particular signals. For example,
 to see all the output&nbsp;variables:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--dumpnames<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>OUTPUT
 PORT<span class="w"> </span>OUTPUT<span class="w"> </span>eoi
@@ -169,13 +169,13 @@ REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_insn_imm
 ...
 </code></pre></div>
 
-<p>Here, the <code>REG_DST</code> type corresponds to a variable that is the left-hand side
-of a non-blocking assignment <code>&lt;=</code>. Conversely, the <code>REG_SRC</code> type is where the
+<p>Here,&nbsp;the <code>REG_DST</code> type corresponds to a variable that is the left-hand side
+of a non-blocking&nbsp;assignment <code>&lt;=</code>. Conversely,&nbsp;the <code>REG_SRC</code> type is where the
 same variable appears in an expression on the right-hand side. In general,
-there can only be a single <code>REG_DST</code> node with a specific name, whereas there
-can be multiple <code>REG_SRC</code> nodes with a specific names. The same is true with
+there can only be a&nbsp;single <code>REG_DST</code> node with a specific name, whereas there
+can be&nbsp;multiple <code>REG_SRC</code> nodes with a specific names. The same is true&nbsp;with
 <code>VAR</code>, <code>WIRE</code> and <code>PORT</code> types. When using this tool, I&#8217;ve found it
-straight forward to locate the variables I need using <code>grep</code> with
+straight forward to locate the variables I need&nbsp;using <code>grep</code> with
 <code>--dumpnames</code>, but there may be more sophisticated approaches that could be&nbsp;implemented.</p>
 <p>A start or end point can be specified as any named vertex, which is anything
 except logic statements. You can query if a path exists between two&nbsp;points:</p>
@@ -192,8 +192,8 @@ to the end point, through a sequence of zero or more combinatorial logic
 statements/blocks, with each dependency corresponding to a variable.
 Importantly, the filenames and line numbers given reference the original source&nbsp;code.</p>
 <p>Since there may be multiple vertices with a name matching the specified start
-and end points, the register version is preferentially located (<code>SRC</code> for a
-start point and <code>DST</code> for an end point), followed by <code>VAR</code>, <code>WIRE</code> and
+and end points, the register version is preferentially located&nbsp;(<code>SRC</code> for a
+start point&nbsp;and <code>DST</code> for an end point), followed&nbsp;by <code>VAR</code>, <code>WIRE</code> and
 <code>PORT</code> types.</p>
 <p>You can also query all the paths that fan out from a particular start&nbsp;point:</p>
 <div class="highlight"><pre><span></span><code>netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
@@ -254,7 +254,7 @@ constraints. (An option is provided to enumerate all paths, but it can only be
 used on small&nbsp;netlists.)</p>
 <p>When trying to match a particular path in a physical build it it useful to
 further constrain the search to force it to match the same path. This can be
-done by specifying through points with the <code>--through</code> option. Each through
+done by specifying through points with&nbsp;the <code>--through</code> option. Each through
 argument is taken in order as an intermediate point in the path. The same
 search algorithm is used on each pair of points to build up a composite report.
 For&nbsp;example:</p>
@@ -278,11 +278,11 @@ support enough of the SystemVerilog standard.) The Verilator modifications add
 a new <span class="caps">AST</span> visitor, which walks the tree after it has been processed, for
 example to propagate constants and inline tasks and&nbsp;modules.</p>
 <p>The <code>netlist-paths</code> tool is implemented in C++ and makes use of the Boost Graph
-Library. Paths are identified using the <code>boost::depth_first_search</code> algorithm.
+Library. Paths are identified using&nbsp;the <code>boost::depth_first_search</code> algorithm.
 The all-fan-out report enumerates paths to all the end points in a depth-first
-traversal of the graph, the fan-in variant uses the <code>boost::reverse_graph</code>
+traversal of the graph, the fan-in variant uses&nbsp;the <code>boost::reverse_graph</code>
 adaptor and performs the same algorithm. Properties are associated with
-vertices in the graph using a <code>boost::dynamic_property_map</code>. I put together a
+vertices in the graph using&nbsp;a <code>boost::dynamic_property_map</code>. I put together a
 <a href="https://github.com/jameshanlon/boost_graph_example">simple example program</a> to
 illustrate how to use these maps (plus some other library features) since I
 found there were some subtleties in getting this to&nbsp;work.</p>
@@ -294,7 +294,7 @@ found there were some subtleties in getting this to&nbsp;work.</p>
 <li>Provide a mechanism to seach for the longest paths in the&nbsp;graph.</li>
 <li>Provide a mechanism to assert there is no logical path between two sub&nbsp;modules.</li>
 <li>Detect and report timing&nbsp;loops.</li>
-<li>Add options to <code>dumpnames</code> to filter by type or&nbsp;direction.</li>
+<li>Add options&nbsp;to <code>dumpnames</code> to filter by type or&nbsp;direction.</li>
 <li>Add options to the querys to select only internal paths or only input/output&nbsp;paths.</li>
 </ul>
 <h2>Links</h2>

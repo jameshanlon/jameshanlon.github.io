@@ -115,9 +115,7 @@ bits, according to the Hamming code. The check bits are chosen so that there is
 a fixed <em>Hamming distance</em> between any two valid codewords (the number of
 positions in which bits&nbsp;differ).</p>
 <p>When valid codewords have a Hamming distance of two, any single bit flip will
-invalidate the word and allow the error to be detected. For example, the valid
-codewords <code>00</code> and <code>11</code> are separated for single bit flips by the invalid
-codewords <code>01</code> and <code>10</code>. If either of the invalid words is obtained an error
+invalidate the word and allow the error to be detected. For example, the valid&nbsp;codewords <code>00</code> and <code>11</code> are separated for single bit flips by the invalid&nbsp;codewords <code>01</code> and <code>10</code>. If either of the invalid words is obtained an error
 has occurred, but neither can be associated with a valid codeword. Two bit
 flips are undetectable since they always map to a valid codeword. Note that
 parity encoding is an example of a distance-two Hamming&nbsp;code.</p>
@@ -333,7 +331,7 @@ bitwise <span class="caps">XOR</span> between the original check bits and the re
 value is called the <em>syndrome</em>. By inspecting the number of bits set in the
 syndrome, it is possible to determine whether there has been an error,
 whether it is correctable, and how to correct&nbsp;it.</p>
-<p>Using the <span class="caps">SEC</span> check-bit encoding above, creating a codeword from <code>data[7:0]</code>,
+<p>Using the <span class="caps">SEC</span> check-bit encoding above, creating a codeword&nbsp;from <code>data[7:0]</code>,
 the check bits are calculated as follows (using Verilog&nbsp;syntax):</p>
 <div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="p">];</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">check_word</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">5</span><span class="p">];</span>
@@ -381,7 +379,7 @@ been taken. If the syndrome&nbsp;is:</p>
 <li>Equal to zero, no error&nbsp;occurred.</li>
 <li>Has one bit set, then this is a flip of a check bit and can be&nbsp;ignored.</li>
 <li>Has a value matching a pattern (three bits set or two bits in the adjacent positions), a correctable error&nbsp;occurred.</li>
-<li>Has a value not matching a pattern (two bits set in the other non-adjacent positions: <code>4'b1010</code>, <code>4'b0101</code>), or four bits set, a multi-bit uncorrectable error&nbsp;occurred.</li>
+<li>Has a value not matching a pattern (two bits set in the other non-adjacent&nbsp;positions: <code>4'b1010</code>, <code>4'b0101</code>), or four bits set, a multi-bit uncorrectable error&nbsp;occurred.</li>
 </ul>
 <p>The above <span class="caps">SECDED</span> check-bit encoding can be implemented in a similar way, but
 since it uses only three-bit patterns, mapping syndromes to correction masks

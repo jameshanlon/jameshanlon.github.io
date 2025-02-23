@@ -91,14 +91,14 @@ low-precision floating-point&nbsp;numbers.</p>
 <p>We needed a new <span class="caps">PRNG</span> because typical state-of-the-art generators are designed
 to be performant when run as software routines, but operations that are cheap
 to execute on a processor may not be cheap to implement in hardware as is the
-case for multiplication or division. Our generator <code>xoroshiro128aox</code> is based
-on <a href="https://vigna.di.unimi.it/">Sebastiano Vigna’s</a> <code>xoroshiro128</code>
+case for multiplication or division. Our&nbsp;generator <code>xoroshiro128aox</code> is based
+on <a href="https://vigna.di.unimi.it/">Sebastiano&nbsp;Vigna’s</a> <code>xoroshiro128</code>
 linear-feedback shift register (<span class="caps">LFSR</span>), which is attractive because it uses 128
 bits of state and is cheap to implement in hardware. The <span class="caps">LFSR</span> operates by
 performing <span class="caps">XOR</span> and fixed-distance shift and rotate operations on the state.
 Following Vigna’s approach of adding a function to ‘scramble’ the <span class="caps">LFSR</span> state,
 we have devised a function consisting of <span class="caps">AND</span>, <span class="caps">OR</span> and <span class="caps">XOR</span> operations (called <span class="caps">AOX</span>
-for short). An C implementation of <code>xoroshiro128aox</code> is as&nbsp;follows:</p>
+for short). An C implementation&nbsp;of <code>xoroshiro128aox</code> is as&nbsp;follows:</p>
 <div class="highlight"><pre><span></span><code><span class="kt">uint64_t</span><span class="w"> </span><span class="n">s0</span><span class="p">,</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w"> </span><span class="c1">// State vectors</span>
 
 <span class="kt">uint64_t</span><span class="w"> </span><span class="nf">rotl</span><span class="p">(</span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -143,11 +143,11 @@ methodology that goes beyond the typical level of&nbsp;analysis.</p>
 <p>To provide a point of comparison, we include the following&nbsp;PRNGs:</p>
 <ul>
 <li>
-<p>32-bit Mersenne Twister, <code>mt32</code>, since it is one of the most widely used
+<p>32-bit Mersenne&nbsp;Twister, <code>mt32</code>, since it is one of the most widely used
     software PRNGs (although it has 19,937 bits of&nbsp;state!).</p>
 </li>
 <li>
-<p><code>xoroshiro128+</code>, which is Vigna’s closest variant of <code>xoroshiro128</code>,
+<p><code>xoroshiro128+</code>, which is Vigna’s closest variant&nbsp;of <code>xoroshiro128</code>,
     using 64-bit addition to scramble 128-bit <span class="caps">LFSR</span>&nbsp;states.</p>
 </li>
 </ul>
@@ -345,7 +345,7 @@ target clock period of 1 GHz. The table below summarises the&nbsp;results.</p>
 </li>
 </ul>
 <p>The following are illustrations of the four <span class="caps">PRNG</span> circuit floorplans, which make
-clear the differences in implementation complexity (left to right:
+clear the differences in implementation complexity (left to&nbsp;right:
 <code>xoroshiro128aox</code>, <code>xoroshiro128+</code>, <code>pcg64</code>, <code>philox4x32-10</code>):</p>
 <table>
 <tbody>
@@ -443,12 +443,12 @@ clear the differences in implementation complexity (left to right:
 <p>This note has provided an overview of the methodology and results of the
 analysis we conducted into the statistical quality of our novel <span class="caps">PRNG</span>
 <code>xoroshiro128aox</code>. This has established that our generator mitigates known
-existing weaknesses of <code>xoroshiro128+</code> on which it is based, and delivers
+existing weaknesses&nbsp;of <code>xoroshiro128+</code> on which it is based, and delivers
 comparable levels of statistical quality on the gold-standard BigCrush test set
-as two contemporary fast PRNGs : <code>pcg64</code> and <code>philox4x32-10</code>. Extending
+as two contemporary fast PRNGs&nbsp;: <code>pcg64</code> and <code>philox4x32-10</code>. Extending
 testing by using PractRand and Gjrand, we do eventually find that a weakness is
 detectable by Gjrand. Since this is not systematic across the test suites, as
-we have seen for the Mersenne Twister, we can consider <code>xoroshiro128aox</code> to
+we have seen for the Mersenne Twister, we can&nbsp;consider <code>xoroshiro128aox</code> to
 provide an excellent tradeoff between quality and implementation cost in&nbsp;hardware.</p>
 <p>Full details of the investigation can be found in the <a href="https://arxiv.org/abs/2203.04058">preprint paper on
 arXiv</a>, and the <a href="https://github.com/jameshanlon/prng-testing">source

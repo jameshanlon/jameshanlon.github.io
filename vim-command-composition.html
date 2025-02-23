@@ -89,14 +89,14 @@ post</a>, and should be useful
 for anyone who is familiar with&nbsp;Vim.</p>
 <p>A Vim command can be constructed from different rules, and below each rule is
 specified with a <a href="https://en.wikipedia.org/wiki/Extended_Backus-Naur_form"><span class="caps">EBNF</span>-style
-syntax</a>, where <code>&lt;...&gt;</code> is
-another rule. <code>{...}</code> represents some key presses, <code>|</code> is an alternative and
+syntax</a>,&nbsp;where <code>&lt;...&gt;</code> is
+another&nbsp;rule. <code>{...}</code> represents some key&nbsp;presses, <code>|</code> is an alternative&nbsp;and
 <code>[...]</code> is an optional component. Be warned that
 since there are many special cases to Vim commands and I&#8217;ve not checked all the
 combinations, some of the rules below may yield invalid compositions! As such,
 these rules are better viewed as a way of remembering commands. For an
 exhaustive treatment of the command language, please check the <a href="https://www.vim.org/docs.php">Vim
-documentation</a>, or use the <code>:help</code> tags that I&#8217;ve&nbsp;given.</p>
+documentation</a>, or use&nbsp;the <code>:help</code> tags that I&#8217;ve&nbsp;given.</p>
 <h2>Motions</h2>
 <p>Motions change the position of the cursor and can be combined with a count to
 repeat the&nbsp;motion.</p>
@@ -107,8 +107,8 @@ repeat the&nbsp;motion.</p>
 
 <p>Examples:</p>
 <ul>
-<li><code>2fx</code> - move to the second right-hand occurrence of <code>x</code> in the line&nbsp;(inclusive)</li>
-<li><code>2Tx</code> - move to the second left-hand occurrence of <code>x</code> in the line&nbsp;(exclusive)</li>
+<li><code>2fx</code> - move to the second right-hand occurrence&nbsp;of <code>x</code> in the line&nbsp;(inclusive)</li>
+<li><code>2Tx</code> - move to the second left-hand occurrence&nbsp;of <code>x</code> in the line&nbsp;(exclusive)</li>
 <li><code>w</code> - move to the next&nbsp;word</li>
 <li><code>10j</code> or <code>10_</code> - move down 10&nbsp;lines</li>
 <li><code>10k</code> - move up 10&nbsp;lines</li>
@@ -116,13 +116,13 @@ repeat the&nbsp;motion.</p>
 <li><code>6E</code> - move to end of sixth word&nbsp;forwards</li>
 <li><code>4b</code> - move to start of the fourth word&nbsp;backwards</li>
 <li><code>2{</code> - move two paragraphs&nbsp;down</li>
-<li><code>3/foo</code> - move to the third occurrence of <code>foo</code> later in the&nbsp;buffer</li>
-<li><code>3?foo</code> - move to the third occurrence of <code>foo</code> earlier in the&nbsp;buffer</li>
+<li><code>3/foo</code> - move to the third occurrence&nbsp;of <code>foo</code> later in the&nbsp;buffer</li>
+<li><code>3?foo</code> - move to the third occurrence&nbsp;of <code>foo</code> earlier in the&nbsp;buffer</li>
 </ul>
 <h2>Text&nbsp;objects</h2>
 <p>Text objects are a collection of characters relative to the position of the
 cursor. Compared to motions, text objects on a whole object, regardless of the
-specific cursor position. The <code>a</code> and <code>i</code> modifiers augment text objects,
+specific cursor position.&nbsp;The <code>a</code> and <code>i</code> modifiers augment text objects,
 specifying whether the surrounding context should be included. The context may
 be whitespace or delimiting&nbsp;characters.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">-</span><span class="nv">keys</span><span class="o">&gt;</span>
@@ -140,13 +140,13 @@ be whitespace or delimiting&nbsp;characters.</p>
 <li><code>ip</code> - inner&nbsp;paragraph</li>
 <li><code>a'</code> - a single-quoted&nbsp;string</li>
 <li><code>i'</code> - inside a single-quoted&nbsp;string</li>
-<li><code>a(</code> = <code>a)</code>= <code>ab</code> - a parenthesised block, from <code>(</code> to <code>)</code></li>
-<li><code>i(</code> = <code>i)</code>= <code>ib</code> - inside a parenthesised block, contents of <code>(...)</code></li>
-<li><code>a&lt;</code> = <code>a&gt;</code> - a tag, from <code>&lt;</code> to <code>&gt;</code></li>
-<li><code>at</code> - around tag block, including matching start and end tags <code>&lt;tag&gt;...&lt;/tag&gt;</code></li>
+<li><code>a(</code> = <code>a)</code>= <code>ab</code> - a parenthesised block,&nbsp;from <code>(</code> to <code>)</code></li>
+<li><code>i(</code> = <code>i)</code>= <code>ib</code> - inside a parenthesised block, contents&nbsp;of <code>(...)</code></li>
+<li><code>a&lt;</code> = <code>a&gt;</code> - a tag,&nbsp;from <code>&lt;</code> to <code>&gt;</code></li>
+<li><code>at</code> - around tag block, including matching start and end&nbsp;tags <code>&lt;tag&gt;...&lt;/tag&gt;</code></li>
 <li><code>it</code> - inside tag block, excluding&nbsp;tags</li>
-<li><code>aB</code> = <code>a{</code> = <code>a}</code> - around a <code>{...}</code> block</li>
-<li><code>iB</code> = <code>i{</code> = <code>i}</code> - inside a <code>{...}</code> block</li>
+<li><code>aB</code> = <code>a{</code> = <code>a}</code> - around&nbsp;a <code>{...}</code> block</li>
+<li><code>iB</code> = <code>i{</code> = <code>i}</code> - inside&nbsp;a <code>{...}</code> block</li>
 </ul>
 <h2>Operators on text&nbsp;objects</h2>
 <p>Operators can be applied to text objects. In some circumstances, a count can be
@@ -171,13 +171,13 @@ applied to the text object to repeat its&nbsp;effect.</p>
 <li><code>y_</code> = <code>yy</code> = <code>Y</code> - yank the&nbsp;line</li>
 <li><code>c_</code> = <code>cc</code> = <code>C</code> - change the&nbsp;line</li>
 <li><code>gUap</code> - make paragraph&nbsp;uppercase</li>
-<li><code>gqap</code> - format paragraph text to <code>textwidth</code> line&nbsp;length</li>
-<li><code>dit</code> - delete text between tags <code>&lt;tag&gt;&lt;/tag&gt;</code></li>
+<li><code>gqap</code> - format paragraph text&nbsp;to <code>textwidth</code> line&nbsp;length</li>
+<li><code>dit</code> - delete text between&nbsp;tags <code>&lt;tag&gt;&lt;/tag&gt;</code></li>
 <li><code>dat</code> - delete tag&nbsp;block</li>
-<li><code>yi"</code> - yank text in <code>"..."</code> block</li>
-<li><code>yi&lt;</code> - yank text in <code>&lt;...&gt;</code> block</li>
-<li><code>yiB</code> - yank text in <code>{...}</code> block</li>
-<li><code>yaB</code> - yank whole <code>{...}</code> block</li>
+<li><code>yi"</code> - yank text&nbsp;in <code>"..."</code> block</li>
+<li><code>yi&lt;</code> - yank text&nbsp;in <code>&lt;...&gt;</code> block</li>
+<li><code>yiB</code> - yank text&nbsp;in <code>{...}</code> block</li>
+<li><code>yaB</code> - yank&nbsp;whole <code>{...}</code> block</li>
 </ul>
 <h2>Operators on&nbsp;motions</h2>
 <p>A motion can be applied after an operator to apply the operator on the text
@@ -189,24 +189,24 @@ that was moved&nbsp;over.</p>
 <ul>
 <li><code>dl</code> = <code>x</code> - delete next&nbsp;character</li>
 <li><code>db</code> - delete backwards to the start of a&nbsp;word</li>
-<li><code>dtx</code> - delete until <code>x</code> character in line&nbsp;(exclusive)</li>
-<li><code>dfx</code> - delete until <code>x</code> character in line&nbsp;(inclusive)</li>
-<li><code>d/foo</code> - delete from cursor to next occurrence of <code>foo</code></li>
-<li><code>d3/foo</code> - delete from cursor until the third occurrence of <code>foo</code></li>
+<li><code>dtx</code> - delete&nbsp;until <code>x</code> character in line&nbsp;(exclusive)</li>
+<li><code>dfx</code> - delete&nbsp;until <code>x</code> character in line&nbsp;(inclusive)</li>
+<li><code>d/foo</code> - delete from cursor to next occurrence&nbsp;of <code>foo</code></li>
+<li><code>d3/foo</code> - delete from cursor until the third occurrence&nbsp;of <code>foo</code></li>
 <li><code>c$</code> = <code>C</code> - change until end of&nbsp;line</li>
 <li><code>d$</code> = <code>D</code> - delete until end of&nbsp;line</li>
 <li><code>d0</code> - delete until beginning of&nbsp;line</li>
 <li><code>d^</code> - delete until first non-blank character in&nbsp;line</li>
 <li><code>c{</code> - change from current line to beginning of&nbsp;paragraph</li>
 <li><code>gU}</code> - make paragraph&nbsp;uppercase</li>
-<li><code>c{</code> - change paragraph (same as <code>cap</code> operator-text&nbsp;object)</li>
+<li><code>c{</code> - change paragraph (same&nbsp;as <code>cap</code> operator-text&nbsp;object)</li>
 <li><code>&gt;}</code> - indent&nbsp;paragraph</li>
-<li><code>y%</code> - yank the entire <code>{...}</code> block</li>
+<li><code>y%</code> - yank the&nbsp;entire <code>{...}</code> block</li>
 <li><code>cgg</code> - change lines from cursor to top of&nbsp;buffer</li>
 <li><code>ggdG</code> - delete contents of&nbsp;buffer</li>
 </ul>
 <h2>Duplicate&nbsp;operators</h2>
-<p>Operators applied twice affect the entire line, a synonym for <code>&lt;operator&gt;_</code>,</p>
+<p>Operators applied twice affect the entire line, a synonym&nbsp;for <code>&lt;operator&gt;_</code>,</p>
 <div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[</span><span class="o">&lt;</span><span class="nv">count</span><span class="o">&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">operator</span><span class="o">&gt;</span>
 </code></pre></div>
 
@@ -218,7 +218,7 @@ that was moved&nbsp;over.</p>
 <li><code>&gt;&gt;</code> = <code>&gt;_</code> = <code>&gt;l</code> - indent&nbsp;line</li>
 <li><code>&lt;&lt;</code> = <code>&lt;_</code> = <code>&gt;l</code> - unindent&nbsp;line</li>
 </ul>
-<p>Note: duplication does not apply to <code>~</code> or two-character&nbsp;operators.</p>
+<p>Note: duplication does not apply&nbsp;to <code>~</code> or two-character&nbsp;operators.</p>
 <h2>Aliases</h2>
 <p>Some commonly-used commands have&nbsp;aliases.</p>
 <ul>
@@ -232,7 +232,7 @@ that was moved&nbsp;over.</p>
 <li><code>S</code> = <code>cc</code> - substitute&nbsp;line</li>
 </ul>
 <h2>Filtering</h2>
-<p>Text lines can be filtered through an external program (see <code>:help filter</code>).</p>
+<p>Text lines can be filtered through an external program&nbsp;(see <code>:help filter</code>).</p>
 <div class="highlight"><pre><span></span><code><span class="nv">command</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">filter</span><span class="o">&gt;</span>
 </code></pre></div>
 
@@ -243,21 +243,21 @@ that was moved&nbsp;over.</p>
 <li><code>!apwc -l</code> - replace paragraph with word&nbsp;count</li>
 <li><code>!apfmt -s</code> - collapse whitespace in paragraph into single&nbsp;spaces</li>
 <li><code>!apfmt -c</code> - centre lines in&nbsp;paragraph</li>
-<li><code>!i(grep foo</code> - remove all lines in <code>(...)</code> block that don&#8217;t contain <code>foo</code>
-  (similar to the Ex command <code>:%v/foo/d</code>)</li>
+<li><code>!i(grep foo</code> - remove all lines&nbsp;in <code>(...)</code> block that don&#8217;t&nbsp;contain <code>foo</code>
+  (similar to the Ex&nbsp;command <code>:%v/foo/d</code>)</li>
 <li><code>gg!Gsort</code> - sort all lines in&nbsp;buffer</li>
 <li><code>gg!Guniq -c</code> - remove all duplicate lines in buffer and prefix remaining with duplicate&nbsp;counts</li>
 </ul>
 <h2>Visual&nbsp;selection</h2>
-<p>Visual selection, character-wise <code>v</code>, line-wise <code>V</code> or block-wise <code>Ctrl+v</code> (all
-referred to below by <code>{visual}</code>, see <code>:help visual-start</code>), followed by a
+<p>Visual selection,&nbsp;character-wise <code>v</code>,&nbsp;line-wise <code>V</code> or&nbsp;block-wise <code>Ctrl+v</code> (all
+referred to below&nbsp;by <code>{visual}</code>,&nbsp;see <code>:help visual-start</code>), followed by a
 motion or text object can be used to specify a character range. An operator can
-then be used to transform the text. Note the operators <code>gu</code>, <code>gU</code> and <code>g@</code>
+then be used to transform the text. Note the&nbsp;operators <code>gu</code>, <code>gU</code> and <code>g@</code>
 can&#8217;t be used in visual mode and text objects in visual mode, however, there
-are additional ones that can (see <code>:help visual-operators</code>). A visual block is
+are additional ones that can&nbsp;(see <code>:help visual-operators</code>). A visual block is
 created by entering a visual mode, then providing a motion or text object to
 set the selection, or alternatively by any sequence of movement commands
-(referred to by <code>{move-around}</code>).</p>
+(referred to&nbsp;by <code>{move-around}</code>).</p>
 <div class="highlight"><pre><span></span><code><span class="nv">visual</span><span class="o">-</span><span class="nv">block</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="p">{</span><span class="nv">move</span><span class="o">-</span><span class="nv">around</span><span class="p">}</span>
 <span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">motion</span><span class="o">&gt;</span>
 <span class="w">              </span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="nv">visual</span><span class="p">}</span><span class="w"> </span><span class="o">&lt;</span><span class="nv">text</span><span class="o">-</span><span class="nv">object</span><span class="o">&gt;</span>
@@ -268,18 +268,18 @@ set the selection, or alternatively by any sequence of movement commands
 
 <p>Examples:</p>
 <ul>
-<li><code>vtxd</code> = <code>dtx</code> - delete until <code>x</code></li>
-<li><code>vt.rx</code> - replace all characters with <code>x</code> until <code>.</code></li>
+<li><code>vtxd</code> = <code>dtx</code> - delete&nbsp;until <code>x</code></li>
+<li><code>vt.rx</code> - replace all characters&nbsp;with <code>x</code> until <code>.</code></li>
 <li><code>v3as~</code> - make next three sentences&nbsp;uppercase</li>
 <li><code>vapU</code> - make paragraph&nbsp;uppercase</li>
 <li><code>vapd</code> - delete&nbsp;paragraph</li>
-<li><code>{Ctrl+v}{move-around}sfoo{Esc}</code> - replace each line of blockwise selection with <code>foo</code></li>
-<li><code>{Ctrl+v}{move-around}Ifoo{Esc}</code> - prepend <code>foo</code> to each line of blockwise&nbsp;selection</li>
-<li><code>{Ctrl+v}{move-around}Afoo{Esc}</code> - append <code>foo</code> to each line of blockwise&nbsp;selection</li>
+<li><code>{Ctrl+v}{move-around}sfoo{Esc}</code> - replace each line of blockwise selection&nbsp;with <code>foo</code></li>
+<li><code>{Ctrl+v}{move-around}Ifoo{Esc}</code> -&nbsp;prepend <code>foo</code> to each line of blockwise&nbsp;selection</li>
+<li><code>{Ctrl+v}{move-around}Afoo{Esc}</code> -&nbsp;append <code>foo</code> to each line of blockwise&nbsp;selection</li>
 <li><code>vap!sort</code> - sort the lines of the current&nbsp;paragraph</li>
-<li><code>vap!fmt</code> - use the <code>fmt</code> command-line tool to format selection into
-  lines of 75 characters (similar to the <code>gqap</code> command)</li>
-<li><code>ggvG!indent</code> - use the <code>indent</code> command-line tool to apply automatic
+<li><code>vap!fmt</code> - use&nbsp;the <code>fmt</code> command-line tool to format selection into
+  lines of 75 characters (similar to&nbsp;the <code>gqap</code> command)</li>
+<li><code>ggvG!indent</code> - use&nbsp;the <code>indent</code> command-line tool to apply automatic
   indentation all lines of a C-code&nbsp;buffer</li>
 <li><code>{visual}J</code> - join the highlighted lines on the current&nbsp;line</li>
 <li><code>{visual}gJ</code> - join the highlighted lines on the current line (removing&nbsp;whitespace)</li>
@@ -294,7 +294,7 @@ combination with motions, operators and text&nbsp;objects.</p>
 <ul>
 <li><code>db.</code> - delete the previous two&nbsp;words</li>
 <li><code>db4.</code> - delete the previous five&nbsp;words</li>
-<li><code>{insert text...}</code> then <code>/{pattern}.</code> - insert text again before next text matching <code>{pattern}</code></li>
+<li><code>{insert text...}</code> then <code>/{pattern}.</code> - insert text again before next text&nbsp;matching <code>{pattern}</code></li>
 </ul>
 <p>The <code>gn</code> and <code>gN</code> motions can be used with operators to move between matching
 search&nbsp;patterns.</p>
@@ -320,8 +320,8 @@ in the Vim&nbsp;help:</p>
 <li><code>g~~</code> = <code>g~g~</code> - switch case of&nbsp;line</li>
 <li><code>gUU</code> = <code>gUgU</code> - make line&nbsp;uppercase</li>
 <li><code>guu</code> = <code>gugu</code> - make line&nbsp;lowercase</li>
-<li><code>r{char}</code> - replace character under cursor with <code>{char}</code></li>
-<li><code>10r{char}</code> - replace the next 10 characters with <code>{char}</code></li>
+<li><code>r{char}</code> - replace character under cursor&nbsp;with <code>{char}</code></li>
+<li><code>10r{char}</code> - replace the next 10 characters&nbsp;with <code>{char}</code></li>
 </ul>
 <hr>
 <h2>Summary of&nbsp;rules</h2>
@@ -386,7 +386,7 @@ in the Vim&nbsp;help:</p>
 </tr>
 <tr>
 <td><code>%</code></td>
-<td>move to matching character (default pairs: <code>()</code>, <code>{}</code>, <code>[]</code>)</td>
+<td>move to matching character (default&nbsp;pairs: <code>()</code>, <code>{}</code>, <code>[]</code>)</td>
 </tr>
 <tr>
 <td><code>[(</code>, <code>[)</code></td>
@@ -398,11 +398,11 @@ in the Vim&nbsp;help:</p>
 </tr>
 <tr>
 <td><code>/{pattern}</code></td>
-<td>search forward (must be followed by <code>{CR}</code>)</td>
+<td>search forward (must be followed&nbsp;by <code>{CR}</code>)</td>
 </tr>
 <tr>
 <td><code>?{pattern}</code></td>
-<td>search backwards (must be followed by <code>{CR}</code>)</td>
+<td>search backwards (must be followed&nbsp;by <code>{CR}</code>)</td>
 </tr>
 <tr>
 <td><code>gg</code> / <code>G</code></td>
@@ -436,7 +436,7 @@ in the Vim&nbsp;help:</p>
 </tr>
 <tr>
 <td><code>~</code></td>
-<td>swap case (or <code>g~</code>)</td>
+<td>swap case&nbsp;(or <code>g~</code>)</td>
 </tr>
 <tr>
 <td><code>&gt;</code></td>
@@ -460,7 +460,7 @@ in the Vim&nbsp;help:</p>
 </tr>
 <tr>
 <td><code>g@</code></td>
-<td>apply function (set by <code>operatorfunc</code>)</td>
+<td>apply function (set&nbsp;by <code>operatorfunc</code>)</td>
 </tr>
 </tbody>
 </table>  <h2>Visual&nbsp;operators</h2>
@@ -524,7 +524,7 @@ in the Vim&nbsp;help:</p>
 <tbody>
 <tr>
 <td><code>w</code></td>
-<td>word (delimited by non-keyword characters, see <code>:help iskeyword</code>)</td>
+<td>word (delimited by non-keyword characters,&nbsp;see <code>:help iskeyword</code>)</td>
 </tr>
 <tr>
 <td><code>W</code></td>
@@ -572,11 +572,11 @@ in the Vim&nbsp;help:</p>
 </tr>
 <tr>
 <td><code>b</code></td>
-<td>text block between <code>(</code> and <code>)</code></td>
+<td>text block&nbsp;between <code>(</code> and <code>)</code></td>
 </tr>
 <tr>
 <td><code>B</code></td>
-<td>text block between <code>{</code> and <code>}</code></td>
+<td>text block&nbsp;between <code>{</code> and <code>}</code></td>
 </tr>
 </tbody>
 </table></div>

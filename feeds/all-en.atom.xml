@@ -226,7 +226,7 @@ scheduled to resolve sensitivity&amp;nbsp;dependencies.&lt;/p&gt;
 following Rust code implements a &lt;span class="caps"&gt;DES&lt;/span&gt; of the system. This is a very simple &lt;span class="caps"&gt;DES&lt;/span&gt;
 example and only one possible implementation, but sufficient to illustrate the
 main&amp;nbsp;concepts.&lt;/p&gt;
-&lt;p&gt;The main component is a &lt;code&gt;Simulator&lt;/code&gt; object that maintains the event queue and
+&lt;p&gt;The main component is&amp;nbsp;a &lt;code&gt;Simulator&lt;/code&gt; object that maintains the event queue and
 the system&amp;nbsp;state:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;struct&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Simulator&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;max_cycles&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;usize&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -237,7 +237,7 @@ the system&amp;nbsp;state:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Events have a type, a time at which they occur and node in the system that they
-belong to. The &lt;code&gt;node_id&lt;/code&gt; is used for directing state&amp;nbsp;updates.&lt;/p&gt;
+belong to.&amp;nbsp;The &lt;code&gt;node_id&lt;/code&gt; is used for directing state&amp;nbsp;updates.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]&lt;/span&gt;
 &lt;span class="k"&gt;enum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;EventType&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Transmit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Receive&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 
@@ -262,7 +262,7 @@ dispatches them to a handler&amp;nbsp;function:&lt;/p&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The simulation &lt;code&gt;current_time&lt;/code&gt; is updated to the time of the current event being
+&lt;p&gt;The&amp;nbsp;simulation &lt;code&gt;current_time&lt;/code&gt; is updated to the time of the current event being
 processed. The event handler function implements the behaviour for each&amp;nbsp;event:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;handle_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nc"&gt;Event&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;event_type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
@@ -692,7 +692,7 @@ unexpected breakages, prevent refactoring and preclude focused testing. In
 general: isolate components by restricting them to only be able to access their
 listed dependencies; divide components by function and abstraction level (eg
 don&amp;#8217;t group by language or technology); and use a standard structure for each
-component (such as &lt;code&gt;lib&lt;/code&gt;, &lt;code&gt;sources&lt;/code&gt;, &lt;code&gt;README&lt;/code&gt; etc).&lt;/p&gt;
+component (such&amp;nbsp;as &lt;code&gt;lib&lt;/code&gt;, &lt;code&gt;sources&lt;/code&gt;, &lt;code&gt;README&lt;/code&gt; etc).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;Embrace open source&lt;/strong&gt;. To save on effort, leverage freely-available tools
@@ -1164,7 +1164,7 @@ preventing the use of parallelism is Python&amp;#8217;s &lt;a href="https://wiki
 (&lt;span class="caps"&gt;GIL&lt;/span&gt;)&lt;/a&gt;. This lock allows only one thread to execute the interpreter at
 once, which was done originally to make the counting of object references
 simpler. It is possible to work around the constraints imposed by the &lt;span class="caps"&gt;GIL&lt;/span&gt;, such
-as with the &lt;code&gt;multiprocessing&lt;/code&gt; module but this makes it difficult to express
+as with&amp;nbsp;the &lt;code&gt;multiprocessing&lt;/code&gt; module but this makes it difficult to express
 different types of parallelism and creates an ease-of-use problem. A
 &lt;a href="https://peps.python.org/pep-0703/"&gt;&lt;span class="caps"&gt;PEP&lt;/span&gt;&lt;/a&gt; submitted by a PyTorch developer makes the case for removing the
 &lt;span class="caps"&gt;GIL&lt;/span&gt;, outlining motivating examples in scientific and numerical computing, and
@@ -1298,11 +1298,11 @@ extensions that allows it to control a &amp;#8216;smart cache&amp;#8217;. Such a
 enable aggressive caching of computations that are frequently recomputed, such
 as in the processes of name and function resolution, or from calling a function
 with the same arguments, which account for a substantial portion of the
-language overhead. A motivating example is caching of the C &lt;code&gt;strlen&lt;/code&gt; function
+language overhead. A motivating example is caching of the&amp;nbsp;C &lt;code&gt;strlen&lt;/code&gt; function
 that is used frequently by the Python interpreter in name resolution. A
 difficulty in caching this function entirely in software is that a full string
 comparison is required to determine whether to invalidate the cache or not, and
-this is roughly as expensive as &lt;code&gt;strlen&lt;/code&gt;. A hardware caching scheme could be
+this is roughly as expensive&amp;nbsp;as &lt;code&gt;strlen&lt;/code&gt;. A hardware caching scheme could be
 implemented more simply by snooping memory writes and invalidating the cache
 entry if any part of the string has changed. To support this, hardware
 extensions would be required to place items in the cache, retrieve items in the
@@ -1961,15 +1961,15 @@ next two sections introduce Hex and&amp;nbsp;X.&lt;/p&gt;
 &lt;p&gt;The Hex architecture is described in detail in &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hexb.pdf"&gt;a separate
 &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, but I will give a brief summary here
 and focus on several important aspects for reference. Hex has four registers:
-program counter &lt;code&gt;pc&lt;/code&gt;, operand register &lt;code&gt;oreg&lt;/code&gt; and the A and B registers
+program&amp;nbsp;counter &lt;code&gt;pc&lt;/code&gt;, operand&amp;nbsp;register &lt;code&gt;oreg&lt;/code&gt; and the A and B&amp;nbsp;registers
 &lt;code&gt;areg&lt;/code&gt; and &lt;code&gt;breg&lt;/code&gt; used for expression evaluation. The architecture is
 agnostic of a particular word size, but it has to be a minimum of a byte and
 multiples of a byte. In the included implementation the word size is 4 bytes.
 Hex has sixteen instructions (hence its name!) that are summarised in the
 following table. Each instruction has a 4-bit opcode and a 4-bit immediate. The
 immediate value can be extended using the prefix instructions to form a wider
-value in the &lt;code&gt;oreg&lt;/code&gt;, adding four bits per instruction. Operations beyond the
-16 available encodings are made accessible by the &lt;code&gt;OPR&lt;/code&gt; instruction that
+value in&amp;nbsp;the &lt;code&gt;oreg&lt;/code&gt;, adding four bits per instruction. Operations beyond the
+16 available encodings are made accessible by&amp;nbsp;the &lt;code&gt;OPR&lt;/code&gt; instruction that
 encodes the operation type with its immediate. The instructions are grouped
 into memory access with absolute or relative addressing modes, loading of
 constants, branching, inter-register operations and supervisor&amp;nbsp;calls.&lt;/p&gt;
@@ -2078,10 +2078,9 @@ constants, branching, inter-register operations and supervisor&amp;nbsp;calls.&l
 &lt;/table&gt;
 
 &lt;h3&gt;Prefixing&lt;/h3&gt;
-&lt;p&gt;Prefixing using the &lt;code&gt;PFIX&lt;/code&gt; and &lt;code&gt;NFIX&lt;/code&gt; operations generates operand values
-in &lt;code&gt;oreg&lt;/code&gt; larger than the 4-bit instruction immediate. For example, the
-following instructions generate the value 16 in &lt;code&gt;oreg&lt;/code&gt; and use &lt;code&gt;LDAC&lt;/code&gt; to
-assign it to &lt;code&gt;areg&lt;/code&gt; :&lt;/p&gt;
+&lt;p&gt;Prefixing using&amp;nbsp;the &lt;code&gt;PFIX&lt;/code&gt; and &lt;code&gt;NFIX&lt;/code&gt; operations generates operand values&amp;nbsp;in &lt;code&gt;oreg&lt;/code&gt; larger than the 4-bit instruction immediate. For example, the
+following instructions generate the value 16&amp;nbsp;in &lt;code&gt;oreg&lt;/code&gt; and&amp;nbsp;use &lt;code&gt;LDAC&lt;/code&gt; to
+assign it&amp;nbsp;to &lt;code&gt;areg&lt;/code&gt; :&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;PFIX&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# oreg = oreg (1) &amp;lt;&amp;lt; 4 (0x000010)&lt;/span&gt;
 LDAC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# areg = oreg 16&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -2093,8 +2092,8 @@ PFIX&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;15&lt;/span&gt;&lt
 LDAC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# areg = oreg 496&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Negative values always require a negative prefix to fill the top most &lt;code&gt;oreg&lt;/code&gt;
-bits with ones, so to load the value -1 into &lt;code&gt;oreg&lt;/code&gt; then &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Negative values always require a negative prefix to fill the top&amp;nbsp;most &lt;code&gt;oreg&lt;/code&gt;
+bits with ones, so to load the value -1&amp;nbsp;into &lt;code&gt;oreg&lt;/code&gt; then &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;NFIX&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# oreg = 0xFFFFFF00 | oreg (15) &amp;lt;&amp;lt; 4 (0xfffffff0)&lt;/span&gt;
 LDAC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;15&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# areg = oreg 4294967295&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -2106,14 +2105,14 @@ LDAC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;Inter-register&amp;nbsp;operations&lt;/h3&gt;
-&lt;p&gt;The inter-register operations use the &lt;code&gt;OPR&lt;/code&gt; opcode and consist only of
+&lt;p&gt;The inter-register operations use&amp;nbsp;the &lt;code&gt;OPR&lt;/code&gt; opcode and consist only of
 addition and subtraction. The group can be extended by implementing additional
 immediate opcodes to add new operations to the processor (such as other
 arithmetic and bitwise operations). The 4-bit immediate supports up to 16
 inter-register operations without the need for prefixing, but many more with
 prefixing and the according overhead to form larger immediates. The following
 instruction sequence adds two numbers from fixed locations in memory, with the
-result written to &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
+result written&amp;nbsp;to &lt;code&gt;areg&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;LDAM&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# areg = mem[oreg (0x000001)] (7)&lt;/span&gt;
 LDBM&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# breg = mem[oreg (0x000002)] (9)&lt;/span&gt;
 OPR&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;# ADD areg = areg (7) + breg (9) (16)&lt;/span&gt;
@@ -2121,7 +2120,7 @@ OPR&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;
 
 &lt;p&gt;A special inter-register operation is a supervisor call that transfers
 control to the system to complete an action such as read or write from a
-file, or to halt the program. The supervisor call type is encoded in the
+file, or to halt the program. The supervisor call type is encoded in&amp;nbsp;the
 &lt;code&gt;oreg&lt;/code&gt; and arguments and return values specific to the call type are passed
 and returned on the stack using the standard calling convention. An example
 code sequence to invoke the exit supervisor call&amp;nbsp;is:&lt;/p&gt;
@@ -2143,30 +2142,28 @@ OPR&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;
 
 &lt;h3&gt;Load-store&amp;nbsp;operations&lt;/h3&gt;
 &lt;p&gt;There are two variants of load and store instructions: using absolute addresses
-and addresses relative to a base address. Absolute addressing (&lt;code&gt;LDAM&lt;/code&gt;,
+and addresses relative to a base address. Absolute addressing&amp;nbsp;(&lt;code&gt;LDAM&lt;/code&gt;,
 &lt;code&gt;LDBM&lt;/code&gt; and &lt;code&gt;STAM&lt;/code&gt;) is intended to access objects in memory that are
 allocated at offsets that are fixed with respect to a program, such as constant
-values and global variables. Relative-addressing (&lt;code&gt;LDAI&lt;/code&gt;, &lt;code&gt;LDBI&lt;/code&gt; and
+values and global variables. Relative-addressing&amp;nbsp;(&lt;code&gt;LDAI&lt;/code&gt;, &lt;code&gt;LDBI&lt;/code&gt; and
 &lt;code&gt;STAI&lt;/code&gt;) is typically used to access objects that are relative to a dynamic
 position, such as the stack pointer, or index into an array. The particular
 variants of load/store instructions is influenced by their targeting from a
-compiler. Having pairs of load instructions that can write to &lt;code&gt;areg&lt;/code&gt; or
-&lt;code&gt;breg&lt;/code&gt; (such as &lt;code&gt;LDAM&lt;/code&gt; and &lt;code&gt;LDBM&lt;/code&gt;) gives flexibility when generating
-operands for binary operations, whereas having only single variants of stores
-(&lt;code&gt;STAM&lt;/code&gt; and &lt;code&gt;STAI&lt;/code&gt;) fits most cases where expression results generated into
+compiler. Having pairs of load instructions that can write&amp;nbsp;to &lt;code&gt;areg&lt;/code&gt; or
+&lt;code&gt;breg&lt;/code&gt; (such&amp;nbsp;as &lt;code&gt;LDAM&lt;/code&gt; and &lt;code&gt;LDBM&lt;/code&gt;) gives flexibility when generating
+operands for binary operations, whereas having only single variants of stores&amp;nbsp;(&lt;code&gt;STAM&lt;/code&gt; and &lt;code&gt;STAI&lt;/code&gt;) fits most cases where expression results generated&amp;nbsp;into
 &lt;code&gt;areg&lt;/code&gt; need to be written to&amp;nbsp;memory.&lt;/p&gt;
 &lt;h3&gt;Branching&lt;/h3&gt;
-&lt;p&gt;For branching, a relative branch is provided with &lt;code&gt;BR&lt;/code&gt;, which can be used, for
-example, to reach a label location. Conditional branch versions &lt;code&gt;BRZ&lt;/code&gt; and
-&lt;code&gt;BRN&lt;/code&gt; are used to implement logical binary operations (less than, equal etc)
-and &lt;code&gt;BRB&lt;/code&gt; is an absolute branch that is used, for example, to return to
+&lt;p&gt;For branching, a relative branch is provided&amp;nbsp;with &lt;code&gt;BR&lt;/code&gt;, which can be used, for
+example, to reach a label location. Conditional branch&amp;nbsp;versions &lt;code&gt;BRZ&lt;/code&gt; and
+&lt;code&gt;BRN&lt;/code&gt; are used to implement logical binary operations (less than, equal etc)&amp;nbsp;and &lt;code&gt;BRB&lt;/code&gt; is an absolute branch that is used, for example, to return to
 a calling function using an address retrieved from memory (see example in next&amp;nbsp;section).&lt;/p&gt;
 &lt;h3&gt;Address&amp;nbsp;generation&lt;/h3&gt;
-&lt;p&gt;A special constant-loading instruction &lt;code&gt;LDAP&lt;/code&gt; is used to generate bytewise
+&lt;p&gt;A special constant-loading&amp;nbsp;instruction &lt;code&gt;LDAP&lt;/code&gt; is used to generate bytewise
 program addresses, relative to the program counter, such as for branch targets.
-The following instruction sequence performs a call to &lt;code&gt;foo&lt;/code&gt; but first loads
-the return (link) address using &lt;code&gt;LDAP&lt;/code&gt; to use with &lt;code&gt;BR&lt;/code&gt;. The callee &lt;code&gt;foo&lt;/code&gt;
-returns to the caller using &lt;code&gt;BRB&lt;/code&gt;.&lt;/p&gt;
+The following instruction sequence performs a call&amp;nbsp;to &lt;code&gt;foo&lt;/code&gt; but first loads
+the return (link) address&amp;nbsp;using &lt;code&gt;LDAP&lt;/code&gt; to use&amp;nbsp;with &lt;code&gt;BR&lt;/code&gt;. The&amp;nbsp;callee &lt;code&gt;foo&lt;/code&gt;
+returns to the caller&amp;nbsp;using &lt;code&gt;BRB&lt;/code&gt;.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;FUNC&lt;span class="w"&gt; &lt;/span&gt;foo
 LDBM&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
 STAI&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Save caller address&lt;/span&gt;
@@ -2245,7 +2242,7 @@ following program implements Bubblesort to sort an array of four&amp;nbsp;elemen
   indicated explicitly with bracketing (apart from associative&amp;nbsp;operators).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Conditional statements (beginning &lt;code&gt;if&lt;/code&gt;) must always have an &lt;code&gt;else&lt;/code&gt; part
+&lt;p&gt;Conditional statements&amp;nbsp;(beginning &lt;code&gt;if&lt;/code&gt;) must always have&amp;nbsp;an &lt;code&gt;else&lt;/code&gt; part
   to simplify&amp;nbsp;parsing.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -2260,9 +2257,9 @@ following program implements Bubblesort to sort an array of four&amp;nbsp;elemen
 &lt;p&gt;Other noteworthy features of X&amp;nbsp;are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;There are two types of procedure: &lt;strong&gt;processes&lt;/strong&gt; (using the &lt;code&gt;proc&lt;/code&gt; keyword)
+&lt;p&gt;There are two types of procedure: &lt;strong&gt;processes&lt;/strong&gt; (using&amp;nbsp;the &lt;code&gt;proc&lt;/code&gt; keyword)
   that execute a sequence of steps with possible side effects, and
-  &lt;strong&gt;functions&lt;/strong&gt; (using the &lt;code&gt;func&lt;/code&gt;keyword ) that have no side effects and return
+  &lt;strong&gt;functions&lt;/strong&gt; (using&amp;nbsp;the &lt;code&gt;func&lt;/code&gt;keyword ) that have no side effects and return
   a&amp;nbsp;value.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -2275,13 +2272,13 @@ following program implements Bubblesort to sort an array of four&amp;nbsp;elemen
   act as abbreviations of the supplied formals. This allows processes and
   functions to be compiled by either as closed subroutines or by substitution of
   the body at the call site, either as a source code transformation or compiler
-  optimisation. For example, given the definition &lt;code&gt;proc foo(val a, array b) is B&lt;/code&gt;,
-  it can be called as a subroutine: &lt;code&gt;foo(x, y)&lt;/code&gt; or substituted: &lt;code&gt;val a = x; array b = y; B&lt;/code&gt;
+  optimisation. For example, given the&amp;nbsp;definition &lt;code&gt;proc foo(val a, array b) is B&lt;/code&gt;,
+  it can be called as a&amp;nbsp;subroutine: &lt;code&gt;foo(x, y)&lt;/code&gt; or&amp;nbsp;substituted: &lt;code&gt;val a = x; array b = y; B&lt;/code&gt;
   providing the names are unique in the&amp;nbsp;procedure.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;A &lt;code&gt;valof&lt;/code&gt; element allows processes to be called from expressions to
-  generate values, however it is not implemented in &lt;code&gt;xhexb&lt;/code&gt; or &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
+  generate values, however it is not implemented&amp;nbsp;in &lt;code&gt;xhexb&lt;/code&gt; or &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Hex processor integrated circuit &lt;a name="hex-processor-integrated-circuit" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
@@ -2407,12 +2404,11 @@ following images are some examples of the different&amp;nbsp;views.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;Hex tooling &lt;a name="hex-tooling" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;There are three tools provided in the Hex toolchain: a Hex instruction set
-simulator &lt;code&gt;hexsim&lt;/code&gt;, a Hex assembler &lt;code&gt;hexasm&lt;/code&gt; and an X compiler &lt;code&gt;xcmp&lt;/code&gt;.
+&lt;p&gt;There are three tools provided in the Hex toolchain: a Hex instruction set&amp;nbsp;simulator &lt;code&gt;hexsim&lt;/code&gt;, a Hex&amp;nbsp;assembler &lt;code&gt;hexasm&lt;/code&gt; and an X&amp;nbsp;compiler &lt;code&gt;xcmp&lt;/code&gt;.
 Instructions on how to build the tools are included in the
 &lt;a href="https://jameshanlon.github.io/hex-processor"&gt;documentation&lt;/a&gt;.
 The implementation is provided in a small number of source files (with only one
-external dependency on &lt;code&gt;boost::format&lt;/code&gt;):&lt;/p&gt;
+external dependency&amp;nbsp;on &lt;code&gt;boost::format&lt;/code&gt;):&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;General Hex definitions are provided in
@@ -2434,7 +2430,7 @@ external dependency on &lt;code&gt;boost::format&lt;/code&gt;):&lt;/p&gt;
   &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/xcmp.hpp"&gt;&lt;code&gt;xcmp.hpp&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Driver code for the respective command-line tools &lt;code&gt;hexsim&lt;/code&gt;, &lt;code&gt;hexasm&lt;/code&gt; and
+&lt;p&gt;Driver code for the respective command-line&amp;nbsp;tools &lt;code&gt;hexsim&lt;/code&gt;, &lt;code&gt;hexasm&lt;/code&gt; and
   &lt;code&gt;xcmp&lt;/code&gt; is implemented in
   &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexsim.cpp"&gt;&lt;code&gt;hexsim.cpp&lt;/code&gt;&lt;/a&gt;,
   &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp"&gt;&lt;code&gt;hexasm.cpp&lt;/code&gt;&lt;/a&gt; and
@@ -2473,7 +2469,7 @@ OPR&lt;span class="w"&gt; &lt;/span&gt;SVC
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This binary can then be simulated with tracing to show what&amp;#8217;s going on (the
-first column is the cycle count and the second is the &lt;code&gt;pc&lt;/code&gt; value):&lt;/p&gt;
+first column is the cycle count and the second is&amp;nbsp;the &lt;code&gt;pc&lt;/code&gt; value):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜&lt;span class="w"&gt; &lt;/span&gt;hexsim&lt;span class="w"&gt; &lt;/span&gt;a.out&lt;span class="w"&gt; &lt;/span&gt;-t
 &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;BR&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pc&lt;span class="w"&gt; &lt;/span&gt;+&lt;span class="w"&gt; &lt;/span&gt;oreg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;0x000008&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;LDAC&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;areg&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;oreg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
@@ -2488,8 +2484,8 @@ a similar most basic program  written in&amp;nbsp;X:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;proc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;is&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;skip&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;This null program is compiled into Hex assembly, where the entry code calls
-&lt;code&gt;main&lt;/code&gt; then exits, and &lt;code&gt;main&lt;/code&gt; does nothing (apart from saving and restoring
+&lt;p&gt;This null program is compiled into Hex assembly, where the entry code&amp;nbsp;calls
+&lt;code&gt;main&lt;/code&gt; then exits,&amp;nbsp;and &lt;code&gt;main&lt;/code&gt; does nothing (apart from saving and restoring
 the link&amp;nbsp;location):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜&lt;span class="w"&gt; &lt;/span&gt;xcmp&lt;span class="w"&gt; &lt;/span&gt;tests/x/exit.x&lt;span class="w"&gt; &lt;/span&gt;--insts-lowered
 BR&lt;span class="w"&gt; &lt;/span&gt;start
@@ -2512,7 +2508,7 @@ LDBI&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
 OPR&lt;span class="w"&gt; &lt;/span&gt;BRB
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;And when simulated produces the following trace where execution through
+&lt;p&gt;And when simulated produces the following trace where execution&amp;nbsp;through
 &lt;code&gt;main&lt;/code&gt; can be seen since it is the only labelled portion of the&amp;nbsp;code:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜&lt;span class="w"&gt; &lt;/span&gt;hexsim&lt;span class="w"&gt; &lt;/span&gt;a.out&lt;span class="w"&gt; &lt;/span&gt;-t
 &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="w"&gt;                   &lt;/span&gt;BR&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nv"&gt;pc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pc&lt;span class="w"&gt; &lt;/span&gt;+&lt;span class="w"&gt; &lt;/span&gt;oreg&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;0x000008&lt;span class="o"&gt;)&lt;/span&gt;
@@ -2529,8 +2525,8 @@ OPR&lt;span class="w"&gt; &lt;/span&gt;BRB
 &lt;span class="m"&gt;11&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="m"&gt;13&lt;/span&gt;&lt;span class="w"&gt;                  &lt;/span&gt;OPR&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The program can also be run on the Verilog Hex implementation using &lt;code&gt;hextb&lt;/code&gt;
-(which doesn&amp;#8217;t provide as rich instruction tracing as &lt;code&gt;hexsim&lt;/code&gt;):&lt;/p&gt;
+&lt;p&gt;The program can also be run on the Verilog Hex implementation&amp;nbsp;using &lt;code&gt;hextb&lt;/code&gt;
+(which doesn&amp;#8217;t provide as rich instruction tracing&amp;nbsp;as &lt;code&gt;hexsim&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜&lt;span class="w"&gt; &lt;/span&gt;hextb&lt;span class="w"&gt; &lt;/span&gt;a.out&lt;span class="w"&gt; &lt;/span&gt;-t
 Wrote&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;20&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bytes&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;memory
 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="m"&gt;11&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;0x51&lt;span class="w"&gt; &lt;/span&gt;LDAP
@@ -2645,14 +2641,14 @@ hello&lt;span class="w"&gt; &lt;/span&gt;world
 &lt;a href="https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x"&gt;&lt;code&gt;xhexb.x&lt;/code&gt;&lt;/a&gt;
 written by David May in ~3,000 lines of X. This serves as a challenging program
 to compile, and interesting that it can bootstrap itself. Using the notation
-X(Y) to mean compile source Y using binary X, we can first create an &lt;code&gt;xhexb&lt;/code&gt;
-binary by running &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;):&lt;/p&gt;
+X(Y) to mean compile source Y using binary X, we can first create&amp;nbsp;an &lt;code&gt;xhexb&lt;/code&gt;
+binary by&amp;nbsp;running &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜&lt;span class="w"&gt; &lt;/span&gt;xcmp&lt;span class="w"&gt; &lt;/span&gt;-S&lt;span class="w"&gt; &lt;/span&gt;tests/x/xhexb.x
 ...
 &lt;span class="m"&gt;20739&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;bytes
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;We can then use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to compile Hello World as
+&lt;p&gt;We can then&amp;nbsp;use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to compile Hello World&amp;nbsp;as
 &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;)(&lt;code&gt;hello_prints.x&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Create an xhexb compiler binary.&lt;/span&gt;
 ➜&lt;span class="w"&gt; &lt;/span&gt;xcmp&lt;span class="w"&gt; &lt;/span&gt;tests/x/xhexb.x
@@ -2668,7 +2664,7 @@ size:&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;414&lt;/span&gt;
 hello&lt;span class="w"&gt; &lt;/span&gt;world
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Similarly, we can use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to bootstrap itself by running
+&lt;p&gt;Similarly, we can&amp;nbsp;use &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;) to bootstrap itself by&amp;nbsp;running
 &lt;code&gt;xcmp&lt;/code&gt;(&lt;code&gt;xhexb.x&lt;/code&gt;)(&lt;code&gt;xhexb.x&lt;/code&gt;):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Create an xhexb compiler binary.&lt;/span&gt;
 ➜&lt;span class="w"&gt; &lt;/span&gt;xcmp&lt;span class="w"&gt; &lt;/span&gt;tests/x/xhexb.x
@@ -2691,7 +2687,7 @@ hello&lt;span class="w"&gt; &lt;/span&gt;world
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h3&gt;Implementation&amp;nbsp;details&lt;/h3&gt;
-&lt;p&gt;Both the assembler and compiler are based on the &lt;code&gt;xhexb.x&lt;/code&gt; bootstrapping
+&lt;p&gt;Both the assembler and compiler are based on&amp;nbsp;the &lt;code&gt;xhexb.x&lt;/code&gt; bootstrapping
 compiler for X discussed&amp;nbsp;above.&lt;/p&gt;
 &lt;p&gt;The assembler works in two main&amp;nbsp;phases:&lt;/p&gt;
 &lt;ul&gt;
@@ -2702,10 +2698,10 @@ compiler for X discussed&amp;nbsp;above.&lt;/p&gt;
 problems. The first is that for a given relative reference, the length of the
 encoding (ie number of prefixes) depends on the value of the reference and vice
 versa. This is solved by iteratively increasing the encoding length until it
-meets the required range (see &lt;code&gt;instrLen()&lt;/code&gt;). The second problem is that the
+meets the required range&amp;nbsp;(see &lt;code&gt;instrLen()&lt;/code&gt;). The second problem is that the
 value of a relative reference depends on the length of any relative encodings
 contained within the range. This is solved by iteratively updating label values
-until they reach a stable state (see &lt;code&gt;resolveLabels()&lt;/code&gt;). The assembler adds
+until they reach a stable state&amp;nbsp;(see &lt;code&gt;resolveLabels()&lt;/code&gt;). The assembler adds
 additional rudimentary debug information to the binary, with a mapping of
 instruction ranges to symbol values. This allows the simulator to display the
 current symbol and&amp;nbsp;offset.&lt;/p&gt;
@@ -2722,7 +2718,7 @@ then lowering the tree to machine&amp;nbsp;instructions:&lt;/p&gt;
 &lt;li&gt;Optimise the machine instruction&amp;nbsp;sequence.&lt;/li&gt;
 &lt;li&gt;Assemble and emit the machine instruction&amp;nbsp;sequence.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Command line options such as &lt;code&gt;--tree&lt;/code&gt; are available to inspect the internal
+&lt;p&gt;Command line options such&amp;nbsp;as &lt;code&gt;--tree&lt;/code&gt; are available to inspect the internal
 representation of the program in between these&amp;nbsp;stages.&lt;/p&gt;
 &lt;p&gt;Compared with a more sophisticated compiler, Hex and X afford two significant
 simplifications. First, the small set of features in X make it straightforward
@@ -2731,10 +2727,10 @@ machine-independent representation. Secondly, the register architecture of Hex
 means that allocation of registers can be handled easily during mapping to
 machine instructions, rather than having to allocate physical registers to a
 virtual set as is typical in machines with more&amp;nbsp;registers.&lt;/p&gt;
-&lt;p&gt;More details of the &lt;code&gt;xhexb&lt;/code&gt; compiler implementation are included in the &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf"&gt;X
+&lt;p&gt;More details of&amp;nbsp;the &lt;code&gt;xhexb&lt;/code&gt; compiler implementation are included in the &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/xhexnotes.pdf"&gt;X
 and Hex notes &lt;span class="caps"&gt;PDF&lt;/span&gt;&lt;/a&gt;, with aspects such as the
 calling convention, handling of operators and arithmetic and memory layout
-being shared in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
+being shared&amp;nbsp;in &lt;code&gt;xcmp&lt;/code&gt;.&lt;/p&gt;
 &lt;h2&gt;A historical note &lt;a name="a-historical-note" class="anchor"&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Hex, apart from being related to the Transputer, has some other interesting
 historical roots. David May learned about languages and compilers from &lt;a href="https://www.cl.cam.ac.uk/~mr10/"&gt;Martin
@@ -2821,12 +2817,12 @@ processor&amp;nbsp;toolchains.&lt;/p&gt;
 &lt;/ul&gt;</content><category term="notes"></category><category term="computing"></category><category term="computer-architecture"></category><category term="microelectronics"></category></entry><entry><title>Seeding parallel xoroshiro128+ generators</title><link href="https://jameswhanlon.com/seeding-parallel-xoroshiro128-generators.html" rel="alternate"></link><published>2022-10-01T00:00:00+02:00</published><updated>2022-10-01T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-10-01:/seeding-parallel-xoroshiro128-generators.html</id><summary type="html">&lt;p&gt;Choosing seeds for parallel xoroshiro128+ generators using fixed
 offsets produces correlated&amp;nbsp;outputs.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As part of the &lt;a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu"&gt;statistical quality
 analysis&lt;/a&gt; I
-did of the of the &lt;code&gt;xoroshiro128aox&lt;/code&gt; &lt;span class="caps"&gt;PRNG&lt;/span&gt;, I looked at interleaved parallel
+did of the of&amp;nbsp;the &lt;code&gt;xoroshiro128aox&lt;/code&gt; &lt;span class="caps"&gt;PRNG&lt;/span&gt;, I looked at interleaved parallel
 generators (where a single generator is created by round-robin interleaving the
 output $n$ identical generators with different seeds) as a way to test its
 suitability for parallel processing. Against my intuition, I found that simple
 seeding schemes produce poor interleaved generators, and even when the
-subsequences are disjoint. These findings equally apply to &lt;code&gt;xoroshiro128+&lt;/code&gt; as
+subsequences are disjoint. These findings equally apply&amp;nbsp;to &lt;code&gt;xoroshiro128+&lt;/code&gt; as
 we will&amp;nbsp;see.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;xoroshiro128+&lt;/code&gt; creators &lt;a href="https://prng.di.unimi.it"&gt;recommend using a jump
 function&lt;/a&gt; to seed parallel generators to
@@ -2862,9 +2858,9 @@ defined in Python notation&amp;nbsp;as:&lt;/p&gt;
 
 &lt;p&gt;And, as&amp;nbsp;baselines:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Using the &lt;code&gt;xoroshiro128&lt;/code&gt; jump function, jumping $2^{64}$ steps [Scheme&amp;nbsp;D].&lt;/li&gt;
+&lt;li&gt;Using&amp;nbsp;the &lt;code&gt;xoroshiro128&lt;/code&gt; jump function, jumping $2^{64}$ steps [Scheme&amp;nbsp;D].&lt;/li&gt;
 &lt;li&gt;Using a minimum-size jump for the number of generators to pass PractRand [Scheme E]
-  (for example, the distance for 1000 generators is 4398046511 = &lt;code&gt;(32 * 1024**4) / (8 * 1000)&lt;/code&gt;).&lt;/li&gt;
+  (for example, the distance for 1000 generators is 4398046511&amp;nbsp;= &lt;code&gt;(32 * 1024**4) / (8 * 1000)&lt;/code&gt;).&lt;/li&gt;
 &lt;li&gt;Using a non-linear &lt;span class="caps"&gt;PRNG&lt;/span&gt; to choose seeds (&lt;span class="caps"&gt;PCG64&lt;/span&gt;) [Scheme&amp;nbsp;F].&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;To test these seeding schemes, I ran each generator against the standard
@@ -2957,9 +2953,9 @@ results at intermediate points and consumes much more output than Big Crush or G
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Note that &lt;code&gt;DC6&lt;/code&gt; and &lt;code&gt;BCFN&lt;/code&gt; are both tests for linearity. For the failing
+&lt;p&gt;Note&amp;nbsp;that &lt;code&gt;DC6&lt;/code&gt; and &lt;code&gt;BCFN&lt;/code&gt; are both tests for linearity. For the failing
 generators (schemes A-C), I checked there are no duplicate values between the
-different generators to establish that no two sequences overlap (using the
+different generators to establish that no two sequences overlap (using&amp;nbsp;the
 &lt;code&gt;analyse&lt;/code&gt; mode). This means that the above failures are due to correlations
 between disjoint&amp;nbsp;sequences.&lt;/p&gt;
 &lt;p&gt;For reference, below is sample output for running the Scheme A generator with
@@ -3071,11 +3067,11 @@ RNG_test&lt;span class="w"&gt; &lt;/span&gt;using&lt;span class="w"&gt; &lt;/spa
 &lt;p&gt;When choosing seeds for PRNGs operating in parallel, it might seem sufficient
 to ensure that the sequences they range over are disjoint, provably or with
 high probability. However, correlations between disjoint subsequences do exist
-in PRNGs based on the &lt;code&gt;xoroshiro128&lt;/code&gt; linear engine. It is known that these
+in PRNGs based on&amp;nbsp;the &lt;code&gt;xoroshiro128&lt;/code&gt; linear engine. It is known that these
 correlations can manifest when sequences are chosen by a linear generator.
 Based on the findings in this note, these correlations also occur when seeds
 are created using non-linear operations such as addition. The safest course of
-action to take is to follow the guidance of the &lt;code&gt;xoroshiro128&lt;/code&gt; authors and
+action to take is to follow the guidance of&amp;nbsp;the &lt;code&gt;xoroshiro128&lt;/code&gt; authors and
 either use the jump function to traverse the state space or use a high-quality
 non-linear &lt;span class="caps"&gt;PRNG&lt;/span&gt; to generate random&amp;nbsp;seeds.&lt;/p&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -3100,14 +3096,14 @@ low-precision floating-point&amp;nbsp;numbers.&lt;/p&gt;
 &lt;p&gt;We needed a new &lt;span class="caps"&gt;PRNG&lt;/span&gt; because typical state-of-the-art generators are designed
 to be performant when run as software routines, but operations that are cheap
 to execute on a processor may not be cheap to implement in hardware as is the
-case for multiplication or division. Our generator &lt;code&gt;xoroshiro128aox&lt;/code&gt; is based
-on &lt;a href="https://vigna.di.unimi.it/"&gt;Sebastiano Vigna’s&lt;/a&gt; &lt;code&gt;xoroshiro128&lt;/code&gt;
+case for multiplication or division. Our&amp;nbsp;generator &lt;code&gt;xoroshiro128aox&lt;/code&gt; is based
+on &lt;a href="https://vigna.di.unimi.it/"&gt;Sebastiano&amp;nbsp;Vigna’s&lt;/a&gt; &lt;code&gt;xoroshiro128&lt;/code&gt;
 linear-feedback shift register (&lt;span class="caps"&gt;LFSR&lt;/span&gt;), which is attractive because it uses 128
 bits of state and is cheap to implement in hardware. The &lt;span class="caps"&gt;LFSR&lt;/span&gt; operates by
 performing &lt;span class="caps"&gt;XOR&lt;/span&gt; and fixed-distance shift and rotate operations on the state.
 Following Vigna’s approach of adding a function to ‘scramble’ the &lt;span class="caps"&gt;LFSR&lt;/span&gt; state,
 we have devised a function consisting of &lt;span class="caps"&gt;AND&lt;/span&gt;, &lt;span class="caps"&gt;OR&lt;/span&gt; and &lt;span class="caps"&gt;XOR&lt;/span&gt; operations (called &lt;span class="caps"&gt;AOX&lt;/span&gt;
-for short). An C implementation of &lt;code&gt;xoroshiro128aox&lt;/code&gt; is as&amp;nbsp;follows:&lt;/p&gt;
+for short). An C implementation&amp;nbsp;of &lt;code&gt;xoroshiro128aox&lt;/code&gt; is as&amp;nbsp;follows:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;// State vectors&lt;/span&gt;
 
 &lt;span class="kt"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;rotl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;uint64_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
@@ -3152,11 +3148,11 @@ methodology that goes beyond the typical level of&amp;nbsp;analysis.&lt;/p&gt;
 &lt;p&gt;To provide a point of comparison, we include the following&amp;nbsp;PRNGs:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;32-bit Mersenne Twister, &lt;code&gt;mt32&lt;/code&gt;, since it is one of the most widely used
+&lt;p&gt;32-bit Mersenne&amp;nbsp;Twister, &lt;code&gt;mt32&lt;/code&gt;, since it is one of the most widely used
     software PRNGs (although it has 19,937 bits of&amp;nbsp;state!).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;xoroshiro128+&lt;/code&gt;, which is Vigna’s closest variant of &lt;code&gt;xoroshiro128&lt;/code&gt;,
+&lt;p&gt;&lt;code&gt;xoroshiro128+&lt;/code&gt;, which is Vigna’s closest variant&amp;nbsp;of &lt;code&gt;xoroshiro128&lt;/code&gt;,
     using 64-bit addition to scramble 128-bit &lt;span class="caps"&gt;LFSR&lt;/span&gt;&amp;nbsp;states.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -3354,7 +3350,7 @@ target clock period of 1 GHz. The table below summarises the&amp;nbsp;results.&l
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The following are illustrations of the four &lt;span class="caps"&gt;PRNG&lt;/span&gt; circuit floorplans, which make
-clear the differences in implementation complexity (left to right:
+clear the differences in implementation complexity (left to&amp;nbsp;right:
 &lt;code&gt;xoroshiro128aox&lt;/code&gt;, &lt;code&gt;xoroshiro128+&lt;/code&gt;, &lt;code&gt;pcg64&lt;/code&gt;, &lt;code&gt;philox4x32-10&lt;/code&gt;):&lt;/p&gt;
 &lt;table&gt;
 &lt;tbody&gt;
@@ -3452,12 +3448,12 @@ clear the differences in implementation complexity (left to right:
 &lt;p&gt;This note has provided an overview of the methodology and results of the
 analysis we conducted into the statistical quality of our novel &lt;span class="caps"&gt;PRNG&lt;/span&gt;
 &lt;code&gt;xoroshiro128aox&lt;/code&gt;. This has established that our generator mitigates known
-existing weaknesses of &lt;code&gt;xoroshiro128+&lt;/code&gt; on which it is based, and delivers
+existing weaknesses&amp;nbsp;of &lt;code&gt;xoroshiro128+&lt;/code&gt; on which it is based, and delivers
 comparable levels of statistical quality on the gold-standard BigCrush test set
-as two contemporary fast PRNGs : &lt;code&gt;pcg64&lt;/code&gt; and &lt;code&gt;philox4x32-10&lt;/code&gt;. Extending
+as two contemporary fast PRNGs&amp;nbsp;: &lt;code&gt;pcg64&lt;/code&gt; and &lt;code&gt;philox4x32-10&lt;/code&gt;. Extending
 testing by using PractRand and Gjrand, we do eventually find that a weakness is
 detectable by Gjrand. Since this is not systematic across the test suites, as
-we have seen for the Mersenne Twister, we can consider &lt;code&gt;xoroshiro128aox&lt;/code&gt; to
+we have seen for the Mersenne Twister, we can&amp;nbsp;consider &lt;code&gt;xoroshiro128aox&lt;/code&gt; to
 provide an excellent tradeoff between quality and implementation cost in&amp;nbsp;hardware.&lt;/p&gt;
 &lt;p&gt;Full details of the investigation can be found in the &lt;a href="https://arxiv.org/abs/2203.04058"&gt;preprint paper on
 arXiv&lt;/a&gt;, and the &lt;a href="https://github.com/jameshanlon/prng-testing"&gt;source
@@ -5471,9 +5467,7 @@ bits, according to the Hamming code. The check bits are chosen so that there is
 a fixed &lt;em&gt;Hamming distance&lt;/em&gt; between any two valid codewords (the number of
 positions in which bits&amp;nbsp;differ).&lt;/p&gt;
 &lt;p&gt;When valid codewords have a Hamming distance of two, any single bit flip will
-invalidate the word and allow the error to be detected. For example, the valid
-codewords &lt;code&gt;00&lt;/code&gt; and &lt;code&gt;11&lt;/code&gt; are separated for single bit flips by the invalid
-codewords &lt;code&gt;01&lt;/code&gt; and &lt;code&gt;10&lt;/code&gt;. If either of the invalid words is obtained an error
+invalidate the word and allow the error to be detected. For example, the valid&amp;nbsp;codewords &lt;code&gt;00&lt;/code&gt; and &lt;code&gt;11&lt;/code&gt; are separated for single bit flips by the invalid&amp;nbsp;codewords &lt;code&gt;01&lt;/code&gt; and &lt;code&gt;10&lt;/code&gt;. If either of the invalid words is obtained an error
 has occurred, but neither can be associated with a valid codeword. Two bit
 flips are undetectable since they always map to a valid codeword. Note that
 parity encoding is an example of a distance-two Hamming&amp;nbsp;code.&lt;/p&gt;
@@ -5689,7 +5683,7 @@ bitwise &lt;span class="caps"&gt;XOR&lt;/span&gt; between the original check bit
 value is called the &lt;em&gt;syndrome&lt;/em&gt;. By inspecting the number of bits set in the
 syndrome, it is possible to determine whether there has been an error,
 whether it is correctable, and how to correct&amp;nbsp;it.&lt;/p&gt;
-&lt;p&gt;Using the &lt;span class="caps"&gt;SEC&lt;/span&gt; check-bit encoding above, creating a codeword from &lt;code&gt;data[7:0]&lt;/code&gt;,
+&lt;p&gt;Using the &lt;span class="caps"&gt;SEC&lt;/span&gt; check-bit encoding above, creating a codeword&amp;nbsp;from &lt;code&gt;data[7:0]&lt;/code&gt;,
 the check bits are calculated as follows (using Verilog&amp;nbsp;syntax):&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;check_word&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;7&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
 &lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;check_word&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
@@ -5737,7 +5731,7 @@ been taken. If the syndrome&amp;nbsp;is:&lt;/p&gt;
 &lt;li&gt;Equal to zero, no error&amp;nbsp;occurred.&lt;/li&gt;
 &lt;li&gt;Has one bit set, then this is a flip of a check bit and can be&amp;nbsp;ignored.&lt;/li&gt;
 &lt;li&gt;Has a value matching a pattern (three bits set or two bits in the adjacent positions), a correctable error&amp;nbsp;occurred.&lt;/li&gt;
-&lt;li&gt;Has a value not matching a pattern (two bits set in the other non-adjacent positions: &lt;code&gt;4'b1010&lt;/code&gt;, &lt;code&gt;4'b0101&lt;/code&gt;), or four bits set, a multi-bit uncorrectable error&amp;nbsp;occurred.&lt;/li&gt;
+&lt;li&gt;Has a value not matching a pattern (two bits set in the other non-adjacent&amp;nbsp;positions: &lt;code&gt;4'b1010&lt;/code&gt;, &lt;code&gt;4'b0101&lt;/code&gt;), or four bits set, a multi-bit uncorrectable error&amp;nbsp;occurred.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The above &lt;span class="caps"&gt;SECDED&lt;/span&gt; check-bit encoding can be implemented in a similar way, but
 since it uses only three-bit patterns, mapping syndromes to correction masks
@@ -6567,14 +6561,14 @@ sequential elements, in turn driving output ports.
 &lt;p&gt;To avoid an intractable state space, the design is changed so that inputs and
 observable outputs are separated only by combinatorial logic. This is done by
 adding new controllable &lt;strong&gt;primary inputs&lt;/strong&gt; and &lt;strong&gt;observable outputs&lt;/strong&gt;, called
-&lt;strong&gt;scan chains&lt;/strong&gt;. A scan chain adds three ports to the chip: a scan chain input,
-&lt;code&gt;scan_in&lt;/code&gt;, a scan chain output &lt;code&gt;scan_out&lt;/code&gt; and an enable &lt;code&gt;scan_enable&lt;/code&gt;.
+&lt;strong&gt;scan chains&lt;/strong&gt;. A scan chain adds three ports to the chip: a scan chain&amp;nbsp;input,
+&lt;code&gt;scan_in&lt;/code&gt;, a scan chain&amp;nbsp;output &lt;code&gt;scan_out&lt;/code&gt; and an&amp;nbsp;enable &lt;code&gt;scan_enable&lt;/code&gt;.
 All registers are converted by adding a multiplexer on the D pin, with one
 input connected to the data signal. The first scan-chain register has it’s
-other multiplexer input connected to &lt;code&gt;scan_in&lt;/code&gt;. Subsequent scan registers
+other multiplexer input connected&amp;nbsp;to &lt;code&gt;scan_in&lt;/code&gt;. Subsequent scan registers
 take their other multiplexer inputs from the output of the previous register in
-the chain. The final register in the chain drives &lt;code&gt;scan_out&lt;/code&gt; from it’s D pin.
-All multiplexers are controlled by &lt;code&gt;scan_enable&lt;/code&gt;.&lt;/p&gt;
+the chain. The final register in the chain&amp;nbsp;drives &lt;code&gt;scan_out&lt;/code&gt; from it’s D pin.
+All multiplexers are controlled&amp;nbsp;by &lt;code&gt;scan_enable&lt;/code&gt;.&lt;/p&gt;
 &lt;figure class="figure d-block text-center"&gt;
   &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-flop.png" class="figure-img img-fluid rounded"&gt;
   &lt;figcaption class="figure-caption"&gt;
@@ -6606,7 +6600,7 @@ inputs allow a simple test procedure to be&amp;nbsp;implemented:&lt;/p&gt;
 &lt;p&gt;Since typical tests will contain large numbers of patterns, the time to test
 one pattern is critical. It is determined by the length of the chain, to shift
 in and out data. To reduce test time, additional scan chains can be introduced
-to allow shifting to be performed in parallel. Each chain adds &lt;code&gt;scan_in&lt;/code&gt; and
+to allow shifting to be performed in parallel. Each chain&amp;nbsp;adds &lt;code&gt;scan_in&lt;/code&gt; and
 &lt;code&gt;scan_out&lt;/code&gt; ports to the chip. The number of scan chains is chosen to trade
 off the physical requirements of the additional ports and routing with test
 time and coverage. To avoid many additional ports at the top level, a set of
@@ -6656,15 +6650,15 @@ additional scan chains may be connected to sequential elements of the core logic
 inputs to the core, with their D inputs corresponding to each input of the test
 core. Some inputs may be omitted from the wrapper chain, such as clock, reset
 and test-related signals. Input wrapper chains are different to regular scan
-chains only in the way that their &lt;code&gt;scan_enable&lt;/code&gt; is controlled. During test mode,
-the scan enable of the input wrapper is held high when the regular &lt;code&gt;scan_enable&lt;/code&gt;
+chains only in the way that&amp;nbsp;their &lt;code&gt;scan_enable&lt;/code&gt; is controlled. During test mode,
+the scan enable of the input wrapper is held high when the&amp;nbsp;regular &lt;code&gt;scan_enable&lt;/code&gt;
 is low and all other registers are in functional mode. The effect of this is
 that the input wrapper chain continues to shift in known values, rather than Xs
 from outside of the test core. When the input wrapper registers are not shared
 with any other test core, the captured values can be shifted out with the other
 test pattern results to ensure all of the registers are functioning&amp;nbsp;correctly.&lt;/p&gt;
 &lt;p&gt;An &lt;strong&gt;output wrapper chain&lt;/strong&gt; behaves exactly as an internal scan chain during test
-mode. However, when they are shared with an adjacent test core, their
+mode. However, when they are shared with an adjacent test core,&amp;nbsp;their
 &lt;code&gt;scan_enable&lt;/code&gt; is controlled differently since they will function as an input
 wrapper chain for that core, with the behaviour described&amp;nbsp;above.&lt;/p&gt;
 &lt;figure class="figure d-block text-center"&gt;
@@ -6680,7 +6674,7 @@ In this case, to prevent Xs from propagating into the logic during test, all
 sources of Xs must be masked with known values. This is done by inserting a
 multiplexer to take the Q pin as input, with the other input as an alternative
 known value, typically from a register on a scan chain. The multiplexer is
-controlled by an &lt;code&gt;xbnd_enable&lt;/code&gt; signal, which when set high will prevent X
+controlled by&amp;nbsp;an &lt;code&gt;xbnd_enable&lt;/code&gt; signal, which when set high will prevent X
 propagation during test mode, and otherwise maintains the functional behaviour
 of the&amp;nbsp;circuit.&lt;/p&gt;
 &lt;figure class="figure d-block text-center"&gt;
@@ -7527,7 +7521,7 @@ could be&amp;nbsp;extended.&lt;/p&gt;
 &lt;h2&gt;Use&lt;/h2&gt;
 &lt;p&gt;Instructions to build the tool are in the &lt;span class="caps"&gt;README&lt;/span&gt; in the &lt;a href="https://github.com/jameshanlon/netlist-paths/blob/master/README.md"&gt;GitHub
 repository&lt;/a&gt;.
-Assuming the &lt;code&gt;netlist-paths&lt;/code&gt; install &lt;code&gt;bin&lt;/code&gt; directory is available in your
+Assuming&amp;nbsp;the &lt;code&gt;netlist-paths&lt;/code&gt; install &lt;code&gt;bin&lt;/code&gt; directory is available in&amp;nbsp;your
 &lt;code&gt;PATH&lt;/code&gt;, then using the &lt;a href="https://github.com/cliffordwolf/picorv32"&gt;PicoRV32 processor
 implementation&lt;/a&gt; as an example, its
 netlist can be generated as&amp;nbsp;follows:&lt;/p&gt;
@@ -7538,8 +7532,8 @@ $&lt;span class="w"&gt; &lt;/span&gt;verilator&lt;span class="w"&gt; &lt;/span&g
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Here a modified version of &lt;a href="https://www.veripool.org/wiki/verilator"&gt;Verilator&lt;/a&gt;
-is used to generate the netlist. (Note that &lt;code&gt;netlist-paths&lt;/code&gt; can invoke
-Verilator but with the &lt;code&gt;--compile&lt;/code&gt; option, but PicoRV32 requires Verilator&amp;#8217;s
+is used to generate the netlist. (Note&amp;nbsp;that &lt;code&gt;netlist-paths&lt;/code&gt; can invoke
+Verilator but with&amp;nbsp;the &lt;code&gt;--compile&lt;/code&gt; option, but PicoRV32 requires&amp;nbsp;Verilator&amp;#8217;s
 &lt;code&gt;--top-module&lt;/code&gt; option. It may be useful to extend the command line arguments to
 allow arbitrary arguments to be passed to Verilator.) Verilator performs the
 generation by traversing the abstract syntax tree of the design and constructs
@@ -7568,9 +7562,9 @@ connectivity between&amp;nbsp;points.&lt;/p&gt;
 
 &lt;p&gt;A vertex in this netlist corresponds to the occurrence of a variable (ie a
 symbolic name). A given symbolic name can appear in different vertices,
-corresponding to its different uses. To see this, the option &lt;code&gt;--dumpnames&lt;/code&gt;
+corresponding to its different uses. To see this, the&amp;nbsp;option &lt;code&gt;--dumpnames&lt;/code&gt;
 prints the names, types and directions of all the vertices in the graph. This
-output can be piped through &lt;code&gt;grep&lt;/code&gt; to locate particular signals. For example,
+output can be piped&amp;nbsp;through &lt;code&gt;grep&lt;/code&gt; to locate particular signals. For example,
 to see all the output&amp;nbsp;variables:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;netlist-paths&lt;span class="w"&gt; &lt;/span&gt;netlist.graph&lt;span class="w"&gt; &lt;/span&gt;--dumpnames&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;grep&lt;span class="w"&gt; &lt;/span&gt;OUTPUT
 PORT&lt;span class="w"&gt; &lt;/span&gt;OUTPUT&lt;span class="w"&gt; &lt;/span&gt;eoi
@@ -7598,13 +7592,13 @@ REG_DST&lt;span class="w"&gt; &lt;/span&gt;picorv32_axi.picorv32_core.cached_ins
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Here, the &lt;code&gt;REG_DST&lt;/code&gt; type corresponds to a variable that is the left-hand side
-of a non-blocking assignment &lt;code&gt;&amp;lt;=&lt;/code&gt;. Conversely, the &lt;code&gt;REG_SRC&lt;/code&gt; type is where the
+&lt;p&gt;Here,&amp;nbsp;the &lt;code&gt;REG_DST&lt;/code&gt; type corresponds to a variable that is the left-hand side
+of a non-blocking&amp;nbsp;assignment &lt;code&gt;&amp;lt;=&lt;/code&gt;. Conversely,&amp;nbsp;the &lt;code&gt;REG_SRC&lt;/code&gt; type is where the
 same variable appears in an expression on the right-hand side. In general,
-there can only be a single &lt;code&gt;REG_DST&lt;/code&gt; node with a specific name, whereas there
-can be multiple &lt;code&gt;REG_SRC&lt;/code&gt; nodes with a specific names. The same is true with
+there can only be a&amp;nbsp;single &lt;code&gt;REG_DST&lt;/code&gt; node with a specific name, whereas there
+can be&amp;nbsp;multiple &lt;code&gt;REG_SRC&lt;/code&gt; nodes with a specific names. The same is true&amp;nbsp;with
 &lt;code&gt;VAR&lt;/code&gt;, &lt;code&gt;WIRE&lt;/code&gt; and &lt;code&gt;PORT&lt;/code&gt; types. When using this tool, I&amp;#8217;ve found it
-straight forward to locate the variables I need using &lt;code&gt;grep&lt;/code&gt; with
+straight forward to locate the variables I need&amp;nbsp;using &lt;code&gt;grep&lt;/code&gt; with
 &lt;code&gt;--dumpnames&lt;/code&gt;, but there may be more sophisticated approaches that could be&amp;nbsp;implemented.&lt;/p&gt;
 &lt;p&gt;A start or end point can be specified as any named vertex, which is anything
 except logic statements. You can query if a path exists between two&amp;nbsp;points:&lt;/p&gt;
@@ -7621,8 +7615,8 @@ to the end point, through a sequence of zero or more combinatorial logic
 statements/blocks, with each dependency corresponding to a variable.
 Importantly, the filenames and line numbers given reference the original source&amp;nbsp;code.&lt;/p&gt;
 &lt;p&gt;Since there may be multiple vertices with a name matching the specified start
-and end points, the register version is preferentially located (&lt;code&gt;SRC&lt;/code&gt; for a
-start point and &lt;code&gt;DST&lt;/code&gt; for an end point), followed by &lt;code&gt;VAR&lt;/code&gt;, &lt;code&gt;WIRE&lt;/code&gt; and
+and end points, the register version is preferentially located&amp;nbsp;(&lt;code&gt;SRC&lt;/code&gt; for a
+start point&amp;nbsp;and &lt;code&gt;DST&lt;/code&gt; for an end point), followed&amp;nbsp;by &lt;code&gt;VAR&lt;/code&gt;, &lt;code&gt;WIRE&lt;/code&gt; and
 &lt;code&gt;PORT&lt;/code&gt; types.&lt;/p&gt;
 &lt;p&gt;You can also query all the paths that fan out from a particular start&amp;nbsp;point:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
@@ -7683,7 +7677,7 @@ constraints. (An option is provided to enumerate all paths, but it can only be
 used on small&amp;nbsp;netlists.)&lt;/p&gt;
 &lt;p&gt;When trying to match a particular path in a physical build it it useful to
 further constrain the search to force it to match the same path. This can be
-done by specifying through points with the &lt;code&gt;--through&lt;/code&gt; option. Each through
+done by specifying through points with&amp;nbsp;the &lt;code&gt;--through&lt;/code&gt; option. Each through
 argument is taken in order as an intermediate point in the path. The same
 search algorithm is used on each pair of points to build up a composite report.
 For&amp;nbsp;example:&lt;/p&gt;
@@ -7707,11 +7701,11 @@ support enough of the SystemVerilog standard.) The Verilator modifications add
 a new &lt;span class="caps"&gt;AST&lt;/span&gt; visitor, which walks the tree after it has been processed, for
 example to propagate constants and inline tasks and&amp;nbsp;modules.&lt;/p&gt;
 &lt;p&gt;The &lt;code&gt;netlist-paths&lt;/code&gt; tool is implemented in C++ and makes use of the Boost Graph
-Library. Paths are identified using the &lt;code&gt;boost::depth_first_search&lt;/code&gt; algorithm.
+Library. Paths are identified using&amp;nbsp;the &lt;code&gt;boost::depth_first_search&lt;/code&gt; algorithm.
 The all-fan-out report enumerates paths to all the end points in a depth-first
-traversal of the graph, the fan-in variant uses the &lt;code&gt;boost::reverse_graph&lt;/code&gt;
+traversal of the graph, the fan-in variant uses&amp;nbsp;the &lt;code&gt;boost::reverse_graph&lt;/code&gt;
 adaptor and performs the same algorithm. Properties are associated with
-vertices in the graph using a &lt;code&gt;boost::dynamic_property_map&lt;/code&gt;. I put together a
+vertices in the graph using&amp;nbsp;a &lt;code&gt;boost::dynamic_property_map&lt;/code&gt;. I put together a
 &lt;a href="https://github.com/jameshanlon/boost_graph_example"&gt;simple example program&lt;/a&gt; to
 illustrate how to use these maps (plus some other library features) since I
 found there were some subtleties in getting this to&amp;nbsp;work.&lt;/p&gt;
@@ -7723,7 +7717,7 @@ found there were some subtleties in getting this to&amp;nbsp;work.&lt;/p&gt;
 &lt;li&gt;Provide a mechanism to seach for the longest paths in the&amp;nbsp;graph.&lt;/li&gt;
 &lt;li&gt;Provide a mechanism to assert there is no logical path between two sub&amp;nbsp;modules.&lt;/li&gt;
 &lt;li&gt;Detect and report timing&amp;nbsp;loops.&lt;/li&gt;
-&lt;li&gt;Add options to &lt;code&gt;dumpnames&lt;/code&gt; to filter by type or&amp;nbsp;direction.&lt;/li&gt;
+&lt;li&gt;Add options&amp;nbsp;to &lt;code&gt;dumpnames&lt;/code&gt; to filter by type or&amp;nbsp;direction.&lt;/li&gt;
 &lt;li&gt;Add options to the querys to select only internal paths or only input/output&amp;nbsp;paths.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Links&lt;/h2&gt;
@@ -7964,14 +7958,14 @@ post&lt;/a&gt;, and should be useful
 for anyone who is familiar with&amp;nbsp;Vim.&lt;/p&gt;
 &lt;p&gt;A Vim command can be constructed from different rules, and below each rule is
 specified with a &lt;a href="https://en.wikipedia.org/wiki/Extended_Backus-Naur_form"&gt;&lt;span class="caps"&gt;EBNF&lt;/span&gt;-style
-syntax&lt;/a&gt;, where &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; is
-another rule. &lt;code&gt;{...}&lt;/code&gt; represents some key presses, &lt;code&gt;|&lt;/code&gt; is an alternative and
+syntax&lt;/a&gt;,&amp;nbsp;where &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; is
+another&amp;nbsp;rule. &lt;code&gt;{...}&lt;/code&gt; represents some key&amp;nbsp;presses, &lt;code&gt;|&lt;/code&gt; is an alternative&amp;nbsp;and
 &lt;code&gt;[...]&lt;/code&gt; is an optional component. Be warned that
 since there are many special cases to Vim commands and I&amp;#8217;ve not checked all the
 combinations, some of the rules below may yield invalid compositions! As such,
 these rules are better viewed as a way of remembering commands. For an
 exhaustive treatment of the command language, please check the &lt;a href="https://www.vim.org/docs.php"&gt;Vim
-documentation&lt;/a&gt;, or use the &lt;code&gt;:help&lt;/code&gt; tags that I&amp;#8217;ve&amp;nbsp;given.&lt;/p&gt;
+documentation&lt;/a&gt;, or use&amp;nbsp;the &lt;code&gt;:help&lt;/code&gt; tags that I&amp;#8217;ve&amp;nbsp;given.&lt;/p&gt;
 &lt;h2&gt;Motions&lt;/h2&gt;
 &lt;p&gt;Motions change the position of the cursor and can be combined with a count to
 repeat the&amp;nbsp;motion.&lt;/p&gt;
@@ -7982,8 +7976,8 @@ repeat the&amp;nbsp;motion.&lt;/p&gt;
 
 &lt;p&gt;Examples:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;2fx&lt;/code&gt; - move to the second right-hand occurrence of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(inclusive)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;2Tx&lt;/code&gt; - move to the second left-hand occurrence of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(exclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2fx&lt;/code&gt; - move to the second right-hand occurrence&amp;nbsp;of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(inclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2Tx&lt;/code&gt; - move to the second left-hand occurrence&amp;nbsp;of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(exclusive)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;w&lt;/code&gt; - move to the next&amp;nbsp;word&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;10j&lt;/code&gt; or &lt;code&gt;10_&lt;/code&gt; - move down 10&amp;nbsp;lines&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;10k&lt;/code&gt; - move up 10&amp;nbsp;lines&lt;/li&gt;
@@ -7991,13 +7985,13 @@ repeat the&amp;nbsp;motion.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;6E&lt;/code&gt; - move to end of sixth word&amp;nbsp;forwards&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;4b&lt;/code&gt; - move to start of the fourth word&amp;nbsp;backwards&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;2{&lt;/code&gt; - move two paragraphs&amp;nbsp;down&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;3/foo&lt;/code&gt; - move to the third occurrence of &lt;code&gt;foo&lt;/code&gt; later in the&amp;nbsp;buffer&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;3?foo&lt;/code&gt; - move to the third occurrence of &lt;code&gt;foo&lt;/code&gt; earlier in the&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3/foo&lt;/code&gt; - move to the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt; later in the&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3?foo&lt;/code&gt; - move to the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt; earlier in the&amp;nbsp;buffer&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Text&amp;nbsp;objects&lt;/h2&gt;
 &lt;p&gt;Text objects are a collection of characters relative to the position of the
 cursor. Compared to motions, text objects on a whole object, regardless of the
-specific cursor position. The &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;i&lt;/code&gt; modifiers augment text objects,
+specific cursor position.&amp;nbsp;The &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;i&lt;/code&gt; modifiers augment text objects,
 specifying whether the surrounding context should be included. The context may
 be whitespace or delimiting&amp;nbsp;characters.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
@@ -8015,13 +8009,13 @@ be whitespace or delimiting&amp;nbsp;characters.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;ip&lt;/code&gt; - inner&amp;nbsp;paragraph&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;a'&lt;/code&gt; - a single-quoted&amp;nbsp;string&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;i'&lt;/code&gt; - inside a single-quoted&amp;nbsp;string&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;a(&lt;/code&gt; = &lt;code&gt;a)&lt;/code&gt;= &lt;code&gt;ab&lt;/code&gt; - a parenthesised block, from &lt;code&gt;(&lt;/code&gt; to &lt;code&gt;)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;i(&lt;/code&gt; = &lt;code&gt;i)&lt;/code&gt;= &lt;code&gt;ib&lt;/code&gt; - inside a parenthesised block, contents of &lt;code&gt;(...)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt; = &lt;code&gt;a&amp;gt;&lt;/code&gt; - a tag, from &lt;code&gt;&amp;lt;&lt;/code&gt; to &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;at&lt;/code&gt; - around tag block, including matching start and end tags &lt;code&gt;&amp;lt;tag&amp;gt;...&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a(&lt;/code&gt; = &lt;code&gt;a)&lt;/code&gt;= &lt;code&gt;ab&lt;/code&gt; - a parenthesised block,&amp;nbsp;from &lt;code&gt;(&lt;/code&gt; to &lt;code&gt;)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i(&lt;/code&gt; = &lt;code&gt;i)&lt;/code&gt;= &lt;code&gt;ib&lt;/code&gt; - inside a parenthesised block, contents&amp;nbsp;of &lt;code&gt;(...)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt; = &lt;code&gt;a&amp;gt;&lt;/code&gt; - a tag,&amp;nbsp;from &lt;code&gt;&amp;lt;&lt;/code&gt; to &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;at&lt;/code&gt; - around tag block, including matching start and end&amp;nbsp;tags &lt;code&gt;&amp;lt;tag&amp;gt;...&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;it&lt;/code&gt; - inside tag block, excluding&amp;nbsp;tags&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;aB&lt;/code&gt; = &lt;code&gt;a{&lt;/code&gt; = &lt;code&gt;a}&lt;/code&gt; - around a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;iB&lt;/code&gt; = &lt;code&gt;i{&lt;/code&gt; = &lt;code&gt;i}&lt;/code&gt; - inside a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;aB&lt;/code&gt; = &lt;code&gt;a{&lt;/code&gt; = &lt;code&gt;a}&lt;/code&gt; - around&amp;nbsp;a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iB&lt;/code&gt; = &lt;code&gt;i{&lt;/code&gt; = &lt;code&gt;i}&lt;/code&gt; - inside&amp;nbsp;a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Operators on text&amp;nbsp;objects&lt;/h2&gt;
 &lt;p&gt;Operators can be applied to text objects. In some circumstances, a count can be
@@ -8046,13 +8040,13 @@ applied to the text object to repeat its&amp;nbsp;effect.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;y_&lt;/code&gt; = &lt;code&gt;yy&lt;/code&gt; = &lt;code&gt;Y&lt;/code&gt; - yank the&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;c_&lt;/code&gt; = &lt;code&gt;cc&lt;/code&gt; = &lt;code&gt;C&lt;/code&gt; - change the&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;gUap&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;gqap&lt;/code&gt; - format paragraph text to &lt;code&gt;textwidth&lt;/code&gt; line&amp;nbsp;length&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dit&lt;/code&gt; - delete text between tags &lt;code&gt;&amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gqap&lt;/code&gt; - format paragraph text&amp;nbsp;to &lt;code&gt;textwidth&lt;/code&gt; line&amp;nbsp;length&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dit&lt;/code&gt; - delete text between&amp;nbsp;tags &lt;code&gt;&amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;dat&lt;/code&gt; - delete tag&amp;nbsp;block&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yi"&lt;/code&gt; - yank text in &lt;code&gt;"..."&lt;/code&gt; block&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yi&amp;lt;&lt;/code&gt; - yank text in &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; block&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yiB&lt;/code&gt; - yank text in &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;yaB&lt;/code&gt; - yank whole &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yi"&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;"..."&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yi&amp;lt;&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yiB&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yaB&lt;/code&gt; - yank&amp;nbsp;whole &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Operators on&amp;nbsp;motions&lt;/h2&gt;
 &lt;p&gt;A motion can be applied after an operator to apply the operator on the text
@@ -8064,24 +8058,24 @@ that was moved&amp;nbsp;over.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;dl&lt;/code&gt; = &lt;code&gt;x&lt;/code&gt; - delete next&amp;nbsp;character&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;db&lt;/code&gt; - delete backwards to the start of a&amp;nbsp;word&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dtx&lt;/code&gt; - delete until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(exclusive)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;dfx&lt;/code&gt; - delete until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(inclusive)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d/foo&lt;/code&gt; - delete from cursor to next occurrence of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;d3/foo&lt;/code&gt; - delete from cursor until the third occurrence of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dtx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(exclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(inclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d/foo&lt;/code&gt; - delete from cursor to next occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d3/foo&lt;/code&gt; - delete from cursor until the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;c$&lt;/code&gt; = &lt;code&gt;C&lt;/code&gt; - change until end of&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;d$&lt;/code&gt; = &lt;code&gt;D&lt;/code&gt; - delete until end of&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;d0&lt;/code&gt; - delete until beginning of&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;d^&lt;/code&gt; - delete until first non-blank character in&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;c{&lt;/code&gt; - change from current line to beginning of&amp;nbsp;paragraph&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;gU}&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;c{&lt;/code&gt; - change paragraph (same as &lt;code&gt;cap&lt;/code&gt; operator-text&amp;nbsp;object)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c{&lt;/code&gt; - change paragraph (same&amp;nbsp;as &lt;code&gt;cap&lt;/code&gt; operator-text&amp;nbsp;object)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;&amp;gt;}&lt;/code&gt; - indent&amp;nbsp;paragraph&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;y%&lt;/code&gt; - yank the entire &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y%&lt;/code&gt; - yank the&amp;nbsp;entire &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;cgg&lt;/code&gt; - change lines from cursor to top of&amp;nbsp;buffer&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;ggdG&lt;/code&gt; - delete contents of&amp;nbsp;buffer&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Duplicate&amp;nbsp;operators&lt;/h2&gt;
-&lt;p&gt;Operators applied twice affect the entire line, a synonym for &lt;code&gt;&amp;lt;operator&amp;gt;_&lt;/code&gt;,&lt;/p&gt;
+&lt;p&gt;Operators applied twice affect the entire line, a synonym&amp;nbsp;for &lt;code&gt;&amp;lt;operator&amp;gt;_&lt;/code&gt;,&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -8093,7 +8087,7 @@ that was moved&amp;nbsp;over.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt; = &lt;code&gt;&amp;gt;_&lt;/code&gt; = &lt;code&gt;&amp;gt;l&lt;/code&gt; - indent&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; = &lt;code&gt;&amp;lt;_&lt;/code&gt; = &lt;code&gt;&amp;gt;l&lt;/code&gt; - unindent&amp;nbsp;line&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Note: duplication does not apply to &lt;code&gt;~&lt;/code&gt; or two-character&amp;nbsp;operators.&lt;/p&gt;
+&lt;p&gt;Note: duplication does not apply&amp;nbsp;to &lt;code&gt;~&lt;/code&gt; or two-character&amp;nbsp;operators.&lt;/p&gt;
 &lt;h2&gt;Aliases&lt;/h2&gt;
 &lt;p&gt;Some commonly-used commands have&amp;nbsp;aliases.&lt;/p&gt;
 &lt;ul&gt;
@@ -8107,7 +8101,7 @@ that was moved&amp;nbsp;over.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;S&lt;/code&gt; = &lt;code&gt;cc&lt;/code&gt; - substitute&amp;nbsp;line&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Filtering&lt;/h2&gt;
-&lt;p&gt;Text lines can be filtered through an external program (see &lt;code&gt;:help filter&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Text lines can be filtered through an external program&amp;nbsp;(see &lt;code&gt;:help filter&lt;/code&gt;).&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -8118,21 +8112,21 @@ that was moved&amp;nbsp;over.&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;!apwc -l&lt;/code&gt; - replace paragraph with word&amp;nbsp;count&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;!apfmt -s&lt;/code&gt; - collapse whitespace in paragraph into single&amp;nbsp;spaces&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;!apfmt -c&lt;/code&gt; - centre lines in&amp;nbsp;paragraph&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;!i(grep foo&lt;/code&gt; - remove all lines in &lt;code&gt;(...)&lt;/code&gt; block that don&amp;#8217;t contain &lt;code&gt;foo&lt;/code&gt;
-  (similar to the Ex command &lt;code&gt;:%v/foo/d&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!i(grep foo&lt;/code&gt; - remove all lines&amp;nbsp;in &lt;code&gt;(...)&lt;/code&gt; block that don&amp;#8217;t&amp;nbsp;contain &lt;code&gt;foo&lt;/code&gt;
+  (similar to the Ex&amp;nbsp;command &lt;code&gt;:%v/foo/d&lt;/code&gt;)&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;gg!Gsort&lt;/code&gt; - sort all lines in&amp;nbsp;buffer&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;gg!Guniq -c&lt;/code&gt; - remove all duplicate lines in buffer and prefix remaining with duplicate&amp;nbsp;counts&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Visual&amp;nbsp;selection&lt;/h2&gt;
-&lt;p&gt;Visual selection, character-wise &lt;code&gt;v&lt;/code&gt;, line-wise &lt;code&gt;V&lt;/code&gt; or block-wise &lt;code&gt;Ctrl+v&lt;/code&gt; (all
-referred to below by &lt;code&gt;{visual}&lt;/code&gt;, see &lt;code&gt;:help visual-start&lt;/code&gt;), followed by a
+&lt;p&gt;Visual selection,&amp;nbsp;character-wise &lt;code&gt;v&lt;/code&gt;,&amp;nbsp;line-wise &lt;code&gt;V&lt;/code&gt; or&amp;nbsp;block-wise &lt;code&gt;Ctrl+v&lt;/code&gt; (all
+referred to below&amp;nbsp;by &lt;code&gt;{visual}&lt;/code&gt;,&amp;nbsp;see &lt;code&gt;:help visual-start&lt;/code&gt;), followed by a
 motion or text object can be used to specify a character range. An operator can
-then be used to transform the text. Note the operators &lt;code&gt;gu&lt;/code&gt;, &lt;code&gt;gU&lt;/code&gt; and &lt;code&gt;g@&lt;/code&gt;
+then be used to transform the text. Note the&amp;nbsp;operators &lt;code&gt;gu&lt;/code&gt;, &lt;code&gt;gU&lt;/code&gt; and &lt;code&gt;g@&lt;/code&gt;
 can&amp;#8217;t be used in visual mode and text objects in visual mode, however, there
-are additional ones that can (see &lt;code&gt;:help visual-operators&lt;/code&gt;). A visual block is
+are additional ones that can&amp;nbsp;(see &lt;code&gt;:help visual-operators&lt;/code&gt;). A visual block is
 created by entering a visual mode, then providing a motion or text object to
 set the selection, or alternatively by any sequence of movement commands
-(referred to by &lt;code&gt;{move-around}&lt;/code&gt;).&lt;/p&gt;
+(referred to&amp;nbsp;by &lt;code&gt;{move-around}&lt;/code&gt;).&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;move&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;around&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
@@ -8143,18 +8137,18 @@ set the selection, or alternatively by any sequence of movement commands
 
 &lt;p&gt;Examples:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;vtxd&lt;/code&gt; = &lt;code&gt;dtx&lt;/code&gt; - delete until &lt;code&gt;x&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vt.rx&lt;/code&gt; - replace all characters with &lt;code&gt;x&lt;/code&gt; until &lt;code&gt;.&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vtxd&lt;/code&gt; = &lt;code&gt;dtx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vt.rx&lt;/code&gt; - replace all characters&amp;nbsp;with &lt;code&gt;x&lt;/code&gt; until &lt;code&gt;.&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;v3as~&lt;/code&gt; - make next three sentences&amp;nbsp;uppercase&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;vapU&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;vapd&lt;/code&gt; - delete&amp;nbsp;paragraph&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}sfoo{Esc}&lt;/code&gt; - replace each line of blockwise selection with &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Ifoo{Esc}&lt;/code&gt; - prepend &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Afoo{Esc}&lt;/code&gt; - append &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}sfoo{Esc}&lt;/code&gt; - replace each line of blockwise selection&amp;nbsp;with &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Ifoo{Esc}&lt;/code&gt; -&amp;nbsp;prepend &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Afoo{Esc}&lt;/code&gt; -&amp;nbsp;append &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;vap!sort&lt;/code&gt; - sort the lines of the current&amp;nbsp;paragraph&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vap!fmt&lt;/code&gt; - use the &lt;code&gt;fmt&lt;/code&gt; command-line tool to format selection into
-  lines of 75 characters (similar to the &lt;code&gt;gqap&lt;/code&gt; command)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ggvG!indent&lt;/code&gt; - use the &lt;code&gt;indent&lt;/code&gt; command-line tool to apply automatic
+&lt;li&gt;&lt;code&gt;vap!fmt&lt;/code&gt; - use&amp;nbsp;the &lt;code&gt;fmt&lt;/code&gt; command-line tool to format selection into
+  lines of 75 characters (similar to&amp;nbsp;the &lt;code&gt;gqap&lt;/code&gt; command)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ggvG!indent&lt;/code&gt; - use&amp;nbsp;the &lt;code&gt;indent&lt;/code&gt; command-line tool to apply automatic
   indentation all lines of a C-code&amp;nbsp;buffer&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;{visual}J&lt;/code&gt; - join the highlighted lines on the current&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;{visual}gJ&lt;/code&gt; - join the highlighted lines on the current line (removing&amp;nbsp;whitespace)&lt;/li&gt;
@@ -8169,7 +8163,7 @@ combination with motions, operators and text&amp;nbsp;objects.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;db.&lt;/code&gt; - delete the previous two&amp;nbsp;words&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;db4.&lt;/code&gt; - delete the previous five&amp;nbsp;words&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;{insert text...}&lt;/code&gt; then &lt;code&gt;/{pattern}.&lt;/code&gt; - insert text again before next text matching &lt;code&gt;{pattern}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{insert text...}&lt;/code&gt; then &lt;code&gt;/{pattern}.&lt;/code&gt; - insert text again before next text&amp;nbsp;matching &lt;code&gt;{pattern}&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The &lt;code&gt;gn&lt;/code&gt; and &lt;code&gt;gN&lt;/code&gt; motions can be used with operators to move between matching
 search&amp;nbsp;patterns.&lt;/p&gt;
@@ -8195,8 +8189,8 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;li&gt;&lt;code&gt;g~~&lt;/code&gt; = &lt;code&gt;g~g~&lt;/code&gt; - switch case of&amp;nbsp;line&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;gUU&lt;/code&gt; = &lt;code&gt;gUgU&lt;/code&gt; - make line&amp;nbsp;uppercase&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;guu&lt;/code&gt; = &lt;code&gt;gugu&lt;/code&gt; - make line&amp;nbsp;lowercase&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;r{char}&lt;/code&gt; - replace character under cursor with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;10r{char}&lt;/code&gt; - replace the next 10 characters with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r{char}&lt;/code&gt; - replace character under cursor&amp;nbsp;with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;10r{char}&lt;/code&gt; - replace the next 10 characters&amp;nbsp;with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h2&gt;Summary of&amp;nbsp;rules&lt;/h2&gt;
@@ -8261,7 +8255,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;%&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;move to matching character (default pairs: &lt;code&gt;()&lt;/code&gt;, &lt;code&gt;{}&lt;/code&gt;, &lt;code&gt;[]&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;move to matching character (default&amp;nbsp;pairs: &lt;code&gt;()&lt;/code&gt;, &lt;code&gt;{}&lt;/code&gt;, &lt;code&gt;[]&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;[(&lt;/code&gt;, &lt;code&gt;[)&lt;/code&gt;&lt;/td&gt;
@@ -8273,11 +8267,11 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;/{pattern}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;search forward (must be followed by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;search forward (must be followed&amp;nbsp;by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;?{pattern}&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;search backwards (must be followed by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;search backwards (must be followed&amp;nbsp;by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;gg&lt;/code&gt; / &lt;code&gt;G&lt;/code&gt;&lt;/td&gt;
@@ -8311,7 +8305,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;swap case (or &lt;code&gt;g~&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;swap case&amp;nbsp;(or &lt;code&gt;g~&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
@@ -8335,7 +8329,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;g@&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;apply function (set by &lt;code&gt;operatorfunc&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;apply function (set&amp;nbsp;by &lt;code&gt;operatorfunc&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;  &lt;h2&gt;Visual&amp;nbsp;operators&lt;/h2&gt;
@@ -8399,7 +8393,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;w&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;word (delimited by non-keyword characters, see &lt;code&gt;:help iskeyword&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;word (delimited by non-keyword characters,&amp;nbsp;see &lt;code&gt;:help iskeyword&lt;/code&gt;)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;W&lt;/code&gt;&lt;/td&gt;
@@ -8447,11 +8441,11 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;b&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;text block between &lt;code&gt;(&lt;/code&gt; and &lt;code&gt;)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block&amp;nbsp;between &lt;code&gt;(&lt;/code&gt; and &lt;code&gt;)&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;B&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;text block between &lt;code&gt;{&lt;/code&gt; and &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block&amp;nbsp;between &lt;code&gt;{&lt;/code&gt; and &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;&lt;/div&gt;
@@ -8672,9 +8666,9 @@ This is because logic is checked at compile time for multiple drivers. Note
 that variables are entities driven by procedural assignments (in always
 blocks), whereas nets occur in any other forms of assignment (continuous,
 primitive outputs and module ports). An exception to this is when integrating
-external &lt;span class="caps"&gt;IP&lt;/span&gt; that uses wire types where some sparing use of the &lt;code&gt;wire&lt;/code&gt; type may
+external &lt;span class="caps"&gt;IP&lt;/span&gt; that uses wire types where some sparing use of&amp;nbsp;the &lt;code&gt;wire&lt;/code&gt; type may
 be required for consistency.&lt;sup id="fnref:logic-wire-reg"&gt;&lt;a class="footnote-ref" href="#fn:logic-wire-reg"&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Multiply-driven nets should be declared using wire.&lt;/strong&gt; This is because &lt;code&gt;wire&lt;/code&gt;
+&lt;p&gt;&lt;strong&gt;Multiply-driven nets should be declared using wire.&lt;/strong&gt; This is&amp;nbsp;because &lt;code&gt;wire&lt;/code&gt;
 data types permit multiple&amp;nbsp;drivers.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Combined logic declarations and assignment statements are not allowed.&lt;/strong&gt; The behaviour of these is to assign
 a value at time 0, which is not synthesizable. Continuous assignment after time 0, which is the typical intention,
@@ -8711,17 +8705,17 @@ to their members recursively. For&amp;nbsp;example:&lt;/p&gt;
 since they provide extra compile-time checking.&lt;sup id="fnref:always-blocks"&gt;&lt;a class="footnote-ref" href="#fn:always-blocks"&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a name="always_comb" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;code&gt;always_comb&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_comb&lt;/code&gt; instead of &lt;code&gt;always&lt;/code&gt; for combinatorial logic.&lt;/strong&gt; The
+&lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_comb&lt;/code&gt; instead&amp;nbsp;of &lt;code&gt;always&lt;/code&gt; for combinatorial logic.&lt;/strong&gt;&amp;nbsp;The
 &lt;code&gt;always_comb&lt;/code&gt; statement allows tools to check that it does not contain any
 latched state and that no other processes assign to variables appearing on the
 left-hand side. (It&amp;#8217;s worth checking the &lt;span class="caps"&gt;LRM&lt;/span&gt; for details of of the other
-differences.) The use of an &lt;code&gt;always_comb&lt;/code&gt; block is also a much clearer
-indication of a combinatorial block that the use of &lt;code&gt;=&lt;/code&gt; as opposed to &lt;code&gt;&amp;lt;=&lt;/code&gt;.&lt;/p&gt;
+differences.) The use of&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; block is also a much clearer
+indication of a combinatorial block that the use&amp;nbsp;of &lt;code&gt;=&lt;/code&gt; as opposed&amp;nbsp;to &lt;code&gt;&amp;lt;=&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Always provide an initial value.&lt;/strong&gt; A latch will be inferred if there exists a
-control-flow path in which a value of a signal is not set. Since &lt;code&gt;always_comb&lt;/code&gt;
+control-flow path in which a value of a signal is not set.&amp;nbsp;Since &lt;code&gt;always_comb&lt;/code&gt;
 specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
-latch since there is no assignment to &lt;code&gt;foo&lt;/code&gt; when the condition is not&amp;nbsp;true.&lt;/p&gt;
+latch since there is no assignment&amp;nbsp;to &lt;code&gt;foo&lt;/code&gt; when the condition is not&amp;nbsp;true.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -8738,8 +8732,8 @@ latch since there is no assignment to &lt;code&gt;foo&lt;/code&gt; when the cond
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Avoid reading and writing a signal in an &lt;code&gt;always_comb&lt;/code&gt; block.&lt;/strong&gt;
-Avoid reading and writing a signal in an &lt;code&gt;always_comb&lt;/code&gt; block. The sensitivity
+&lt;p&gt;&lt;strong&gt;Avoid reading and writing a signal in&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; block.&lt;/strong&gt;
+Avoid reading and writing a signal in&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; block. The sensitivity
 list only includes variables that are read in expressions or functions and it
 excludes variables that are also written to. According to these restrictions, a
 variable that is read and written in a block is excluded from the sensitivity
@@ -8747,35 +8741,35 @@ list, and activation of the block will be dependent on other variables.
 However, this style can cause some tools to warn of a simulation-synthesis
 mismatch (presumably because they apply conservative rules from older versions
 of the language&amp;nbsp;standard).&lt;/p&gt;
-&lt;p&gt;In the following code, the block is triggered only when the the right-hand-side
+&lt;p&gt;In the following code, the block is triggered only when the the&amp;nbsp;right-hand-side
 &lt;code&gt;foo&lt;/code&gt; changes, rather than entering a feedback loop where it shifts&amp;nbsp;continuously:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;To avoid reading and writing &lt;code&gt;foo&lt;/code&gt; in the same block and possible warnings
+&lt;p&gt;To avoid reading and&amp;nbsp;writing &lt;code&gt;foo&lt;/code&gt; in the same block and possible warnings
 from tools, a new signal can be&amp;nbsp;introduced:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;next_foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Where possible extract logic into &lt;code&gt;assign&lt;/code&gt; statements.&lt;/strong&gt; Extract single
-assignments to a variable into a separate &lt;code&gt;assign&lt;/code&gt; statement, where it is
+&lt;p&gt;&lt;strong&gt;Where possible extract logic&amp;nbsp;into &lt;code&gt;assign&lt;/code&gt; statements.&lt;/strong&gt; Extract single
+assignments to a variable into a&amp;nbsp;separate &lt;code&gt;assign&lt;/code&gt; statement, where it is
 possible to do so. This approach uses the features of SystemVerilog
 consistently, rather than using two mechanisms to achieve the same effect. This
-makes it clear that an &lt;code&gt;always_comb&lt;/code&gt; is used to introduce sequentiality.
-Another opportunity to move logic into separate &lt;code&gt;assign&lt;/code&gt; statements is with
+makes it clear that&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; is used to introduce sequentiality.
+Another opportunity to move logic into&amp;nbsp;separate &lt;code&gt;assign&lt;/code&gt; statements is with
 complex expressions, such as the Boolean value for a conditional statement.
 Doing this makes the control flow structure clearer, potentially provide
 opportunities for reuse, and provides a separate signal when inspecting the
 signals in a waveform&amp;nbsp;viewer.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Avoid unnecessary sequentiality.&lt;/strong&gt; It is easy to add statements to an
+&lt;p&gt;&lt;strong&gt;Avoid unnecessary sequentiality.&lt;/strong&gt; It is easy to add statements to&amp;nbsp;an
 &lt;code&gt;always_comb&lt;/code&gt; to expand its behaviour, but this should only be done when there
 are true sequential dependencies between statements in the block. In general,
 parallelism should be exposed where ever possible. In the the following
-example, the sequentiality is not necessary since the output &lt;code&gt;set_foo&lt;/code&gt; depends
+example, the sequentiality is not necessary since the&amp;nbsp;output &lt;code&gt;set_foo&lt;/code&gt; depends
 independently on the various&amp;nbsp;conditions:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;set_foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -8795,7 +8789,7 @@ independently on the various&amp;nbsp;conditions:&lt;/p&gt;
 
 &lt;p&gt;Clearly the sequencing of the conditions is not necessary, so the block could
 be transformed to separate the logic for each condition into separate parallel
-processes (extracting into &lt;code&gt;assign&lt;/code&gt; statements as per the rule above) and
+processes (extracting&amp;nbsp;into &lt;code&gt;assign&lt;/code&gt; statements as per the rule above) and
 explicitly combine them with the implied logical disjunction of the original&amp;nbsp;block:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;condition_a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;signal_a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;signal_b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;condition_b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;signal_c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;signal_d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -8809,18 +8803,18 @@ explicitly combine them with the implied logical disjunction of the original&amp
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;It is &lt;a href="https://www.veripool.org/papers/verilator_philips_internals.pdf"&gt;recommended&lt;/a&gt; by the author of Verilator to split up
+&lt;p&gt;It is &lt;a href="https://www.veripool.org/papers/verilator_philips_internals.pdf"&gt;recommended&lt;/a&gt; by the author of Verilator to split&amp;nbsp;up
 &lt;code&gt;always&lt;/code&gt; blocks (combinatorial or sequential) so they contain as few
 statements as possible. This allows Verilator the most freedom to order the
 code to improve execution performance. Presumably, this provides similar
 freedoms to other&amp;nbsp;simulators.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Drive one signal per block.&lt;/strong&gt; With complex control flow statements, it is
-tempting to use a single &lt;code&gt;always_comb&lt;/code&gt; block to drive multiple signals. In some
+tempting to use a&amp;nbsp;single &lt;code&gt;always_comb&lt;/code&gt; block to drive multiple signals. In some
 circumstances, there may be good reasons to do this, such as when many output
 signals are used in a similar way, but in the general case, splitting each
 signal into a separate block makes it clear what logic involved in driving that
 signal, and as such, facilitates further&amp;nbsp;simplification.&lt;/p&gt;
-&lt;p&gt;An additional reason to avoid driving multiple signals per &lt;code&gt;always_comb&lt;/code&gt; block
+&lt;p&gt;An additional reason to avoid driving multiple signals&amp;nbsp;per &lt;code&gt;always_comb&lt;/code&gt; block
 is that &lt;a href="https://www.veripool.org/wiki/verilator"&gt;Verilator&lt;/a&gt; can infer a dependence between two signals,
 leading to false circular combinatorial loops. In these cases, it issues an
 &lt;a href="https://www.embecosm.com/appnotes/ean6/html/ch07s02s07.html"&gt;&lt;code&gt;UPOPTFLAT&lt;/code&gt; warning&lt;/a&gt; and cannot optimise the path, leading to
@@ -8872,25 +8866,25 @@ to a factor of two&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a name="always_ff" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;&lt;code&gt;always_ff&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_ff&lt;/code&gt; instead of &lt;code&gt;always&lt;/code&gt; for sequential logic.&lt;/strong&gt; Similarly to
-&lt;code&gt;always_comb&lt;/code&gt;, use of &lt;code&gt;always_ff&lt;/code&gt; permits tools to check that the procedure
+&lt;p&gt;&lt;strong&gt;Use &lt;code&gt;always_ff&lt;/code&gt; instead&amp;nbsp;of &lt;code&gt;always&lt;/code&gt; for sequential logic.&lt;/strong&gt; Similarly&amp;nbsp;to
+&lt;code&gt;always_comb&lt;/code&gt;, use&amp;nbsp;of &lt;code&gt;always_ff&lt;/code&gt; permits tools to check that the procedure
 only contains sequential logic behaviour (no timing controls and only one event
 control) that variables on the left-hand side are not written to by any other
 process, and makes clear the intent for sequential logic behaviour with
-non-blocking assignments, &lt;code&gt;&amp;lt;=&lt;/code&gt;.&lt;/p&gt;
+non-blocking&amp;nbsp;assignments, &lt;code&gt;&amp;lt;=&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid adding logic to non-blocking assignments.&lt;/strong&gt; This is primarily a matter
-of taste, but having non-blocking assignments in &lt;code&gt;always_ff&lt;/code&gt; blocks only from a
+of taste, but having non-blocking assignments&amp;nbsp;in &lt;code&gt;always_ff&lt;/code&gt; blocks only from a
 logic signal name, rather than a logical expression, keeps the block simple and
-limits combinatorial logic to &lt;code&gt;always_comb&lt;/code&gt; blocks and &lt;code&gt;assign&lt;/code&gt; statements
-elsewhere in the module. Since synthesizable &lt;code&gt;always_ff&lt;/code&gt;s are additionally
+limits combinatorial logic&amp;nbsp;to &lt;code&gt;always_comb&lt;/code&gt; blocks&amp;nbsp;and &lt;code&gt;assign&lt;/code&gt; statements
+elsewhere in the module. Since&amp;nbsp;synthesizable &lt;code&gt;always_ff&lt;/code&gt;s are additionally
 restricted in that variables assigned to must have a reset condition of a
 constant value, maintaining this clarity aids the designer. Having separate
 combinatorial blocks is also useful since it allows the logic signal driving a
 flip-flop as well as the registered value to be apparent in a waveform viewer,
 particularly when clock gates are&amp;nbsp;used.&lt;/p&gt;
 &lt;p&gt;A typical pattern when implementing combinatorial logic and registers is to
-define the set and clear conditions in an &lt;code&gt;always_comb&lt;/code&gt; and register the value
-in an accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;/p&gt;
+define the set and clear conditions in&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; and register the value
+in an&amp;nbsp;accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;bit&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bit_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -8917,7 +8911,7 @@ in an accompanying &lt;code&gt;always_ff&lt;/code&gt;, for&amp;nbsp;example:&lt;
 a flip flop will drive X on its output, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. Having
 registers initialised with a defined value precludes these kinds of mismatches.
-In the above example, &lt;code&gt;bit_q&lt;/code&gt; is correctly initialised to&amp;nbsp;0.&lt;/p&gt;
+In the above&amp;nbsp;example, &lt;code&gt;bit_q&lt;/code&gt; is correctly initialised to&amp;nbsp;0.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid using synchronous-reset registers.&lt;/strong&gt; These type of flip flops are not
 typically used because there are circumstances when a clock is not available
 and reset-to-clock paths are not timed in the physical implementation. In cases
@@ -8925,14 +8919,14 @@ where area and power are constrained, non-reset flip flops can instead be
 deployed for better&amp;nbsp;savings.&lt;/p&gt;
 &lt;p&gt;In certain circumstances when it is appropriate to use synchronous-reset registers, then
 &lt;strong&gt;avoid mixing synchronous and asynchronous reset signals&lt;/strong&gt;.
-A reset signal (eg &lt;code&gt;i_rst&lt;/code&gt;) should not be used as a
+A reset signal&amp;nbsp;(eg &lt;code&gt;i_rst&lt;/code&gt;) should not be used as a
 synchronous reset for one set of registers and an asynchronous reset for another set. This is because the resets
 must be controlled differently by &lt;span class="caps"&gt;DFT&lt;/span&gt; control logic, and use of a single signal may obscure the designer&amp;nbsp;intent.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid using non-reset registers.&lt;/strong&gt; To avoid issues with X values in a design
 as far as possible, non-reset registers should only be used when specifically
 required to save area and power, such as for the storage elements of a register
 file. In certain circumstances when it is appropriate to use non-reset
-registers, then &lt;strong&gt;define non-reset registers in a separate &lt;code&gt;always_ff&lt;/code&gt; block&lt;/strong&gt;.
+registers, then &lt;strong&gt;define non-reset registers in a&amp;nbsp;separate &lt;code&gt;always_ff&lt;/code&gt; block&lt;/strong&gt;.
 For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// A non-reset register.&lt;/span&gt;
 &lt;span class="k"&gt;always_ff&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;@(&lt;/span&gt;&lt;span class="k"&gt;posedge&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i_clk&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
@@ -8972,7 +8966,7 @@ important conditional context of&amp;nbsp;expressions.&lt;/p&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Use if-else-if statements to implement priority encoders.&lt;/strong&gt; Although a
+&lt;p&gt;&lt;strong&gt;Use if-else-if statements to implement priority encoders.&lt;/strong&gt; Although&amp;nbsp;a
 &lt;code&gt;priority case&lt;/code&gt; statement can be used to do this, it is easier for designers to
 recognise a priority encoder when it is written as an if-else-if statement. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Replace an unqualified case:&lt;/span&gt;
@@ -8989,12 +8983,12 @@ recognise a priority encoder when it is written as an if-else-if statement. For&
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Do not use qualifiers with &lt;code&gt;if&lt;/code&gt;-&lt;code&gt;else&lt;/code&gt;-&lt;code&gt;if&lt;/code&gt; statements.&lt;/strong&gt; The default
-behaviour of if statements is that of &lt;code&gt;priority&lt;/code&gt;, meaning that one condition is
+&lt;p&gt;&lt;strong&gt;Do not use qualifiers&amp;nbsp;with &lt;code&gt;if&lt;/code&gt;-&lt;code&gt;else&lt;/code&gt;-&lt;code&gt;if&lt;/code&gt; statements.&lt;/strong&gt; The default
+behaviour of if statements is that&amp;nbsp;of &lt;code&gt;priority&lt;/code&gt;, meaning that one condition is
 matched, the conditions are evaluated in sequence and only the body of the
-first matching condition is evaluated. For &lt;code&gt;unique&lt;/code&gt; and &lt;code&gt;unique0&lt;/code&gt; variants of
+first matching condition is evaluated.&amp;nbsp;For &lt;code&gt;unique&lt;/code&gt; and &lt;code&gt;unique0&lt;/code&gt; variants&amp;nbsp;of
 &lt;code&gt;if&lt;/code&gt; statements (one or no matching conditions, which can be evaluated in
-parallel), use a &lt;code&gt;unique&lt;/code&gt;-qualified case statement instead. For&amp;nbsp;example:&lt;/p&gt;
+parallel), use&amp;nbsp;a &lt;code&gt;unique&lt;/code&gt;-qualified case statement instead. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Replace a unique if:&lt;/span&gt;
 &lt;span class="n"&gt;unique&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ctrl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b01&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;output&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -9012,7 +9006,7 @@ parallel), use a &lt;code&gt;unique&lt;/code&gt;-qualified case statement instea
 &lt;span class="k"&gt;endcase&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Note that &lt;code&gt;if&lt;/code&gt; statements are X-optimistic in that a condition that evaluates
+&lt;p&gt;Note&amp;nbsp;that &lt;code&gt;if&lt;/code&gt; statements are X-optimistic in that a condition that evaluates
 to an X is treated as if it were a zero. This behaviour has drawbacks and
 benefits, but should be carefully considered since it can be a cause of
 divergence in behaviour between simulation and synthesis. In contrast, case
@@ -9047,10 +9041,10 @@ the&amp;nbsp;verification.&lt;/p&gt;
 &lt;p&gt;Note that if a case condition contains a list of expressions, it is not a
 violation of uniqueness if more than one expression matches since they are
 selecting the same&amp;nbsp;statement.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Do not use &lt;code&gt;unique0&lt;/code&gt; as a case qualifier.&lt;/strong&gt; Despite this qualifier being in
-the SystemVerilog &lt;span class="caps"&gt;LRM&lt;/span&gt; for more than a decade, tool support for &lt;code&gt;unique0&lt;/code&gt; is
-patchy and sometimes absent. This suggests that adoption of &lt;code&gt;unique0&lt;/code&gt; is low, so
-the &lt;span class="caps"&gt;EDA&lt;/span&gt; companies have not needed to support it comprehensively. As such,
+&lt;p&gt;&lt;strong&gt;Do not&amp;nbsp;use &lt;code&gt;unique0&lt;/code&gt; as a case qualifier.&lt;/strong&gt; Despite this qualifier being in
+the SystemVerilog &lt;span class="caps"&gt;LRM&lt;/span&gt; for more than a decade, tool support&amp;nbsp;for &lt;code&gt;unique0&lt;/code&gt; is
+patchy and sometimes absent. This suggests that adoption&amp;nbsp;of &lt;code&gt;unique0&lt;/code&gt; is low, so
+the &lt;span class="caps"&gt;EDA&lt;/span&gt; companies have not needed to support it comprehensively. As&amp;nbsp;such,
 &lt;code&gt;unique0&lt;/code&gt; should not be used, and instead a unique case with an empty default
 should be used, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Replace a unique0 case:&lt;/span&gt;
@@ -9073,7 +9067,7 @@ should be used, for&amp;nbsp;example:&lt;/p&gt;
 are always matches and/or are parallel, then they should use a priority case with a default. This way, the
 logic simulated results will always match the synthesized&amp;nbsp;logic.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;The Synopsys full_case/parallel_case compiler directives should not be
-used.&lt;/strong&gt; Instead, use either the &lt;code&gt;unique&lt;/code&gt; or &lt;code&gt;priority&lt;/code&gt; qualifiers, as
+used.&lt;/strong&gt; Instead, use either&amp;nbsp;the &lt;code&gt;unique&lt;/code&gt; or &lt;code&gt;priority&lt;/code&gt; qualifiers, as
 shown in the table&amp;nbsp;below:&lt;/p&gt;
 &lt;table class="table table-striped table-sm"&gt;
 &lt;thead&gt;
@@ -9108,8 +9102,8 @@ they can be used to cover all other case conditions that are not explicitly
 specified. Their inclusion in a case statement must be considered&amp;nbsp;carefully.&lt;/p&gt;
 &lt;p&gt;Defaults can be used to assign a value to a combinatorial signal to avoid
 latches from being inferred, however it is clearer to provide a default value
-at the beginning of an &lt;code&gt;always_comb&lt;/code&gt; block (see above). This is because it is
-conventional to add a &lt;code&gt;default&lt;/code&gt; at the end of a &lt;code&gt;case&lt;/code&gt; statement, which obscures
+at the beginning of&amp;nbsp;an &lt;code&gt;always_comb&lt;/code&gt; block (see above). This is because it is
+conventional to add&amp;nbsp;a &lt;code&gt;default&lt;/code&gt; at the end of&amp;nbsp;a &lt;code&gt;case&lt;/code&gt; statement, which obscures
 the effect of a default, possibly leading to bugs. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Assign a default at the top of the block.&lt;/span&gt;
 &lt;span class="k"&gt;always_comb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;begin&lt;/span&gt;
@@ -9125,18 +9119,18 @@ the effect of a default, possibly leading to bugs. For&amp;nbsp;example:&lt;/p&g
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;If a condition were to be added around the above case statement, the default
-value assignment of &lt;code&gt;next_state&lt;/code&gt; would remain at the top of the block. On the
+value assignment&amp;nbsp;of &lt;code&gt;next_state&lt;/code&gt; would remain at the top of the block. On the
 other hand, if the default value assignment were done in a default of the case,
 and not moved out, a latch would be&amp;nbsp;inferred.&lt;/p&gt;
-&lt;p&gt;Defaults can be used to trap unexpected case values. However, by specifying
+&lt;p&gt;Defaults can be used to trap unexpected case values. However, by&amp;nbsp;specifying
 &lt;code&gt;unique&lt;/code&gt; or &lt;code&gt;priority&lt;/code&gt;, unexpected case values will cause either of the
 no-matching-condition or multiple-conditions matching violation checks to fire.
-For example, with a one-hot case select, it is not necessary to add a
+For example, with a one-hot case select, it is not necessary to add&amp;nbsp;a
 &lt;code&gt;default: $error(...);&lt;/code&gt; case condition to trap values that are not one&amp;nbsp;hot.&lt;/p&gt;
-&lt;p&gt;There is no &lt;code&gt;priority0&lt;/code&gt; case statement qualifier, so it is reasonable to
-include an empty &lt;code&gt;default&lt;/code&gt; with a &lt;code&gt;priority case&lt;/code&gt; to disable the
-no-matching-condition violation check, similarly to &lt;code&gt;unique case&lt;/code&gt;. However, it
-is more conventional to use an &lt;code&gt;if&lt;/code&gt;-&lt;code&gt;else&lt;/code&gt;-&lt;code&gt;if&lt;/code&gt; to implement a priority
+&lt;p&gt;There is&amp;nbsp;no &lt;code&gt;priority0&lt;/code&gt; case statement qualifier, so it is reasonable to
+include an&amp;nbsp;empty &lt;code&gt;default&lt;/code&gt; with&amp;nbsp;a &lt;code&gt;priority case&lt;/code&gt; to disable the
+no-matching-condition violation check, similarly&amp;nbsp;to &lt;code&gt;unique case&lt;/code&gt;. However, it
+is more conventional to use&amp;nbsp;an &lt;code&gt;if&lt;/code&gt;-&lt;code&gt;else&lt;/code&gt;-&lt;code&gt;if&lt;/code&gt; to implement a priority
 encoder. Example of a case-based priority&amp;nbsp;encoder:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;priority&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;case&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cond&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nl"&gt;VALUE_A:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
@@ -9189,8 +9183,8 @@ multiplexer can be&amp;nbsp;written:&lt;/p&gt;
 &lt;span class="k"&gt;endmodule&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;As an aside, it is convenient to define a one-hot encoding in a &lt;code&gt;union&lt;/code&gt; type
-with another &lt;code&gt;struct&lt;/code&gt; to provide named access to each member. For example,
+&lt;p&gt;As an aside, it is convenient to define a one-hot encoding in&amp;nbsp;a &lt;code&gt;union&lt;/code&gt; type
+with&amp;nbsp;another &lt;code&gt;struct&lt;/code&gt; to provide named access to each member. For&amp;nbsp;example,
 &lt;code&gt;status_q&lt;/code&gt; above could be redefined&amp;nbsp;as:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;typedef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;enum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;STATUS_START&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b001&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -9213,10 +9207,10 @@ with another &lt;code&gt;struct&lt;/code&gt; to provide named access to each mem
 &lt;p&gt;Bear in mind however that this union introduces potential for the control structure to correspond incorrectly with
 the enumeration, which may introduce bugs into the&amp;nbsp;design.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Minimise the amount of logic inside a case statement.&lt;/strong&gt; The rationale for
-this is similar to extracting logic from &lt;code&gt;always_comb&lt;/code&gt; blocks into &lt;code&gt;assign&lt;/code&gt;
+this is similar to extracting logic&amp;nbsp;from &lt;code&gt;always_comb&lt;/code&gt; blocks&amp;nbsp;into &lt;code&gt;assign&lt;/code&gt;
 statements where possible: to make the control flow structure clearer to the
 designer and tooling, and to provide opportunities for reuse or
-further simplification. For example, avoid nesting &lt;code&gt;case&lt;/code&gt; statements:&lt;/p&gt;
+further simplification. For example, avoid&amp;nbsp;nesting &lt;code&gt;case&lt;/code&gt; statements:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;status_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;status_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="n"&gt;status_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;next_status&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mode_q&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -9236,7 +9230,7 @@ further simplification. For example, avoid nesting &lt;code&gt;case&lt;/code&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;And instead extract a nested &lt;code&gt;case&lt;/code&gt; into a separate process, providing a
+&lt;p&gt;And instead extract a&amp;nbsp;nested &lt;code&gt;case&lt;/code&gt; into a separate process, providing a
 result signal to use in the parent&amp;nbsp;case:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;status_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;status_q&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;status_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;next_status&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
@@ -9261,7 +9255,7 @@ result signal to use in the parent&amp;nbsp;case:&lt;/p&gt;
 &lt;span class="nt"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Although this example seems simple, the &lt;code&gt;case&lt;/code&gt;-based logic driving a state
+&lt;p&gt;Although this example seems simple,&amp;nbsp;the &lt;code&gt;case&lt;/code&gt;-based logic driving a state
 machine can quickly become&amp;nbsp;complicated.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Use &lt;code&gt;case inside&lt;/code&gt; for matching with don&amp;#8217;t cares.&lt;/strong&gt; For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;localparam&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;p_done&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;4&lt;/span&gt;&lt;span class="mi"&gt;&amp;#39;d0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -9282,14 +9276,14 @@ machine can quickly become&amp;nbsp;complicated.&lt;/p&gt;
 &lt;span class="k"&gt;end&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Unless matching upon &lt;code&gt;'bX&lt;/code&gt; or &lt;code&gt;'bZ&lt;/code&gt; is genuinely required, then &lt;code&gt;casex&lt;/code&gt; or
-&lt;code&gt;casez&lt;/code&gt; should not be used.&lt;/strong&gt; Instead, the &lt;code&gt;case inside&lt;/code&gt; construct should be
+&lt;p&gt;&lt;strong&gt;Unless matching&amp;nbsp;upon &lt;code&gt;'bX&lt;/code&gt; or &lt;code&gt;'bZ&lt;/code&gt; is genuinely required,&amp;nbsp;then &lt;code&gt;casex&lt;/code&gt; or
+&lt;code&gt;casez&lt;/code&gt; should not be used.&lt;/strong&gt; Instead,&amp;nbsp;the &lt;code&gt;case inside&lt;/code&gt; construct should be
 used to indicate don&amp;#8217;t-care bits in the case select as per the previous&amp;nbsp;example.&lt;/p&gt;
 &lt;p&gt;&lt;a name="expressions" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Expressions&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Make operator associativity explicit.&lt;/strong&gt; This is to avoid any ambiguity over
 the ordering of operators. In particular, always bracket the condition of a
-ternary/conditional expression (&lt;code&gt;?:&lt;/code&gt;), especially if you are nesting them,
+ternary/conditional expression&amp;nbsp;(&lt;code&gt;?:&lt;/code&gt;), especially if you are nesting them,
 since they associate left to right, and all other arithmetic and logical
 operators associate right to&amp;nbsp;left.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;...&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;
@@ -9325,7 +9319,7 @@ the result of a narrower expression for&amp;nbsp;assignment:&lt;/p&gt;
 
 &lt;p&gt;Special care should be taken with sub expressions, since their result length is
 determined automatically by the width of the largest operand. For example,
-without an explicit type cast to a 17-bit result around &lt;code&gt;a + b&lt;/code&gt;, the carry out
+without an explicit type cast to a 17-bit result&amp;nbsp;around &lt;code&gt;a + b&lt;/code&gt;, the carry out
 bit would be&amp;nbsp;lost:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;typedef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;16&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sum_t&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -9333,14 +9327,13 @@ bit would be&amp;nbsp;lost:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Capture carry out bits (even if they are unused) so the left-hand-side
-assignment width matches the full width of the right hand side. Using a prefix
-like &lt;code&gt;unused_&lt;/code&gt; makes the process of signing off any related warnings with the
+assignment width matches the full width of the right hand side. Using a prefix&amp;nbsp;like &lt;code&gt;unused_&lt;/code&gt; makes the process of signing off any related warnings with the
 downstream synthesis and physical build&amp;nbsp;simpler:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;unused_co&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Exceptions to this rule can be made for the common constants 0, 1 and -1 to be
-specified as &lt;code&gt;integer&lt;/code&gt; literals, for&amp;nbsp;example:&lt;/p&gt;
+specified&amp;nbsp;as &lt;code&gt;integer&lt;/code&gt; literals, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -9363,7 +9356,7 @@ synthesis, particularly with multipliers. The following example (adapted from
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Note that an operation is only considered signed if all of the operands are
-signed, and that literal values can be specified as signed, for example:
+signed, and that literal values can be specified as signed, for&amp;nbsp;example:
 &lt;code&gt;2'sb11&lt;/code&gt; is -1 in 2&amp;nbsp;bits.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid splitting arithmetic between statements or modules.&lt;/strong&gt; This facilitates
 optimisation during synthesis, for example, to choose or generate an optimised
@@ -9374,7 +9367,7 @@ adder implementation for the given set of operands and carry ins/outs. Instead&a
 &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;unused_co&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;int_sum&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;All of the arithmetic contributing to &lt;code&gt;sum&lt;/code&gt; can be written in a single&amp;nbsp;expression:&lt;/p&gt;
+&lt;p&gt;All of the arithmetic contributing&amp;nbsp;to &lt;code&gt;sum&lt;/code&gt; can be written in a single&amp;nbsp;expression:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;unused_co&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -9390,9 +9383,9 @@ constants must be sized correctly to avoid width-mismatch warnings that must be
 signed off later in the&amp;nbsp;flow.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Constants should be declared inside packages.&lt;/strong&gt; Derived constants with a
 meaning specific to a module should be defined in the appropriate scope of the&amp;nbsp;module.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Constants assigned to an &lt;code&gt;enum&lt;/code&gt; port must be of the same &lt;code&gt;enum&lt;/code&gt; type.&lt;/strong&gt; Not
+&lt;p&gt;&lt;strong&gt;Constants assigned to&amp;nbsp;an &lt;code&gt;enum&lt;/code&gt; port must be of the&amp;nbsp;same &lt;code&gt;enum&lt;/code&gt; type.&lt;/strong&gt; Not
 doing so relies on an implicit conversion, which can have inconsistent
-behaviour between tools. Assign an &lt;code&gt;enum&lt;/code&gt; value directly, or by using a static
+behaviour between tools. Assign&amp;nbsp;an &lt;code&gt;enum&lt;/code&gt; value directly, or by using a static
 cast. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;m_foo_pkg&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;typedef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
@@ -9441,11 +9434,11 @@ cast. For&amp;nbsp;example:&lt;/p&gt;
 &lt;span class="k"&gt;assign&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data_b&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foo_pkg&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;&amp;#39;(&lt;/span&gt;&lt;span class="mh"&gt;5&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;With the exception of &lt;code&gt;'0&lt;/code&gt;, unsized literal single-bit values (unsigned and
+&lt;p&gt;With the exception&amp;nbsp;of &lt;code&gt;'0&lt;/code&gt;, unsized literal single-bit values (unsigned and
 without a radix) in assignments should not be used in combinatorial logic,
 since they can be misinterpreted. They appear similar to explicit assignments
-with a radix, yet represent very different values. For example, &lt;code&gt;'1&lt;/code&gt; looks
-similar to &lt;code&gt;'d1&lt;/code&gt; but encodes the value $2^n - 1$ where $n$ is the width of the
+with a radix, yet represent very different values. For&amp;nbsp;example, &lt;code&gt;'1&lt;/code&gt; looks
+similar&amp;nbsp;to &lt;code&gt;'d1&lt;/code&gt; but encodes the value $2^n - 1$ where $n$ is the width of the
 variable being assigned&amp;nbsp;to.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;15&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mh"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -9465,11 +9458,11 @@ variable being assigned&amp;nbsp;to.&lt;/p&gt;
 
 &lt;p&gt;&lt;a name="x-values" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;X&amp;nbsp;values&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Assignment of &lt;code&gt;X&lt;/code&gt; values as don&amp;#8217;t care values should be avoided.&lt;/strong&gt; This is
+&lt;p&gt;&lt;strong&gt;Assignment&amp;nbsp;of &lt;code&gt;X&lt;/code&gt; values as don&amp;#8217;t care values should be avoided.&lt;/strong&gt; This is
 for similar reasons for not using non-reset registers, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. However, if
 it can be demonstrated that use of X values can provide better QoR in the
-physical build of a block, specific and limited use of &lt;code&gt;X&lt;/code&gt; values can be&amp;nbsp;justified.&lt;/p&gt;
+physical build of a block, specific and limited use&amp;nbsp;of &lt;code&gt;X&lt;/code&gt; values can be&amp;nbsp;justified.&lt;/p&gt;
 &lt;p&gt;&lt;a name="naming" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Naming&lt;/h2&gt;
 &lt;p&gt;Clear and consistent naming is important for a design to be easily understood
@@ -9484,15 +9477,14 @@ different in pipeline&amp;nbsp;stages.&lt;/p&gt;
 is typical for synthesis to flatten the hierarchical structure and consequently
 symbol names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
-a flip-flop clock pin might be named
-&lt;code&gt;u_toplevel_u_submodule_p0_signal_q_reg_17_/CK&lt;/code&gt; corresponding to the register
+a flip-flop clock pin might be&amp;nbsp;named
+&lt;code&gt;u_toplevel_u_submodule_p0_signal_q_reg_17_/CK&lt;/code&gt; corresponding to the&amp;nbsp;register
 &lt;code&gt;u_toplevel/u_submodule/p0_signal_q[17]&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Names should be meaningful, whilst avoiding excessive verbosity.&lt;/strong&gt; For example,
-&lt;code&gt;n3&lt;/code&gt; should be avoided as it lacks meaning whereas &lt;code&gt;floating_point_opcode_bus&lt;/code&gt; is
-excessively long. &lt;code&gt;fp_opcode&lt;/code&gt; is a reasonable&amp;nbsp;compromise.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Names should be meaningful, whilst avoiding excessive verbosity.&lt;/strong&gt; For&amp;nbsp;example,
+&lt;code&gt;n3&lt;/code&gt; should be avoided as it lacks meaning&amp;nbsp;whereas &lt;code&gt;floating_point_opcode_bus&lt;/code&gt; is
+excessively&amp;nbsp;long. &lt;code&gt;fp_opcode&lt;/code&gt; is a reasonable&amp;nbsp;compromise.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Avoid using C/C++/Verilog/SystemVerilog/&lt;span class="caps"&gt;VHDL&lt;/span&gt; keywords as names.&lt;/strong&gt; Even if
-they are not reserved names in the language being used in that file. For
-example: &lt;code&gt;auto&lt;/code&gt;, &lt;code&gt;unsigned&lt;/code&gt;, &lt;code&gt;task&lt;/code&gt;, &lt;code&gt;register&lt;/code&gt; or &lt;code&gt;asm&lt;/code&gt;.&lt;/p&gt;
+they are not reserved names in the language being used in that file. For&amp;nbsp;example: &lt;code&gt;auto&lt;/code&gt;, &lt;code&gt;unsigned&lt;/code&gt;, &lt;code&gt;task&lt;/code&gt;, &lt;code&gt;register&lt;/code&gt; or &lt;code&gt;asm&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;All names must be all lower case and underscore separated.&lt;/strong&gt;
 For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt; &lt;span class="n"&gt;m_cpu&lt;/span&gt;;
@@ -9596,8 +9588,7 @@ enumerated&amp;nbsp;below:&lt;/p&gt;
 &lt;/table&gt;
 
 &lt;p&gt;Where signals are both active-low and require a suffix from elsewhere in the
-table, the &lt;code&gt;_n&lt;/code&gt; suffix should be appended without an extra underscore. For
-example, &lt;code&gt;_q&lt;/code&gt; becomes &lt;code&gt;_qn&lt;/code&gt; for an active-low flop output, and &lt;code&gt;_clk&lt;/code&gt; becomes
+table,&amp;nbsp;the &lt;code&gt;_n&lt;/code&gt; suffix should be appended without an extra underscore. For&amp;nbsp;example, &lt;code&gt;_q&lt;/code&gt; becomes &lt;code&gt;_qn&lt;/code&gt; for an active-low flop output,&amp;nbsp;and &lt;code&gt;_clk&lt;/code&gt; becomes
 &lt;code&gt;_clkn&lt;/code&gt; for an inverted&amp;nbsp;clock.&lt;/p&gt;
 &lt;p&gt;The following code example shows appropriate usage of the above prefix and
 suffix&amp;nbsp;guidelines:&lt;/p&gt;
@@ -9641,8 +9632,8 @@ suffix&amp;nbsp;guidelines:&lt;/p&gt;
 &lt;span class="k"&gt;endmodule&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Another example illustrates the use of the pipeline prefix, using &lt;code&gt;e&lt;/code&gt; to denote
-an external signal and &lt;code&gt;p&lt;/code&gt; an internal&amp;nbsp;one:&lt;/p&gt;
+&lt;p&gt;Another example illustrates the use of the pipeline prefix,&amp;nbsp;using &lt;code&gt;e&lt;/code&gt; to denote
+an external signal&amp;nbsp;and &lt;code&gt;p&lt;/code&gt; an internal&amp;nbsp;one:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;m_mempipe&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;input&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;i_clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="k"&gt;input&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;i_rst&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -9695,8 +9686,8 @@ select a set of registers or similar signals different in pipeline&amp;nbsp;stag
 to flatten the hierarchical structure of a SystemVerilog design. Consequently
 symbols names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
-a flip-flop clock pin might be named
-&lt;code&gt;u_toplevel_u_submodule_p0_signal_q_reg_17_/CK&lt;/code&gt; corresponding to the register
+a flip-flop clock pin might be&amp;nbsp;named
+&lt;code&gt;u_toplevel_u_submodule_p0_signal_q_reg_17_/CK&lt;/code&gt; corresponding to the&amp;nbsp;register
 &lt;code&gt;u_toplevel/u_submodule/p0_signal_q[17]&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a name="generate-naming" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Generate block&amp;nbsp;naming&lt;/h3&gt;
@@ -9771,7 +9762,7 @@ to gen_op0 or gen_op1, indeed these could be switched with no visibility in the&
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;genblk2&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mh"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Using a &lt;code&gt;g_&lt;/code&gt; prefix for named generate blocks, clearly distinguishes with
+&lt;p&gt;Using&amp;nbsp;a &lt;code&gt;g_&lt;/code&gt; prefix for named generate blocks, clearly distinguishes with
 instantiations of modules, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;m_foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
 &lt;span class="p"&gt;...&lt;/span&gt;
@@ -9844,13 +9835,13 @@ registered outputs illustrates this kind of&amp;nbsp;structuring:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Use &lt;code&gt;.*&lt;/code&gt; and &lt;code&gt;.name()&lt;/code&gt; syntax in some circumstances to simplify port lists in module
 instantiations.&lt;/strong&gt; Doing so can reduce the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. The wildcard &lt;code&gt;.*&lt;/code&gt; also provides additional checks:&lt;sup id="fnref:wildcards"&gt;&lt;a class="footnote-ref" href="#fn:wildcards"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+scope for typing or copy-paste errors. The&amp;nbsp;wildcard &lt;code&gt;.*&lt;/code&gt; also provides additional checks:&lt;sup id="fnref:wildcards"&gt;&lt;a class="footnote-ref" href="#fn:wildcards"&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;It requires all nets be&amp;nbsp;connected.&lt;/li&gt;
 &lt;li&gt;It requires all nets to be the same&amp;nbsp;size.&lt;/li&gt;
 &lt;li&gt;It prevents implicit nets from being&amp;nbsp;inferred.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Named connections with &lt;code&gt;.name()&lt;/code&gt; can be used with wildcards to add specific
+&lt;p&gt;Named connections&amp;nbsp;with &lt;code&gt;.name()&lt;/code&gt; can be used with wildcards to add specific
 exceptions, such as when names do not match or for unconnected or tied-off
 ports. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;foo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;input&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i_clk&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -9875,7 +9866,7 @@ port hookups and the widths of the signals for correctness. Not doing so
 obscures functionality in the&amp;nbsp;design.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;In parameter lists, separate parameters that are intended to be set
 externally from secondary parameters that are only used internally.&lt;/strong&gt; There is
-no way to prevent some parameters being set externally, ie with &lt;code&gt;localparam&lt;/code&gt;,
+no way to prevent some parameters being set externally, ie&amp;nbsp;with &lt;code&gt;localparam&lt;/code&gt;,
 so a comment can be used to do this, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;module&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;m_rf&lt;/span&gt;
 &lt;span class="p"&gt;#(&lt;/span&gt;&lt;span class="k"&gt;parameter&lt;/span&gt;
@@ -9904,7 +9895,7 @@ module into sections. For&amp;nbsp;example:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Any unused or dangling signals/ports within a block must be terminated with a
-signal prefixed with &lt;code&gt;unused_&lt;/code&gt;.&lt;/strong&gt; These signals can be &lt;span class="caps"&gt;AND&lt;/span&gt;-reduced to make a
+signal prefixed&amp;nbsp;with &lt;code&gt;unused_&lt;/code&gt;.&lt;/strong&gt; These signals can be &lt;span class="caps"&gt;AND&lt;/span&gt;-reduced to make a
 single-bit signal. The &lt;span class="caps"&gt;AND&lt;/span&gt;-reduction with constant zeros guarantees the result
 is always zero, so it can be safely optimised away. For&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;logic&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_unused_ok&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mh"&gt;1&lt;/span&gt;&lt;span class="mb"&gt;&amp;#39;b0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -9934,16 +9925,16 @@ defined by the package. For&amp;nbsp;example:&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Assertions should be written in a separate file that is bound in to the
 appropriate scope.&lt;/strong&gt; Verification tests must be written to specifically ensure
 that the assertions are present in&amp;nbsp;simulation.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Assertion files must be named after the block they apply to, with an
+&lt;p&gt;&lt;strong&gt;Assertion files must be named after the block they apply to, with&amp;nbsp;an
 &lt;code&gt;_assert.sv&lt;/code&gt; suffix.&lt;/strong&gt; Where assertions have been split into different groups
 to allow use in gate-level simulations (or other environments), the file name
-may have a &lt;code&gt;_ports_assert.sv&lt;/code&gt;, &lt;code&gt;_regs_assert.sv&lt;/code&gt; or &lt;code&gt;_nets_assert.sv&lt;/code&gt; suffix as&amp;nbsp;appropriate.&lt;/p&gt;
+may have&amp;nbsp;a &lt;code&gt;_ports_assert.sv&lt;/code&gt;, &lt;code&gt;_regs_assert.sv&lt;/code&gt; or &lt;code&gt;_nets_assert.sv&lt;/code&gt; suffix as&amp;nbsp;appropriate.&lt;/p&gt;
 &lt;p&gt;&lt;a name="preprocessor" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Preprocessor&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;In general, it should be possible to avoid any preprocessing of code.&lt;/strong&gt; Other
 built-in language structures such as parameters and generate statements should
-be used instead. Don&amp;#8217;t use local &lt;code&gt;define&lt;/code&gt; statements in modules unless
-absolutely necessary, use &lt;code&gt;localparam&lt;/code&gt; instead of &lt;code&gt;define&lt;/code&gt;:&lt;/p&gt;
+be used instead. Don&amp;#8217;t use&amp;nbsp;local &lt;code&gt;define&lt;/code&gt; statements in modules unless
+absolutely necessary,&amp;nbsp;use &lt;code&gt;localparam&lt;/code&gt; instead&amp;nbsp;of &lt;code&gt;define&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Avoid&lt;/span&gt;
 &lt;span class="cp"&gt;`define CONSTANT 1&lt;/span&gt;
 
@@ -9954,7 +9945,7 @@ absolutely necessary, use &lt;code&gt;localparam&lt;/code&gt; instead of &lt;cod
 &lt;p&gt;This is because SystemVerilog macro definitions are not scoped within a module,
 which can easily lead to them &amp;#8216;leaking&amp;#8217; between files in a filelist, making the
 elaboration dependent on the ordering of the&amp;nbsp;list.&lt;/p&gt;
-&lt;p&gt;For similar reasons, &lt;strong&gt;use generate-if blocks instead of &lt;code&gt;ifdef&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For similar reasons, &lt;strong&gt;use generate-if blocks instead&amp;nbsp;of &lt;code&gt;ifdef&lt;/code&gt;.&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;// Avoid&lt;/span&gt;
 &lt;span class="no"&gt;`ifdef&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FLAG&lt;/span&gt;
 &lt;span class="p"&gt;...&lt;/span&gt;
@@ -9968,7 +9959,7 @@ elaboration dependent on the ordering of the&amp;nbsp;list.&lt;/p&gt;
 &lt;span class="k"&gt;endgenerate&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;If a local define is unavoidable, then a corresponding &lt;code&gt;undef&lt;/code&gt; must be included
+&lt;p&gt;&lt;strong&gt;If a local define is unavoidable, then a&amp;nbsp;corresponding &lt;code&gt;undef&lt;/code&gt; must be included
 before the end of the file.&lt;/strong&gt; This is to avoid macro definitions polluting the
 global&amp;nbsp;namespace.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;`define LOCAL_DEFINE&lt;/span&gt;
@@ -9990,7 +9981,7 @@ programming languages for compatibility with version control and editors&amp;nbs
 &lt;p&gt;&lt;strong&gt;Split long lines or complex expressions with continuations or across
 statements.&lt;/strong&gt; Apply indent as appropriate  for clarity. In this context, &amp;#8216;long&amp;#8217;
 is a reasonable value chosen by the author, but typically between 80 and 120&amp;nbsp;characters.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Use begin and end to wrap &lt;code&gt;if&lt;/code&gt;/&lt;code&gt;else&lt;/code&gt;, &lt;code&gt;always_ff&lt;/code&gt; and &lt;code&gt;always_comb&lt;/code&gt;
+&lt;p&gt;&lt;strong&gt;Use begin and end to&amp;nbsp;wrap &lt;code&gt;if&lt;/code&gt;/&lt;code&gt;else&lt;/code&gt;, &lt;code&gt;always_ff&lt;/code&gt; and &lt;code&gt;always_comb&lt;/code&gt;
 blocks.&lt;/strong&gt; This adds consistency to the code and can help to prevent statements
 from unintentionally being excluded from a block. Only use begin and end in
 case alternatives when they contain multiple&amp;nbsp;statements.&lt;/p&gt;
@@ -10084,8 +10075,8 @@ place to find out&amp;nbsp;more.&lt;/p&gt;
 &lt;li id="fn:always-blocks"&gt;
 &lt;p&gt;With one exception of memory structures that require
   initialisation via an external hierarchical reference. If the memory array is
-  written by an &lt;code&gt;always_&lt;/code&gt; block, the memory cannot be driven by another process.
-  Support for &lt;code&gt;$deposit&lt;/code&gt; is patchy in tooling, so this cannot always be relied
+  written by&amp;nbsp;an &lt;code&gt;always_&lt;/code&gt; block, the memory cannot be driven by another process.
+  Support&amp;nbsp;for &lt;code&gt;$deposit&lt;/code&gt; is patchy in tooling, so this cannot always be relied
   on.&amp;#160;&lt;a class="footnote-backref" href="#fnref:always-blocks" title="Jump back to footnote 2 in the text"&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li id="fn:wildcards"&gt;
@@ -10184,8 +10175,8 @@ also some interesting discussion from 2010 between the authors of PractRand and
 RaBiGete &lt;a href="http://mathforum.org/kb/message.jspa?messageID=7152033"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h1&gt;Testing with&amp;nbsp;TestU01&lt;/h1&gt;
 &lt;p&gt;TestU01 provides an interface to test external generators written in C. The
-interface requires a method, &lt;code&gt;GetU01&lt;/code&gt;, to generate numbers in the unit interval
-$[0, 1)$ as a &lt;code&gt;double&lt;/code&gt; and a method, &lt;code&gt;GetBits&lt;/code&gt;, to return 32 random bits as an
+interface requires a&amp;nbsp;method, &lt;code&gt;GetU01&lt;/code&gt;, to generate numbers in the unit interval
+$[0, 1)$ as&amp;nbsp;a &lt;code&gt;double&lt;/code&gt; and a&amp;nbsp;method, &lt;code&gt;GetBits&lt;/code&gt;, to return 32 random bits as&amp;nbsp;an
 &lt;code&gt;unsigned int&lt;/code&gt;. Some tests will use random bits and some will use random floats.
 Just one function can be provided, with the other defined by TestU01 with
 the relationship&amp;nbsp;$\texttt{GetU01}=\texttt{GetBits}/2^{32}$.&lt;/p&gt;
@@ -10196,12 +10187,12 @@ errors. For this reason, it is considered good practice to also test the
 reversed output of generator, to expose the lowest bits. To test generators
 with a larger output, say 64 bits, it is important that all the bits are
 exposed to the tests. One way to do this is to alternately use the high and low
-bits of a 64-bit value each call to &lt;code&gt;GetBits&lt;/code&gt; or &lt;code&gt;GetU01&lt;/code&gt;. A further reason to
+bits of a 64-bit value each call&amp;nbsp;to &lt;code&gt;GetBits&lt;/code&gt; or &lt;code&gt;GetU01&lt;/code&gt;. A further reason to
 run the reverse of a generator is that the Crush test battery are defined to
 ignore the bottom-most bit of the generator&amp;#8217;s output, and most tests also
 ignore the second bit (see the &lt;a href="http://simul.iro.umontreal.ca/testu01/guideshorttestu01.pdf"&gt;TestU01
 documentation&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;In his testing of the &lt;code&gt;xorshift&lt;/code&gt; family of generators, &lt;a href="http://vigna.di.unimi.it/"&gt;Sebastiano
+&lt;p&gt;In his testing of&amp;nbsp;the &lt;code&gt;xorshift&lt;/code&gt; family of generators, &lt;a href="http://vigna.di.unimi.it/"&gt;Sebastiano
 Vigna&lt;/a&gt; takes the following approach to measuring
 quality with TestU01: for a particular generator, run it with 100 different
 seeds, which are spaced at regular intervals in the state space, i.e.  for a
@@ -10215,7 +10206,7 @@ $2^{38}$ random values in 106 tests), potential generators can be assessed by
 running the smaller test batteries SmallCrush (10 tests) and Crush (96 tests),
 continuing based on the number of&amp;nbsp;failures.&lt;/p&gt;
 &lt;p&gt;Through my own experiments, I found that the reverse of a generator won&amp;#8217;t
-always catch weak lower bits.  &lt;code&gt;xoroshiro128+&lt;/code&gt; is currently the &lt;a href="http://xoroshiro.di.unimi.it/#shootout"&gt;highest
+always catch weak lower&amp;nbsp;bits.  &lt;code&gt;xoroshiro128+&lt;/code&gt; is currently the &lt;a href="http://xoroshiro.di.unimi.it/#shootout"&gt;highest
 quality and fastest known generator&lt;/a&gt;,
 as measured by the above process, with 31 failures and 27 failures when
 reversed, but it has a known weak bit 0 that follows a &lt;a href="https://en.wikipedia.org/wiki/Linearity#Boolean_functions"&gt;linear
@@ -10224,18 +10215,18 @@ not detected by BigCrush, even when reversed.  However, the weak bit is
 detectable with the matrix rank test with parameters $N=1$, $n=80$, $r=15$,
 $s=15$, $L=k=5000$, or more simply by swapping the high and low 16-bit portions
 of each 32-bit word to move the bottom bit into the middle. I didn&amp;#8217;t discover
-anything new about &lt;code&gt;xoroshiro128+&lt;/code&gt; here, but what this does highlight is that
+anything new&amp;nbsp;about &lt;code&gt;xoroshiro128+&lt;/code&gt; here, but what this does highlight is that
 comprehensive test sets like TestU01 are by no means exhaustive, and it
 therefore worth testing some of their assumptions, particularly in this case if
 you are interested in the quality of bit&amp;nbsp;0.&lt;/p&gt;
 &lt;p&gt;Incidentally, TestU01 includes a battery of nine tests called Alphabit, which
 is allows specific bits or ranges of bits from a generator to be tested. It was
-not stringent enough however to detect the correlation of &lt;code&gt;xoroshirt128+&lt;/code&gt;&lt;span class="quo"&gt;&amp;#8216;&lt;/span&gt;s bit&amp;nbsp;0.&lt;/p&gt;
+not stringent enough however to detect the correlation&amp;nbsp;of &lt;code&gt;xoroshirt128+&lt;/code&gt;&lt;span class="quo"&gt;&amp;#8216;&lt;/span&gt;s bit&amp;nbsp;0.&lt;/p&gt;
 &lt;h1&gt;An&amp;nbsp;example&lt;/h1&gt;
 &lt;p&gt;I&amp;#8217;ve put together a simple example, &lt;a href="https://github.com/jameshanlon/prng-testing/tree/2017-blog"&gt;available on
 Github&lt;/a&gt;, of using
-TestU01 to assess the quality of a &lt;span class="caps"&gt;PRNG&lt;/span&gt;, which replicates Vigna&amp;#8217;s testing of
-&lt;code&gt;xoroshiro128+&lt;/code&gt;.  The code includes a C program to test &lt;code&gt;xoroshiro128+&lt;/code&gt; with
+TestU01 to assess the quality of a &lt;span class="caps"&gt;PRNG&lt;/span&gt;, which replicates Vigna&amp;#8217;s testing&amp;nbsp;of
+&lt;code&gt;xoroshiro128+&lt;/code&gt;.  The code includes a C program to&amp;nbsp;test &lt;code&gt;xoroshiro128+&lt;/code&gt; with
 the Crush batteries and Python scripts to run the test over different seeds and
 to summarise the output of&amp;nbsp;TestU01.&lt;/p&gt;
 &lt;h1&gt;Further reading and&amp;nbsp;links&lt;/h1&gt;
@@ -10274,7 +10265,7 @@ which helped me to derive the convolutional equations for back&amp;nbsp;propagat
 &lt;h1&gt;The source&amp;nbsp;code&lt;/h1&gt;
 &lt;p&gt;The &lt;a href="https://github.com/jameshanlon/convolutional-neural-network"&gt;repository&lt;/a&gt;
 contains several example programs with different network
-configurations. They are instantiated from a generic header &lt;code&gt;Network.hpp&lt;/code&gt;,
+configurations. They are instantiated from a generic&amp;nbsp;header &lt;code&gt;Network.hpp&lt;/code&gt;,
 which contains classes for fully-connected, softmax, convolutional and
 max-pooling layer types, and a network class that performs the stochastic
 gradient descent, minibatching and training over multiple epochs with
@@ -10284,13 +10275,13 @@ activation functions, which are specified as template parameters to the
 network. The code is written primarily primarily to be clear and
 understandable, as such there will be many opportunities for optimisations and
 other improvements (please let me know if you have any&amp;nbsp;suggestions).&lt;/p&gt;
-&lt;p&gt;For instructions on how to build and run the examples, see the &lt;code&gt;README.md&lt;/code&gt;
-file. Note that Boost is required for &lt;code&gt;multi_array&lt;/code&gt; and Threading Building
+&lt;p&gt;For instructions on how to build and run the examples, see&amp;nbsp;the &lt;code&gt;README.md&lt;/code&gt;
+file. Note that Boost is required&amp;nbsp;for &lt;code&gt;multi_array&lt;/code&gt; and Threading Building
 Blocks to parallelise the training over minibatches and accuracy evaluation by
 performing inferences in parallel, up to the minibatch size.  It should be
 straightforward to build other network configurations or to modify the
 implementations or to experiment with new&amp;nbsp;features.&lt;/p&gt;
-&lt;p&gt;Included in the &lt;code&gt;extra&lt;/code&gt; folder, are implementations of the example programs
+&lt;p&gt;Included in&amp;nbsp;the &lt;code&gt;extra&lt;/code&gt; folder, are implementations of the example programs
 in &lt;a href="https://www.tensorflow.org/"&gt;TensorFlow&lt;/a&gt;, adapted from the &lt;a href="https://www.tensorflow.org/tutorials/mnist/pros/"&gt;&lt;span class="caps"&gt;MNIST&lt;/span&gt;
 tutorial&lt;/a&gt;. I found these
 useful as a point of comparison to validate the behaviour of the&amp;nbsp;networks.&lt;/p&gt;
@@ -10620,8 +10611,8 @@ execution&amp;nbsp;of:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;the function &lt;code&gt;g&lt;/code&gt; is only executed once the execution of the function &lt;code&gt;f&lt;/code&gt; has
-completed. A set of statements can be made to execute in parallel using a &lt;code&gt;par&lt;/code&gt;
+&lt;p&gt;the&amp;nbsp;function &lt;code&gt;g&lt;/code&gt; is only executed once the execution of the&amp;nbsp;function &lt;code&gt;f&lt;/code&gt; has
+completed. A set of statements can be made to execute in parallel using&amp;nbsp;a &lt;code&gt;par&lt;/code&gt;
 statement, so that the&amp;nbsp;statement&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -10646,7 +10637,7 @@ having to write each one separately, so that the&amp;nbsp;statement:&lt;/p&gt;
 
 &lt;p&gt;The tasks in a parallel statement are executed by creating threads on the
 processor executing the statement. Tasks can be placed on different tiles by
-using an &lt;code&gt;on&lt;/code&gt; prefix. In following&amp;nbsp;example:&lt;/p&gt;
+using&amp;nbsp;an &lt;code&gt;on&lt;/code&gt; prefix. In following&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tile&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;par&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;size_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -10654,7 +10645,7 @@ using an &lt;code&gt;on&lt;/code&gt; prefix. In following&amp;nbsp;example:&lt;/
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;the task &lt;code&gt;f&lt;/code&gt; is placed on any available core of tile 0 and instances of the task
+&lt;p&gt;the&amp;nbsp;task &lt;code&gt;f&lt;/code&gt; is placed on any available core of tile 0 and instances of the task
 g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
 main function of an &lt;span class="caps"&gt;XC&lt;/span&gt; program. Conceptually, this is because when an &lt;span class="caps"&gt;XC&lt;/span&gt;
 program is compiled, it is divided up at its top level, into separately
@@ -10679,15 +10670,14 @@ remote procedure call. For example, in the parallel&amp;nbsp;statement:&lt;/p&gt
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;the client initiates the transaction &lt;code&gt;f&lt;/code&gt;, with the parameter value 42, from the
-interface &lt;code&gt;i&lt;/code&gt;. The server waits on the transaction (as a case in the select
+&lt;p&gt;the client initiates the&amp;nbsp;transaction &lt;code&gt;f&lt;/code&gt;, with the parameter value 42, from the&amp;nbsp;interface &lt;code&gt;i&lt;/code&gt;. The server waits on the transaction (as a case in the select
 statement) and responds when the client initiates it by printing out a message
 with the received parameter value. Transaction functions can also be used for
 two-way communication by using reference parameters, allowing data to be
 transferred from a client to a server, and then back&amp;nbsp;again.&lt;/p&gt;
 &lt;p&gt;Interfaces can only be used by two tasks; they do not allow multiple clients to
 be connected to one server. The types of either end of an interface connection
-of type &lt;code&gt;T&lt;/code&gt; are server interface &lt;code&gt;T&lt;/code&gt; and client interface &lt;code&gt;T&lt;/code&gt;. Therefore, when
+of&amp;nbsp;type &lt;code&gt;T&lt;/code&gt; are server&amp;nbsp;interface &lt;code&gt;T&lt;/code&gt; and client&amp;nbsp;interface &lt;code&gt;T&lt;/code&gt;. Therefore, when
 interface types are passed as parameters, the type of connection must also be
 specified, for&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -10703,9 +10693,9 @@ specified, for&amp;nbsp;example:&lt;/p&gt;
 response to client requests, but in some circumstances it is useful for a
 server to be able to trigger a response from the client. This can be achieved
 by annotating a function in the interface with no parameters and a void return
-type, with &lt;code&gt;[[notification]]&lt;/code&gt; slave. The client waits on the notification
+type,&amp;nbsp;with &lt;code&gt;[[notification]]&lt;/code&gt; slave. The client waits on the notification
 transaction in a select statement for the server to initiate it. A
-corresponding function can be annotated with &lt;code&gt;[[clears_notification]]&lt;/code&gt;, which is
+corresponding function can be annotated&amp;nbsp;with &lt;code&gt;[[clears_notification]]&lt;/code&gt;, which is
 called by the slave to clear the notification. In the following simple&amp;nbsp;example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;interface&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;I&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;
 &lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;void&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -10735,9 +10725,9 @@ called by the slave to clear the notification. In the following simple&amp;nbsp;
 &lt;span class="err"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;when client 2 initiates the transaction function &lt;code&gt;f&lt;/code&gt;, the server notifies client
-1 via the transaction function &lt;code&gt;isReady&lt;/code&gt;. Client 1 waits for the server
-notification, and then initiates &lt;code&gt;getValue&lt;/code&gt; when it is&amp;nbsp;received.&lt;/p&gt;
+&lt;p&gt;when client 2 initiates the transaction&amp;nbsp;function &lt;code&gt;f&lt;/code&gt;, the server notifies client
+1 via the transaction&amp;nbsp;function &lt;code&gt;isReady&lt;/code&gt;. Client 1 waits for the server
+notification, and then&amp;nbsp;initiates &lt;code&gt;getValue&lt;/code&gt; when it is&amp;nbsp;received.&lt;/p&gt;
 &lt;p&gt;So that it is easier to connect many clients to one server, interfaces can also
 be declared as arrays. A server can select over an interface array using an
 index&amp;nbsp;variable.&lt;/p&gt;
@@ -10748,7 +10738,7 @@ additional&amp;nbsp;complexity.&lt;/p&gt;
 &lt;h3&gt;Channels&lt;/h3&gt;
 &lt;p&gt;Communication channels provide a more primitive way of communicating between
 tasks than interfaces. A channel connects two tasks and allows them to send and
-receive data, using the in &lt;code&gt;&amp;lt;:&lt;/code&gt; and out &lt;code&gt;:&amp;gt;&lt;/code&gt; operators respectively. A
+receive data, using the&amp;nbsp;in &lt;code&gt;&amp;lt;:&lt;/code&gt; and&amp;nbsp;out &lt;code&gt;:&amp;gt;&lt;/code&gt; operators respectively. A
 communication only occurs when an input is matched with an output, and because
 either side waits for the other to be ready, this also causes the tasks to
 synchronise. In the&amp;nbsp;following:&lt;/p&gt;
@@ -10760,7 +10750,7 @@ synchronise. In the&amp;nbsp;following:&lt;/p&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;the value 42 is sent over the channel &lt;code&gt;c&lt;/code&gt; and assigned to the variable &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;the value 42 is sent over the&amp;nbsp;channel &lt;code&gt;c&lt;/code&gt; and assigned to the&amp;nbsp;variable &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;
 &lt;h3&gt;Streaming&amp;nbsp;channels&lt;/h3&gt;
 &lt;p&gt;A streaming channel does not require each input and matching output to
 synchronise, so communication can occur&amp;nbsp;asynchronously.&lt;/p&gt;
@@ -10790,8 +10780,7 @@ expression is true at the same time the event is enabled. For example, with a&am
 
 &lt;p&gt;the left-hand channel of the above example can only input data when the
 variable enable is&amp;nbsp;true.&lt;/p&gt;
-&lt;p&gt;The selection of events is arbitrary, but event priority can be enforced with
-the &lt;code&gt;[[ordered]]&lt;/code&gt; attribute for selects. The effect is that higher-priority
+&lt;p&gt;The selection of events is arbitrary, but event priority can be enforced with&amp;nbsp;the &lt;code&gt;[[ordered]]&lt;/code&gt; attribute for selects. The effect is that higher-priority
 events occur earlier in the body of the&amp;nbsp;statement.&lt;/p&gt;
 &lt;p&gt;To aid in creating reusable components and libraries, select functions can be
 used to abstract multiple cases of a select into a single unit. The following
@@ -10815,7 +10804,7 @@ select function encapsulates the cases of the above select&amp;nbsp;statement:&l
 &lt;h3&gt;Timing&lt;/h3&gt;
 &lt;p&gt;Every tile has a reference clock that can be accessed via timer variables.
 Performing an output operation on a timer reads the current time in cycles. For
-example, to calculate the elapsed execution time of a function &lt;code&gt;f&lt;/code&gt;:&lt;/p&gt;
+example, to calculate the elapsed execution time of a&amp;nbsp;function &lt;code&gt;f&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;timer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="kt"&gt;uint32_t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="nl"&gt;t&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -10838,13 +10827,12 @@ the select&amp;nbsp;statement:&lt;/p&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;waits for the timer &lt;code&gt;t&lt;/code&gt; to exceed the value of time before reacting to it. The
-value of &lt;code&gt;t&lt;/code&gt; is discarded with the syntax &lt;code&gt;:&amp;gt; void&lt;/code&gt;, but it can be assigned to a
-variable &lt;code&gt;x&lt;/code&gt; with the syntax &lt;code&gt;:&amp;gt; int x&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;waits for the&amp;nbsp;timer &lt;code&gt;t&lt;/code&gt; to exceed the value of time before reacting to it. The
+value&amp;nbsp;of &lt;code&gt;t&lt;/code&gt; is discarded with the&amp;nbsp;syntax &lt;code&gt;:&amp;gt; void&lt;/code&gt;, but it can be assigned to a&amp;nbsp;variable &lt;code&gt;x&lt;/code&gt; with the&amp;nbsp;syntax &lt;code&gt;:&amp;gt; int x&lt;/code&gt;.&lt;/p&gt;
 &lt;h3&gt;&lt;span class="caps"&gt;IO&lt;/span&gt;&lt;/h3&gt;
 &lt;p&gt;Variables of the type port provide access to &lt;span class="caps"&gt;IO&lt;/span&gt; pins on an XCore device in &lt;span class="caps"&gt;XC&lt;/span&gt;.
 Ports can have power-of-two widths, allowing the same number of bits to be
-input or output every cycle. The same channel input and output operators &lt;code&gt;&amp;lt;&lt;/code&gt;
+input or output every cycle. The same channel input and output&amp;nbsp;operators &lt;code&gt;&amp;lt;&lt;/code&gt;
 and &lt;code&gt;&amp;gt;&lt;/code&gt; respectively are used for&amp;nbsp;this.&lt;/p&gt;
 &lt;p&gt;The following program continuously reads the value on one port and outputs it
 on&amp;nbsp;another:&lt;/p&gt;
@@ -10863,7 +10851,7 @@ on&amp;nbsp;another:&lt;/p&gt;
 &lt;p&gt;The declaration of ports must have global scope and each port must specify
 whether it is inputting or outputting, and is assigned a fixed value to specify
 which pins it corresponds to. These values are defined as macros in a system
-header file (&lt;code&gt;xs1.h&lt;/code&gt;).&lt;/p&gt;
+header file&amp;nbsp;(&lt;code&gt;xs1.h&lt;/code&gt;).&lt;/p&gt;
 &lt;p&gt;By default, ports are driven at the tile&amp;#8217;s reference clock. However, clock
 block resources can be used to provide different clock signals, either by
 dividing the reference clock, or based on an external signal. Ports can be
@@ -10878,7 +10866,7 @@ example, the&amp;nbsp;statement:&lt;/p&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;uses the predicate when &lt;code&gt;pinseq&lt;/code&gt; to wait for the value on the port &lt;code&gt;p&lt;/code&gt; to equal &lt;code&gt;v&lt;/code&gt;
+&lt;p&gt;uses the predicate&amp;nbsp;when &lt;code&gt;pinseq&lt;/code&gt; to wait for the value on the&amp;nbsp;port &lt;code&gt;p&lt;/code&gt; to&amp;nbsp;equal &lt;code&gt;v&lt;/code&gt;
 before triggering the response to print a&amp;nbsp;notification.&lt;/p&gt;
 &lt;h3&gt;Port&amp;nbsp;timing&lt;/h3&gt;
 &lt;p&gt;To be able to control when outputs on a port occur with respect to the port&amp;#8217;s
@@ -10886,7 +10874,7 @@ clock, outputs can be timestamped or timed. The timestamped&amp;nbsp;statement:&
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;causes the value &lt;code&gt;v&lt;/code&gt; to be output on the port &lt;code&gt;p&lt;/code&gt; and for count to be set to the
+&lt;p&gt;causes the&amp;nbsp;value &lt;code&gt;v&lt;/code&gt; to be output on the&amp;nbsp;port &lt;code&gt;p&lt;/code&gt; and for count to be set to the
 value of the port&amp;#8217;s counter (incremented by one each reference clock cycle).
 The timed output&amp;nbsp;statement:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;count&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -10899,11 +10887,11 @@ value v is&amp;nbsp;output.&lt;/p&gt;
 is limited (eight in current XCore devices), &lt;span class="caps"&gt;XC&lt;/span&gt; provides two ways to map
 multiple tasks to cores and better exploit the available&amp;nbsp;cores.&lt;/p&gt;
 &lt;p&gt;Server tasks that are composed of a never-ending loop containing a select
-statement can be marked as combinable with the attribute &lt;code&gt;[[combinable]]&lt;/code&gt;. This
+statement can be marked as combinable with the&amp;nbsp;attribute &lt;code&gt;[[combinable]]&lt;/code&gt;. This
 allows the compiler to combine two or more combinable tasks to run on the same
 core, by merging the cases into a single&amp;nbsp;select.&lt;/p&gt;
 &lt;p&gt;Tasks of the same form as combinable ones, except that each case of the select
-handles a transaction function, can be marked with the attribute
+handles a transaction function, can be marked with the&amp;nbsp;attribute
 &lt;code&gt;[[distributable]]&lt;/code&gt;. This allows the compiler to convert the select cases into
 local function&amp;nbsp;calls.&lt;/p&gt;
 &lt;h3&gt;Memory&amp;nbsp;access&lt;/h3&gt;
@@ -10918,7 +10906,7 @@ in which checks are made to ensure&amp;nbsp;that:&lt;/p&gt;
 pointers (restricted, aliasing, movable), static checking during compilation
 and run-time&amp;nbsp;checks.&lt;/p&gt;
 &lt;p&gt;Unsafe pointers provide the same behaviour as pointers in C. An unsafe pointer
-must be declared with the unsafe keyword, and they can only be used within
+must be declared with the unsafe keyword, and they can only be used&amp;nbsp;within
 &lt;code&gt;unsafe { ... }&lt;/code&gt; regions.&lt;/p&gt;
 &lt;h3&gt;Additional&amp;nbsp;features&lt;/h3&gt;
 &lt;h4&gt;References&lt;/h4&gt;
@@ -10930,13 +10918,13 @@ structure and can be used as parameters to regular and transaction&amp;nbsp;func
 &lt;h4&gt;Nullable&amp;nbsp;types&lt;/h4&gt;
 &lt;p&gt;Resource types such as interfaces, channel ends, ports and clocks must always
 have a valid value. The nullable qualifier allows these types to have no value,
-which is specified with the &lt;code&gt;?&lt;/code&gt; symbol. For example, a nullable channel is
+which is specified with&amp;nbsp;the &lt;code&gt;?&lt;/code&gt; symbol. For example, a nullable channel is
 declared&amp;nbsp;with:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;chan&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Nullable resource types can also be used to implement optional resource
-arguments for functions. The &lt;code&gt;isnull()&lt;/code&gt; builtin function can be used to check
+arguments for functions.&amp;nbsp;The &lt;code&gt;isnull()&lt;/code&gt; builtin function can be used to check
 if a resource is&amp;nbsp;null.&lt;/p&gt;
 &lt;h4&gt;Multiple&amp;nbsp;returns&lt;/h4&gt;
 &lt;p&gt;In &lt;span class="caps"&gt;XC&lt;/span&gt;, functions can return multiple values. For example, the following
@@ -10951,7 +10939,7 @@ function implements the swap&amp;nbsp;operation:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2&gt;Multicore Hello&amp;nbsp;World&lt;/h2&gt;
-&lt;p&gt;The following program prints &lt;code&gt;Hello World&lt;/code&gt; on four&amp;nbsp;processors:&lt;/p&gt;
+&lt;p&gt;The following program&amp;nbsp;prints &lt;code&gt;Hello World&lt;/code&gt; on four&amp;nbsp;processors:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 &lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;platform.h&amp;gt;&lt;/span&gt;
 

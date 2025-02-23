@@ -192,9 +192,9 @@ This is because logic is checked at compile time for multiple drivers. Note
 that variables are entities driven by procedural assignments (in always
 blocks), whereas nets occur in any other forms of assignment (continuous,
 primitive outputs and module ports). An exception to this is when integrating
-external <span class="caps">IP</span> that uses wire types where some sparing use of the <code>wire</code> type may
+external <span class="caps">IP</span> that uses wire types where some sparing use of&nbsp;the <code>wire</code> type may
 be required for consistency.<sup id="fnref:logic-wire-reg"><a class="footnote-ref" href="#fn:logic-wire-reg">1</a></sup></p>
-<p><strong>Multiply-driven nets should be declared using wire.</strong> This is because <code>wire</code>
+<p><strong>Multiply-driven nets should be declared using wire.</strong> This is&nbsp;because <code>wire</code>
 data types permit multiple&nbsp;drivers.</p>
 <p><strong>Combined logic declarations and assignment statements are not allowed.</strong> The behaviour of these is to assign
 a value at time 0, which is not synthesizable. Continuous assignment after time 0, which is the typical intention,
@@ -231,17 +231,17 @@ to their members recursively. For&nbsp;example:</p>
 since they provide extra compile-time checking.<sup id="fnref:always-blocks"><a class="footnote-ref" href="#fn:always-blocks">2</a></sup></p>
 <p><a name="always_comb" class="anchor"></a></p>
 <h3><code>always_comb</code></h3>
-<p><strong>Use <code>always_comb</code> instead of <code>always</code> for combinatorial logic.</strong> The
+<p><strong>Use <code>always_comb</code> instead&nbsp;of <code>always</code> for combinatorial logic.</strong>&nbsp;The
 <code>always_comb</code> statement allows tools to check that it does not contain any
 latched state and that no other processes assign to variables appearing on the
 left-hand side. (It&#8217;s worth checking the <span class="caps">LRM</span> for details of of the other
-differences.) The use of an <code>always_comb</code> block is also a much clearer
-indication of a combinatorial block that the use of <code>=</code> as opposed to <code>&lt;=</code>.</p>
+differences.) The use of&nbsp;an <code>always_comb</code> block is also a much clearer
+indication of a combinatorial block that the use&nbsp;of <code>=</code> as opposed&nbsp;to <code>&lt;=</code>.</p>
 <p><strong>Always provide an initial value.</strong> A latch will be inferred if there exists a
-control-flow path in which a value of a signal is not set. Since <code>always_comb</code>
+control-flow path in which a value of a signal is not set.&nbsp;Since <code>always_comb</code>
 specifically precludes the creation of latches, doing so will cause a warning
 or error in simulation or synthesis. For example, the following code implies a
-latch since there is no assignment to <code>foo</code> when the condition is not&nbsp;true.</p>
+latch since there is no assignment&nbsp;to <code>foo</code> when the condition is not&nbsp;true.</p>
 <div class="highlight"><pre><span></span><code><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">    </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
@@ -258,8 +258,8 @@ latch since there is no assignment to <code>foo</code> when the condition is not
 <span class="k">end</span>
 </code></pre></div>
 
-<p><strong>Avoid reading and writing a signal in an <code>always_comb</code> block.</strong>
-Avoid reading and writing a signal in an <code>always_comb</code> block. The sensitivity
+<p><strong>Avoid reading and writing a signal in&nbsp;an <code>always_comb</code> block.</strong>
+Avoid reading and writing a signal in&nbsp;an <code>always_comb</code> block. The sensitivity
 list only includes variables that are read in expressions or functions and it
 excludes variables that are also written to. According to these restrictions, a
 variable that is read and written in a block is excluded from the sensitivity
@@ -267,35 +267,35 @@ list, and activation of the block will be dependent on other variables.
 However, this style can cause some tools to warn of a simulation-synthesis
 mismatch (presumably because they apply conservative rules from older versions
 of the language&nbsp;standard).</p>
-<p>In the following code, the block is triggered only when the the right-hand-side
+<p>In the following code, the block is triggered only when the the&nbsp;right-hand-side
 <code>foo</code> changes, rather than entering a feedback loop where it shifts&nbsp;continuously:</p>
 <div class="highlight"><pre><span></span><code><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">  </span><span class="n">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
 <span class="k">end</span>
 </code></pre></div>
 
-<p>To avoid reading and writing <code>foo</code> in the same block and possible warnings
+<p>To avoid reading and&nbsp;writing <code>foo</code> in the same block and possible warnings
 from tools, a new signal can be&nbsp;introduced:</p>
 <div class="highlight"><pre><span></span><code><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">  </span><span class="n">next_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
 <span class="k">end</span>
 </code></pre></div>
 
-<p><strong>Where possible extract logic into <code>assign</code> statements.</strong> Extract single
-assignments to a variable into a separate <code>assign</code> statement, where it is
+<p><strong>Where possible extract logic&nbsp;into <code>assign</code> statements.</strong> Extract single
+assignments to a variable into a&nbsp;separate <code>assign</code> statement, where it is
 possible to do so. This approach uses the features of SystemVerilog
 consistently, rather than using two mechanisms to achieve the same effect. This
-makes it clear that an <code>always_comb</code> is used to introduce sequentiality.
-Another opportunity to move logic into separate <code>assign</code> statements is with
+makes it clear that&nbsp;an <code>always_comb</code> is used to introduce sequentiality.
+Another opportunity to move logic into&nbsp;separate <code>assign</code> statements is with
 complex expressions, such as the Boolean value for a conditional statement.
 Doing this makes the control flow structure clearer, potentially provide
 opportunities for reuse, and provides a separate signal when inspecting the
 signals in a waveform&nbsp;viewer.</p>
-<p><strong>Avoid unnecessary sequentiality.</strong> It is easy to add statements to an
+<p><strong>Avoid unnecessary sequentiality.</strong> It is easy to add statements to&nbsp;an
 <code>always_comb</code> to expand its behaviour, but this should only be done when there
 are true sequential dependencies between statements in the block. In general,
 parallelism should be exposed where ever possible. In the the following
-example, the sequentiality is not necessary since the output <code>set_foo</code> depends
+example, the sequentiality is not necessary since the&nbsp;output <code>set_foo</code> depends
 independently on the various&nbsp;conditions:</p>
 <div class="highlight"><pre><span></span><code><span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">  </span><span class="n">set_foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
@@ -315,7 +315,7 @@ independently on the various&nbsp;conditions:</p>
 
 <p>Clearly the sequencing of the conditions is not necessary, so the block could
 be transformed to separate the logic for each condition into separate parallel
-processes (extracting into <code>assign</code> statements as per the rule above) and
+processes (extracting&nbsp;into <code>assign</code> statements as per the rule above) and
 explicitly combine them with the implied logical disjunction of the original&nbsp;block:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">condition_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signal_a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">signal_b</span><span class="p">;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">condition_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">signal_c</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">signal_d</span><span class="p">;</span>
@@ -329,18 +329,18 @@ explicitly combine them with the implied logical disjunction of the original&nbs
 <span class="k">end</span>
 </code></pre></div>
 
-<p>It is <a href="https://www.veripool.org/papers/verilator_philips_internals.pdf">recommended</a> by the author of Verilator to split up
+<p>It is <a href="https://www.veripool.org/papers/verilator_philips_internals.pdf">recommended</a> by the author of Verilator to split&nbsp;up
 <code>always</code> blocks (combinatorial or sequential) so they contain as few
 statements as possible. This allows Verilator the most freedom to order the
 code to improve execution performance. Presumably, this provides similar
 freedoms to other&nbsp;simulators.</p>
 <p><strong>Drive one signal per block.</strong> With complex control flow statements, it is
-tempting to use a single <code>always_comb</code> block to drive multiple signals. In some
+tempting to use a&nbsp;single <code>always_comb</code> block to drive multiple signals. In some
 circumstances, there may be good reasons to do this, such as when many output
 signals are used in a similar way, but in the general case, splitting each
 signal into a separate block makes it clear what logic involved in driving that
 signal, and as such, facilitates further&nbsp;simplification.</p>
-<p>An additional reason to avoid driving multiple signals per <code>always_comb</code> block
+<p>An additional reason to avoid driving multiple signals&nbsp;per <code>always_comb</code> block
 is that <a href="https://www.veripool.org/wiki/verilator">Verilator</a> can infer a dependence between two signals,
 leading to false circular combinatorial loops. In these cases, it issues an
 <a href="https://www.embecosm.com/appnotes/ean6/html/ch07s02s07.html"><code>UPOPTFLAT</code> warning</a> and cannot optimise the path, leading to
@@ -392,25 +392,25 @@ to a factor of two</a>.</p>
 
 <p><a name="always_ff" class="anchor"></a></p>
 <h3><code>always_ff</code></h3>
-<p><strong>Use <code>always_ff</code> instead of <code>always</code> for sequential logic.</strong> Similarly to
-<code>always_comb</code>, use of <code>always_ff</code> permits tools to check that the procedure
+<p><strong>Use <code>always_ff</code> instead&nbsp;of <code>always</code> for sequential logic.</strong> Similarly&nbsp;to
+<code>always_comb</code>, use&nbsp;of <code>always_ff</code> permits tools to check that the procedure
 only contains sequential logic behaviour (no timing controls and only one event
 control) that variables on the left-hand side are not written to by any other
 process, and makes clear the intent for sequential logic behaviour with
-non-blocking assignments, <code>&lt;=</code>.</p>
+non-blocking&nbsp;assignments, <code>&lt;=</code>.</p>
 <p><strong>Avoid adding logic to non-blocking assignments.</strong> This is primarily a matter
-of taste, but having non-blocking assignments in <code>always_ff</code> blocks only from a
+of taste, but having non-blocking assignments&nbsp;in <code>always_ff</code> blocks only from a
 logic signal name, rather than a logical expression, keeps the block simple and
-limits combinatorial logic to <code>always_comb</code> blocks and <code>assign</code> statements
-elsewhere in the module. Since synthesizable <code>always_ff</code>s are additionally
+limits combinatorial logic&nbsp;to <code>always_comb</code> blocks&nbsp;and <code>assign</code> statements
+elsewhere in the module. Since&nbsp;synthesizable <code>always_ff</code>s are additionally
 restricted in that variables assigned to must have a reset condition of a
 constant value, maintaining this clarity aids the designer. Having separate
 combinatorial blocks is also useful since it allows the logic signal driving a
 flip-flop as well as the registered value to be apparent in a waveform viewer,
 particularly when clock gates are&nbsp;used.</p>
 <p>A typical pattern when implementing combinatorial logic and registers is to
-define the set and clear conditions in an <code>always_comb</code> and register the value
-in an accompanying <code>always_ff</code>, for&nbsp;example:</p>
+define the set and clear conditions in&nbsp;an <code>always_comb</code> and register the value
+in an&nbsp;accompanying <code>always_ff</code>, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="kt">logic</span><span class="w"> </span><span class="kt">bit</span><span class="p">;</span>
 <span class="kt">logic</span><span class="w"> </span><span class="n">bit_q</span><span class="p">;</span>
 
@@ -437,7 +437,7 @@ in an accompanying <code>always_ff</code>, for&nbsp;example:</p>
 a flip flop will drive X on its output, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. Having
 registers initialised with a defined value precludes these kinds of mismatches.
-In the above example, <code>bit_q</code> is correctly initialised to&nbsp;0.</p>
+In the above&nbsp;example, <code>bit_q</code> is correctly initialised to&nbsp;0.</p>
 <p><strong>Avoid using synchronous-reset registers.</strong> These type of flip flops are not
 typically used because there are circumstances when a clock is not available
 and reset-to-clock paths are not timed in the physical implementation. In cases
@@ -445,14 +445,14 @@ where area and power are constrained, non-reset flip flops can instead be
 deployed for better&nbsp;savings.</p>
 <p>In certain circumstances when it is appropriate to use synchronous-reset registers, then
 <strong>avoid mixing synchronous and asynchronous reset signals</strong>.
-A reset signal (eg <code>i_rst</code>) should not be used as a
+A reset signal&nbsp;(eg <code>i_rst</code>) should not be used as a
 synchronous reset for one set of registers and an asynchronous reset for another set. This is because the resets
 must be controlled differently by <span class="caps">DFT</span> control logic, and use of a single signal may obscure the designer&nbsp;intent.</p>
 <p><strong>Avoid using non-reset registers.</strong> To avoid issues with X values in a design
 as far as possible, non-reset registers should only be used when specifically
 required to save area and power, such as for the storage elements of a register
 file. In certain circumstances when it is appropriate to use non-reset
-registers, then <strong>define non-reset registers in a separate <code>always_ff</code> block</strong>.
+registers, then <strong>define non-reset registers in a&nbsp;separate <code>always_ff</code> block</strong>.
 For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// A non-reset register.</span>
 <span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">i_clk</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
@@ -492,7 +492,7 @@ important conditional context of&nbsp;expressions.</p>
 <span class="k">end</span>
 </code></pre></div>
 
-<p><strong>Use if-else-if statements to implement priority encoders.</strong> Although a
+<p><strong>Use if-else-if statements to implement priority encoders.</strong> Although&nbsp;a
 <code>priority case</code> statement can be used to do this, it is easier for designers to
 recognise a priority encoder when it is written as an if-else-if statement. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Replace an unqualified case:</span>
@@ -509,12 +509,12 @@ recognise a priority encoder when it is written as an if-else-if statement. For&
 <span class="k">end</span>
 </code></pre></div>
 
-<p><strong>Do not use qualifiers with <code>if</code>-<code>else</code>-<code>if</code> statements.</strong> The default
-behaviour of if statements is that of <code>priority</code>, meaning that one condition is
+<p><strong>Do not use qualifiers&nbsp;with <code>if</code>-<code>else</code>-<code>if</code> statements.</strong> The default
+behaviour of if statements is that&nbsp;of <code>priority</code>, meaning that one condition is
 matched, the conditions are evaluated in sequence and only the body of the
-first matching condition is evaluated. For <code>unique</code> and <code>unique0</code> variants of
+first matching condition is evaluated.&nbsp;For <code>unique</code> and <code>unique0</code> variants&nbsp;of
 <code>if</code> statements (one or no matching conditions, which can be evaluated in
-parallel), use a <code>unique</code>-qualified case statement instead. For&nbsp;example:</p>
+parallel), use&nbsp;a <code>unique</code>-qualified case statement instead. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Replace a unique if:</span>
 <span class="n">unique</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ctrl</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
 <span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
@@ -532,7 +532,7 @@ parallel), use a <code>unique</code>-qualified case statement instead. For&nbsp;
 <span class="k">endcase</span>
 </code></pre></div>
 
-<p>Note that <code>if</code> statements are X-optimistic in that a condition that evaluates
+<p>Note&nbsp;that <code>if</code> statements are X-optimistic in that a condition that evaluates
 to an X is treated as if it were a zero. This behaviour has drawbacks and
 benefits, but should be carefully considered since it can be a cause of
 divergence in behaviour between simulation and synthesis. In contrast, case
@@ -567,10 +567,10 @@ the&nbsp;verification.</p>
 <p>Note that if a case condition contains a list of expressions, it is not a
 violation of uniqueness if more than one expression matches since they are
 selecting the same&nbsp;statement.</p>
-<p><strong>Do not use <code>unique0</code> as a case qualifier.</strong> Despite this qualifier being in
-the SystemVerilog <span class="caps">LRM</span> for more than a decade, tool support for <code>unique0</code> is
-patchy and sometimes absent. This suggests that adoption of <code>unique0</code> is low, so
-the <span class="caps">EDA</span> companies have not needed to support it comprehensively. As such,
+<p><strong>Do not&nbsp;use <code>unique0</code> as a case qualifier.</strong> Despite this qualifier being in
+the SystemVerilog <span class="caps">LRM</span> for more than a decade, tool support&nbsp;for <code>unique0</code> is
+patchy and sometimes absent. This suggests that adoption&nbsp;of <code>unique0</code> is low, so
+the <span class="caps">EDA</span> companies have not needed to support it comprehensively. As&nbsp;such,
 <code>unique0</code> should not be used, and instead a unique case with an empty default
 should be used, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Replace a unique0 case:</span>
@@ -593,7 +593,7 @@ should be used, for&nbsp;example:</p>
 are always matches and/or are parallel, then they should use a priority case with a default. This way, the
 logic simulated results will always match the synthesized&nbsp;logic.</p>
 <p><strong>The Synopsys full_case/parallel_case compiler directives should not be
-used.</strong> Instead, use either the <code>unique</code> or <code>priority</code> qualifiers, as
+used.</strong> Instead, use either&nbsp;the <code>unique</code> or <code>priority</code> qualifiers, as
 shown in the table&nbsp;below:</p>
 <table class="table table-striped table-sm">
 <thead>
@@ -628,8 +628,8 @@ they can be used to cover all other case conditions that are not explicitly
 specified. Their inclusion in a case statement must be considered&nbsp;carefully.</p>
 <p>Defaults can be used to assign a value to a combinatorial signal to avoid
 latches from being inferred, however it is clearer to provide a default value
-at the beginning of an <code>always_comb</code> block (see above). This is because it is
-conventional to add a <code>default</code> at the end of a <code>case</code> statement, which obscures
+at the beginning of&nbsp;an <code>always_comb</code> block (see above). This is because it is
+conventional to add&nbsp;a <code>default</code> at the end of&nbsp;a <code>case</code> statement, which obscures
 the effect of a default, possibly leading to bugs. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Assign a default at the top of the block.</span>
 <span class="k">always_comb</span><span class="w"> </span><span class="k">begin</span>
@@ -645,18 +645,18 @@ the effect of a default, possibly leading to bugs. For&nbsp;example:</p>
 </code></pre></div>
 
 <p>If a condition were to be added around the above case statement, the default
-value assignment of <code>next_state</code> would remain at the top of the block. On the
+value assignment&nbsp;of <code>next_state</code> would remain at the top of the block. On the
 other hand, if the default value assignment were done in a default of the case,
 and not moved out, a latch would be&nbsp;inferred.</p>
-<p>Defaults can be used to trap unexpected case values. However, by specifying
+<p>Defaults can be used to trap unexpected case values. However, by&nbsp;specifying
 <code>unique</code> or <code>priority</code>, unexpected case values will cause either of the
 no-matching-condition or multiple-conditions matching violation checks to fire.
-For example, with a one-hot case select, it is not necessary to add a
+For example, with a one-hot case select, it is not necessary to add&nbsp;a
 <code>default: $error(...);</code> case condition to trap values that are not one&nbsp;hot.</p>
-<p>There is no <code>priority0</code> case statement qualifier, so it is reasonable to
-include an empty <code>default</code> with a <code>priority case</code> to disable the
-no-matching-condition violation check, similarly to <code>unique case</code>. However, it
-is more conventional to use an <code>if</code>-<code>else</code>-<code>if</code> to implement a priority
+<p>There is&nbsp;no <code>priority0</code> case statement qualifier, so it is reasonable to
+include an&nbsp;empty <code>default</code> with&nbsp;a <code>priority case</code> to disable the
+no-matching-condition violation check, similarly&nbsp;to <code>unique case</code>. However, it
+is more conventional to use&nbsp;an <code>if</code>-<code>else</code>-<code>if</code> to implement a priority
 encoder. Example of a case-based priority&nbsp;encoder:</p>
 <div class="highlight"><pre><span></span><code><span class="n">priority</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">cond</span><span class="p">)</span>
 <span class="w">  </span><span class="nl">VALUE_A:</span><span class="w"> </span><span class="p">...</span>
@@ -709,8 +709,8 @@ multiplexer can be&nbsp;written:</p>
 <span class="k">endmodule</span>
 </code></pre></div>
 
-<p>As an aside, it is convenient to define a one-hot encoding in a <code>union</code> type
-with another <code>struct</code> to provide named access to each member. For example,
+<p>As an aside, it is convenient to define a one-hot encoding in&nbsp;a <code>union</code> type
+with&nbsp;another <code>struct</code> to provide named access to each member. For&nbsp;example,
 <code>status_q</code> above could be redefined&nbsp;as:</p>
 <div class="highlight"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">STATUS_START</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span>
@@ -733,10 +733,10 @@ with another <code>struct</code> to provide named access to each member. For exa
 <p>Bear in mind however that this union introduces potential for the control structure to correspond incorrectly with
 the enumeration, which may introduce bugs into the&nbsp;design.</p>
 <p><strong>Minimise the amount of logic inside a case statement.</strong> The rationale for
-this is similar to extracting logic from <code>always_comb</code> blocks into <code>assign</code>
+this is similar to extracting logic&nbsp;from <code>always_comb</code> blocks&nbsp;into <code>assign</code>
 statements where possible: to make the control flow structure clearer to the
 designer and tooling, and to provide opportunities for reuse or
-further simplification. For example, avoid nesting <code>case</code> statements:</p>
+further simplification. For example, avoid&nbsp;nesting <code>case</code> statements:</p>
 <div class="highlight"><pre><span></span><code><span class="n">status_t</span><span class="w"> </span><span class="n">status_q</span><span class="p">;</span>
 <span class="n">status_t</span><span class="w"> </span><span class="n">next_status</span><span class="p">;</span>
 <span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">mode_q</span><span class="p">;</span>
@@ -756,7 +756,7 @@ further simplification. For example, avoid nesting <code>case</code> statements:
 <span class="k">end</span>
 </code></pre></div>
 
-<p>And instead extract a nested <code>case</code> into a separate process, providing a
+<p>And instead extract a&nbsp;nested <code>case</code> into a separate process, providing a
 result signal to use in the parent&nbsp;case:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">status_t</span><span class="w"> </span><span class="nt">status_q</span><span class="o">;</span>
 <span class="nt">status_t</span><span class="w"> </span><span class="nt">next_status</span><span class="o">;</span>
@@ -781,7 +781,7 @@ result signal to use in the parent&nbsp;case:</p>
 <span class="nt">end</span>
 </code></pre></div>
 
-<p>Although this example seems simple, the <code>case</code>-based logic driving a state
+<p>Although this example seems simple,&nbsp;the <code>case</code>-based logic driving a state
 machine can quickly become&nbsp;complicated.</p>
 <p><strong>Use <code>case inside</code> for matching with don&#8217;t cares.</strong> For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">localparam</span><span class="w"> </span><span class="n">p_done</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mi">&#39;d0</span><span class="p">,</span>
@@ -802,14 +802,14 @@ machine can quickly become&nbsp;complicated.</p>
 <span class="k">end</span>
 </code></pre></div>
 
-<p><strong>Unless matching upon <code>'bX</code> or <code>'bZ</code> is genuinely required, then <code>casex</code> or
-<code>casez</code> should not be used.</strong> Instead, the <code>case inside</code> construct should be
+<p><strong>Unless matching&nbsp;upon <code>'bX</code> or <code>'bZ</code> is genuinely required,&nbsp;then <code>casex</code> or
+<code>casez</code> should not be used.</strong> Instead,&nbsp;the <code>case inside</code> construct should be
 used to indicate don&#8217;t-care bits in the case select as per the previous&nbsp;example.</p>
 <p><a name="expressions" class="anchor"></a></p>
 <h2>Expressions</h2>
 <p><strong>Make operator associativity explicit.</strong> This is to avoid any ambiguity over
 the ordering of operators. In particular, always bracket the condition of a
-ternary/conditional expression (<code>?:</code>), especially if you are nesting them,
+ternary/conditional expression&nbsp;(<code>?:</code>), especially if you are nesting them,
 since they associate left to right, and all other arithmetic and logical
 operators associate right to&nbsp;left.</p>
 <div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">||</span>
@@ -845,7 +845,7 @@ the result of a narrower expression for&nbsp;assignment:</p>
 
 <p>Special care should be taken with sub expressions, since their result length is
 determined automatically by the width of the largest operand. For example,
-without an explicit type cast to a 17-bit result around <code>a + b</code>, the carry out
+without an explicit type cast to a 17-bit result&nbsp;around <code>a + b</code>, the carry out
 bit would be&nbsp;lost:</p>
 <div class="highlight"><pre><span></span><code><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 <span class="k">typedef</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">16</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">sum_t</span><span class="p">;</span>
@@ -853,14 +853,13 @@ bit would be&nbsp;lost:</p>
 </code></pre></div>
 
 <p>Capture carry out bits (even if they are unused) so the left-hand-side
-assignment width matches the full width of the right hand side. Using a prefix
-like <code>unused_</code> makes the process of signing off any related warnings with the
+assignment width matches the full width of the right hand side. Using a prefix&nbsp;like <code>unused_</code> makes the process of signing off any related warnings with the
 downstream synthesis and physical build&nbsp;simpler:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">unused_co</span><span class="p">,</span><span class="w"> </span><span class="n">result</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
 </code></pre></div>
 
 <p>Exceptions to this rule can be made for the common constants 0, 1 and -1 to be
-specified as <code>integer</code> literals, for&nbsp;example:</p>
+specified&nbsp;as <code>integer</code> literals, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
 </code></pre></div>
@@ -883,7 +882,7 @@ synthesis, particularly with multipliers. The following example (adapted from
 </code></pre></div>
 
 <p>Note that an operation is only considered signed if all of the operands are
-signed, and that literal values can be specified as signed, for example:
+signed, and that literal values can be specified as signed, for&nbsp;example:
 <code>2'sb11</code> is -1 in 2&nbsp;bits.</p>
 <p><strong>Avoid splitting arithmetic between statements or modules.</strong> This facilitates
 optimisation during synthesis, for example, to choose or generate an optimised
@@ -894,7 +893,7 @@ adder implementation for the given set of operands and carry ins/outs. Instead&n
 <span class="p">{</span><span class="n">unused_co</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">int_sum</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">};</span>
 </code></pre></div>
 
-<p>All of the arithmetic contributing to <code>sum</code> can be written in a single&nbsp;expression:</p>
+<p>All of the arithmetic contributing&nbsp;to <code>sum</code> can be written in a single&nbsp;expression:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="n">unused_co</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
 </code></pre></div>
 
@@ -910,9 +909,9 @@ constants must be sized correctly to avoid width-mismatch warnings that must be
 signed off later in the&nbsp;flow.</p>
 <p><strong>Constants should be declared inside packages.</strong> Derived constants with a
 meaning specific to a module should be defined in the appropriate scope of the&nbsp;module.</p>
-<p><strong>Constants assigned to an <code>enum</code> port must be of the same <code>enum</code> type.</strong> Not
+<p><strong>Constants assigned to&nbsp;an <code>enum</code> port must be of the&nbsp;same <code>enum</code> type.</strong> Not
 doing so relies on an implicit conversion, which can have inconsistent
-behaviour between tools. Assign an <code>enum</code> value directly, or by using a static
+behaviour between tools. Assign&nbsp;an <code>enum</code> value directly, or by using a static
 cast. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="n">m_foo_pkg</span><span class="p">;</span>
 <span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
@@ -961,11 +960,11 @@ cast. For&nbsp;example:</p>
 <span class="k">assign</span><span class="w"> </span><span class="n">data_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">foo_pkg</span><span class="o">::</span><span class="n">bar</span><span class="p">&#39;(</span><span class="mh">5</span><span class="p">);</span>
 </code></pre></div>
 
-<p>With the exception of <code>'0</code>, unsized literal single-bit values (unsigned and
+<p>With the exception&nbsp;of <code>'0</code>, unsized literal single-bit values (unsigned and
 without a radix) in assignments should not be used in combinatorial logic,
 since they can be misinterpreted. They appear similar to explicit assignments
-with a radix, yet represent very different values. For example, <code>'1</code> looks
-similar to <code>'d1</code> but encodes the value $2^n - 1$ where $n$ is the width of the
+with a radix, yet represent very different values. For&nbsp;example, <code>'1</code> looks
+similar&nbsp;to <code>'d1</code> but encodes the value $2^n - 1$ where $n$ is the width of the
 variable being assigned&nbsp;to.</p>
 <div class="highlight"><pre><span></span><code><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
 
@@ -985,11 +984,11 @@ variable being assigned&nbsp;to.</p>
 
 <p><a name="x-values" class="anchor"></a></p>
 <h2>X&nbsp;values</h2>
-<p><strong>Assignment of <code>X</code> values as don&#8217;t care values should be avoided.</strong> This is
+<p><strong>Assignment&nbsp;of <code>X</code> values as don&#8217;t care values should be avoided.</strong> This is
 for similar reasons for not using non-reset registers, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. However, if
 it can be demonstrated that use of X values can provide better QoR in the
-physical build of a block, specific and limited use of <code>X</code> values can be&nbsp;justified.</p>
+physical build of a block, specific and limited use&nbsp;of <code>X</code> values can be&nbsp;justified.</p>
 <p><a name="naming" class="anchor"></a></p>
 <h2>Naming</h2>
 <p>Clear and consistent naming is important for a design to be easily understood
@@ -1004,15 +1003,14 @@ different in pipeline&nbsp;stages.</p>
 is typical for synthesis to flatten the hierarchical structure and consequently
 symbol names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
-a flip-flop clock pin might be named
-<code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the register
+a flip-flop clock pin might be&nbsp;named
+<code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the&nbsp;register
 <code>u_toplevel/u_submodule/p0_signal_q[17]</code>.</p>
-<p><strong>Names should be meaningful, whilst avoiding excessive verbosity.</strong> For example,
-<code>n3</code> should be avoided as it lacks meaning whereas <code>floating_point_opcode_bus</code> is
-excessively long. <code>fp_opcode</code> is a reasonable&nbsp;compromise.</p>
+<p><strong>Names should be meaningful, whilst avoiding excessive verbosity.</strong> For&nbsp;example,
+<code>n3</code> should be avoided as it lacks meaning&nbsp;whereas <code>floating_point_opcode_bus</code> is
+excessively&nbsp;long. <code>fp_opcode</code> is a reasonable&nbsp;compromise.</p>
 <p><strong>Avoid using C/C++/Verilog/SystemVerilog/<span class="caps">VHDL</span> keywords as names.</strong> Even if
-they are not reserved names in the language being used in that file. For
-example: <code>auto</code>, <code>unsigned</code>, <code>task</code>, <code>register</code> or <code>asm</code>.</p>
+they are not reserved names in the language being used in that file. For&nbsp;example: <code>auto</code>, <code>unsigned</code>, <code>task</code>, <code>register</code> or <code>asm</code>.</p>
 <p><strong>All names must be all lower case and underscore separated.</strong>
 For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="n">m_cpu</span>;
@@ -1116,8 +1114,7 @@ enumerated&nbsp;below:</p>
 </table>
 
 <p>Where signals are both active-low and require a suffix from elsewhere in the
-table, the <code>_n</code> suffix should be appended without an extra underscore. For
-example, <code>_q</code> becomes <code>_qn</code> for an active-low flop output, and <code>_clk</code> becomes
+table,&nbsp;the <code>_n</code> suffix should be appended without an extra underscore. For&nbsp;example, <code>_q</code> becomes <code>_qn</code> for an active-low flop output,&nbsp;and <code>_clk</code> becomes
 <code>_clkn</code> for an inverted&nbsp;clock.</p>
 <p>The following code example shows appropriate usage of the above prefix and
 suffix&nbsp;guidelines:</p>
@@ -1161,8 +1158,8 @@ suffix&nbsp;guidelines:</p>
 <span class="k">endmodule</span>
 </code></pre></div>
 
-<p>Another example illustrates the use of the pipeline prefix, using <code>e</code> to denote
-an external signal and <code>p</code> an internal&nbsp;one:</p>
+<p>Another example illustrates the use of the pipeline prefix,&nbsp;using <code>e</code> to denote
+an external signal&nbsp;and <code>p</code> an internal&nbsp;one:</p>
 <div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">m_mempipe</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">i_clk</span><span class="p">,</span>
 <span class="w">  </span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w">        </span><span class="n">i_rst</span><span class="p">,</span>
@@ -1215,8 +1212,8 @@ select a set of registers or similar signals different in pipeline&nbsp;stages.<
 to flatten the hierarchical structure of a SystemVerilog design. Consequently
 symbols names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
-a flip-flop clock pin might be named
-<code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the register
+a flip-flop clock pin might be&nbsp;named
+<code>u_toplevel_u_submodule_p0_signal_q_reg_17_/CK</code> corresponding to the&nbsp;register
 <code>u_toplevel/u_submodule/p0_signal_q[17]</code>.</p>
 <p><a name="generate-naming" class="anchor"></a></p>
 <h3>Generate block&nbsp;naming</h3>
@@ -1291,7 +1288,7 @@ to gen_op0 or gen_op1, indeed these could be switched with no visibility in the&
 <span class="w">  </span><span class="n">genblk2</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span>
 </code></pre></div>
 
-<p>Using a <code>g_</code> prefix for named generate blocks, clearly distinguishes with
+<p>Using&nbsp;a <code>g_</code> prefix for named generate blocks, clearly distinguishes with
 instantiations of modules, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">m_foo</span><span class="w"> </span><span class="p">(</span>
 <span class="p">...</span>
@@ -1364,13 +1361,13 @@ registered outputs illustrates this kind of&nbsp;structuring:</p>
 
 <p><strong>Use <code>.*</code> and <code>.name()</code> syntax in some circumstances to simplify port lists in module
 instantiations.</strong> Doing so can reduce the amount of boilerplate code and thus the
-scope for typing or copy-paste errors. The wildcard <code>.*</code> also provides additional checks:<sup id="fnref:wildcards"><a class="footnote-ref" href="#fn:wildcards">3</a></sup></p>
+scope for typing or copy-paste errors. The&nbsp;wildcard <code>.*</code> also provides additional checks:<sup id="fnref:wildcards"><a class="footnote-ref" href="#fn:wildcards">3</a></sup></p>
 <ul>
 <li>It requires all nets be&nbsp;connected.</li>
 <li>It requires all nets to be the same&nbsp;size.</li>
 <li>It prevents implicit nets from being&nbsp;inferred.</li>
 </ul>
-<p>Named connections with <code>.name()</code> can be used with wildcards to add specific
+<p>Named connections&nbsp;with <code>.name()</code> can be used with wildcards to add specific
 exceptions, such as when names do not match or for unconnected or tied-off
 ports. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">i_clk</span><span class="p">,</span>
@@ -1395,7 +1392,7 @@ port hookups and the widths of the signals for correctness. Not doing so
 obscures functionality in the&nbsp;design.</p>
 <p><strong>In parameter lists, separate parameters that are intended to be set
 externally from secondary parameters that are only used internally.</strong> There is
-no way to prevent some parameters being set externally, ie with <code>localparam</code>,
+no way to prevent some parameters being set externally, ie&nbsp;with <code>localparam</code>,
 so a comment can be used to do this, for&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">m_rf</span>
 <span class="p">#(</span><span class="k">parameter</span>
@@ -1424,7 +1421,7 @@ module into sections. For&nbsp;example:</p>
 </code></pre></div>
 
 <p><strong>Any unused or dangling signals/ports within a block must be terminated with a
-signal prefixed with <code>unused_</code>.</strong> These signals can be <span class="caps">AND</span>-reduced to make a
+signal prefixed&nbsp;with <code>unused_</code>.</strong> These signals can be <span class="caps">AND</span>-reduced to make a
 single-bit signal. The <span class="caps">AND</span>-reduction with constant zeros guarantees the result
 is always zero, so it can be safely optimised away. For&nbsp;example:</p>
 <div class="highlight"><pre><span></span><code><span class="kt">logic</span><span class="w"> </span><span class="n">_unused_ok</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span>
@@ -1454,16 +1451,16 @@ defined by the package. For&nbsp;example:</p>
 <p><strong>Assertions should be written in a separate file that is bound in to the
 appropriate scope.</strong> Verification tests must be written to specifically ensure
 that the assertions are present in&nbsp;simulation.</p>
-<p><strong>Assertion files must be named after the block they apply to, with an
+<p><strong>Assertion files must be named after the block they apply to, with&nbsp;an
 <code>_assert.sv</code> suffix.</strong> Where assertions have been split into different groups
 to allow use in gate-level simulations (or other environments), the file name
-may have a <code>_ports_assert.sv</code>, <code>_regs_assert.sv</code> or <code>_nets_assert.sv</code> suffix as&nbsp;appropriate.</p>
+may have&nbsp;a <code>_ports_assert.sv</code>, <code>_regs_assert.sv</code> or <code>_nets_assert.sv</code> suffix as&nbsp;appropriate.</p>
 <p><a name="preprocessor" class="anchor"></a></p>
 <h3>Preprocessor</h3>
 <p><strong>In general, it should be possible to avoid any preprocessing of code.</strong> Other
 built-in language structures such as parameters and generate statements should
-be used instead. Don&#8217;t use local <code>define</code> statements in modules unless
-absolutely necessary, use <code>localparam</code> instead of <code>define</code>:</p>
+be used instead. Don&#8217;t use&nbsp;local <code>define</code> statements in modules unless
+absolutely necessary,&nbsp;use <code>localparam</code> instead&nbsp;of <code>define</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Avoid</span>
 <span class="cp">`define CONSTANT 1</span>
 
@@ -1474,7 +1471,7 @@ absolutely necessary, use <code>localparam</code> instead of <code>define</code>
 <p>This is because SystemVerilog macro definitions are not scoped within a module,
 which can easily lead to them &#8216;leaking&#8217; between files in a filelist, making the
 elaboration dependent on the ordering of the&nbsp;list.</p>
-<p>For similar reasons, <strong>use generate-if blocks instead of <code>ifdef</code>.</strong></p>
+<p>For similar reasons, <strong>use generate-if blocks instead&nbsp;of <code>ifdef</code>.</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Avoid</span>
 <span class="no">`ifdef</span><span class="w"> </span><span class="n">FLAG</span>
 <span class="p">...</span>
@@ -1488,7 +1485,7 @@ elaboration dependent on the ordering of the&nbsp;list.</p>
 <span class="k">endgenerate</span>
 </code></pre></div>
 
-<p><strong>If a local define is unavoidable, then a corresponding <code>undef</code> must be included
+<p><strong>If a local define is unavoidable, then a&nbsp;corresponding <code>undef</code> must be included
 before the end of the file.</strong> This is to avoid macro definitions polluting the
 global&nbsp;namespace.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">`define LOCAL_DEFINE</span>
@@ -1510,7 +1507,7 @@ programming languages for compatibility with version control and editors&nbsp;et
 <p><strong>Split long lines or complex expressions with continuations or across
 statements.</strong> Apply indent as appropriate  for clarity. In this context, &#8216;long&#8217;
 is a reasonable value chosen by the author, but typically between 80 and 120&nbsp;characters.</p>
-<p><strong>Use begin and end to wrap <code>if</code>/<code>else</code>, <code>always_ff</code> and <code>always_comb</code>
+<p><strong>Use begin and end to&nbsp;wrap <code>if</code>/<code>else</code>, <code>always_ff</code> and <code>always_comb</code>
 blocks.</strong> This adds consistency to the code and can help to prevent statements
 from unintentionally being excluded from a block. Only use begin and end in
 case alternatives when they contain multiple&nbsp;statements.</p>
@@ -1604,8 +1601,8 @@ place to find out&nbsp;more.</p>
 <li id="fn:always-blocks">
 <p>With one exception of memory structures that require
   initialisation via an external hierarchical reference. If the memory array is
-  written by an <code>always_</code> block, the memory cannot be driven by another process.
-  Support for <code>$deposit</code> is patchy in tooling, so this cannot always be relied
+  written by&nbsp;an <code>always_</code> block, the memory cannot be driven by another process.
+  Support&nbsp;for <code>$deposit</code> is patchy in tooling, so this cannot always be relied
   on.&#160;<a class="footnote-backref" href="#fnref:always-blocks" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:wildcards">
