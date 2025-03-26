@@ -820,7 +820,7 @@ logic [2:0] status;
 logic [3:0] next_state;
 
 always_comb begin
-  priority case (status)
+  priority case (status) inside
     3'b00?: next_state = p_done;
     3'b01?: next_state = p_init;
     3'b1?0: next_state = p_end;
