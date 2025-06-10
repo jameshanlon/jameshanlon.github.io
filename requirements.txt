@@ -4,5 +4,5 @@ pelican==4.11.0
 Pillow==11.1.0
 pre-commit==4.1.0
 pygments==2.18.0
-requests==2.32.3
+requests==2.32.4
 typogrify==2.1.0
