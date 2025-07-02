@@ -35,3 +35,4 @@ Title: Links right
 - [Peter Birch](https://intuity.io)
 - [Peter Hanlon](https://www.youtube.com/@PPPE1957)
 - [Evan Griffiths](https://evangriffiths.org)
+- [Oliver Child](https://oliverchild.com)
