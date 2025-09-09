@@ -869,8 +869,12 @@ and compilers.
 
 ## Similar projects <a name="similar-projects" class="anchor"></a>
 
-The following are some similar projects that include simple implementations of
-processor toolchains.
+[The Big Hex Machine](https://bighexmachine.github.io) is a giant hands-on
+implementation of a Hex processor. It was designed and built by students and
+staff at the University of Bristol's Computer Science Department.
+
+Here are some other related projects that include simple implementations of
+processors and/or their toolchains.
 
 - [VSPL](https://www.cl.cam.ac.uk/~mr10/VSPL.html), is a very simple
   programming language designed by Martin Richards to be used as a case study
