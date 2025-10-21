@@ -2700,8 +2700,8 @@ is always the closest one. The following table summarises Hamming&amp;nbsp;codes
 &lt;tbody&gt;
   &lt;tr&gt;
     &lt;td&gt;2&lt;/td&gt;
-    &lt;td&gt;1&lt;/td&gt;
     &lt;td&gt;0&lt;/td&gt;
+    &lt;td&gt;1&lt;/td&gt;
     &lt;td&gt;Single error detection (eg parity code)&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
