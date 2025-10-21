@@ -123,8 +123,8 @@ is always the closest one. The following table summarises Hamming codes.
 <tbody>
   <tr>
     <td>2</td>
-    <td>1</td>
     <td>0</td>
+    <td>1</td>
     <td>Single error detection (eg parity code)</td>
   </tr>
   <tr>
