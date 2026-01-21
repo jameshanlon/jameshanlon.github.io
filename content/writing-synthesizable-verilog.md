@@ -1401,7 +1401,7 @@ module m_foo (
 );
   m_child u_child (...);
   generate
-    for (genvar i-0; i < 3; i++) begin : g_loop
+    for (genvar i=0; i < 3; i++) begin : g_loop
       ...
     end
   endgenerate
