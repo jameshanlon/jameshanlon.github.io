@@ -27,6 +27,7 @@ def load_yaml(filename: str):
 
 JINJA_CONTEXT = {
     "projects": load_yaml("content/pages/projects.yml"),
+    "links": load_yaml("content/pages/links.yml"),
 }
 
 JINJA_FILTERS = {

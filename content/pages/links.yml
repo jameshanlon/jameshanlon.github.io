@@ -1,0 +1,131 @@
+left:
+  - heading: Technical blogs
+    links:
+      - name: Dan Lu
+        href: https://danluu.com
+      - name: Eli Bendersky
+        href: https://eli.thegreenplace.net
+      - name: Ken Sherriff
+        href: https://www.righto.com
+      - name: Muxup
+        href: https://muxup.com
+      - name: Protons for Breakfast
+        href: https://protonsforbreakfast.wordpress.com
+      - name: Random ASCII
+        href: https://randomascii.wordpress.com
+      - name: Stratechery
+        href: https://stratechery.com
+      - name: The blog at the bottom of the sea
+        href: https://blog.demofox.org
+      - name: Zip CPU
+        href: http://zipcpu.com
+
+  - heading: Chips
+    links:
+      - name: Chips and Cheese
+        href: https://chipsandcheese.com
+      - name: Deep Chip
+        href: http://deepchip.com
+      - name: Real World Tech
+        href: https://www.realworldtech.com
+      - name: Semi Analysis
+        href: https://www.semianalysis.com
+      - name: The Chip Letter
+        href: https://thechipletter.substack.com
+      - name: When Silicon Fails
+        href: https://whensiliconfails.wordpress.com
+      - name: WikiChip
+        href: https://en.wikichip.org/wiki/WikiChip
+
+  - heading: Computing resources
+    links:
+      - name: Awesome Compilers
+        href: http://aalhour.com/awesome-compilers
+      - name: Niklaus Wirth Archive
+        href: https://people.inf.ethz.ch/wirth
+      - name: Per Brinch Hansen Archive
+        href: http://brinch-hansen.net
+
+  - heading: Occam and transputers
+    links:
+      - name: "Ram's Transputer Page"
+        href: http://transputer.classiccmp.org
+      - name: Transputer.net
+        href: https://www.transputer.net
+
+  - heading: Simple compilers and interpreters
+    links:
+      - name: "Picol (TCL, 500 lines)"
+        href: http://antirez.com/picol/picol.c.txt
+      - name: "500 Lines or Less: A Python Interpreter Written in Python"
+        href: https://aosabook.org/en/500L/a-python-interpreter-written-in-python.html
+      - name: "Pocket Py: a Python Interpreter in 1 File"
+        href: https://github.com/pocketpy/pocketpy
+      - name: SmallC
+        href: https://github.com/ncb85/SmallC-85
+
+right:
+  - heading: Sustainability
+    links:
+      - name: Bristol Energy Cooperative
+        href: https://bristolenergy.coop
+      - name: Bristol Energy Network
+        href: https://bristolenergynetwork.org
+      - name: Carbon Commentary
+        href: https://www.carboncommentary.com/blog
+      - name: Carbon Brief
+        href: https://www.carbonbrief.org
+      - name: Climate Change Tracker
+        href: https://climatechangetracker.org
+      - name: Earth Notes
+        href: http://www.earth.org.uk
+      - name: "Improve your EPC, EPC Works"
+        href: https://www.epcworks.co.uk/improve-your-epc
+      - name: Shrink That Footprint
+        href: https://shrinkthatfootprint.com
+
+  - heading: Books
+    links:
+      - name: A Practical Introduction to Computer Architecture
+        href: https://www.phoo.org/book/pica
+      - name: Communicating Sequential Processes
+        href: http://www.usingcsp.com
+      - name: Deep Learning
+        href: https://www.deeplearningbook.org/
+      - name: "Information Theory, Inference, and Learning Algorithms"
+        href: http://www.inference.org.uk/mackay/itila
+      - name: "Neural Networks and Deep Learning, Michael Nielsen"
+        href: http://neuralnetworksanddeeplearning.com
+      - name: Structure and Interpretation of Computer Programs
+        href: https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip
+      - name: Sustainable Energy without the Hot Air
+        href: https://www.withouthotair.com
+      - name: Standard Ebooks
+        href: https://standardebooks.org
+
+  - heading: People
+    links:
+      - name: Andrew Holme
+        href: http://www.aholme.co.uk
+      - name: Ashley Robinson
+        href: http://www.ajrobinson.org
+      - name: David May
+        href: http://people.cs.bris.ac.uk/~dave
+      - name: Graham Markall
+        href: https://big-grey.co.uk
+      - name: James Pallister
+        href: http://www.jpallister.com
+      - name: Jeremy Morse
+        href: https://jmorse.net
+      - name: Kate Hodesdon
+        href: https://hodesdon.substack.com/
+      - name: Michael Boulton
+        href: https://boulton.xyz
+      - name: Peter Birch
+        href: https://intuity.io
+      - name: Peter Hanlon
+        href: https://www.youtube.com/@PPPE1957
+      - name: Evan Griffiths
+        href: https://evangriffiths.org
+      - name: Oliver Child
+        href: https://oliverchild.com
