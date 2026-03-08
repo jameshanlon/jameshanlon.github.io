@@ -74,7 +74,7 @@ encodes the operation type with its immediate. The instructions are grouped
 into memory access with absolute or relative addressing modes, loading of
 constants, branching, inter-register operations and supervisor calls.
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Opcode</th>
   <th scope="col">Behaviour</th>

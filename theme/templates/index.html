@@ -8,13 +8,10 @@ well as various archived documents and talks, and some information about me.</p>
 <p>Browse:
 <a href="/categories.html">by catergory</a>,
 <a href="/tags.html">by tag</a>.
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md article-list">
-    {% for article in articles %}
-      {{ macros.render_article_item(article) }}
-    {% endfor %}
-  </div>
+<div class="article-list">
+  {% for article in articles %}
+    {{ macros.render_article_item(article) }}
+  {% endfor %}
 </div>
 <br>
 </p>

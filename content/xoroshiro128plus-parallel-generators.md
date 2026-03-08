@@ -73,7 +73,7 @@ results at intermediate points and consumes much more output than Big Crush or G
 
 The results are summarised in the following table:
 
-<table class="table">
+<table>
   <thead>
     <tr>
       <th scope="col">Seeding scheme</th>

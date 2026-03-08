@@ -602,7 +602,7 @@ logic simulated results will always match the synthesized logic.
 used.** Instead, use either the `unique` or `priority` qualifiers, as
 shown in the table below:
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">SystemVerilog construct</th>
   <th scope="col">Approximate Synopsys pragma equivalent</th>
@@ -1110,7 +1110,7 @@ instances, flip flops, ports etc), and suffixes are generally used to convey
 semantic information. A good standard set of prefixes and suffixes are
 enumerated below:
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col" style="width:20%">Prefix</th>
   <th scope="col">Usage</th>
@@ -1155,7 +1155,7 @@ enumerated below:
 </tbody>
 </table>
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col" style="width:20%">Suffix</th>
   <th scope="col">Usage</th>

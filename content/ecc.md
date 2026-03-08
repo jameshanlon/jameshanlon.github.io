@@ -112,7 +112,7 @@ can change one valid codeword into another one. If a code can correct $d$
 errors, it must have a minimum distance of $2d+1$ so that the originating code
 is always the closest one. The following table summarises Hamming codes.
 
-<table class="table table-sm">
+<table>
 <thead>
   <tr>
     <th scope="col">Distance</th>

@@ -107,7 +107,7 @@ stack has the power supply, taking mains voltage and providing 5V up to 60W
 LEDs only. Note that the power supply does not output enough power do drive
 the boxes comfortably (80W would be more comfortable).
 
-<table class="table table-sm">
+<table>
   <thead>
     <tr>
       <th scope="col">Channel</th>
