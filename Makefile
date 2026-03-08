@@ -17,11 +17,7 @@ ifeq ($(RELATIVE), 1)
 	PELICANOPTS += --relative-urls
 endif
 
-all: webpack html
-
-webpack:
-	npm install
-	npx webpack
+all: html
 
 html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
@@ -42,4 +38,4 @@ clean:
 validate: html
 	html5validator --root $(OUTPUTDIR)
 
-.PHONY: html help clean regenerate serve
+.PHONY: html clean regenerate serve validate

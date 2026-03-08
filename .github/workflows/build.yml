@@ -32,9 +32,6 @@ jobs:
           path: ./output/thumbs
           key: ${{runner.os}}-thumbs
 
-      - name: Run webpack
-        run: make webpack
-
       - name: Build the website
         run: make html
 
