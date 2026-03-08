@@ -5,6 +5,7 @@ Category: notes
 Tags: computing, PRNGs
 Summary: Using empirical statistical tests to determine the quality of PRNGs.
 Status: published
+Math: true
 ---
 
 Recently I have been doing some work testing the quality of [random

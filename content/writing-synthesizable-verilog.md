@@ -5,6 +5,7 @@ Category: notes
 Tags: computing, microelectronics, programming-languages, verilog
 Summary: Coding style for RTL design using Verilog / SystemVerilog. Updated 2024.
 Status: published
+Math: true
 ---
 
 > **_NOTE:_**  Updated February 2024 with improvements and new guidance.

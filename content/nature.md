@@ -3,6 +3,7 @@ Title: Reflections on the state of nature
 Date: 2020-12-04
 Category: non-technical
 Status: published
+Math: true
 Summary: A review of human impacts on nature as a way to reflect and navigate
          environmental bad news.
 Tags: climate-change, sustainability

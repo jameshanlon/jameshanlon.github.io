@@ -6,6 +6,7 @@ Tags: computing
 Summary: Using Hamming Codes for single error correction and double error
          detection.
 Status: published
+Math: true
 ---
 
 Error correcting codes (ECCs) are used in computer and communication systems to

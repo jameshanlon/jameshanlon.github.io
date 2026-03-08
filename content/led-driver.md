@@ -6,6 +6,7 @@ Tags: lighting, electronics
 Summary: An LED driver module controlled by a PIC12F1572 and with CAT4101
          drivers, deployable in an array via a RS485 interface.
 Status: published
+Math: true
 ---
 
 {% import 'post-macros.html' as macros %}

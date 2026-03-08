@@ -6,6 +6,7 @@ Tags: computing, PRNGs
 Summary: Choosing seeds for parallel xoroshiro128+ generators using fixed
          offsets produces correlated outputs.
 Status: published
+Math: true
 ---
 
 As part of the [statistical quality

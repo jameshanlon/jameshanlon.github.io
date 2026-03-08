@@ -6,6 +6,7 @@ Tags: machine-intelligence
 Summary: A C++ implementation of a convoluational neural network building on the
          explanation in Michael Nielsen's book 'Neural Networks and Deep Learning'.
 Status: published
+Math: true
 ---
 
 The online book '[Neural Networks and Deep

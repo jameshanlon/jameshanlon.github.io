@@ -5,6 +5,7 @@ Category: non-technical
 Tags: energy-efficiency, retrofit, sustainability
 Summary: Retrofitting insulation in a timber-framed top floor.
 Status: published
+Math: true
 ---
 
 {% import 'post-macros.html' as macros %}
