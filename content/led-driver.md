@@ -12,7 +12,7 @@ Math: true
 {% import 'post-macros.html' as macros %}
 
 <div class="float-right">
-<a href="{{'LED-driver/board-layers.png'|asset}}" data-lightbox="led-driver">
+<a href="{{'LED-driver/board-layers.png'|asset}}" class="glightbox" data-gallery="led-driver">
   <img class="thumbnail rounded" src="{{'LED-driver/board-layers.png'|thumbnail('400x400')}}" alt="Board silk screen">
 </a>
 </div>
@@ -74,7 +74,7 @@ in Shenzhen, China.
 Here's the schematic:
 
 <div class="text-center">
-  <a href="{{'LED-driver/schematic.png'|asset}}" data-lightbox="led-driver">
+  <a href="{{'LED-driver/schematic.png'|asset}}" class="glightbox" data-gallery="led-driver">
     <img class="rounded" src="{{'LED-driver/schematic.png'|thumbnail('800x800')}}" alt="Board circuit schematic">
   </a>
 </div>

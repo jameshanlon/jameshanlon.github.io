@@ -34,12 +34,12 @@ few tens of watts of power, provides deterministic (completely predictable)
 execution of 512 threads and provides a very simple programming interface.
 
 <div class="text-center">
-<a href="{{'XMP-64/xmp64-1.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-1.JPG'|thumbnail('320x320')}}" alt="XMP-64 top"></a>
-<a href="{{'XMP-64/xmp64-2.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-2.JPG'|thumbnail('320x320')}}" alt="XMP-64 bottom"></a>
-<a href="{{'XMP-64/xmp64-3.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-3.JPG'|thumbnail('320x320')}}" alt="XMP-64 top/down"></a>
-<a href="{{'XMP-64/xmp64-4.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-4.JPG'|thumbnail('320x320')}}" alt="XMP-64 left side"></a>
-<a href="{{'XMP-64/xmp64-5.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-5.JPG'|thumbnail('320x320')}}" alt="XMP-64 right side"></a>
-<a href="{{'XMP-64/xmp64-6.JPG'|asset}}" data-lightbox="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-6.JPG'|thumbnail('320x320')}}" alt="XMP-64 in case"></a>
+<a href="{{'XMP-64/xmp64-1.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-1.JPG'|thumbnail('320x320')}}" alt="XMP-64 top"></a>
+<a href="{{'XMP-64/xmp64-2.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-2.JPG'|thumbnail('320x320')}}" alt="XMP-64 bottom"></a>
+<a href="{{'XMP-64/xmp64-3.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-3.JPG'|thumbnail('320x320')}}" alt="XMP-64 top/down"></a>
+<a href="{{'XMP-64/xmp64-4.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-4.JPG'|thumbnail('320x320')}}" alt="XMP-64 left side"></a>
+<a href="{{'XMP-64/xmp64-5.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-5.JPG'|thumbnail('320x320')}}" alt="XMP-64 right side"></a>
+<a href="{{'XMP-64/xmp64-6.JPG'|asset}}" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="{{'XMP-64/xmp64-6.JPG'|thumbnail('320x320')}}" alt="XMP-64 in case"></a>
 </div>
 
 As you can see in the pictures, there are two Ethernet interfaces at the top of

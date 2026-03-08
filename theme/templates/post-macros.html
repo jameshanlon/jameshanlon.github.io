@@ -26,7 +26,7 @@
   {% endif %}
 <div class="text-center">
 <figure class="figure">
-  <a href="{{filename|asset}}" data-lightbox="all">
+  <a href="{{filename|asset}}" class="glightbox" data-gallery="all">
     <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
   <figcaption class="figure-caption text-left">{{caption}}</figcaption>
@@ -37,7 +37,7 @@
     {% set alt = 'No alt text' %}
   {% endif %}
 <div class="text-center">
-  <a href="{{filename|asset}}" data-lightbox="all">
+  <a href="{{filename|asset}}" class="glightbox" data-gallery="all">
     <img class="figure-img img-fluid thumbnail" src="/{{filename|thumbnail(size)}}" alt="{{alt}}">
   </a>
 </div>
