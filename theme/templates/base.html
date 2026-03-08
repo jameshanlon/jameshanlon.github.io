@@ -9,12 +9,7 @@
   <title>{% block title %}{{SITENAME}}{% endblock title %}</title>
   <link rel="icon" type="image/png" sizes="32x32" href="{{SITEURL}}/theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{SITEURL}}/theme/images/favicon-16x16.png">
-  <!-- Default Pygments style -->
-  {% if article %}
-  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments.css" id="pygments-style"/>
-  {% else %}
-  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments-dark.css" id="pygments-style"/>
-  {%endif%}
+  <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="{{SITEURL}}/theme/css/main.css"/>
   {% if FEED_ATOM %}
   <link href="{{FEED_DOMAIN}}/{{FEED_ATOM}}"
@@ -111,13 +106,6 @@
       // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
-      // Toggle the Pygments style.
-      var elem = document.getElementById('pygments-style');
-      if (elem.getAttribute('href') == '{{SITEURL}}/theme/css/pygments-dark.css') {
-        elem.setAttribute('href', '{{SITEURL}}/theme/css/pygments.css');
-      } else {
-        elem.setAttribute('href', '{{SITEURL}}/theme/css/pygments-dark.css');
-      }
     }
   </script>
 </body>
