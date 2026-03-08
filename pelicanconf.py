@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 import sys
 import os
-import logging
 import yaml
 
 sys.path.insert(0, os.getcwd())
@@ -58,7 +57,8 @@ DEFAULT_PAGINATION = False
 PAGE_SAVE_AS = "{slug}.html"
 
 MENU_ITEMS = [
-    ("notes", "index.html"),
+    ("home", "index.html"),
+    ("notes", "archives.html"),
     ("projects", "projects.html"),
     ("archive", "archive.html"),
     ("about", "about.html"),
