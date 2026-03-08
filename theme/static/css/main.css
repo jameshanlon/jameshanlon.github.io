@@ -13,7 +13,7 @@ body {
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
-  padding-top: 3.5rem;
+  padding-top: 4.5rem;
 }
 
 img {
@@ -44,7 +44,7 @@ hr {
    ========================================================================== */
 
 .container {
-  max-width: 720px;
+  max-width: 860px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -267,7 +267,7 @@ figcaption {
 
 .text-center { text-align: center; }
 .text-left { text-align: left; }
-.text-muted { color: #6c757d; }
+.text-muted { color: #495057; }
 .text-decoration-none { text-decoration: none; }
 .text-uppercase { text-transform: uppercase; }
 .d-block { display: block; }
@@ -363,7 +363,7 @@ a.no-underline {
    ========================================================================== */
 
 footer {
-  color: #6c757d;
+  color: #495057;
   margin-bottom: 2em;
 }
 
