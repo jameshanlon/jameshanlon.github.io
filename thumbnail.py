@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import requests
-from PIL import Image, ExifTags
+from PIL import Image, ImageOps
 from io import BytesIO
 import logging
 
@@ -78,21 +78,8 @@ def get_thumbnail(filepath, size):
         logging.info(f"Using local image version {local_path}")
     else:
         image = fetch_remote(filepath, size)
-    # Rotate if recorded in metadata.
-    # https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image
-    if image.format == "JPEG" or image.format == "TIFF":
-        for orientation in ExifTags.TAGS.keys():
-            if ExifTags.TAGS[orientation] == "Orientation":
-                break
-        if image._getexif():
-            exif = dict(image._getexif().items())
-            if orientation in exif:
-                if exif[orientation] == 3:
-                    image = image.rotate(180, expand=True)
-                elif exif[orientation] == 6:
-                    image = image.rotate(270, expand=True)
-                elif exif[orientation] == 8:
-                    image = image.rotate(90, expand=True)
+    # Rotate if recorded in EXIF metadata.
+    image = ImageOps.exif_transpose(image)
     original_w = image.size[0]
     original_h = image.size[1]
     logging.info("Old size: {} x {}".format(original_w, original_h))
