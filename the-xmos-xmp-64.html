@@ -9,8 +9,10 @@
   <title>The XMOS XMP-64</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <!-- Default Pygments style -->
-  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css" id="pygments-style"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
   <link href="https://jameswhanlon.com/reeds/atom.xml"
         type="application/atom+xml" rel="alternate"
@@ -18,15 +20,9 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <!-- MathJax -->
-  <script>
-  MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-              svg: { fontCache: 'global' } };
-  </script>
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-  </script>
-  <script src="./theme/js/bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -102,12 +98,12 @@ competitive with contemporary <span class="caps">CPU</span> or <span class="caps
 few tens of watts of power, provides deterministic (completely predictable)
 execution of 512 threads and provides a very simple programming&nbsp;interface.</p>
 <div class="text-center">
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-1.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-1_320x320.JPG" alt="XMP-64 top"></a>
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-2.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-2_320x320.JPG" alt="XMP-64 bottom"></a>
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-3.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-3_320x320.JPG" alt="XMP-64 top/down"></a>
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-4.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-4_320x320.JPG" alt="XMP-64 left side"></a>
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-5.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-5_320x320.JPG" alt="XMP-64 right side"></a>
-<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-6.JPG" data-lightbox="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-6_320x320.JPG" alt="XMP-64 in case"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-1.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-1_320x320.JPG" alt="XMP-64 top"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-2.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-2_320x320.JPG" alt="XMP-64 bottom"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-3.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-3_320x320.JPG" alt="XMP-64 top/down"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-4.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-4_320x320.JPG" alt="XMP-64 left side"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-5.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-5_320x320.JPG" alt="XMP-64 right side"></a>
+<a href="https://jwh.ams3.digitaloceanspaces.com/homepage/XMP-64/xmp64-6.JPG" class="glightbox" data-gallery="xmp64"><img class="thumbnail rounded" src="thumbs/xmp64-6_320x320.JPG" alt="XMP-64 in case"></a>
 </div>
 
 <p>As you can see in the pictures, there are two Ethernet interfaces at the top of
@@ -243,13 +239,6 @@ paper</a> (ArXiv) for more&nbsp;details.</p>
       // Toggle the light/dark icon.
       x.firstElementChild.classList.toggle('bi-brightness-high-fill');
       x.firstElementChild.classList.toggle('bi-moon-fill');
-      // Toggle the Pygments style.
-      var elem = document.getElementById('pygments-style');
-      if (elem.getAttribute('href') == './theme/css/pygments-dark.css') {
-        elem.setAttribute('href', './theme/css/pygments.css');
-      } else {
-        elem.setAttribute('href', './theme/css/pygments-dark.css');
-      }
     }
   </script>
 </body>
