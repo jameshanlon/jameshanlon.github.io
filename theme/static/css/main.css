@@ -13,7 +13,7 @@ body {
   line-height: 1.5;
   color: #212529;
   background-color: #fff;
-  padding-top: 4.5rem;
+  padding-top: 0;
 }
 
 img {
@@ -107,10 +107,6 @@ hr {
    ========================================================================== */
 
 .site-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
   background-color: #212529;
   padding: 0.5rem 0;
@@ -290,7 +286,7 @@ figcaption {
 a.anchor {
   display: block;
   position: relative;
-  top: -80px;
+  top: -1rem;
   visibility: hidden;
 }
 
