@@ -94,7 +94,7 @@ increases in the level of provisioning to humans. However, these service
 benefits directly impact other services due to dramatic changes in land use and
 associated air, water and soil pollution.
 
-<table class="table table-sm">
+<table>
   <caption>
   Summary of nature's ecosystem services it provides to humans
   </caption>

@@ -75,7 +75,7 @@ a high-level review of the system.
 The overall performance of the system for the year from July 2023 to July 2024
 is summarised in the following table.
 
-<table class="table">
+<table>
   <thead>
     <tr>
       <th scope="col">Metric</th>

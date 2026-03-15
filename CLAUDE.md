@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Personal homepage built with [Pelican](https://blog.getpelican.com/) (Python static site generator). Source lives in `content/` and `theme/`; output is generated into `output/`. Frontend libraries (Bootstrap, Bootstrap Icons, GLightbox) are loaded from jsDelivr CDN.
+Personal homepage built with [Pelican](https://blog.getpelican.com/) (Python static site generator). Source lives in `content/` and `theme/`; output is generated into `output/`. The theme uses hand-written CSS with no framework dependencies. GLightbox is loaded from jsDelivr CDN for image lightboxes.
 
 ## Setup
 
@@ -63,7 +63,7 @@ Pages live in `content/pages/` and are rendered as standalone pages (e.g. `about
 `theme/templates/` — Jinja2 HTML templates; `base.html` is the root layout.
 `theme/static/` — CSS and images.
 
-The site supports **light/dark mode toggle** (Bootstrap 5 `data-bs-theme`). Articles default to light mode; all other pages default to dark. Pygments syntax highlighting uses a single `pygments.css` with `[data-bs-theme]` attribute selectors for both modes.
+The site uses a light theme. The navigation bar uses a CSS-only hamburger menu (hidden checkbox trick) for mobile — no JavaScript needed. Pygments syntax highlighting uses `pygments.css` with bare selectors (light mode only).
 
 Image lightboxes use [GLightbox](https://biati-digital.github.io/glightbox/) — links need `class="glightbox"` and `data-gallery="name"` attributes.
 
@@ -73,7 +73,7 @@ Analytics via [GoatCounter](https://www.goatcounter.com/).
 
 Images can be stored locally in `content/images/` (for development) or hosted remotely on DigitalOcean Spaces. `thumbnail.py` checks for a local copy first and falls back to fetching remotely. This means the build works offline if images are present locally, and works without local images by fetching from the remote store.
 
-To regenerate Pygments CSS after changing themes, generate both light and dark rules and scope them with `[data-bs-theme]` selectors in a single `pygments.css` file.
+To regenerate Pygments CSS after changing themes, generate light-mode rules with bare selectors into `pygments.css`.
 
 Image conversion utilities (from `NOTES.md`):
 ```bash

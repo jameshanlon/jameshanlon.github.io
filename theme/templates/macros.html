@@ -1,27 +1,13 @@
 {%- macro render_article_item(article) %}
-  <div class="row article-info">
-    {#<div class="col-1 article-info-date text-right">
-      <time class="published" datetime="{{article.date.isoformat()}}">
-        {{article.date|strftime('%b%y')}}
-      </time>
-    </div>#}
-    <div class="col-11 article-info">
-      <a href="/{{article.url}}" class="article-info-title text-decoration-none">
-        {{article.title}}
-      </a>
-      <span class="article-tag small">
-        {{article.date|strftime('%b %Y')}}
-      </span>
-      {% if article.summary %}
-      <span class="article-summary">{{article.summary}}</span>
-      {% endif %}
-      {#
-      {% for tag in article.tags | sort %}
-        <span class="article-tag small">
-          <a href="/tag/{{tag}}.html" class="text-decoration-none">{{tag}}</a>
-        </span>
-      {% endfor %}
-      #}
-    </div>
+  <div class="article-info">
+    <a href="/{{article.url}}" class="article-info-title text-decoration-none">
+      {{article.title}}
+    </a>
+    <span class="article-tag small">
+      {{article.date|strftime('%b %Y')}}
+    </span>
+    {% if article.summary %}
+    <span class="article-summary">{{article.summary}}</span>
+    {% endif %}
   </div>
 {% endmacro %}

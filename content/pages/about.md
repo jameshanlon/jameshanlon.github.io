@@ -3,7 +3,7 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-<img class="img-fluid" src="{{'mugshot-trees.jpg'|thumbnail('600x600')}}" alt="James W Hanlon">
+<img src="{{'mugshot-trees.jpg'|thumbnail('600x600')}}" alt="James W Hanlon">
 
 # About me
 
@@ -47,9 +47,8 @@ are publicly available in the hope they will be useful to others. I'd
 love to hear from you if that's the case.
 
 This website is built using [Pelican](https://blog.getpelican.com), a static
-website generator written in Python. The theme is simply derived from
-[Bootstrap](https://getbootstrap.com) and it is hosted on GitHub Pages. The
-source code is available for
+website generator written in Python, with a simple hand-written CSS theme. It
+is hosted on GitHub Pages. The source code is available for
 [reuse](https://github.com/jameshanlon/jameshanlon.github.io). I track visitors
 using the excellent [GoatCounter](https://www.goatcounter.com).
 

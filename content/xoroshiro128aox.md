@@ -108,7 +108,7 @@ the entries highlighted in red. The Mersenne Twister consistently fails,
 whereas xoroshiro128+ fails on a particular output permutation where the lower
 32 bits are discarded (this is a known deficiency of the generator).
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Output 1</th>
@@ -185,7 +185,7 @@ detect them. Given that BigCrush and PractRand did not, xoroshiro128aox
 represents a significant improvement over xoroshiro128+, whilst still being
 cheap to implement in hardware as we show in the next section.
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Total failures</th>
@@ -220,7 +220,7 @@ Twister because of its considerable state size) after they have been fully
 synthesised and placed and routed using Graphcore’s 7 nm cell library and a
 target clock period of 1 GHz. The table below summarises the results.
 
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Total cells (state update)</th>

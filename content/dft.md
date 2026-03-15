@@ -28,9 +28,9 @@ values on all outputs. Doing so requires sequencing of state transitions
 through the logic, but the size of the state space grows exponentially with the
 number of states.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/chip.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/chip.png'|asset}}">
+  <figcaption>
     Conceptually, a silicon chip is a set of input ports driving logic with
 sequential elements, in turn driving output ports.
   </figcaption>
@@ -48,17 +48,17 @@ take their other multiplexer inputs from the output of the previous register in
 the chain. The final register in the chain drives ``scan_out`` from it’s D pin.
 All multiplexers are controlled by ``scan_enable``.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/scan-flop.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/scan-flop.png'|asset}}">
+  <figcaption>
     A standard flip flop (left) and a scanned flip flop with scan-in and
 scan-enable inputs (right).
   </figcaption>
 </figure>
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/scan-chains.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/scan-chains.png'|asset}}">
+  <figcaption>
     Scan chain topology providing a set of controllable primary inputs and a set of observable outputs.
   </figcaption>
 </figure>
@@ -86,9 +86,9 @@ time and coverage. To avoid many additional ports at the top level, a set of
 parallel scan chains can be driven by DFT logic that supplies compressed
 patterns to the inputs and compresses results from the outputs.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/parallel-scan-chains.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/parallel-scan-chains.png'|asset}}">
+  <figcaption>
     Parallel scan chains to reduce test time.
   </figcaption>
 </figure>
@@ -115,16 +115,16 @@ wrapper scan register to control whether the input or output is used or driven
 respectively. If the input or output is directly connected to a register, then
 a bypass is not necessary.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/wrapper-flop.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/wrapper-flop.png'|asset}}">
+  <figcaption>
     Wrapper flops inserted on input and output ports.
   </figcaption>
 </figure>
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/test-core.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/test-core.png'|asset}}">
+  <figcaption>
     A test core isolated with input and output wrapper chains. One or more
 additional scan chains may be connected to sequential elements of the core logic.
   </figcaption>
@@ -147,9 +147,9 @@ mode. However, when they are shared with an adjacent test core, their
 ``scan_enable`` is controlled differently since they will function as an input
 wrapper chain for that core, with the behaviour described above.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/adjacent-test-cores.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/adjacent-test-cores.png'|asset}}">
+  <figcaption>
     Test core B shares core B's output wrapper chain, using it as an input wrapper chain in test mode.
   </figcaption>
 </figure>
@@ -165,9 +165,9 @@ controlled by an ``xbnd_enable`` signal, which when set high will prevent X
 propagation during test mode, and otherwise maintains the functional behaviour
 of the circuit.
 
-<figure class="figure d-block text-center">
-  <img src="{{'DFT/xbnd-flop.png'|asset}}" class="figure-img img-fluid rounded">
-  <figcaption class="figure-caption">
+<figure>
+  <img src="{{'DFT/xbnd-flop.png'|asset}}">
+  <figcaption>
     A X-source flop with bypass multiplexing of a known value.
   </figcaption>
 </figure>

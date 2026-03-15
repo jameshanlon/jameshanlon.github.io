@@ -3,8 +3,7 @@ Status: published
 
 A collection of links to other places on the internet I find interesting.
 
-<div class="container-fluid">
-  <div class="row">
+<div class="row">
     {% for col in [links.left, links.right] %}
     <div class="col-md">
       {% for section in col %}
@@ -18,4 +17,3 @@ A collection of links to other places on the internet I find interesting.
     </div>
     {% endfor %}
   </div>
-</div>

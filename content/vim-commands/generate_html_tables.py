@@ -7,7 +7,7 @@ with open(sys.argv[1]) as f:
     content = f.readlines()
 content = [x for x in content if x.strip() != ""]
 headers = [x.strip() for x in content[0].split("|")]
-print('<table class="table table-striped table-sm">')
+print('<table>')
 print("<thead>")
 print("<tr>")
 print("<th>{}</th>".format(headers[0]))

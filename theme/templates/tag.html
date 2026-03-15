@@ -4,7 +4,7 @@
 {% block content %}
 <h1>Tag: {{tag}}</h1>
 <hr>
-<div class="container artcile-list">
+<div class="article-list">
 {% for article in articles %}
   {{ macros.render_article_item(article) }}
 {% endfor %}

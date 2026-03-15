@@ -285,7 +285,6 @@ in the Vim help:
 
 ## Summary of rules
 
-<div class="container">
 <div class="row">
 <div class="col-sm">
   <h2>Motions</h2>
@@ -317,7 +316,6 @@ in the Vim help:
   <p><code>&lt;modifiers&gt;</code></p>
   <p>References: <code>:help text-objects</code></p>
   {% include 'vim-commands/modifiers.html' %}
-</div>
 </div>
 </div>
 

@@ -144,7 +144,7 @@ overhead are described in the following table, which is taken from the paper.
 
 [^python-overheads]: See [2] and [3] for other similar analyses that [1] builds on.
 
-<table class="table table-sm table-striped">
+<table>
   <caption>Sources of performance overhead in Python, from [1].</caption>
   <thead>
     <tr>

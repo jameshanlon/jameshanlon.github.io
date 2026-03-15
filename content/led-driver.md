@@ -81,7 +81,7 @@ Here's the schematic:
 
 # Parts list
 
-<table class="table table-sm">
+<table>
   <thead>
     <tr>
       <th cope="col">Quantity</th>
@@ -166,7 +166,7 @@ used (you should however check the datasheet for a particular LED):
 
 [#cat4101-datasheet]: https://www.onsemi.com/pub/Collateral/CAT4101-D.PDF
 
-<table class="table table-sm">
+<table>
   <thead>
     <tr>
       <th scope="col">Colour</th>
@@ -212,7 +212,7 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
 
 [#linear-driver]: https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver
 
-<table class="table table-sm">
+<table>
   <thead>
     <tr>
       <th scope="col">Channel</th>
