@@ -1,0 +1,1464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - Perspectives</title><link href="https://jameswhanlon.com/" rel="alternate"/><link href="https://jameswhanlon.com/feeds/perspectives.atom.xml" rel="self"/><id>https://jameswhanlon.com/</id><updated>2024-08-26T00:00:00+02:00</updated><entry><title>Personal data and self hosting</title><link href="https://jameswhanlon.com/personal-data-and-self-hosting.html" rel="alternate"/><published>2024-08-26T00:00:00+02:00</published><updated>2024-08-26T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-26:/personal-data-and-self-hosting.html</id><summary type="html">&lt;p&gt;Details of how I how self host services to maintain a degree of
+digital privacy and&amp;nbsp;freedom.&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/boxes.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/boxes_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As part of a conscious effort to reduce or remove my dependence on cloud
+services for storing my data, I have been running a modest self-hosted setup
+for quite a few years, which has worked well and required very little ongoing
+maintenance. I haven’t attempted to self-host services like email, opting
+instead for trusted providers. This short note goes over the main&amp;nbsp;details.&lt;/p&gt;
+&lt;p&gt;The goals for my personal computing&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;To have complete control over my personal data, giving me flexibility over
+  how to manage and access it. Even with &lt;span class="caps"&gt;GDPR&lt;/span&gt;, this would be an ambitious goal for
+  all personal data, so I really mean files and media created on personal
+  computing devices. Anything that I can download from a cloud service, I aim
+  backup on my own storage, or master it there if I no longer require access via
+  the cloud&amp;nbsp;service.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To have independence from companies that (a) offer free services in return
+  for collecting profiling data or to target adverts at me, (b) lock me in as a
+  user so it is hard to move to another service and (c) to avoid services that I
+  come to rely on being&amp;nbsp;end-of-lifed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To have a system that is simple to set up, maintain, use, upgrade and
+  possibly/eventually to migrate&amp;nbsp;from.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To provide a significant amount of storage (in personal data terms, ~tens of TBs).
+  This is because accessing volumes of data this large through cloud services can be
+  expensive when you factor in monthly charges and transfer&amp;nbsp;costs.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The main philosophy of my approach is to minimise maintenance effort whilst
+still achieving the above goals, so my setup is very vanilla. Many more exotic
+and interesting self hosted systems can be found (I’ve linked to a few
+resources at &lt;a href="#links"&gt;the end&lt;/a&gt;).&lt;/p&gt;
+&lt;h2&gt;Synology&amp;nbsp;Diskstation&lt;/h2&gt;
+&lt;p&gt;The main machine is a Synology Diskstation &lt;span class="caps"&gt;DS220&lt;/span&gt;+, a two-bay network-attached-storage (&lt;span class="caps"&gt;NAS&lt;/span&gt;) box.
+I have this running with two 8 &lt;span class="caps"&gt;TB&lt;/span&gt; disks in &lt;span class="caps"&gt;RAID&lt;/span&gt; 1 configuration (two-way redundant
+using one disk as a mirror), and I upgraded it with 16 &lt;span class="caps"&gt;GB&lt;/span&gt; of memory in addition to the
+2 &lt;span class="caps"&gt;GB&lt;/span&gt; it comes with. There are many applications that Synology provide, but the main ones
+I use&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fileserver (&lt;span class="caps"&gt;SMB&lt;/span&gt; for access via Windows and Mac machines, and the Drive app for accessing and syncing&amp;nbsp;files).&lt;/li&gt;
+&lt;li&gt;Photos (in particular the photos mobile app automatically syncs photos to the &lt;span class="caps"&gt;NAS&lt;/span&gt; for&amp;nbsp;backup).&lt;/li&gt;
+&lt;li&gt;Music.&lt;/li&gt;
+&lt;li&gt;Hyperbackup.&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;VPN&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;DNS&lt;/span&gt;&amp;nbsp;server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The advantage of a Synology system is good hardware complemented
+by their ecosystem of applications, spanning iPhone and Android too. The catch
+is that this ecosystem is closed source and managed by Synology. As such, support for old
+hardware is eventually dropped and some software packages are deprecated.
+To mitigate these problems, an alternative is TrueNAS (formerly FreeNAS), running on
+some suitable hardware. Other non-Synology software can be run on
+a Synology device using Docker, however I&amp;#8217;ve had problems doing this with constant disk
+accesses caused by
+&lt;a href="https://www.reddit.com/r/synology/comments/xpn5rh/docker_constant_hdd_readwrite"&gt;container health checks&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A neat feature of Synology hardware is their &lt;a href="https://quickconnect.to"&gt;Quickconnect&lt;/a&gt;
+remote access, without needing a &lt;span class="caps"&gt;VPN&lt;/span&gt; or having an open port. This works with
+the web interface and phone&amp;nbsp;apps.&lt;/p&gt;
+&lt;p&gt;The single most important aspect of managing personal data is ensuring it is
+robustly backed up. &lt;span class="caps"&gt;RAID&lt;/span&gt; 1 provides protection against loss of a single disk
+(and Synology handles this well), but not against damage to the system such as would
+happen in an accident or fire. To mitigate this, I have setup an off-site backup
+using another Synology Diskstation &lt;span class="caps"&gt;NAS&lt;/span&gt;. A full incremental backup
+is performed nightly using Synology&amp;#8217;s Hyperbackup. I have checked that files
+are retrievable but I admit I have not tried a full system restore since it has
+not yet been&amp;nbsp;necessary.&lt;/p&gt;
+&lt;h2&gt;Linux&amp;nbsp;host&lt;/h2&gt;
+&lt;p&gt;The second box in the picture above is a Lenovo ThinkCentre M75q Tiny &lt;span class="caps"&gt;PC&lt;/span&gt; that I
+got to plug the gap in the Synology&amp;#8217;s capabilities, namely in running
+additional services and providing a Linux host that I can use for development
+etc, rather than paying for an under powered &lt;span class="caps"&gt;VPS&lt;/span&gt;. The machine has a Ryzen 5
+&lt;span class="caps"&gt;3400GE&lt;/span&gt; processor with &lt;span class="caps"&gt;16GB&lt;/span&gt; &lt;span class="caps"&gt;DDR3&lt;/span&gt; &lt;span class="caps"&gt;RAM&lt;/span&gt;  and a 500 &lt;span class="caps"&gt;GB&lt;/span&gt; NVMe &lt;span class="caps"&gt;SSD&lt;/span&gt;. You can pick these
+machines up very&amp;nbsp;cheaply.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/homepage.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/homepage_600x600.png" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Currently it&amp;nbsp;runs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gethomepage.dev"&gt;Homepage&lt;/a&gt; providing a general internal landing page for statuses and convenient&amp;nbsp;links.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://freshrss.org"&gt;FreshRSS&lt;/a&gt; for aggregating and reading &lt;span class="caps"&gt;RSS&lt;/span&gt;&amp;nbsp;feeds.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://speedtest-tracker.dev"&gt;Speedtest Tracker&lt;/a&gt; for monitoring my internet&amp;nbsp;connection.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Yanson/octograph"&gt;Octograph&lt;/a&gt; for monitoring my home electricity use and&amp;nbsp;pricing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Access&lt;/h2&gt;
+&lt;p&gt;Using Synology &lt;span class="caps"&gt;VPN&lt;/span&gt; server on the &lt;span class="caps"&gt;DS220&lt;/span&gt;+, I have an OpenVPN service setup that
+allows me to access my home network remotely. This gives me access to the
+various services, as well as to machines via &lt;span class="caps"&gt;RDP&lt;/span&gt; and &lt;span class="caps"&gt;SSH&lt;/span&gt;. Within the network, I
+have a local &lt;span class="caps"&gt;DNS&lt;/span&gt; service (also running on the &lt;span class="caps"&gt;DS220&lt;/span&gt;+) to provide convenient
+names for&amp;nbsp;devices.&lt;/p&gt;
+&lt;h2&gt;Other&amp;nbsp;services&lt;/h2&gt;
+&lt;p&gt;As I mentioned at the start, there are a number of third-party services that I
+use. The key ones&amp;nbsp;are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://proton.me"&gt;Proton&lt;/a&gt; primarily for email, calendar and&amp;nbsp;passwords.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com"&gt;Github&lt;/a&gt; for code and Github pages for hosting this website (at the time of&amp;nbsp;writing).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.digitalocean.com"&gt;Digital Ocean&lt;/a&gt; for object storage with&amp;nbsp;Spaces.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.google.com"&gt;Google Sheets&lt;/a&gt; for word processing and&amp;nbsp;spreadsheets.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://standardnotes.com"&gt;Standard notes&lt;/a&gt; for note taking, since they have
+  recently been acquired by&amp;nbsp;Proton.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.icloud.com"&gt;Apple iCloud&lt;/a&gt; for contacts and&amp;nbsp;reminders.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.strava.com"&gt;Strava&lt;/a&gt; and &lt;a href="https://connect.garmin.com"&gt;Garmin&lt;/a&gt; for fitness&amp;nbsp;data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This list is not exhaustive but these services all hold valuable data that I
+would not want to lose in the event the provider loses the data or I get
+locked out of my account. Although these scenarios is unlikely, I mitigate the
+risks by taking manual backups, albeit on a less frequent basis that I&amp;nbsp;should.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This note details hardware and software alternatives for operating personal services
+that are east to setup and maintain, with scope to add much more functionality. This
+approach provides a strong alternative to entrusting a third party to hold your data.
+Moreover, it can be done cheaply too, with the cost of &lt;span class="caps"&gt;NAS&lt;/span&gt; setups being dominated by the
+price of disks themselves and many great open-source software&amp;nbsp;options.&lt;/p&gt;
+&lt;p&gt;&lt;a name="links"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Related&amp;nbsp;links&lt;/h2&gt;
+&lt;p&gt;There are many great blog posts about self hosting of computing services. These
+are a few that I have come&amp;nbsp;across.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://awesome-selfhosted.net"&gt;Awesome-Selfhosted&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jnsgr.uk/2024/07/how-i-computer-in-2024"&gt;How I Computer in 2024&lt;/a&gt;, blog post by Jon&amp;nbsp;Seager.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.fidelramos.net/software/homelab"&gt;My homelab setup&lt;/a&gt;, blog post by Fidel&amp;nbsp;Ramos.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.devroom.io/2020/02/28/building-a-diy-home-server-with-freenas"&gt;Building a &lt;span class="caps"&gt;DIY&lt;/span&gt; Home Server with FreeNAS&lt;/a&gt;,&amp;nbsp;devroom.io.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Perspectives"/><category term="self-hosted"/></entry><entry><title>Reflections on the state of nature</title><link href="https://jameswhanlon.com/reflections-on-the-state-of-nature.html" rel="alternate"/><published>2020-12-04T00:00:00+01:00</published><updated>2020-12-04T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2020-12-04:/reflections-on-the-state-of-nature.html</id><summary type="html">&lt;p&gt;A review of human impacts on nature as a way to reflect and navigate
+environmental bad&amp;nbsp;news.&lt;/p&gt;</summary><content type="html">&lt;p&gt;For a long time I have been deeply worried about the looming threat of climate
+change and its broad consequences. But greenhouse gas emissions from human
+activities are just one part of a complex picture in which we (human beings)
+are damaging our environment so severely that the future of our life on Earth
+uncertain, and this uncertainty is within the timescale of our children&amp;#8217;s
+lifetimes. Indeed, there is some degree of consensus that we are heading for
+some form of &lt;a href="https://jembendell.com/2019/05/15/deep-adaptation-versions/"&gt;societal collapse&lt;/a&gt;. In this note, I wanted to try
+and articulate the complex picture of human impacts on nature as a way to
+reflect on the situation in which we find ourselves in, and provide something to
+navigate the stream of environmental bad news that we receive. The information
+in this note is drawn primarily from recent significant reports that focus on
+global impacts, linked at the&amp;nbsp;end.&lt;/p&gt;
+&lt;h2&gt;Nature&amp;#8217;s biodiversity and ecosystem&amp;nbsp;services&lt;/h2&gt;
+&lt;!-- Species / biodiversity loss
+- Since 1970, 81% of inland wetland species populations and 36% of coastal and marine species have declined.
+- pollinators: &gt;75% global food crop types rely on animal pollination
+- TODO: level of insect extinction?
+--&gt;
+
+&lt;p&gt;Nature is the rich variety of life and environments found on Earth, but because
+of human impacts it is in&amp;nbsp;decline.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;The &lt;a href="https://ipbes.net/global-assessment"&gt;2019 &lt;span class="caps"&gt;UN&lt;/span&gt; Global Assessment Report on Biodiversity and Ecosystem
+Services&lt;/a&gt; is the work of an intergovernmental body and represents the
+&lt;a href="https://www.un.org/sustainabledevelopment/blog/2019/05/nature-decline-unprecedented-report/"&gt;most comprehensive assessment&lt;/a&gt; of life on earth ever completed.
+The report finds that human activities have caused huge declines in
+terrestrial, freshwater and marine environments. Across an estimated eight
+million known animal and plant species, approximately one million are currently
+threatened with extinction. This rate of extinction is estimated to be 10 to
+100 times higher than any of the previous known five mass extinction events in
+the history of Earth, thus it has been named the &lt;a href="https://en.wikipedia.org/wiki/Holocene_extinction"&gt;Holocene
+extinction&lt;/a&gt;, characterising the current geological&amp;nbsp;epoch.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="https://livingplanet.panda.org/en-us/"&gt;&lt;span class="caps"&gt;WWF&lt;/span&gt; Living Planet Report 2020&lt;/a&gt; provides a similarly
+stark assessment of the state of the world&amp;#8217;s ecosystems and lifeforms: between
+1970 to 2016 there was been an average decline of 68% in populations of
+mammals, birds, amphibians, reptiles and fish according to the &amp;#8216;Living Planet
+Index&amp;#8217;, which aggregates data from 20,811 populations representing 4,392 species
+globally and does not include insects. Rates of decline vary significantly by
+region, with the highest average declines in tropical regions (94% of
+vertebrate populations in Latin America and the&amp;nbsp;Caribbean).&lt;/p&gt;
+&lt;p&gt;A &lt;a href="https://www.pnas.org/content/115/25/6506"&gt;2018 study&lt;/a&gt; &lt;a href="https://www.theguardian.com/environment/2018/may/21/human-race-just-001-of-all-life-but-has-destroyed-over-80-of-wild-mammals-study"&gt;found&lt;/a&gt; that
+of all mammals on Earth, 96% are livestock, 36% are humans and only 4% are wild
+animals. Of birds, 70% are poultry and 30% are wild. These proportions
+correspond to intensification of animal agriculture with losses of 83% of wild
+terrestrial mammals, 80% of marine mammals, 50% of plants and 15% of&amp;nbsp;fish.&lt;/p&gt;
+&lt;p&gt;The issues of biodiversity and ecosystems are central to the functioning of our
+planet and to our health and wellbeing. Biodiversity relates to the variety of
+genes, species and functional traits in an &lt;a href="https://en.wikipedia.org/wiki/Ecosystem"&gt;ecosystem&lt;/a&gt;, which is
+defined as a community of living things in an environment, all interacting as a
+system. It is recognised that biodiversity affects the functioning of
+ecosystems, the flows of energy, materials, minerals, and water. At a &lt;a href="http://uknea.unep-wcmc.org/EcosystemAssessmentConcepts/EcosystemFunctioning/tabid/100/Default.aspx"&gt;high
+level&lt;/a&gt;, all ecosystems are powered by the sun&amp;#8217;s energy
+that is captured by photosynthesis, and this energy is transferred upwards
+through the food web. The movement of nutrients occurs as living organisms
+exchange them though their interactions with the physical&amp;nbsp;environment.&lt;/p&gt;
+&lt;p&gt;Humans too are part of an ecosystem, depending on plants and organisms to
+capture the sun&amp;#8217;s energy and convert it into edible products. However, human
+activities such as agriculture and forestry management can be seen as ways of
+manipulating our ecosystems to increase the output of particular provisions.
+Unfortunately, such interventions have effects that are detrimental to other
+aspects of ecosystem&amp;nbsp;functioning.&lt;/p&gt;
+&lt;p&gt;Apart from the wonder and beauty of the natural world and a sense that it
+should be respected and preserved, biodiversity can be viewed through a more
+functional lens as &lt;a href="https://pub.epsilon.slu.se/10240/7/wardle_d_etal_130415.pdf"&gt;providing services&lt;/a&gt; for the
+benefit of humans, and indeed our survival. These ecosystem services can be
+&lt;a href="http://www.fao.org/ecosystem-services-biodiversity/en/"&gt;broken down into four groups&lt;/a&gt;: provisioning, regulating,
+support and cultural, summarised in the following table. According to the
+Global Assessment Report, the trend of 16 of these 19 categories is that
+decline over the last 50 years. Only energy, food, and raw materials have seen
+increases in the level of provisioning to humans. However, these service
+benefits directly impact other services due to dramatic changes in land use and
+associated air, water and soil&amp;nbsp;pollution.&lt;/p&gt;
+&lt;table&gt;
+  &lt;caption&gt;
+  Summary of nature&amp;#8217;s ecosystem services it provides to humans
+  &lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th class="w-25"&gt;Group&lt;/th&gt;
+      &lt;th&gt;Service&lt;/th&gt;
+      &lt;th&gt;Historical 50-year trend&lt;/th&gt;
+      &lt;th&gt;Details/examples&lt;/th&gt;
+    &lt;tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td rowspan="6"&gt;&lt;strong&gt;Provisioning services&lt;/strong&gt; that support the production of renewable resources.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Food and feed&lt;/td&gt;
+      &lt;td class="text-success"&gt;Increase&lt;/td&gt;
+      &lt;td&gt;Such as crops and fisheries, feeding humans directly and indirectly with livestock.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Energy&lt;/td&gt;
+      &lt;td class="text-success"&gt;Increase&lt;/td&gt;
+      &lt;td&gt;Such as biofuels.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Raw materials&lt;/td&gt;
+      &lt;td class="text-success"&gt;Increase&lt;/td&gt;
+      &lt;td&gt;Such as wood for construction and natural fibres for clothing.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Freshwater&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Water is essential for human life and for the cultivation of crops.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Medicinal, biochemical and genetic resources&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;For example, new antibiotics are discovered in nature, rather than being created artifically.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;!-- --&gt;
+    &lt;tr&gt;&lt;td rowspan="9"&gt;&lt;strong&gt;Regulating services&lt;/strong&gt; that lessen environmental change.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Regulation of climate&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline*&lt;/td&gt;
+      &lt;td&gt;By sequestration of carbon dioxide to reduce the effects of global warming.
+          *The capacity of the oceans to do this has remained constant in this period.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Regulation of local climate and air quality&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Examples including shade from trees, forests influencing rainfall and plants regulating air quality by removing pollutants.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Moderation of extreme events and natural disasters&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Such as floods, storms, tsunamis, landslides and droughts.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Regulation of freshwater and coastal water quality&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Such as treatment of waste water to eliminate harmful pathogens.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Regulation of freshwater flow&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Which affects the quantity, location and timing of freshwater.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Regulation of soil fertility and prevention of soil erosion.&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Fertility refers to the ability of soil to sustain plant growth, and erosion is the displacement of soil, most immediately impacting crop production.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Biological control of disease and pests&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Such as by the control of the population of a species that acts as a vector for a disease by another, perhaps predatory, species.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Pollination of plants&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;To enable reproduction of many plants.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;!-- --&gt;
+    &lt;tr&gt;&lt;td rowspan="3"&gt;&lt;strong&gt;Supporting services&lt;/strong&gt; that provide a basis for all ecosystems and their biodiversity with habitats and genetic diversity.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Soil formation&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;To provide a habitat for many types of plant.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Nutrient cycling&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;To provide the necessary mineral nutrients, including water, to organisms.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;!-- --&gt;
+    &lt;tr&gt;&lt;td rowspan="5"&gt;&lt;strong&gt;Cultural services&lt;/strong&gt; are non-material human benefits.&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Recreation and mental and physical health in natural spaces&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Such as walking, running or sports in a park.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Tourism though the enjoyment of nature&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Benefiting those experiencing nature, as well as providing income for those facilitating it.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Aesthetic appreciation and inspiration for culture, art and design&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Much of culture, art and design draws on the natural world.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Spiritual experience and sense of place&lt;/td&gt;
+      &lt;td class="text-danger"&gt;Decline&lt;/td&gt;
+      &lt;td&gt;Nature is a common element of most religions.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;!-- Summary of drivers and impacts of declining nature --&gt;
+
+&lt;!-- Increasing consumption --&gt;
+
+&lt;p&gt;Since 1970, the global population has more than doubled (3.7 billion to 7.6
+billion), global trade has increased ten fold and average &lt;span class="caps"&gt;GDP&lt;/span&gt; has increased
+four fold. It is estimated there has been a 15% per-capita increase in
+consumption globally and this is compounded by increasing levels of
+long-distance goods transportation. Increased consumption, along with
+technological development, has driven increased production of food, materials
+and fuels, and has driven urbanisation, which is reflected in global&amp;nbsp;statistics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Crop production has increased 300% since&amp;nbsp;1970.&lt;/li&gt;
+&lt;li&gt;Timber production has increased by 50% since&amp;nbsp;1970.&lt;/li&gt;
+&lt;li&gt;Extraction of resources has almost doubled since&amp;nbsp;1980.&lt;/li&gt;
+&lt;li&gt;Urban areas have more than doubled since&amp;nbsp;1992.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!--
+Drivers:
+ Land use change (agriculture, degradation)
+ Direct exploitation
+ Climate change
+ pollution
+ invasive species
+--&gt;
+
+&lt;p&gt;Consequently, the primary driver of biodiversity loss in terrestrial and
+freshwater ecosystems is &lt;strong&gt;land-use change&lt;/strong&gt;, closely followed by &lt;strong&gt;direct
+exploitation&lt;/strong&gt; through harvesting, logging and hunting. In marine ecosystems,
+direct exploitation through fishing is the primary driver, followed by
+land-/sea-use change. Together these issues account for more than 50% of the
+global impact on nature, but approximately 30% is this is attributable to three
+other significant factors: &lt;strong&gt;climate change&lt;/strong&gt;, &lt;strong&gt;pollution&lt;/strong&gt; and &lt;strong&gt;invasive
+alien species&lt;/strong&gt;.&lt;/p&gt;
+&lt;!-- UN summary --&gt;
+&lt;p&gt;The &lt;span class="caps"&gt;UN&lt;/span&gt; Global Assessment Report summarises human impact thus: 75% of the
+earth&amp;#8217;s land surface is now significantly altered, 66% of the oceans are
+significantly altered, and global indicators of the condition of biodiversity
+and ecosystems indicate a 47% decrease from before human impacts, with a
+continuing decline of approximately 4% per&amp;nbsp;decade.&lt;/p&gt;
+&lt;p&gt;A &lt;a href="https://www.swissre.com/media/news-releases/nr-20200923-biodiversity-and-ecosystems-services.html"&gt;recent report by the Swiss Re global insurance company&lt;/a&gt;
+concludes that 20% of the world&amp;#8217;s countries are at risk of their ecosystems
+collapsing due to a decline in biodiversity and consequent ecosystem services
+decline. (Ecosystem &lt;a href="https://en.wikipedia.org/wiki/Ecosystem_collapse"&gt;collapse&lt;/a&gt; is when processes and
+features supporting life are reduced or disappear, typically leading to a
+drastic reduction in the number of organisms living in an environment, and
+often mass extinction.) Swiss Re frame this decline as a critical issue because
+they estimate 55% of global &lt;span class="caps"&gt;GDP&lt;/span&gt; depends on high-functioning biodiversity and
+ecosystem services. The graphic below summarises the global distribution of the
+problem with an index developed by Swiss Re to compare biodiversity and
+ecosystem services by aggregating data across indicators. Included &lt;a href="https://www.swissre.com/institute/research/topics-and-risk-dialogues/climate-and-natural-catastrophe-risk/expertise-publication-biodiversity-and-ecosystems-services.html"&gt;in the
+index&lt;/a&gt; are habitat intactness, pollination, air quality and
+local climate, water security, soil fertility, erosion control, coastal
+protection, food provision and timber&amp;nbsp;provision.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/Swiss-Re-biodiversity-ecosystems-services.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/Swiss-Re-biodiversity-ecosystems-services_w=650.jpg" alt="Swiss Re Institute global biodiversity index."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Swiss Re Institute global biodiversity index.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2&gt;Terrestrial and freshwater&amp;nbsp;ecosystems&lt;/h2&gt;
+&lt;div class="float-right" width="400px"&gt;
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/glo-land-use.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/glo-land-use_w=400.png" alt="Transformation of land use over the last 8,000 years, from UN Global Land Outlook 2017."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Transformation of land use over the last 8,000 years, from &lt;span class="caps"&gt;UN&lt;/span&gt; Global Land Outlook 2017.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;/div&gt;
+
+&lt;!-- Agriculture --&gt;
+
+&lt;p&gt;Growth in consumption has driven land-use change and now 33% of the Earth&amp;#8217;s
+land surface is dedicated to crop and animal agriculture. Such is the scale of
+this production, that it is responsible for 25% of greenhouse emissions (18%
+for animals and 7% for plants), and it consumes 75% of global freshwater
+resources. Destruction of habitats is a primary driver for  biodiversity loss
+and the expansion of agriculture has mainly replaced tropical forests, wetlands
+and grasslands, which are home to the highest levels of biodiversity, as well
+as providing huge carbon sinks, protecting against extreme weather events and
+are difficult or impossible to&amp;nbsp;replace.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;Compared with pre-industrial times, it is estimated that 30% of global habitats
+have lost the ability to support long-term survival for the species they&amp;nbsp;accommodate.&lt;/p&gt;
+&lt;!-- Forests --&gt;
+
+&lt;p&gt;&lt;strong&gt;Forests&lt;/strong&gt; cover 31% of the Earth&amp;#8217;s land area and harbour most of terrestrial
+biodiversity, but are distributed unequally.
+Tropical and subtropical forest accounts for 42% of global cover, of the
+remaining cover, 24% is in boreal regions and 22% in temperate regions (see the
+&lt;a href="http://www.fao.org/3/ca8985en/CA8985EN.pdf"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; The State of the World&amp;#8217;s Forests report&lt;/a&gt; graphic&amp;nbsp;below).&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;Globally, &lt;a href="https://www.nature.com/articles/nature14967"&gt;it is estimated&lt;/a&gt; that there has been a 46%
+reduction in the number of trees prior to human impacts, and approximately 10
+billion trees are now felled annually. This deforestation is driven primarily
+by agriculture, with secondary factors accounting for &amp;lt;20% of total
+deforestation being urban, infrastructure and mining&amp;nbsp;expansion.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;In Latin America for example, 100 million hectares (or 1 million square km, or
+four times the land area of the &lt;span class="caps"&gt;UK&lt;/span&gt;) of tropical forest were lost in the period
+1980 to 2000, mainly to cattle and palm oil plantations, and this ecosystem
+destruction continues today, pushing areas of the Amazon to a tipping point
+where &lt;a href="https://www.theguardian.com/environment/2020/oct/05/amazon-near-tipping-point-of-switching-from-rainforest-to-savannah-study"&gt;rainforest is converted to open savannah&lt;/a&gt;. There is
+also a &lt;a href="https://www.theguardian.com/environment/2020/aug/30/rampant-destruction-of-forests-will-unleash-more-pandemics"&gt;strong link&lt;/a&gt; between deforestation and the
+emergence of dangerous novel&amp;nbsp;viruses.&lt;/p&gt;
+&lt;p&gt;Of the remaining forests, 66% have been &lt;a href="http://www.fao.org/3/ca8985en/CA8985EN.pdf"&gt;subject to human impacts&lt;/a&gt;
+causing significant changes to their ecological processes and ability to
+naturally regenerate. Forests are being degraded primarily by logging for raw
+material and fuel, with secondary factors accounting for &amp;lt;20% of total
+degradation being forest fires and&amp;nbsp;livestock.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;Due to the expansion of new forest area, the net rate of forest loss has
+decreased by 50% since 1990 (an estimated 16 million hectares per year,
+compared with 10 million between 2015 to 2020), which is encouraging but still
+falls short of increasing forest cover in the near term to mitigate climate
+change and to preserve biodiversity. Replacement of old growth forests is not
+one-for-one: the ability of trees to absorb carbon dioxide &lt;a href="https://www.sciencedaily.com/releases/2008/09/080910133934.htm"&gt;improves with
+age&lt;/a&gt; and establishment of new forests also takes&amp;nbsp;decades.&lt;/p&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/fao-global-tree-cover-ecological-zone.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/fao-global-tree-cover-ecological-zone_w=500.png" alt="Forests by ecological zone."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Forests by ecological zone.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/fao-deforestation-drivers.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/fao-deforestation-drivers_w=500.png" alt="Drivers of deforestation and degradation."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Drivers of deforestation and degradation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;From the &lt;span class="caps"&gt;UN&lt;/span&gt; The State of the World&amp;#8217;s Forests report 2020&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;!-- Wetlands --&gt;
+
+&lt;p&gt;&lt;strong&gt;Wetlands&lt;/strong&gt; are inland areas of water such as lakes, rivers, floodplains,
+swamps, marshes, peatlands, mangroves and coral reefs, and include artificial
+areas such as reservoirs and rice paddies. Wetlands provide additional
+important ecosystem services: water purification and a source of food. More
+than 85% have been lost between 1700 (pre-industrial times) to 2000, and this
+has accelerated: the rate of destruction has been approximately three times
+faster than that of forests with 30% lost between 1970 and 2008. This
+destruction is driven primarily by land-use change due to agriculture, but also
+climate change, direct extraction and pollution. Globally, there are &lt;a href="https://www.ramsar.org/sites/default/files/documents/library/info2007-01-e.pdf"&gt;now
+approximately&lt;/a&gt; 5.7 million square kilometres of wetlands, or 6%
+of global land area. Creation of artificial wetlands has also accelerated,
+accounting for 12% of the total area, with &lt;a href="https://academic.oup.com/bioscience/article/65/4/346/255153"&gt;mixed impacts&lt;/a&gt;
+on&amp;nbsp;wildlife.&lt;/p&gt;
+&lt;!-- Land degradation, soils --&gt;
+
+&lt;p&gt;Once land has been converted to agricultural purposes from pristine habitats,
+it is further subject to &lt;strong&gt;degradation&lt;/strong&gt;, primarily from intensive practices
+that do not allow soil to naturally regenerate between harvests and abundantly
+use chemicals for fertilisation and pest control. Secondary drivers are
+urbanisation, development of infrastructure, production of energy and mining.
+The &lt;span class="caps"&gt;UN&lt;/span&gt;&amp;#8217;s &lt;a href="https://knowledge.unccd.int/glo/GLO_first_edition"&gt;Global Land Outlook report&lt;/a&gt; states that over the
+last 20 years, approximately 20% of land supporting the growth of plants shows
+persistent declining trends in productivity (16% of forests, 19% of grasslands
+and 27% of rangeland). The impacts vary significantly by region, with Africa
+and Europe having some of the highest levels of land degradation, with effects
+of future food production insecurity, water insecurity and reduced protection
+against extreme weather&amp;nbsp;events.&lt;/p&gt;
+&lt;!-- Pollution --&gt;
+
+&lt;p&gt;Although land-use change and direct exploitation are dominant factors in the
+decline of terrestrial nature, the combined &lt;strong&gt;pollution&lt;/strong&gt; of harmful
+substances and introduction of invasive alien species account for more than 20%
+of the declines in&amp;nbsp;nature.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;Anthropogenic pollution that negatively impacts nature takes numerous forms:
+chemicals released into the air (including greenhouse gasses causing global
+warming), contamination of soil and water with chemicals including
+hydrocarbons, heavy metals, fertilisers and pesticides, as well as raw sewage.
+Every year into the world&amp;#8217;s waters, more than 80% of global untreated
+wastewater and 300-400 million tons of industrial waste is&amp;nbsp;discharged.&lt;/p&gt;
+&lt;!----&gt;
+&lt;p&gt;The introduction of invasive terrestrial species have risen approximately 70%
+since 1970, due mainly to the growth of long-distance transport of goods and
+people, but increasingly from changing climates enabling habitation in new
+areas. Alien species can have significant direct effects on new ecosystems because
+of a lack of natural predators, because they carry diseases and because they
+outcompete native wildlife or prey on them. They can case indirect detrimental effects
+through impacting the ecosystem by, for example, changing soil chemistry or the
+intensity of wildfires. Alien species are a particular problem in marine
+ecosystems and are discussed in the next&amp;nbsp;section.&lt;/p&gt;
+&lt;p&gt;Climate change, which is discussed in the final section, has a relatively
+smaller impact, but one that is increasing rapidly, and simultaneously
+exacerbating other&amp;nbsp;drivers.&lt;/p&gt;
+&lt;h2&gt;The oceans and marine&amp;nbsp;ecosystems&lt;/h2&gt;
+&lt;p&gt;The oceans cover approximately 70% of the earth&amp;#8217;s surface, account for 90% of
+the earth&amp;#8217;s ecosystems and hold 97% of the earth&amp;#8217;s water. In marine ecosystems
+the primary driver of biodiversity loss is fishing, closely followed by sea and
+coastal land-use change. Only 3% of the ocean is now considered to be free from
+human&amp;nbsp;impacts.&lt;/p&gt;
+&lt;!-- Carbon sequestration and acidification --&gt;
+
+&lt;p&gt;The vastness of the oceans have provided a significant buffer against the
+effects global warming by absorbing huge quantities of &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; and heat.
+Between 2009-2018, the oceans absorbed 23% of global &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; emissions,
+however absorption of &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; comes at the cost of &lt;strong&gt;acidification&lt;/strong&gt;,
+meaning a decrease in the pH level. Since the 1980s, pH has been decreasing by
+0.017-0.027 pH units per decade. Acidification is known to reduce the ability
+of marine organisms to form hard parts such as shells and skeletons, affecting
+their ability to grow and reproduce, but the exact effects on different species
+and their ecosystems is not yet well understood. This situation is not easy to
+remedy: if &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; emissions were to stop today, we would see a lag of
+one or more decades where acidification would continue and it is expected that
+it would take tens to hundreds of thousands of years for the oceans to return
+to a normal pH level. As a point of comparison, the largest extinction event of
+marine life &lt;a href="https://en.wikipedia.org/wiki/Paleocene%E2%80%93Eocene_Thermal_Maximum"&gt;occurred approximately 55 million years ago&lt;/a&gt; when global
+temperatures increased by 5-8 C with a rate of carbon emissions 16 times less
+than we have now, and over a course of 30,000&amp;nbsp;years.&lt;/p&gt;
+&lt;!-- Heat sink --&gt;
+
+&lt;p&gt;The oceans are also estimated to have absorbed &lt;a href="http://www.climatechange2013.org/images/report/WG1AR5_SPM_FINAL.pdf"&gt;90% of the energy accumulation
+from global warming between 1971 and 2010&lt;/a&gt;, which equates to a
+0.11 C rise in the upper 75 m of water from 0.09-0.13 C. The effects of &lt;strong&gt;ocean
+heating&lt;/strong&gt; are thermal expansion causing sea level rise (accounting for ~30% of
+the observed rise), increased melting of sea ice, increased &lt;strong&gt;stratification&lt;/strong&gt;,
+reduced sequestering of atmospheric &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; and altering of ocean
+currents and storm tracks. In 2019, the global average sea temperature reached
+the highest recorded value, and more than &lt;a href="https://www.aljazeera.com/news/2020/03/state-oceans-200310152317671.html"&gt;84% of the ocean&lt;/a&gt;
+experienced at least one abnormally high temperature&amp;nbsp;event.&lt;/p&gt;
+&lt;!-- Stratification --&gt;
+
+&lt;p&gt;Stratification occurs when the sea&amp;#8217;s surface warms but the water underneath
+does not, or because runoff from ice melt leads to a layer of less-salty water.
+Such a differential prevents &lt;strong&gt;nutrient-rich water&lt;/strong&gt; from upwelling and mixing
+with the warmer, lighter water that supports more biodiversity, depriving
+marine life such as corals and algae, from&amp;nbsp;food.&lt;/p&gt;
+&lt;!-- Deoxygenation --&gt;
+
+&lt;p&gt;Ocean heating also causes the upper layer to be &lt;strong&gt;deoxygenated&lt;/strong&gt; because oxygen
+is less soluble as water warms, making it harder for marine organisms that
+depend on oxygen to survive. Water with oxygen saturation between 1-30% is
+called &lt;a href="https://en.wikipedia.org/wiki/Hypoxia_(environmental)"&gt;&lt;strong&gt;hypoxic&lt;/strong&gt;&lt;/a&gt; which leads to the death of fish and
+invertebrates such as worms and clams. Water with oxygen below 1% is called
+anoxic. In 2008, it was estimated that there were 400 hypoxic or anoxic &amp;#8216;dead
+zones&amp;#8217;, totalling 245,000 km$2$. Compounding these issues are feedback effects:
+warming water increases the metabolic rate of marine organisms that produce
+oxygen causing them to respire more and generate less oxygen; additionally, the
+lack of nutrients due to stratification inhibits photosynthesis by organisms
+such as &lt;a href="https://en.wikipedia.org/wiki/Phytoplankton"&gt;phytoplankton&lt;/a&gt; (microscopic organisms that create
+organic compounds including oxygen from dissolved &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt;).&lt;/p&gt;
+&lt;!-- Oxygenated waters --&gt;
+
+&lt;p&gt;Because the oceans are so vast, it might not seem that deoxygenation and
+hypoxic areas pose a significant threat to marine ecosystems, but the area in
+which oxygen-rich waters occur is bounded by a naturally-occurring
+&lt;strong&gt;oxygen-minimum zone&lt;/strong&gt; located beyond the continental shelves. The result is a
+narrow region of water on the coast of the continents, with only the upper
+part of the water column suitable for supporting most marine life. As hypoxic
+and anoxic regions grow, the part of the ocean supporting most marine life is
+shrinking, and the combination of deoxygenation and decreased nutrient supply is
+destabilising the base of complex food webs and&amp;nbsp;ecosystems.&lt;/p&gt;
+&lt;p&gt;As if the effects of climate change on marine ecosystems were not bad enough,
+they are under attack from other issues including overfishing, eutrophication
+and pollution, and foreign&amp;nbsp;species.&lt;/p&gt;
+&lt;!-- Fishing --&gt;
+
+&lt;p&gt;&lt;strong&gt;Fishing&lt;/strong&gt; &lt;a href="https://www.fishforward.eu/en/topics/facts-figures/"&gt;accounts&lt;/a&gt; for the extraction of
+approximately 110 million tonnes of fish and invertebrates every year, having
+increased from 28 million tonnes in 1950, and is the primary driver of
+biodiversity loss in oceans. Peak catches were in 1996 at 130 million tonnes,
+and have been declining at 1.2 million tonnes annually since then. Of these
+quantities, approximately 35% is bycatch and discarded and 12-18% is illegal
+and unregulated. More than 55% of ocean area is now subject to industrial
+fishing. Destructive and poorly-regulated practices like &lt;a href="bottom-trawling"&gt;bottom
+trawling&lt;/a&gt; further cause almost irreparable habitat destruction
+for reefs, sponges and shellfish. These factors have led to a situation
+where 33% of fish stocks are caught at unsustainable levels, 60% are maximally
+sustainably fished and only 7% are underfished. Global populations of sharks and
+rays have &lt;a href="https://www.ecowatch.com/shark-population-overfishing-2650168793.html"&gt;declined by 71% since 1970&lt;/a&gt;.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/Global-Fishing-Watch-Fishing-activity.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/Global-Fishing-Watch-Fishing-activity_w=600.png" alt="Global fishing activity 2016 (Global Fishing Watch)"&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Global fishing activity 2016 (Global Fishing Watch)&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;Eutrophication&lt;/strong&gt; is a particular kind of pollution where excess nutrients
+  are deposited in water, typically by land runoff or direct discharge of
+nitrogen and phosphorus from fertilisers used in agriculture, in industry or
+from sewage. The effect is that water becomes stratified into a layer where
+phytoplankton and other algaes rapidly multiply to create huge blooms. These
+blooms lower the oxygen levels in the water, can produce toxins and reduce the
+sunlight entering the water. Blooms can last days to months, and when they die
+their decomposition further deoxygenates the water, creating longer-lasting
+effects. Globally, algal blooms due to eutrophication are becoming more
+frequent and more toxic, in 2018 there were &lt;a href="https://www.theguardian.com/environment/2020/jan/04/lethal-algae-blooms-an-ecosystem-out-of-balance"&gt;300 reported
+incidents&lt;/a&gt; reported&amp;nbsp;worldwide.&lt;/p&gt;
+&lt;!-- Non-nutrient pollution --&gt;
+
+&lt;p&gt;There are many other forms of &lt;strong&gt;non-nutrient marine pollution&lt;/strong&gt;, including any
+substance or object introduced that has a harmful effect on ecosystems. There
+are a vast array of non-nutrient pollutants, each with their own harmful
+effects, but including pesticides, herbicides, fungicides, hydrocarbons, oil
+spills, plastics, heavy metals, radioactive waste and hot water from power
+stations. Like nutrient pollution, non-nutrient pollutants typically come from
+diffuse sources such as land runoff, wind-blown debris, atmospheric emissions,
+shipping, and oil extraction. These sources include waste material or chemicals
+from industrial, agricultural and residential activities. Industrial activities
+that do discharge contaminants directly into waterways or by incineration,
+discharge them as airborne particles that eventually settle. For example:
+pesticides are widely used in plant agriculture and antibiotics and growth
+hormones in livestock agriculture, transport produces substantial oil and
+rubber residues, and domestic use of a variety of chemicals and medicines leads
+to contaminants eventually finding their way into watercourses. To give one
+example it is estimated that the amount of plastic pollution has increased
+tenfold since 1980, and that 4 to 12 million tonnes of plastic entered the
+oceans in just one year in 2010. The &lt;a href="https://marinedebris.noaa.gov/movement/great-pacific-garbage-patch"&gt;Great Pacific Garbage Patch&lt;/a&gt; is
+estimated to be 700,000 square km and containing 80,000 tonnes of&amp;nbsp;waste.&lt;/p&gt;
+&lt;!-- Foreign species --&gt;
+
+&lt;p&gt;The introduction of &lt;strong&gt;foreign species&lt;/strong&gt; into non-native habitats is another
+form of ocean pollution that has dramatic, negative effects on marine
+ecosystems and biodiversity. The movement happens primarily via the ballast
+water of ships. When a ship is docked, it will fill internal water reservoirs to
+counterbalance cargo. When the ship arrives at its destination and has
+unloaded, it will discharge its ballast, along with whatever stowaways it
+contains, from fish to microscopic organisms. Plastics are being recognised as
+another vector for species movement, with organisms that can attach themselves
+to floating plastic debris such as jellyfish polyps and algae. Recorded
+invasive species have doubled in the last 50 years, and the threat posed is
+acknowledged to be one of the &lt;a href="https://www.oceanprotect.org/resources/issue-briefs/invasive-species/"&gt;main drivers impacting global
+biodiversity&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Global&amp;nbsp;warming&lt;/h2&gt;
+&lt;p&gt;Global warming induced climate change has a broad impact on nature and
+interacts with many of the other drivers discussed, exacerbating the negative
+impacts. With an accelerating rate of climate change, it poses a significant
+and growing risk to nature and&amp;nbsp;humans.&lt;/p&gt;
+&lt;p&gt;There are clear indicators of the drivers and effects of global warming due to
+anthropogenic emissions (hazardous emissions caused by humans), as shown by the
+charts below. Atmospheric concentration of carbon dioxide (&lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt;) is
+at 408 parts per million and 147% more than pre-industrial levels (&lt;span class="caps"&gt;PIL&lt;/span&gt;, of
+which 1750 is used as a representative baseline); methane (&lt;span class="caps"&gt;CH&lt;/span&gt;&lt;sub&gt;4&lt;/sub&gt;) is
+at 1,870 parts per billion and 259% more than &lt;span class="caps"&gt;PIL&lt;/span&gt;; and nitrous oxide
+(N&lt;sub&gt;2&lt;/sub&gt;O) is at 331 parts per billion and 123% of &lt;span class="caps"&gt;PIL&lt;/span&gt;. As a consequence,
+the global mean temperature and the global mean sea level are 1.2C and 20 cm
+higher respectively than &lt;span class="caps"&gt;PIL&lt;/span&gt; with year-on-year records being set. Temperature
+and sea-level rises are variable across the globe, for instance the Arctic has
+been experiencing sustained higher-than-average temperatures. The global oxygen
+(O&lt;sub&gt;2&lt;/sub&gt;) level has been declining since it was first measured in 1991,
+approximately 0.05% higher than the present&amp;nbsp;day.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/Climate-levels.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/Climate-levels_w=800.png" alt="Climate Levels (2 Degrees Institute)."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Climate Levels (2 Degrees Institute).&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The 2018 &lt;a href="https://www.ipcc.ch/sr15"&gt;&lt;span class="caps"&gt;IPCC&lt;/span&gt; &amp;#8216;Global Warming of 1.5C&amp;#8217; report&lt;/a&gt; sets
+out the current status and trajectory of planetary temperature. Humans have
+caused approximately 1.2C of global warming since pre industrial levels.
+Historical emissions of greenhouse gasses are likely to cause further warming
+of 0.5C over the next two to three decades, with effects persisting for
+millennia. In other words, the possibility of avoiding 1.5C warming is now
+vanishingly small, even if there was an immediate halt of anthropogenic
+emissions. This puts us on a pathway of warming from 1-2 C warming and beyond,
+which is predicted to have significantly worse effects compared with 1.5C until
+the end of the century, &lt;a href="https://www.ipcc.ch/sr15/chapter/chapter-3/"&gt;including&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="float-right" width="400px"&gt;
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/NSIDC-arctic-sea-ice-extent-2012.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/NSIDC-arctic-sea-ice-extent-2012_w=300.png" alt="Sea ice extent Sep 2012, National Snow and Ice Data Center Boulder."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Sea ice extent Sep 2012, National Snow and Ice Data Center Boulder.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;More frequent &lt;strong&gt;extreme weather events&lt;/strong&gt; including heatwaves, heavy precipitation,
+   severe drought, with effects including large-scale wild fires and&amp;nbsp;flooding.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Higher average temperatures&lt;/strong&gt;, with increases being 2 to 3 times greater
+   in some&amp;nbsp;regions.&lt;/li&gt;
+&lt;li&gt;More frequent &lt;strong&gt;ice-free Arctic&lt;/strong&gt;, once per decade rather than once per century, with
+   consequences for ocean circulation and more warming due to less reflection
+   of heat (see 2012 ice extent image, showing a 12% loss per decade since 1979).
+   2020 has continued the trend with a &lt;a href="https://www.theguardian.com/world/2020/oct/22/alarm-as-arctic-sea-ice-not-yet-freezing-at-latest-date-on-record"&gt;later than ever&lt;/a&gt; ice-free
+   arctic. Similar reductions in ice affect polar mountain glaciers and ice&amp;nbsp;sheets.&lt;/li&gt;
+&lt;li&gt;Increased &lt;strong&gt;sea level rise&lt;/strong&gt; driven by ocean warming and melting ice: 10cm
+   more by 2100, affecting approximately 10.4 million more&amp;nbsp;people.&lt;/li&gt;
+&lt;li&gt;Potential to trigger &lt;strong&gt;instabilities in the Greenland and Antarctic ice
+   sheets&lt;/strong&gt;, which would result in multi-meter sea-level&amp;nbsp;rises.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These effects have consequent impacts in terrestrial&amp;nbsp;ecosystems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Species habitat loss&lt;/strong&gt; through reduction in their climatically determined
+   geographic range, a total of 6% to 18% loss for insects, 8% to 16% loss for
+   plants and 4% to 8% loss for vertebrates. Some species will adapt by moving
+   further north, but some will not be able to. Other species will exploit the
+   opportunity, to move into areas once too cold, often with detrimental&amp;nbsp;effects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Transformation of terrestrial and wetland ecosystems&lt;/strong&gt;, such as the expansion
+   of desert, is 13% globally, vs 4% at&amp;nbsp;1.5C.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thawing of permafrost&lt;/strong&gt; with an area of 1.5 to 2.5 million km$^2$, which is
+   approximately 40% of the arctic&amp;#8217;s&amp;nbsp;permafrost.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In ocean&amp;nbsp;ecosystems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tropical coral reef loss&lt;/strong&gt; is almost total at &amp;gt;99%, compared with 70-90% lost at&amp;nbsp;1.5C.&lt;/li&gt;
+&lt;li&gt;Substantial &lt;strong&gt;changes to ocean chemistry&lt;/strong&gt; leading to acidification, hypoxia and dead&amp;nbsp;zones.&lt;/li&gt;
+&lt;li&gt;Increasing numbers of jellyfish, particularly in&amp;nbsp;blooms.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;On water&amp;nbsp;resources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Increase in &lt;strong&gt;water scarcity&lt;/strong&gt; by up to&amp;nbsp;50%.&lt;/li&gt;
+&lt;li&gt;Reduced &lt;strong&gt;food security&lt;/strong&gt; caused by reduced crop yields, reduced fisheries
+   (twice the level of decline compared with 1.5C) and reduced production&amp;nbsp;livestock.&lt;/li&gt;
+&lt;li&gt;Substantial &lt;strong&gt;decline in fisheries productivity&lt;/strong&gt; at low&amp;nbsp;latitudes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And impact humans as&amp;nbsp;well:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Substantial increase in human exposure to &lt;strong&gt;flooding&lt;/strong&gt;, affecting 10 million
+   more&amp;nbsp;people.&lt;/li&gt;
+&lt;li&gt;Increased negative consequences to &lt;strong&gt;human health&lt;/strong&gt; due to heat, diseases
+   and malnutrition, with greater risks in urban&amp;nbsp;areas.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Pest species&lt;/strong&gt; such as mosquitos and ticks that spread disease, and locusts
+   and beetles that ruin&amp;nbsp;crops.&lt;/li&gt;
+&lt;li&gt;Increased &lt;strong&gt;poverty&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Limiting global warming to 1.5-2 C requires nothing short of immediate and
+dramatic reductions in global emissions to reach net zero &lt;span class="caps"&gt;CO&lt;/span&gt;&lt;sub&gt;2&lt;/sub&gt; and
+similar reductions in gasses such as methane, but policy and aspirations fall
+short of the change necessary. The charts below illustrate the different
+pathways that can be taken, and this stark contrast: current pledges and
+targets fall 50% short of the expected reduction of emissions to limit warming
+to 1.5 C under the Paris agreement and 30% of the expected emissions for 2 C.
+By the end of the century, we will end up with around 4 C of warming if we
+carry on as normal, but still almost 3 C with the realisation of current policy
+and&amp;nbsp;pledges.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/CAT-Graph-2030EmissionsGaps-2020.09.original.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/CAT-Graph-2030EmissionsGaps-2020.09.original_w=500.png" alt="Climate Action Tracker 2030 emissions gaps."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Climate Action Tracker 2030 emissions gaps.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/nature/CAT-2100WarmingProjectionsGraph-2020.09.original.png" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/CAT-2100WarmingProjectionsGraph-2020.09.original_w=500.png" alt="Climate Action Tracker 2100 warming projections."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Climate Action Tracker 2100 warming projections.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!--
+https://www.ipcc.ch/sr15/chapter/chapter-3/
+https://www.wri.org/blog/2018/10/half-degree-and-world-apart-difference-climate-impacts-between-15-c-and-2-c-warming
+https://www.carbonbrief.org/scientists-compare-climate-change-impacts-at-1-5c-and-2c
+https://nymag.com/intelligencer/2017/07/climate-change-earth-too-hot-for-humans.html
+--&gt;
+
+&lt;h2&gt;Final&amp;nbsp;thoughts&lt;/h2&gt;
+&lt;p&gt;This note attempts to concisely and objectively summarise the issues
+surrounding human impact on nature. Since I&amp;#8217;m not an expert, it necessarily
+skims along the top of what are hugely complex issues. What I do hope however
+is that it conveys the magnitude and gravity of the situation for nature on
+earth and how the contributing issues are deeply&amp;nbsp;interconnected.&lt;/p&gt;
+&lt;!--I also hope that it serves as a resource to aid understanding and as a
+contemporaneous reference for those taking part in related discussions.--&gt;
+
+&lt;p&gt;Climate change is now beginning to be taken more seriously and is increasingly
+becoming part of normal discourse. But the declines in biodiversity and
+ecosystem services are generally poorly understood and regarded as risks, but
+currently have a disproportionately greater impact on humans with issues such
+as access to freshwater, air pollution and protection from extreme weather.
+The &lt;span class="caps"&gt;UN&lt;/span&gt; Global Assessment Report finds that negative trends in nature will
+continue until 2050 and beyond due to the projected impacts of increasing land-use
+change, exploitation of organisms and climate change under current
+trajectories. These impacts will also be distributed unevenly and will affect
+many of the world&amp;#8217;s indigenous people and poorest communities&amp;nbsp;first.&lt;/p&gt;
+&lt;p&gt;The ongoing assessment of the state of nature and modelling of the future are
+imperfect and we cannot fully understand the consequences of human actions.
+What we can be sure about however is that our situation is unprecedented in
+history. Measured against the earth&amp;#8217;s history, the time frame for these effects
+to become catastrophic is just a blink of an eye. Should things change
+dramatically tomorrow, many of these impacts are locked in for decades.
+Momentum to mitigate these issues is building but will it be enough, and in&amp;nbsp;time?&lt;/p&gt;
+&lt;p&gt;The &lt;span class="caps"&gt;UN&lt;/span&gt; report concludes that avoiding such a scenario requires systematic,
+transformative change across across economic, social, political and
+technological factors. Everyone has a part to&amp;nbsp;play.&lt;/p&gt;
+&lt;!--
+World fails to meet a single target to stop destruction of nature – UN report
+https://www.theguardian.com/environment/2020/sep/15/every-global-target-to-stem-destruction-of-nature-by-2020-missed-un-report-aoe
+'Lost decade for nature' as UK fails on 17 of 20 UN biodiversity targets
+https://www.theguardian.com/global-development/2020/sep/14/lost-decade-for-nature-as-uk-fails-on-17-of-20-un-biodiversity-targets-aoe
+--&gt;
+
+&lt;h2&gt;References / further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://climateactiontracker.org/global/cat-emissions-gaps"&gt;Climate Action Tracker&lt;/a&gt;, 2030 emissions&amp;nbsp;gaps.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.climatelevels.org/"&gt;Climate Levels&lt;/a&gt;, live graphs of atmospheric concentrations of greenhouse gasses and global mean temperature, sea level and oxygen&amp;nbsp;level.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jembendell.com/2019/05/15/deep-adaptation-versions/"&gt;Deep Adaptation: A Map for Navigating Climate Tragedy&lt;/a&gt;, Jem Bendell,&amp;nbsp;2018.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.cbd.int/gbo5"&gt;Global biodiversity outlook 5&lt;/a&gt;, Secretariat of the Convention on Biological Diversity&amp;nbsp;2020.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://globalfishingwatch.org/"&gt;Global Fishing&amp;nbsp;Watch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.globalforestwatch.org/"&gt;Global Forest&amp;nbsp;Watch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://skepticalscience.com/argument.php"&gt;Global Warming &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; Climate Change&amp;nbsp;Myths&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.global-wetland-outlook.ramsar.org/outlook"&gt;Global Wetland Outlook: State of the World&amp;#8217;s Wetlands and their services to people&lt;/a&gt;, Ramsar Convention on Wetlands&amp;nbsp;2018.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://deepoceanfacts.com/ocean-pollution"&gt;Ocean Pollution: Causes and Effects&lt;/a&gt;, Deep Ocean&amp;nbsp;Facts.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.oceanprotect.org/resources/issue-briefs/"&gt;One Ocean Project, issue&amp;nbsp;briefs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.fao.org/documents/card/en/c/ca8985en"&gt;State of the World&amp;#8217;s Forests 2020. In&amp;nbsp;brief&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stung! On Jellyfish Blooms and the Future of the Ocean, &lt;a href="http://lisagershwin.com"&gt;Lisa-ann Gershwin&lt;/a&gt;,&amp;nbsp;2013.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.swissre.com/institute/research/topics-and-risk-dialogues/climate-and-natural-catastrophe-risk/expertise-publication-biodiversity-and-ecosystems-services.html"&gt;Swiss Re Institute&amp;#8217;s report on Biodiversity and Ecosystem Services: A business case for re/insurance&lt;/a&gt; (&lt;a href="https://www.theguardian.com/environment/2020/oct/12/fifth-of-nations-at-risk-of-ecosystem-collapse-analysis-finds"&gt;Guardian coverage&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://medium.com/@cache_86525/the-future-is-grim-27ca6f7ab07b"&gt;The future is grim&lt;/a&gt;, Cache Baba,&amp;nbsp;2019.&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://uknea.unep-wcmc.org/"&gt;&lt;span class="caps"&gt;UK&lt;/span&gt; National Ecosystem Assessment&lt;/a&gt;&amp;nbsp;(2014).&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://ipbes.net/global-assessment"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; Global Assessment Report on Biodiversity and Ecosystem Services&lt;/a&gt; (&lt;a href="https://www.un.org/sustainabledevelopment/blog/2019/05/nature-decline-unprecedented-report/"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; blog article with good summary of facts&lt;/a&gt;) (&lt;a href="https://www.theguardian.com/environment/2019/may/06/human-society-under-urgent-threat-loss-earth-natural-life-un-report"&gt;Guardian coverage&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.unenvironment.org/resources/global-environment-outlook-6"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; Global Environment Outlook 6&lt;/a&gt;,&amp;nbsp;2019.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://knowledge.unccd.int/glo/GLO_first_edition"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; Global Land Outlook&lt;/a&gt;, &lt;span class="caps"&gt;UN&lt;/span&gt; Convention to Combat Desertification (&lt;span class="caps"&gt;UNCCD&lt;/span&gt;), 2017. (&lt;a href="https://www.theguardian.com/environment/2017/sep/12/third-of-earths-soil-acutely-degraded-due-to-agriculture-study"&gt;Guardian coverage&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.fao.org/state-of-forests/en/"&gt;&lt;span class="caps"&gt;UN&lt;/span&gt; State of The World&amp;#8217;s Forests 2020 report&lt;/a&gt;, &lt;span class="caps"&gt;UN&lt;/span&gt; Food and Agriculture&amp;nbsp;Organization.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://wwf.panda.org/knowledge_hub/all_publications/living_planet_report_2018/"&gt;&lt;span class="caps"&gt;WWF&lt;/span&gt; Living Planet Report 2018: Aiming Higher&lt;/a&gt; (&lt;a href="https://www.theguardian.com/environment/2018/oct/30/humanity-wiped-out-animals-since-1970-major-report-finds"&gt;Guardian coverage&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://livingplanet.panda.org/en-us/"&gt;&lt;span class="caps"&gt;WWF&lt;/span&gt; Living Planet Report 2020: Bending the Curve of Biodiversity Loss&lt;/a&gt; (&lt;a href="https://www.theguardian.com/environment/2020/sep/10/humans-exploiting-and-destroying-nature-on-unprecedented-scale-report-aoe"&gt;Guardian coverage&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://library.wmo.int/doc_num.php?explnum_id=10211"&gt;World Meteorological Organization, Statement on the State of the Global Climate in&amp;nbsp;2019&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://earthobservatory.nasa.gov/world-of-change"&gt;World of Change&lt;/a&gt;, satellite imagery of the changing Earth surface from &lt;span class="caps"&gt;NASA&lt;/span&gt; Earth&amp;nbsp;Observatory.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Perspectives"/><category term="climate-change"/><category term="sustainability"/></entry><entry><title>Vim command composition</title><link href="https://jameswhanlon.com/vim-command-composition.html" rel="alternate"/><published>2018-08-23T00:00:00+02:00</published><updated>2018-08-23T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2018-08-23:/vim-command-composition.html</id><summary type="html">&lt;p&gt;The rules for composing Vim&amp;#8217;s motions and&amp;nbsp;operators.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I&amp;#8217;ve been using Vim for a long time and I&amp;#8217;m familiar with many of its commands
+but I&amp;#8217;ve never had a good understanding of the underlying components of
+commands and their composition. Although there are many good Vim
+&lt;a href="#references"&gt;references&lt;/a&gt;, I felt that I was still not seeing the full picture.
+So, to try and dig a little deeper and educate myself, I&amp;#8217;ve put together this
+reference, which details a subset of the command language. The approach I&amp;#8217;ve
+taken was inspired by the grammar rules outlined in &lt;a href="https://takac.github.io/2013/01/30/vim-grammar/"&gt;this blog
+post&lt;/a&gt;, and should be useful
+for anyone who is familiar with&amp;nbsp;Vim.&lt;/p&gt;
+&lt;p&gt;A Vim command can be constructed from different rules, and below each rule is
+specified with a &lt;a href="https://en.wikipedia.org/wiki/Extended_Backus-Naur_form"&gt;&lt;span class="caps"&gt;EBNF&lt;/span&gt;-style
+syntax&lt;/a&gt;,&amp;nbsp;where &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; is
+another&amp;nbsp;rule. &lt;code&gt;{...}&lt;/code&gt; represents some key&amp;nbsp;presses, &lt;code&gt;|&lt;/code&gt; is an alternative&amp;nbsp;and
+&lt;code&gt;[...]&lt;/code&gt; is an optional component. Be warned that
+since there are many special cases to Vim commands and I&amp;#8217;ve not checked all the
+combinations, some of the rules below may yield invalid compositions! As such,
+these rules are better viewed as a way of remembering commands. For an
+exhaustive treatment of the command language, please check the &lt;a href="https://www.vim.org/docs.php"&gt;Vim
+documentation&lt;/a&gt;, or use&amp;nbsp;the &lt;code&gt;:help&lt;/code&gt; tags that I&amp;#8217;ve&amp;nbsp;given.&lt;/p&gt;
+&lt;h2&gt;Motions&lt;/h2&gt;
+&lt;p&gt;Motions change the position of the cursor and can be combined with a count to
+repeat the&amp;nbsp;motion.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;digits&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;2fx&lt;/code&gt; - move to the second right-hand occurrence&amp;nbsp;of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(inclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2Tx&lt;/code&gt; - move to the second left-hand occurrence&amp;nbsp;of &lt;code&gt;x&lt;/code&gt; in the line&amp;nbsp;(exclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;w&lt;/code&gt; - move to the next&amp;nbsp;word&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;10j&lt;/code&gt; or &lt;code&gt;10_&lt;/code&gt; - move down 10&amp;nbsp;lines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;10k&lt;/code&gt; - move up 10&amp;nbsp;lines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;6w&lt;/code&gt; - move to start of the sixth word&amp;nbsp;forwards&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;6E&lt;/code&gt; - move to end of sixth word&amp;nbsp;forwards&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;4b&lt;/code&gt; - move to start of the fourth word&amp;nbsp;backwards&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2{&lt;/code&gt; - move two paragraphs&amp;nbsp;down&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3/foo&lt;/code&gt; - move to the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt; later in the&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3?foo&lt;/code&gt; - move to the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt; earlier in the&amp;nbsp;buffer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Text&amp;nbsp;objects&lt;/h2&gt;
+&lt;p&gt;Text objects are a collection of characters relative to the position of the
+cursor. Compared to motions, text objects on a whole object, regardless of the
+specific cursor position.&amp;nbsp;The &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;i&lt;/code&gt; modifiers augment text objects,
+specifying whether the surrounding context should be included. The context may
+be whitespace or delimiting&amp;nbsp;characters.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;modifier&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;aw&lt;/code&gt; - around word (includes surrounding&amp;nbsp;whitespace)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iw&lt;/code&gt; - inner word (excludes surrounding&amp;nbsp;whitespace)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;aW&lt;/code&gt; - around &lt;span class="caps"&gt;WORD&lt;/span&gt; (where word is delimited by&amp;nbsp;whitespace)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;as&lt;/code&gt; - around&amp;nbsp;sentence&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;is&lt;/code&gt; - inner&amp;nbsp;sentence&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ap&lt;/code&gt; - around&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ip&lt;/code&gt; - inner&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a'&lt;/code&gt; - a single-quoted&amp;nbsp;string&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i'&lt;/code&gt; - inside a single-quoted&amp;nbsp;string&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a(&lt;/code&gt; = &lt;code&gt;a)&lt;/code&gt;= &lt;code&gt;ab&lt;/code&gt; - a parenthesised block,&amp;nbsp;from &lt;code&gt;(&lt;/code&gt; to &lt;code&gt;)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;i(&lt;/code&gt; = &lt;code&gt;i)&lt;/code&gt;= &lt;code&gt;ib&lt;/code&gt; - inside a parenthesised block, contents&amp;nbsp;of &lt;code&gt;(...)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt; = &lt;code&gt;a&amp;gt;&lt;/code&gt; - a tag,&amp;nbsp;from &lt;code&gt;&amp;lt;&lt;/code&gt; to &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;at&lt;/code&gt; - around tag block, including matching start and end&amp;nbsp;tags &lt;code&gt;&amp;lt;tag&amp;gt;...&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;it&lt;/code&gt; - inside tag block, excluding&amp;nbsp;tags&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;aB&lt;/code&gt; = &lt;code&gt;a{&lt;/code&gt; = &lt;code&gt;a}&lt;/code&gt; - around&amp;nbsp;a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;iB&lt;/code&gt; = &lt;code&gt;i{&lt;/code&gt; = &lt;code&gt;i}&lt;/code&gt; - inside&amp;nbsp;a &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Operators on text&amp;nbsp;objects&lt;/h2&gt;
+&lt;p&gt;Operators can be applied to text objects. In some circumstances, a count can be
+applied to the text object to repeat its&amp;nbsp;effect.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;modifier&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cw&lt;/code&gt;  - change word from&amp;nbsp;cursor&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ciw&lt;/code&gt; - change word under&amp;nbsp;cursor&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dw&lt;/code&gt; - delete until end of&amp;nbsp;word&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;5dw&lt;/code&gt; = &lt;code&gt;d5w&lt;/code&gt; - delete until end of right-hand sixth&amp;nbsp;word&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;caw&lt;/code&gt; - change around word under&amp;nbsp;cursor&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;2d3w&lt;/code&gt; - delete six&amp;nbsp;words&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;5gUw&lt;/code&gt; - make the next five words&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dgg&lt;/code&gt; - delete lines from cursor to beginning of&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dG&lt;/code&gt; - delete lines from cursor to end of&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3d_&lt;/code&gt; - delete three&amp;nbsp;lines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c$&lt;/code&gt; - change until end of&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y_&lt;/code&gt; = &lt;code&gt;yy&lt;/code&gt; = &lt;code&gt;Y&lt;/code&gt; - yank the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c_&lt;/code&gt; = &lt;code&gt;cc&lt;/code&gt; = &lt;code&gt;C&lt;/code&gt; - change the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gUap&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gqap&lt;/code&gt; - format paragraph text&amp;nbsp;to &lt;code&gt;textwidth&lt;/code&gt; line&amp;nbsp;length&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dit&lt;/code&gt; - delete text between&amp;nbsp;tags &lt;code&gt;&amp;lt;tag&amp;gt;&amp;lt;/tag&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dat&lt;/code&gt; - delete tag&amp;nbsp;block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yi"&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;"..."&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yi&amp;lt;&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;&amp;lt;...&amp;gt;&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yiB&lt;/code&gt; - yank text&amp;nbsp;in &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yaB&lt;/code&gt; - yank&amp;nbsp;whole &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Operators on&amp;nbsp;motions&lt;/h2&gt;
+&lt;p&gt;A motion can be applied after an operator to apply the operator on the text
+that was moved&amp;nbsp;over.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dl&lt;/code&gt; = &lt;code&gt;x&lt;/code&gt; - delete next&amp;nbsp;character&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;db&lt;/code&gt; - delete backwards to the start of a&amp;nbsp;word&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dtx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(exclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dfx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt; character in line&amp;nbsp;(inclusive)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d/foo&lt;/code&gt; - delete from cursor to next occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d3/foo&lt;/code&gt; - delete from cursor until the third occurrence&amp;nbsp;of &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c$&lt;/code&gt; = &lt;code&gt;C&lt;/code&gt; - change until end of&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d$&lt;/code&gt; = &lt;code&gt;D&lt;/code&gt; - delete until end of&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d0&lt;/code&gt; - delete until beginning of&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d^&lt;/code&gt; - delete until first non-blank character in&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c{&lt;/code&gt; - change from current line to beginning of&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gU}&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c{&lt;/code&gt; - change paragraph (same&amp;nbsp;as &lt;code&gt;cap&lt;/code&gt; operator-text&amp;nbsp;object)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;}&lt;/code&gt; - indent&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y%&lt;/code&gt; - yank the&amp;nbsp;entire &lt;code&gt;{...}&lt;/code&gt; block&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cgg&lt;/code&gt; - change lines from cursor to top of&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ggdG&lt;/code&gt; - delete contents of&amp;nbsp;buffer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Duplicate&amp;nbsp;operators&lt;/h2&gt;
+&lt;p&gt;Operators applied twice affect the entire line, a synonym&amp;nbsp;for &lt;code&gt;&amp;lt;operator&amp;gt;_&lt;/code&gt;,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dd&lt;/code&gt; = &lt;code&gt;d_&lt;/code&gt; - delete&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cc&lt;/code&gt; = &lt;code&gt;c_&lt;/code&gt; - change&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;yy&lt;/code&gt; = &lt;code&gt;y_&lt;/code&gt; - yank&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt; = &lt;code&gt;&amp;gt;_&lt;/code&gt; = &lt;code&gt;&amp;gt;l&lt;/code&gt; - indent&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; = &lt;code&gt;&amp;lt;_&lt;/code&gt; = &lt;code&gt;&amp;gt;l&lt;/code&gt; - unindent&amp;nbsp;line&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: duplication does not apply&amp;nbsp;to &lt;code&gt;~&lt;/code&gt; or two-character&amp;nbsp;operators.&lt;/p&gt;
+&lt;h2&gt;Aliases&lt;/h2&gt;
+&lt;p&gt;Some commonly-used commands have&amp;nbsp;aliases.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; = &lt;code&gt;dl&lt;/code&gt; - delete next&amp;nbsp;character&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C&lt;/code&gt; = &lt;code&gt;c$&lt;/code&gt; - change until the end of the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;D&lt;/code&gt; = &lt;code&gt;d$&lt;/code&gt; - delete until the end of the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Y&lt;/code&gt; = &lt;code&gt;yy&lt;/code&gt; - yank the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;S&lt;/code&gt; = &lt;code&gt;cc&lt;/code&gt; - change the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;A&lt;/code&gt; = &lt;code&gt;$a&lt;/code&gt; - append text to end of the&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;s&lt;/code&gt; = &lt;code&gt;cl&lt;/code&gt; - substitute character (delete and&amp;nbsp;insert)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;S&lt;/code&gt; = &lt;code&gt;cc&lt;/code&gt; - substitute&amp;nbsp;line&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Filtering&lt;/h2&gt;
+&lt;p&gt;Text lines can be filtered through an external program&amp;nbsp;(see &lt;code&gt;:help filter&lt;/code&gt;).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples, using some basic utilities found on Unix&amp;nbsp;platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;!8jsort&lt;/code&gt; - sort the next 8&amp;nbsp;lines&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!apsort&lt;/code&gt; - sort lines in&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!apwc -l&lt;/code&gt; - replace paragraph with word&amp;nbsp;count&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!apfmt -s&lt;/code&gt; - collapse whitespace in paragraph into single&amp;nbsp;spaces&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!apfmt -c&lt;/code&gt; - centre lines in&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;!i(grep foo&lt;/code&gt; - remove all lines&amp;nbsp;in &lt;code&gt;(...)&lt;/code&gt; block that don&amp;#8217;t&amp;nbsp;contain &lt;code&gt;foo&lt;/code&gt;
+  (similar to the Ex&amp;nbsp;command &lt;code&gt;:%v/foo/d&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gg!Gsort&lt;/code&gt; - sort all lines in&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gg!Guniq -c&lt;/code&gt; - remove all duplicate lines in buffer and prefix remaining with duplicate&amp;nbsp;counts&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Visual&amp;nbsp;selection&lt;/h2&gt;
+&lt;p&gt;Visual selection,&amp;nbsp;character-wise &lt;code&gt;v&lt;/code&gt;,&amp;nbsp;line-wise &lt;code&gt;V&lt;/code&gt; or&amp;nbsp;block-wise &lt;code&gt;Ctrl+v&lt;/code&gt; (all
+referred to below&amp;nbsp;by &lt;code&gt;{visual}&lt;/code&gt;,&amp;nbsp;see &lt;code&gt;:help visual-start&lt;/code&gt;), followed by a
+motion or text object can be used to specify a character range. An operator can
+then be used to transform the text. Note the&amp;nbsp;operators &lt;code&gt;gu&lt;/code&gt;, &lt;code&gt;gU&lt;/code&gt; and &lt;code&gt;g@&lt;/code&gt;
+can&amp;#8217;t be used in visual mode and text objects in visual mode, however, there
+are additional ones that can&amp;nbsp;(see &lt;code&gt;:help visual-operators&lt;/code&gt;). A visual block is
+created by entering a visual mode, then providing a motion or text object to
+set the selection, or alternatively by any sequence of movement commands
+(referred to&amp;nbsp;by &lt;code&gt;{move-around}&lt;/code&gt;).&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;move&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;around&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;vtxd&lt;/code&gt; = &lt;code&gt;dtx&lt;/code&gt; - delete&amp;nbsp;until &lt;code&gt;x&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vt.rx&lt;/code&gt; - replace all characters&amp;nbsp;with &lt;code&gt;x&lt;/code&gt; until &lt;code&gt;.&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;v3as~&lt;/code&gt; - make next three sentences&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vapU&lt;/code&gt; - make paragraph&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vapd&lt;/code&gt; - delete&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}sfoo{Esc}&lt;/code&gt; - replace each line of blockwise selection&amp;nbsp;with &lt;code&gt;foo&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Ifoo{Esc}&lt;/code&gt; -&amp;nbsp;prepend &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{Ctrl+v}{move-around}Afoo{Esc}&lt;/code&gt; -&amp;nbsp;append &lt;code&gt;foo&lt;/code&gt; to each line of blockwise&amp;nbsp;selection&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vap!sort&lt;/code&gt; - sort the lines of the current&amp;nbsp;paragraph&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vap!fmt&lt;/code&gt; - use&amp;nbsp;the &lt;code&gt;fmt&lt;/code&gt; command-line tool to format selection into
+  lines of 75 characters (similar to&amp;nbsp;the &lt;code&gt;gqap&lt;/code&gt; command)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ggvG!indent&lt;/code&gt; - use&amp;nbsp;the &lt;code&gt;indent&lt;/code&gt; command-line tool to apply automatic
+  indentation all lines of a C-code&amp;nbsp;buffer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{visual}J&lt;/code&gt; - join the highlighted lines on the current&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{visual}gJ&lt;/code&gt; - join the highlighted lines on the current line (removing&amp;nbsp;whitespace)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Other command&amp;nbsp;combinations&lt;/h2&gt;
+&lt;p&gt;Beyond the above rules, there are further command keys and more restricted
+combination with motions, operators and text&amp;nbsp;objects.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;.&lt;/code&gt; command repeats the last change that was&amp;nbsp;made.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;db.&lt;/code&gt; - delete the previous two&amp;nbsp;words&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;db4.&lt;/code&gt; - delete the previous five&amp;nbsp;words&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{insert text...}&lt;/code&gt; then &lt;code&gt;/{pattern}.&lt;/code&gt; - insert text again before next text&amp;nbsp;matching &lt;code&gt;{pattern}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;code&gt;gn&lt;/code&gt; and &lt;code&gt;gN&lt;/code&gt; motions can be used with operators to move between matching
+search&amp;nbsp;patterns.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;gn&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;gN&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cgn&lt;/code&gt; - change the next search&amp;nbsp;match&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3cgn&lt;/code&gt; - change the third search&amp;nbsp;match&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cgN&lt;/code&gt; - change the previous search&amp;nbsp;match&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here are some other interesting and potentially useful commands that I&amp;#8217;ve found
+in the Vim&amp;nbsp;help:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gf&lt;/code&gt; - goto file (when cursor is on a valid filesystem&amp;nbsp;path)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gF&lt;/code&gt; - goto file and line number (line number following&amp;nbsp;path)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;J&lt;/code&gt; - Join the current line with the next one (with space in&amp;nbsp;between)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gJ&lt;/code&gt; - Join the current line with the next one (without space in&amp;nbsp;between)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3J&lt;/code&gt; - join the next three lines on the current line (removing&amp;nbsp;indent)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;3gJ&lt;/code&gt; - join the next three lines on the current&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gv&lt;/code&gt; - reselect previous visual&amp;nbsp;area&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;g~~&lt;/code&gt; = &lt;code&gt;g~g~&lt;/code&gt; - switch case of&amp;nbsp;line&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gUU&lt;/code&gt; = &lt;code&gt;gUgU&lt;/code&gt; - make line&amp;nbsp;uppercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;guu&lt;/code&gt; = &lt;code&gt;gugu&lt;/code&gt; - make line&amp;nbsp;lowercase&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r{char}&lt;/code&gt; - replace character under cursor&amp;nbsp;with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;10r{char}&lt;/code&gt; - replace the next 10 characters&amp;nbsp;with &lt;code&gt;{char}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2&gt;Summary of&amp;nbsp;rules&lt;/h2&gt;
+&lt;div class="row"&gt;
+&lt;div class="col-sm"&gt;
+  &lt;h2&gt;Motions&lt;/h2&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;motion-keys&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;References: &lt;code&gt;:help motion&lt;/code&gt;
+    &lt;code&gt;:help various-motions&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Action&lt;/th&gt;
+&lt;th&gt;Effect&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;l&lt;/code&gt;,&lt;code&gt;h&lt;/code&gt;,&lt;code&gt;j&lt;/code&gt;,&lt;code&gt;k&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;right, left, down, up&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;w&lt;/code&gt; / &lt;code&gt;W&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;start of next word / start of next &lt;span class="caps"&gt;WORD&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;b&lt;/code&gt; / &lt;code&gt;B&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;start of pevious word / start of previous &lt;span class="caps"&gt;WORD&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;e&lt;/code&gt; / &lt;code&gt;E&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;end of next word / end of next &lt;span class="caps"&gt;WORD&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;0&lt;/code&gt; / &lt;code&gt;$&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;start / end of line&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;^&lt;/code&gt; / &lt;code&gt;g_&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;first / last non-blank character in line&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;{&lt;/code&gt; / &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;start / end of paragraph&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;t{char}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;till - move to next character (inclusive)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;f{char}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;find - move to next character (exclusive)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;T{char}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;till - move to previous character (inclusive)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;F{char}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;find - move to previous character (exclusive)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;%&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;move to matching character (default&amp;nbsp;pairs: &lt;code&gt;()&lt;/code&gt;, &lt;code&gt;{}&lt;/code&gt;, &lt;code&gt;[]&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[(&lt;/code&gt;, &lt;code&gt;[)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;move to matching parenthesis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[{&lt;/code&gt;, &lt;code&gt;[}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;move to matching curly brace&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;/{pattern}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;search forward (must be followed&amp;nbsp;by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;?{pattern}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;search backwards (must be followed&amp;nbsp;by &lt;code&gt;{CR}&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gg&lt;/code&gt; / &lt;code&gt;G&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;move to first / last line in buffer&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;div class="col-sm"&gt;
+  &lt;h2&gt;Operators&lt;/h2&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;operators&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;Reference: &lt;code&gt;:help operator&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Operator&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;c&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;change&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;delete&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;y&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;yank&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;swap case&amp;nbsp;(or &lt;code&gt;g~&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;shift right (always linewise)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;&amp;lt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;shift left (always linewise)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gu&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;make lowercase&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gU&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;make uppercase&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gq&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;format text&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;g@&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;apply function (set&amp;nbsp;by &lt;code&gt;operatorfunc&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;  &lt;h2&gt;Visual&amp;nbsp;operators&lt;/h2&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;visual-operators&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;References: &lt;code&gt;:help visual-operators&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Operator&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;r{char}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;replace every character in selection with {char}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;s&lt;/code&gt;, &lt;code&gt;c&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;substitute (inserted text replicated on each line for blockwise)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;J&lt;/code&gt; / &lt;code&gt;gJ&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;join / join (remove whitespace)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;p&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;put (replace selection with contents of register)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;U&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;make uppercase&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;u&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;make lowercase&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;I&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;insert (prepend, only on blockwise selection)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;A&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;insert (append, only on blockwise selection)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="row"&gt;
+&lt;div class="col-sm"&gt;
+  &lt;h2&gt;Text&amp;nbsp;objects&lt;/h2&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;text-object-keys&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;References: &lt;code&gt;:help text-objects&lt;/code&gt;, &lt;code&gt;:help objects&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Text object&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;w&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;word (delimited by non-keyword characters,&amp;nbsp;see &lt;code&gt;:help iskeyword&lt;/code&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;W&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;WORD&lt;/span&gt; (delimited by whitespace, includes empy line)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;sentence&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;p&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;paragraph&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;t&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;tag&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[&lt;/code&gt;, &lt;code&gt;]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between square brackets&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;{&lt;/code&gt;, &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between curly braces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;(&lt;/code&gt;, &lt;code&gt;)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between parethesises&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;'&lt;/code&gt;, &lt;code&gt;'&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between single quotes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;"&lt;/code&gt;, &lt;code&gt;"&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between double quotes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between angle braces&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;`&lt;/code&gt;, &lt;code&gt;`&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block between back ticks&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;b&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block&amp;nbsp;between &lt;code&gt;(&lt;/code&gt; and &lt;code&gt;)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;B&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;text block&amp;nbsp;between &lt;code&gt;{&lt;/code&gt; and &lt;code&gt;}&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;div class="col-sm"&gt;
+  &lt;h2&gt;Modifiers&lt;/h2&gt;
+  &lt;p&gt;&lt;code&gt;&amp;lt;modifiers&amp;gt;&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;References: &lt;code&gt;:help text-objects&lt;/code&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Movement&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;a&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;a or around&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;i&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;inner&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;digits&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;modifier&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;modifier&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;move&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;around&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="nv"&gt;command&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;text&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;object&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;motion&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;visual&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;block&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;gn&lt;/span&gt;
+&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nv"&gt;operator&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;gN&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2&gt;Some random&amp;nbsp;commands&lt;/h2&gt;
+&lt;p&gt;Just for fun, here are some random commands using the above rules to show the
+variety of actions you can perform. Some might not make sense or not work, but
+they might give you some&amp;nbsp;ideas.&lt;/p&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-sm-3"&gt;&lt;h3&gt;Motions&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;&lt;h3&gt;Text&amp;nbsp;objects&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;&lt;h3&gt;Operators on text&amp;nbsp;objects&lt;/h3&gt;&lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;&lt;h3&gt;Operators on&amp;nbsp;motions&lt;/h3&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-sm-3"&gt;
+      &lt;div class="row"&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;F{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;t{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;9B&lt;/code&gt;&lt;br&gt;&lt;code&gt;3/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;b&lt;/code&gt;&lt;br&gt;&lt;code&gt;T{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;{&lt;/code&gt;&lt;br&gt;&lt;code&gt;j&lt;/code&gt;&lt;br&gt;&lt;code&gt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;l&lt;/code&gt;&lt;br&gt;&lt;code&gt;g_&lt;/code&gt;&lt;br&gt;&lt;code&gt;5[(&lt;/code&gt;&lt;br&gt;&lt;code&gt;%&lt;/code&gt;&lt;br&gt;&lt;code&gt;{&lt;/code&gt;&lt;br&gt;&lt;code&gt;0F{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;T{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;10&lt;/code&gt;&lt;br&gt;&lt;code&gt;k&lt;/code&gt;&lt;br&gt;&lt;code&gt;[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;%&lt;/code&gt;&lt;br&gt;&lt;code&gt;1G&lt;/code&gt;&lt;br&gt;&lt;code&gt;[{&lt;/code&gt;&lt;br&gt;&lt;code&gt;5k&lt;/code&gt;&lt;br&gt;&lt;code&gt;0&lt;/code&gt;&lt;br&gt;&lt;code&gt;/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;1/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;2l&lt;/code&gt;&lt;/div&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;?{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;g_&lt;/code&gt;&lt;br&gt;&lt;code&gt;1h&lt;/code&gt;&lt;br&gt;&lt;code&gt;h&lt;/code&gt;&lt;br&gt;&lt;code&gt;t{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4F{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;0$&lt;/code&gt;&lt;br&gt;&lt;code&gt;t{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;$&lt;/code&gt;&lt;br&gt;&lt;code&gt;B&lt;/code&gt;&lt;br&gt;&lt;code&gt;l&lt;/code&gt;&lt;br&gt;&lt;code&gt;g_&lt;/code&gt;&lt;br&gt;&lt;code&gt;^&lt;/code&gt;&lt;br&gt;&lt;code&gt;1{&lt;/code&gt;&lt;br&gt;&lt;code&gt;2?{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;G&lt;/code&gt;&lt;br&gt;&lt;code&gt;^&lt;/code&gt;&lt;br&gt;&lt;code&gt;k&lt;/code&gt;&lt;br&gt;&lt;code&gt;1[(&lt;/code&gt;&lt;br&gt;&lt;code&gt;$&lt;/code&gt;&lt;br&gt;&lt;code&gt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;h&lt;/code&gt;&lt;br&gt;&lt;code&gt;^&lt;/code&gt;&lt;br&gt;&lt;code&gt;/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;gg&lt;/code&gt;&lt;br&gt;&lt;code&gt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;g_&lt;/code&gt;&lt;br&gt;&lt;code&gt;1e&lt;/code&gt;&lt;br&gt;&lt;code&gt;[)&lt;/code&gt;&lt;br&gt;&lt;code&gt;t{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;6/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;t{ch}&lt;/code&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;
+      &lt;div class="row"&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;iw&lt;/code&gt;&lt;br&gt;&lt;code&gt;ab&lt;/code&gt;&lt;br&gt;&lt;code&gt;a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;aw&lt;/code&gt;&lt;br&gt;&lt;code&gt;it&lt;/code&gt;&lt;br&gt;&lt;code&gt;i&amp;lt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;i[&lt;/code&gt;&lt;br&gt;&lt;code&gt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;aw&lt;/code&gt;&lt;br&gt;&lt;code&gt;i"&lt;/code&gt;&lt;br&gt;&lt;code&gt;a"&lt;/code&gt;&lt;br&gt;&lt;code&gt;ip&lt;/code&gt;&lt;br&gt;&lt;code&gt;iB&lt;/code&gt;&lt;br&gt;&lt;code&gt;i[&lt;/code&gt;&lt;br&gt;&lt;code&gt;a]&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;gt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;a{&lt;/code&gt;&lt;br&gt;&lt;code&gt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;a[&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;gt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;a"&lt;/code&gt;&lt;br&gt;&lt;code&gt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;i{&lt;/code&gt;&lt;br&gt;&lt;code&gt;i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;it&lt;/code&gt;&lt;br&gt;&lt;code&gt;ab&lt;/code&gt;&lt;br&gt;&lt;code&gt;i&amp;gt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;a'&lt;/code&gt;&lt;/div&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;at&lt;/code&gt;&lt;br&gt;&lt;code&gt;i{&lt;/code&gt;&lt;br&gt;&lt;code&gt;is&lt;/code&gt;&lt;br&gt;&lt;code&gt;iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;aW&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;gt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;i[&lt;/code&gt;&lt;br&gt;&lt;code&gt;a{&lt;/code&gt;&lt;br&gt;&lt;code&gt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;aB&lt;/code&gt;&lt;br&gt;&lt;code&gt;ip&lt;/code&gt;&lt;br&gt;&lt;code&gt;a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;a]&lt;/code&gt;&lt;br&gt;&lt;code&gt;i"&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;ib&lt;/code&gt;&lt;br&gt;&lt;code&gt;a(&lt;/code&gt;&lt;br&gt;&lt;code&gt;iw&lt;/code&gt;&lt;br&gt;&lt;code&gt;i"&lt;/code&gt;&lt;br&gt;&lt;code&gt;a{&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;at&lt;/code&gt;&lt;br&gt;&lt;code&gt;a{&lt;/code&gt;&lt;br&gt;&lt;code&gt;ip&lt;/code&gt;&lt;br&gt;&lt;code&gt;a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;a"&lt;/code&gt;&lt;br&gt;&lt;code&gt;as&lt;/code&gt;&lt;br&gt;&lt;code&gt;i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;a{&lt;/code&gt;&lt;br&gt;&lt;code&gt;ap&lt;/code&gt;&lt;br&gt;&lt;code&gt;a&amp;lt;&lt;/code&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;
+      &lt;div class="row"&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;&amp;lt;aW&lt;/code&gt;&lt;br&gt;&lt;code&gt;5gua{&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;gt;4aW&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;at&lt;/code&gt;&lt;br&gt;&lt;code&gt;8&amp;gt;iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;gUis&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;gt;aW&lt;/code&gt;&lt;br&gt;&lt;code&gt;3g@aw&lt;/code&gt;&lt;br&gt;&lt;code&gt;g@i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;0ap&lt;/code&gt;&lt;br&gt;&lt;code&gt;~a(&lt;/code&gt;&lt;br&gt;&lt;code&gt;y5a]&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;0i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;gt;3ip&lt;/code&gt;&lt;br&gt;&lt;code&gt;g@a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;da"&lt;/code&gt;&lt;br&gt;&lt;code&gt;gUi[&lt;/code&gt;&lt;br&gt;&lt;code&gt;gq1i{&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;i]&lt;/code&gt;&lt;br&gt;&lt;code&gt;2g~ib&lt;/code&gt;&lt;br&gt;&lt;code&gt;g@i]&lt;/code&gt;&lt;br&gt;&lt;code&gt;gua`&lt;/code&gt;&lt;br&gt;&lt;code&gt;gUi(&lt;/code&gt;&lt;br&gt;&lt;code&gt;~8a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;is&lt;/code&gt;&lt;br&gt;&lt;code&gt;d7a[&lt;/code&gt;&lt;br&gt;&lt;code&gt;g~i(&lt;/code&gt;&lt;br&gt;&lt;code&gt;d5aw&lt;/code&gt;&lt;br&gt;&lt;code&gt;g~a}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4diW&lt;/code&gt;&lt;br&gt;&lt;code&gt;gqiw&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;4i{&lt;/code&gt;&lt;/div&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;&amp;lt;is&lt;/code&gt;&lt;br&gt;&lt;code&gt;g~iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;daW&lt;/code&gt;&lt;br&gt;&lt;code&gt;&amp;lt;aB&lt;/code&gt;&lt;br&gt;&lt;code&gt;~a)&lt;/code&gt;&lt;br&gt;&lt;code&gt;c5a&amp;lt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;gUaB&lt;/code&gt;&lt;br&gt;&lt;code&gt;ca}&lt;/code&gt;&lt;br&gt;&lt;code&gt;9g@as&lt;/code&gt;&lt;br&gt;&lt;code&gt;gu0a(&lt;/code&gt;&lt;br&gt;&lt;code&gt;~2a"&lt;/code&gt;&lt;br&gt;&lt;code&gt;ya&amp;lt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;gUa'&lt;/code&gt;&lt;br&gt;&lt;code&gt;~9a`&lt;/code&gt;&lt;br&gt;&lt;code&gt;y2is&lt;/code&gt;&lt;br&gt;&lt;code&gt;gU2i)&lt;/code&gt;&lt;br&gt;&lt;code&gt;c4i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;7ya"&lt;/code&gt;&lt;br&gt;&lt;code&gt;guaB&lt;/code&gt;&lt;br&gt;&lt;code&gt;0&amp;lt;i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;c9i'&lt;/code&gt;&lt;br&gt;&lt;code&gt;guib&lt;/code&gt;&lt;br&gt;&lt;code&gt;g@a`&lt;/code&gt;&lt;br&gt;&lt;code&gt;9g@a&amp;gt;&lt;/code&gt;&lt;br&gt;&lt;code&gt;6c9ip&lt;/code&gt;&lt;br&gt;&lt;code&gt;2g@2ab&lt;/code&gt;&lt;br&gt;&lt;code&gt;yi[&lt;/code&gt;&lt;br&gt;&lt;code&gt;1c3iW&lt;/code&gt;&lt;br&gt;&lt;code&gt;c3ap&lt;/code&gt;&lt;br&gt;&lt;code&gt;8gUi`&lt;/code&gt;&lt;br&gt;&lt;code&gt;gqit&lt;/code&gt;&lt;br&gt;&lt;code&gt;g@i[&lt;/code&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-3"&gt;
+      &lt;div class="row"&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;0d{&lt;/code&gt;&lt;br&gt;&lt;code&gt;9gu[)&lt;/code&gt;&lt;br&gt;&lt;code&gt;2yT{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;8g~?{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;2ce&lt;/code&gt;&lt;br&gt;&lt;code&gt;0gUb&lt;/code&gt;&lt;br&gt;&lt;code&gt;8g~j&lt;/code&gt;&lt;br&gt;&lt;code&gt;2c[(&lt;/code&gt;&lt;br&gt;&lt;code&gt;3&amp;gt;}&lt;/code&gt;&lt;br&gt;&lt;code&gt;3&amp;gt;gg&lt;/code&gt;&lt;br&gt;&lt;code&gt;6&amp;gt;G&lt;/code&gt;&lt;br&gt;&lt;code&gt;6~j&lt;/code&gt;&lt;br&gt;&lt;code&gt;0d[{&lt;/code&gt;&lt;br&gt;&lt;code&gt;8gU{&lt;/code&gt;&lt;br&gt;&lt;code&gt;4c[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4~h&lt;/code&gt;&lt;br&gt;&lt;code&gt;7&amp;lt;l&lt;/code&gt;&lt;br&gt;&lt;code&gt;7g@^&lt;/code&gt;&lt;br&gt;&lt;code&gt;6~/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;7yh&lt;/code&gt;&lt;br&gt;&lt;code&gt;3&amp;lt;}&lt;/code&gt;&lt;br&gt;&lt;code&gt;1&amp;lt;F{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4cw&lt;/code&gt;&lt;br&gt;&lt;code&gt;1gu[)&lt;/code&gt;&lt;br&gt;&lt;code&gt;0cB&lt;/code&gt;&lt;br&gt;&lt;code&gt;7g~[{&lt;/code&gt;&lt;br&gt;&lt;code&gt;3g~[{&lt;/code&gt;&lt;br&gt;&lt;code&gt;7yk&lt;/code&gt;&lt;br&gt;&lt;code&gt;3~k&lt;/code&gt;&lt;br&gt;&lt;code&gt;5g~[)&lt;/code&gt;&lt;br&gt;&lt;code&gt;5g@G&lt;/code&gt;&lt;br&gt;&lt;code&gt;8yt{ch}&lt;/code&gt;&lt;/div&gt;
+    &lt;div class="col-4"&gt;&lt;code&gt;0g@e&lt;/code&gt;&lt;br&gt;&lt;code&gt;8&amp;gt;0&lt;/code&gt;&lt;br&gt;&lt;code&gt;6g~[(&lt;/code&gt;&lt;br&gt;&lt;code&gt;5dB&lt;/code&gt;&lt;br&gt;&lt;code&gt;9&amp;gt;T{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;0gU{&lt;/code&gt;&lt;br&gt;&lt;code&gt;3&amp;lt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;1y?{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4g@[{&lt;/code&gt;&lt;br&gt;&lt;code&gt;5~b&lt;/code&gt;&lt;br&gt;&lt;code&gt;2&amp;lt;^&lt;/code&gt;&lt;br&gt;&lt;code&gt;4&amp;gt;w&lt;/code&gt;&lt;br&gt;&lt;code&gt;4y{&lt;/code&gt;&lt;br&gt;&lt;code&gt;1&amp;lt;e&lt;/code&gt;&lt;br&gt;&lt;code&gt;8c[}&lt;/code&gt;&lt;br&gt;&lt;code&gt;6c{&lt;/code&gt;&lt;br&gt;&lt;code&gt;2g~/{pat}&lt;/code&gt;&lt;br&gt;&lt;code&gt;3cj&lt;/code&gt;&lt;br&gt;&lt;code&gt;8cT{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;3&amp;gt;%&lt;/code&gt;&lt;br&gt;&lt;code&gt;0&amp;lt;F{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;4gqB&lt;/code&gt;&lt;br&gt;&lt;code&gt;3gqT{ch}&lt;/code&gt;&lt;br&gt;&lt;code&gt;3dk&lt;/code&gt;&lt;br&gt;&lt;code&gt;5&amp;gt;[)&lt;/code&gt;&lt;br&gt;&lt;code&gt;2gqh&lt;/code&gt;&lt;br&gt;&lt;code&gt;8ce&lt;/code&gt;&lt;br&gt;&lt;code&gt;7~gg&lt;/code&gt;&lt;br&gt;&lt;code&gt;3cl&lt;/code&gt;&lt;br&gt;&lt;code&gt;4c^&lt;/code&gt;&lt;br&gt;&lt;code&gt;4c%&lt;/code&gt;&lt;br&gt;&lt;code&gt;1gq$&lt;/code&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a name="references" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;References/further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://danielmiessler.com/study/vim/"&gt;A vim Tutorial and&amp;nbsp;Primer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://zzapper.co.uk/vimtips.html"&gt;Best of Vim&amp;nbsp;Tips&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://yanpritzker.com/learn-to-speak-vim-verbs-nouns-and-modifiers-d7bfed1f6b2d"&gt;Learn to speak vim — verbs, nouns, and&amp;nbsp;modifiers!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ismail.badawi.io/blog/2014/04/23/the-compositional-nature-of-vim/"&gt;The compositional nature of&amp;nbsp;Vim&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://rc3.org/2012/05/12/the-grammar-of-vim/"&gt;The grammar of&amp;nbsp;Vim&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://michael.peopleofhonoronly.com/vim/"&gt;Vim Cheat Sheet for&amp;nbsp;Programmers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://vim.rtorr.com/"&gt;Vim Cheat&amp;nbsp;Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.fprintf.net/vimCheatSheet.html"&gt;Vim Commands Cheat&amp;nbsp;Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://takac.github.io/2013/01/30/vim-grammar/"&gt;Vim&amp;nbsp;Grammar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guidehttps://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide//https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/"&gt;Vim Text Objects: The Definitive&amp;nbsp;Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.vim.org/docs.php"&gt;Vim&amp;nbsp;documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://zmievski.org/files/talks/codeworks-2009/vim-for-php-programmers.pdf"&gt;Vim for &lt;span class="caps"&gt;PHP&lt;/span&gt;&amp;nbsp;programmers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118"&gt;Your problem with Vim is that you don&amp;#8217;t grok&amp;nbsp;vi&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Perspectives"/><category term="computing"/><category term="vim"/></entry></feed>

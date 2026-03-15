@@ -1,0 +1,1466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - Home and Sustainability</title><link href="https://jameswhanlon.com/" rel="alternate"/><link href="https://jameswhanlon.com/feeds/home-and-sustainability.atom.xml" rel="self"/><id>https://jameswhanlon.com/</id><updated>2024-07-31T00:00:00+02:00</updated><entry><title>Review of heat pump use and performance</title><link href="https://jameswhanlon.com/review-of-heat-pump-use-and-performance.html" rel="alternate"/><published>2024-07-31T00:00:00+02:00</published><updated>2024-07-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-07-31:/review-of-heat-pump-use-and-performance.html</id><summary type="html">&lt;p&gt;A review of one year&amp;#8217;s worth of data from my home heat&amp;nbsp;pump.&lt;/p&gt;</summary><content type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&lt;span class="caps"&gt;NOTE&lt;/span&gt;:&lt;/em&gt;&lt;/strong&gt;  Updated October 2024 with improved&amp;nbsp;charts.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump-cropped.jpg" alt="My 10kW Vaillant Arotherm
+Plus."&gt;
+  &lt;figcaption&gt;My 10kW Vaillant Arotherm
+Plus.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;I had a 10 kW Vaillant Arotherm heat pump installed in July 2022, and a year
+later a &lt;a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway"&gt;Vaillant Sensonet gateway&lt;/a&gt;, which provides monitoring and
+logging services via the &amp;#8216;myVaillant&amp;#8217; smartphone app. Since I now have a year&amp;#8217;s
+worth of data, this note reviews what has been logged to see how the system is&amp;nbsp;performing.&lt;/p&gt;
+&lt;p&gt;The heat pump serves my house of approximately 90 square meters internal area.
+I have previously posted about the building&amp;#8217;s &lt;a href="home-thermal-imaging-survey.html"&gt;energy
+efficiency&lt;/a&gt; and &lt;a href="cornish-unit-house-retrofit-insulation.html"&gt;additional first floor
+insulation&lt;/a&gt; added. This pump&amp;#8217;s
+capacity exceeds the current requirements of the house, but we are planning an
+extension in the near&amp;nbsp;future.&lt;/p&gt;
+&lt;h2&gt;System&amp;nbsp;operation&lt;/h2&gt;
+&lt;p&gt;The way I run the system is for space heating to run continuously with a fixed
+temperature of 19 degrees C is set in the downstairs hallway (a central point
+in the house), and hot water to run continuously at 50 degrees C. In the first
+year of running the system, I experimented with running heating and hot water
+for set periods during each day of the week, but I found that the heat pump had
+to work hard to bring the system and the fabric of the house back up to&amp;nbsp;temperature.&lt;/p&gt;
+&lt;p&gt;I was advised that continuous operation was more efficient and since the house
+is almost always occupied, this matched our use. At that point I hadn&amp;#8217;t taken a
+close look at the measured performance and was just monitoring the electricity
+demand ad hoc. It is not to say that running the system with setback
+temperatures would not be effective and may better match occupancy: see
+analysis from &lt;a href="https://www.heatgeek.com/should-your-heating-be-left-on-all-the-time-or-not"&gt;Heatgeek&lt;/a&gt; or &lt;a href="https://protonsforbreakfast.wordpress.com/2022/12/19/setback-should-you-lower-heating-overnight"&gt;Protons for
+Breakfast&lt;/a&gt; on this subject, But for me, having a continuous
+temperature is the most comfortable and seems to work&amp;nbsp;well.&lt;/p&gt;
+&lt;h2&gt;The &lt;em&gt;myViallant&lt;/em&gt;&amp;nbsp;app&lt;/h2&gt;
+&lt;p&gt;The &lt;em&gt;myVaillant&lt;/em&gt; app usefully provides a button to download all logged data per
+year in a set of &lt;span class="caps"&gt;CSV&lt;/span&gt; files and this code is &lt;a href="https://github.com/jameshanlon/home-energy-data"&gt;available on
+Github&lt;/a&gt;. I have summarised the year period from July 2023 to
+July 2024 in the following charts. Having read this &lt;a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review"&gt;&lt;span class="caps"&gt;PFB&lt;/span&gt; review&lt;/a&gt;,
+I am aware that there are issues with the quality of the logged data.
+The review measured a ~8% error in electricity consumed and a ~20% error in the heat
+energy produced, as well as pointing out many logged values are quantised to
+kWh units, which I also observe in my data. Significantly, this means that the
+raw Vaillant data under reports &lt;span class="caps"&gt;COP&lt;/span&gt;. I don&amp;#8217;t have a point of comparison with
+with an alternative measurement of the consumed and generated energy (although I
+would like to install an &lt;a href="https://openenergymonitor.org"&gt;OpenEnergyMonitor&lt;/a&gt; to do this).
+Despite the potential inaccuracies of the Vaillant data, it remains useful for
+a high-level review of the&amp;nbsp;system.&lt;/p&gt;
+&lt;h2&gt;Analysis&lt;/h2&gt;
+&lt;p&gt;The overall performance of the system for the year from July 2023 to July 2024
+is summarised in the following&amp;nbsp;table.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Metric&lt;/th&gt;
+      &lt;th scope="col"&gt;Value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+ &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Consumed electricity heating&lt;/td&gt;
+      &lt;td&gt;1.34 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Consumed electricity hot water&lt;/td&gt;
+      &lt;td&gt;1.01 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total consumed electricity&lt;/td&gt;
+      &lt;td&gt;2.36 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Average daily electricity consumption&lt;/td&gt;
+      &lt;td&gt;6.65 kWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heat generated heating&lt;/td&gt;
+      &lt;td&gt;4.91 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heat generated hot water&lt;/td&gt;
+      &lt;td&gt;3.13 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total heat generated&lt;/td&gt;
+      &lt;td&gt;8.04 MWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;3.65&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hot water &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;3.09&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;3.41&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Note that when scaling consumed electricity by 8% and generated electricity by
+20% to adjust for possible inaccuracy, heating &lt;span class="caps"&gt;SCOP&lt;/span&gt; is 4.06, hot water &lt;span class="caps"&gt;SCOP&lt;/span&gt; is
+3.43 and they are combined at 3.79. Note also, that these figures do not include
+the electricity used for the weekly Legionella purge performed by an immersion
+heater I have installed in my&amp;nbsp;system.&lt;/p&gt;
+&lt;p&gt;Looking more closely at consumption, the chart below shows all measurements
+over this period for heating, hot water and their&amp;nbsp;combination.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/consumed.png" alt="Electrical energy consumed in kWh."&gt;
+  &lt;figcaption&gt;Electrical energy consumed in kWh.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Most obviously, electricity consumption during the winter months increases
+significantly when the heat pump is using approximately 10 kWh per day. There
+are two spikes in November and January where temperatures went below zero, and
+at these times consumption went up close to 30 kWh per day. As expected,
+electricity consumption for hot water is more consistent throughout the year
+with a lesser increase through the winter months. The short periods where both
+drop to zero are due either to a holiday and the system being in &amp;#8216;absence&amp;#8217; mode
+or a technical issue. The technical issue has been due to a loss of pressure in
+the system, requiring a manual top up from the mains water&amp;nbsp;supply.&lt;/p&gt;
+&lt;p&gt;The next chart is the heat energy generated, which is tightly correlated with
+the consumption&amp;nbsp;graph.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/generated.png" alt="Heat energy generated (hot water and heating) in kWh."&gt;
+  &lt;figcaption&gt;Heat energy generated (hot water and heating) in kWh.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Combining the previous two charts by calculating the ratio between generated and
+consumed, gives the coefficient of performance (&lt;span class="caps"&gt;COP&lt;/span&gt;). A handful of measurements
+produced very large &lt;span class="caps"&gt;COP&lt;/span&gt; values, that are unrealistic, so I have clipped these
+with a maximum &lt;span class="caps"&gt;COP&lt;/span&gt; of&amp;nbsp;6.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed."&gt;
+  &lt;figcaption&gt;&lt;span class="caps"&gt;COP&lt;/span&gt; calculated by dividing heat generated by electrical energy consumed.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This is the same &lt;span class="caps"&gt;COP&lt;/span&gt; data averaged over weekly&amp;nbsp;intervals.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/weekly-COP.png" alt="Weekly averaged COP."&gt;
+  &lt;figcaption&gt;Weekly averaged &lt;span class="caps"&gt;COP&lt;/span&gt;.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The next chart is a different presentation of the &lt;span class="caps"&gt;COP&lt;/span&gt; data, with &lt;span class="caps"&gt;COP&lt;/span&gt; plotted as
+a function of heat output. It&amp;#8217;s clear that peak &lt;span class="caps"&gt;COP&lt;/span&gt; is at ~10 kW heat output,
+but there is little penalty in efficiency between that and the highest recorded&amp;nbsp;output.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-output-vs-COP.png" alt="Heat output versus weekly averaged COP."&gt;
+  &lt;figcaption&gt;Heat output versus weekly averaged &lt;span class="caps"&gt;COP&lt;/span&gt;.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Looking at the temperature of the hot water tank, this stays constant as expected
+but with a few exceptions: when I changed the temperature from 45 to 50 degrees C
+in October 2023; when the system has been off or out of order; and when every week
+on a Monday the immersion heater kicks in to perform a Legionella purge (which
+curiously it has stopped since March 2024. After later investigation this
+appears to be a faulty timer or immersion heater, so I switched to performing
+the purge using the heat pump&amp;nbsp;itself).&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius."&gt;
+  &lt;figcaption&gt;Hot water temperature in degrees Celsius.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Finally, we have a plot of internal (red) vs external (blue) temperature in
+degrees C. This clearly shows that the 19 degrees C target was maintained
+throughout the year, notwithstanding the periods of absence/downtime and on
+particular hot days when the temperature rose above the target. Given how
+quickly our summers are changing with more intense heat, having a system that
+can also perform cooling would be a big benefit. But overall, I think this
+chart well represents the benefit of having a heat pump, providing a home
+environment with a continuous temperature throughout the&amp;nbsp;year.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius."&gt;
+  &lt;figcaption&gt;Internal and external temperatures in degrees Celsius.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;For the same period I obtained the electricity use and cost data from Octopus
+using their excellent &lt;span class="caps"&gt;API&lt;/span&gt; via the &lt;a href="https://github.com/Yanson/octograph"&gt;Octograph tool&lt;/a&gt;, visualised below
+on a Grafana dashboard. According to the Vaillant data, the heat pump used 2.39
+MWh of energy, which is only 32% of the total electricity use. I am suspicious
+that this is inaccurate, even factoring in an 8% underestimate from the Vaillant
+measurements. I would expect the heat pump to be using more like half of total
+electricity on average, given that other electricity use is cooking and
+appliances etc, but perhaps I am wrong. Otherwise the usage profile matches between
+the two data&amp;nbsp;sets.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/Grafana-Octopus-electricity-use.png" alt="Electricity use from Octopus data."&gt;
+  &lt;figcaption&gt;Electricity use from Octopus data.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;The data collected by the Vaillant heat pump control system appears to be
+somewhat inaccurate but nevertheless provides a high-level overview of the
+performance of the system. I&amp;#8217;ve been very pleased with how it has performed
+over the last year, and this is backed up by the statistics I have collated.
+With work planned on the house, there are more thermal-efficiency gains to be
+made, so hopefully I can further improve it&amp;#8217;s running&amp;nbsp;efficiency.&lt;/p&gt;
+&lt;h2&gt;References and further&amp;nbsp;reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://protonsforbreakfast.wordpress.com/heat-pump-articles/"&gt;Protons for Breakfast, articles about heat
+  pumps&lt;/a&gt; is a
+  fantastic set of articles by physicist Michael de&amp;nbsp;Podesta.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://energy-stats.uk"&gt;Energy Stats&lt;/a&gt; provides pricing data for various
+  Octopus Energy&amp;nbsp;tariffs.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.guylipman.com/octopus"&gt;Guy Lipman&amp;#8217;s Octopus Energy resources&lt;/a&gt; is
+  a collection of notes focusing on using the Octopus &lt;span class="caps"&gt;API&lt;/span&gt; to access energy&amp;nbsp;data.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://octopus.energy/blog/agile-smart-home-diy"&gt;Octopus Energy &lt;span class="caps"&gt;API&lt;/span&gt;&lt;/a&gt; is the
+  landing page for using their &lt;span class="caps"&gt;API&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Yanson/octograph"&gt;Octograph (Github)&lt;/a&gt; A Python tool for
+  extracting Octopus Energy meter readings to InfluxDB and&amp;nbsp;Grafana.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Home and Sustainability"/><category term="sustainability"/></entry><entry><title>Cornish Unit House retrofit insulation</title><link href="https://jameswhanlon.com/cornish-unit-house-retrofit-insulation.html" rel="alternate"/><published>2022-12-29T00:00:00+01:00</published><updated>2022-12-29T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2022-12-29:/cornish-unit-house-retrofit-insulation.html</id><summary type="html">&lt;p&gt;Retrofitting insulation in a timber-framed top&amp;nbsp;floor.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I live in a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit house (Type
+1)&lt;/a&gt;
+and have recently had a heat pump installed to replace an ageing gas boiler.
+Having lived in the house for several years, I was well aware of significant
+thermal issues, particularly upstairs, due to the house being very cold in the
+winter and very hot in the summer. Temperature changes in the house were
+noticable with cold returning quickly after the heating being on. A
+non-invasive &lt;a href="home-thermal-imaging-survey.html"&gt;survey of the building&lt;/a&gt; last
+winter showed up various minor issues but didn&amp;#8217;t pinpoint a particular issue.
+Further investigation into the upstairs walls revealed there to be virtually no
+insulation, only ~50 mm of glass wool insulation hanging behind the
+plasterboard, as well as direct routes into the floor cavity (along the joists)
+from the eaves. The effective result is a plasterboard tent upstairs with cold
+air circulating just behind the walls, and to an extent the floor/ceiling. In
+contrast, the ground floor walls are a more modern cavity construction from
+them being replaced in the 1980s, and they have, at some point subsequently,
+been filled with polystyrene insulation&amp;nbsp;beads.&lt;/p&gt;
+&lt;p&gt;Given that the upper part of the house is a timber construction, the walls have
+voids between the timbers that new insulation can be fitted into (directly
+replacing the glass wool). This seemed like a great opportunity given that it
+would be much more difficult to add significant insulation were the walls a
+typical masonry construction, since insulation could only be added externally
+(expensive) or internally (limited depth). Insulation is often added to Cornish
+Unit houses when they are retiled since all of the timbers are exposed.
+However, in my case since the roof is fine, installing the insulation from
+internal access is simpler and much cheaper, albeit a more messy job. The
+detail below shows the planned modification: adding 80 mm of &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation
+board between the joists, and 25 mm insulated plasterboard on top with a
+sandwiched breathable vapour membrane, providing 105 mm of insulation and an
+expected U value of 0.25 W/m$^2$K, in line with the new &lt;a href="https://www.gov.uk/government/publications/conservation-of-fuel-and-power-approved-document-l"&gt;Part L Building
+Regulations&lt;/a&gt;.
+Note that a short section of insulation is added at the floor level to make the
+insulation continuous from the brick wall cavity up to the&amp;nbsp;loft.&lt;/p&gt;
+&lt;p&gt;The full description as submitted to Building Control is
+as follows. They subsequently inspected and signed off the&amp;nbsp;work.&lt;/p&gt;
+&lt;p&gt;Upgrading external wall insulation within timber framed wall at first floor
+level, which forms lower section of tiled mansard roof on a Cornish Unit Type 1
+house. Hanging tiles with breather membrane to remain as existing. Replacing
+existing 80mm mineral wool insulation with 80mm rigid &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board
+between studs within the timber frame. Adding a vapour control layer and dry
+lining the internal face with 37.5mm insulated plasterboard, plaster and&amp;nbsp;finish.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Proposed wall build up&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Roof tiles hanging (to remain as&amp;nbsp;existing).&lt;/li&gt;
+&lt;li&gt;Breather membrane (to remain as&amp;nbsp;existing).&lt;/li&gt;
+&lt;li&gt;Ventilated cavity (30mm at high level - 335mm at low&amp;nbsp;level).&lt;/li&gt;
+&lt;li&gt;80mm &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board between studs (Celotex &lt;span class="caps"&gt;GA4000&lt;/span&gt;&amp;nbsp;80mm).&lt;/li&gt;
+&lt;li&gt;Combined vapour control &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt; air tightness layer, taped (Procheck Adapt &lt;span class="caps"&gt;VCL&lt;/span&gt; with integral&amp;nbsp;tape).&lt;/li&gt;
+&lt;li&gt;37.5mm insulated plasterboard (Celotex &lt;span class="caps"&gt;PL4025&lt;/span&gt; 25 +&amp;nbsp;12.5mm).&lt;/li&gt;
+&lt;li&gt;Internal finish (plaster and&amp;nbsp;paint).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Method of installation&lt;/strong&gt;: Renovation to be completed from inside the property by
+removing plasterboard and existing mineral wool insulation internally to expose
+the frame. Mineral wool insulation to be replaced by 80mm &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation boards
+between timber studs. Breather membrane and roof tiles to remain as existing.
+Timber battens to be installed at high level to form a 30mm ventilated cavity.
+Continuous vapour control and air tightness layer to be added on the internal face
+of the &lt;span class="caps"&gt;PIR&lt;/span&gt; insulation board and taped. 37.5mm layer of insulated plasterboard
+to be installed onto the &lt;span class="caps"&gt;VCL&lt;/span&gt;. Plaster and paint to&amp;nbsp;finish.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Notes&lt;/strong&gt;: Insulation at lower eaves to be made continuous with existing cavity
+wall bead insulation to ground floor masonry wall. Similarly, insulation to be
+made continuous at ceiling junction with existing mineral wool insulation
+between ceiling joists in roof void, where possible. Estimated U-value of
+proposed build-up = 0.25 W/m$^2$K (source: Saint Gobain &lt;span class="caps"&gt;UK&lt;/span&gt; U-value&amp;nbsp;calculator).&lt;/p&gt;
+&lt;p&gt;I investigated alternatives to &lt;span class="caps"&gt;PIR&lt;/span&gt; board, such as insulation board constructed
+from natural fibres, but these generally seemed twice as expensive per square
+metre and offered approximately half the U value. Given that wall depth was
+critical, these weren&amp;#8217;t good&amp;nbsp;solutions.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/insulation-stack-1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/insulation-stack-1_600x600.jpg" alt="Materials pile: 80 mm PIR top and 37.5 mm insulated plasterboard bottom. A total of 13 80 mm sheets and 16 37.5 mm sheets were used."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Materials pile: 80 mm &lt;span class="caps"&gt;PIR&lt;/span&gt; top and 37.5 mm insulated plasterboard bottom. A total of 13 80 mm sheets and 16 37.5 mm sheets were used.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/insulation-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/insulation-detail_600x600.jpg" alt="Section detail showing additional insulation and it's integration with the existing structure and insulation."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Section detail showing additional insulation and it&amp;#8217;s integration with the existing structure and insulation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Bedroom&amp;nbsp;1&lt;/h2&gt;
+&lt;p&gt;Roofing baton is added at the top of the wall to ensure there is an air gap
+behind the insulation board and at the bottom of the wall to prevent the
+insulation from pushing into the cavity. Unfortunately there were few
+consistent dimensions between the timbers so all boards had to be cut to
+measure for each&amp;nbsp;space.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-stripped.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-prepped.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-prepped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-insulation.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-membrane.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-membrane_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-plasterboard-1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-plasterboard-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-plasterboard-2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-plasterboard-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;An awkward section was above the windows where the was a steel lintel as well
+as a void for the section of roof that protrudes over the window. Liberal
+amounts of expanding foam were used to fill gaps as well as&amp;nbsp;possible.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-head-1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-window-head-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-head-2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-window-head-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-detail-1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-window-detail-1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed1-window-detail-2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed1-window-detail-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Bedroom&amp;nbsp;2&lt;/h1&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-before.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-before_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-stripped.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-stripped-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-stripped-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-baton.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-baton_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-floor-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-floor-detail_600x600.jpg" alt="PIR sections cut to sit on top of the ground floor brick wall, fitting between the floor joists."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;&lt;span class="caps"&gt;PIR&lt;/span&gt; sections cut to sit on top of the ground floor brick wall, fitting between the floor joists.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-insulation.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-insulation-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-insulation-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-membrane.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-membrane_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-plasterboard.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-plasterboard_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed2-plasterboard-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed2-plasterboard-detail_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Bedroom&amp;nbsp;3&lt;/h1&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-stripped.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed3-stripped_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-insulation1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed3-insulation1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-insulation2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed3-insulation2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/bed3-plasterboard.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bed3-plasterboard_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Hallway&lt;/h1&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hallway-stripped1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hallway-stripped2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-floor-detail.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hallway-floor-detail_600x600.jpg" alt="Insulation providing continuity between the brick cavity and the new wall insulation, as well as plugging the gap from the eaves into the floor."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Insulation providing continuity between the brick cavity and the new wall insulation, as well as plugging the gap from the eaves into the floor.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/hallway-stripped2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hallway-stripped2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Performance&lt;/h1&gt;
+&lt;p&gt;The work was completed in the summer, but the results became evident during a
+cold snap in December. Purely from a comfort point of view, the upstairs went
+from being the colder part of the house, to the warmer part. I also used a
+thermal imaging camera to inspect the insulation. The camera confirmed that the
+new insulated sections provide a consistent warm temperature as expected, with
+no unexpected temperature changes within these ares. Some minor issues
+highlighted were at the intersections with other surfaces and&amp;nbsp;areas.&lt;/p&gt;
+&lt;p&gt;The two images below highlight a minor cold bridge effect from the plasterboard&amp;nbsp;fixing.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-plasterboard-fixing1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-plasterboard-fixing1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-plasterboard-fixing2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-plasterboard-fixing2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The image on the left below shows a cold corner section, which was due to cold
+ingress on the next door room before that room had been upgraded. The image on
+the right below shows a piece of missing insulation (unrelated to the&amp;nbsp;work!).&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-corner-cold.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-corner-cold_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-missing-loft-insulation.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-missing-loft-insulation_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Finally, these two images show intersection of the new insulation with masonry
+walls and there being an ingress of cold air, although only a minor temperature
+difference of ~1-2&amp;nbsp;degrees.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-wall1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-wall1_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/house-insulation/TI-wall2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/TI-wall2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Summary&lt;/h1&gt;
+&lt;p&gt;Upgrading the insulation within the upper timber frame of my Cornish Unit house
+was relatively straightforward and a cheap way to substantially improve the
+thermal performance of the building. The effects of this work are significant,
+making the house a much more comfortable and stable environment, and a great
+deal more suitable environment to heat using an air-source heat&amp;nbsp;pump.&lt;/p&gt;
+&lt;h1&gt;Related&amp;nbsp;links&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.epcworks.co.uk/improve-your-epc/mansard-roof"&gt;Mansard Roof, &lt;span class="caps"&gt;EPC&lt;/span&gt;&amp;nbsp;Works&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Home and Sustainability"/><category term="energy-efficiency"/><category term="retrofit"/><category term="sustainability"/></entry><entry><title>Home thermal-imaging survey</title><link href="https://jameswhanlon.com/home-thermal-imaging-survey.html" rel="alternate"/><published>2021-03-31T00:00:00+02:00</published><updated>2021-03-31T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2021-03-31:/home-thermal-imaging-survey.html</id><summary type="html">&lt;p&gt;Investigation of thermal faults using a thermal-imaging&amp;nbsp;camera.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently moved into a &lt;a href="https://nonstandardhouse.com/cornish-unit-type-1-precast-reinforced-concrete-house/"&gt;Cornish Unit Type 1 house&lt;/a&gt;, and
+with my involvement with &lt;a href="https://cheeseproject.co.uk"&gt;The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project&lt;/a&gt; I was keen to
+perform a thermal-imaging survey to better understand how well the building
+performs thermally. Also, with the first few months in the house being in
+winter and it feeling very cold in places, I had extra motivation to find out
+where heat was being lost, and to try and resolve some faults. I have written
+this note to record what I found as a case study that others may find useful,
+from the point of view of understanding the benefits of using thermal imaging
+to assess building performance, and to see the kinds of thermal faults that are
+standard among domestic buildings. Included also are some simple remedial
+measures that I took to address thermal faults. The emphasis of these were low
+cost and low effort to improve the house in the short term, and particularly
+during the winter. With plans to renovate and extend in the next couple of
+years, the survey would also provide guidance on where more significant
+interventions could be&amp;nbsp;targeted.&lt;/p&gt;
+&lt;p&gt;I followed the methodology of The &lt;span class="caps"&gt;CHEESE&lt;/span&gt; Project to perform the survey (more
+details about &lt;a href="https://cheeseproject.co.uk/home-surveys"&gt;home surveys&lt;/a&gt; and the
+&lt;a href="https://cheeseproject.co.uk/pre-survey-guide"&gt;process&lt;/a&gt;). To summarise: the best thermal imaging results
+are obtained when there is a good temperature differential (at least 10
+degrees) between inside the building and outside. For this reason, winter is
+the best period, with the building heated for 24 hours to warm up the fabric
+rather than just the air inside it. A blower door fitted to an external door is
+used to reduce the internal air pressure and accentuate any draughts. Once the
+heating is switched off, the house will start to cool down by thermal
+conduction through materials and ingress of cold air through draughts. While
+this is happening the thermal camera is used to capture the effects of any
+areas of rapid cooling, ie &amp;#8216;thermal&amp;nbsp;faults.&lt;/p&gt;
+&lt;h2&gt;External&lt;/h2&gt;
+&lt;p&gt;I did the survey in December, and the external temperature was close to 0
+degrees. The images below show the back of the house in infra red (thermal) and
+visible light. There is little to learn from the thermal picture, and note that
+the windows will be reflecting some of the cool night&amp;nbsp;sky.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/external/back-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/external/back-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There are a few things to remember when inspecting the thermal images. The
+thermal image is overlaid on the larger visible-light image, the temperature
+value is the measurement taken at the cross hairs, and often each image is
+taken with a particular temperature range to give the best contrast to the
+subject of the image. The temperature range is given in the top left-hand
+corner, and the black and white squares show the degree increments along the
+colour scale. In the thermal image above left, the range is centred on 20
+degrees plus and minus 23 degrees. All the thermal images in this note use a
+colour palette called &amp;#8216;ironbow&amp;#8217;, which I find most intuitive, there are however
+other choices such as rainbow and&amp;nbsp;greyscale.&lt;/p&gt;
+&lt;h2&gt;Front&amp;nbsp;door&lt;/h2&gt;
+&lt;p&gt;The area by the front door was noticeably cold when walking past it. The thermal
+images reveal cold single glazed glass sections (at ~15 degrees compared with
+~22 degrees ambient temperature of the hallway), and draughts, particularly at
+the bottom where the temperature drops to 10&amp;nbsp;degrees.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/front-door-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/front-door-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/front-door-bottom-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/front-door-bottom-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To tackle the leakiness of the front door, I added some acrylic secondary
+glazing to the glass sections and blocked up the letter box with glass fibre
+insulation and a wooden plug (there is another letter box in the porch). I
+admit this was not an elegant solution, but it was quick and cheap. The look of
+acrylic could have been improved by using magnetic strip for attaching it, also
+allowing for it to be removed. But since the door will be replaced in the next
+18 months, I was not too&amp;nbsp;worried.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/secondary-glazing-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/secondary-glazing-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/front-door/letter-box-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/letter-box-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Windows&lt;/h2&gt;
+&lt;p&gt;The house has uPVC double glazing throughout (installed within the last 10
+years), but a main finding of the survey was the windows had some significant
+thermal&amp;nbsp;faults.&lt;/p&gt;
+&lt;h3&gt;Leaking&amp;nbsp;trim&lt;/h3&gt;
+&lt;p&gt;The most obvious fault was draughts around the edges of the frames, from behind a
+plastic trim. In the left-hand images, the cold area is a draught emerging from
+a section of silicon sealant that had&amp;nbsp;detached.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-1-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/leaking-trim-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-1-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/leaking-trim-1-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-2-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/leaking-trim-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/leaking-trim-2-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/leaking-trim-2-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When I removed the trim to investigate, I found the frames had not been sealed
+to the wall in any way (left), so there was a gap all around where air could
+penetrate. On several windows, daylight was visible without the trim. Mostly
+the plastic trims were doing a good job preventing draughts, but they were not
+providing much insulation against air circulating behind them. I fixed the
+issue by using expanding foam to fill the gaps, and used filler to address any
+smaller gaps and make it flush with the window&amp;nbsp;reveals.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/removed-trim-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/removed-trim-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/filled-gap-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/filled-gap-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Leaking&amp;nbsp;sill&lt;/h3&gt;
+&lt;p&gt;Related to the lack of sealing of the window frames to the wall was draughts
+emerging from under the window sill. In the thermal picture below this is
+particularly visible being above a warm radiator. With the blower door running,
+it is also easy to feel these with the back of a&amp;nbsp;finger.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/sill-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/sill-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/sill-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/sill-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Leaking&amp;nbsp;seals&lt;/h3&gt;
+&lt;p&gt;Two opening panes had leaks along part of their seals, where the window did not
+shut tight to the frame to make it airtight. This was not a significant source
+of a draught, but a problem that is commonly found with uPVC windows. Often the
+hinges can be adjusted to remedy this issue, or foam insulation tape could be&amp;nbsp;added.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/seal-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/seal-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/dining-room-window-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/dining-room-window-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Missing&amp;nbsp;insulation&lt;/h3&gt;
+&lt;p&gt;An interesting aspect of the house is that the upper floor has a &lt;a href="https://en.wikipedia.org/wiki/Mansard_roof"&gt;Mansard
+roof&lt;/a&gt; and is timber construction. The first-floor walls have had
+insulation inserted behind the tiles, but the thermal picture below shows
+clearly no insulation has been added above the window. This is the case for all
+the upstairs&amp;nbsp;windows.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/top-insulation-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/top-insulation-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/windows/top-insulation-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/top-insulation-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;First floor&amp;nbsp;walls&lt;/h2&gt;
+&lt;p&gt;The images below of the first-floor walls show clearly the timber sub structure
+of the roof and the voids between where insulation has been added. Below the
+window in the top-left image, there is evidence of air ingress from around the
+frame into the wall. In the bottom-right image, there is evidence of air
+ingress from the loft space into the wall, due to missing or lacking insulation
+at that intersection. In the same picture, you can see a rectangle of missing
+insulation in the corner. In the bottom-left image, you can see warm walls,
+the cold window frames and the missing insulation at the&amp;nbsp;top.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/below-window-landing-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/below-window-landing-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-2-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bedroom-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-1-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bedroom-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/bedroom-3-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bedroom-3-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;By coincidence, a near by Cornish Unit Type 1 house was undergoing some extension
+work, and has its upper timbers exposed. The picture below shows clearly the
+construction, and notably the wall voids contained no&amp;nbsp;insulation.&lt;/p&gt;
+&lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/upper-walls/upper-wall-construction.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/upper-wall-construction_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Ground&amp;nbsp;wall&lt;/h2&gt;
+&lt;p&gt;The Mansard roof construction means that the interface between the roof and
+masonry walls is at the top of the ground floor walls (rather than more
+conventionally at the top of the upper floor walls). The images below show
+ingress of cold air from the eaves and into the surrounding wall, stairs and
+floor. Note also the shape of the block work in the ground floor&amp;nbsp;wall.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/blockwork-stairs-1-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/blockwork-stairs-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/blockwork-stairs-2-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/blockwork-stairs-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/floorboard-leak-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorboard-leak-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/ground-wall/floorboard-leak-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorboard-leak-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Air&amp;nbsp;brick&lt;/h2&gt;
+&lt;p&gt;The building has one air brick that vents into the wall cavity. This is
+particularly visible inside, as a cascade of cold air down the wall. Presumably
+the ventilation is necessary to prevent moisture buildup in the&amp;nbsp;cavity.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/air-brick/air-brick-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/air-brick-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/air-brick/air-brick-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/air-brick-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Loft&amp;nbsp;hatch&lt;/h2&gt;
+&lt;p&gt;One of the first jobs after moving in was to install a loft ladder for better
+access to the loft space for storage. The job still requires some finishing
+touches, but the thermal image shows there is only one main area that requires
+some additional sealing. Otherwise, I packed more insulation around the frame
+to resolve the more minor cold&amp;nbsp;patches.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-hatch/hatch-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hatch-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-hatch/hatch-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/hatch-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Loft&amp;nbsp;insulation&lt;/h2&gt;
+&lt;p&gt;Due to my work boarding out the loft, there was another piece of missing
+insulation in the corner (here in the bathroom). These images clearly show the
+value of loft insulation, and it extending to the&amp;nbsp;edges.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/missing-bathroom-1-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/missing-bathroom-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/missing-bathroom-2-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/missing-bathroom-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Installing boarding in the loft for storage was a good opportunity to
+redistribute and top up insulation, and make sure it extended into corners
+(whilst maintaining space for airflow from the roof). In the right-hand
+picture, the black columns are stilts that boarding is attached&amp;nbsp;to.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/loft-insulation-bare.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/loft-insulation-bare_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/loft-insulation/loft-insulation-stilts.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/loft-insulation-stilts_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Kitchen&lt;/h2&gt;
+&lt;p&gt;Another particularly cold spot in the house was in a corner of the kitchen, and
+inside the corner cupboard. This was due to a soil pipe running up through the
+house to avoid the angle of the Mansard roof, and the boxing carrying it up
+through the kitchen channelling cold air from the outside. As you can see, the
+internal temperature of the cupboard was about 10 degrees lower than the
+ambient room temperature, similar to the front door. I tackled this issue by
+sealing as much as possible around the boxing and stuffing fibre insulation in
+all of the remaining gaps. This made a big difference, but a complete fix would
+require taking the cabinets out and redoing the&amp;nbsp;boxing.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kitchen/cold-cupboard-1-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/cold-cupboard-1-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kitchen/cold-cupboard-2-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/cold-cupboard-2-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Bathroom&lt;/h2&gt;
+&lt;p&gt;The thermal images in the bathroom did not reveal any significant draughts, but
+they do show cold air circulating behind the walls. This was confirmed when the
+bathroom was reorganised, revealing a void behind the sink with plenty of
+daylight visible through the eaves. Note also in the image of the toilet, the
+cold water sitting in the&amp;nbsp;cistern.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/bathroom-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bathroom-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/sink-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/sink-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/toilet-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/toilet-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/bathroom/toilet-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/toilet-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Central&amp;nbsp;heating&lt;/h2&gt;
+&lt;p&gt;It was interesting for the thermal images to reveal the workings of the
+central heating system. The condensing boiler and its pipework is clearly
+visible in the top two images. The hot water tank is middle-left, a radiator
+middle-right and otherwise hidden pipework in the bottom two&amp;nbsp;images.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/boiler-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/boiler-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/boiler-visible.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/boiler-visible_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/water-tank-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/water-tank-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/radiator-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/radiator-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/pipe-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/pipe-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/central-heating/pipe-ceiling-thermal.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/pipe-ceiling-thermal_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Kit&lt;/h2&gt;
+&lt;p&gt;The left-hand image show the the &lt;span class="caps"&gt;CHEESE&lt;/span&gt; blower door installed on the side door,
+which precludes that door from being inspected, but it was less of a worry than
+the front door. The right-hand image shows the &lt;span class="caps"&gt;CHEESE&lt;/span&gt; camera kit, with the
+iPhone and Flir camera&amp;nbsp;attachment.&lt;/p&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kit/blower-door.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/blower-door_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/thermal-survey/kit/cheese-camera-kit.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/cheese-camera-kit_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;</content><category term="Home and Sustainability"/><category term="energy-efficiency"/><category term="retrofit"/><category term="sustainability"/></entry><entry><title>Retrofit shed insulation</title><link href="https://jameswhanlon.com/retrofit-shed-insulation.html" rel="alternate"/><published>2018-09-30T00:00:00+02:00</published><updated>2018-09-30T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2018-09-30:/retrofit-shed-insulation.html</id><summary type="html">&lt;p&gt;Retrofitting an existing shed/workshop with insulation to improve its
+energy efficiency and make it a usable space throughout the&amp;nbsp;year.&lt;/p&gt;</summary><content type="html">&lt;p&gt;To make the shed in my garden (built by the previous owner) a usable space in
+cold weather, I decided to insulate it. The construction of it is a stud timber
+frame of 2x4&amp;#8221; with a corrugated metal exterior and lined inside with &lt;span class="caps"&gt;OSB&lt;/span&gt; board.
+The construction has created voids in the floor, walls and roof, providing a
+convenient space to add&amp;nbsp;insulation.&lt;/p&gt;
+&lt;p&gt;I considered using natural wool insulation, as opposed to rigid insulation
+board, but felt that it would difficult to secure it in place in a consistent
+way, as well as ensuring an air gap remains between the external cladding. I
+decided on using Celotex rigid insulation board and used 12 sheets of 75mm
+thick standard 2400 mm x 1200 mm size, and two boards of the same size at 50 mm
+for the back wall. In total, the insulation cost £512.74 (including &lt;span class="caps"&gt;VAT&lt;/span&gt;). To
+prevent draughts as much as possible, I decided to tape the gaps between the
+boards and shed timbers. I bought about 8 rolls of foil tape to do&amp;nbsp;this.&lt;/p&gt;
+&lt;p&gt;The insulation board turned out to be easy to work with, easy to cut with a
+panel saw and fitting snugly in the gaps and leaving plenty of space for
+ventilation. I found the dust created by sawing the board irritating to my eyes
+and breathing so as much as possible wore eye protection and a mask (although
+hard to do getting hot in the small space). Working overhead on the roof was
+the worst part as it was difficult to avoid falling dust on my face. The whole
+job took three days to complete and has made a substantial difference to the
+stability of the temperature in the&amp;nbsp;space.&lt;/p&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/before-left-wall.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/before-left-wall_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/before-consumer-unit.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/before-consumer-unit_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/insulation-board.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/insulation-board_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;The &lt;span class="caps"&gt;OSB&lt;/span&gt; lining before starting (left) and the 75 mm board (right).&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/stripped-panorama.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/stripped-panorama_w=1200.jpg" alt="OSB lining removed from the walls and roof."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;&lt;span class="caps"&gt;OSB&lt;/span&gt; lining removed from the walls and roof.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/stripped-floor.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/stripped-floor_h=450.jpg" alt="The remaining OSB removed from the floor."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;The remaining &lt;span class="caps"&gt;OSB&lt;/span&gt; removed from the floor.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/floor-1.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/floor-1_600x600.jpg" alt="Complete and taped floor insulation, and half the floor restored."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Complete and taped floor insulation, and half the floor restored.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/exposed-roof.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/exposed-roof_600x600.jpg" alt="Installation of insulation into the roof apex. The dust falling from the board as they are positioned in place made this an unpleasant job."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Installation of insulation into the roof apex. The dust falling from the board as they are positioned in place made this an unpleasant job.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/left-wall-done.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/left-wall-done_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/right-wall-done-2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/right-wall-done-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/fiddly-bit.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/fiddly-bit_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;Completed walls and roof, prior to taping.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/back-wall-preparation.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-wall-preparation_600x600.jpg" alt="Timer added to provide a space to install the insulation."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;Timer added to provide a space to install the insulation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/back-wall-done.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-wall-done_600x600.jpg" alt="...and the insulation in place."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;&amp;#8230;and the insulation in place.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/back-right-2.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-right-2_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/door-left-done.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/door-left-done_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;Details of more completed areas, before and after taping.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/complete-tools-panorama.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/complete-tools-panorama_w=1200.jpg" alt="The scene before tidying up."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;The scene before tidying up.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/complete-panorama.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/complete-panorama_w=1200.jpg" alt="...and after tidying."&gt;
+  &lt;/a&gt;
+  &lt;figcaption&gt;&amp;#8230;and after tidying.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/work-bench.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/work-bench_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
+  &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/shed-insulation/shelving.jpg" class="glightbox" data-gallery="all"&gt;
+    &lt;img class="thumbnail" src="/thumbs/shelving_600x600.jpg" alt="No alt text"&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;figcaption&gt;Almost done: enough &lt;span class="caps"&gt;OSB&lt;/span&gt; lining back in to install the workbench and shelves.&lt;/figcaption&gt;
+&lt;/figure&gt;</content><category term="Home and Sustainability"/><category term="energy-efficiency"/><category term="retrofit"/><category term="sheds"/><category term="sustainability"/></entry></feed>
