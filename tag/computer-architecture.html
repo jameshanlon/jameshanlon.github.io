@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=dark>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>Tag: computer-architecture - James W. Hanlon</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="../theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="../theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,119 +23,100 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-brightness-high-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
 <h1>Tag: computer-architecture</h1>
 <hr>
-<div class="container artcile-list">
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/building-a-python-processor.html" class="article-info-title text-decoration-none">
-        Building a Python&nbsp;processor
-      </a>
-      <span class="article-tag small">
-        Jun 2023
-      </span>
-      <span class="article-summary"><p>A rationale and strawman for a processor to accelerate
+<div class="article-list">
+    <div class="article-info">
+    <a href="/building-a-python-processor.html" class="article-info-title text-decoration-none">
+      Building a Python&nbsp;processor
+    </a>
+    <span class="article-tag small">
+      Jun 2023
+    </span>
+    <span class="article-summary"><p>A rationale and strawman for a processor to accelerate
 dynamic-language&nbsp;workloads.</p></span>
-    </div>
   </div>
 
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/from-logic-gates-to-a-programming-language-using-the-hex-architecture.html" class="article-info-title text-decoration-none">
-        From logic gates to a programming language using the Hex&nbsp;architecture
-      </a>
-      <span class="article-tag small">
-        Nov 2022
-      </span>
-      <span class="article-summary"><p>A hardware implementation of a Hex processor with some basic tooling,
+    <div class="article-info">
+    <a href="/from-logic-gates-to-a-programming-language-using-the-hex-architecture.html" class="article-info-title text-decoration-none">
+      From logic gates to a programming language using the Hex&nbsp;architecture
+    </a>
+    <span class="article-tag small">
+      Nov 2022
+    </span>
+    <span class="article-summary"><p>A hardware implementation of a Hex processor with some basic tooling,
 including a complete compiler for a simple programming&nbsp;language.</p></span>
-    </div>
   </div>
 
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/new-chips-for-machine-intelligence.html" class="article-info-title text-decoration-none">
-        New chips for machine&nbsp;intelligence
-      </a>
-      <span class="article-tag small">
-        Oct 2019
-      </span>
-      <span class="article-summary"><p>Details of new chips that have been built recently to accelerate
+    <div class="article-info">
+    <a href="/new-chips-for-machine-intelligence.html" class="article-info-title text-decoration-none">
+      New chips for machine&nbsp;intelligence
+    </a>
+    <span class="article-tag small">
+      Oct 2019
+    </span>
+    <span class="article-summary"><p>Details of new chips that have been built recently to accelerate
 machine intelligence&nbsp;workloads.</p></span>
-    </div>
   </div>
 
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/machine-learning-challenges-for-computer-architecture.html" class="article-info-title text-decoration-none">
-        Machine learning challenges for computer&nbsp;architecture
-      </a>
-      <span class="article-tag small">
-        Nov 2016
-      </span>
-      <span class="article-summary"><p>Neural networks have become a hot topic in computing and their development is
+    <div class="article-info">
+    <a href="/machine-learning-challenges-for-computer-architecture.html" class="article-info-title text-decoration-none">
+      Machine learning challenges for computer&nbsp;architecture
+    </a>
+    <span class="article-tag small">
+      Nov 2016
+    </span>
+    <span class="article-summary"><p>Neural networks have become a hot topic in computing and their development is
 progressing rapidly. They have a long history with some of the first …</p></span>
-    </div>
   </div>
 
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/the-xc-programming-language.html" class="article-info-title text-decoration-none">
-        The <span class="caps">XC</span> Programming&nbsp;Language
-      </a>
-      <span class="article-tag small">
-        Dec 2014
-      </span>
-      <span class="article-summary"><p>An overview of the key features of the language, many of which derive
+    <div class="article-info">
+    <a href="/the-xc-programming-language.html" class="article-info-title text-decoration-none">
+      The <span class="caps">XC</span> Programming&nbsp;Language
+    </a>
+    <span class="article-tag small">
+      Dec 2014
+    </span>
+    <span class="article-summary"><p>An overview of the key features of the language, many of which derive
 from&nbsp;occam.</p></span>
-    </div>
   </div>
 
-    <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/scalable-abstractions-for-general-purpose-parallel-computation.html" class="article-info-title text-decoration-none">
-        Scalable abstractions for general-purpose parallel&nbsp;computation
-      </a>
-      <span class="article-tag small">
-        Oct 2014
-      </span>
-      <span class="article-summary"><p>An overview of my PhD&nbsp;thesis.</p></span>
-    </div>
+    <div class="article-info">
+    <a href="/scalable-abstractions-for-general-purpose-parallel-computation.html" class="article-info-title text-decoration-none">
+      Scalable abstractions for general-purpose parallel&nbsp;computation
+    </a>
+    <span class="article-tag small">
+      Oct 2014
+    </span>
+    <span class="article-summary"><p>An overview of my PhD&nbsp;thesis.</p></span>
   </div>
 
 </div>
@@ -148,38 +124,22 @@ from&nbsp;occam.</p></span>
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

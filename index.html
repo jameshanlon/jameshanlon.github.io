@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=dark>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>James W. Hanlon</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-brightness-high-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a class="active" aria-current="page" href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
 <p>Welcome to the website of <a href="/about.html">James W. Hanlon</a>. Here
 you'll find notes on subjects of interest and projects I've been working on, as
@@ -70,376 +58,315 @@ well as various archived documents and talks, and some information about me.</p>
 <p>Browse:
 <a href="/categories.html">by catergory</a>,
 <a href="/tags.html">by tag</a>.
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md article-list">
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/personal-data-and-self-hosting.html" class="article-info-title text-decoration-none">
-        Personal data and self&nbsp;hosting
-      </a>
-      <span class="article-tag small">
-        Aug 2024
-      </span>
-      <span class="article-summary"><p>Details of how I how self host services to maintain a degree of
+<div class="article-list">
+      <div class="article-info">
+    <a href="/personal-data-and-self-hosting.html" class="article-info-title text-decoration-none">
+      Personal data and self&nbsp;hosting
+    </a>
+    <span class="article-tag small">
+      Aug 2024
+    </span>
+    <span class="article-summary"><p>Details of how I how self host services to maintain a degree of
 digital privacy and&nbsp;freedom.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/discrete-event-simulation.html" class="article-info-title text-decoration-none">
-        Discrete-event&nbsp;simulation
-      </a>
-      <span class="article-tag small">
-        Aug 2024
-      </span>
-      <span class="article-summary"><p>How to build a simple discrete-event simulation with an example in&nbsp;Rust</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/discrete-event-simulation.html" class="article-info-title text-decoration-none">
+      Discrete-event&nbsp;simulation
+    </a>
+    <span class="article-tag small">
+      Aug 2024
+    </span>
+    <span class="article-summary"><p>How to build a simple discrete-event simulation with an example in&nbsp;Rust</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/review-of-heat-pump-use-and-performance.html" class="article-info-title text-decoration-none">
-        Review of heat pump use and&nbsp;performance
-      </a>
-      <span class="article-tag small">
-        Jul 2024
-      </span>
-      <span class="article-summary"><p>A review of one year&#8217;s worth of data from my home heat&nbsp;pump.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/review-of-heat-pump-use-and-performance.html" class="article-info-title text-decoration-none">
+      Review of heat pump use and&nbsp;performance
+    </a>
+    <span class="article-tag small">
+      Jul 2024
+    </span>
+    <span class="article-summary"><p>A review of one year&#8217;s worth of data from my home heat&nbsp;pump.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/silicon-infrastructure.html" class="article-info-title text-decoration-none">
-        Silicon&nbsp;infrastructure
-      </a>
-      <span class="article-tag small">
-        Aug 2023
-      </span>
-      <span class="article-summary"><p>Thoughts on the requirements of software infrastructure
+      <div class="article-info">
+    <a href="/silicon-infrastructure.html" class="article-info-title text-decoration-none">
+      Silicon&nbsp;infrastructure
+    </a>
+    <span class="article-tag small">
+      Aug 2023
+    </span>
+    <span class="article-summary"><p>Thoughts on the requirements of software infrastructure
 to support chip&nbsp;design.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/building-a-python-processor.html" class="article-info-title text-decoration-none">
-        Building a Python&nbsp;processor
-      </a>
-      <span class="article-tag small">
-        Jun 2023
-      </span>
-      <span class="article-summary"><p>A rationale and strawman for a processor to accelerate
+      <div class="article-info">
+    <a href="/building-a-python-processor.html" class="article-info-title text-decoration-none">
+      Building a Python&nbsp;processor
+    </a>
+    <span class="article-tag small">
+      Jun 2023
+    </span>
+    <span class="article-summary"><p>A rationale and strawman for a processor to accelerate
 dynamic-language&nbsp;workloads.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/cornish-unit-house-retrofit-insulation.html" class="article-info-title text-decoration-none">
-        Cornish Unit House retrofit&nbsp;insulation
-      </a>
-      <span class="article-tag small">
-        Dec 2022
-      </span>
-      <span class="article-summary"><p>Retrofitting insulation in a timber-framed top&nbsp;floor.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/cornish-unit-house-retrofit-insulation.html" class="article-info-title text-decoration-none">
+      Cornish Unit House retrofit&nbsp;insulation
+    </a>
+    <span class="article-tag small">
+      Dec 2022
+    </span>
+    <span class="article-summary"><p>Retrofitting insulation in a timber-framed top&nbsp;floor.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/from-logic-gates-to-a-programming-language-using-the-hex-architecture.html" class="article-info-title text-decoration-none">
-        From logic gates to a programming language using the Hex&nbsp;architecture
-      </a>
-      <span class="article-tag small">
-        Nov 2022
-      </span>
-      <span class="article-summary"><p>A hardware implementation of a Hex processor with some basic tooling,
+      <div class="article-info">
+    <a href="/from-logic-gates-to-a-programming-language-using-the-hex-architecture.html" class="article-info-title text-decoration-none">
+      From logic gates to a programming language using the Hex&nbsp;architecture
+    </a>
+    <span class="article-tag small">
+      Nov 2022
+    </span>
+    <span class="article-summary"><p>A hardware implementation of a Hex processor with some basic tooling,
 including a complete compiler for a simple programming&nbsp;language.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/seeding-parallel-xoroshiro128-generators.html" class="article-info-title text-decoration-none">
-        Seeding parallel xoroshiro128+&nbsp;generators
-      </a>
-      <span class="article-tag small">
-        Oct 2022
-      </span>
-      <span class="article-summary"><p>Choosing seeds for parallel xoroshiro128+ generators using fixed
+      <div class="article-info">
+    <a href="/seeding-parallel-xoroshiro128-generators.html" class="article-info-title text-decoration-none">
+      Seeding parallel xoroshiro128+&nbsp;generators
+    </a>
+    <span class="article-tag small">
+      Oct 2022
+    </span>
+    <span class="article-summary"><p>Choosing seeds for parallel xoroshiro128+ generators using fixed
 offsets produces correlated&nbsp;outputs.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu.html" class="article-info-title text-decoration-none">
-        The hardware pseudorandom number generator of the Graphcore <span class="caps">IPU</span>
-      </a>
-      <span class="article-tag small">
-        Sep 2022
-      </span>
-      <span class="article-summary"><p>A short summary of an investigation into the statisitical quality and
+      <div class="article-info">
+    <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu.html" class="article-info-title text-decoration-none">
+      The hardware pseudorandom number generator of the Graphcore <span class="caps">IPU</span>
+    </a>
+    <span class="article-tag small">
+      Sep 2022
+    </span>
+    <span class="article-summary"><p>A short summary of an investigation into the statisitical quality and
 implementation cost in hardware of the xoroshiro128aox <span class="caps">PRNG</span>.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/garden-workshop.html" class="article-info-title text-decoration-none">
-        Garden&nbsp;workshop
-      </a>
-      <span class="article-tag small">
-        Oct 2021
-      </span>
-      <span class="article-summary"><p>Design and construction of a office and&nbsp;workshop.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/garden-workshop.html" class="article-info-title text-decoration-none">
+      Garden&nbsp;workshop
+    </a>
+    <span class="article-tag small">
+      Oct 2021
+    </span>
+    <span class="article-summary"><p>Design and construction of a office and&nbsp;workshop.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/home-thermal-imaging-survey.html" class="article-info-title text-decoration-none">
-        Home thermal-imaging&nbsp;survey
-      </a>
-      <span class="article-tag small">
-        Mar 2021
-      </span>
-      <span class="article-summary"><p>Investigation of thermal faults using a thermal-imaging&nbsp;camera.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/home-thermal-imaging-survey.html" class="article-info-title text-decoration-none">
+      Home thermal-imaging&nbsp;survey
+    </a>
+    <span class="article-tag small">
+      Mar 2021
+    </span>
+    <span class="article-summary"><p>Investigation of thermal faults using a thermal-imaging&nbsp;camera.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/reflections-on-the-state-of-nature.html" class="article-info-title text-decoration-none">
-        Reflections on the state of&nbsp;nature
-      </a>
-      <span class="article-tag small">
-        Dec 2020
-      </span>
-      <span class="article-summary"><p>A review of human impacts on nature as a way to reflect and navigate
+      <div class="article-info">
+    <a href="/reflections-on-the-state-of-nature.html" class="article-info-title text-decoration-none">
+      Reflections on the state of&nbsp;nature
+    </a>
+    <span class="article-tag small">
+      Dec 2020
+    </span>
+    <span class="article-summary"><p>A review of human impacts on nature as a way to reflect and navigate
 environmental bad&nbsp;news.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/error-correcting-codes.html" class="article-info-title text-decoration-none">
-        Error-correcting&nbsp;codes
-      </a>
-      <span class="article-tag small">
-        May 2020
-      </span>
-      <span class="article-summary"><p>Using Hamming Codes for single error correction and double error&nbsp;detection.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/error-correcting-codes.html" class="article-info-title text-decoration-none">
+      Error-correcting&nbsp;codes
+    </a>
+    <span class="article-tag small">
+      May 2020
+    </span>
+    <span class="article-summary"><p>Using Hamming Codes for single error correction and double error&nbsp;detection.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/recycled-allotment-shed.html" class="article-info-title text-decoration-none">
-        Recycled allotment&nbsp;shed
-      </a>
-      <span class="article-tag small">
-        Nov 2019
-      </span>
-      <span class="article-summary"><p>Low-cost construction of a shed out of reclaimed&nbsp;materials.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/recycled-allotment-shed.html" class="article-info-title text-decoration-none">
+      Recycled allotment&nbsp;shed
+    </a>
+    <span class="article-tag small">
+      Nov 2019
+    </span>
+    <span class="article-summary"><p>Low-cost construction of a shed out of reclaimed&nbsp;materials.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/new-chips-for-machine-intelligence.html" class="article-info-title text-decoration-none">
-        New chips for machine&nbsp;intelligence
-      </a>
-      <span class="article-tag small">
-        Oct 2019
-      </span>
-      <span class="article-summary"><p>Details of new chips that have been built recently to accelerate
+      <div class="article-info">
+    <a href="/new-chips-for-machine-intelligence.html" class="article-info-title text-decoration-none">
+      New chips for machine&nbsp;intelligence
+    </a>
+    <span class="article-tag small">
+      Oct 2019
+    </span>
+    <span class="article-summary"><p>Details of new chips that have been built recently to accelerate
 machine intelligence&nbsp;workloads.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/testing-silicon-logic-with-scan-structures.html" class="article-info-title text-decoration-none">
-        Testing silicon logic with scan&nbsp;structures
-      </a>
-      <span class="article-tag small">
-        Apr 2019
-      </span>
-      <span class="article-summary"><p>A description of how digital circuits are modified to allow scan
+      <div class="article-info">
+    <a href="/testing-silicon-logic-with-scan-structures.html" class="article-info-title text-decoration-none">
+      Testing silicon logic with scan&nbsp;structures
+    </a>
+    <span class="article-tag small">
+      Apr 2019
+    </span>
+    <span class="article-summary"><p>A description of how digital circuits are modified to allow scan
 testing to be&nbsp;performed.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/rgb-lightbox-stacks.html" class="article-info-title text-decoration-none">
-        <span class="caps">RGB</span> lightbox&nbsp;stacks
-      </a>
-      <span class="article-tag small">
-        Dec 2018
-      </span>
-      <span class="article-summary"><p>Experimental lighting using high-power LEDs in generous volumes and
+      <div class="article-info">
+    <a href="/rgb-lightbox-stacks.html" class="article-info-title text-decoration-none">
+      <span class="caps">RGB</span> lightbox&nbsp;stacks
+    </a>
+    <span class="article-tag small">
+      Dec 2018
+    </span>
+    <span class="article-summary"><p>Experimental lighting using high-power LEDs in generous volumes and
 behind translucent acrylic plastic to create big blocks of&nbsp;colour.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/three-channel-high-power-led-driver.html" class="article-info-title text-decoration-none">
-        Three-channel high-power <span class="caps">LED</span>&nbsp;driver
-      </a>
-      <span class="article-tag small">
-        Dec 2018
-      </span>
-      <span class="article-summary"><p>An <span class="caps">LED</span> driver module controlled by a <span class="caps">PIC12F1572</span> and with <span class="caps">CAT4101</span>
+      <div class="article-info">
+    <a href="/three-channel-high-power-led-driver.html" class="article-info-title text-decoration-none">
+      Three-channel high-power <span class="caps">LED</span>&nbsp;driver
+    </a>
+    <span class="article-tag small">
+      Dec 2018
+    </span>
+    <span class="article-summary"><p>An <span class="caps">LED</span> driver module controlled by a <span class="caps">PIC12F1572</span> and with <span class="caps">CAT4101</span>
 drivers, deployable in an array via a <span class="caps">RS485</span>&nbsp;interface.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/querying-logical-paths-in-a-verilog-design.html" class="article-info-title text-decoration-none">
-        Querying logical paths in a Verilog&nbsp;design
-      </a>
-      <span class="article-tag small">
-        Nov 2018
-      </span>
-      <span class="article-summary"><p>A description of a command-line tool I created for tracing timing
+      <div class="article-info">
+    <a href="/querying-logical-paths-in-a-verilog-design.html" class="article-info-title text-decoration-none">
+      Querying logical paths in a Verilog&nbsp;design
+    </a>
+    <span class="article-tag small">
+      Nov 2018
+    </span>
+    <span class="article-summary"><p>A description of a command-line tool I created for tracing timing
 paths from a flattened netlist back through the <span class="caps">RTL</span>.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/retrofit-shed-insulation.html" class="article-info-title text-decoration-none">
-        Retrofit shed&nbsp;insulation
-      </a>
-      <span class="article-tag small">
-        Sep 2018
-      </span>
-      <span class="article-summary"><p>Retrofitting an existing shed/workshop with insulation to improve its
+      <div class="article-info">
+    <a href="/retrofit-shed-insulation.html" class="article-info-title text-decoration-none">
+      Retrofit shed&nbsp;insulation
+    </a>
+    <span class="article-tag small">
+      Sep 2018
+    </span>
+    <span class="article-summary"><p>Retrofitting an existing shed/workshop with insulation to improve its
 energy efficiency and make it a usable space throughout the&nbsp;year.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/vim-command-composition.html" class="article-info-title text-decoration-none">
-        Vim command&nbsp;composition
-      </a>
-      <span class="article-tag small">
-        Aug 2018
-      </span>
-      <span class="article-summary"><p>The rules for composing Vim&#8217;s motions and&nbsp;operators.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/vim-command-composition.html" class="article-info-title text-decoration-none">
+      Vim command&nbsp;composition
+    </a>
+    <span class="article-tag small">
+      Aug 2018
+    </span>
+    <span class="article-summary"><p>The rules for composing Vim&#8217;s motions and&nbsp;operators.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/writing-synthesizable-verilog.html" class="article-info-title text-decoration-none">
-        Writing synthesizable&nbsp;Verilog
-      </a>
-      <span class="article-tag small">
-        May 2018
-      </span>
-      <span class="article-summary"><p>Coding style for <span class="caps">RTL</span> design using Verilog / SystemVerilog. Updated&nbsp;2024.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/writing-synthesizable-verilog.html" class="article-info-title text-decoration-none">
+      Writing synthesizable&nbsp;Verilog
+    </a>
+    <span class="article-tag small">
+      May 2018
+    </span>
+    <span class="article-summary"><p>Coding style for <span class="caps">RTL</span> design using Verilog / SystemVerilog. Updated&nbsp;2024.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/notes-on-testing-random-number-generators.html" class="article-info-title text-decoration-none">
-        Notes on testing random number&nbsp;generators
-      </a>
-      <span class="article-tag small">
-        Apr 2017
-      </span>
-      <span class="article-summary"><p>Using empirical statistical tests to determine the quality of&nbsp;PRNGs.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/notes-on-testing-random-number-generators.html" class="article-info-title text-decoration-none">
+      Notes on testing random number&nbsp;generators
+    </a>
+    <span class="article-tag small">
+      Apr 2017
+    </span>
+    <span class="article-summary"><p>Using empirical statistical tests to determine the quality of&nbsp;PRNGs.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/a-convolutional-neural-network-from-scratch.html" class="article-info-title text-decoration-none">
-        A convolutional neural network from&nbsp;scratch
-      </a>
-      <span class="article-tag small">
-        Feb 2017
-      </span>
-      <span class="article-summary"><p>A C++ implementation of a convoluational neural network building on the
+      <div class="article-info">
+    <a href="/a-convolutional-neural-network-from-scratch.html" class="article-info-title text-decoration-none">
+      A convolutional neural network from&nbsp;scratch
+    </a>
+    <span class="article-tag small">
+      Feb 2017
+    </span>
+    <span class="article-summary"><p>A C++ implementation of a convoluational neural network building on the
 explanation in Michael Nielsen&#8217;s book &#8216;Neural Networks and Deep&nbsp;Learning&#8217;.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/reducing-memory-use-in-deep-neural-networks.html" class="article-info-title text-decoration-none">
-        Reducing memory use in deep neural&nbsp;networks
-      </a>
-      <span class="article-tag small">
-        Feb 2017
-      </span>
-      <span class="article-summary"><p>A review of state-of-the-art techniques&nbsp;used.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/reducing-memory-use-in-deep-neural-networks.html" class="article-info-title text-decoration-none">
+      Reducing memory use in deep neural&nbsp;networks
+    </a>
+    <span class="article-tag small">
+      Feb 2017
+    </span>
+    <span class="article-summary"><p>A review of state-of-the-art techniques&nbsp;used.</p></span>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/machine-learning-challenges-for-computer-architecture.html" class="article-info-title text-decoration-none">
-        Machine learning challenges for computer&nbsp;architecture
-      </a>
-      <span class="article-tag small">
-        Nov 2016
-      </span>
-      <span class="article-summary"><p>Neural networks have become a hot topic in computing and their development is
+      <div class="article-info">
+    <a href="/machine-learning-challenges-for-computer-architecture.html" class="article-info-title text-decoration-none">
+      Machine learning challenges for computer&nbsp;architecture
+    </a>
+    <span class="article-tag small">
+      Nov 2016
+    </span>
+    <span class="article-summary"><p>Neural networks have become a hot topic in computing and their development is
 progressing rapidly. They have a long history with some of the first …</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/the-xc-programming-language.html" class="article-info-title text-decoration-none">
-        The <span class="caps">XC</span> Programming&nbsp;Language
-      </a>
-      <span class="article-tag small">
-        Dec 2014
-      </span>
-      <span class="article-summary"><p>An overview of the key features of the language, many of which derive
+      <div class="article-info">
+    <a href="/the-xc-programming-language.html" class="article-info-title text-decoration-none">
+      The <span class="caps">XC</span> Programming&nbsp;Language
+    </a>
+    <span class="article-tag small">
+      Dec 2014
+    </span>
+    <span class="article-summary"><p>An overview of the key features of the language, many of which derive
 from&nbsp;occam.</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/the-xmos-xmp-64.html" class="article-info-title text-decoration-none">
-        The <span class="caps">XMOS</span> <span class="caps">XMP</span>-64
-      </a>
-      <span class="article-tag small">
-        Dec 2014
-      </span>
-      <span class="article-summary"><p>The <span class="caps">XMP</span>-64 is an experimental single-board distributed-memory parallel computer
+      <div class="article-info">
+    <a href="/the-xmos-xmp-64.html" class="article-info-title text-decoration-none">
+      The <span class="caps">XMOS</span> <span class="caps">XMP</span>-64
+    </a>
+    <span class="article-tag small">
+      Dec 2014
+    </span>
+    <span class="article-summary"><p>The <span class="caps">XMP</span>-64 is an experimental single-board distributed-memory parallel computer
 with 512 hardware threads  and is programmable with a C-like language.  It was
 developed by …</p></span>
-    </div>
   </div>
 
-        <div class="row article-info">
-    <div class="col-11 article-info">
-      <a href="/scalable-abstractions-for-general-purpose-parallel-computation.html" class="article-info-title text-decoration-none">
-        Scalable abstractions for general-purpose parallel&nbsp;computation
-      </a>
-      <span class="article-tag small">
-        Oct 2014
-      </span>
-      <span class="article-summary"><p>An overview of my PhD&nbsp;thesis.</p></span>
-    </div>
+      <div class="article-info">
+    <a href="/scalable-abstractions-for-general-purpose-parallel-computation.html" class="article-info-title text-decoration-none">
+      Scalable abstractions for general-purpose parallel&nbsp;computation
+    </a>
+    <span class="article-tag small">
+      Oct 2014
+    </span>
+    <span class="article-summary"><p>An overview of my PhD&nbsp;thesis.</p></span>
   </div>
 
-  </div>
 </div>
 <br>
 </p>
@@ -447,38 +374,22 @@ developed by …</p></span>
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

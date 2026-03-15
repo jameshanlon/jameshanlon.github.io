@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=light>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>Garden workshop</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-moon-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
   <h1>
     Garden&nbsp;workshop
@@ -70,8 +58,8 @@
     <time class="published" datetime="2021-10-04T00:00:00+02:00">
       04 Oct 2021
     </time><br>
-      <span class="article-tag small"><a href="/tag/sheds.html">sheds</a></span>
-      <span class="article-tag small"><a href="/tag/construction.html">construction</a></span>
+      <span class="article-tag"><a href="/tag/sheds.html">sheds</a></span>
+      <span class="article-tag"><a href="/tag/construction.html">construction</a></span>
   </div>
   <div class="article-body">
     <p>During the summer of 2021 I built a garden workshop. This was a joint endeavour
@@ -84,24 +72,22 @@ rod system for the footings, and a &#8216;build pack&#8217; that crucially
 provided a preliminary materials list.  This note documents the process of the
 design and build, but making sure not to reveal any of the details supplied in the
 Oakwood Garden Rooms build&nbsp;pack.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/3D.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/3D_600x600.png" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/3D_600x600.png" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/corner-windows.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/corner-windows_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/corner-windows_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -111,45 +97,41 @@ steel rod footings. The setting out of these was carefully determined with
 string lines since the base timbers slot directly onto the rods with a
 relatively small amount of tolerance, and determining the overall size and
 shape of the&nbsp;base.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/levelled.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/levelled_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/levelled_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/setting-out.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/setting-out_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/setting-out_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/post-holes.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/post-holes_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/post-holes_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/rods.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/rods_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/rods_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -160,45 +142,41 @@ mm insulation is cut and inserted between the joists, and supported below from
 falling by treated batten fastened to the joists. All gaps were filled with
 expanding foam. A layer of breathable roofing sheet is laid over the base
 before the 22 mm chipboard floor sheets are glued and fastened&nbsp;down.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/base-frame.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/base-frame_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/base-frame_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/base-joists.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/base-joists_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/base-joists_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/base-insulation.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/base-insulation_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/base-insulation_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/base-floor.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/base-floor_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/base-floor_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -206,69 +184,63 @@ before the 22 mm chipboard floor sheets are glued and fastened&nbsp;down.</p>
 <p>The walls are constructed using 50 x 100 mm studwork timbers and covered with 12 mm <span class="caps">OSB</span>
 sheet. The roof is constructed with 47 x 125 mm timbers, doubled up to span the
 wall-to-wall gap, and covered in 18 mm <span class="caps">OSB</span> tongue-and-groove roofing&nbsp;sheets.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/back-walls.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/back-walls_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/back-walls_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/all-walls.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/all-walls_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/all-walls_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/osb-walls.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/osb-walls_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/osb-walls_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-osb.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-osb_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-osb_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
 <h1>Waterproof wrap and&nbsp;batons</h1>
 <p>The walls are covered in a breathable waterproof membrane (standard roofing
 sheet) and two perpendicular layers of roofing batten to support the vertical&nbsp;cladding.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/first-battons.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/first-battons_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/first-battons_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/membrane-and-battons.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/membrane-and-battons_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/membrane-and-battons_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -277,66 +249,60 @@ sheet) and two perpendicular layers of roofing batten to support the vertical&nb
 Sawmills</a> in South Wales. The vertical
 pattern is 150 mm widths separated by a 25 mm gap, fastened to 75 mm widths
 sitting&nbsp;behind.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/cladding-mockup.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/cladding-mockup_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/cladding-mockup_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/cladding-1.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/cladding-1_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/cladding-1_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/cladding-2.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/cladding-2_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/cladding-2_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/cladding-3.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/cladding-3_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/cladding-3_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/vertical-cladding-complete.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/vertical-cladding-complete_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/vertical-cladding-complete_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/cladding-complete.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/cladding-complete_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/cladding-complete_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -348,45 +314,41 @@ boards laid on top and packed tightly. The roof is covered with a
 <a href="https://www.bauder.co.uk/roof-systems/waterproofing-systems/bituminous-systems/bauder-total-roof-system">Bauder single-ply roofing system</a>,
 installed by <a href="https://countyflatroofing.co.uk/">County Flat Roofing</a>. The roof
 lights measure 1,200 x 900 mm external&nbsp;dimensions.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-insulation-perimiter.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-insulation-perimiter_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-insulation-perimiter_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-insulation-install.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-insulation-install_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-insulation-install_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-insulation-complete.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-insulation-complete_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-insulation-complete_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-light-upstands.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-light-upstands_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-light-upstands_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -398,72 +360,66 @@ Bauder membrane, roof light upstand and rooflight. The wall buildup consists of 
 inside) 100 mm studwork, 12 mm <span class="caps">OSB</span>, waterproof membrane, two layers of 25 mm
 roofing batten, two layers of 20 mm Cedar board. Both buildups do not show the
 15 mm internal plywood panelling that was installed&nbsp;later.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/roof-buildup.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/roof-buildup_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/roof-buildup_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/wall-buildup.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/wall-buildup_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/wall-buildup_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
 <h1>Windows</h1>
 <p>The two windows are 1,040 x 1,040 mm double-glazed aluminium casement, supplied by
 <a href="https://www.panoramicwindows.co.uk/">Panoramic Windows</a>.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/corner-windows.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/corner-windows_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/corner-windows_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/window-face-on.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/window-face-on_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/window-face-on_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
 <h1>Internal fit&nbsp;out</h1>
 <h2>Socket and switch&nbsp;positions</h2>
 <p>Positions of sockets, lights and wiring was marked out using&nbsp;tape.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/socket-positions-1.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/socket-positions-1_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/socket-positions-1_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/socket-positions-2.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/socket-positions-2_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/socket-positions-2_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -473,24 +429,22 @@ were created for the wiring. In order to create a moisture barrier, all sheets
 were taped together with aluminium foil to create a single air-tight surface.
 Special attention was paid to the interaction between the roof and walls, where
 otherwise it would have been easy to have areas of missing or shallow&nbsp;insulation.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/insulation-windows.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/insulation-windows_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/insulation-windows_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/insulation-back-corner.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/insulation-back-corner_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/insulation-back-corner_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -499,111 +453,101 @@ otherwise it would have been easy to have areas of missing or shallow&nbsp;insul
 holes in the carcassing. We created two separate socket circuits (right and
 left), and a circuit for wall-mounted heaters. The lighting is divided into
 three ceiling circuits branched off the switches, plus an outdoor&nbsp;light.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/wiring-channels-1.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/wiring-channels-1_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/wiring-channels-1_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/wiring-channels-2.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/wiring-channels-2_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/wiring-channels-2_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/inside-first-fix.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/inside-first-fix_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/inside-first-fix_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/inside-first-fix-and-floor.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/inside-first-fix-and-floor_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/inside-first-fix-and-floor_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
 <h2>Boarding</h2>
 <p>The internal finish is done with 15 mm <span class="caps">WISA</span>-Spruce Special boards fixed to the
 walls and&nbsp;ceiling.</p>
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/back-wall-taped.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/back-wall-taped_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/back-wall-taped_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/back-wall-first-board.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/back-wall-first-board_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/back-wall-first-board_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/boarding-complete-1.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/boarding-complete-1_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/boarding-complete-1_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/boarding-complete-2.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/boarding-complete-2_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/boarding-complete-2_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col">
-    <div class="text-center">
+<div class="row align-items-center">
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/ceiling-boarding-1.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/ceiling-boarding-1_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/ceiling-boarding-1_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
-    <div class="col">
-    <div class="text-center">
+  </div>
+  <div class="col">
+  <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/ceiling-boarding-2.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/ceiling-boarding-2_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/ceiling-boarding-2_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
-    </div>
   </div>
 </div>
 
@@ -611,7 +555,7 @@ walls and&nbsp;ceiling.</p>
 <p>With the second-fix electrics completed, the workshop was&nbsp;operational.</p>
 <div class="text-center">
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/lighting.jpg" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/lighting_600x600.jpg" alt="No alt text">
+    <img class="thumbnail" src="/thumbs/lighting_600x600.jpg" alt="No alt text">
   </a>
 </div>
 
@@ -619,34 +563,28 @@ walls and&nbsp;ceiling.</p>
 <p><a name="drawings" class="anchor"></a></p>
 <h2>Drawings</h2>
 <p>The following drawings are taken from the Revit model of the&nbsp;workshop.</p>
-<div class="text-center">
-<figure class="figure">
+<figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/plans.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/plans_1000x1000.png" alt="Plan views.">
+    <img class="thumbnail" src="/thumbs/plans_1000x1000.png" alt="Plan views.">
   </a>
-  <figcaption class="figure-caption text-left">Plan views.</figcaption>
+  <figcaption>Plan views.</figcaption>
 </figure>
-</div>
 
-<div class="text-center">
-<figure class="figure">
+<figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/elevations.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/elevations_1000x1000.png" alt="Elevation views.">
+    <img class="thumbnail" src="/thumbs/elevations_1000x1000.png" alt="Elevation views.">
   </a>
-  <figcaption class="figure-caption text-left">Elevation views.</figcaption>
+  <figcaption>Elevation views.</figcaption>
 </figure>
-</div>
 
-<div class="text-center">
-<figure class="figure">
+<figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/garden-workshop/section.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/section_1000x1000.png" alt="Section view showing
+    <img class="thumbnail" src="/thumbs/section_1000x1000.png" alt="Section view showing
 buildups of the roof, walls and floor. and intersections between them.">
   </a>
-  <figcaption class="figure-caption text-left">Section view showing
+  <figcaption>Section view showing
 buildups of the roof, walls and floor. and intersections between them.</figcaption>
 </figure>
-</div>
   </div>
   <div class="article-footer">
     <p>Please get in touch (mail @ this domain) with any
@@ -656,38 +594,22 @@ buildups of the roof, walls and floor. and intersections between them.</figcapti
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

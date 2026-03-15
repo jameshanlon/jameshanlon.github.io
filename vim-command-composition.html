@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=light>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>Vim command composition</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-moon-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
   <h1>
     Vim command&nbsp;composition
@@ -70,8 +58,8 @@
     <time class="published" datetime="2018-08-23T00:00:00+02:00">
       23 Aug 2018
     </time><br>
-      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
-      <span class="article-tag small"><a href="/tag/vim.html">vim</a></span>
+      <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag"><a href="/tag/vim.html">vim</a></span>
   </div>
   <div class="article-body">
     <p>I&#8217;ve been using Vim for a long time and I&#8217;m familiar with many of its commands
@@ -321,14 +309,13 @@ in the Vim&nbsp;help:</p>
 </ul>
 <hr>
 <h2>Summary of&nbsp;rules</h2>
-<div class="container">
 <div class="row">
 <div class="col-sm">
   <h2>Motions</h2>
   <p><code>&lt;motion-keys&gt;</code></p>
   <p>References: <code>:help motion</code>
     <code>:help various-motions</code></p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
 <tr>
 <th>Action</th>
@@ -410,7 +397,7 @@ in the Vim&nbsp;help:</p>
   <h2>Operators</h2>
   <p><code>&lt;operators&gt;</code></p>
   <p>Reference: <code>:help operator</code></p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
 <tr>
 <th>Key</th>
@@ -462,7 +449,7 @@ in the Vim&nbsp;help:</p>
 </table>  <h2>Visual&nbsp;operators</h2>
   <p><code>&lt;visual-operators&gt;</code></p>
   <p>References: <code>:help visual-operators</code></p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
 <tr>
 <th>Key</th>
@@ -510,7 +497,7 @@ in the Vim&nbsp;help:</p>
   <h2>Text&nbsp;objects</h2>
   <p><code>&lt;text-object-keys&gt;</code></p>
   <p>References: <code>:help text-objects</code>, <code>:help objects</code></p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
 <tr>
 <th>Key</th>
@@ -580,7 +567,7 @@ in the Vim&nbsp;help:</p>
   <h2>Modifiers</h2>
   <p><code>&lt;modifiers&gt;</code></p>
   <p>References: <code>:help text-objects</code></p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
 <tr>
 <th>Key</th>
@@ -598,7 +585,6 @@ in the Vim&nbsp;help:</p>
 </tr>
 </tbody>
 </table></div>
-</div>
 </div>
 
 <div class="highlight"><pre><span></span><code><span class="nv">count</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">{</span><span class="nv">digits</span><span class="p">}</span>
@@ -691,38 +677,22 @@ they might give you some&nbsp;ideas.</p>
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

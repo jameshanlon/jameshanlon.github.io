@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - technical</title><link href="https://jameswhanlon.com/" rel="alternate"/><link href="https://jameswhanlon.com/feeds/technical.atom.xml" rel="self"/><id>https://jameswhanlon.com/</id><updated>2024-08-26T00:00:00+02:00</updated><entry><title>Personal data and self hosting</title><link href="https://jameswhanlon.com/personal-data-and-self-hosting.html" rel="alternate"/><published>2024-08-26T00:00:00+02:00</published><updated>2024-08-26T00:00:00+02:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2024-08-26:/personal-data-and-self-hosting.html</id><summary type="html">&lt;p&gt;Details of how I how self host services to maintain a degree of
 digital privacy and&amp;nbsp;freedom.&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/boxes.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boxes_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/boxes_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -84,7 +84,7 @@ etc, rather than paying for an under powered &lt;span class="caps"&gt;VPS&lt;/sp
 machines up very&amp;nbsp;cheaply.&lt;/p&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/self-hosted/homepage.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/homepage_600x600.png" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/homepage_600x600.png" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 

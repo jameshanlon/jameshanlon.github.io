@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=light>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>New chips for machine intelligence</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-moon-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
   <h1>
     New chips for machine&nbsp;intelligence
@@ -70,9 +58,9 @@
     <time class="published" datetime="2019-10-04T00:00:00+02:00">
       04 Oct 2019
     </time><br>
-      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
-      <span class="article-tag small"><a href="/tag/machine-intelligence.html">machine-intelligence</a></span>
-      <span class="article-tag small"><a href="/tag/computer-architecture.html">computer-architecture</a></span>
+      <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag"><a href="/tag/machine-intelligence.html">machine-intelligence</a></span>
+      <span class="article-tag"><a href="/tag/computer-architecture.html">computer-architecture</a></span>
   </div>
   <div class="article-body">
     <p>This note summarises details of some of the new silicon chips for machine
@@ -83,7 +71,7 @@ since they represent the frontier in performance and capability. There are many
 chips designed for inference, but these are typically intended for use in
 embedded or edge&nbsp;deployments.</p>
 <p>In&nbsp;summary:</p>
-<table class="table table-sm">
+<table>
 <caption>
 *Speculated<br>
 &dagger; Figures given for a single chip
@@ -217,7 +205,7 @@ embedded or edge&nbsp;deployments.</p>
 
 <p><a name="cerebras" class="anchor"></a></p>
 <h2>Cerebras Wafer-Scale&nbsp;Engine</h2>
-<p><img class="float-right img-fluid" src="thumbs/cerebras-wse_220x220.png" alt="Cerebras chip"></p>
+<p><img class="float-right" src="thumbs/cerebras-wse_220x220.png" alt="Cerebras chip"></p>
 <p>The Cerebras Wafer-Scale Engine (<span class="caps">WSE</span>) is undoubtedly the most bold and
 innovative design to appear recently. Wafer-scale integration is not a new
 idea, but integration issues to do with yield, power delivery and thermal
@@ -273,7 +261,7 @@ which will necessitate such&nbsp;scaling.</p>
 </ul>
 <p><a name="google-tpu-3" class="anchor"></a></p>
 <h2>Google <span class="caps">TPU</span>&nbsp;v3</h2>
-<p><img class="float-right img-fluid" src="thumbs/google-tpu3_220x220.png" alt="TPU-3 board"></p>
+<p><img class="float-right" src="thumbs/google-tpu3_220x220.png" alt="TPU-3 board"></p>
 <p>With few details available on the specifications of the <span class="caps">TPU</span> v3, it is likely an
 incremental improvement to the <span class="caps">TPU</span> v2: doubling the performance, adding <span class="caps">HBM2</span>
 memory to double the capacity and&nbsp;bandwidth.</p>
@@ -297,7 +285,7 @@ memory to double the capacity and&nbsp;bandwidth.</p>
 </ul>
 <p><a name="google-tpu-2" class="anchor"></a></p>
 <h2>Google <span class="caps">TPU</span>&nbsp;v2</h2>
-<p><img class="float-right img-fluid" src="thumbs/google-tpu2_220x220.png" alt="TPU-2 board"></p>
+<p><img class="float-right" src="thumbs/google-tpu2_220x220.png" alt="TPU-2 board"></p>
 <p>The <span class="caps">TPU</span> v2 is designed for training and inference. It improves over the <span class="caps">TPU</span> v1
 with floating point arithmetic and enhanced memory capacity and bandwidth with
 <span class="caps">HBM</span> integrated&nbsp;memory.</p>
@@ -329,7 +317,7 @@ with floating point arithmetic and enhanced memory capacity and bandwidth with
 </ul>
 <p><a name="google-tpu-1" class="anchor"></a></p>
 <h2>Google <span class="caps">TPU</span>&nbsp;v1</h2>
-<p><img class="float-right img-fluid" src="thumbs/google-tpu1_220x220.png" alt="TPU-1 board"></p>
+<p><img class="float-right" src="thumbs/google-tpu1_220x220.png" alt="TPU-1 board"></p>
 <p>Google&#8217;s first generation <span class="caps">TPU</span> was designed for inference only and supports only
 integer arithmetic. It provides acceleration to a host <span class="caps">CPU</span> by being sent
 instructions across PCIe-3, to perform matrix multiplications and apply
@@ -358,7 +346,7 @@ saved much time in design and&nbsp;verification.</p>
 </ul>
 <p><a name="graphcore-c2-ipu" class="anchor"></a></p>
 <h2>Graphcore <span class="caps">IPU</span></h2>
-<p><img class="float-right img-fluid" src="thumbs/graphcore-ipu_220x220.png" alt="Graphcore IPU floorplan"></p>
+<p><img class="float-right" src="thumbs/graphcore-ipu_220x220.png" alt="Graphcore IPU floorplan"></p>
 <p><strong><span class="caps">DISCLAIMER</span></strong>: I work at Graphcore, and all of the information given here is
 lifted directly from the linked references&nbsp;below.</p>
 <p>The Graphcore <span class="caps">IPU</span> architecture is highly parallel with a large collection of
@@ -402,7 +390,7 @@ Larger systems of <span class="caps">IPU</span> chips can be built by connecting
 </ul>
 <p><a name="habana-gaudi" class="anchor"></a></p>
 <h2>Habana Labs&nbsp;Gaudi</h2>
-<p><img class="float-right img-fluid" src="thumbs/habana-gaudi_220x220.png" alt="Habana Gaudi board"></p>
+<p><img class="float-right" src="thumbs/habana-gaudi_220x220.png" alt="Habana Gaudi board"></p>
 <p>Habana&#8217;s Gaudi <span class="caps">AI</span> training processor shares similarities with contemporary
 GPUs, particularly wide <span class="caps">SIMD</span> parallelism and <span class="caps">HBM2</span> memory. The chip integrates
 ten 100G Ethernet links which support remote direct memory access (<span class="caps">RDMA</span>). This
@@ -446,7 +434,7 @@ equipment, compared with Nvidia&#8217;s NVLink or&nbsp;OpenCAPI.</p>
 </ul>
 <p><a name="huawei-ascend" class="anchor"></a></p>
 <h2>Huawei Ascend&nbsp;910</h2>
-<p><img class="float-right img-fluid" src="thumbs/huawei-ascend_220x220.png" alt="Huawei Ascend floorplan"></p>
+<p><img class="float-right" src="thumbs/huawei-ascend_220x220.png" alt="Huawei Ascend floorplan"></p>
 <p>Huawei&#8217;s Ascend also bears similarities to the latest GPUs with wide <span class="caps">SIMD</span>
 arithmetic and a 3D matrix unit, comparable to Nvidia&#8217;s Tensor Cores, a
 (assumed) coherent 32 <span class="caps">MB</span> shared L2 on-chip cache. The chip includes
@@ -487,7 +475,7 @@ core), 100x for L2 cache (shared between cores), and 2000x for external <span cl
 </ul>
 <p><a name="intel-nnp-t" class="anchor"></a></p>
 <h2>Intel <span class="caps">NNP</span>-T</h2>
-<p><img class="float-right img-fluid" src="thumbs/intel-nnpt_220x220.png" alt="Intel NNP-T floorplan"></p>
+<p><img class="float-right" src="thumbs/intel-nnpt_220x220.png" alt="Intel NNP-T floorplan"></p>
 <p>This chip is Intel&#8217;s second attempt at an accelerator for machine learning,
 following the Xeon Phi. Like the <a href="#habana-gaudi">Habana Gaudi chip</a>, it
 integrates a small number of wide vector cores, with <span class="caps">HBM2</span> integrated memory and
@@ -544,7 +532,7 @@ similar 100 Gbit <span class="caps">IO</span>&nbsp;links.</p>
 </ul>
 <p><a name="nvidia-volta" class="anchor"></a></p>
 <h2>Nvidia&nbsp;Volta</h2>
-<p><img class="float-right img-fluid" src="thumbs/nvidia-volta_220x220.png" alt="Nvidia Volta board"></p>
+<p><img class="float-right" src="thumbs/nvidia-volta_220x220.png" alt="Nvidia Volta board"></p>
 <p>Volta introduces Tensor Cores, <span class="caps">HBM2</span> and NVLink 2.0, from the <a href="https://en.wikipedia.org/wiki/Pascal_(microarchitecture)">Pascal
 architecture</a>.</p>
 <p>General&nbsp;details:</p>
@@ -572,7 +560,7 @@ architecture</a>.</p>
 </ul>
 <p><a name="nvidia-turing" class="anchor"></a></p>
 <h2>Nvidia&nbsp;Turing</h2>
-<p><img class="float-right img-fluid" src="thumbs/nvidia-turing_220x220.png" alt="Nvidia Turing die shot"></p>
+<p><img class="float-right" src="thumbs/nvidia-turing_220x220.png" alt="Nvidia Turing die shot"></p>
 <p>Turing is an architectural revision of Volta, manufactured on the same 16 nm
 process, but with fewer <span class="caps">CUDA</span> and Tensor cores. It consequently has a smaller
 die size and lower power envelope. Apart from <span class="caps">ML</span> tasks, it is designed to
@@ -640,38 +628,22 @@ Brain inspired:
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

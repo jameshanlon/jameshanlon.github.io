@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=light>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>Review of heat pump use and performance</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-moon-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
   <h1>
     Review of heat pump use and&nbsp;performance
@@ -70,20 +58,18 @@
     <time class="published" datetime="2024-07-31T00:00:00+02:00">
       31 Jul 2024
     </time><br>
-      <span class="article-tag small"><a href="/tag/sustainability.html">sustainability</a></span>
+      <span class="article-tag"><a href="/tag/sustainability.html">sustainability</a></span>
   </div>
   <div class="article-body">
     <blockquote>
 <p><strong><em><span class="caps">NOTE</span>:</em></strong>  Updated October 2024 with improved&nbsp;charts.</p>
 </blockquote>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump-cropped.jpg" alt="My 10kW Vaillant Arotherm
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-pump-cropped.jpg" alt="My 10kW Vaillant Arotherm
 Plus.">
-  <figcaption class="figure-caption text-left">My 10kW Vaillant Arotherm
+  <figcaption>My 10kW Vaillant Arotherm
 Plus.</figcaption>
 </figure>
-</div>
 
 <p>I had a 10 kW Vaillant Arotherm heat pump installed in July 2022, and a year
 later a <a href="https://www.vaillant.co.uk/product-systems/smart-controls/myvaillant-connect-internet-gateway">Vaillant Sensonet gateway</a>, which provides monitoring and
@@ -127,7 +113,7 @@ a high-level review of the&nbsp;system.</p>
 <h2>Analysis</h2>
 <p>The overall performance of the system for the year from July 2023 to July 2024
 is summarised in the following&nbsp;table.</p>
-<table class="table">
+<table>
   <thead>
     <tr>
       <th scope="col">Metric</th>
@@ -185,12 +171,10 @@ the electricity used for the weekly Legionella purge performed by an immersion
 heater I have installed in my&nbsp;system.</p>
 <p>Looking more closely at consumption, the chart below shows all measurements
 over this period for heating, hot water and their&nbsp;combination.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/consumed.png" alt="Electrical energy consumed in kWh.">
-  <figcaption class="figure-caption text-left">Electrical energy consumed in kWh.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/consumed.png" alt="Electrical energy consumed in kWh.">
+  <figcaption>Electrical energy consumed in kWh.</figcaption>
 </figure>
-</div>
 
 <p>Most obviously, electricity consumption during the winter months increases
 significantly when the heat pump is using approximately 10 kWh per day. There
@@ -203,41 +187,33 @@ or a technical issue. The technical issue has been due to a loss of pressure in
 the system, requiring a manual top up from the mains water&nbsp;supply.</p>
 <p>The next chart is the heat energy generated, which is tightly correlated with
 the consumption&nbsp;graph.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/generated.png" alt="Heat energy generated (hot water and heating) in kWh.">
-  <figcaption class="figure-caption text-left">Heat energy generated (hot water and heating) in kWh.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/generated.png" alt="Heat energy generated (hot water and heating) in kWh.">
+  <figcaption>Heat energy generated (hot water and heating) in kWh.</figcaption>
 </figure>
-</div>
 
 <p>Combining the previous two charts by calculating the ratio between generated and
 consumed, gives the coefficient of performance (<span class="caps">COP</span>). A handful of measurements
 produced very large <span class="caps">COP</span> values, that are unrealistic, so I have clipped these
 with a maximum <span class="caps">COP</span> of&nbsp;6.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed.">
-  <figcaption class="figure-caption text-left"><span class="caps">COP</span> calculated by dividing heat generated by electrical energy consumed.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/COP.png" alt="COP calculated by dividing heat generated by electrical energy consumed.">
+  <figcaption><span class="caps">COP</span> calculated by dividing heat generated by electrical energy consumed.</figcaption>
 </figure>
-</div>
 
 <p>This is the same <span class="caps">COP</span> data averaged over weekly&nbsp;intervals.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/weekly-COP.png" alt="Weekly averaged COP.">
-  <figcaption class="figure-caption text-left">Weekly averaged <span class="caps">COP</span>.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/weekly-COP.png" alt="Weekly averaged COP.">
+  <figcaption>Weekly averaged <span class="caps">COP</span>.</figcaption>
 </figure>
-</div>
 
 <p>The next chart is a different presentation of the <span class="caps">COP</span> data, with <span class="caps">COP</span> plotted as
 a function of heat output. It&#8217;s clear that peak <span class="caps">COP</span> is at ~10 kW heat output,
 but there is little penalty in efficiency between that and the highest recorded&nbsp;output.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-output-vs-COP.png" alt="Heat output versus weekly averaged COP.">
-  <figcaption class="figure-caption text-left">Heat output versus weekly averaged <span class="caps">COP</span>.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/heat-output-vs-COP.png" alt="Heat output versus weekly averaged COP.">
+  <figcaption>Heat output versus weekly averaged <span class="caps">COP</span>.</figcaption>
 </figure>
-</div>
 
 <p>Looking at the temperature of the hot water tank, this stays constant as expected
 but with a few exceptions: when I changed the temperature from 45 to 50 degrees C
@@ -246,12 +222,10 @@ on a Monday the immersion heater kicks in to perform a Legionella purge (which
 curiously it has stopped since March 2024. After later investigation this
 appears to be a faulty timer or immersion heater, so I switched to performing
 the purge using the heat pump&nbsp;itself).</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius.">
-  <figcaption class="figure-caption text-left">Hot water temperature in degrees Celsius.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/water-temperature.png" alt="Hot water temperature in degrees Celsius.">
+  <figcaption>Hot water temperature in degrees Celsius.</figcaption>
 </figure>
-</div>
 
 <p>Finally, we have a plot of internal (red) vs external (blue) temperature in
 degrees C. This clearly shows that the 19 degrees C target was maintained
@@ -261,12 +235,10 @@ quickly our summers are changing with more intense heat, having a system that
 can also perform cooling would be a big benefit. But overall, I think this
 chart well represents the benefit of having a heat pump, providing a home
 environment with a continuous temperature throughout the&nbsp;year.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius.">
-  <figcaption class="figure-caption text-left">Internal and external temperatures in degrees Celsius.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/internal-external-temperature.png" alt="Internal and external temperatures in degrees Celsius.">
+  <figcaption>Internal and external temperatures in degrees Celsius.</figcaption>
 </figure>
-</div>
 
 <p>For the same period I obtained the electricity use and cost data from Octopus
 using their excellent <span class="caps">API</span> via the <a href="https://github.com/Yanson/octograph">Octograph tool</a>, visualised below
@@ -277,12 +249,10 @@ measurements. I would expect the heat pump to be using more like half of total
 electricity on average, given that other electricity use is cooking and
 appliances etc, but perhaps I am wrong. Otherwise the usage profile matches between
 the two data&nbsp;sets.</p>
-<div class="text-center">
-<figure class="figure">
-  <img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/Grafana-Octopus-electricity-use.png" alt="Electricity use from Octopus data.">
-  <figcaption class="figure-caption text-left">Electricity use from Octopus data.</figcaption>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump/Grafana-Octopus-electricity-use.png" alt="Electricity use from Octopus data.">
+  <figcaption>Electricity use from Octopus data.</figcaption>
 </figure>
-</div>
 
 <h2>Summary</h2>
 <p>The data collected by the Vaillant heat pump control system appears to be
@@ -314,38 +284,22 @@ made, so hopefully I can further improve it&#8217;s running&nbsp;efficiency.</p>
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>

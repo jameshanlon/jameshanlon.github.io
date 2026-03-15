@@ -69,12 +69,10 @@ for a node must be scheduled any receive events for that node have been
 processed. By separating event processing in this way, there can be no
 dependencies between the serialisation of transmit and receive events as they
 are fetched from the simulation&amp;nbsp;queue.&lt;/p&gt;
-&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/discrete-event-simulation/DES-ring.png" alt="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep."&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;&lt;span class="caps"&gt;DES&lt;/span&gt; of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.&lt;/figcaption&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/discrete-event-simulation/DES-ring.png" alt="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep."&gt;
+  &lt;figcaption&gt;&lt;span class="caps"&gt;DES&lt;/span&gt; of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
 &lt;p&gt;Extending this concept of phases, a timestep can be divided into an arbitrary
 number of sub phases to model more complex behaviours. An interesting example
@@ -369,7 +367,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   dependency management tool provides very similar&amp;nbsp;functionality.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/design-representation.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/design-representation.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -382,7 +380,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   were for the design representation during a configuration&amp;nbsp;step.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/verif-representation.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/verif-representation.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -395,7 +393,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/lint-check.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/lint-check_1000x1000.png" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/lint-check_1000x1000.png" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -406,7 +404,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   checker that need to be&amp;nbsp;investigated.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/cdc-rdc-check.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/cdc-rdc-check.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -420,7 +418,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   and without delay&amp;nbsp;annotations.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/simulation-flow.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/simulation-flow.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -430,7 +428,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   assumptions and properties to be&amp;nbsp;checked.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/formal-property-check.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/formal-property-check.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -441,7 +439,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   called a &lt;em&gt;reference&lt;/em&gt; that is the baseline and an &lt;em&gt;implementation&lt;/em&gt; to&amp;nbsp;check.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/equivalence-flow.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/equivalence-flow.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;ul&gt;
@@ -455,7 +453,7 @@ executed, typically corresponding to a&amp;nbsp;step.&lt;/p&gt;
   checking. See &lt;a href="https://github.com/The-OpenROAD-Project/OpenROAD"&gt;OpenROAD&lt;/a&gt; for an example open source physical build&amp;nbsp;flow.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class="text-center"&gt;
-  &lt;img class="figure-img img-fluid" src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/phys-build-flow.png" alt="No alt text"&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/silicon-infra/phys-build-flow.png" alt="No alt text"&gt;
 &lt;/div&gt;
 
 &lt;blockquote&gt;
@@ -724,7 +722,7 @@ develop to provide these capabilities&amp;nbsp;too:&lt;/p&gt;
 &lt;p&gt;The work in &lt;em&gt;Quantitative Overhead Analysis for Python&lt;/em&gt; [1] provides a detailed
 analysis of overheads in CPython. &lt;sup id="fnref:python-overheads"&gt;&lt;a class="footnote-ref" href="#fn:python-overheads"&gt;1&lt;/a&gt;&lt;/sup&gt; The different types of
 overhead are described in the following table, which is taken from the&amp;nbsp;paper.&lt;/p&gt;
-&lt;table class="table table-sm table-striped"&gt;
+&lt;table&gt;
   &lt;caption&gt;Sources of performance overhead in Python, from [1].&lt;/caption&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -761,14 +759,12 @@ the remaining 35.1% is used for the execution of the program. Of the language
 features, name resolution and function setup/cleanup dominate. Of the
 interpreter operations, dispatch (reading bytecode and executing the correct
 operations) and C function calls&amp;nbsp;dominate.&lt;/p&gt;
-&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/measured-overheads.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/measured-overheads_1000x1000.png" alt="Python overheads measured in various benchmarks, from [1]."&gt;
+    &lt;img class="thumbnail" src="/thumbs/measured-overheads_1000x1000.png" alt="Python overheads measured in various benchmarks, from [1]."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Python overheads measured in various benchmarks, from [1].&lt;/figcaption&gt;
+  &lt;figcaption&gt;Python overheads measured in various benchmarks, from [1].&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
 &lt;p&gt;There has been significant work on tackling (2) the language implementation.
 Prominent examples include:
@@ -874,30 +870,24 @@ objects over this boundary is complicated and potentially a significant
 overhead. In the second scenario, the whole Python program is executed by the
 interpreter running on the accelerator. This simplifies the interface between
 the two devices, which would only need to provide basic system calls to the&amp;nbsp;interpreter.&lt;/p&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/offload-model-fine.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/offload-model-fine_1000x1000.png" alt="Fine-grained offload"&gt;
+    &lt;img class="thumbnail" src="/thumbs/offload-model-fine_1000x1000.png" alt="Fine-grained offload"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Fine-grained offload&lt;/figcaption&gt;
+  &lt;figcaption&gt;Fine-grained offload&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/offload-model-coarse.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/offload-model-coarse_1000x1000.png" alt="Coarse-grained offload"&gt;
+    &lt;img class="thumbnail" src="/thumbs/offload-model-coarse_1000x1000.png" alt="Coarse-grained offload"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Coarse-grained offload&lt;/figcaption&gt;
+  &lt;figcaption&gt;Coarse-grained offload&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -909,7 +899,7 @@ on &lt;span class="caps"&gt;DRAM&lt;/span&gt; integrated with the device. The la
 supply lower latency and higher bandwidth to the&amp;nbsp;memories.&lt;/p&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/accelerator.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/accelerator_1000x1000.png" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/accelerator_1000x1000.png" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -944,7 +934,7 @@ extensions would be required to place items in the cache, retrieve items in the
 cache, monitor ranges of memory and invalidate items in monitored&amp;nbsp;ranges.&lt;/p&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/smart-cache.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/smart-cache_1000x1000.png" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/smart-cache_1000x1000.png" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -996,7 +986,7 @@ parallel machine. I have previously outlined a similar kind of machine in my
 description at some point&amp;nbsp;soon.&lt;/p&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/python-processor/parallel-microarchitecture-top.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/parallel-microarchitecture-top_1000x1000.png" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/parallel-microarchitecture-top_1000x1000.png" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -1114,7 +1104,7 @@ value in&amp;nbsp;the &lt;code&gt;oreg&lt;/code&gt;, adding four bits per instru
 encodes the operation type with its immediate. The instructions are grouped
 into memory access with absolute or relative addressing modes, loading of
 constants, branching, inter-register operations and supervisor&amp;nbsp;calls.&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col"&gt;Opcode&lt;/th&gt;
   &lt;th scope="col"&gt;Behaviour&lt;/th&gt;
@@ -1463,84 +1453,66 @@ has the following&amp;nbsp;characteristics:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;The OpenROAD &lt;span class="caps"&gt;GUI&lt;/span&gt; provides many ways to visualise and explore the design. The
 following images are some examples of the different&amp;nbsp;views.&lt;/p&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-stdcells.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-stdcells_600x600.png" alt="Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1)."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-stdcells_600x600.png" alt="Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1)."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).&lt;/figcaption&gt;
+  &lt;figcaption&gt;Floorplan showing the standard cells only, with the two lowest metal layers (logic and M1).&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-closeup.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-closeup_600x600.png" alt="A zoomed view showing standard cells with logic and M1 layers only."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-closeup_600x600.png" alt="A zoomed view showing standard cells with logic and M1 layers only."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;A zoomed view showing standard cells with logic and M1 layers only.&lt;/figcaption&gt;
+  &lt;figcaption&gt;A zoomed view showing standard cells with logic and M1 layers only.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-clocktree.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-clocktree_600x600.png" alt="A view showing all nets constituting the clock tree."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-clocktree_600x600.png" alt="A view showing all nets constituting the clock tree."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;A view showing all nets constituting the clock tree.&lt;/figcaption&gt;
+  &lt;figcaption&gt;A view showing all nets constituting the clock tree.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-routing-congestion.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-routing-congestion_600x600.png" alt="A heatmap view representing routing congestion."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-routing-congestion_600x600.png" alt="A heatmap view representing routing congestion."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;A heatmap view representing routing congestion.&lt;/figcaption&gt;
+  &lt;figcaption&gt;A heatmap view representing routing congestion.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-setup-worstpath.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-setup-worstpath_600x600.png" alt="A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-setup-worstpath_600x600.png" alt="A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.&lt;/figcaption&gt;
+  &lt;figcaption&gt;A visualisation of the worst setup path in the design, including the nets and cells on the path as well as the paths for the launch and capture clocks.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/floorplan-hold-worstpath.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/floorplan-hold-worstpath_600x600.png" alt="The same visualisation for the worst (least slack) hold path in the design."&gt;
+    &lt;img class="thumbnail" src="/thumbs/floorplan-hold-worstpath_600x600.png" alt="The same visualisation for the worst (least slack) hold path in the design."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;The same visualisation for the worst (least slack) hold path in the design.&lt;/figcaption&gt;
+  &lt;figcaption&gt;The same visualisation for the worst (least slack) hold path in the design.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -2012,7 +1984,7 @@ PractRand test battery. PractRand is a good choice for these tests since it repo
 results at intermediate points and consumes much more output than Big Crush or Gjrand:
 32 &lt;span class="caps"&gt;TB&lt;/span&gt; by default. A pass is achieved if no overtly suspicious $p$-values are&amp;nbsp;flagged.&lt;/p&gt;
 &lt;p&gt;The results are summarised in the following&amp;nbsp;table:&lt;/p&gt;
-&lt;table class="table"&gt;
+&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th scope="col"&gt;Seeding scheme&lt;/th&gt;
@@ -2324,7 +2296,7 @@ fail only when it fails on the same test over all seeds, which can be seen in
 the entries highlighted in red. The Mersenne Twister consistently fails,
 whereas xoroshiro128+ fails on a particular output permutation where the lower
 32 bits are discarded (this is a known deficiency of the&amp;nbsp;generator).&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col"&gt;Generator&lt;/th&gt;
   &lt;th scope="col"&gt;Output 1&lt;/th&gt;
@@ -2400,7 +2372,7 @@ operations only to an extent, and a particular test will be sensitive enough to
 detect them. Given that BigCrush and PractRand did not, xoroshiro128aox
 represents a significant improvement over xoroshiro128+, whilst still being
 cheap to implement in hardware as we show in the next&amp;nbsp;section.&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col"&gt;Generator&lt;/th&gt;
   &lt;th scope="col"&gt;Total failures&lt;/th&gt;
@@ -2434,7 +2406,7 @@ we compare physical implementations of the generators (excluding Mersenne
 Twister because of its considerable state size) after they have been fully
 synthesised and placed and routed using Graphcore’s 7 nm cell library and a
 target clock period of 1 GHz. The table below summarises the&amp;nbsp;results.&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col"&gt;Generator&lt;/th&gt;
   &lt;th scope="col"&gt;Total cells (state update)&lt;/th&gt;
@@ -2499,41 +2471,33 @@ clear the differences in implementation complexity (left to&amp;nbsp;right:
 &lt;table&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/plus_600x600.png" alt="xoroshiro128+"&gt;
+    &lt;img class="thumbnail" src="/thumbs/plus_600x600.png" alt="xoroshiro128+"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;xoroshiro128+&lt;/figcaption&gt;
+  &lt;figcaption&gt;xoroshiro128+&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/aox_600x600.png" alt="xoroshiro128aox"&gt;
+    &lt;img class="thumbnail" src="/thumbs/aox_600x600.png" alt="xoroshiro128aox"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;xoroshiro128aox&lt;/figcaption&gt;
+  &lt;figcaption&gt;xoroshiro128aox&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_600x600.png" alt="pcg64"&gt;
+    &lt;img class="thumbnail" src="/thumbs/pcg64_600x600.png" alt="pcg64"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;pcg64&lt;/figcaption&gt;
+  &lt;figcaption&gt;pcg64&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/philox_600x600.png" alt="philox4x32-10"&gt;
+    &lt;img class="thumbnail" src="/thumbs/philox_600x600.png" alt="philox4x32-10"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;philox4x32-10&lt;/figcaption&gt;
+  &lt;figcaption&gt;philox4x32-10&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -2549,41 +2513,33 @@ clear the differences in implementation complexity (left to&amp;nbsp;right:
 &lt;table&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/plus_100x100.png" alt="xoroshiro128+"&gt;
+    &lt;img class="thumbnail" src="/thumbs/plus_100x100.png" alt="xoroshiro128+"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;xoroshiro128+&lt;/figcaption&gt;
+  &lt;figcaption&gt;xoroshiro128+&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/aox_90x90.png" alt="xoroshiro128aox"&gt;
+    &lt;img class="thumbnail" src="/thumbs/aox_90x90.png" alt="xoroshiro128aox"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;xoroshiro128aox&lt;/figcaption&gt;
+  &lt;figcaption&gt;xoroshiro128aox&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_246x246.png" alt="pcg64"&gt;
+    &lt;img class="thumbnail" src="/thumbs/pcg64_246x246.png" alt="pcg64"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;pcg64&lt;/figcaption&gt;
+  &lt;figcaption&gt;pcg64&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
-  &lt;td&gt;&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;td&gt;&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/philox_446x446.png" alt="philox4x32-10"&gt;
+    &lt;img class="thumbnail" src="/thumbs/philox_446x446.png" alt="philox4x32-10"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;philox4x32-10&lt;/figcaption&gt;
+  &lt;figcaption&gt;philox4x32-10&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
@@ -2688,7 +2644,7 @@ errors, it must have a minimum distance of $d+1$ so there is no way $d$ errors
 can change one valid codeword into another one. If a code can correct $d$
 errors, it must have a minimum distance of $2d+1$ so that the originating code
 is always the closest one. The following table summarises Hamming&amp;nbsp;codes.&lt;/p&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;tr&gt;
     &lt;th scope="col"&gt;Distance&lt;/th&gt;
@@ -2940,7 +2896,7 @@ since they represent the frontier in performance and capability. There are many
 chips designed for inference, but these are typically intended for use in
 embedded or edge&amp;nbsp;deployments.&lt;/p&gt;
 &lt;p&gt;In&amp;nbsp;summary:&lt;/p&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
 &lt;caption&gt;
 *Speculated&lt;br&gt;
 &amp;dagger; Figures given for a single chip
@@ -3074,7 +3030,7 @@ embedded or edge&amp;nbsp;deployments.&lt;/p&gt;
 
 &lt;p&gt;&lt;a name="cerebras" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Cerebras Wafer-Scale&amp;nbsp;Engine&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/cerebras-wse_220x220.png" alt="Cerebras chip"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/cerebras-wse_220x220.png" alt="Cerebras chip"&gt;&lt;/p&gt;
 &lt;p&gt;The Cerebras Wafer-Scale Engine (&lt;span class="caps"&gt;WSE&lt;/span&gt;) is undoubtedly the most bold and
 innovative design to appear recently. Wafer-scale integration is not a new
 idea, but integration issues to do with yield, power delivery and thermal
@@ -3130,7 +3086,7 @@ which will necessitate such&amp;nbsp;scaling.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="google-tpu-3" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Google &lt;span class="caps"&gt;TPU&lt;/span&gt;&amp;nbsp;v3&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/google-tpu3_220x220.png" alt="TPU-3 board"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/google-tpu3_220x220.png" alt="TPU-3 board"&gt;&lt;/p&gt;
 &lt;p&gt;With few details available on the specifications of the &lt;span class="caps"&gt;TPU&lt;/span&gt; v3, it is likely an
 incremental improvement to the &lt;span class="caps"&gt;TPU&lt;/span&gt; v2: doubling the performance, adding &lt;span class="caps"&gt;HBM2&lt;/span&gt;
 memory to double the capacity and&amp;nbsp;bandwidth.&lt;/p&gt;
@@ -3154,7 +3110,7 @@ memory to double the capacity and&amp;nbsp;bandwidth.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="google-tpu-2" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Google &lt;span class="caps"&gt;TPU&lt;/span&gt;&amp;nbsp;v2&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/google-tpu2_220x220.png" alt="TPU-2 board"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/google-tpu2_220x220.png" alt="TPU-2 board"&gt;&lt;/p&gt;
 &lt;p&gt;The &lt;span class="caps"&gt;TPU&lt;/span&gt; v2 is designed for training and inference. It improves over the &lt;span class="caps"&gt;TPU&lt;/span&gt; v1
 with floating point arithmetic and enhanced memory capacity and bandwidth with
 &lt;span class="caps"&gt;HBM&lt;/span&gt; integrated&amp;nbsp;memory.&lt;/p&gt;
@@ -3186,7 +3142,7 @@ with floating point arithmetic and enhanced memory capacity and bandwidth with
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="google-tpu-1" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Google &lt;span class="caps"&gt;TPU&lt;/span&gt;&amp;nbsp;v1&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/google-tpu1_220x220.png" alt="TPU-1 board"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/google-tpu1_220x220.png" alt="TPU-1 board"&gt;&lt;/p&gt;
 &lt;p&gt;Google&amp;#8217;s first generation &lt;span class="caps"&gt;TPU&lt;/span&gt; was designed for inference only and supports only
 integer arithmetic. It provides acceleration to a host &lt;span class="caps"&gt;CPU&lt;/span&gt; by being sent
 instructions across PCIe-3, to perform matrix multiplications and apply
@@ -3215,7 +3171,7 @@ saved much time in design and&amp;nbsp;verification.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="graphcore-c2-ipu" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Graphcore &lt;span class="caps"&gt;IPU&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/graphcore-ipu_220x220.png" alt="Graphcore IPU floorplan"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/graphcore-ipu_220x220.png" alt="Graphcore IPU floorplan"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;DISCLAIMER&lt;/span&gt;&lt;/strong&gt;: I work at Graphcore, and all of the information given here is
 lifted directly from the linked references&amp;nbsp;below.&lt;/p&gt;
 &lt;p&gt;The Graphcore &lt;span class="caps"&gt;IPU&lt;/span&gt; architecture is highly parallel with a large collection of
@@ -3259,7 +3215,7 @@ Larger systems of &lt;span class="caps"&gt;IPU&lt;/span&gt; chips can be built b
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="habana-gaudi" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Habana Labs&amp;nbsp;Gaudi&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/habana-gaudi_220x220.png" alt="Habana Gaudi board"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/habana-gaudi_220x220.png" alt="Habana Gaudi board"&gt;&lt;/p&gt;
 &lt;p&gt;Habana&amp;#8217;s Gaudi &lt;span class="caps"&gt;AI&lt;/span&gt; training processor shares similarities with contemporary
 GPUs, particularly wide &lt;span class="caps"&gt;SIMD&lt;/span&gt; parallelism and &lt;span class="caps"&gt;HBM2&lt;/span&gt; memory. The chip integrates
 ten 100G Ethernet links which support remote direct memory access (&lt;span class="caps"&gt;RDMA&lt;/span&gt;). This
@@ -3303,7 +3259,7 @@ equipment, compared with Nvidia&amp;#8217;s NVLink or&amp;nbsp;OpenCAPI.&lt;/p&g
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="huawei-ascend" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Huawei Ascend&amp;nbsp;910&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/huawei-ascend_220x220.png" alt="Huawei Ascend floorplan"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/huawei-ascend_220x220.png" alt="Huawei Ascend floorplan"&gt;&lt;/p&gt;
 &lt;p&gt;Huawei&amp;#8217;s Ascend also bears similarities to the latest GPUs with wide &lt;span class="caps"&gt;SIMD&lt;/span&gt;
 arithmetic and a 3D matrix unit, comparable to Nvidia&amp;#8217;s Tensor Cores, a
 (assumed) coherent 32 &lt;span class="caps"&gt;MB&lt;/span&gt; shared L2 on-chip cache. The chip includes
@@ -3344,7 +3300,7 @@ core), 100x for L2 cache (shared between cores), and 2000x for external &lt;span
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="intel-nnp-t" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Intel &lt;span class="caps"&gt;NNP&lt;/span&gt;-T&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/intel-nnpt_220x220.png" alt="Intel NNP-T floorplan"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/intel-nnpt_220x220.png" alt="Intel NNP-T floorplan"&gt;&lt;/p&gt;
 &lt;p&gt;This chip is Intel&amp;#8217;s second attempt at an accelerator for machine learning,
 following the Xeon Phi. Like the &lt;a href="#habana-gaudi"&gt;Habana Gaudi chip&lt;/a&gt;, it
 integrates a small number of wide vector cores, with &lt;span class="caps"&gt;HBM2&lt;/span&gt; integrated memory and
@@ -3401,7 +3357,7 @@ similar 100 Gbit &lt;span class="caps"&gt;IO&lt;/span&gt;&amp;nbsp;links.&lt;/p&
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="nvidia-volta" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Nvidia&amp;nbsp;Volta&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/nvidia-volta_220x220.png" alt="Nvidia Volta board"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/nvidia-volta_220x220.png" alt="Nvidia Volta board"&gt;&lt;/p&gt;
 &lt;p&gt;Volta introduces Tensor Cores, &lt;span class="caps"&gt;HBM2&lt;/span&gt; and NVLink 2.0, from the &lt;a href="https://en.wikipedia.org/wiki/Pascal_(microarchitecture)"&gt;Pascal
 architecture&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;General&amp;nbsp;details:&lt;/p&gt;
@@ -3429,7 +3385,7 @@ architecture&lt;/a&gt;.&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a name="nvidia-turing" class="anchor"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Nvidia&amp;nbsp;Turing&lt;/h2&gt;
-&lt;p&gt;&lt;img class="float-right img-fluid" src="thumbs/nvidia-turing_220x220.png" alt="Nvidia Turing die shot"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img class="float-right" src="thumbs/nvidia-turing_220x220.png" alt="Nvidia Turing die shot"&gt;&lt;/p&gt;
 &lt;p&gt;Turing is an architectural revision of Volta, manufactured on the same 16 nm
 process, but with fewer &lt;span class="caps"&gt;CUDA&lt;/span&gt; and Tensor cores. It consequently has a smaller
 die size and lower power envelope. Apart from &lt;span class="caps"&gt;ML&lt;/span&gt; tasks, it is designed to
@@ -3505,9 +3461,9 @@ computationally difficult to setup inputs each clock cycle to observe desired
 values on all outputs. Doing so requires sequencing of state transitions
 through the logic, but the size of the state space grows exponentially with the
 number of&amp;nbsp;states.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/chip.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/chip.png"&gt;
+  &lt;figcaption&gt;
     Conceptually, a silicon chip is a set of input ports driving logic with
 sequential elements, in turn driving output ports.
   &lt;/figcaption&gt;
@@ -3524,17 +3480,17 @@ other multiplexer input connected&amp;nbsp;to &lt;code&gt;scan_in&lt;/code&gt;. 
 take their other multiplexer inputs from the output of the previous register in
 the chain. The final register in the chain&amp;nbsp;drives &lt;code&gt;scan_out&lt;/code&gt; from it’s D pin.
 All multiplexers are controlled&amp;nbsp;by &lt;code&gt;scan_enable&lt;/code&gt;.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-flop.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-flop.png"&gt;
+  &lt;figcaption&gt;
     A standard flip flop (left) and a scanned flip flop with scan-in and
 scan-enable inputs (right).
   &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-chains.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/scan-chains.png"&gt;
+  &lt;figcaption&gt;
     Scan chain topology providing a set of controllable primary inputs and a set of observable outputs.
   &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -3561,9 +3517,9 @@ off the physical requirements of the additional ports and routing with test
 time and coverage. To avoid many additional ports at the top level, a set of
 parallel scan chains can be driven by &lt;span class="caps"&gt;DFT&lt;/span&gt; logic that supplies compressed
 patterns to the inputs and compresses results from the&amp;nbsp;outputs.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/parallel-scan-chains.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/parallel-scan-chains.png"&gt;
+  &lt;figcaption&gt;
     Parallel scan chains to reduce test time.
   &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -3586,16 +3542,16 @@ core logic of the design. A bypass multiplexer is inserted on the output of the
 wrapper scan register to control whether the input or output is used or driven
 respectively. If the input or output is directly connected to a register, then
 a bypass is not&amp;nbsp;necessary.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/wrapper-flop.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/wrapper-flop.png"&gt;
+  &lt;figcaption&gt;
     Wrapper flops inserted on input and output ports.
   &lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/test-core.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/test-core.png"&gt;
+  &lt;figcaption&gt;
     A test core isolated with input and output wrapper chains. One or more
 additional scan chains may be connected to sequential elements of the core logic.
   &lt;/figcaption&gt;
@@ -3616,9 +3572,9 @@ test pattern results to ensure all of the registers are functioning&amp;nbsp;cor
 mode. However, when they are shared with an adjacent test core,&amp;nbsp;their
 &lt;code&gt;scan_enable&lt;/code&gt; is controlled differently since they will function as an input
 wrapper chain for that core, with the behaviour described&amp;nbsp;above.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/adjacent-test-cores.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/adjacent-test-cores.png"&gt;
+  &lt;figcaption&gt;
     Test core B shares core B&amp;#8217;s output wrapper chain, using it as an input wrapper chain in test mode.
   &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -3632,9 +3588,9 @@ known value, typically from a register on a scan chain. The multiplexer is
 controlled by&amp;nbsp;an &lt;code&gt;xbnd_enable&lt;/code&gt; signal, which when set high will prevent X
 propagation during test mode, and otherwise maintains the functional behaviour
 of the&amp;nbsp;circuit.&lt;/p&gt;
-&lt;figure class="figure d-block text-center"&gt;
-  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/xbnd-flop.png" class="figure-img img-fluid rounded"&gt;
-  &lt;figcaption class="figure-caption"&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/DFT/xbnd-flop.png"&gt;
+  &lt;figcaption&gt;
     A X-source flop with bypass multiplexing of a known value.
   &lt;/figcaption&gt;
 &lt;/figure&gt;
@@ -3651,7 +3607,7 @@ of the&amp;nbsp;circuit.&lt;/p&gt;
 which this note is&amp;nbsp;based.&lt;/p&gt;</content><category term="notes"/><category term="microelectronics"/></entry><entry><title>RGB lightbox stacks</title><link href="https://jameswhanlon.com/rgb-lightbox-stacks.html" rel="alternate"/><published>2018-12-31T00:00:00+01:00</published><updated>2018-12-31T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2018-12-31:/rgb-lightbox-stacks.html</id><summary type="html">&lt;p&gt;Experimental lighting using high-power LEDs in generous volumes and
 behind translucent acrylic plastic to create big blocks of&amp;nbsp;colour.&lt;/p&gt;</summary><content type="html">&lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-3.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-3_800x800.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/completed-boxes-3_800x800.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
@@ -3670,63 +3626,59 @@ achieving a similar block-colour effect. My motivation was to build something
 similar but that could also be used as subtle/ambient lighting, making use of
 the amazing colours and ability to accurately modulate LEDs to create smooth
 transitions between rich colours and interesting&amp;nbsp;combinations.&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-blue.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/colour-experiment-blue_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/colour-experiment-blue_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/colour-experiment-red.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/colour-experiment-red_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/colour-experiment-red_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;An early experiment to see how the &lt;span class="caps"&gt;LED&lt;/span&gt; light diffuses through the acrylic in a plywood volume.&lt;/figcaption&gt;
+&lt;figcaption&gt;An early experiment to see how the &lt;span class="caps"&gt;LED&lt;/span&gt; light diffuses through the acrylic in a plywood volume.&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Construction of the stacks was straightforward: all panel dimensions are
 multiples of 300 and all joints biscuited and glued to avoid any visible
 fixings. (I unfortunately don&amp;#8217;t have any pictures of the construction of the&amp;nbsp;stacks.)&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bead-detail-1_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bead-detail-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/bead-detail-2.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/bead-detail-2_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/bead-detail-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/tape.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/tape_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/tape_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;Detail of the lip added to seat the acrylic panels and the narrow double-sided tape to fix them in place.&lt;/figcaption&gt;
+&lt;figcaption&gt;Detail of the lip added to seat the acrylic panels and the narrow double-sided tape to fix them in place.&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;The acrylic panels were cut to fit the inner box dimensions exactly, but with
@@ -3734,14 +3686,12 @@ small variations in the dimensions of the boxes. Getting them all to fit was a
 long process of sanding down each one to fit a particular opening. A secure fit
 of the panels was achieved with tight tolerances and narrow double-sided sticky
 tape (pictured above&amp;nbsp;right).&lt;/p&gt;
-&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-1_600x600.jpg" alt="The boxes with all acrylic panels in place."&gt;
+    &lt;img class="thumbnail" src="/thumbs/completed-boxes-1_600x600.jpg" alt="The boxes with all acrylic panels in place."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;The boxes with all acrylic panels in place.&lt;/figcaption&gt;
+  &lt;figcaption&gt;The boxes with all acrylic panels in place.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
 &lt;p&gt;Pairs of white and &lt;span class="caps"&gt;RGB&lt;/span&gt; LEDs were mounted on aluminium bar in each pixel. The
 &lt;span class="caps"&gt;LED&lt;/span&gt; were fixed in place with small bolts. I made small plastic washers to avoid
@@ -3751,101 +3701,93 @@ the rear side, fixed with thermal glue (these were cut up from larger &lt;span c
 heatsinks). All of the &lt;span class="caps"&gt;LED&lt;/span&gt; wiring was conveniently done with &lt;span class="caps"&gt;CAT6&lt;/span&gt; cable, using
 all of the eight cores to wire the four channels. Each channel draws about
 1 W at 5 V (200 mA), which is within the specification of the &lt;span class="caps"&gt;CAT6&lt;/span&gt;.&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-bar-2.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/led-bar-2_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/led-bar-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/led-heatsinks.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/led-heatsinks_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/led-heatsinks_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;The system used to mount the LEDs in the middle of each box.&lt;/figcaption&gt;
+&lt;figcaption&gt;The system used to mount the LEDs in the middle of each box.&lt;/figcaption&gt;
 &lt;/figure&gt;
 
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/skeleton-boxes-with-leds.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/skeleton-boxes-with-leds_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/skeleton-boxes-with-leds_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/boxes-in-workshop.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/boxes-in-workshop_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/boxes-in-workshop_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;The boxes with all of the LEDs and their cabling installed.&lt;/figcaption&gt;
+&lt;figcaption&gt;The boxes with all of the LEDs and their cabling installed.&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;Each box has a rear plug panel. The central box acts as a master and has
 connections for power, Ethernet, and provides serial data and power to the
 other outer&amp;nbsp;boxes.&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/power-supply.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/power-supply_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/power-supply_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/plug-panel.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/plug-panel_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/plug-panel_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/slave-box-control-boards.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/slave-box-control-boards_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/slave-box-control-boards_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;The master and slave plug panels for each stack.&lt;/figcaption&gt;
+&lt;figcaption&gt;The master and slave plug panels for each stack.&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;The inter-box wiring uses 5-pin &lt;span class="caps"&gt;XLR&lt;/span&gt; sockets, to carry power, ground and the
 differential pair for the serial signal. The wires were made with a dual-core
 power wire (sufficient to carry the required power at 5V) with a another
 dual-core wire for the serial, wrapped in a heatshrink&amp;nbsp;coat.&lt;/p&gt;
-&lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/cables.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/cables_600x600.jpg" alt="Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two CAT-6 cores for serial data."&gt;
+    &lt;img class="thumbnail" src="/thumbs/cables_600x600.jpg" alt="Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two CAT-6 cores for serial data."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two &lt;span class="caps"&gt;CAT&lt;/span&gt;-6 cores for serial data.&lt;/figcaption&gt;
+  &lt;figcaption&gt;Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two &lt;span class="caps"&gt;CAT&lt;/span&gt;-6 cores for serial data.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
 &lt;p&gt;The electronics for the &lt;span class="caps"&gt;LED&lt;/span&gt; drivers is described in a &lt;a href="https://jameswhanlon.com/three-channel-high-power-led-driver.html"&gt;separate
 note&lt;/a&gt;. Each of the &lt;span class="caps"&gt;LED&lt;/span&gt; driver boards has three
@@ -3861,7 +3803,7 @@ stack has the power supply, taking mains voltage and providing 5V up to 60W
 (12A) for the three stacks. See the table below for calculated power of the
 LEDs only. Note that the power supply does not output enough power do drive
 the boxes comfortably (80W would be more&amp;nbsp;comfortable).&lt;/p&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th scope="col"&gt;Channel&lt;/th&gt;
@@ -3941,100 +3883,86 @@ meter of the central&amp;nbsp;stack:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;p&gt;These numbers are slightly higher than expected, due to the &lt;span class="caps"&gt;LED&lt;/span&gt; driver current
 ranging between 0.357 mA (blue) and 0.370 mA&amp;nbsp;(green).&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-and-psu.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/control-board-and-psu_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/control-board-and-psu_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/control-board-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/control-board-1_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/control-board-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-stack-test-with-board.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/one-stack-test-with-board_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/one-stack-test-with-board_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;Integration of the electronics into the master stack (similar for the outer stacks).&lt;/figcaption&gt;
+&lt;figcaption&gt;Integration of the electronics into the master stack (similar for the outer stacks).&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;The back panels fasten with M8 bolts into&amp;nbsp;T-nuts.&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/back-panels.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/back-panels_600x600.jpg" alt="Details of the back plates, fastened by M8 Allen key bolts."&gt;
+    &lt;img class="thumbnail" src="/thumbs/back-panels_600x600.jpg" alt="Details of the back plates, fastened by M8 Allen key bolts."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Details of the back plates, fastened by M8 Allen key bolts.&lt;/figcaption&gt;
+  &lt;figcaption&gt;Details of the back plates, fastened by M8 Allen key bolts.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/completed-boxes-2.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/completed-boxes-2_600x600.jpg" alt="The boxes in a complete state"&gt;
+    &lt;img class="thumbnail" src="/thumbs/completed-boxes-2_600x600.jpg" alt="The boxes in a complete state"&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;The boxes in a complete state&lt;/figcaption&gt;
+  &lt;figcaption&gt;The boxes in a complete state&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;&lt;/figcaption&gt;
+&lt;figcaption&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;It&amp;#8217;s hard to capture the quality of the effect of the light boxes on camera.
 The images below are two early tests: left just using a lamp in one of the
 pixels, right with no blending of the &lt;span class="caps"&gt;RGB&lt;/span&gt;&amp;nbsp;channels.&lt;/p&gt;
-&lt;figure class="figure"&gt;
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+&lt;figure&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/one-cell-illuminated.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/one-cell-illuminated_600x600.jpg" alt="Seeing the effect of the acrylic diffusion with just a lamp in one of the cells."&gt;
+    &lt;img class="thumbnail" src="/thumbs/one-cell-illuminated_600x600.jpg" alt="Seeing the effect of the acrylic diffusion with just a lamp in one of the cells."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;Seeing the effect of the acrylic diffusion with just a lamp in one of the cells.&lt;/figcaption&gt;
+  &lt;figcaption&gt;Seeing the effect of the acrylic diffusion with just a lamp in one of the cells.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
-&lt;figure class="figure"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;figure&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/rgb-test.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/rgb-test_600x600.jpg" alt="The first RGB test of a stack."&gt;
+    &lt;img class="thumbnail" src="/thumbs/rgb-test_600x600.jpg" alt="The first RGB test of a stack."&gt;
   &lt;/a&gt;
-  &lt;figcaption class="figure-caption text-left"&gt;The first &lt;span class="caps"&gt;RGB&lt;/span&gt; test of a stack.&lt;/figcaption&gt;
+  &lt;figcaption&gt;The first &lt;span class="caps"&gt;RGB&lt;/span&gt; test of a stack.&lt;/figcaption&gt;
 &lt;/figure&gt;
-&lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;figcaption class="figure-caption"&gt;&lt;/figcaption&gt;
+&lt;figcaption&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;
 
 &lt;p&gt;The behaviour of the boxes is determined by the &lt;span class="caps"&gt;PIC&lt;/span&gt; programs and the Raspberry
@@ -4128,7 +4056,7 @@ in Shenzhen,&amp;nbsp;China.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h1&gt;Parts&amp;nbsp;list&lt;/h1&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th cope="col"&gt;Quantity&lt;/th&gt;
@@ -4209,7 +4137,7 @@ in Shenzhen,&amp;nbsp;China.&lt;/p&gt;
 mA, at 1.4 KOhms. See the &lt;span class="caps"&gt;CAT4101&lt;/span&gt; &lt;a href="https://www.onsemi.com/pub/Collateral/CAT4101-D.PDF"&gt;datasheet&lt;/a&gt; for more&amp;nbsp;details.&lt;/p&gt;
 &lt;p&gt;For reference, I have assumed the following parameters of the LEDs I
 used (you should however check the datasheet for a particular &lt;span class="caps"&gt;LED&lt;/span&gt;):&lt;/p&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th scope="col"&gt;Colour&lt;/th&gt;
@@ -4252,7 +4180,7 @@ $V_{led}/V_{supply}$. A disadvantage of driving each &lt;span class="caps"&gt;LE
 its efficiency can be low, down to 50%. The power delivered to the &lt;span class="caps"&gt;LED&lt;/span&gt; is
 $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
 \times V_{supply}$ (not including quiescent&amp;nbsp;power).&lt;/p&gt;
-&lt;table class="table table-sm"&gt;
+&lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th scope="col"&gt;Channel&lt;/th&gt;
@@ -4358,86 +4286,80 @@ this significantly reduces the throughput. In Python a packet can be sent with
 &lt;h1&gt;Pictures&lt;/h1&gt;
 &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/unpopulated-boards.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/unpopulated-boards_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/unpopulated-boards_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-1_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/assembled-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-2.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-2_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/assembled-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-top.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-top_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/assembled-top_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/assembled-programmer.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/assembled-programmer_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/assembled-programmer_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/8up.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/8up_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/8up_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class="container"&gt;
-  &lt;div class="row align-items-center"&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+&lt;div class="row align-items-center"&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/array-1_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/array-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/array-2.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/array-2_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/array-2_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
-    &lt;div class="col"&gt;
-    &lt;div class="text-center"&gt;
+  &lt;/div&gt;
+  &lt;div class="col"&gt;
+  &lt;div class="text-center"&gt;
   &lt;a href="https://jwh.ams3.digitaloceanspaces.com/homepage/LED-driver/4up-1.jpg" class="glightbox" data-gallery="all"&gt;
-    &lt;img class="figure-img img-fluid thumbnail" src="/thumbs/4up-1_600x600.jpg" alt="No alt text"&gt;
+    &lt;img class="thumbnail" src="/thumbs/4up-1_600x600.jpg" alt="No alt text"&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 
-    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -4927,14 +4849,13 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h2&gt;Summary of&amp;nbsp;rules&lt;/h2&gt;
-&lt;div class="container"&gt;
 &lt;div class="row"&gt;
 &lt;div class="col-sm"&gt;
   &lt;h2&gt;Motions&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;&amp;lt;motion-keys&amp;gt;&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;References: &lt;code&gt;:help motion&lt;/code&gt;
     &lt;code&gt;:help various-motions&lt;/code&gt;&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th&gt;Action&lt;/th&gt;
@@ -5016,7 +4937,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
   &lt;h2&gt;Operators&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;&amp;lt;operators&amp;gt;&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;Reference: &lt;code&gt;:help operator&lt;/code&gt;&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th&gt;Key&lt;/th&gt;
@@ -5068,7 +4989,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/table&gt;  &lt;h2&gt;Visual&amp;nbsp;operators&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;&amp;lt;visual-operators&amp;gt;&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;References: &lt;code&gt;:help visual-operators&lt;/code&gt;&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th&gt;Key&lt;/th&gt;
@@ -5116,7 +5037,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
   &lt;h2&gt;Text&amp;nbsp;objects&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;&amp;lt;text-object-keys&amp;gt;&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;References: &lt;code&gt;:help text-objects&lt;/code&gt;, &lt;code&gt;:help objects&lt;/code&gt;&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th&gt;Key&lt;/th&gt;
@@ -5186,7 +5107,7 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
   &lt;h2&gt;Modifiers&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;&amp;lt;modifiers&amp;gt;&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;References: &lt;code&gt;:help text-objects&lt;/code&gt;&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th&gt;Key&lt;/th&gt;
@@ -5204,7 +5125,6 @@ in the Vim&amp;nbsp;help:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;&lt;/div&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;count&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="nv"&gt;digits&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
@@ -5802,7 +5722,7 @@ logic simulated results will always match the synthesized&amp;nbsp;logic.&lt;/p&
 &lt;p&gt;&lt;strong&gt;The Synopsys full_case/parallel_case compiler directives should not be
 used.&lt;/strong&gt; Instead, use either&amp;nbsp;the &lt;code&gt;unique&lt;/code&gt; or &lt;code&gt;priority&lt;/code&gt; qualifiers, as
 shown in the table&amp;nbsp;below:&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col"&gt;SystemVerilog construct&lt;/th&gt;
   &lt;th scope="col"&gt;Approximate Synopsys pragma equivalent&lt;/th&gt;
@@ -6234,7 +6154,7 @@ For&amp;nbsp;example:&lt;/p&gt;
 instances, flip flops, ports etc), and suffixes are generally used to convey
 semantic information. A good standard set of prefixes and suffixes are
 enumerated&amp;nbsp;below:&lt;/p&gt;
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col" style="width:20%"&gt;Prefix&lt;/th&gt;
   &lt;th scope="col"&gt;Usage&lt;/th&gt;
@@ -6279,7 +6199,7 @@ enumerated&amp;nbsp;below:&lt;/p&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;table class="table table-striped table-sm"&gt;
+&lt;table&gt;
 &lt;thead&gt;
   &lt;th scope="col" style="width:20%"&gt;Suffix&lt;/th&gt;
   &lt;th scope="col"&gt;Usage&lt;/th&gt;

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<!-- Make light mode the default for articles since this works better with
-    images with a white background and code highlighting. -->
-<html lang="en" data-bs-theme=light>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="James W. Hanlon">
   <title>The hardware pseudorandom number generator of the Graphcore IPU</title>
   <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
   <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
   <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
@@ -20,7 +16,6 @@
   <link href="https://jameswhanlon.com/reeds/rss.xml"
         type="application/rss+xml" rel="alternate"
         title="James W. Hanlon RSS Feed" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
   <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
@@ -28,40 +23,33 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0 text-uppercase">
-          <li class="nav-item">
-              <a class="nav-link" href="/index.html">notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/projects.html">projects</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/archive.html">archive</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/about.html">about</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/links.html">links</a>
-          </li>
-        </ul>
-        <a class="navbar-brand" href="#">James W. Hanlon</a>
-        <button class="btn btn-secondary" type="button" onclick="toggleMode(this)">
-          <!-- Initial button state -->
-            <i class="bi bi-moon-fill"></i>
-        </button>
-      </div>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">notes</a>
+        </li>
+        <li>
+            <a href="/projects.html">projects</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+        <li>
+            <a href="/about.html">about</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
     </div>
   </nav>
   </header>
 
-  <main class="flex-shrink-0">
+  <main>
   <div class="container">
   <h1>
     The hardware pseudorandom number generator of the Graphcore <span class="caps">IPU</span>
@@ -70,8 +58,8 @@
     <time class="published" datetime="2022-09-21T00:00:00+02:00">
       21 Sep 2022
     </time><br>
-      <span class="article-tag small"><a href="/tag/computing.html">computing</a></span>
-      <span class="article-tag small"><a href="/tag/PRNGs.html">PRNGs</a></span>
+      <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag"><a href="/tag/PRNGs.html">PRNGs</a></span>
   </div>
   <div class="article-body">
     <p>This note is a short summary of my <a href="https://ieeexplore.ieee.org/document/9875973"><span class="caps">IEEE</span> Transactions on Computers journal
@@ -171,7 +159,7 @@ fail only when it fails on the same test over all seeds, which can be seen in
 the entries highlighted in red. The Mersenne Twister consistently fails,
 whereas xoroshiro128+ fails on a particular output permutation where the lower
 32 bits are discarded (this is a known deficiency of the&nbsp;generator).</p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Output 1</th>
@@ -247,7 +235,7 @@ operations only to an extent, and a particular test will be sensitive enough to
 detect them. Given that BigCrush and PractRand did not, xoroshiro128aox
 represents a significant improvement over xoroshiro128+, whilst still being
 cheap to implement in hardware as we show in the next&nbsp;section.</p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Total failures</th>
@@ -281,7 +269,7 @@ we compare physical implementations of the generators (excluding Mersenne
 Twister because of its considerable state size) after they have been fully
 synthesised and placed and routed using Graphcore’s 7 nm cell library and a
 target clock period of 1 GHz. The table below summarises the&nbsp;results.</p>
-<table class="table table-striped table-sm">
+<table>
 <thead>
   <th scope="col">Generator</th>
   <th scope="col">Total cells (state update)</th>
@@ -346,41 +334,33 @@ clear the differences in implementation complexity (left to&nbsp;right:
 <table>
 <tbody>
 <tr>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/plus_600x600.png" alt="xoroshiro128+">
+    <img class="thumbnail" src="/thumbs/plus_600x600.png" alt="xoroshiro128+">
   </a>
-  <figcaption class="figure-caption text-left">xoroshiro128+</figcaption>
+  <figcaption>xoroshiro128+</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/aox_600x600.png" alt="xoroshiro128aox">
+    <img class="thumbnail" src="/thumbs/aox_600x600.png" alt="xoroshiro128aox">
   </a>
-  <figcaption class="figure-caption text-left">xoroshiro128aox</figcaption>
+  <figcaption>xoroshiro128aox</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_600x600.png" alt="pcg64">
+    <img class="thumbnail" src="/thumbs/pcg64_600x600.png" alt="pcg64">
   </a>
-  <figcaption class="figure-caption text-left">pcg64</figcaption>
+  <figcaption>pcg64</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/philox_600x600.png" alt="philox4x32-10">
+    <img class="thumbnail" src="/thumbs/philox_600x600.png" alt="philox4x32-10">
   </a>
-  <figcaption class="figure-caption text-left">philox4x32-10</figcaption>
+  <figcaption>philox4x32-10</figcaption>
 </figure>
-</div>
 </td>
 </tr>
 </table>
@@ -396,41 +376,33 @@ clear the differences in implementation complexity (left to&nbsp;right:
 <table>
 <tbody>
 <tr>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/plus.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/plus_100x100.png" alt="xoroshiro128+">
+    <img class="thumbnail" src="/thumbs/plus_100x100.png" alt="xoroshiro128+">
   </a>
-  <figcaption class="figure-caption text-left">xoroshiro128+</figcaption>
+  <figcaption>xoroshiro128+</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/aox.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/aox_90x90.png" alt="xoroshiro128aox">
+    <img class="thumbnail" src="/thumbs/aox_90x90.png" alt="xoroshiro128aox">
   </a>
-  <figcaption class="figure-caption text-left">xoroshiro128aox</figcaption>
+  <figcaption>xoroshiro128aox</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/pcg64.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/pcg64_246x246.png" alt="pcg64">
+    <img class="thumbnail" src="/thumbs/pcg64_246x246.png" alt="pcg64">
   </a>
-  <figcaption class="figure-caption text-left">pcg64</figcaption>
+  <figcaption>pcg64</figcaption>
 </figure>
-</div>
 </td>
-  <td><div class="text-center">
-<figure class="figure">
+  <td><figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/prng-quality/philox.png" class="glightbox" data-gallery="all">
-    <img class="figure-img img-fluid thumbnail" src="/thumbs/philox_446x446.png" alt="philox4x32-10">
+    <img class="thumbnail" src="/thumbs/philox_446x446.png" alt="philox4x32-10">
   </a>
-  <figcaption class="figure-caption text-left">philox4x32-10</figcaption>
+  <figcaption>philox4x32-10</figcaption>
 </figure>
-</div>
 </td>
 </tr>
 </table>
@@ -458,38 +430,22 @@ code</a> for the experiments on&nbsp;GitHub.</p>
   </main>
 
   <hr>
-  <footer class="text-muted">
+  <footer>
     <div class="container">
-      <div class="small">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons Licence" style="border-width:0"
-               src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
-        </a>
-        <br>
-        Unless otherwise noted, all content is freely available under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License</a>.<br>
-        The views expressed on this website are the author’s personal views and should not be
-        attributed to any other person, including that of their employer.<br>
-        <br>
-        Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
-        <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
-      </div>
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
     </div>
   </footer>
-  <script>
-    function toggleMode(x) {
-      // Toggle the colour mode in Bootstrap.
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        document.documentElement.setAttribute('data-bs-theme','light')
-      }
-      else {
-        document.documentElement.setAttribute('data-bs-theme','dark')
-      }
-      // Toggle the light/dark icon.
-      x.firstElementChild.classList.toggle('bi-brightness-high-fill');
-      x.firstElementChild.classList.toggle('bi-moon-fill');
-    }
-  </script>
 </body>
 </html>
