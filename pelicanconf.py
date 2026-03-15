@@ -7,7 +7,12 @@ import logging
 import yaml
 
 sys.path.insert(0, os.getcwd())
+import markdown as md
 from thumbnail import get_thumbnail, get_image
+
+
+def render_markdown(text):
+    return md.markdown(text.strip())
 
 AUTHOR = "James W. Hanlon"
 SITENAME = "James W. Hanlon"
@@ -26,15 +31,18 @@ def load_yaml(filename: str):
 
 
 JINJA_CONTEXT = {
-    "projects": load_yaml("content/pages/projects.yml"),
+    "code": load_yaml("content/pages/code.yml"),
     "links": load_yaml("content/pages/links.yml"),
 }
+
+JINJA_GLOBALS = JINJA_CONTEXT
 
 JINJA_FILTERS = {
     "asset": get_asset_url,
     "thumbnail": get_thumbnail,
     "image": get_image,
     "load_yaml": load_yaml,
+    "markdown": render_markdown,
 }
 
 PATH = "content"
@@ -59,12 +67,15 @@ DEFAULT_PAGINATION = False
 PAGE_SAVE_AS = "{slug}.html"
 
 MENU_ITEMS = [
-    ("notes", "index.html"),
-    ("projects", "projects.html"),
-    ("archive", "archive.html"),
-    ("about", "about.html"),
+    ("about", "index.html"),
+    ("notes", "notes.html"),
+    ("code", "code.html"),
     ("links", "links.html"),
+    ("archive", "archive.html"),
 ]
+
+DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "notes"]
+NOTES_SAVE_AS = "notes.html"
 
 STATIC_PATHS = [
     "files",

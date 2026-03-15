@@ -1,7 +1,7 @@
-Title: Projects
+Title: Code
 Status: published
 
-{% for project in projects %}
+{% for project in code %}
 <div class="card mb-3">
 <div class="card-body">
  <h5 class="card-title">{{project.name}}</h5>

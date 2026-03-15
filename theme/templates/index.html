@@ -1,26 +1,70 @@
 {% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
-<p>Welcome to the website of <a href="/about.html">James W. Hanlon</a>. Here
-you'll find notes on subjects of interest and projects I've been working on, as
-well as various archived documents and talks, and some information about me.</p>
-<hr>
-{% set category_order = ['Computing and Silicon', 'Physical Projects', 'Home and Sustainability', 'Perspectives'] %}
-<p>
-{% for cat_name in category_order %}
-  <a href="#{{ cat_name|lower|replace(' ', '-') }}">{{ cat_name }}</a>{% if not loop.last %} · {% endif %}
-{% endfor %}
-</p>
-{% for cat_name in category_order %}
-  {% set cat_articles = articles|selectattr('category.name', 'equalto', cat_name)|list %}
-  {% if cat_articles %}
-  <h2 id="{{ cat_name|lower|replace(' ', '-') }}">{{ cat_name }}</h2>
-  <div class="article-list">
-    {% for article in cat_articles %}
-      {{ macros.render_article_item(article) }}
-    {% endfor %}
+<div class="about-header">
+  <img class="mugshot" src="{{'mugshot-trees.jpg'|thumbnail('200x200')}}" alt="James W Hanlon">
+  <div>
+    <p>I'm James, a silicon engineer at <a href="https://www.xtxmarkets.com">XTX Markets</a>.
+    Previously I worked at <a href="http://www.graphcore.ai">Graphcore</a> on their AI accelerator
+    and at <a href="http://www.xmos.com">XMOS</a> on compiler toolchains for embedded parallel processors.
+    I hold a PhD from the <a href="http://www.bris.ac.uk">University of Bristol</a> in computer science.</p>
+    <p>Here you'll find <a href="/notes.html">notes</a> on subjects of interest,
+    <a href="/projects.html">projects</a> I've been working on,
+    and various <a href="/archive.html">archived</a> documents and talks.</p>
+    <p>Get in touch: <em>mail @ this domain</em> ·
+    <a href="https://github.com/jameshanlon">GitHub</a> ·
+    <a href="https://www.linkedin.com/in/jameswhanlon">LinkedIn</a></p>
   </div>
-  {% endif %}
-{% endfor %}
-<br>
+</div>
+<hr>
+
+<div class="about-body">
+<h2>About me</h2>
+
+<p>I currently work at <a href="https://www.xtxmarkets.com">XTX Markets</a> as a silicon
+engineer. Between 2016 and 2023, I worked at the UK-based chip company
+<a href="http://www.graphcore.ai">Graphcore</a>, where I was involved in many aspects of
+the design and implementation of their AI accelerator. Prior to Graphcore, I
+have worked as a software engineer specialising in the compiler toolchain at
+<a href="http://www.xmos.com">XMOS</a> for their embedded parallel processors, and as a
+technical consultant at <a href="http://www.redoakconsulting.co.uk">Red Oak Consulting</a>
+in Cheltenham, who specialise in services for high-performance computing.</p>
+
+<p>I completed a PhD at the <a href="http://www.bris.ac.uk">University of Bristol</a> in the
+<a href="http://www.cs.bris.ac.uk">Department of Computer Science</a> in 2014, with a
+thesis entitled <em><a href="/scalable-abstractions-for-general-purpose-parallel-computation.html">Scalable abstractions for general-purpose parallel
+computation</a></em>, which investigated the relationship
+between the hardware implementation of highly-parallel computers and
+programming languages and software for them. I hold a masters degree in
+Computer Science from the same institution.</p>
+
+<p>Since it's inception in 2015, I helped to found and run <a href="http://www.cheeseproject.co.uk">The CHEESE
+Project</a>, a not-for-profit enterprise that uses
+thermal imaging to encourage people to reduce their domestic energy losses. For
+those who struggle to heat their homes, it improves their health and well being
+and for those who have thermally-inefficient homes, it saves them money and
+reduces their carbon emissions. As part of the expansion of CHEESE nationwide,
+I have helped to found <a href="http://www.first-thermal.co.uk">First Thermal</a>, a
+social franchise to replicate the approach.</p>
+
+<p>There are some more CV-related details on
+<a href="https://www.linkedin.com/in/jameswhanlon">LinkedIn</a>.</p>
+
+<h2>About this website</h2>
+
+<p>My intention with this website is to provide somewhere for me to
+<a href="/archive.html">archive</a> my old academic work, and a way to publish notes on
+topics that interest me and details of projects that I've undertaken in my
+spare time. These notes are written primarily as a record for myself, but they
+are publicly available in the hope they will be useful to others. I'd
+love to hear from you if that's the case.</p>
+
+<p>This website is built using <a href="https://blog.getpelican.com">Pelican</a>, a static
+website generator written in Python, with a simple hand-written CSS theme. It
+is hosted on GitHub Pages. The source code is available for
+<a href="https://github.com/jameshanlon/jameshanlon.github.io">reuse</a>. I track visitors
+using the excellent <a href="https://www.goatcounter.com">GoatCounter</a>.</p>
+
+</div>
+
 {% endblock content %}
