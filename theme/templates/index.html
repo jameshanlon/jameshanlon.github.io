@@ -1,7 +1,6 @@
 {% import 'macros.html' as macros %}
 {% extends "base.html" %}
 {% block content %}
-<<<<<<< HEAD
 <div class="about-header">
   <img class="mugshot" src="{{'mugshot-trees.jpg'|thumbnail('200x200')}}" alt="James W Hanlon">
   <div>
@@ -16,34 +15,6 @@
     <a href="https://github.com/jameshanlon">GitHub</a> ·
     <a href="https://www.linkedin.com/in/jameswhanlon">LinkedIn</a></p>
   </div>
-||||||| c63d183
-<p>Welcome to the website of <a href="/about.html">James W. Hanlon</a>. Here
-you'll find notes on subjects of interest and projects I've been working on, as
-well as various archived documents and talks, and some information about me.</p>
-<hr>
-<p>Browse:
-<a href="/categories.html">by catergory</a>,
-<a href="/tags.html">by tag</a>.
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md article-list">
-    {% for article in articles %}
-      {{ macros.render_article_item(article) }}
-    {% endfor %}
-  </div>
-=======
-<p>Welcome to the website of <a href="/about.html">James W. Hanlon</a>. Here
-you'll find notes on subjects of interest and projects I've been working on, as
-well as various archived documents and talks, and some information about me.</p>
-<hr>
-<p>Browse:
-<a href="/categories.html">by catergory</a>,
-<a href="/tags.html">by tag</a>.
-<div class="article-list">
-  {% for article in articles %}
-    {{ macros.render_article_item(article) }}
-  {% endfor %}
->>>>>>> master
 </div>
 <hr>
 
