@@ -1,7 +1,7 @@
 ---
 Title: The hardware pseudorandom number generator of the Graphcore IPU
 Date: 2022-09-21
-Category: notes
+Category: Computing and Silicon
 Tags: computing, PRNGs
 Summary: A short summary of an investigation into the statisitical quality and
          implementation cost in hardware of the xoroshiro128aox PRNG.

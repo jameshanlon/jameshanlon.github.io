@@ -1,7 +1,7 @@
 ---
 Title: Machine learning challenges for computer architecture
 Date: 2016-11-4
-Category: notes
+Category: Computing and Silicon
 Tags: computing; computer-architecture; machine-intelligence
 Status: published
 ---

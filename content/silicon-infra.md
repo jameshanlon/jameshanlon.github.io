@@ -1,7 +1,7 @@
 ---
 Title: Silicon infrastructure
 Date: 2023-08-2
-Category: notes
+Category: Computing and Silicon
 Tags: computing, microelectronics, verilog
 Summary: Thoughts on the requirements of software infrastructure
          to support chip design.

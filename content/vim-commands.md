@@ -1,7 +1,7 @@
 ---
 Title: Vim command composition
 Date: 2018-08-23
-Category: notes
+Category: Perspectives
 Tags: computing, vim
 Summary: The rules for composing Vim's motions and operators.
 Status: published

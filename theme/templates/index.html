@@ -5,14 +5,22 @@
 you'll find notes on subjects of interest and projects I've been working on, as
 well as various archived documents and talks, and some information about me.</p>
 <hr>
-<p>Browse:
-<a href="/categories.html">by catergory</a>,
-<a href="/tags.html">by tag</a>.
-<div class="article-list">
-  {% for article in articles %}
-    {{ macros.render_article_item(article) }}
-  {% endfor %}
-</div>
-<br>
+{% set category_order = ['Computing and Silicon', 'Physical Projects', 'Home and Sustainability', 'Perspectives'] %}
+<p>
+{% for cat_name in category_order %}
+  <a href="#{{ cat_name|lower|replace(' ', '-') }}">{{ cat_name }}</a>{% if not loop.last %} · {% endif %}
+{% endfor %}
 </p>
+{% for cat_name in category_order %}
+  {% set cat_articles = articles|selectattr('category.name', 'equalto', cat_name)|list %}
+  {% if cat_articles %}
+  <h2 id="{{ cat_name|lower|replace(' ', '-') }}">{{ cat_name }}</h2>
+  <div class="article-list">
+    {% for article in cat_articles %}
+      {{ macros.render_article_item(article) }}
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endfor %}
+<br>
 {% endblock content %}

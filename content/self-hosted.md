@@ -1,7 +1,7 @@
 ---
 Title: Personal data and self hosting
 Date: 2024-08-26
-Category: technical
+Category: Perspectives
 Tags: self-hosted
 Summary: Details of how I how self host services to maintain a degree of
          digital privacy and freedom.

@@ -1,7 +1,7 @@
 ---
 Title: The XMOS XMP-64
 Date: 2014-12-04
-Category: Notes
+Category: Computing and Silicon
 Tags: computing, electronics
 Status: published
 ---

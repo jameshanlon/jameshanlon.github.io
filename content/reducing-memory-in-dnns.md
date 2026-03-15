@@ -1,7 +1,7 @@
 ---
 Title: Reducing memory use in deep neural networks
 Date: 2017-2-5
-Category: notes
+Category: Computing and Silicon
 Tags: computing; machine-intelligence
 Summary: A review of state-of-the-art techniques used.
 Status: published
