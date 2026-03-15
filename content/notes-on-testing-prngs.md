@@ -1,7 +1,7 @@
 ---
 Title: Notes on testing random number generators
 Date: 2017-4-5
-Category: notes
+Category: Computing and Silicon
 Tags: computing, PRNGs
 Summary: Using empirical statistical tests to determine the quality of PRNGs.
 Status: published

@@ -1,7 +1,7 @@
 ---
 Title: Seeding parallel xoroshiro128+ generators
 Date: 2022-10-1
-Category: notes
+Category: Computing and Silicon
 Tags: computing, PRNGs
 Summary: Choosing seeds for parallel xoroshiro128+ generators using fixed
          offsets produces correlated outputs.

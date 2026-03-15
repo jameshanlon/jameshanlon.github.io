@@ -1,7 +1,7 @@
 ---
 Title: Recycled allotment shed
 Date: 2019-11-10
-Category: non-technical
+Category: Physical Projects
 Tags: sheds, construction
 Summary: Low-cost construction of a shed out of reclaimed materials.
 Status: published

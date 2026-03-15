@@ -1,7 +1,7 @@
 ---
 Title: Testing silicon logic with scan structures
 Date: 2019-04-18
-Category: notes
+Category: Computing and Silicon
 Tags: microelectronics
 Summary: A description of how digital circuits are modified to allow scan
          testing to be performed.

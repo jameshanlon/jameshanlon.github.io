@@ -1,7 +1,7 @@
 ---
 Title: Cornish Unit House retrofit insulation
 Date: 2022-12-29
-Category: non-technical
+Category: Home and Sustainability
 Tags: energy-efficiency, retrofit, sustainability
 Summary: Retrofitting insulation in a timber-framed top floor.
 Status: published

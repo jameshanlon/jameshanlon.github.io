@@ -1,7 +1,7 @@
 ---
 Title: Garden workshop
 Date: 2021-10-04
-Category: non-technical
+Category: Physical Projects
 Status: published
 Summary: Design and construction of a office and workshop.
 Tags: sheds, construction

@@ -1,7 +1,7 @@
 ---
 Title: Writing synthesizable Verilog
 Date: 2018-5-4
-Category: notes
+Category: Computing and Silicon
 Tags: computing, microelectronics, programming-languages, verilog
 Summary: Coding style for RTL design using Verilog / SystemVerilog. Updated 2024.
 Status: published

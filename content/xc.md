@@ -1,7 +1,7 @@
 ---
 Title: The XC Programming Language
 Date: 2014-12-13
-Category: notes
+Category: Computing and Silicon
 Tags: computing, computer-architecture, programming-languages
 Summary: An overview of the key features of the language, many of which derive
          from occam.

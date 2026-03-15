@@ -1,7 +1,7 @@
 ---
 Title: Building a Python processor
 Date: 2023-06-27
-Category: notes
+Category: Computing and Silicon
 Tags: computing, computer-architecture
 Summary: A rationale and strawman for a processor to accelerate
          dynamic-language workloads.

@@ -1,7 +1,7 @@
 ---
 Title: RGB lightbox stacks
 Date: 2018-12-31
-Category: notes
+Category: Physical Projects
 Tags: lighting, electronics
 Summary: Experimental lighting using high-power LEDs in generous volumes and
          behind translucent acrylic plastic to create big blocks of colour.

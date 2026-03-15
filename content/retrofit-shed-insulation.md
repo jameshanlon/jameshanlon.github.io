@@ -1,7 +1,7 @@
 ---
 Title: Retrofit shed insulation
 Date: 2018-09-30
-Category: non-technical
+Category: Home and Sustainability
 Tags: energy-efficiency, retrofit, sheds, sustainability
 Summary: Retrofitting an existing shed/workshop with insulation to improve its
          energy efficiency and make it a usable space throughout the year.

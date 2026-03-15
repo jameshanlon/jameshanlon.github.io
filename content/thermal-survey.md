@@ -1,7 +1,7 @@
 ---
 Title: Home thermal-imaging survey
 Date: 2021-03-31
-Category: non-technical
+Category: Home and Sustainability
 Status: published
 Summary: Investigation of thermal faults using a thermal-imaging camera.
 Tags: energy-efficiency, retrofit, sustainability
