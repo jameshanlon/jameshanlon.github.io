@@ -3,7 +3,10 @@
 {% block title %}Notes - {{ SITENAME }}{% endblock %}
 {% block content %}
 {% set category_order = ['Computing and Silicon', 'Physical Projects', 'Home and Sustainability', 'Perspectives'] %}
-<p>My collection of notes on various subjects of interest.</p>
+<p>My collection of notes on topics of interest and details of projects that
+I've undertaken in my spare time. These notes are written primarily as a record
+for myself, but they are publicly available in the hope they will be useful to
+others. I'd love to hear from you if that's the case.</p>
 <p>
 {% for cat_name in category_order %}
   <a href="#{{ cat_name|lower|replace(' ', '-') }}">{{ cat_name }}</a>{% if not loop.last %} · {% endif %}
