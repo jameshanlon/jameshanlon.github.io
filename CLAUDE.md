@@ -8,6 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Do not add `Co-Authored-By` trailers to commit messages.
 - Do not add session URLs or other tool-generated links to commit messages.
 
+Set the author identity in a fresh clone before committing:
+
+```bash
+git config user.name "James Hanlon"
+git config user.email mail@jameswhanlon.com
+```
+
 ## Overview
 
 Personal homepage built with [Pelican](https://blog.getpelican.com/) (Python static site generator). Source lives in `content/` and `theme/`; output is generated into `output/`. The theme uses hand-written CSS with no framework dependencies. GLightbox is loaded from jsDelivr CDN for image lightboxes.
