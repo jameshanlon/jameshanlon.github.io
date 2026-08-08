@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="James W. Hanlon">
+  <title>Static netlist analysis with slang</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../theme/images/favicon-16x16.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="../theme/css/pygments.css"/>
+  <link rel="stylesheet" type="text/css" href="../theme/css/main.css"/>
+  <link href="https://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="https://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">about</a>
+        </li>
+        <li>
+            <a href="/notes.html">notes</a>
+        </li>
+        <li>
+            <a href="/code.html">code</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+  <div class="container">
+  <h1>
+    Static netlist analysis with&nbsp;slang
+[DRAFT]  </h1>
+  <div class="lead">
+    <time class="published" datetime="2026-08-08T00:00:00+02:00">
+      08 Aug 2026
+    </time><br>
+      <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag"><a href="/tag/microelectronics.html">microelectronics</a></span>
+      <span class="article-tag"><a href="/tag/verilog.html">verilog</a></span>
+  </div>
+  <div class="article-body">
+    <!--
+SKELETON — outline only. Each section below has a note on what to cover.
+Set `Status: published` and update `Date:` when the content is written.
+
+Framing: this is the sequel to "Querying logical paths in a Verilog design"
+(2018, content/netlist-paths.md). That note is what search engines currently
+find, and it now describes a superseded tool. Link the two in both directions:
+add a line to the top of netlist-paths.md pointing here once this is published.
+-->
+
+<!--
+INTRO
+- One paragraph on the problem, restated for a reader who hasn't read the 2018
+  note: it is easy to build complex cross-module logic in SystemVerilog and
+  hard to see what actually drives a net without a full synthesis run.
+- One paragraph on why this is a rewrite rather than an update — what the
+  Verilator XML/netlist-graph route couldn't do, and what changed.
+- One sentence stating what the note covers.
+-->
+
+<h2>Background: what Netlist Paths&nbsp;did</h2>
+<!--
+- Brief recap of the original approach: a patched Verilator emitting a graph of
+  variable/logic dependencies, queried with Boost Graph.
+- The limits that motivated a rewrite. Candidates to check against reality
+  before asserting: dependence on a fork of Verilator and the maintenance cost
+  of tracking it upstream; post-elaboration flattening losing source-level
+  structure; granularity of the dependency graph (whole-variable vs bit/field);
+  language coverage.
+- Keep this short — link to the old note rather than repeating it.
+-->
+
+<h2>Why&nbsp;slang</h2>
+<!--
+- What slang provides: a standards-tracking SystemVerilog frontend with a
+  documented AST and data-flow analysis, usable as a library.
+- The key difference from the Verilator route — analysis at the source level
+  against the elaborated AST, rather than reading a dumped artefact.
+- Anything given up by the change (state a fair trade-off, not just upside).
+-->
+
+<h2>Representation</h2>
+<!--
+- What a vertex is and what an edge means in the dependency graph.
+- How the source-level view is retained: names, hierarchy, file/line locations.
+- Handling of the awkward cases — structs and unions, packed vs unpacked
+  arrays, partial assignments, generate blocks, interfaces, parameters.
+- A small worked example is worth more than prose here. Consider a figure —
+  drop the  markers below and it becomes a live macro call:
+{{ macros.image('slang-netlist/graph-example.png', caption="Dependency graph for a small module.") }}-->
+
+<h2>Use</h2>
+<!--
+- Mirror the structure of the 2018 note: a real design, real command output.
+- PicoRV32 was the example last time; using it again makes the two notes
+  directly comparable. A SystemVerilog design would show more of what slang
+  buys you — pick one and say why.
+- Cover the queries: does a path exist, fan-in, fan-out, through-points.
+- Paste actual terminal output rather than paraphrasing it.
+-->
+
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>TODO:<span class="w"> </span>real<span class="w"> </span><span class="nb">command</span><span class="w"> </span>and<span class="w"> </span>output
+</code></pre></div>
+
+<h2>Implementation</h2>
+<!--
+- Structure of the code: how the analysis hangs off slang's AST, what the graph
+  library is, how the Python interface is bound.
+- The parts that were harder than expected — this is the most useful material
+  for anyone attempting something similar, and the part nobody else can write.
+- Performance on a design of meaningful size, if measured.
+-->
+
+<h2>What I would do&nbsp;differently</h2>
+<!--
+- The 2018 note ended with an "Improvements" list. Worth revisiting it here:
+  which of those ideas made it into this tool, which turned out not to matter,
+  and what is still open.
+- Honest limitations of the current implementation.
+-->
+
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/jameshanlon/slang-netlist">slang-netlist on&nbsp;GitHub</a></li>
+<li><a href="https://www.jameswhanlon.com/slang-netlist">slang-netlist&nbsp;documentation</a></li>
+<li><a href="https://sv-lang.com">slang</a></li>
+<li><a href="../querying-logical-paths-in-a-verilog-design.html">Querying logical paths in a Verilog design</a> — the 2018&nbsp;predecessor</li>
+<li><a href="https://github.com/jameshanlon/netlist-paths">Netlist Paths on&nbsp;GitHub</a></li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer>
+    <div class="container">
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
+    </div>
+  </footer>
+</body>
+</html>
