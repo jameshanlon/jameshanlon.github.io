@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Conventions
+
+- All commits are authored by James Hanlon <mail@jameswhanlon.com>.
+- Do not add `Co-Authored-By` trailers to commit messages.
+- Do not add session URLs or other tool-generated links to commit messages.
+
 ## Overview
 
 Personal homepage built with [Pelican](https://blog.getpelican.com/) (Python static site generator). Source lives in `content/` and `theme/`; output is generated into `output/`. The theme uses hand-written CSS with no framework dependencies. GLightbox is loaded from jsDelivr CDN for image lightboxes.
