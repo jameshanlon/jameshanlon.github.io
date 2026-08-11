@@ -1,169 +1,212 @@
 ---
-Title: House extension and renovation
+Title: Extending and decarbonising a Cornish Unit house
 Date: 2026-08-10
-Category: Physical Projects
-Tags: construction, retrofit, energy-efficiency
-Summary: Design and construction of an extension to a 1940s Cornish Unit house,
-         and the renovation work that went with it.
+Category: Home and Sustainability
+Tags: sustainability, energy-efficiency, retrofit, construction
+Summary: Adding to a 1940s precast concrete prefab rather than demolishing it,
+         and what the fabric and heating measurements show before and after.
 Status: draft
 ---
 
 {% import 'post-macros.html' as macros %}
 
 <!--
-SKELETON — outline only. Set `Status: published` and update `Date:` when written.
+================================================================================
+PRE-PUBLICATION CHECKLIST — work through this before setting Status: published.
+================================================================================
 
-CATEGORY — filed under Physical Projects to sit with the garden workshop and
-allotment shed, since this is primarily a build log. If the note ends up leading
-on fabric performance and energy rather than construction, move it to Home and
-Sustainability alongside house-insulation.md and thermal-survey.md. Pick one
-before publishing rather than trying to serve both.
+IMAGES
+[ ] Strip EXIF from every original before uploading to Spaces. The build does
+    NOT do this for you: get_thumbnail() strips metadata from the thumbnail, but
+    macros.image() links the thumbnail to the full-size original on Spaces,
+    which is served exactly as uploaded, and macros.imagenothumb() copies the
+    file byte-for-byte via shutil.copyfile. Verified by test, not assumed.
+        exiftool -all= -tagsFromFile @ -Orientation <files>
+    Confirm with: exiftool -gps:all -make -model <files>
+[ ] Same check over the ~150 photos already published across thermal-survey.md,
+    garden-workshop.md, house-insulation.md and allotment-shed.md — this note is
+    a good prompt to audit the existing set.
+[ ] No exterior elevations in street context; no neighbouring properties,
+    numbers, or distinguishing street features in frame.
+[ ] Prefer drawn details over site photographs throughout (see DIAGRAMS below).
 
-MODEL — content/garden-workshop.md is the closest existing note and the right
-template: chronological build stages, short prose per stage, heavy use of paired
-photographs, CAD drawings at the end. Follow its shape. Note that it mixes `#`
-and `##` for stage headings inconsistently; use `##` throughout here.
+DISCLOSURE
+[ ] Do not link or cite the planning application or building control records —
+    those portals are searchable by address, and they also expose neighbour
+    correspondence, which is not yours to publish.
+[ ] No whole-house floor plan with room labels, door and window positions.
+    Buildup sections and junction details only.
+[ ] Nothing on locks, alarm, cameras, gates, access, or workshop contents.
+[ ] No dates or duration for which the house stood open or unoccupied.
+[ ] Costs as percentages against budget, not absolute figures (see COSTS).
+[ ] Energy data at monthly or seasonal resolution only (see PERFORMANCE).
+[ ] Publish after completion, not during. A live build log advertises a
+    scaffolded house at a location this site already narrows considerably.
 
-CONTEXT THIS CONNECTS TO — the extension is already referenced across three
-published notes, so this one is the payoff:
-- heat-pump.md (2024) said the 10 kW unit exceeded the requirements of the
-  ~90 m2 house because an extension was planned. This note supplies the "before".
-- house-insulation.md covers the first-floor retrofit on the timber frame.
-- thermal-survey.md identified the original fabric faults.
-Add reciprocal links to those notes when this is published.
+AGGREGATION
+[ ] The site already discloses house type, city, floor area, room-by-room
+    interiors, garden layout, allotment, and continuous occupancy. Judge each
+    inclusion here by what it ADDS to that, not by whether it is sensitive
+    on its own.
 
-PHOTOGRAPHS — take them as you go, including the stages that get buried. The
-garden workshop note works because of the sequence of build photos, and those
-cannot be recovered afterwards. Groundworks, insulation and first-fix are the
-ones always missed.
+================================================================================
+FRAMING
+================================================================================
+
+This is a case study of an archetype, not a build log of a house. The Cornish
+Unit is a hard-to-treat 1940s precast concrete prefab with tens of thousands
+still occupied, frequently non-mortgageable and poorly performing. That framing
+is the point of the note — it is what makes it useful to a reader who owns one,
+and generalising away from the specific property is also what keeps it safe to
+publish.
+
+Organise by thermal question, not by build sequence. The chronological structure
+(groundworks, structure, fit out) pulls the note toward "here is my house, stage
+by stage"; the build sequence belongs as supporting detail under the questions
+below.
+
+This connects directly to the CHEESE Project and First Thermal work — applying
+the retrofit and thermal-imaging principles you have advocated professionally to
+a genuinely difficult case. Worth stating once, early; it gives the note its
+audience.
+
+Existing notes this builds on — cross-link, do not repeat, and add reciprocal
+links when publishing:
+- thermal-survey.md — the documented fabric faults, the baseline nobody else has
+- house-insulation.md — the first-floor timber-frame retrofit
+- heat-pump.md — the 10 kW unit, sized in anticipation of this work
+
+DIAGRAMS — the single highest-value substitution. Buildup sections, U-value
+tables, airtightness and thermal-bridging junction details carry the argument
+better than site photographs and contain no location information at all. Budget
+drawing time accordingly.
 -->
 
 <!--
 INTRO
-- What the house is: 1940s Cornish Unit, precast concrete ground floor with a
-  timber-framed first floor, ~90 m2 before the work.
-- What was built and why, in a few sentences. What the house could not do before.
-- Who did what — self-build, main contractor, or a mix. The garden workshop note
-  is explicit about this and it sets reader expectations correctly.
-- Whether the design was yours, an architect's, or a package.
+- The archetype: what a Cornish Unit is, how many there are, why they are hard
+  to treat, and what that means for the people living in them.
+- The decision this note is about: extend and upgrade, or demolish and rebuild.
+- What the reader gets — measurements before and after, on a house with an
+  unusually well documented starting point.
 -->
 
-## Design and planning
+## Why extend rather than demolish
 
 <!--
-- The brief and the constraints that shaped it.
-- Planning permission or permitted development, and how long it took. Cornish
-  Unit houses have specific structural quirks worth mentioning if they bore on
-  the design.
-- Building regulations approach — the fabric standards you were held to, and
-  whether you chose to exceed them.
-- Structural engineering for the connection into the existing house.
-- CAD drawings and 3D views. The workshop note put drawings in a section at the
-  end; either works, but decide once.
+- The embodied carbon argument, made properly rather than gestured at. Retaining
+  existing structure against the carbon cost of demolition and new build.
+- The counter-argument taken seriously: these are poor-performing buildings and
+  there is a real case for replacement. Say where the balance fell for you and
+  why, including the non-carbon reasons.
+- Anything specific to precast concrete construction that bears on this —
+  condition assessment, structural viability, known failure modes.
+- This is the most substantive sustainability section and it is about buildings
+  in general, not about your house in particular. Give it room.
 -->
 
-## Groundworks and foundations
+## The baseline
 
 <!--
-- Site clearance, dig, and what was found once open. Services, drains, and the
-  original foundation detail.
-- Foundation type and why.
-- Any insulation below slab.
+- What the house was before, in measurements: heat loss, U-values of the
+  original construction, the faults found by thermal imaging, energy demand.
+- Draw on thermal-survey.md and house-insulation.md for this — the value is that
+  the "before" state is documented rather than reconstructed from memory.
+- Keep it to fabric and energy. Room-by-room interior narrative is not needed
+  here and adds disclosure the earlier notes already made.
 -->
 
-## Structure
+## Fabric
 
 <!--
-- Frame or masonry, and the reasoning.
-- Connection into the existing Cornish Unit structure — likely the most
-  technically interesting part, and the part least covered elsewhere online.
-- Openings, lintels, steels.
+- Wall, roof and floor buildups for the new construction, with U-values.
+- What was done to the retained fabric, and how far it could realistically be
+  improved given precast concrete construction.
+- Where you exceeded building regulations and where you did not, honestly, with
+  the reasoning — regulations-minimum decisions are informative too.
+- Materials: insulation choices and their embodied carbon, not just their
+  lambda values.
+- Drawn sections rather than photographs. Example figure — drop the
+  {% raw %}{% endraw %} markers to make it live:
+{% raw %}{{ macros.image('house-extension/wall-buildup.png', caption="Wall buildup and U-value.") }}{% endraw %}
 -->
 
-## Envelope
+## The junction
 
 <!--
-- Wall, roof and floor buildups with U-values. The workshop note has a
-  "Buildups" section; do the same here, and give the actual figures.
-- Airtightness strategy and how it was detailed, especially at the junction with
-  the existing house where the two constructions meet. This is where the
-  performance is usually lost.
-- Thermal bridging at that junction.
-- Windows and glazing specification.
+- Where new construction meets 1940s precast is the technically interesting part
+  of the whole project and the part least covered anywhere online. This is the
+  section that justifies the note existing.
+- Airtightness strategy across the junction, and how it was detailed. This is
+  where performance is normally lost.
+- Thermal bridging, and what you could not eliminate.
+- Moisture and interstitial condensation risk when you insulate one side of a
+  concrete structure and butt a modern envelope against it.
+- Junction detail drawings. Again: drawings, not site photographs.
 -->
 
-## Renovation of the existing house
+## Heating and ventilation
 
 <!--
-- What was done to the original fabric while the work was open: rewiring,
-  replumbing, insulation upgrades, replastering.
-- Cross-reference house-insulation.md rather than repeating it, and note
-  anything that revised or undid that earlier work.
-- Faults from thermal-survey.md that this was the opportunity to fix — closing
-  that loop explicitly is worth a paragraph.
+- Integrating the extension into the existing heat pump system: emitters, flow
+  temperature, rebalancing, whether the 10 kW capacity turned out to be the
+  right call now that the floor area it was sized for actually exists.
+  heat-pump.md set this question up in 2024; this is where it gets answered.
+- Ventilation: an airtight extension attached to a leaky house changes the
+  moisture and air quality picture. MVHR or its absence deserves a paragraph
+  either way.
 -->
 
-## Services and heating
+## Construction
 
 <!--
-- How the extension was integrated into the existing heat pump system:
-  emitters, flow temperatures, whether the 10 kW unit was resized or rebalanced.
-- Underfloor heating versus radiators, if relevant.
-- Ventilation — an airtight extension on a leaky house changes the picture, and
-  MVHR or its absence deserves a sentence either way.
-- Electrical work, and anything left as provision for later.
+- Compressed. Enough for a reader to understand how the fabric decisions above
+  were actually realised — foundations, frame, envelope sequence — without
+  becoming a stage-by-stage log.
+- Who did what: self-build, contractor, or a mix.
+- The buildability problems, especially anything that forced a change to the
+  fabric or junction detailing. Compromises made on site are the useful content
+  here, not the sequence of events.
 -->
 
-## Internal fit out
+## Costs
 
 <!--
-- Follow the workshop note's subsections where they apply: socket and switch
-  positions, boarding, second-fix.
-- Finishes and anything made rather than bought.
+- Percentages against budget, not absolute figures: "18% over, mostly
+  groundworks" carries everything useful without profiling your finances against
+  a house type and a city already published on this site.
+- Where retrofit cost more than new build would have, and where it cost less.
+- Cost per unit of heat loss avoided is the sustainability-relevant framing and
+  is far more useful to a reader than a total.
 -->
 
-## What it cost and how long it took
+## Measured performance
 
 <!--
-- Budget against outturn, honestly, and where the overrun was. Almost no
-  self-build write-up does this and it is the section readers most want.
-- Programme against actual.
-- If publishing exact figures is uncomfortable, percentages against budget still
-  carry the useful information.
+- Before and after, using the same metrics as the baseline section so the
+  comparison is like-for-like: heat loss in W/K, U-values, air permeability if a
+  test was done, kWh/m2/yr, SCOP.
+- RESOLUTION: monthly or seasonal aggregates only. Daily or hourly heat pump
+  data is an occupancy record — holidays and working patterns are legible in it.
+  Aggregates make every argument this note needs and leak nothing.
+- Normalise for the larger floor area and for weather, or the comparison
+  misleads. Demand rising in absolute terms while intensity falls is the
+  expected result and worth stating plainly.
+- Overlap with the multi-year heat pump note: decide which note owns the
+  analysis and which links to it, so the numbers are not maintained twice.
+- A repeat thermal-imaging survey of the junction and new fabric is the natural
+  closing figure and parallels thermal-survey.md directly. Check the frames for
+  anything identifying before publishing.
 -->
 
-## Performance
+## What generalises
 
 <!--
-- This is what makes the note more than a build log, and what nobody else can
-  write about this house: there is a documented before state.
-- Heat pump data before and after — heating demand against the larger floor
-  area. Note that this interacts with the multi-year heat pump note; decide
-  which note carries the analysis and which one links to it, so the numbers
-  are not maintained in two places.
-- Air test result if one was done.
-- A repeat thermal-imaging survey of the junction and the new fabric would be
-  the natural closing figure, and directly parallels thermal-survey.md.
--->
-
-## What I would do differently
-
-<!--
-- The mistakes. house-insulation.md and the workshop note are both usefully
-  candid, and that is why they are worth reading.
--->
-
-## Drawings
-
-<!--
-Plans, sections and 3D views, as in the workshop note. Example figure and paired
-layout — drop the {% raw %}{% endraw %} markers to make these live:
-{% raw %}{{ macros.image('house-extension/3D.png', caption="Extension design.") }}
-
-{{ macros.pair_layout(
-     macros.image('house-extension/before.jpg'),
-     macros.image('house-extension/after.jpg'),
-     caption="Before and after.") }}{% endraw %}
+- What a reader with the same house type should take from this — the decisions
+  that would transfer, and the ones that were specific to this site.
+- What you would do differently. house-insulation.md and garden-workshop.md are
+  both usefully candid and that is why they are worth reading.
+- Where the remaining losses are, and whether they are worth chasing.
 -->
 
 ## Related links
@@ -171,4 +214,4 @@ layout — drop the {% raw %}{% endraw %} markers to make these live:
 - [Cornish Unit House retrofit insulation]({filename}/house-insulation.md)
 - [Home thermal-imaging survey]({filename}/thermal-survey.md)
 - [Review of heat pump use and performance]({filename}/heat-pump.md)
-- [Garden workshop]({filename}/garden-workshop.md)
+- [The CHEESE Project](http://www.cheeseproject.co.uk)
