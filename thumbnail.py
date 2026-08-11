@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import requests
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, UnidentifiedImageError
 from io import BytesIO
 import logging
 
@@ -23,6 +23,30 @@ def fetch_remote(filepath, size):
         logging.error("Image not found: " + image_url)
         sys.exit(1)
     return Image.open(BytesIO(response.content))
+
+
+def copy_without_metadata(src_path, dst_path):
+    """
+    Copy an image, dropping its metadata. EXIF can carry GPS coordinates and
+    camera details, which shouldn't be published. Orientation is applied to the
+    pixels first, since dropping the EXIF tag would otherwise leave images
+    displayed rotated.
+    """
+    try:
+        image = Image.open(src_path)
+    except UnidentifiedImageError:
+        # Not a format Pillow can read (eg SVG), so copy it verbatim.
+        logging.info("Copying " + src_path + " without re-encoding")
+        shutil.copyfile(src_path, dst_path)
+        return
+    image_format = image.format
+    image = ImageOps.exif_transpose(image)
+    if image_format == "JPEG":
+        # Re-encoding is lossy, so use a high quality setting.
+        image.save(dst_path, "JPEG", quality=95)
+    else:
+        image.save(dst_path, image_format)
+    logging.info("Wrote " + dst_path + " without metadata")
 
 
 def get_image(filepath):
@@ -48,7 +72,7 @@ def get_image(filepath):
             os.makedirs(image_dir)
 
         # Copy the file to the output directory
-        shutil.copyfile(local_path, image_path)
+        copy_without_metadata(local_path, image_path)
 
         return "/images/" + image_name
 
