@@ -54,15 +54,6 @@
     - name: GitHub
       href: https://github.com/jameshanlon/home-energy-data
 
-- name: Personal finances
-  desc: |
-    A Python-based project that I use to fetch personal finance data (collected
-    transactions from bank accounts and credit cards etc) held in Google
-    Sheets and then generate a set of summary HTML reports including tables and charts.
-  links:
-    - name: GitHub
-      href: https://github.com/jameshanlon/finances
-
 - name: Netlist Paths
   desc: |
     Netlist Paths is a library and command-line tool for querying a Verilog
