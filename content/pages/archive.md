@@ -11,6 +11,10 @@ Status: published
 
 Various talks and papers that I've produced since 2014.
 
+[Extracting bit-level connectivity from SystemVerilog designs with Slang Netlist](
+{{'talks/slang-netlist-ORConf-2026.pdf'|asset}}),<br>
+A talk presented at [ORConf 2026](https://orconf.org/) in Ghent, Belgium.
+
 [A Fast Hardware Pseudorandom Number Generator Based on xoroshiro128](https://ieeexplore.ieee.org/document/9875973),
 <br>With Stephen Felix, in IEEE Transactions on Computers, 2022, doi: 10.1109/TC.2022.3204226
 ([preprint on arXiv](https://arxiv.org/abs/2203.04058)).
