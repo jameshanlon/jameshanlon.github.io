@@ -52,11 +52,11 @@ In summary:
     <td><a href="#google-tpu-1">Google TPU v1</a></td>
     <td>28nm</td>
     <td>Unknown</td>
-    <td>75</td>
+    <td>40</td>
     <td>28</td>
     <td>n/a</td>
     <td>23 (INT16)</td>
-    <td>30 (DDR3)</td>
+    <td>34 (DDR3)</td>
     <td>14</td>
   </tr>
   <tr>
@@ -77,7 +77,7 @@ In summary:
     <td>200*</td>
     <td>Unknown</td>
     <td>Unknown</td>
-    <td>90</td>
+    <td>123</td>
     <td>1200 (HBM2)*</td>
     <td>8*</td>
   </tr>
@@ -121,7 +121,7 @@ In summary:
     <td>250</td>
     <td>60</td>
     <td>Unknown</td>
-    <td>110</td>
+    <td>119</td>
     <td>1220 (HBM2)</td>
     <td>447</td>
   </tr>
@@ -227,9 +227,9 @@ General details (per chip):
 - Announced May 2018.
 - Likely to be 16nm or 12nm.
 - 200W estimated TDP.
-- 105 TFLOPs of BFloat16, likely from doubling the MXUs to four.
+- 123 TFLOPs of BFloat16, likely from doubling the MXUs to four.
 - Each MXU has dedicated access to 8 GB of memory.
-- Integrated in four-chip modules (pictured), 420 TFLOPs peak performance.
+- Integrated in four-chip modules (pictured), 492 TFLOPs peak performance.
 
 IO:
 
@@ -290,7 +290,7 @@ General details:
 
 - Announced in 2016.
 - 331 mm<sup>2</sup> die on 28nm process.
-- Clocked at 700 MHz and 28-40W TDP.
+- Clocked at 700 MHz and 40W TDP.
 - 28 MB on-chip SRAM memory: 24 MB for activations and 4 MB for accumulators.
 - Proportions of the die area: 35% memory, 24% matrix multiply unit, 41%
   remaining area for logic.
@@ -545,11 +545,11 @@ General details:
 
 - Announced September 2018.
 - TSMC 12nm FFN, 754 mm<sup>2</sup> die, 18.6 bn transistors.
-- 260 W TDP.
+- 250 W TDP.
 - 72 SMs, each containing: 64 FP32 cores, 64 INT32 cores and 8 Tensor Cores
   (4608 FP32 cores, 4608 INT32 cores and 576 TCs).
 - Peak performance with boost clock: 16.3 TFLOPs FP32, 130.5 TFLOPs FP16, 261 TFLOPs INT8, 522 TFLOPs INT4.
-- 24.5 MB on-chip memory between 6 MB L2 cache and 256 KB SM register files.
+- 24.6 MB on-chip memory between 6 MB L2 cache and 256 KB SM register files.
 - 1455 MHz base clock.
 
 IO:
