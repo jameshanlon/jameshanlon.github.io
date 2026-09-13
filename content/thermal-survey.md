@@ -18,8 +18,8 @@ where heat was being lost, and to try and resolve some faults. I have written
 this note to record what I found as a case study that others may find useful,
 from the point of view of understanding the benefits of using thermal imaging
 to assess building performance, and to see the kinds of thermal faults that are
-standard among domestic buildings. Included also are some simple remedial
-measures that I took to address thermal faults. The emphasis of these were low
+common among domestic buildings. Included also are some simple remedial
+measures that I took to address thermal faults. The emphasis was on low
 cost and low effort to improve the house in the short term, and particularly
 during the winter. With plans to renovate and extend in the next couple of
 years, the survey would also provide guidance on where more significant
@@ -36,7 +36,7 @@ used to reduce the internal air pressure and accentuate any draughts. Once the
 heating is switched off, the house will start to cool down by thermal
 conduction through materials and ingress of cold air through draughts. While
 this is happening the thermal camera is used to capture the effects of any
-areas of rapid cooling, ie 'thermal faults.
+areas of rapid cooling, ie 'thermal faults'.
 
 
 
@@ -49,7 +49,7 @@ areas of rapid cooling, ie 'thermal faults.
 ## External
 
 I did the survey in December, and the external temperature was close to 0
-degrees. The images below show the back of the house in infra red (thermal) and
+degrees. The images below show the back of the house in infrared (thermal) and
 visible light. There is little to learn from the thermal picture, and note that
 the windows will be reflecting some of the cool night sky.
 
@@ -59,20 +59,20 @@ the windows will be reflecting some of the cool night sky.
 
 There are a few things to remember when inspecting the thermal images. The
 thermal image is overlaid on the larger visible-light image, the temperature
-value is the measurement taken at the cross hairs, and often each image is
+value is the measurement taken at the crosshairs, and often each image is
 taken with a particular temperature range to give the best contrast to the
 subject of the image. The temperature range is given in the top left-hand
 corner, and the black and white squares show the degree increments along the
 colour scale. In the thermal image above left, the range is centred on 20
 degrees plus and minus 23 degrees. All the thermal images in this note use a
-colour palette called 'ironbow', which I find most intuitive, there are however
+colour palette called 'ironbow', which I find most intuitive; there are, however,
 other choices such as rainbow and greyscale.
 
 
 ## Front door
 
 The area by the front door was noticeably cold when walking past it. The thermal
-images reveal cold single glazed glass sections (at ~15 degrees compared with
+images reveal cold single-glazed glass sections (at ~15 degrees compared with
 ~22 degrees ambient temperature of the hallway), and draughts, particularly at
 the bottom where the temperature drops to 10 degrees.
 
@@ -81,9 +81,9 @@ the bottom where the temperature drops to 10 degrees.
      macros.image('thermal-survey/front-door/front-door-bottom-thermal.jpg'), ) }}
 
 To tackle the leakiness of the front door, I added some acrylic secondary
-glazing to the glass sections and blocked up the letter box with glass fibre
-insulation and a wooden plug (there is another letter box in the porch). I
-admit this was not an elegant solution, but it was quick and cheap. The look of
+glazing to the glass sections and blocked up the letterbox with glass fibre
+insulation and a wooden plug (there is another letterbox in the porch). I
+admit this was not an elegant solution, but it was quick and cheap. The look of the
 acrylic could have been improved by using magnetic strip for attaching it, also
 allowing for it to be removed. But since the door will be replaced in the next
 18 months, I was not too worried.
@@ -96,14 +96,14 @@ allowing for it to be removed. But since the door will be replaced in the next
 ## Windows
 
 The house has uPVC double glazing throughout (installed within the last 10
-years), but a main finding of the survey was the windows had some significant
+years), but a main finding of the survey was that the windows had some significant
 thermal faults.
 
 ### Leaking trim
 
 The most obvious fault was draughts around the edges of the frames, from behind a
 plastic trim. In the left-hand images, the cold area is a draught emerging from
-a section of silicon sealant that had detached.
+a section of silicone sealant that had detached.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/windows/leaking-trim-1-thermal.jpg'),
@@ -127,9 +127,9 @@ smaller gaps and make it flush with the window reveals.
 
 ### Leaking sill
 
-Related to the lack of sealing of the window frames to the wall was draughts
+Related to the lack of sealing of the window frames to the wall were draughts
 emerging from under the window sill. In the thermal picture below this is
-particularly visible being above a warm radiator. With the blower door running,
+particularly visible as it is above a warm radiator. With the blower door running,
 it is also easy to feel these with the back of a finger.
 
 {{ macros.pair_layout(
@@ -140,7 +140,7 @@ it is also easy to feel these with the back of a finger.
 
 Two opening panes had leaks along part of their seals, where the window did not
 shut tight to the frame to make it airtight. This was not a significant source
-of a draught, but a problem that is commonly found with uPVC windows. Often the
+of draughts, but a problem that is commonly found with uPVC windows. Often the
 hinges can be adjusted to remedy this issue, or foam insulation tape could be
 added.
 
@@ -151,9 +151,9 @@ added.
 ### Missing insulation
 
 An interesting aspect of the house is that the upper floor has a [Mansard
-roof][mansard-roof] and is timber construction. The first-floor walls have had
-insulation inserted behind the tiles, but the thermal picture below shows
-clearly no insulation has been added above the window. This is the case for all
+roof][mansard-roof] and is of timber construction. The first-floor walls have had
+insulation inserted behind the tiles, but the thermal picture below clearly
+shows that no insulation has been added above the window. This is the case for all
 the upstairs windows.
 
 {{ macros.pair_layout(
@@ -164,9 +164,9 @@ the upstairs windows.
 [mansard-roof]: https://en.wikipedia.org/wiki/Mansard_roof
 
 
-## First floor walls
+## First-floor walls
 
-The images below of the first-floor walls show clearly the timber sub structure
+The images below of the first-floor walls show clearly the timber substructure
 of the roof and the voids between where insulation has been added. Below the
 window in the top-left image, there is evidence of air ingress from around the
 frame into the wall. In the bottom-right image, there is evidence of air
@@ -183,8 +183,8 @@ the cold window frames and the missing insulation at the top.
      macros.image('thermal-survey/upper-walls/bedroom-1-thermal.jpg'),
      macros.image('thermal-survey/upper-walls/bedroom-3-thermal.jpg'), ) }}
 
-By coincidence, a near by Cornish Unit Type 1 house was undergoing some extension
-work, and has its upper timbers exposed. The picture below shows clearly the
+By coincidence, a nearby Cornish Unit Type 1 house was undergoing some extension
+work, and had its upper timbers exposed. The picture below shows clearly the
 construction, and notably the wall voids contained no insulation.
 
 {{ macros.image('thermal-survey/upper-walls/upper-wall-construction.jpg') }}
@@ -195,7 +195,7 @@ The Mansard roof construction means that the interface between the roof and
 masonry walls is at the top of the ground floor walls (rather than more
 conventionally at the top of the upper floor walls). The images below show
 ingress of cold air from the eaves and into the surrounding wall, stairs and
-floor. Note also the shape of the block work in the ground floor wall.
+floor. Note also the shape of the blockwork in the ground floor wall.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/ground-wall/blockwork-stairs-1-thermal.jpg'),
@@ -234,7 +234,7 @@ to resolve the more minor cold patches.
 
 Due to my work boarding out the loft, there was another piece of missing
 insulation in the corner (here in the bathroom). These images clearly show the
-value of loft insulation, and it extending to the edges.
+value of loft insulation, and of extending it to the edges.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/loft-insulation/missing-bathroom-1-thermal.jpg'),
@@ -243,7 +243,7 @@ value of loft insulation, and it extending to the edges.
 Installing boarding in the loft for storage was a good opportunity to
 redistribute and top up insulation, and make sure it extended into corners
 (whilst maintaining space for airflow from the roof). In the right-hand
-picture, the black columns are stilts that boarding is attached to.
+picture, the black columns are stilts that the boarding is attached to.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/loft-insulation/loft-insulation-bare.jpg'),
@@ -287,7 +287,7 @@ cold water sitting in the cistern.
 ## Central heating
 
 It was interesting for the thermal images to reveal the workings of the
-central heating system. The condensing boiler and its pipework is clearly
+central heating system. The condensing boiler and its pipework are clearly
 visible in the top two images. The hot water tank is middle-left, a radiator
 middle-right and otherwise hidden pipework in the bottom two images.
 
@@ -306,10 +306,10 @@ middle-right and otherwise hidden pipework in the bottom two images.
 
 ## Kit
 
-The left-hand image show the the CHEESE blower door installed on the side door,
+The left-hand image shows the CHEESE blower door installed on the side door,
 which precludes that door from being inspected, but it was less of a worry than
 the front door. The right-hand image shows the CHEESE camera kit, with the
-iPhone and Flir camera attachment.
+iPhone and FLIR camera attachment.
 
 {{ macros.pair_layout(
      macros.image('thermal-survey/kit/blower-door.jpg'),
