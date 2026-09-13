@@ -426,7 +426,7 @@ General details:
 
 Interconnect and IO:
 
-- Cores interconnected in a 6 x 4 2D mesh packet-switched network, providing
+- Cores interconnected in a 2D mesh packet-switched network, providing
   128 GBps bidirectional bandwidth per core.
 - 4 TBps access to L2 cache.
 - 1.2 TBps HBM2 access bandwidth.
