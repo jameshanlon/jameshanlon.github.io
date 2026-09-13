@@ -408,12 +408,12 @@ Other noteworthy features of X are:
 ## Hex processor integrated circuit <a name="hex-processor-integrated-circuit" class="anchor"></a>
 
 A hardware implementation of the Hex processor is written in SystemVerilog,
-[``processor.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.sv),
+[``processor.sv``](https://github.com/jameshanlon/hex-processor/blob/main/rtl/processor.sv),
 in just 150 lines. This implementation is single-cycle in that all elements of
 instruction execution (ie instruction fetch from memory, decode, instruction
 memory access and state writeback) are completed in one clock cycle. A separate
 memory module,
-[``memory.sv``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/memory.sv),
+[``memory.sv``](https://github.com/jameshanlon/hex-processor/blob/main/rtl/memory.sv),
 implements a single-cycle random-access memory with two ports: one for
 instruction fetch and the other for data access so that they can occur
 simultaneously in the same cycle. Note that because memory access time
@@ -421,7 +421,7 @@ increases with the memory capacity, an implementation of Hex accessing a large
 memory (ie more than a few thousand bytes) would add pipelining to hide the
 latency to memory. Some degree of pipelining is standard in processor
 implementations. The hardware design is simulated using Verilator, with C++
-testbench driver code in [``hextb.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hextb.cpp).
+testbench driver code in [``hextb.cpp``](https://github.com/jameshanlon/hex-processor/blob/main/tools/hextb.cpp).
 
 Using [OpenROAD](https://theopenroadproject.org/), an open-source toolchain
 for performing synthesis, optimisation and physical layout of digital circuits,
@@ -434,7 +434,7 @@ libraries, design rules and tooling. Since OpenROAD uses
 [Yosys](https://yosyshq.net/yosys/) for synthesis, which doesn't support
 some SystemVerilog features, I used
 [sv2v](https://github.com/zachjs/sv2v) to convert the implementation to plain
-Verilog 2005 (see [``processor.v``](https://github.com/jameshanlon/hex-processor/blob/master/verilog/processor.v)).
+Verilog 2005 (see [``processor.v``](https://github.com/jameshanlon/hex-processor/blob/main/rtl/processor.v)).
 
 The physical design is based on an OpenROAD [default
 flow](https://openroad.readthedocs.io/en/latest/tutorials/FlowTutorial.html),
@@ -473,25 +473,25 @@ The implementation is provided in a small number of source files (with only one
 external dependency on ``boost::format``):
 
 - General Hex definitions are provided in
-  [``hex.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.hpp) and
-  [``hex.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hex.cpp).
+  [``hex.hpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/hex.hpp) and
+  [``hex.cpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/hex.cpp).
 
 - The Hex simulator is implemented in the headers
-  [``hexsim.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsim.hpp) and
-  [``hexsimio.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsimio.hpp).
+  [``hexsim.hpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/hexsim.hpp) and
+  [``hexsimio.hpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/hexsimio.hpp).
   (Note that listings for a complete simulator in C are given in the [Hex definition (PDF)]({{'hex-processor/hexb.pdf'|asset}}).)
 
 - The Hex assembler is implemented in the header
-  [``hexasm.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.hpp).
+  [``hexasm.hpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/hexasm.hpp).
 
 - The X compiler is implemented in the header
-  [``xcmp.hpp``](https://github.com/jameshanlon/hex-processor/blob/master/xcmp.hpp).
+  [``xcmp.hpp``](https://github.com/jameshanlon/hex-processor/blob/main/src/xcmp.hpp).
 
 - Driver code for the respective command-line tools ``hexsim``, ``hexasm`` and
   ``xcmp`` is implemented in
-  [``hexsim.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexsim.cpp),
-  [``hexasm.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/hexasm.cpp) and
-  [``xcmp.cpp``](https://github.com/jameshanlon/hex-processor/blob/master/xcmp.cpp).
+  [``hexsim.cpp``](https://github.com/jameshanlon/hex-processor/blob/main/tools/hexsim.cpp),
+  [``hexasm.cpp``](https://github.com/jameshanlon/hex-processor/blob/main/tools/hexasm.cpp) and
+  [``xcmp.cpp``](https://github.com/jameshanlon/hex-processor/blob/main/tools/xcmp.cpp).
 
 ### A simple example
 
@@ -555,7 +555,7 @@ This null program is compiled into Hex assembly, where the entry code calls
 the link location):
 
 ```bash
-➜ xcmp tests/x/exit.x --insts-lowered
+➜ xcmp examples/exit.x --insts-lowered
 BR start
 DATA 199999
 start
@@ -627,7 +627,7 @@ And ``prints`` unpacks the bytewise string representation by using routines for
 performing division and remainder by 256. The full program listing is:
 
 ```bash
-➜ cat tests/x/hello_prints.x
+➜ cat examples/hello_prints.x
 val put = 1;
 val bytesperword = 4;
 var div_x;
@@ -708,7 +708,7 @@ inspecting the trace makes it clear that most time is spent in the arithmetic
 routines.
 
 ```bash
-➜ xcmp tests/x/hello_prints.x
+➜ xcmp examples/hello_prints.x
 ➜ hexsim a.out
 hello world
 ➜ hexsim a.out -t
@@ -719,14 +719,14 @@ hello world
 ### Building an X compiler and bootstrapping
 
 A third example is a complete compiler for X, written in X:
-[``xhexb.x``](https://github.com/jameshanlon/hex-processor/blob/master/tests/x/xhexb.x)
+[``xhexb.x``](https://github.com/jameshanlon/hex-processor/blob/main/examples/xhexb.x)
 written by David May in ~3,000 lines of X. This serves as a challenging program
 to compile, and it is interesting that it can bootstrap itself. Using the notation
 X(Y) to mean compile source Y using binary X, we can first create an ``xhexb``
 binary by running ``xcmp``(``xhexb.x``):
 
 ```bash
-➜ xcmp -S tests/x/xhexb.x
+➜ xcmp -S examples/xhexb.x
 ...
 20739 bytes
 ```
@@ -736,10 +736,10 @@ We can then use ``xcmp``(``xhexb.x``) to compile Hello World as
 
 ```bash
 # Create an xhexb compiler binary.
-➜ xcmp tests/x/xhexb.x
+➜ xcmp examples/xhexb.x
 
 # Compile Hello World.
-➜ hexsim a.out < tests/x/hello_prints.x
+➜ hexsim a.out < examples/hello_prints.x
 tree size: 602
 program size: 414
 size: 414
@@ -754,16 +754,16 @@ Similarly, we can use ``xcmp``(``xhexb.x``) to bootstrap itself by running
 
 ```bash
 # Create an xhexb compiler binary.
-➜ xcmp tests/x/xhexb.x
+➜ xcmp examples/xhexb.x
 
 # Use xhexb binary to compile xhexb.x.
-➜ hexsim a.out < tests/x/xhexb.x
+➜ hexsim a.out < examples/xhexb.x
 tree size: 18631
 program size: 17093
 size: 177097
 
 # Use the bootstrapped xhexb binary to compile Hello World.
-➜ hexsim simout2 < tests/x/hello_prints.x
+➜ hexsim simout2 < examples/hello_prints.x
 tree size: 602
 program size: 414
 size: 414
