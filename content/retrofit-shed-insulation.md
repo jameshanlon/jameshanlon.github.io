@@ -17,19 +17,19 @@ The construction has created voids in the floor, walls and roof, providing a
 convenient space to add insulation.
 
 I considered using natural wool insulation, as opposed to rigid insulation
-board, but felt that it would difficult to secure it in place in a consistent
-way, as well as ensuring an air gap remains between the external cladding. I
-decided on using Celotex rigid insulation board and used 12 sheets of 75mm
+board, but felt that it would be difficult to secure it in place in a consistent
+way, as well as ensuring an air gap remains between it and the external cladding. I
+decided on using Celotex rigid insulation board and used 12 sheets of 75 mm
 thick standard 2400 mm x 1200 mm size, and two boards of the same size at 50 mm
 for the back wall. In total, the insulation cost £512.74 (including VAT). To
 prevent draughts as much as possible, I decided to tape the gaps between the
 boards and shed timbers. I bought about 8 rolls of foil tape to do this.
 
 The insulation board turned out to be easy to work with, easy to cut with a
-panel saw and fitting snugly in the gaps and leaving plenty of space for
+panel saw, and fitted snugly in the gaps, leaving plenty of space for
 ventilation. I found the dust created by sawing the board irritating to my eyes
-and breathing so as much as possible wore eye protection and a mask (although
-hard to do getting hot in the small space). Working overhead on the roof was
+and breathing, so as much as possible I wore eye protection and a mask (although
+this was hard to do as I got hot in the small space). Working overhead on the roof was
 the worst part as it was difficult to avoid falling dust on my face. The whole
 job took three days to complete and has made a substantial difference to the
 stability of the temperature in the space.
@@ -50,7 +50,7 @@ stability of the temperature in the space.
                   caption='Complete and taped floor insulation, and half the floor restored.')) }}
 
 {{ macros.image('shed-insulation/exposed-roof.jpg',
-                caption="Installation of insulation into the roof apex. The dust falling from the board as they are positioned in place made this an unpleasant job.") }}
+                caption="Installation of insulation into the roof apex. The dust falling from the boards as they were positioned in place made this an unpleasant job.") }}
 
 {{ macros.triple_layout(
      macros.image('shed-insulation/left-wall-done.jpg'),
@@ -60,7 +60,7 @@ stability of the temperature in the space.
 
 {{ macros.pair_layout(
      macros.image('shed-insulation/back-wall-preparation.jpg',
-                  caption="Timer added to provide a space to install the insulation."),
+                  caption="Timber added to provide a space to install the insulation."),
      macros.image('shed-insulation/back-wall-done.jpg',
                   caption="...and the insulation in place.")) }}
 
