@@ -14,13 +14,13 @@ XC is a programming language developed by XMOS for real-time embedded parallel
 programming of their XCore processor architecture. XC is based on the features
 for parallelism and communication in occam, and the syntax and some sequential
 features of C. In addition, XC provides primitives to expose hardware
-resources: locks, ports and timers. XC programs can be executed with levels of
-I/O real-time performance that is usually attributed to FPGA or ASIC devices.
+resources: clocks, ports and timers. XC programs can be executed with levels of
+I/O real-time performance that are usually attributed to FPGA or ASIC devices.
 The design of XC was heavily influenced by the occam programming language,
 which first introduced channel communication, alternation, ports and timers.
 Occam was developed by [David
 May](https://en.wikipedia.org/wiki/David_May_(computer_scientist)) and built on
-the [Communicating Sequential Processes]() formalism, a process algebra
+the [Communicating Sequential Processes](https://en.wikipedia.org/wiki/Communicating_sequential_processes) formalism, a process algebra
 developed by [Tony Hoare](https://en.wikipedia.org/wiki/Tony_Hoare).
 
 This note was originally written for
@@ -61,8 +61,8 @@ statement, so that the statement
 par { f(); g(); }
 ```
 
-causes `f` and `g` to be executed simultaneously. The execution of parallel
-statement only completes when each of the component statements have completed.
+causes `f` and `g` to be executed simultaneously. The execution of a parallel
+statement only completes when each of the component statements has completed.
 The component statements are called tasks in XC.
 
 Because the sharing of variables can lead to race conditions and
@@ -87,7 +87,7 @@ par { f(0); f(1); f(2); f(3); }
 
 The tasks in a parallel statement are executed by creating threads on the
 processor executing the statement. Tasks can be placed on different tiles by
-using an `on` prefix. In following example:
+using an `on` prefix. In the following example:
 
 ```C
 par {
@@ -98,15 +98,16 @@ par {
 ```
 
 the task `f` is placed on any available core of tile 0 and instances of the task
-g placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
+`g` are placed on cores 0, 1, 2 and 3 of tile 1. Task placement is restricted to the
 main function of an XC program. Conceptually, this is because when an XC
-program is compiled, it is divided up at its top level, into separately
+program is compiled, it is divided up at its top level into separately
 executable programs for each tile.
 
 ### Communication
 
 Parallel tasks are able to communicate with each other using interfaces or channels.
-Interfaces
+
+### Interfaces
 
 An interface specifies a set of transaction types, where each type is defined
 as a function with parameter and return types. When two tasks are connected via
@@ -155,12 +156,12 @@ Transaction functions in an interface restrict servers to reacting only in
 response to client requests, but in some circumstances it is useful for a
 server to be able to trigger a response from the client. This can be achieved
 by annotating a function in the interface with no parameters and a void return
-type, with `[[notification]]` slave. The client waits on the notification
+type, with `[[notification]] slave`. The client waits on the notification
 transaction in a select statement for the server to initiate it. A
 corresponding function can be annotated with `[[clears_notification]]`, which is
 called by the slave to clear the notification. In the following simple example:
 
-```
+```C
 interface I {
   void f(int x);
   [[notification]] slave void isReady();
@@ -206,7 +207,7 @@ additional complexity.
 
 Communication channels provide a more primitive way of communicating between
 tasks than interfaces. A channel connects two tasks and allows them to send and
-receive data, using the in `<:` and out `:>` operators respectively. A
+receive data, using the output `<:` and input `:>` operators respectively. A
 communication only occurs when an input is matched with an output, and because
 either side waits for the other to be ready, this also causes the tasks to
 synchronise. In the following:
@@ -231,7 +232,7 @@ synchronise, so communication can occur asynchronously.
 
 The select statement waits for events to occur. It is similar to the
 alternation process in occam. Each component of a select is an event, such as
-an interface transaction, channel input or port input (see #IO), and an
+an interface transaction, channel input or port input (see the IO section below), and an
 associated action. When a select is executed, it waits until the first event is
 enabled and then executes that event's action. In the following example:
 
@@ -246,7 +247,7 @@ select {
 }
 ```
 
-the select statement merges data from left and right channels on to an out
+the select statement merges data from left and right channels onto an out
 channel.
 
 A select case can be guarded, so that the case is only selected if the guard
@@ -263,8 +264,8 @@ the left-hand channel of the above example can only input data when the
 variable enable is true.
 
 The selection of events is arbitrary, but event priority can be enforced with
-the `[[ordered]]` attribute for selects. The effect is that higher-priority
-events occur earlier in the body of the statement.
+the `[[ordered]]` attribute for selects. The effect is that events
+occurring earlier in the body of the statement have higher priority.
 
 To aid in creating reusable components and libraries, select functions can be
 used to abstract multiple cases of a select into a single unit. The following
@@ -292,7 +293,7 @@ select {
 ### Timing
 
 Every tile has a reference clock that can be accessed via timer variables.
-Performing an output operation on a timer reads the current time in cycles. For
+Performing an input operation on a timer reads the current time in cycles. For
 example, to calculate the elapsed execution time of a function `f`:
 
 ```C
@@ -321,7 +322,7 @@ select {
 }
 ```
 
-waits for the timer `t` to exceed the value of time before reacting to it. The
+waits for the timer `t` to exceed the value of `time` before reacting to it. The
 value of `t` is discarded with the syntax `:> void`, but it can be assigned to a
 variable `x` with the syntax `:> int x`.
 
@@ -329,8 +330,8 @@ variable `x` with the syntax `:> int x`.
 
 Variables of the type port provide access to IO pins on an XCore device in XC.
 Ports can have power-of-two widths, allowing the same number of bits to be
-input or output every cycle. The same channel input and output operators `<`
-and `>` respectively are used for this.
+input or output every cycle. The same channel input and output operators `:>`
+and `<:` respectively are used for this.
 
 The following program continuously reads the value on one port and outputs it
 on another:
@@ -357,7 +358,9 @@ By default, ports are driven at the tile's reference clock. However, clock
 block resources can be used to provide different clock signals, either by
 dividing the reference clock, or based on an external signal. Ports can be
 further configured to use buffering and to synchronise with other ports. This
-configuration is performed using library functions. Port events
+configuration is performed using library functions.
+
+### Port events
 
 Ports can generate events, which can be handled in select statements. For
 example, the statement:
@@ -370,7 +373,7 @@ select {
 }
 ```
 
-uses the predicate when `pinseq` to wait for the value on the port `p` to equal `v`
+uses the `when pinseq` predicate to wait for the value on the port `p` to equal `v`
 before triggering the response to print a notification.
 
 ### Port timing
@@ -382,7 +385,7 @@ clock, outputs can be timestamped or timed. The timestamped statement:
 p <: v @ count;
 ```
 
-causes the value `v` to be output on the port `p` and for count to be set to the
+causes the value `v` to be output on the port `p` and for `count` to be set to the
 value of the port's counter (incremented by one each reference clock cycle).
 The timed output statement:
 
@@ -390,8 +393,8 @@ The timed output statement:
 p @ count <: v;
 ```
 
-causes the port to wait until its counter reaches the value of count before the
-value v is output.
+causes the port to wait until its counter reaches the value of `count` before the
+value `v` is output.
 
 ### Multiplexing tasks onto cores
 
@@ -418,19 +421,19 @@ in which checks are made to ensure that:
 - memory aliases are not created;
 - dangling pointers are not created.
 
-These guarantees are achieved through a combination of a different kinds of
+These guarantees are achieved through a combination of different kinds of
 pointers (restricted, aliasing, movable), static checking during compilation
 and run-time checks.
 
 Unsafe pointers provide the same behaviour as pointers in C. An unsafe pointer
-must be declared with the unsafe keyword, and they can only be used within
+must be declared with the `unsafe` keyword and can only be used within
 `unsafe { ... }` regions.
 
 ### Additional features
 
 #### References
 
-XC provides references, that are similar to those in C++ and are specified with
+XC provides references that are similar to those in C++ and are specified with
 the & symbol after the type. A reference provides another name for an existing
 variable, such that reading and writing it is the same as reading and writing
 the original variable. References can refer to elements of an array or
@@ -448,7 +451,7 @@ chan ?c;
 ```
 
 Nullable resource types can also be used to implement optional resource
-arguments for functions. The `isnull()` builtin function can be used to check
+arguments for functions. The `isnull()` built-in function can be used to check
 if a resource is null.
 
 #### Multiple returns
