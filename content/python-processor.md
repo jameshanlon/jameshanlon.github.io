@@ -466,7 +466,7 @@ allocation and GC for performance and safety.
 [python-overheads-ieee]: https://ieeexplore.ieee.org/document/8573512
 [python-overheads-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
 [barany-acm]: https://dl.acm.org/doi/10.1145/2617548.2617552
-[barany-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
+[barany-pdf]: https://www.cristal.univ-lille.fr/dyla14/papers/dyla14-8-Python_Interpreter_Performance_Deconstructed.pdf
 [mostafa-ucsb]: https://cs.ucsb.edu/research/tech-reports/2010-14
 [garcia-gc]: https://research-information.bris.ac.uk/en/studentTheses/integrated-hardware-garbage-collection-for-real-time-embedded-sys
 [garcia-gc-pdf]: https://research-information.bris.ac.uk/files/298185781/Final_Copy_2021_09_28_Amaya_Garcia_A_PhD.pdf
