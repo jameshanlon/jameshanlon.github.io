@@ -19,7 +19,7 @@ can be integrated into more complex workflows, in contrast with using more
 complex and usually graphical EDA tooling.
 
 The tool addresses high-level structural problems in a design, such as
-incorrect dependencies when a signal including logic that is not necessary to
+incorrect dependencies when a signal includes logic that is not necessary to
 its function. It does not deal with other timing issues that are a product of
 the synthesis and physical build of the design. As such, all the structural
 information required is contained within the Verilog source code.
@@ -45,12 +45,12 @@ $ verilator --dump-netlist-graph -o netlist.graph picorv32.v --top-module picorv
 
 Here a modified version of [Verilator](https://www.veripool.org/wiki/verilator)
 is used to generate the netlist. (Note that `netlist-paths` can invoke
-Verilator but with the `--compile` option, but PicoRV32 requires Verilator's
-`--top-module` option. It may be useful to extend the command line arguments to
+Verilator with the `--compile` option, but PicoRV32 requires Verilator's
+`--top-module` option. It may be useful to extend the command-line arguments to
 allow arbitrary arguments to be passed to Verilator.) Verilator performs the
-generation by traversing the abstract syntax tree of the design and constructs
+generation by traversing the abstract syntax tree of the design, constructing
 a graph of dependencies between variables and combinatorial logical constructs,
-and identifies variables corresponding to sequential elements (flip flops).
+and identifying variables corresponding to sequential elements (flip-flops).
 
 The graph structure/netlist is written to file in [Graphviz dot
 format](https://graphviz.gitlab.io/_pages/doc/info/lang.html), and specifies
@@ -115,9 +115,9 @@ Here, the `REG_DST` type corresponds to a variable that is the left-hand side
 of a non-blocking assignment `<=`. Conversely, the `REG_SRC` type is where the
 same variable appears in an expression on the right-hand side. In general,
 there can only be a single ``REG_DST`` node with a specific name, whereas there
-can be multiple ``REG_SRC`` nodes with a specific names. The same is true with
+can be multiple ``REG_SRC`` nodes with a specific name. The same is true with
 ``VAR``, ``WIRE`` and ``PORT`` types. When using this tool, I've found it
-straight forward to locate the variables I need using `grep` with
+straightforward to locate the variables I need using `grep` with
 `--dumpnames`, but there may be more sophisticated approaches that could be
 implemented.
 
@@ -133,7 +133,7 @@ $ netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state --end
   picorv32_axi.picorv32_core.dbg_valid_insn   REG_DST         picorv32.v:751
 ```
 
-In this path report, it lists the sequential dependencies from the start point
+This path report lists the sequential dependencies from the start point
 to the end point, through a sequence of zero or more combinatorial logic
 statements/blocks, with each dependency corresponding to a variable.
 Importantly, the filenames and line numbers given reference the original source
@@ -147,7 +147,7 @@ start point and ``DST`` for an end point), followed by ``VAR``, ``WIRE`` and
 You can also query all the paths that fan out from a particular start point:
 
 ```
-netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
+$ netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
 Path 1
   picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
   ASSIGNW                                     LOGIC           picorv32.v:1373
@@ -201,12 +201,12 @@ Found 74 paths
 ```
 
 Since the number of paths between any two points in an arbitrary graph grows
-exponentially with the size of the graph, it infeasible to report all paths
+exponentially with the size of the graph, it is infeasible to report all paths
 between two points, so this tool simply looks for any path that satisfies those
 constraints. (An option is provided to enumerate all paths, but it can only be
 used on small netlists.)
 
-When trying to match a particular path in a physical build it it useful to
+When trying to match a particular path in a physical build it is useful to
 further constrain the search to force it to match the same path. This can be
 done by specifying through points with the `--through` option. Each through
 argument is taken in order as an intermediate point in the path. The same
@@ -230,7 +230,7 @@ To avoid writing a preprocessor and parser for Verilog, I modified
 [Verilator](https://www.veripool.org/wiki/verilator) to obtain the netlist of a
 Verilog design. (I would have liked to use
 [Yosys](http://www.clifford.at/yosys/) to do this because it provides a neat
-interface to adding custom AST passes, but unfortunately it does not currently
+interface for adding custom AST passes, but unfortunately it does not currently
 support enough of the SystemVerilog standard.) The Verilator modifications add
 a new AST visitor, which walks the tree after it has been processed, for
 example to propagate constants and inline tasks and modules.
@@ -238,7 +238,7 @@ example to propagate constants and inline tasks and modules.
 The `netlist-paths` tool is implemented in C++ and makes use of the Boost Graph
 Library. Paths are identified using the `boost::depth_first_search` algorithm.
 The all-fan-out report enumerates paths to all the end points in a depth-first
-traversal of the graph, the fan-in variant uses the `boost::reverse_graph`
+traversal of the graph; the fan-in variant uses the `boost::reverse_graph`
 adaptor and performs the same algorithm. Properties are associated with
 vertices in the graph using a `boost::dynamic_property_map`. I put together a
 [simple example program](https://github.com/jameshanlon/boost_graph_example) to
@@ -252,12 +252,12 @@ ideas:
 
 - Provide additional flexibility to allow a choice between multiple matching start, through or end points.
 - Provide a mechanism to search for high fan-out variables.
-- Provide a mechanism to seach for the longest paths in the graph.
-- Provide a mechanism to assert there is no logical path between two sub
-  modules.
+- Provide a mechanism to search for the longest paths in the graph.
+- Provide a mechanism to assert there is no logical path between two
+  submodules.
 - Detect and report timing loops.
 - Add options to `dumpnames` to filter by type or direction.
-- Add options to the querys to select only internal paths or only input/output
+- Add options to the queries to select only internal paths or only input/output
   paths.
 
 ## Links
