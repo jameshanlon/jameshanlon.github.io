@@ -1447,7 +1447,8 @@ module m_rca
     output logic [p_width-1:0] o_sum );
 
   // Wires.
-  logic [p_width-1:0] carry;
+  logic [p_width:0]   carry;
+  logic [p_width-1:0] sum;
   // Registers.
   logic [p_width-1:0] sum_q;
   logic               co_q;
@@ -1458,7 +1459,7 @@ module m_rca
   assign {o_co, o_sum} = {co_q, sum_q};
 
   // Named generate block for per-bit continuous assignments.
-  for (i = 0; i < p_width; i = i + 1) begin: bit
+  for (i = 0; i < p_width; i = i + 1) begin: g_bit
     assign {carry[i+1], sum[i]} = i_op1[i] + i_op2[i] + carry[i];
   end
 
@@ -1468,7 +1469,7 @@ module m_rca
       co_q  <= 1'b0;
     end else begin
       sum_q <= sum;
-      co_q  <= carry[p_width-1];
+      co_q  <= carry[p_width];
     end
   end
 
@@ -1726,8 +1727,4 @@ place to find out more.
   ([PDF](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf)).
 
 - Datapath Synthesis for Standard-Cell Design, Reto Zimmermann, 2009
-  ([PDF](http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf)).
-
-- Getting the Most from Synthesis to Improve your Datapath QoR, Reto
-  Zimmermann, Principal R&D Engineer, DesignWare IP
-  ([PDF](http://icslwebs.ee.ucla.edu/dejan/ee219awiki/images/d/de/WB7_tutorial_datapath_final_032112.pdf)).
+  ([PDF](http://www.iis.ee.ethz.ch/~zimmi/publications/datapath_synthesis.pdf)).
