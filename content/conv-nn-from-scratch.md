@@ -3,7 +3,7 @@ Title: A convolutional neural network from scratch
 Date: 2017-2-10
 Category: Computing and Silicon
 Tags: machine-intelligence
-Summary: A C++ implementation of a convoluational neural network building on the
+Summary: A C++ implementation of a convolutional neural network building on the
          explanation in Michael Nielsen's book 'Neural Networks and Deep Learning'.
 Status: published
 Math: true
@@ -15,18 +15,18 @@ excellent introduction to neural networks and the world of deep learning.  As
 the book works through the theory, it makes it concrete by explaining how the
 concepts are implemented using Python. The complete Python programs are
 [available on
-Github](https://github.com/mnielsen/neural-networks-and-deep-learning) for
+GitHub](https://github.com/mnielsen/neural-networks-and-deep-learning) for
 further inspection and experimentation.
 
-I decided to write my own implementations of the examples however. Partly to
-develop a better understanding but also because I felt that the matrix-based
+I decided to write my own implementations of the examples, however, partly to
+develop a better understanding, but also because I felt that the matrix-based
 presentation of the mathematics and use of NumPy operations in the examples
 obscured some of the intuition around neurons and their connections, and
 because the later examples of convolutional layers are implemented using
-[Theano](deeplearning.net/software/theano/).
+[Theano](http://deeplearning.net/software/theano/).
 
 So, in the hope that it might be interesting as a simple and self-contained
-example of a convolutional neural network where nothing is hidden, I've put he
+example of a convolutional neural network where nothing is hidden, I've put the
 source code for my implementation (written in C++) on
 [GitHub](https://github.com/jameshanlon/convolutional-neural-network). For
 reference I've also written up below the various equations for the
@@ -34,7 +34,7 @@ fully-connected and convolutional layers in element-wise notation. I should
 thank two particularly useful blog posts by [Andrew
 Gibiansky](http://andrew.gibiansky.com/blog/machine-learning/convolutional-neural-networks/)
 and [Grzegorz Gwardys](https://grzegorzgwardys.wordpress.com/2016/04/22/8/)
-which helped me to derive the convolutional equations for back propagation.
+which helped me to derive the convolutional equations for backpropagation.
 
 # The source code
 
@@ -47,8 +47,8 @@ gradient descent, minibatching and training over multiple epochs with
 randomly-shuffled training data. The header also contains definitions for
 quadratic and cross-entropy cost functions, and sigmoid and rectified-linear
 activation functions, which are specified as template parameters to the
-network. The code is written primarily primarily to be clear and
-understandable, as such there will be many opportunities for optimisations and
+network. The code is written primarily to be clear and
+understandable; as such, there will be many opportunities for optimisations and
 other improvements (please let me know if you have any suggestions).
 
 For instructions on how to build and run the examples, see the ``README.md``
@@ -58,7 +58,7 @@ performing inferences in parallel, up to the minibatch size.  It should be
 straightforward to build other network configurations or to modify the
 implementations or to experiment with new features.
 
-Included in the ``extra`` folder, are implementations of the example programs
+Included in the ``extra`` folder are implementations of the example programs
 in [TensorFlow](https://www.tensorflow.org/), adapted from the [MNIST
 tutorial](https://www.tensorflow.org/tutorials/mnist/pros/). I found these
 useful as a point of comparison to validate the behaviour of the networks.
@@ -86,12 +86,12 @@ $$a_i^l = \sigma(z_i^l)$$
 
 The error of a neuron $i$ in the output layer is given by
 $\delta_i = (a_i -y_i)\sigma'(z_i)$
-for the sigmoid activation function and by
+for the quadratic cost function and by
 $\delta_i = a_i - y_i$
-for the cross-entropy activation function.
+for the cross-entropy cost function.
 
 In the backwards pass, errors are propagated to a neuron from neurons that are
-connected as outputs.  The weighted sum of the output neuron's errors and
+connected as outputs.  The weighted sum of the output neurons' errors and
 connection weight is calculated and this value is then multiplied by the
 derivative of the activation function:
 $$\delta_i^l = \sum_j w_{j,i}^{l+1} \delta_j^{l+1} \sigma'(z_i^l)$$
@@ -105,7 +105,7 @@ $$\frac{\partial C}{\partial b_i^l} = \delta_i^l$$
 
 ## For a convolutional layer
 
-Assuming a two-dimensional input of size $N\times N$ and convolutional mask of
+Assume a two-dimensional input of size $N\times N$ and convolutional mask of
 size $m\times m$.
 
 In the forward pass, each neuron convolves the weights with its receptive field:
@@ -115,10 +115,10 @@ $$a_{x,y}^l = \sigma(z_{x,y}^l)$$
 In the backwards pass, errors are propagated to a neuron from the neurons
 connected as outputs in the next layer:
 $$\delta_{x,y}^l = \sum_{a=0}^{m-1}\sum_{b=0}^{m-1} w_{a,b}^{l+1}\delta_{x-a,y-b}^{l+1}\sigma'(z_{x,y}^l)$$
-One way to simplify this is to [think of the convolutional layer as one
-dimensional](https://grzegorzgwardys.wordpress.com/2016/04/22/8/) (as with a
-fully-connected layer), where each neuron has only $m\times m$ inputs connections.
-Then, back propagation operates in the same way as it does with fully-connected
+One way to simplify this is to [think of the convolutional layer as
+one-dimensional](https://grzegorzgwardys.wordpress.com/2016/04/22/8/) (as with a
+fully-connected layer), where each neuron has only $m\times m$ input connections.
+Then, backpropagation operates in the same way as it does with fully-connected
 layers. You can in fact use this approach to derive the above equation.
 
 The delta of a weight is calculated from the activations in the previous layer
