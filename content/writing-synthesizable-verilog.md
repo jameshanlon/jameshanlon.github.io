@@ -15,7 +15,7 @@ design. Coming from a software background where I was mainly using C/C++ and
 Python, it has been interesting to experience the contrasting philosophy and
 mindset associated with using a language to describe hardware circuits. Much of
 this is because SystemVerilog provides little abstraction of hardware
-structures, and only through disciplined/idiomatic use, can efficient designs
+structures, and only through disciplined/idiomatic use can efficient designs
 be implemented. A compounding issue is that complex hardware designs rely on a
 complex ecosystem of proprietary tooling.
 
@@ -23,7 +23,7 @@ As I see it, there are three aspects to writing synthesizable SystemVerilog
 code: the particular features of the language to use, the style and idioms
 employed in using those features, and the tooling support for a design. Good
 coding style can help achieve better results in synthesis and simulation, as
-well as producing code that contains less errors and is understandable,
+well as producing code that contains fewer errors and is understandable,
 reusable, and easily modifiable. Many of the observations in this note relate
 to coding style. The next sections give some context around the use of
 SystemVerilog in digital design, or you can [skip ahead](#guidance) to the
@@ -64,16 +64,16 @@ There is a variety of standard tooling that is used with SystemVerilog, and
 indeed other hardware description languages (HDLs). This includes simulation,
 formal analysis/model checking, formal equivalence checking, coverage analysis,
 synthesis and physical layout, known collectively as electronic design
-automation tools (EDA). Since standard EDA tooling is developed and maintained
+automation (EDA) tools. Since standard EDA tooling is developed and maintained
 as proprietary and closed-source software by companies like Cadence, Synopsys
 and Mentor, the tooling options are multiplied.
 
 In contrast with the open-source software ecosystems of programming languages
 (for example), closed-source EDA tools do not benefit from the scale and
 momentum of open projects, in the way that conventional software languages do,
-with a one (or perhaps two) compilers and associated tooling such as debuggers
+with one (or perhaps two) compilers and associated tooling such as debuggers
 and program analysers. Such a fragmented ecosystem inevitably has a larger
-variability in precisely how features of SystemVerilog language are implemented
+variability in precisely how features of the SystemVerilog language are implemented
 and which features are not supported, particularly since there is no standard
 synthesizable subset. Consequently, engineers using SystemVerilog/HDLs with
 proprietary EDA tools do so conservatively, sticking to a lowest common
@@ -86,7 +86,7 @@ subset), to ensure compatibility and good results.
 ## Overview
 
 This note records rules, conventions and guidance for writing SystemVerilog
-approaches that I have been observed to interact well with the supporting
+that I have observed to interact well with the supporting
 tooling and to encourage good coding style and produce good synthesis results.
 I owe many of these insights to the guidance of my colleagues.
 
@@ -98,7 +98,7 @@ sections:
 - [Types](#types)
 - [Always blocks](#always-blocks)
     * [always_comb](#always_comb)
-    * [always_ff](#always_comb)
+    * [always_ff](#always_ff)
 - [Control flow](#control-flow)
     * [If statements](#if-statements)
     * [Case statements](#case-statements)
@@ -128,7 +128,7 @@ primitive outputs and module ports). An exception to this is when integrating
 external IP that uses wire types where some sparing use of the `wire` type may
 be required for consistency.[^logic-wire-reg]
 
-[^logic-wire-reg]: More details on these types is given
+[^logic-wire-reg]: More details on these types are given
   [here](https://blogs.sw.siemens.com/verificationhorizons/2013/05/03/wire-vs-reg) and
   [here](https://www.verilogpro.com/verilog-reg-verilog-wire-systemverilog-logic).
 
@@ -186,9 +186,9 @@ since they provide extra compile-time checking.[^always-blocks]
 **Use `always_comb` instead of `always` for combinatorial logic.** The
 `always_comb` statement allows tools to check that it does not contain any
 latched state and that no other processes assign to variables appearing on the
-left-hand side. (It's worth checking the LRM for details of of the other
+left-hand side. (It's worth checking the LRM for details of the other
 differences.) The use of an `always_comb` block is also a much clearer
-indication of a combinatorial block that the use of `=` as opposed to `<=`.
+indication of a combinatorial block than the use of `=` as opposed to `<=`.
 
 **Always provide an initial value.** A latch will be inferred if there exists a
 control-flow path in which a value of a signal is not set. Since `always_comb`
@@ -215,8 +215,7 @@ always_comb begin
 end
 ```
 
-**Avoid reading and writing a signal in an `always_comb` block.**
-Avoid reading and writing a signal in an `always_comb` block. The sensitivity
+**Avoid reading and writing a signal in an `always_comb` block.** The sensitivity
 list only includes variables that are read in expressions or functions and it
 excludes variables that are also written to. According to these restrictions, a
 variable that is read and written in a block is excluded from the sensitivity
@@ -225,7 +224,7 @@ However, this style can cause some tools to warn of a simulation-synthesis
 mismatch (presumably because they apply conservative rules from older versions
 of the language standard).
 
-In the following code, the block is triggered only when the the right-hand-side
+In the following code, the block is triggered only when the right-hand-side
 `foo` changes, rather than entering a feedback loop where it shifts continuously:
 
 ``` verilog
@@ -243,21 +242,21 @@ always_comb begin
 end
 ```
 
-**Where possible extract logic into `assign` statements.** Extract single
+**Where possible, extract logic into `assign` statements.** Extract single
 assignments to a variable into a separate `assign` statement, where it is
 possible to do so. This approach uses the features of SystemVerilog
 consistently, rather than using two mechanisms to achieve the same effect. This
 makes it clear that an `always_comb` is used to introduce sequentiality.
 Another opportunity to move logic into separate `assign` statements is with
 complex expressions, such as the Boolean value for a conditional statement.
-Doing this makes the control flow structure clearer, potentially provide
+Doing this makes the control flow structure clearer, potentially provides
 opportunities for reuse, and provides a separate signal when inspecting the
 signals in a waveform viewer.
 
 **Avoid unnecessary sequentiality.** It is easy to add statements to an
 `always_comb` to expand its behaviour, but this should only be done when there
 are true sequential dependencies between statements in the block. In general,
-parallelism should be exposed where ever possible. In the the following
+parallelism should be exposed wherever possible. In the following
 example, the sequentiality is not necessary since the output `set_foo` depends
 independently on the various conditions:
 
@@ -307,14 +306,14 @@ freedoms to other simulators.
 tempting to use a single `always_comb` block to drive multiple signals. In some
 circumstances, there may be good reasons to do this, such as when many output
 signals are used in a similar way, but in the general case, splitting each
-signal into a separate block makes it clear what logic involved in driving that
+signal into a separate block makes it clear what logic is involved in driving that
 signal, and as such, facilitates further simplification.
 
 An additional reason to avoid driving multiple signals per `always_comb` block
 is that [Verilator][verilator] can infer a dependence between two signals,
 leading to false circular combinatorial loops. In these cases, it issues an
-[`UPOPTFLAT` warning][unoptflat] and cannot optimise the path, leading to
-reduced emulation performance. Generally, fixing warnings pertaining to
+[`UNOPTFLAT` warning][unoptflat] and cannot optimise the path, leading to
+reduced simulation performance. Generally, fixing warnings pertaining to
 unoptimisable constructs can improve Verilator's simulation performance by [up
 to a factor of two][verilator-internals].
 
@@ -360,7 +359,7 @@ always_comb begin
   bar = bar_q;
   if (condition_a)
     case (condition_b)
-      0: if (condition_b) begin
+      0: if (condition_c) begin
            bar = ...;
          end
       2: bar = ...;
@@ -375,7 +374,7 @@ end
 **Use `always_ff` instead of `always` for sequential logic.** Similarly to
 `always_comb`, use of `always_ff` permits tools to check that the procedure
 only contains sequential logic behaviour (no timing controls and only one event
-control) that variables on the left-hand side are not written to by any other
+control), that variables on the left-hand side are not written to by any other
 process, and makes clear the intent for sequential logic behaviour with
 non-blocking assignments, `<=`.
 
@@ -399,7 +398,7 @@ logic bit;
 logic bit_q;
 
 always_comb begin
-  bit <= bit_q;
+  bit = bit_q;
   if (set_condition) begin
     bit = 1'b1;
   end
@@ -418,15 +417,15 @@ end
 ```
 
 **Registers should always be reset to a constant value.** Without being reset,
-a flip flop will drive X on its output, which can lead to
+a flip-flop will drive X on its output, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. Having
 registers initialised with a defined value precludes these kinds of mismatches.
 In the above example, `bit_q` is correctly initialised to 0.
 
-**Avoid using synchronous-reset registers.** These type of flip flops are not
+**Avoid using synchronous-reset registers.** These types of flip-flops are not
 typically used because there are circumstances when a clock is not available
 and reset-to-clock paths are not timed in the physical implementation. In cases
-where area and power are constrained, non-reset flip flops can instead be
+where area and power are constrained, non-reset flip-flops can instead be
 deployed for better savings.
 
 In certain circumstances when it is appropriate to use synchronous-reset registers, then
@@ -461,12 +460,12 @@ to initialise the contents to a known state.
 ### If statements
 
 **Avoid mixing block control flow with Boolean expressions.** This is because
-it make it harder for structural coverage analysis tools to break down complex
-conditions into manageable sub terms, or even that analysis will ignore
+it makes it harder for structural coverage analysis tools to break down complex
+conditions into manageable subterms, or even that analysis will ignore
 important conditional context of expressions.
 
 ``` verilog
-// Replace mixed block control flow and boolean expressions:
+// Replace mixed block control flow and Boolean expressions:
 if (enabled) begin
   flag = x && y;
   if (flag) begin
@@ -482,7 +481,7 @@ if (enabled) begin
 end
 
 // Or even better collapsed into a single Boolean expression:
-if (enable && x && y) begin
+if (enabled && x && y) begin
   out = a;
 end
 ```
@@ -557,7 +556,7 @@ The behaviour of an unqualified case statement is that of priority, but without
 the requirement for any case item expressions to match and the corresponding
 violation check. Because case statements are typically used to represent
 parallel choices, an unqualified case does not clearly indicate whether the
-designer has intended the case be priority or parallel. Adding a qualifier
+designer has intended the case to be priority or parallel. Adding a qualifier
 makes this explicit (leading to the right synthesis result) and adds checking.
 
 It is important to have checking of case behaviour: if a violation is reported
@@ -595,8 +594,8 @@ endcase
 ```
 
 **If in doubt, use priority case with a default.** If a designer is not completely sure whether the case conditions
-are always matches and/or are parallel, then they should use a priority case with a default. This way, the
-logic simulated results will always match the synthesized logic.
+always match and/or are parallel, then they should use a priority case with a default. This way, the
+simulated results will always match the synthesized logic.
 
 **The Synopsys full_case/parallel_case compiler directives should not be
 used.** Instead, use either the `unique` or `priority` qualifiers, as
@@ -635,8 +634,8 @@ Note that default conditions are matched only if no case condition matches, so
 they can be used to cover all other case conditions that are not explicitly
 specified. Their inclusion in a case statement must be considered carefully.
 
-Defaults can be used to assign a value to a combinatorial signal to avoid
-latches from being inferred, however it is clearer to provide a default value
+Defaults can be used to assign a value to a combinatorial signal to prevent
+latches from being inferred; however, it is clearer to provide a default value
 at the beginning of an `always_comb` block (see above). This is because it is
 conventional to add a `default` at the end of a `case` statement, which obscures
 the effect of a default, possibly leading to bugs. For example:
@@ -664,13 +663,13 @@ Defaults can be used to trap unexpected case values. However, by specifying
 `unique` or `priority`, unexpected case values will cause either of the
 no-matching-condition or multiple-conditions matching violation checks to fire.
 For example, with a one-hot case select, it is not necessary to add a
-`default: $error(...);` case condition to trap values that are not one hot.
+`default: $error(...);` case condition to trap values that are not one-hot.
 
 There is no `priority0` case statement qualifier, so it is reasonable to
 include an empty `default` with a `priority case` to disable the
 no-matching-condition violation check, similarly to `unique case`. However, it
 is more conventional to use an `if`-`else`-`if` to implement a priority
-encoder. Example of a case-based priority encoder:
+encoder. An example of a case-based priority encoder:
 
 ``` verilog
 priority case (cond)
@@ -679,14 +678,14 @@ priority case (cond)
   VALUE_C: ...
   default: ; // Use an empty default with priority when there are no matching
              // conditions, but could the case equally be written with an
-             // if-then-if statement?
+             // if-else-if statement?
 endcase
 ```
 
 Empty defaults might also be used to plug coverage holes. This can occur when
 the coverage tool expects to see all input combinations and does not understand
 when these are prevented by design, eg with one-hot encoding. Adding an empty
-default may plug this coverage hole, however doing this will typically change
+default may plug this coverage hole; however, doing this will typically change
 the synthesis results because it implies an additional decode/control signal to
 select the default block, which is probably not what the designer intended. In
 such a situation, designers should add coverage waivers where a lack of a
@@ -751,7 +750,7 @@ typedef union packed {
 status_t status_q;
 ```
 
-Bear in mind however that this union introduces potential for the control structure to correspond incorrectly with
+Bear in mind, however, that this union introduces potential for the control structure to correspond incorrectly with
 the enumeration, which may introduce bugs into the design.
 
 **Minimise the amount of logic inside a case statement.** The rationale for
@@ -766,10 +765,10 @@ status_t next_status;
 logic [3:0] mode_q;
 
 always_comb begin
-  next_status = state_q;
+  next_status = status_q;
   unique case(1'b1)
-    status_q.ctrl.stat_start:
-      unique0 case (mode) inside
+    status_q.ctrl.status_start:
+      unique0 case (mode_q) inside
         4'b000?,
         4'b0?00: next_status = STATUS_ERROR;
         default: next_status = STATUS_END;
@@ -782,14 +781,15 @@ end
 
 And instead extract a nested `case` into a separate process, providing a
 result signal to use in the parent case:
-```
+
+``` verilog
 status_t status_q;
 status_t next_status;
 status_t start_next_status;
 logic [3:0] mode_q;
 
 always_comb begin
-  start_next_status = state_q;
+  start_next_status = status_q;
   case (mode_q) inside
     4'b000?,
     4'b0?00: start_next_status = STATUS_ERROR;
@@ -841,8 +841,8 @@ example.
 **Make operator associativity explicit.** This is to avoid any ambiguity over
 the ordering of operators. In particular, always bracket the condition of a
 ternary/conditional expression (`?:`), especially if you are nesting them,
-since they associate left to right, and all other arithmetic and logical
-operators associate right to left.
+since they associate right to left, and all other arithmetic and logical
+operators associate left to right.
 
 ``` verilog
 ... = (a && b) ||
@@ -880,19 +880,19 @@ always_ff @(posedge i_clk or posedge i_rst)
   value_q <= i_rst ? value_t'(42) : value;
 ```
 
-Special care should be taken with sub expressions, since their result length is
+Special care should be taken with subexpressions, since their result length is
 determined automatically by the width of the largest operand. For example,
 without an explicit type cast to a 17-bit result around `a + b`, the carry out
 bit would be lost:
 
 ``` verilog
-logic [15:0] result, a b;
+logic [15:0] result, a, b;
 typedef logic [16:0] sum_t;
 assign result = sum_t'(a + b) >> 1;
 ```
 
 Capture carry out bits (even if they are unused) so the left-hand-side
-assignment width matches the full width of the right hand side. Using a prefix
+assignment width matches the full width of the right-hand side. Using a prefix
 like `unused_` makes the process of signing off any related warnings with the
 downstream synthesis and physical build simpler:
 
@@ -911,7 +911,7 @@ assign sum = value - 1;
 **Use `signed` types for signed arithmetic, and avoid implementing signed
 arithmetic with manual sign extensions.** SystemVerilog uses the signedness of
 an expression to determine how to extend its width (as well as inferring
-signedness of parent expressions). Since the rules for sign determination is
+signedness of parent expressions). Since the rules for sign determination are
 similar to expression size but not the same, making it explicit avoids errors.
 It also facilitates the use of optimised arithmetic implementations in
 synthesis, particularly with multipliers. The following example (adapted from
@@ -952,7 +952,7 @@ expression:
 {unused_co, sum} = a + b + c;
 ```
 
-**Do not mix bitwise and logical operator in the same expression.** There are
+**Do not mix bitwise and logical operators in the same expression.** There are
 different precedence rules for the types, so the behaviour may not be what is
 expected. Instead, break up the expression to make it explicit what the
 intended behaviour is.
@@ -962,7 +962,7 @@ intended behaviour is.
 ## Constants
 
 **Avoid magic numbers.** All numeric constants, with the exception of zero and
-one (for incrementing) should be defined symbolically. All assignment to
+one (for incrementing) should be defined symbolically. All assignments of
 constants must be sized correctly to avoid width-mismatch warnings that must be
 signed off later in the flow.
 
@@ -977,7 +977,7 @@ cast. For example:
 
 ``` verilog
 package m_foo_pkg;
-  typedef logic [1:0] {
+  typedef enum logic [1:0] {
     A, B, C, D
   } enum_t;
 endpackage
@@ -1006,10 +1006,10 @@ endmodule
 ``` verilog
 logic [127:0] data_a;
 
-// Explicitly 32 bits wide, decimal 0 assigment.
+// Explicitly 128 bits wide, decimal 0 assignment.
 assign data_a = 128'd0;
 
-// Explicitly 32 bits wide, binary 0 assignment.
+// Explicitly 128 bits wide, binary 0 assignment.
 assign data_a = 128'b0;
 
 // Avoid.
@@ -1042,7 +1042,7 @@ assign data = '1;
 assign data = 16'hFFFF;
 
 // The replication operator should be used to set all bits to a value.
-assign data = { 16 {1'b1} }; // Equivalent to above assigment
+assign data = { 16 {1'b1} }; // Equivalent to above assignment
 
 // Acceptable since repeated zeroes are still zero.
 assign data = '0;
@@ -1054,7 +1054,7 @@ assign data = 16'h0; // Equivalent
 ## X values
 
 **Assignment of `X` values as don't care values should be avoided.** This is
-for similar reasons for not using non-reset registers, which can lead to
+for similar reasons to not using non-reset registers, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. However, if
 it can be demonstrated that use of X values can provide better QoR in the
 physical build of a block, specific and limited use of `X` values can be
@@ -1066,14 +1066,14 @@ justified.
 ## Naming
 
 Clear and consistent naming is important for a design to be easily understood
-and maintainability by a designer, but naming must facilitate easy manipulation
+and maintained by a designer, but naming must facilitate easy manipulation
 by various tools in the RTL and physical design flows.
 
 During RTL debug, names should allow simple sorting and searching in a
-wave viewer. By using common prefixes for related signals, sorting will place
+waveform viewer. By using common prefixes for related signals, sorting will place
 them together. Similarly, common substrings are useful to filter a subset of
 signals over, for example to select a set of registers or similar signals
-different in pipeline stages.
+in different pipeline stages.
 
 Throughout the physical design flows, names must allow sensible flattening. It
 is typical for synthesis to flatten the hierarchical structure and consequently
@@ -1091,7 +1091,7 @@ excessively long. `fp_opcode` is a reasonable compromise.
 they are not reserved names in the language being used in that file. For
 example: `auto`, `unsigned`, `task`, `register` or `asm`.
 
-**All names must be all lower case and underscore separated.**
+**All names must be all lowercase and underscore separated.**
 For example:
 ```
 module m_cpu;
@@ -1106,8 +1106,8 @@ begin : ecc_encode
 ### Prefixes and suffixes
 
 Name prefixes are generally used to indicate object types (such as module
-instances, flip flops, ports etc), and suffixes are generally used to convey
-semantic information. A good standard set of prefixes and suffixes are
+instances, flip-flops, ports etc), and suffixes are generally used to convey
+semantic information. A good standard set of prefixes and suffixes is
 enumerated below:
 
 <table>
@@ -1126,7 +1126,7 @@ enumerated below:
 </tr>
 <tr>
   <td><code>io_</code></td>
-  <td>Bidirecitonal (inout) port</td>
+  <td>Bidirectional (inout) port</td>
 </tr>
 <tr>
   <td><code>u_</code></td>
@@ -1175,11 +1175,11 @@ enumerated below:
 </tr>
 <tr>
   <td><code>_q</code></td>
-  <td>Signal driven from a flip flop</td>
+  <td>Signal driven from a flip-flop</td>
 </tr>
 <tr>
   <td><code>_n</code></td>
-  <td>Active-low signal</code></td>
+  <td>Active-low signal</td>
 </tr>
 <tr>
   <td><code>_t</code></td>
@@ -1265,7 +1265,7 @@ module m_mempipe (
   always_ff @(posedge i_clk or posedge i_rst) begin
     if (i_rst) begin
       p3_data_q <= 32'h00000000;
-    end else if (e2_valid_q) begin
+    end else if (p2_valid_q) begin
       p3_data_q <= p2_data;
     end
   end
@@ -1282,7 +1282,7 @@ A strict approach to signal naming should be taken to make it easier to
 understand and navigate a design:
 
 **To make clear their relationship to the structure of a module**. Prefixes and
-suffices can denote, for example, whether a signal is an input or output, the
+suffixes can denote, for example, whether a signal is an input or output, the
 pipeline stage it corresponds to and whether it is driven by logic or directly
 from a flip-flop. The exact naming convention will be tailored to a project,
 but here are some examples:
@@ -1297,14 +1297,14 @@ m2_result_ff     // A registered result, driven by a flip-flop.
 o_x4_state       // An output signal driven from stage x4.
 ```
 
-**To allow simple sorting and searching in wave viewer**. By using common
+**To allow simple sorting and searching in waveform viewer**. By using common
 prefixes for related signals, sorting will place them together. Similarly,
 common substrings are useful to filter a subset of signals over, for example to
-select a set of registers or similar signals different in pipeline stages.
+select a set of registers or similar signals in different pipeline stages.
 
 **To be flattened sensibly by downstream tools**. It is typical for synthesis
 to flatten the hierarchical structure of a SystemVerilog design. Consequently
-symbols names are derived from their place in the module hierarchy. A suitable
+symbol names are derived from their place in the module hierarchy. A suitable
 naming scheme really only requires consistency across a design. As an example,
 a flip-flop clock pin might be named
 `u_toplevel_u_submodule_p0_signal_q_reg_17_/CK` corresponding to the register
@@ -1393,7 +1393,7 @@ m_gen_loop
   genblk2[2]
 ```
 
-Using a `g_` prefix for named generate blocks, clearly distinguishes with
+Using a `g_` prefix for named generate blocks clearly distinguishes them from
 instantiations of modules, for example:
 
 ``` verilog
@@ -1432,7 +1432,7 @@ follows.
 
 **Separate combinatorial and sequential nets.** Declarations of combinatorial
 and sequential nets should be separated into different sections for clarity.
-This allows the flip-flops in the design to be seen clearly providing a feel
+This allows the flip-flops in the design to be seen clearly, providing a feel
 for the size and complexity of the block. The following ripple-carry adder with
 registered outputs illustrates this kind of structuring:
 
@@ -1479,7 +1479,7 @@ endmodule
 instantiations.** Doing so can reduce the amount of boilerplate code and thus the
 scope for typing or copy-paste errors. The wildcard `.*` also provides additional checks:[^wildcards]
 
-- It requires all nets be connected.
+- It requires all nets to be connected.
 - It requires all nets to be the same size.
 - It prevents implicit nets from being inferred.
 
@@ -1495,7 +1495,7 @@ module foo (input logic i_clk,
   ...
 endmodule
 
-u_module foo (.*,
+foo u_module (.*,
               .in(in),
               .out(out));
 ```
@@ -1506,7 +1506,7 @@ to make the right tradeoff. Specific examples of where wildcard hookups are
 useful are in wrapper modules and testbenches.
 
 [^wildcards]: See Section 7 of 'Synthesizing SystemVerilog: Busting the Myth
-  that SystemVerilog is only for Verification (linked in the references).
+  that SystemVerilog is only for Verification' (linked in the references).
 
 **Avoid logic in module instantiations.** By instantiating a module with a set
 of named signals, mapping one-to-one with ports, it is easier to inspect the
@@ -1566,7 +1566,7 @@ logic _unused_ok = &{1'b0,
 between multiple modules or IPs.**
 
 **Qualify types, constants, tasks or functions with their package name and
-avoid \* imports.** This resolves any potential ambiguity in the providence of
+avoid \* imports.** This resolves any potential ambiguity in the provenance of
 symbols to the designer and avoids polluting the current scope with all names
 defined by the package. For example:
 
@@ -1600,7 +1600,7 @@ appropriate.
 **In general, it should be possible to avoid any preprocessing of code.** Other
 built-in language structures such as parameters and generate statements should
 be used instead. Don't use local `define` statements in modules unless
-absolutely necessary, use `localparam` instead of `define`:
+absolutely necessary; use `localparam` instead of `define`:
 
 ``` verilog
 // Avoid
@@ -1648,8 +1648,8 @@ global namespace.
 <a name="formatting" class="anchor"></a>
 ## Formatting
 
-Rules for formatting are not mandated so to provide some flexibility to
-designer's own tastes and the inevitable exceptions to rules. Above all, the
+Rules for formatting are not mandated so as to provide some flexibility to
+designers' own tastes and the inevitable exceptions to rules. Above all, the
 most important issue with formatting is to maintain consistency within a
 logical part of the design.
 
@@ -1657,7 +1657,7 @@ logical part of the design.
 programming languages for compatibility with version control and editors etc.
 
 **Split long lines or complex expressions with continuations or across
-statements.** Apply indent as appropriate  for clarity. In this context, 'long'
+statements.** Apply indent as appropriate for clarity. In this context, 'long'
 is a reasonable value chosen by the author, but typically between 80 and 120
 characters.
 
@@ -1690,7 +1690,7 @@ place to find out more.
 - [Sutherland HDL papers](http://www.sutherland-hdl.com/papers.html) on
   Verilog/SystemVerilog, in particular:
 
-    * Stuart Sutherland and Don Mills, Standard gotchas subtleties in the
+    * Stuart Sutherland and Don Mills, Standard gotchas: subtleties in the
       Verilog and SystemVerilog standards that every engineer should know. SNUG 2006.
       ([PDF](http://www.sutherland-hdl.com/papers/2006-SNUG-Boston_standard_gotchas_paper.pdf))
 
@@ -1711,7 +1711,7 @@ place to find out more.
 
 - Clifford E. Cummings and Don Mills. Synchronous Resets? Asynchronous Resets?
   I am so confused! How will I ever know which to use?
-  ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf).
+  ([PDF](http://www.sunburst-design.com/papers/CummingsSNUG2002SJ_Resets.pdf)).
 
 - SystemVerilog's priority & unique - A Solution to Verilog's "full_case" & "parallel_case" Evil Twins!,
   Clifford E. Cummings, SNUG 2005
@@ -1722,7 +1722,7 @@ place to find out more.
 - Verilog HDL Coding, Semiconductor Reuse Standard, Freescale Semiconductor
   ([PDF](https://people.ece.cornell.edu/land/courses/ece5760/Verilog/FreescaleVerilog.pdf)).
 
-- Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides,
+- Complex Digital Systems, Synthesis, MIT OCW, 2005 (presentation slides)
   ([PDF](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-884-complex-digital-systems-spring-2005/lecture-notes/l05_synthesis.pdf)).
 
 - Datapath Synthesis for Standard-Cell Design, Reto Zimmermann, 2009
