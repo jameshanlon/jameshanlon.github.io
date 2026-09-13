@@ -3,7 +3,7 @@ Title: The hardware pseudorandom number generator of the Graphcore IPU
 Date: 2022-09-21
 Category: Computing and Silicon
 Tags: computing, PRNGs
-Summary: A short summary of an investigation into the statisitical quality and
+Summary: A short summary of an investigation into the statistical quality and
          implementation cost in hardware of the xoroshiro128aox PRNG.
 Status: published
 ---
@@ -15,16 +15,16 @@ paper](https://ieeexplore.ieee.org/document/9875973) and was originally written
 to appear on the Graphcore blog.
 
 The Graphcore IPU contains a novel pseudorandom number generator (PRNG) that
-was designed to produce high-quality statistical randomness, whist also being
+was designed to produce high-quality statistical randomness, whilst also being
 cheap to implement in hardware. Having an efficient hardware RNG means
-randomness can be used frequently: the IPUs generator can produce 64-bits of
+randomness can be used frequently: the IPU's generator can produce 64 bits of
 unique randomness from all of its 1,216 tiles every clock cycle. This, for
 example, makes it possible to perform on-the-fly stochastic rounding of
 low-precision floating-point numbers.
 
 We needed a new PRNG because typical state-of-the-art generators are designed
 to be performant when run as software routines, but operations that are cheap
-to execute on a processor may not be cheap to implement in hardware as is the
+to execute on a processor may not be cheap to implement in hardware, as is the
 case for multiplication or division. Our generator ``xoroshiro128aox`` is based
 on [Sebastiano Vigna’s](https://vigna.di.unimi.it/) ``xoroshiro128``
 linear-feedback shift register (LFSR), which is attractive because it uses 128
@@ -32,7 +32,7 @@ bits of state and is cheap to implement in hardware. The LFSR operates by
 performing XOR and fixed-distance shift and rotate operations on the state.
 Following Vigna’s approach of adding a function to ‘scramble’ the LFSR state,
 we have devised a function consisting of AND, OR and XOR operations (called AOX
-for short). An C implementation of ``xoroshiro128aox`` is as follows:
+for short). A C implementation of ``xoroshiro128aox`` is as follows:
 
 ``` C
 uint64_t s0, s1; // State vectors
@@ -57,16 +57,16 @@ uint64_t next(void) {
 
 To determine that this new PRNG provides a good source of randomness, we took
 the conventional approach of subjecting the generator to batteries of
-statistical tests, that aim to detect correlations over large portions of the
-generator’s output. Given that any PRNG is inherently non-random because they
-produce numbers according to a fixed sequence, statistical testing is only as
-good as the tests that they run, and their performance can only be judged on
+statistical tests that aim to detect correlations over large portions of the
+generator’s output. Given that any PRNG is inherently non-random because it
+produces numbers according to a fixed sequence, statistical testing is only as
+good as the tests that are run, and their performance can only be judged on
 their ability to distinguish existing good generators from bad ones. Indeed, a
 novel statistical test could immediately raise the bar for all PRNGs.
 
 Within the field of PRNG design,
 [TestU01’s](http://simul.iro.umontreal.ca/testu01/tu01.html) BigCrush battery
-is accepted as the gold-standard statistical test, however it is not always
+is accepted as the gold-standard statistical test; however, it is not always
 clear exactly what methodology has been used to obtain a pass/fail result. In
 particular, the choice of initial state (the seed) is important because
 different parts of a sequence may have different properties, and TestU01 has
@@ -97,7 +97,7 @@ And to represent the current state-of-the-art 128-bit generators, we include:
   variable rotation operations to produce outputs.
 
 The table below summarises the TestU01 BigCrush results, where the six output
-columns correspond to different permutations of the generators bits (eg 1 is
+columns correspond to different permutations of the generators' bits (eg 1 is
 unchanged, 2 is swapping the most and least significant 32 bits) and the
 numbers are total failures. Since a true random number generator has a
 probability of failing, the expected number of failures can be calculated.
@@ -174,13 +174,13 @@ whereas xoroshiro128+ fails on a particular output permutation where the lower
 </table>
 
 The table below summarises the Gjrand results, which just runs 13 tests and by
-default consumes approximately 10 TB of data. Unlike BigCrush and TestU01,
+default consumes approximately 10 TB of data. Unlike BigCrush and PractRand,
 xoroshiro128aox fails Gjrand on both versions of its z9 test, which looks for
-dependencies in the Hamming Weight of successive outputs. Although BigCrush and
-PractRand include similar tests that analyse Hamming Weight dependencies, they
+dependencies in the Hamming weight of successive outputs. Although BigCrush and
+PractRand include similar tests that analyse Hamming weight dependencies, they
 do not detect correlations. What this shows is that the scrambling of the
 xoroshiro128 LFSR’s state serves to hide correlations due to the linear
-operations only to an extent, and a particular test will be sensitive enough to
+operations only to an extent, and a particular test can be sensitive enough to
 detect them. Given that BigCrush and PractRand did not, xoroshiro128aox
 represents a significant improvement over xoroshiro128+, whilst still being
 cheap to implement in hardware as we show in the next section.
@@ -218,7 +218,7 @@ To demonstrate that xoroshiro128aox is indeed cheap to implement in hardware,
 we compare physical implementations of the generators (excluding Mersenne
 Twister because of its considerable state size) after they have been fully
 synthesised and placed and routed using Graphcore’s 7 nm cell library and a
-target clock period of 1 GHz. The table below summarises the results.
+target clock frequency of 1 GHz. The table below summarises the results.
 
 <table>
 <thead>
@@ -278,7 +278,7 @@ Key takeaways from these results are:
 
 The following are illustrations of the four PRNG circuit floorplans, which make
 clear the differences in implementation complexity (left to right:
-``xoroshiro128aox``, ``xoroshiro128+``, ``pcg64``, ``philox4x32-10``):
+``xoroshiro128+``, ``xoroshiro128aox``, ``pcg64``, ``philox4x32-10``):
 
 <table>
 <tbody>
@@ -288,6 +288,7 @@ clear the differences in implementation complexity (left to right:
   <td>{{ macros.image('prng-quality/pcg64.png', caption='pcg64') }}</td>
   <td>{{ macros.image('prng-quality/philox.png', caption='philox4x32-10') }}</td>
 </tr>
+</tbody>
 </table>
 
 And scaled to relative sizes:
@@ -307,6 +308,7 @@ And scaled to relative sizes:
   <td>{{ macros.image('prng-quality/pcg64.png', size='246x246', caption='pcg64') }}</td>
   <td>{{ macros.image('prng-quality/philox.png', size='446x446', caption='philox4x32-10') }}</td>
 </tr>
+</tbody>
 </table>
 
 ## Summary
@@ -316,7 +318,7 @@ analysis we conducted into the statistical quality of our novel PRNG
 ``xoroshiro128aox``. This has established that our generator mitigates known
 existing weaknesses of ``xoroshiro128+`` on which it is based, and delivers
 comparable levels of statistical quality on the gold-standard BigCrush test set
-as two contemporary fast PRNGs : ``pcg64`` and ``philox4x32-10``. Extending
+as two contemporary fast PRNGs: ``pcg64`` and ``philox4x32-10``. Extending
 testing by using PractRand and Gjrand, we do eventually find that a weakness is
 detectable by Gjrand. Since this is not systematic across the test suites, as
 we have seen for the Mersenne Twister, we can consider ``xoroshiro128aox`` to
