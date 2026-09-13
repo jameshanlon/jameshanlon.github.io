@@ -103,7 +103,9 @@ So that I could easily access the electronics, I integrated the drivers and
 their wiring on a plywood board that sits in the base of a stack. The master
 stack has the power supply, taking mains voltage and providing 5V up to 60W
 (12A) for the three stacks. See the table below for calculated power of the
-LEDs only. Note that the power supply does not output enough power to drive
+LEDs only. The total power drawn is the current multiplied by the 5V supply, of
+which the LED power is delivered to the LED and the remainder is dissipated by
+the driver (see the [LED driver note]({filename}/led-driver.md) for more details). Note that the power supply does not output enough power to drive
 the boxes comfortably (80W would be more comfortable).
 
 <table>
@@ -114,7 +116,8 @@ the boxes comfortably (80W would be more comfortable).
       <th scope="col">Current (A)</th>
       <th scope="col">LED power (W)</th>
       <th scope="col">Driver efficiency</th>
-      <th scope="col">Driver power (W)</th>
+      <th scope="col">Total power (W)</th>
+      <th scope="col">Driver dissipation (W)</th>
     </tr>
   </thead>
   <tbody>
@@ -125,6 +128,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>0.72</td>
       <td>0.48</td>
       <td>1.5</td>
+      <td>0.78</td>
     </tr>
     <tr>
       <td>Green</td>
@@ -133,6 +137,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>1.02</td>
       <td>0.68</td>
       <td>1.5</td>
+      <td>0.48</td>
     </tr>
     <tr>
       <td>Blue</td>
@@ -141,6 +146,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>1.05</td>
       <td>0.7</td>
       <td>1.5</td>
+      <td>0.45</td>
     </tr>
     <tr>
       <td>White</td>
@@ -149,6 +155,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>0.96</td>
       <td>0.64</td>
       <td>1.5</td>
+      <td>0.54</td>
     </tr>
     <tr>
       <td>Total (per pixel)</td>
@@ -157,6 +164,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>3.75</td>
       <td>-</td>
       <td>6</td>
+      <td>2.25</td>
     </tr>
     <tr>
       <td>Total (per stack)</td>
@@ -165,6 +173,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>11.25</td>
       <td>-</td>
       <td>18</td>
+      <td>6.75</td>
     </tr>
     <tr>
       <td>Total</td>
@@ -173,6 +182,7 @@ the boxes comfortably (80W would be more comfortable).
       <td>33.75</td>
       <td>-</td>
       <td>54</td>
+      <td>20.25</td>
     </tr>
   </tbody>
 </table>
@@ -219,8 +229,9 @@ programmed individually and for each program to be compiled with a unique
 identifier, this is not an easy way to experiment with modulating schemes.
 Instead, each PIC is programmed only to change the output intensity, and
 experimentation can be done using Python on the Raspberry Pi over SSH. In this
-scheme, updates are sent to the LED drivers synchronously, as a frame. At
-115,200 bps baud rate over RS485, this is sufficient to deliver up to 389
+scheme, updates are sent to the LED drivers synchronously, as a frame. Each byte sent over
+the UART takes 10 bits, including the start and stop bits, so at 115,200 bps
+baud rate over RS485, a 37-byte frame is sufficient to deliver up to 311
 updates per second. In practice there are overheads that will reduce this. If,
 for smooth graduations between colours, the frame rate was not adequate, an
 optimisation could be to expand the capability of the PIC driver code to
