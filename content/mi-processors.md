@@ -219,7 +219,7 @@ References:
 <img class="float-right" src="{{'MI-chips/google-tpu3.png'|thumbnail('220x220')}}" alt="TPU-3 board">
 
 With few details available on the specifications of the TPU v3, it is likely an
-incremental improvement to the TPU v2: doubling the performance, adding HBM2
+incremental improvement to the TPU v2: more than doubling the per-chip performance, adding HBM2
 memory to double the capacity and bandwidth.
 
 General details (per chip):
@@ -227,9 +227,9 @@ General details (per chip):
 - Announced May 2018.
 - Likely to be 16nm or 12nm.
 - 200W estimated TDP.
-- 123 TFLOPs of BFloat16, likely from doubling the MXUs to four.
+- 123 TFLOPs of BFloat16, achieved via higher clock frequencies and core enhancements.
 - Each MXU has dedicated access to 8 GB of memory.
-- Integrated in four-chip modules (pictured), 492 TFLOPs peak performance.
+- Integrated in four-chip modules (pictured), 492 TFLOPs peak performance and 128 GB of HBM2.
 
 IO:
 
@@ -257,7 +257,7 @@ General details (per chip):
 - 45 TFLOPs of BFloat16.
 - Two cores with scalar and matrix units.
 - Also supports FP32.
-- Integrated in four-chip modules (pictured), 180 TFLOPs peak performance.
+- Integrated in four-chip modules (pictured), 180 TFLOPs peak performance and 64 GB of HBM.
 
 Each core:
 
