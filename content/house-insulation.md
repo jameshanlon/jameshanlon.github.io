@@ -20,7 +20,7 @@ noticeable, with the cold returning quickly after the heating had been on. A
 non-invasive [survey of the building](home-thermal-imaging-survey.html) last
 winter showed up various minor issues but didn't pinpoint a particular issue.
 Further investigation into the upstairs walls revealed there to be virtually no
-insulation, only ~50 mm of glass wool insulation hanging behind the
+insulation, only ~80 mm of glass wool insulation hanging behind the
 plasterboard, as well as direct routes into the floor cavity (along the joists)
 from the eaves. The effective result is a plasterboard tent upstairs with cold
 air circulating just behind the walls, and to an extent the floor/ceiling. In
