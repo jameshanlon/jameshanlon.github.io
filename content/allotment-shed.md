@@ -23,11 +23,11 @@ Project](https://www.bwrp.org.uk/):
 
 Also from the BWRP were: sheets of 12mm ply for the floor and roof, solid wood
 planks for the door, an odd piece of shelving which worked brilliantly as a big
-window sill, baton for the window frame. Other costs were: two boxes of screws
-and roofing nails (Screwfix), acrylic sheet for the window (Wickes). Everything
-else was sourced for free, from friends or found on the streets of Bristol:
-breeze blocks for the base, pallet wood for the cladding, miscellaneous timber
-for the frame, roof felt and felt glue and hinges and shackles for the door.
+window sill, and batten for the window frame. Other costs were: two boxes of
+screws and roofing nails (Screwfix), and acrylic sheet for the window (Wickes).
+Everything else was sourced for free, from friends or found on the streets of
+Bristol: breeze blocks for the base, pallet wood for the cladding, miscellaneous
+timber for the frame, roof felt, felt glue, and hinges and shackles for the door.
 
 I didn't keep details of all the money spent, but the final cost was
 approximately £150 and the end result was a sturdy shed that should last quite a
