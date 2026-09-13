@@ -22,11 +22,11 @@ A chip can be viewed as a set of input ports that feed into a series of
 combinatorial and sequential cells, and arrive at a set of output ports. To
 test that the function of the chip is correct, it would suffice to check that a
 particular output is generated for a particular input, or sequence of inputs
-and outputs. However, if the intervening logic contains sequential elements, is
-computationally difficult to setup inputs each clock cycle to observe desired
+and outputs. However, if the intervening logic contains sequential elements, it is
+computationally difficult to set up inputs each clock cycle to observe desired
 values on all outputs. Doing so requires sequencing of state transitions
 through the logic, but the size of the state space grows exponentially with the
-number of states.
+number of state elements.
 
 <figure>
   <img src="{{'DFT/chip.png'|asset}}">
@@ -40,18 +40,19 @@ To avoid an intractable state space, the design is changed so that inputs and
 observable outputs are separated only by combinatorial logic. This is done by
 adding new controllable **primary inputs** and **observable outputs**, called
 **scan chains**. A scan chain adds three ports to the chip: a scan chain input,
-``scan_in``, a scan chain output ``scan_out`` and an enable ``scan_enable``.
+``scan_in``, a scan chain output,
+``scan_out``, and an enable, ``scan_enable``.
 All registers are converted by adding a multiplexer on the D pin, with one
-input connected to the data signal. The first scan-chain register has it’s
+input connected to the data signal. The first scan-chain register has its
 other multiplexer input connected to ``scan_in``. Subsequent scan registers
 take their other multiplexer inputs from the output of the previous register in
-the chain. The final register in the chain drives ``scan_out`` from it’s D pin.
+the chain. The final register in the chain drives ``scan_out`` from its Q pin.
 All multiplexers are controlled by ``scan_enable``.
 
 <figure>
   <img src="{{'DFT/scan-flop.png'|asset}}">
   <figcaption>
-    A standard flip flop (left) and a scanned flip flop with scan-in and
+    A standard flip-flop (left) and a scanned flip-flop with scan-in and
 scan-enable inputs (right).
   </figcaption>
 </figure>
@@ -71,14 +72,14 @@ inputs allow a simple test procedure to be implemented:
 1.	Set ``scan_enable`` high (scan mode).
 2.	Shift in N bits of input data.
 3.	Set ``scan_enable`` low (functional mode).
-4.	Tick the clock once to propagate input vector though combinatorial logic into outputs.
+4.	Tick the clock once to propagate the input vector through combinatorial logic into outputs.
 5.	Set ``scan_enable`` high (scan mode).
 6.	Shift out N bits of output data.
 7.	Check that the output data equals the input data transformed by the same logic function.
 
 Since typical tests will contain large numbers of patterns, the time to test
-one pattern is critical. It is determined by the length of the chain, to shift
-in and out data. To reduce test time, additional scan chains can be introduced
+one pattern is critical. It is determined by the time to shift
+data in and out, which depends on the length of the chain. To reduce test time, additional scan chains can be introduced
 to allow shifting to be performed in parallel. Each chain adds ``scan_in`` and
 ``scan_out`` ports to the chip. The number of scan chains is chosen to trade
 off the physical requirements of the additional ports and routing with test
@@ -97,15 +98,15 @@ patterns to the inputs and compresses results from the outputs.
 
 Typically, a chip is too complex to test with a single set of scan chains. Even
 with only combinatorial logic between primary inputs and observable outputs, it
-becomes computationally difficult to analyse to generate patterns that can
+becomes computationally difficult to analyse and generate patterns that can
 effectively exercise it to achieve good coverage and fault isolation. Instead,
-a chip is divided into sub components, each of which is amenable to testing (an
+a chip is divided into subcomponents, each of which is amenable to testing (an
 approach known as hierarchical DFT). The components are referred to as **test
 cores** and typically naturally correspond to functional blocks of the chip
 design.
 
 It is necessary for a test core to be isolated from the rest of the design. At
-a chip-level primary inputs are controllable in that their values are always
+the chip level, primary inputs are controllable in that their values are always
 known. However, the values of an input to a test core are unknown and likely to
 be Xs. If X values propagate into a test core, coverage can be reduced, or
 worse, the testing methodology may be invalidated altogether. Isolation is
@@ -143,14 +144,14 @@ with any other test core, the captured values can be shifted out with the other
 test pattern results to ensure all of the registers are functioning correctly.
 
 An **output wrapper chain** behaves exactly as an internal scan chain during test
-mode. However, when they are shared with an adjacent test core, their
-``scan_enable`` is controlled differently since they will function as an input
+mode. However, when it is shared with an adjacent test core, its
+``scan_enable`` is controlled differently since it will function as an input
 wrapper chain for that core, with the behaviour described above.
 
 <figure>
   <img src="{{'DFT/adjacent-test-cores.png'|asset}}">
   <figcaption>
-    Test core B shares core B's output wrapper chain, using it as an input wrapper chain in test mode.
+    Test core B shares core A's output wrapper chain, using it as an input wrapper chain in test mode.
   </figcaption>
 </figure>
 
@@ -168,7 +169,7 @@ of the circuit.
 <figure>
   <img src="{{'DFT/xbnd-flop.png'|asset}}">
   <figcaption>
-    A X-source flop with bypass multiplexing of a known value.
+    An X-source flop with bypass multiplexing of a known value.
   </figcaption>
 </figure>
 
