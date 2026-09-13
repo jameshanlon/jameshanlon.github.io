@@ -14,14 +14,14 @@ started to deliver state-of-the-art results, with deep neural network-based
 algorithms displacing conventional machine-learning and programmed ones in many
 areas.
 
-The recent developments in neural networks, since around 2010,  has coincided
+The recent developments in neural networks, since around 2010, have coincided
 with the availability of commodity high-performance GPUs. These devices provide
 enough memory and compute that networks can be trained with large datasets, in
 the order of hours or days, to perform classification tasks for practical and
-interesting problems such as image and speech recognition. Although GPUs have
-established themselves as the standard way to accelerate neural networks, they
-have done this by transitioning relatively quickly from applications in
-traditional HPC, but they are already evolving to meet the needs of machine
+interesting problems such as image and speech recognition. GPUs have
+established themselves as the standard way to accelerate neural networks,
+having transitioned relatively quickly from applications in
+traditional HPC, and they are already evolving to meet the needs of machine
 learning. In this article I want to discuss some of the challenges that neural
 networks and their development present to GPUs, and indeed more generally to
 the status quo of computer architecture.
@@ -45,22 +45,22 @@ fully connected with 4,096, 4,096 and 1,000 neurons respectively, requiring
 a single input image with a trained network, the same number of MACs.
 
 The use of [convolutional layers][#ConvNetsLink] reduces the number of
-parameters by sharing a small sets between the neurons. The five
+parameters by sharing small sets of them between neurons. The five
 convolutional layers preceding the fully-connected layers in AlexNet contain
-just 2.5 million neurons, but require 655.6 million MACs per input. AlexNet was
-state of the art in 2009 and networks since then have developed with many more
+just 2.5 million parameters, but require 655.6 million MACs per input. AlexNet was
+state of the art in 2012 and networks since then have developed with many more
 convolutional layers and a smaller fully connected component, resulting in
 relatively slow growth in the number of parameters but significant increases in
 the number of MACs. A variant of the [VGG network][#VGGNetLink]
 (2014) with 19 layers (three fully connected) has 143.6 million parameters and
-requires a total of 19.6 million MACs in the forward pass. A variant of the
+requires a total of 19.6 billion MACs in the forward pass. A variant of the
 [ResNet network][#ResNetLink] (2015) with 50 layers (one fully connected) has
 25.5 million parameters and 3.8 billion MACs for the forward pass. More [recent
 work][#StocDepthLink] has demonstrated benefits of networks with more than
 1,000 layers.
 
 When a network is being trained, more compute is required by an additional
-backwards pass and and memory requirements increase since intermediate values
+backwards pass and memory requirements increase since intermediate values
 for each parameter must be maintained from the forward pass.
 
 The challenge for computer architecture here is to deliver the huge number of
@@ -97,19 +97,19 @@ of layers.
 ## Precision
 
 Reducing the precision of arithmetic reduces the cost of memory and compute
-since lower-precision floating-point numbers require less bits of storage and
-require smaller more power-efficient structures in silicon to implement
+since lower-precision floating-point numbers require fewer bits of storage and
+require smaller, more power-efficient structures in silicon to implement
 arithmetic operations. Recent research has demonstrated that representations
 between 8 and 16 bits can deliver [similar results][#LowPrecisionLink] to
-32-bit precision for inference and training. This has already has an impact on
+32-bit precision for inference and training. This has already had an impact on
 architecture: Google has claimed a [10x increase in efficiency][#TPULink] with
-it's Tensor Processing Unit (TPU) using [8-bit precision][#8BitTFLink], and
+its Tensor Processing Unit (TPU) using [8-bit precision][#8BitTFLink], and
 Nvidia's new Pascal architecture supports [16-bit floating-point
 arithmetic][#PascalFP16Link] at twice the rate of single precision, and [8-bit
 integer arithmetic][#PascalInt8Link] at four times the rate. Intel have also
 [recently announced][#KnightsMillLink] a variant of their Xeon Phi processor,
-code named Knights Mill, that will be optimised for deep learning with variable
-precision floating-point arithmetic.
+code-named Knights Mill, that will be optimised for deep learning with variable-precision
+floating-point arithmetic.
 
 [#LowPrecisionLink]: https://arxiv.org/abs/1412.7024
 
@@ -132,7 +132,7 @@ proposed][#NNArchLink]. For example, [residual connections][#ResNetLink]
 provide a pathway between non-adjacent layers, [fractal
 architectures][#FractalArchLink] have self-similar structures at different
 scales and entire neural networks can be [used as basic building
-blocks][#NetInNetArchLink]. There can also by dynamism in the structure;
+blocks][#NetInNetArchLink]. There can also be dynamism in the structure;
 [dropout][#DropoutLink] prevents overfitting by randomly removing connections
 during training to 'thin' the network, and networks with [stochastic
 depth][#StochasticDepthLink] randomly exclude subsets of layers during training
@@ -163,11 +163,11 @@ structures.
 
 There are [many languages, frameworks and libraries][#MLProgrammingListLink]
 available for creating deep-learning applications and they are having to
-evolve quickly though to keep up with the pace of research. This is a strong
+evolve quickly to keep up with the pace of research. This is a strong
 indication that the means by which we program neural networks need to be
 general enough to facilitate experimentation but also deliver reasonable
 performance so that it is practical to explore different designs and
-hyper parameters.
+hyperparameters.
 
 However, there is a gulf between the high-level representations of neural
 networks used by researchers and their actual implementation on hardware.  For
@@ -198,13 +198,13 @@ deliver more performance for a wider range of programs.
 
 Finally, a unique aspect of machine-learning algorithms is the separation
 between the phase in which they are trained and their subsequent deployment for
-inference.  Since training demands more compute and memory resources and is
+inference.  Training demands more compute and memory resources and is
 typically carried out in a data-centre environment where space, power and, to
 some extent, time are not constraining issues.  A trained neural network can be
 deployed in more constrained environments, such as mobile or robotics, where
-they may be reacting in real time, to a voice user interface or sensor input
-for example, with limited memory and power. They may also continue to learn as
-they are exposed to more data.
+it may be reacting in real time, to a voice user interface or sensor input
+for example, with limited memory and power. It may also continue to learn as
+it is exposed to more data.
 
 The result of training is a set of parameter values and portability to another
 platform requires the weights to be loaded in an implementation of the same
@@ -219,8 +219,8 @@ would further improve portability between platforms.
 
 There have been some efforts to try to measure aspects of the implementation,
 deployment and performance of deep neural networks. In particular
-[Deepmark][#DeepMarkLink], which is based on specific networks, and
-[Deepbench][#DeepBenchLink], which takes a simpler approach by just looking at
+[DeepMark][#DeepMarkLink], which is based on specific networks, and
+[DeepBench][#DeepBenchLink], which takes a simpler approach by just looking at
 important kernels.
 
 [#DeepMarkLink]: https://github.com/DeepMark/deepmark
@@ -229,8 +229,8 @@ important kernels.
 
 ## In summary
 
-Modern deep neural networks are now state-of-the-art in many application areas
+Modern deep neural networks are now state of the art in many application areas
 of computing but with their unique characteristics, they pose a significant
-challenge to conventional computer architecture. This challenge however is also
+challenge to conventional computer architecture. This challenge, however, is also
 an opportunity to build new machines and programming languages that break away
 from the status quo of sequential shared-memory von Neumann machines.
