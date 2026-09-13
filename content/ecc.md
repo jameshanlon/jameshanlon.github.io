@@ -319,13 +319,13 @@ creating a mask to flip the bit in that position:
 
 ``` verilog
 unique case(syndrome)
-  4'b1110: correction = 1<<0;
-  4'b0111: correction = 1<<1;
-  4'b1011: correction = 1<<2;
-  4'b1101: correction = 1<<3;
-  4'b1100: correction = 1<<4;
+  4'b0111: correction = 1<<0;
+  4'b1110: correction = 1<<1;
+  4'b1101: correction = 1<<2;
+  4'b1011: correction = 1<<3;
+  4'b0011: correction = 1<<4;
   4'b0110: correction = 1<<5;
-  4'b0011: correction = 1<<6;
+  4'b1100: correction = 1<<6;
   4'b1001: correction = 1<<7;
   default: correction = 0;
 endcase
@@ -350,7 +350,7 @@ since it uses only three-bit patterns, mapping syndromes to correction masks
 can be done with three-input AND gates:
 
 ``` verilog
-unique case(syndrome)
+case (1'b1)
   syndrome[0] && syndrome[1] && syndrome[2]: correction = 1<<0;
   syndrome[0] && syndrome[1] && syndrome[3]: correction = 1<<1;
   syndrome[0] && syndrome[2] && syndrome[3]: correction = 1<<2;
@@ -363,8 +363,8 @@ unique case(syndrome)
 endcase
 ```
 
-And any syndromes with one or two bits set are correctable, and otherwise
-uncorrectable.
+A syndrome with one bit set, or three bits matching a pattern, is correctable.
+An even number of bits set indicates an uncorrectable double error.
 
 
 ## References / further reading
