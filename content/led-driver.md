@@ -4,7 +4,7 @@ Date: 2018-12-30
 Category: Physical Projects
 Tags: lighting, electronics
 Summary: An LED driver module controlled by a PIC12F1572 and with CAT4101
-         drivers, deployable in an array via a RS485 interface.
+         drivers, deployable in an array via an RS485 interface.
 Status: published
 Math: true
 ---
@@ -20,8 +20,8 @@ Math: true
 This note describes an LED driver I designed for a lighting project. I decided
 on a custom solution because I couldn't find any suitable boards available to
 buy at a reasonable price. The intended application (which I will describe in
-another note) requires 12 high-power (~1W) LEDs to be driven individually a 3 by 3
-grid measuring approximately 1 metre square, with each of the nine cell
+another note) requires 36 high-power (~1W) LEDs to be driven individually in a 3 by 3
+grid measuring approximately 1 metre square, with each of the nine cells
 containing a red, green, blue and white LED.
 
 I embarked on this project without any experience of designing PCBs, and with
@@ -37,37 +37,37 @@ The board is designed around the following main IC components:
 
 - Microchip PIC12F1572 for PWM LED control and serial communication. This was
   the simplest PIC I could find that had multiple PWM outputs and UART serial
-communication capability. It's an 8-bit device with 16-bit PWMs and 3.5 KBs of
+communication capability. It's an 8-bit device with 16-bit PWMs and 3.5 KB of
 program memory.
 
-- Maxim MAX485 for communication to multiple of these boards. This IC provides
+- Maxim MAX485 for communication between multiple boards. This IC provides
   half-duplex communication over a 2-wire differential pair using the RS485
-protocol, allowing communication over long distances. Importantly it supports
+protocol, allowing communication over long distances. Importantly, it supports
 multiple drops, so a number of boards can be wired together with a bus. I chose
 this as it is very simple to integrate, with no additional components required,
 compared to the capacitors necessary for the MAX232. Talking to the PIC, this
 can support a baud rate of 115,200 bps.
 
-- ON Semiconductor CAT4101 for driving LEDs with a constant-current up to 1A
+- ON Semiconductor CAT4101 for driving LEDs with a constant current of up to 1A
 with PWM control. Because the temperature fluctuations of high-power LEDs
-affects their forward voltage, driving them with a constant current is
-important to avoid damage due to over voltage. These chips neatly integrate
+affect their forward voltage, driving them with a constant current is
+important to avoid damage due to overvoltage. These chips neatly integrate
 this with the PWM control ability. Their only downsides were their cost (~£2
 each - with 36 of them needed for my lighting project, they were the greatest
-single expense) and package which isn't designed to be hand soldered.
+single expense) and their package, which isn't designed to be hand-soldered.
 
 Other features:
 
 - Header for in-circuit PIC programming. To disconnect the UART pins (required
-  for programming) and to attach a 10K pull up resistor, I included three
-  jumper headers. However, I found connecting the pull up wasn't necessary for
+  for programming) and to attach a 10K pull-up resistor, I included three
+  jumper headers. However, I found connecting the pull-up wasn't necessary for
   programming.
 
 - Screw terminals for all installation connections.
 
 - Indicator LEDs for UART TX and RX directions, and power.
 
-I designed the PCB using the excellent [KiCAD](http://kicad-pcb.org/) and had
+I designed the PCB using the excellent [KiCad](http://kicad-pcb.org/) and had
 it manufactured very cheaply by [Seeed Studio](https://www.seeedstudio.com/fusion_pcb.html)
 in Shenzhen, China.
 
@@ -84,7 +84,7 @@ Here's the schematic:
 <table>
   <thead>
     <tr>
-      <th cope="col">Quantity</th>
+      <th scope="col">Quantity</th>
       <th scope="col">Package</th>
       <th scope="col">Description</th>
     </tr>
@@ -159,7 +159,7 @@ Here's the schematic:
 </table>
 
 The CAT4101 sense resistors are chosen to give a constant current close to 300
-mA, at 1.4 KOhms. See the CAT4101 [datasheet][#cat4101-datasheet] for more details.
+mA, at 1.4 kOhm. See the CAT4101 [datasheet][#cat4101-datasheet] for more details.
 
 For reference, I have assumed the following parameters of the LEDs I
 used (you should however check the datasheet for a particular LED):
@@ -197,7 +197,7 @@ used (you should however check the datasheet for a particular LED):
     <tr>
       <td>White</td>
       <td>2.8-3.4</td>
-      <td>1W Ice White LED (Bridgelux 9000-15000k)</td>
+      <td>1W Ice White LED (Bridgelux 9000-15000K)</td>
       <td><a href="https://futureeden.co.uk/collections/ice-white-bridgelux-power-led-9000-15000k/products/1w-ice-white-led-bridgelux-12000k-with-pcb">Future Eden</a></td>
     </tr>
   </tbody>
@@ -270,14 +270,14 @@ boards would be controlled by another processor broadcasting on the RS485 bus.
 I used a Raspberry Pi with an RS485 shield to do this.
 
 At a minimum, the PICs need to set the intensity of each LED they control,
-which is the current operation of the firmware. They could however be triggered
+which is the current operation of the firmware. They could, however, be triggered
 to perform more complex modulations. This would reduce the data transmission
 requirements on the RS485 bus, potentially improving the quality of animations
 produced by an array.
 
 The PIC microcontrollers are programmed in C, which I did using Microchip's XC
-compiler and MPLab IDE software. In order that each board can uniquely identify
-it's control data, they are compiled with a unique ID. With a deployment of 12
+compiler and MPLAB IDE software. In order that each board can uniquely identify
+its control data, they are compiled with a unique ID. With a deployment of 12
 boards, firmware updates are a little arduous, particularly since the two
 jumpers need to be removed as well.
 
@@ -341,8 +341,8 @@ if (RCREGbits.RCREG == START_PACKET) {
 
 # Improvements
 
-- Adjust the CAT4101 sense resistor to deliver closer to 300 mA (1.5-1.6 KOhm).
-- Remove the 10K pull up resistor for programming the PIC since it is
+- Adjust the CAT4101 sense resistor to deliver closer to 300 mA (1.5-1.6 kOhm).
+- Remove the 10K pull-up resistor for programming the PIC since it is
   unnecessary.
 - Update the defunct silk screen URL to my new jameswhanlon.com domain.
 
