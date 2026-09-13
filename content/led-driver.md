@@ -206,9 +206,10 @@ used (you should however check the datasheet for a particular LED):
 The CAT4101 is a [linear driver][#linear-driver], so it effectively acts as a
 variable resistor to deliver constant current, with an efficiency of
 $V_{led}/V_{supply}$. A disadvantage of driving each LED individually is that
-its efficiency can be low, down to 50%. The power delivered to the LED is
-$I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
-\times V_{supply}$ (not including quiescent power).
+its efficiency can be low, down to 50%. With a 5 V supply, the total power
+drawn is $I_{led} \times V_{supply}$, of which $I_{led} \times V_{led}$ is
+delivered to the LED and the remainder, $I_{led} \times (V_{supply} -
+V_{led})$, is dissipated by the driver (not including quiescent power).
 
 [#linear-driver]: https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver
 
@@ -220,7 +221,8 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
       <th scope="col">Current (A)</th>
       <th scope="col">LED power (W)</th>
       <th scope="col">CAT4101 efficiency</th>
-      <th scope="col">Driver power (W)</th>
+      <th scope="col">Total power (W)</th>
+      <th scope="col">Driver dissipation (W)</th>
     </tr>
   </thead>
   <tbody>
@@ -231,6 +233,7 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
       <td>0.72</td>
       <td>0.48</td>
       <td>1.5</td>
+      <td>0.78</td>
     </tr>
     <tr>
       <td>Green</td>
@@ -239,6 +242,7 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
       <td>1.02</td>
       <td>0.68</td>
       <td>1.5</td>
+      <td>0.48</td>
     </tr>
     <tr>
       <td>Blue</td>
@@ -247,6 +251,7 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
       <td>1.05</td>
       <td>0.7</td>
       <td>1.5</td>
+      <td>0.45</td>
     </tr>
     <tr>
       <td>White</td>
@@ -255,6 +260,7 @@ $I_{led} \times V_{led}$ and the power dissipated by the driver is $I_{led}
       <td>0.96</td>
       <td>0.64</td>
       <td>1.5</td>
+      <td>0.54</td>
     </tr>
   </tbody>
 </table>
@@ -285,9 +291,10 @@ I found that an efficient communication protocol between an array of boards
 and the main controller (Raspberry Pi) is a sequence of bytes with the first
 uniquely determining the header and the following 36 determining the intensity
 of each of the individual LEDs. Each board uses its ID to choose three values
-in the payload. At 115,200 bps, this in theory allows up to 389 commands to
-be sent per second. Note that the boards do not send an acknowledgement, since
-this significantly reduces the throughput. In Python a packet can be sent with
+in the payload. Each byte sent over the UART takes 10 bits, including the start
+and stop bits, so at 115,200 bps a 37-byte packet in theory allows up to 311
+commands to be sent per second. Note that the boards do not send an
+acknowledgement, since this significantly reduces the throughput. In Python a packet can be sent with
 ([snippet from here](https://github.com/jameshanlon/rgb-stacks/blob/master/rgbstacks.py)):
 
 ```
@@ -354,4 +361,4 @@ if (RCREGbits.RCREG == START_PACKET) {
 - [Easy CAT4101 LED Driver (Instructables)](https://www.instructables.com/id/Easy-CAT4101-LED-Driver/)
 - [High power LED driver circuits (Instructables)](https://www.instructables.com/id/Circuits-for-using-High-Power-LED-s/)
 - [Power LED's - Simplest Light With Constant-current Circuit (Instructables)](https://www.instructables.com/id/Power-LED-s---simplest-light-with-constant-current/)
-- [Re: Help understanding electrical efficiency of LEDs with PWM dimming (Candle Power Forums)](https://electronics.stackexchange.com/questions/344547/how-do-i-calculate-the-efficiency-of-a-linear-constant-current-led-driver)
+- [Re: Help understanding electrical efficiency of LEDs with PWM dimming (Candle Power Forums)](https://www.candlepowerforums.com/threads/help-understanding-electrical-efficiency-of-leds-with-pwm-dimming.386772/)
