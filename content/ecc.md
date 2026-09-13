@@ -3,39 +3,39 @@ Title: Error-correcting codes
 Date: 2020-05-02
 Category: Computing and Silicon
 Tags: computing
-Summary: Using Hamming Codes for single error correction and double error
+Summary: Using Hamming codes for single error correction and double error
          detection.
 Status: published
 Math: true
 ---
 
-Error correcting codes (ECCs) are used in computer and communication systems to
+Error-correcting codes (ECCs) are used in computer and communication systems to
 improve resiliency to bit flips caused by permanent hardware faults or
 transient conditions, such as neutron particles from cosmic rays, known
 generally as [soft errors](https://en.wikipedia.org/wiki/Soft_error). This note
-describes the principles of Hamming codes that underpin ECC schemes, ECC codes
-are constructed, focusing on single-error correction and double error
+describes the principles of Hamming codes that underpin ECC schemes, how the codes
+are constructed, focusing on single-error correction and double-error
 detection, and how they are implemented.
 
 ECCs work by adding additional redundant bits to be stored or transported with
 data. The bits are encoded as a function of the data in such a way that it is
 possible to detect erroneous bit flips and to correct them. The ratio of the
 number of data bits to the total number of bits encoded is called the *code
-rate*, with a rate of 1 being a an impossible encoding with no overhead.
+rate*, with a rate of 1 being an impossible encoding with no overhead.
 
 ## Simple ECCs
 
 **Parity coding** adds a single bit that indicates whether the number of set
-bits in the data is odd or even. When the data and parity bit is accessed or
+bits in the data is odd or even. When the data and parity bit are accessed or
 received, the parity can be recomputed and compared. This is sufficient to
 detect any odd number of bit flips but not to correct them. For applications
 where the error rate is low, so that only single bit flips are likely and
 double bit flips are rare enough to be ignored, parity error detection is
-sufficient and desirable due to it's low overhead (just a single bit) and
+sufficient and desirable due to its low overhead (just a single bit) and
 simple implementation.
 
 **Repetition coding** simply repeats each data bit a fixed number of times. When
-the encoded data is received, if each of the repeated bits are non identical,
+the encoded data is received, if the repeated bits are not identical,
 an error has occurred. With a repetition of two, single-bit errors can be
 detected but not corrected. With a repetition of three, single bit flips can be
 corrected by determining each data bit as the majority value in each triple,
@@ -85,11 +85,11 @@ cause correction to the wrong valid codeword.
 111 < Valid codeword
 ```
 
-With Hamming distance four, two bit flips moves any valid codeword Hamming
+With Hamming distance four, two bit flips move any valid codeword Hamming
 distance two from exactly two valid codewords, allowing detection of two flips
 but not correction. Single bit flips can be corrected as they were for distance
-three. Distance-four codes are widely used in computing, where is it often the
-case where single errors are frequent, double errors are rare and triple errors
+three. Distance-four codes are widely used in computing, where it is often the
+case that single errors are frequent, double errors are rare and triple errors
 occur so rarely they can be ignored. These codes are referred to as 'SECDED
 ECC' (single error correction, double error detection).
 
@@ -158,7 +158,7 @@ is always the closest one. The following table summarises Hamming codes.
 
 ## Creating a Hamming code
 
-A codeword includes the data bits and checkbits. Each check bit corresponds to
+A codeword includes the data bits and check bits. Each check bit corresponds to
 a subset of the data bits and it is set when the parity of those data bits is
 odd. To obtain a code with a particular Hamming distance, the number of check
 bits and their mapping to data bits must be chosen carefully.
@@ -166,7 +166,7 @@ bits and their mapping to data bits must be chosen carefully.
 To build a single-error correcting (SEC) code that requires Hamming distance
 three between valid codewords, it is necessary for:
 
-- The mapping of each data bit to check bits is unique.
+- The mapping of each data bit to check bits to be unique.
 - Each data bit to map to at least two check bits.
 
 To see why this works, consider two distinct codewords that necessarily
@@ -185,7 +185,7 @@ must have different data bits. If the data bits differ by:
 To build a SECDED code that requires Hamming distance of four between valid
 codewords, it is necessary for:
 
-- The mapping of each data bit to check bits is unique.
+- The mapping of each data bit to check bits to be unique.
 - Each data bit to map to at least three check bits.
 - Each check bit pattern to have an odd number of bits set.
 
@@ -195,7 +195,7 @@ by:
 - **1 bit** flips three check bits, giving a total of four different bits.
 
 - **2 bits** flip check bits in two patterns, and since any two odd-length patterns
-  must have at least two non-overlapping bits, the results is at least two
+  must have at least two non-overlapping bits, the result is at least two
   flipped bits, giving a total of four different bits. For example:
 
 ``` text
@@ -265,7 +265,7 @@ data[7]      x     x x
 Note that mappings of data bits to check bits can be chosen flexibly, providing
 they maintain the rules that set the Hamming distance. This flexibility is
 useful when implementing ECC to reduce the cost of calculating the check bits.
-In contrast, many descriptions of ECC that I have found in text books and on
+In contrast, many descriptions of ECC that I have found in textbooks and on
 [Wikipedia](https://en.wikipedia.org/wiki/Hamming_code) describe a specific
 encoding that does not acknowledge this freedom. The encoding they describe
 allows the syndrome to be interpreted as the bit index of the single bit error,
@@ -276,7 +276,7 @@ power-of-two positions, for no apparent benefit.
 
 ## Implementing ECC
 
-Given data bits and check bits, and mapping of data bits to check bits, ECC
+Given data bits and check bits, and a mapping of data bits to check bits, ECC
 encoding works by calculating the check bits from the data bits, then combining
 data bits and check bits to form the codeword. Decoding works by taking the
 data bits from a codeword, recalculating the check bits, then calculating the
@@ -298,10 +298,10 @@ assign check_word[3] = data[1] ^ data[2] ^ data[3] ^ data[6] ^ data[7];
 And the codeword formed by concatenating the check bits and data:
 
 ``` verilog
-assign codeword = {check[3:0], data[7:0]};
+assign codeword = {check_word[3:0], data[7:0]};
 ```
 
-Decoding of a codeword, splits it into the checkword and data bits, recomputes
+Decoding a codeword splits it into the check word and data bits, recomputes
 the check bits and calculates the syndrome:
 
 ``` verilog
@@ -338,9 +338,9 @@ assign corrected_data = data ^ correction;
 ```
 
 The value of the syndrome can be further inspected to signal what action has
-been taken. If the syndrome is:
+been taken. If the syndrome:
 
-- Equal to zero, no error occurred.
+- Is zero, no error occurred.
 - Has one bit set, then this is a flip of a check bit and can be ignored.
 - Has a value matching a pattern (three bits set or two bits in the adjacent positions), a correctable error occurred.
 - Has a value not matching a pattern (two bits set in the other non-adjacent positions: `4'b1010`, `4'b0101`), or four bits set, a multi-bit uncorrectable error occurred.
