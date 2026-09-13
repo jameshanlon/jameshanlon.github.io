@@ -10,7 +10,7 @@ Status: published
 
 This note summarises details of some of the new silicon chips for machine
 intelligence. Its aim is to distil the most important implementation and
-architectural details (at least that are currently available), to highlight the
+architectural details (at least those that are currently available), to highlight the
 main differences between them. I'm focusing on chips designed for training
 since they represent the frontier in performance and capability. There are many
 chips designed for inference, but these are typically intended for use in
@@ -144,7 +144,7 @@ In summary:
     <td>24.6</td>
     <td>16.3</td>
     <td>130.5</td>
-    <td>672 (HBM2)</td>
+    <td>672 (GDDR6)</td>
     <td>100</td>
   </tr>
 </tbody>
@@ -156,11 +156,11 @@ In summary:
 
 <img class="float-right" src="{{'MI-chips/cerebras-wse.png'|thumbnail('220x220')}}" alt="Cerebras chip">
 
-The Cerebras Wafer-Scale Engine (WSE) is undoubtedly the most bold and
+The Cerebras Wafer-Scale Engine (WSE) is undoubtedly the boldest and
 innovative design to appear recently. Wafer-scale integration is not a new
 idea, but integration issues to do with yield, power delivery and thermal
 expansion have made it difficult to commercialise (see the 1989 [Anamartic 160
-MB solid state disk][anamartic]). Cerebras use this approach to integrate 84
+MB solid-state disk][anamartic]). Cerebras use this approach to integrate 84
 chips with high-speed interconnect, uniformly scaling the 2D-mesh based
 interconnect to huge proportions. This provides a machine with a large amount
 of memory (18 GB) distributed among a large amount of compute (3.3 Peta FLOPs
@@ -173,7 +173,7 @@ which will necessitate such scaling.
 General details:
 
 - Announced August 2019.
-- 46,225 mm<sup>2</sup> wafer-scale integrated system (215 mm x 215 mm) om TSMC 16 nm.
+- 46,225 mm<sup>2</sup> wafer-scale integrated system (215 mm x 215 mm) on TSMC 16 nm.
 - 1.2T transistors.
 - Many individual chips: a total of 84 (12 wide by 7 tall).
 - 18 GB total of SRAM memory, distributed among cores.
@@ -246,7 +246,7 @@ References:
 <img class="float-right" src="{{'MI-chips/google-tpu2.png'|thumbnail('220x220')}}" alt="TPU-2 board">
 
 The TPU v2 is designed for training and inference. It improves over the TPU v1
-with floating point arithmetic and enhanced memory capacity and bandwidth with
+with floating-point arithmetic and enhanced memory capacity and bandwidth with
 HBM integrated memory.
 
 General details (per chip):
@@ -280,9 +280,9 @@ References:
 
 <img class="float-right" src="{{'MI-chips/google-tpu1.png'|thumbnail('220x220')}}" alt="TPU-1 board">
 
-Google's first generation TPU was designed for inference only and supports only
+Google's first-generation TPU was designed for inference only and supports only
 integer arithmetic. It provides acceleration to a host CPU by being sent
-instructions across PCIe-3, to perform matrix multiplications and apply
+instructions across PCIe-3 to perform matrix multiplications and apply
 activation functions. This is a significant simplification which would have
 saved much time in design and verification.
 
@@ -300,7 +300,7 @@ General details:
 IO:
 
 - 8 GB DDR3-2133 DRAM accessible via two ports at 34 GB/s.
-- PCIe-3 x 16 (14 GBps).
+- PCIe-3 x16 (14 GBps).
 
 References:
 
@@ -332,7 +332,7 @@ General details:
 - 125 TFLOPs peak FP16 arithmetic with FP32 accumulation.
 - 300 MB total on-chip memory, distributed among processor cores, providing an
   aggregate access bandwidth of 45 TBps.
-- All model state held on chip, there is no directly-attached DRAM.
+- All model state held on chip; there is no directly attached DRAM.
 - 150 W TDP (300 W PCIe card).
 
 IO:
@@ -373,7 +373,7 @@ General details:
 - Heterogeneous architecture with:
     * a GEMM operations engine;
     * 8 Tensor Processing Cores (TPCs);
-    * a shared SRAM memory (software managed and accessible via RDMA).
+    * a shared SRAM memory (software-managed and accessible via RDMA).
 - 200W TDP for PCIe card and 300W TDP for the mezzanine card.
 - Unknown total on-chip memory.
 - Explicit memory management between chips (no coherency).
@@ -383,7 +383,7 @@ TPC core:
 - VLIW SIMD parallelism and a local SRAM memory.
 - Mixed precision: FP32, BF16, plus integer formats (INT32, INT16, INT8, UINT32, UINT8).
 - Random number generation.
-- Transcendental functions: Sigmoid, Tanh, Gaussian error linear unit (GeLU).
+- Transcendental functions: Sigmoid, Tanh, Gaussian error linear unit (GELU).
 - Tensor addressing and strided access.
 - Unknown local memory per TPC.
 
@@ -406,19 +406,19 @@ References:
 <img class="float-right" src="{{'MI-chips/huawei-ascend.png'|thumbnail('220x220')}}" alt="Huawei Ascend floorplan">
 
 Huawei's Ascend also bears similarities to the latest GPUs with wide SIMD
-arithmetic and a 3D matrix unit, comparable to Nvidia's Tensor Cores, a
+arithmetic and a 3D matrix unit, comparable to Nvidia's Tensor Cores, and an
 (assumed) coherent 32 MB shared L2 on-chip cache. The chip includes
-additional logic for 128 channel video decoding engines for H.264/265. In their
+additional logic for 128-channel video decoding engines for H.264/265. In their
 Hot Chips presentation, Huawei described overlapping the cube and vector
 operations to obtain high efficiency and the challenge of the memory hierarchy
-with ratio of bandwidth to throughput dropping by 10x for L1 cache (in the
+with the ratio of bandwidth to throughput dropping by 10x for L1 cache (in the
 core), 100x for L2 cache (shared between cores), and 2000x for external DRAM.
 
 General details:
 
 - Announced August 2019.
 - 456 mm<sup>2</sup> logic die on a 7+ nm EUV process.
-- Copackaged with four 96 mm<sup>2</sup> HBM2 stacks and 'Nimbus' IO processor chip.
+- Copackaged with four 96 mm<sup>2</sup> HBM2 stacks and a 'Nimbus' IO processor chip.
 - 32 DaVinci cores.
 - Peak 256 TFLOPs (32 x 4096 x 2) FP16 performance, double that for INT8.
 - 32 MB shared on-chip SRAM (L2 cache).
@@ -436,7 +436,7 @@ Interconnect and IO:
 Each DaVinci core:
 
 - 3D 16x16x16 matrix multiply unit providing 4,096 FP16 MACs and 8,192 INT8 MACs.
-- 2,048 bit SIMD vector operations for FP32 (x64), FP16 (x128) and INT8 (x256).
+- 2,048-bit SIMD vector operations for FP32 (x64), FP16 (x128) and INT8 (x256).
 - Support for scalar operations.
 
 References:
@@ -457,12 +457,12 @@ similar 100 Gbit IO links.
 General details:
 
 - 27 bn transistors.
-- 688 mm<sup>2</sup> die on TSMC 16FF+ TSMC with CoWoS.
+- 688 mm<sup>2</sup> die on TSMC 16FF+ with CoWoS.
 - 32 GB HBM2-2400 in four 8 GB stacks integrated on a 1200 mm<sup>2</sup> passive silicon interposer.
 - 60 MB on-chip SRAM memory distributed among cores and ECC protected.
 - Up to 1.1 GHz core clock.
 - 150-250W TDP.
-- 24 Tensor Processing Cluster (TCP) cores.
+- 24 Tensor Processing Cluster (TPC) cores.
 - TPCs connected in a 2D mesh network topology.
     * Separate networks for different types of data: control, memory and inter-chip communication.
     * Support for multicast.
@@ -505,7 +505,7 @@ References:
 
 <img class="float-right" src="{{'MI-chips/nvidia-volta.png'|thumbnail('220x220')}}" alt="Nvidia Volta board">
 
-Volta introduces Tensor Cores, HBM2 and NVLink 2.0, from the [Pascal
+Volta introduces Tensor Cores, HBM2 and NVLink 2.0, compared with the [Pascal
 architecture](https://en.wikipedia.org/wiki/Pascal_(microarchitecture)).
 
 General details:
@@ -536,17 +536,17 @@ References:
 
 <img class="float-right" src="{{'MI-chips/nvidia-turing.png'|thumbnail('220x220')}}" alt="Nvidia Turing die shot">
 
-Turing is an architectural revision of Volta, manufactured on the same 16 nm
+Turing is an architectural revision of Volta, manufactured on the same 12 nm
 process, but with fewer CUDA and Tensor cores. It consequently has a smaller
 die size and lower power envelope. Apart from ML tasks, it is designed to
-perform real-time ray tracing, for which it also used the Tensor Cores.
+perform real-time ray tracing, for which it also uses the Tensor Cores.
 
 General details:
 
 - Announced September 2018.
 - TSMC 12nm FFN, 754 mm<sup>2</sup> die, 18.6 bn transistors.
 - 260 W TDP.
-- 72 SMs, each containing: 64 FP32 cores, and 64 INT32 cores, 8 Tensor cores
+- 72 SMs, each containing: 64 FP32 cores, 64 INT32 cores and 8 Tensor Cores
   (4608 FP32 cores, 4608 INT32 cores and 576 TCs).
 - Peak performance with boost clock: 16.3 TFLOPs FP32, 130.5 TFLOPs FP16, 261 TFLOPs INT8, 522 TFLOPs INT4.
 - 24.5 MB on-chip memory between 6 MB L2 cache and 256 KB SM register files.
@@ -559,7 +559,7 @@ IO:
 
 References:
 
-- [Wikipedia: Turing (mircoarchitecture)][#turing-uarch]
+- [Wikipedia: Turing (microarchitecture)][#turing-uarch]
 - [AnandTech: NVIDIA Reveals Next-Gen Turing GPU Architecture, August 2018](https://www.anandtech.com/show/13214/nvidia-reveals-next-gen-turing-gpu-architecture)
 - [Nvidia Turing GPU architecture whitepaper (PDF)](https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/technologies/turing-architecture/NVIDIA-Turing-Architecture-Whitepaper.pdf)
 
@@ -578,10 +578,10 @@ for discussion of this note.
 More:
 - SambaNova (no sign of silicon)
 - Wave Computing
-- Cambricon (Huwawei NPU, Alibaba)
+- Cambricon (Huawei NPU, Alibaba)
 - Baidu XPU
 - Cornami
-- Fijitsu DPU
+- Fujitsu DPU
 - IBM TrueNorth
 - ThinCI
 - Vathys
@@ -593,8 +593,8 @@ Inference only:
 - Alibaba Hanguang 800 (12nm 17bn transistors)
 - T-Head XuanTie 910
 Brain inspired:
-- Mythic (analoge computing in NAND memory, works on 8 bit values only)
+- Mythic (analogue computing in NAND memory, works on 8 bit values only)
 - Applied Brain Research (ABR) - Nengo "brain" chip
-- Rain Neuromophic
+- Rain Neuromorphic
 - GrAI (pronounced "gray") Matter Labs has a fully digital neuromorphic processor
 -->
