@@ -9,9 +9,9 @@ Status: published
 
 {% import 'post-macros.html' as macros %}
 
-Discrete event simulation (DES) is a methodology for modelling dynamic systems
+Discrete-event simulation (DES) is a methodology for modelling dynamic systems
 as a sequence of events in time. There are plenty of places to read about DES,
-but in this note I want to outline how it works and can be simply implement,
+but in this note I want to outline how it works and can be implemented simply,
 recognising several subtleties. DES is widely used in different areas where
 analytical solutions are difficult; I am focusing on its use in modelling
 digital logic and computer systems.
@@ -20,10 +20,10 @@ In a DES, each event is scheduled to occur at a particular point in time and
 represents a change in the state of the system and the possible generation of
 future events. Because there are no state changes between events, the
 simulation jumps through time from one event to the next. These variable time
-steps are in contrast with a discrete-event scheme with fixed timesteps. Fixed
+steps are in contrast with a discrete-time scheme with fixed timesteps. Fixed
 timesteps are particularly suited to digital systems with clocked logic, where
-each time increment corresponds to clock cycle. Fixed-time simulation has the
-drawback that all time steps are evaluated regardless of whether anything
+each time increment corresponds to a clock cycle. Fixed-time simulation has the
+drawback that all timesteps are evaluated regardless of whether anything
 happens, although it is easier to reason about since everything proceeds in
 lockstep. DES is inherently more flexible but can be harder to parallelise
 because of the need to maintain a centralised event list.
@@ -34,9 +34,9 @@ because of the need to maintain a centralised event list.
 The main components of a DES are:
 
 - A **state** (or set of states) representing the components of the system.
-- **Events**, that occur atomically at a particular instant and can update
+- **Events** that occur atomically at a particular instant and can update
   the system state and create new future events.
-- A **clock**, that records the simulation time.
+- A **clock** that records the simulation time.
 - A **list of future events** (the *event list*). This is most often implemented
   as a priority queue with events queued in chronological order, soonest at
   the front.
@@ -44,8 +44,8 @@ The main components of a DES are:
 An outline of the DES algorithm is as follows:
 
 - Create one or more initial events and add them to the event list.
-- While the event list not empty:
-    * Choose a next event with the earliest time.
+- While the event list is not empty:
+    * Choose the next event with the earliest time.
     * Advance simulation clock to time of event.
     * Execute the event.
         - State updates are committed immediately.
@@ -73,9 +73,9 @@ phases to impose an ordering of events.
 The simplest case is to divide each timestep into two phases to serialise the
 handling of two dependent events. As an example, consider nodes in a ring
 topology that can pass tokens between themselves in one direction, with it
-taking one timestep to for a token to traverse one node. Each node has two
+taking one timestep for a token to traverse one node. Each node has two
 associated events: *transmit* and *receive*. It must hold that a transmit event
-for a node must be scheduled any receive events for that node have been
+for a node must be scheduled after any receive events for that node have been
 processed. By separating event processing in this way, there can be no
 dependencies between the serialisation of transmit and receive events as they
 are fetched from the simulation queue.
@@ -84,12 +84,12 @@ are fetched from the simulation queue.
                        caption="DES of a ring of nodes that exchange a token with events for transmit and receive, separated by different phases within a simulation timestep.") }}
 
 Extending this concept of phases, a timestep can be divided into an arbitrary
-number of sub phases to model more complex behaviours. An interesting example
-of this is SystemVerliog, which defines its execution semantics in terms of
-multi-phase discrete event simulation. Roughly, a design or test bench defines
+number of sub-phases to model more complex behaviours. An interesting example
+of this is SystemVerilog, which defines its execution semantics in terms of
+multi-phase discrete-event simulation. Roughly, a design or test bench defines
 a set of stateful processes that respond to changes on their inputs to produce
 outputs. Every change in state of a net or variable causes processes sensitive
-to them to be evaluated. There may be many steps of evaluation to produce a
+to it to be evaluated. There may be many steps of evaluation to produce a
 final output for the timestep. The timestep is divided into a fixed set of
 ordered regions (17 in total) to provide predictable interactions with a
 design. Within a region, many events may be processed and further ones
@@ -114,7 +114,7 @@ struct Simulator {
 }
 ```
 
-Events have a type, a time at which they occur and node in the system that they
+Events have a type, a time at which they occur and a node in the system that they
 belong to. The `node_id` is used for directing state updates.
 
 ``` Rust
@@ -181,7 +181,7 @@ fn handle_event(&mut self, event: Event) {
 Each event action updates the node state and creates a new event corresponding
 to the passing of the token to the next node of the ring.
 
-The simulation is setup with a initial receive event at node 0:
+The simulation is set up with an initial receive event at node 0:
 
 ``` Rust
 let mut sim = Simulator::new(20);
@@ -231,7 +231,7 @@ being simulated.
 
 ## Summary
 
-This note explains how DES simulation works and how it simple to implement. DES
+This note explains how DES works and how simple it is to implement. DES
 is well suited to modelling synchronous and asynchronous digital systems, but
 care must be taken to ensure that simultaneous events are scheduled without
 dependencies and events are not duplicated.
@@ -245,4 +245,4 @@ dependencies and events are not duplicated.
 - [Distributed discrete event simulation](https://dl.acm.org/doi/pdf/10.1145/6462.6485), Jayadev Misra (1986).
 - [Parallel discrete event simulation](https://dl.acm.org/doi/10.1145/84537.84545), Richard M. Fujimoto (1990).
 - Principles and Practices of Interconnection Networks, Chapter 24, William Dally, Brian Towles (2004).
-- [1800-2017 SystemVerilog LRM](https://ieeexplore.ieee.org/document/8299595),  section 4 'Scheduling semantics'.
+- [1800-2017 SystemVerilog LRM](https://ieeexplore.ieee.org/document/8299595), section 4 'Scheduling semantics'.
