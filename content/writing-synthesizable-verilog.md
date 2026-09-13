@@ -394,24 +394,24 @@ define the set and clear conditions in an `always_comb` and register the value
 in an accompanying `always_ff`, for example:
 
 ``` verilog
-logic bit;
-logic bit_q;
+logic pending;
+logic pending_q;
 
 always_comb begin
-  bit = bit_q;
+  pending = pending_q;
   if (set_condition) begin
-    bit = 1'b1;
+    pending = 1'b1;
   end
   if (clear_condition) begin
-    bit = 1'b0;
+    pending = 1'b0;
   end
 end
 
 always_ff @(posedge i_clk or posedge i_rst) begin
   if (i_rst) begin
-    bit_q <= 1'b0;
+    pending_q <= 1'b0;
   end else begin
-    bit_q <= bit;
+    pending_q <= pending;
   end
 end
 ```
@@ -420,7 +420,7 @@ end
 a flip-flop will drive X on its output, which can lead to
 simulation-versus-synthesis mismatches, potentially obscuring bugs. Having
 registers initialised with a defined value precludes these kinds of mismatches.
-In the above example, `bit_q` is correctly initialised to 0.
+In the above example, `pending_q` is correctly initialised to 0.
 
 **Avoid using synchronous-reset registers.** These types of flip-flops are not
 typically used because there are circumstances when a clock is not available
@@ -444,7 +444,7 @@ For example:
 ``` verilog
 // A non-reset register.
 always_ff @(posedge i_clk) begin
-  bit_q <= bit;
+  pending_q <= pending;
 end
 ```
 
