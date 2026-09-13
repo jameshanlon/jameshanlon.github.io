@@ -447,7 +447,7 @@ allocation and GC for performance and safety.
 
 1. Mohamed Ismail and G. Edward Suh, *Quantitative Overhead Analysis for
    Python*, 2018 IEEE International Symposium on Workload Characterization
-   (IISWC). [[IEEE][python-overheads-ieee], [PDF][python-overheads-pdf]]
+   (IISWC). [[IEEE][python-overheads-ieee]]
 
 2. Nagy Mostafa, Chandra Krintz, Calin Cascaval, David Edelsohn, Priya
    Nagpurkar, Peng Wu, *Understanding the Potential of Interpreter-based
@@ -464,7 +464,6 @@ allocation and GC for performance and safety.
 
 
 [python-overheads-ieee]: https://ieeexplore.ieee.org/document/8573512
-[python-overheads-pdf]: https://www.cs.ucsb.edu/sites/default/files/documents/2010-14.pdf
 [barany-acm]: https://dl.acm.org/doi/10.1145/2617548.2617552
 [barany-pdf]: https://www.cristal.univ-lille.fr/dyla14/papers/dyla14-8-Python_Interpreter_Performance_Deconstructed.pdf
 [mostafa-ucsb]: https://cs.ucsb.edu/research/tech-reports/2010-14
