@@ -22,7 +22,7 @@ are connected in an order-four hypercube topology, with every G4 connected
 directly to four others. The G4 has 16 links, so four links are used to connect
 each direction.  The data rate of each link is 400 Mbits/second, or 1.6
 Gbits/second in each edge of the hypercube. The bisection bandwidth of the
-entire network is four times this again, at 6.4 Gbits/second. Each processor
+entire network is eight times this again, at 12.8 Gbits/second. Each processor
 core has 64 KB of SRAM memory and runs at 400 MHz. The whole XMP-64 array
 therefore provides 512 threads, 4 MB of memory and a peak performance of 25.6
 GOPS. (There are more details in the performance experiment document linked
