@@ -10,12 +10,12 @@ Math: true
 ---
 
 As part of the [statistical quality
-analysis](/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu) I
-did of the of the `xoroshiro128aox` PRNG, I looked at interleaved parallel
+analysis](/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu.html) I
+did of the `xoroshiro128aox` PRNG, I looked at interleaved parallel
 generators (where a single generator is created by round-robin interleaving the
-output $n$ identical generators with different seeds) as a way to test its
+output of $n$ identical generators with different seeds) as a way to test its
 suitability for parallel processing. Against my intuition, I found that simple
-seeding schemes produce poor interleaved generators, and even when the
+seeding schemes produce poor interleaved generators, even when the
 subsequences are disjoint. These findings equally apply to `xoroshiro128+` as
 we will see.
 
@@ -25,7 +25,7 @@ deterministically move to disjoint parts of the sequence. However, computing
 jumps is expensive to do in hardware because it involves 128-bit arithmetic and
 so it is preferable to compute seed values based on a simpler function of a
 machine's state, such as an integer identifier for a process/thread. Since the
-probability of any two randomly-chosen sequences overlap is very small even
+probability of any two randomly chosen sequences overlapping is very small even
 with a large number of sequences, it seems reasonable to assume that a simple
 seed generator will perform okay in practice. Note also that the creators
 separately recommend "that initialization must be performed with a generator
@@ -52,7 +52,7 @@ for i in range(NUM_SEEDS):
     seed[i] = int(rand(0, (2**128) // NUM_SEEDS) + i * ((2**128) // NUM_SEEDS))
 ```
 
-By adding a fixed offset to a initial state of balanced 0s and 1s [Scheme C]:
+By adding a fixed offset to an initial state of balanced 0s and 1s [Scheme C]:
 
 ``` python
 for i in range(NUM_SEEDS):
@@ -68,7 +68,7 @@ And, as baselines:
 
 To test these seeding schemes, I ran each generator against the standard
 PractRand test battery. PractRand is a good choice for these tests since it reports
-results at intermediate points and consumes much more output than Big Crush or Gjrand:
+results at intermediate points and consumes much more output than BigCrush or Gjrand:
 32 TB by default. A pass is achieved if no overtly suspicious $p$-values are flagged.
 
 The results are summarised in the following table:
@@ -123,7 +123,7 @@ The results are summarised in the following table:
       <td>Scheme C</td>
       <td>10</td>
       <td>256 MB</td>
-      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3</code></td>
+      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme C</td>
@@ -135,7 +135,7 @@ The results are summarised in the following table:
       <td>Scheme C</td>
       <td>1000</td>
       <td>256 MB</td>
-      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>Brank</code>, <code>FPF</code>, <code>mod3n</code></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>BRank</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme D</td>
@@ -159,7 +159,7 @@ The results are summarised in the following table:
 </table>
 
 Note that `DC6` and `BCFN` are both tests for linearity. For the failing
-generators (schemes A-C), I checked there are no duplicate values between the
+generators (schemes A-C), I checked that there are no duplicate values between the
 different generators to establish that no two sequences overlap (using the
 `analyse` mode). This means that the above failures are due to correlations
 between disjoint sequences.
