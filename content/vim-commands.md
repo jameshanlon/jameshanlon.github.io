@@ -18,7 +18,7 @@ post](https://takac.github.io/2013/01/30/vim-grammar/), and should be useful
 for anyone who is familiar with Vim.
 
 A Vim command can be constructed from different rules, and below each rule is
-specified with a [EBNF-style
+specified with an [EBNF-style
 syntax](https://en.wikipedia.org/wiki/Extended_Backus-Naur_form), where `<...>` is
 another rule. `{...}` represents some key presses, `|` is an alternative and
 `[...]` is an optional component. Be warned that
@@ -50,14 +50,14 @@ Examples:
 - `6w` - move to start of the sixth word forwards
 - `6E` - move to end of sixth word forwards
 - `4b` - move to start of the fourth word backwards
-- `2{` - move two paragraphs down
+- `2}` - move two paragraphs down
 - `3/foo` - move to the third occurrence of `foo` later in the buffer
 - `3?foo` - move to the third occurrence of `foo` earlier in the buffer
 
 ## Text objects
 
 Text objects are a collection of characters relative to the position of the
-cursor. Compared to motions, text objects on a whole object, regardless of the
+cursor. Compared to motions, text objects operate on a whole object, regardless of the
 specific cursor position. The `a` and `i` modifiers augment text objects,
 specifying whether the surrounding context should be included. The context may
 be whitespace or delimiting characters.
@@ -71,15 +71,15 @@ Examples:
 
 - `aw` - around word (includes surrounding whitespace)
 - `iw` - inner word (excludes surrounding whitespace)
-- `aW` - around WORD (where word is delimited by whitespace)
+- `aW` - around WORD (where WORD is delimited by whitespace)
 - `as` - around sentence
 - `is` - inner sentence
 - `ap` - around paragraph
 - `ip` - inner paragraph
 - `a'` - a single-quoted string
 - `i'` - inside a single-quoted string
-- `a(` = `a)`= `ab` - a parenthesised block, from `(` to `)`
-- `i(` = `i)`= `ib` - inside a parenthesised block, contents of `(...)`
+- `a(` = `a)` = `ab` - a parenthesised block, from `(` to `)`
+- `i(` = `i)` = `ib` - inside a parenthesised block, contents of `(...)`
 - `a<` = `a>` - a tag, from `<` to `>`
 - `at` - around tag block, including matching start and end tags `<tag>...</tag>`
 - `it` - inside tag block, excluding tags
@@ -98,10 +98,10 @@ text-object := <count> <modifier> <text-object-keys>
 
 Examples:
 
-- `cw`  - change word from cursor
+- `cw` - change word from cursor
 - `ciw` - change word under cursor
 - `dw` - delete until end of word
-- `5dw` = `d5w` - delete until end of right-hand sixth word
+- `5dw` = `d5w` - delete five words
 - `caw` - change around word under cursor
 - `2d3w` - delete six words
 - `5gUw` - make the next five words uppercase
@@ -151,7 +151,7 @@ Examples:
 
 ## Duplicate operators
 
-Operators applied twice affect the entire line, a synonym for `<operator>_`,
+Operators applied twice affect the entire line, a synonym for `<operator>_`.
 
 ```
 command := [<count>] <operator> <operator>
@@ -163,13 +163,13 @@ Examples:
 - `cc` = `c_` - change line
 - `yy` = `y_` - yank line
 - `>>` = `>_` = `>l` - indent line
-- `<<` = `<_` = `>l` - unindent line
+- `<<` = `<_` = `<l` - unindent line
 
 Note: duplication does not apply to `~` or two-character operators.
 
 ## Aliases
 
-Some commonly-used commands have aliases.
+Some commonly used commands have aliases.
 
 - `x` = `dl` - delete next character
 - `C` = `c$` - change until the end of the line
@@ -192,7 +192,7 @@ Examples, using some basic utilities found on Unix platforms:
 
 - `!8jsort` - sort the next 8 lines
 - `!apsort` - sort lines in paragraph
-- `!apwc -l` - replace paragraph with word count
+- `!apwc -l` - replace paragraph with line count
 - `!apfmt -s` - collapse whitespace in paragraph into single spaces
 - `!apfmt -c` - centre lines in paragraph
 - `!i(grep foo` - remove all lines in `(...)` block that don't contain `foo`
@@ -206,8 +206,8 @@ Visual selection, character-wise `v`, line-wise `V` or block-wise `Ctrl+v` (all
 referred to below by `{visual}`, see `:help visual-start`), followed by a
 motion or text object can be used to specify a character range. An operator can
 then be used to transform the text. Note the operators `gu`, `gU` and `g@`
-can't be used in visual mode and text objects in visual mode, however, there
-are additional ones that can (see `:help visual-operators`). A visual block is
+can't be used in visual mode; however, there are additional visual-mode
+operators that can (see `:help visual-operators`). A visual block is
 created by entering a visual mode, then providing a motion or text object to
 set the selection, or alternatively by any sequence of movement commands
 (referred to by `{move-around}`).
@@ -225,7 +225,7 @@ Examples:
 
 - `vtxd` = `dtx` - delete until `x`
 - `vt.rx` - replace all characters with `x` until `.`
-- `v3as~` - make next three sentences uppercase
+- `v3as~` - switch the case of the next three sentences
 - `vapU` - make paragraph uppercase
 - `vapd` - delete paragraph
 - `{Ctrl+v}{move-around}sfoo{Esc}` - replace each line of blockwise selection with `foo`
@@ -235,14 +235,14 @@ Examples:
 - `vap!fmt` - use the `fmt` command-line tool to format selection into
   lines of 75 characters (similar to the `gqap` command)
 - `ggvG!indent` - use the `indent` command-line tool to apply automatic
-  indentation all lines of a C-code buffer
+  indentation to all lines of a C-code buffer
 - `{visual}J` - join the highlighted lines on the current line
 - `{visual}gJ` - join the highlighted lines on the current line (removing whitespace)
 
 ## Other command combinations
 
 Beyond the above rules, there are further command keys and more restricted
-combination with motions, operators and text objects.
+combinations with motions, operators and text objects.
 
 The `.` command repeats the last change that was made.
 ```
@@ -268,10 +268,10 @@ command := [<count>] <operator> gn
 Here are some other interesting and potentially useful commands that I've found
 in the Vim help:
 
-- `gf` - goto file (when cursor is on a valid filesystem path)
-- `gF` - goto file and line number (line number following path)
-- `J` - Join the current line with the next one (with space in between)
-- `gJ` - Join the current line with the next one (without space in between)
+- `gf` - go to file (when cursor is on a valid filesystem path)
+- `gF` - go to file and line number (line number following path)
+- `J` - join the current line with the next one (with space in between)
+- `gJ` - join the current line with the next one (without space in between)
 - `3J` - join the next three lines on the current line (removing indent)
 - `3gJ` - join the next three lines on the current line
 - `gv` - reselect previous visual area
@@ -367,7 +367,7 @@ they might give you some ideas.
 - [Vim Cheat Sheet](https://vim.rtorr.com/)
 - [Vim Commands Cheat Sheet](https://www.fprintf.net/vimCheatSheet.html)
 - [Vim Grammar](https://takac.github.io/2013/01/30/vim-grammar/)
-- [Vim Text Objects: The Definitive Guide](https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guidehttps://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide//https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/)
+- [Vim Text Objects: The Definitive Guide](https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/)
 - [Vim documentation](https://www.vim.org/docs.php)
 - [Vim for PHP programmers](http://zmievski.org/files/talks/codeworks-2009/vim-for-php-programmers.pdf)
 - [Your problem with Vim is that you don't grok vi](https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim/1220118#1220118)
