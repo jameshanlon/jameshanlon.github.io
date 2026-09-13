@@ -14,7 +14,7 @@ XC is a programming language developed by XMOS for real-time embedded parallel
 programming of their XCore processor architecture. XC is based on the features
 for parallelism and communication in occam, and the syntax and some sequential
 features of C. In addition, XC provides primitives to expose hardware
-resources: clocks, ports and timers. XC programs can be executed with levels of
+resources: locks, ports and timers. XC programs can be executed with levels of
 I/O real-time performance that are usually attributed to FPGA or ASIC devices.
 The design of XC was heavily influenced by the occam programming language,
 which first introduced channel communication, alternation, ports and timers.
