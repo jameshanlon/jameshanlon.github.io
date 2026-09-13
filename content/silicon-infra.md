@@ -23,24 +23,24 @@ development:
   reduce complexity and make run times practical.
 
 - **Tooling**. Compared to software tooling, standard chip-design tooling
-  (known in the industry as *electronic design automation*) :
-    (1) is almost all proprietary and used under license, meaning that interactive
+  (known in the industry as *electronic design automation*):
+    (1) is almost all proprietary and used under licence, meaning that interactive
     and automated use is limited and at odds with a continuous-integration model
     of development;
-    (2) can have long run times (upwards of 12 hours for a job are not uncommon) and produce
+    (2) can have long run times (upwards of 12 hours for a job is not uncommon) and produce
     vast quantities of data, making it very unattractive to rerun something
     unless absolutely necessary; and
     (3) can be non-deterministic in that rerunning a job with the same set of inputs
     produces a different output.
 
-- **Tape out**. When a design is released for manufacture (known in the
-  industry as a *tape out*), there are typically high non-recoverable expenses associated
+- **Tape-out**. When a design is released for manufacture (known in the
+  industry as a *tape-out*), there are typically high non-recoverable expenses associated
   with setting up the processes and a long lead time in receiving a (hopefully)
   working device. There are two implications of this situation:
-    (1) chip tape outs precludes incremental releases, for example to fix trivial bugs, and
+    (1) chip tape-outs preclude incremental releases, for example to fix trivial bugs, and
     therefore means that the confidence in the correct functionality of the
     design must be very high;
-    (2) post tape out, the design source code is effectively frozen forever more for
+    (2) after tape-out, the design source code is effectively frozen forever more for
     the purposes of debug and analysis.
 
 Despite these differences, many of the techniques and tools from software
@@ -57,7 +57,7 @@ and structure of a software infrastructure to build chips.
 1. [Model](#model)
 1. [Details](#details)
 1. [Summary](#summary)
-1. [Acknowledgments](#acknowledgements)
+1. [Acknowledgements](#acknowledgements)
 1. [Related projects](#related-projects)
 
 ## Aims <a name="aims" class="anchor"></a>
@@ -68,26 +68,26 @@ specific, I also define the following capabilities that should be supported as
 an overall philosophy of the approach that is explored in this note:
 
 - To **rerun everything from scratch**, requiring full
-  automation of an the end-to-end flow. This is intended to: (1) distribute the
+  automation of the end-to-end flow. This is intended to: (1) distribute the
   task of integrating components of a design across a team, thereby revealing
-  issues at as earlier stage in the project as possible to avoid disruptive
+  issues at as early a stage in the project as possible to avoid disruptive
   changes towards the end; (2) enable faster design iteration; and (3)
   provide traceability of results (a foundation for the next aim).
 
-- Provide a **full audit trail** such that a release of a design for tape out
+- Provide a **full audit trail** such that a release of a design for tape-out
   has data and a set of reports, logs, coverage metrics, documentation and
   signoffs that are traceable back to the original RTL source files. This is
   important for building confidence to tape out, as well as providing information
   for future work on a completed design.
 
 - Support **multiple chips and frozen designs** to keep previous generations
-  alive for debug of silicon issues and/or as a basis for a incremental tape out
+  alive for debug of silicon issues and/or as a basis for an incremental tape-out
   (known as a *respin*), and to allow multiple designs to be built concurrently.
 
 ## Guiding principles <a name="principles" class="anchor"></a>
 
 I think it is useful to underpin the aims, implementation and operation of a
-chip-design infrastructure are a set of guiding principles for the project team
+chip-design infrastructure with a set of guiding principles for the project team
 to employ when design decisions need to be made.  These principles are formed
 from my own experience and through conversations with others. I am sure that
 alternative foundations can be constructed and argued for.
@@ -114,22 +114,22 @@ listed dependencies; divide components by function and abstraction level (eg
 don't group by language or technology); and use a standard structure for each
 component (such as ``lib``, ``sources``, ``README`` etc).
 
-1. **Embrace open source**. To save on effort, leverage freely-available tools
+1. **Embrace open source**. To save on effort, leverage freely available tools
 and libraries wherever possible in the infrastructure, rather than implementing
 custom versions. Where open source is used, contributions back upstream benefit
 the community and help to align the project with the way it is being deployed.
 This particularly applies to open source in the ASIC/FPGA domain, where
 [open-source software][oss-hw] is unencumbered by licensing restrictions. Often
-chip projects will be on tight schedules, so careful judgment of the
+chip projects will be on tight schedules, so careful judgement of the
 effort-benefit tradeoff must be made.
 
 1. **Performance is important**. With the ability to rerun everything from
 scratch coupled with a multi-chip and monorepository approach, the compute
 demands can scale quickly so it is crucial that the infrastructure is
-performant. This can easily become a problem with codebases make extensive use
+performant. This can easily become a problem with codebases that make extensive use
 of a scripting language such as Python.  Mitigations include writing (or
 rewriting) parts in a lower-level language such as C++, and setting things up in
-such a way that this Python and C++ components can interoperate cleanly (eg
+such a way that Python and C++ components can interoperate cleanly (eg
 well-defined boundaries and dependencies).
 
 [oss-hw]: https://github.com/aolofsson/awesome-opensource-hardware
@@ -147,9 +147,9 @@ executed, typically corresponding to a step.
 - **Design representation**. To read a design into a tool, the design must have
   a complete representation including tool-agnostic configuration, macro
   defines, library files and RTL sources. Often, RTL code will need to be
-  generated programatically using templates or other types of code generators. It
+  generated programmatically using templates or other types of code generators. It
   is also typical that a design will be implemented in a hierarchical fashion, so
-  a configuration step must gather together the required modules and package it
+  a configuration step must gather together the required modules and package them
   into a single representation. As an example, the open-source [Bender][bender]
   dependency management tool provides very similar functionality.
 
@@ -157,9 +157,9 @@ executed, typically corresponding to a step.
 
 - **Verification representation**. For the purposes of simulation and
   analysis, a verification representation is a variation of a design
-  representation, adding configuration and macro defines, source files for a test
-  bench, monitors, assertions etc, and possibly substituting parts of the design
-  for fast models or block boxes. These verification components will likely live
+  representation, adding configuration and macro defines, source files for a
+  testbench, monitors, assertions etc, and possibly substituting parts of the design
+  for fast models or black boxes. These verification components will likely live
   with the corresponding parts of the design and be collected together as they
   were for the design representation during a configuration step.
 
@@ -181,7 +181,7 @@ executed, typically corresponding to a step.
 
 {{ macros.imagenothumb('silicon-infra/cdc-rdc-check.png') }}
 
-- **Simulation testbench**. A simulation test bench requires a representation
+- **Simulation testbench**. A simulation testbench requires a representation
   of the design, a verification environment and test stimulus. Test stimulus is
   often randomly generated. Coverage (structural or functional) can be collected
   during simulation and when many test instances are run for a particular test
@@ -192,7 +192,7 @@ executed, typically corresponding to a step.
 
 {{ macros.imagenothumb('silicon-infra/simulation-flow.png') }}
 
-- **Formal property test bench**. Analysing and proving formal properties of a
+- **Formal property testbench**. Analysing and proving formal properties of a
   design is a complementary technique to standard functional coverage. Inputs
   to this are a verification representation of the design and a set of
   assumptions and properties to be checked.
@@ -213,15 +213,15 @@ executed, typically corresponding to a step.
   transforming the design into a set of two-dimensional layers. Following synthesis
   are: scan insertion for DFT, floorplanning (placing ports and macros),
   placement (placing cells), clock tree synthesis, routing (establishing all
-  required connections using the available routing layers, finishing and
-  checking. See [OpenROAD][OpenROAD] for an example open source physical build
+  required connections using the available routing layers), finishing and
+  checking. See [OpenROAD][OpenROAD] for an example open-source physical build
   flow.
 
 {{ macros.imagenothumb('silicon-infra/phys-build-flow.png') }}
 
-> **A note on DFT**. A central aspect of any chip design is the DFT (device
-> test) strategy. Testability is achieved by adding logic in the form of
-> *instruments* and *connectivity* to make the the existing logic
+> **A note on DFT**. A central aspect of any chip design is the DFT (design
+> for test) strategy. Testability is achieved by adding logic in the form of
+> *instruments* and *connectivity* to make the existing logic
 > *controllable* and *observable*. The means by which this is done and the
 > point in the development process is heavily dependent on the design and the
 > tooling used. Typically, DFT logic is inserted using automated tools during
@@ -235,7 +235,7 @@ executed, typically corresponding to a step.
 > given the same inputs due to the nature of the optimisation algorithms they
 > use. The second is that close to the closure of a design component, manual
 > interventions will be made to address localised issues in the design. The
-> combination of these issues mean that it is not possible to rerun physical
+> combination of these issues means that it is not possible to rerun physical
 > builds from scratch and achieve satisfactory results. Therefore, a silicon
 > infrastructure must be able to support frozen data from particular flow
 > stages.
@@ -252,9 +252,9 @@ executed, typically corresponding to a step.
 
 A model for a silicon infrastructure that captures the use cases described is a
 hierarchical collection of *tasks* that consume inputs and produce outputs. A
-task can be dependent on another task by consuming that task's output and
+task can be dependent on another task by consuming that task's output, and
 tasks can be composed together in this way into *flows*. The set of tasks
-implementing a flow form an acyclic directed graph (DAG) with nodes representing
+implementing a flow form a directed acyclic graph (DAG) with nodes representing
 fixed inputs or jobs and edges corresponding to dependencies. The structure of
 this graph is determined statically (ie without any dependence on runtime
 data). Execution proceeds by running tasks whose inputs are ready and letting
@@ -267,28 +267,28 @@ A *task* is defined by:
 - A set of outputs.
 - A set of configuration values.
 - A set of resource requirements (time, memory, cores).
-- An *action* that that operates only on the inputs and must produce all the
+- An *action* that operates only on the inputs and must produce all
   of the outputs, typically achieved by executing a script or separate tool.
 - If a task attempts to access an input that is not specified, then an error is
   raised.
 
-A *flow* is a hierarchical task and defined by:
+A *flow* is a hierarchical task and is defined by:
 
 - A set of inputs.
 - A set of outputs.
 - A set of configuration values.
 - A set of resource requirements.
-- A *action* consisting of executing one or more tasks according to their
-  dependencies. Inputs and outputs of the flow must be connected to the sub
-  tasks and similarly for dependencies between sub tasks.
+- An *action* consisting of executing one or more tasks according to their
+  dependencies. Inputs and outputs of the flow must be connected to the
+  subtasks and similarly for dependencies between subtasks.
 - Tasks can be specified using *replication* with static bounds
   to create arrays, and *conditionality* to include or exclude tasks dependent on
   configuration values.
 
 Configuration values are used to control the behaviour of a flow or task.
-A flow can propagate configuration into its sub tasks, but it must do so
-explicitly. Configuration values can be set on the command line. Example use of
-configuration options is to control features like debug flags, substitution
+A flow can propagate configuration into its subtasks, but it must do so
+explicitly. Configuration values can be set on the command line. Example uses of
+configuration options are to control features like debug flags, substitution
 of components of the design for simulation, or the inclusion of
 tests to run in a regression.
 
@@ -297,12 +297,12 @@ pipelined data processing. In the field of genomics, the [Workflow Description
 Language][openwdl] (WDL) and [Common Workflow Language][cwl] (CWL) are open
 programming language specifications. Example implementations of WDL are
 [MiniWDL][miniwdl] and [Cromwell][cromwell], and of CWL are [cwltool][cwltool]
-and [Toil][toil]. A [Nextflow][nextflow] offers comparable features but is
+and [Toil][toil]. [Nextflow][nextflow] offers comparable features but is
 based on a domain-specific language implemented in Groovy. This
 [paper][wf-mgmt-paper] offers a good comparison of WDL, CWL and Nextflow. Also
 worth mentioning are [Snakemake][snakemake], [Apache Airflow][airflow], [Apache
 Beam][beam], [Luigi][luigi] and [Flyte][flyte]. I'm still investigating the
-suitability of these tools for Silicon design workloads.
+suitability of these tools for silicon design workloads.
 
 [nextflow]: https://www.nextflow.io
 [openwdl]: https://openwdl.org
@@ -330,9 +330,9 @@ What are some specific useful features?
 This section records some important details to consider when implementing a silicon
 flow, as well as some nice-to-have features.
 
-- **Environment**. A controlled environment execution environment with specific
-  tool versions for reproducability and legacy support. Container technology
-  supports this requirement very will with implementations such as
+- **Environment**. A controlled execution environment with specific
+  tool versions for reproducibility and legacy support. Container technology
+  supports this requirement very well with implementations such as
   [Singularity/Apptainer][singularity]. A lighter-weight solution is
   [faketree][faketree] for managing filesystem layout in a dynamic way to meet
   the constraints of EDA tools.
@@ -346,15 +346,15 @@ flow, as well as some nice-to-have features.
   inspection during and after the run should be provided, likely through a
   web-based dashboard.
 
-- **Fault tolerance**. Flows should be robust to failures. When an task failure
+- **Fault tolerance**. Flows should be robust to failures. When a task failure
   does occur, the correct statuses should be propagated up any hierarchy of
-  tasks to provides visibility of the issue. The logging infrastructure should
+  tasks to provide visibility of the issue. The logging infrastructure should
   record any progress that was made, providing a starting point for debug or to
   restart the task. It should be straightforward to rerun part of a job that has
   failed in a reproducible way.
 
 - **Storage**. The use of a shared filesystem such as NFS is typical in silicon
-  EDA flows, however it creates a single point of failure and has limited
+  EDA flows; however, it creates a single point of failure and has limited
   scalability. An alternative shared storage system is object storage such as
   [MinIO][minio].
 
@@ -362,7 +362,7 @@ flow, as well as some nice-to-have features.
   immutable storage that can then be referenced as a dependency.
 
 - **Periodic jobs**. A mechanism for running periodic jobs is required to
-  implement a continuous-integration (CI) and/or continuous-delivery (CD).
+  implement continuous integration (CI) and/or continuous delivery (CD).
   [Jenkins][jenkins], [GitHub Actions][githubactions] or [GitLab CI/CD][gitlabci]
   are all directly applicable here.
 
@@ -382,10 +382,10 @@ engineering due to fundamental differences in processes, and is likely to be
 quite different from the typical methodologies used in conventional silicon
 design. Based on some simple use cases, a model is proposed that abstracts the
 details of resource allocation and data movement by providing tasks with inputs
-and outputs as primitives. Surprisingly, there already exist a family of tools
+and outputs as primitives. Surprisingly, there already exists a family of tools
 from data science that employ a very similar model.
 
-## Acknowledgments <a name="acknowledgements" class="anchor"></a>
+## Acknowledgements <a name="acknowledgements" class="anchor"></a>
 
 The motivation for writing this note came from recent discussions on building a
 from-scratch silicon infrastructure with [James Pallister][jamesp] and [Peter
@@ -398,16 +398,16 @@ Birch][peterb]. This note is a synthesis of ideas from those conversations.
 
 - [Gator](https://gator.intuity.io), a framework for running a hierarchy of
   jobs and aggregating logs, metrics, resource utilisation, and artefacts.
-- [Blockwork](https://github.com/blockwork-eda/blockwork), is a build system and
+- [Blockwork](https://github.com/blockwork-eda/blockwork) is a build system and
   orchestrator for silicon design.
 - [Blade](https://blu-blade.readthedocs.io) is a tool for autogenerating
-  modules, interconnects and register definitions from an YAML schema.
-- [Siliconcompiler](https://github.com/siliconcompiler/siliconcompiler) is a modular
+  modules, interconnects and register definitions from a YAML schema.
+- [SiliconCompiler](https://github.com/siliconcompiler/siliconcompiler) is a modular
   build system for silicon hardware.
 - Berkeley [Chipyard](https://github.com/ucb-bar/chipyard) is an agile framework
   for hardware design, using Chisel for RTL specification.
 - Berkeley [Hammer](https://github.com/ucb-bar/hammer) is a physical design framework.
-- Pulp Platform [Bender](https://github.com/pulp-platform/bender) is a dependency
+- PULP Platform [Bender](https://github.com/pulp-platform/bender) is a dependency
   management tool for hardware design projects.
 - [Rich Porter's series on digital verification](http://dungspreader.blogspot.com/)
   and [source code](https://github.com/rporter/verilog_integration) for the project.
