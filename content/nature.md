@@ -326,7 +326,7 @@ material and fuel, with secondary factors accounting for <20% of total
 degradation being forest fires and livestock.
 <!---->
 Due to the expansion of new forest area, the net rate of forest loss has
-decreased by 50% since 1990 (an estimated 16 million hectares per year,
+decreased by approximately 38% since 1990 (an estimated 16 million hectares per year,
 compared with 10 million between 2015 and 2020), which is encouraging but still
 falls short of increasing forest cover in the near term to mitigate climate
 change and to preserve biodiversity. Replacement of old-growth forests is not
@@ -424,10 +424,15 @@ and their ecosystems are not yet well understood. This situation is not easy to
 remedy: if CO<sub>2</sub> emissions were to stop today, we would see a lag of
 one or more decades where acidification would continue and it is expected that
 it would take tens to hundreds of thousands of years for the oceans to return
-to a normal pH level. As a point of comparison, the largest extinction event of
-marine life [occurred approximately 55 million years ago][PETM] when global
-temperatures increased by 5-8 C with a rate of carbon emissions 16 times less
-than we have now, and over a course of 30,000 years.
+to a normal pH level. As a point of comparison, during the [Paleocene-Eocene Thermal
+Maximum][PETM] approximately 55 million years ago, global temperatures increased
+by 5-8 C with a rate of carbon emissions 16 times less than we have now, and
+over a course of 30,000 years. This caused one of the largest extinctions of
+deep-sea life, wiping out 35-50% of species of benthic foraminifera
+(single-celled organisms living on the sea floor). It was not the largest
+extinction of marine life overall, however: that was the [end-Permian
+extinction][permian] approximately 252 million years ago, which eliminated the
+large majority of marine species.
 
 <!-- Heat sink -->
 
@@ -737,6 +742,7 @@ https://www.theguardian.com/global-development/2020/sep/14/lost-decade-for-natur
 [hypoxia]: https://en.wikipedia.org/wiki/Hypoxia_(environmental)
 [phytoplankton]: https://en.wikipedia.org/wiki/Phytoplankton
 [PETM]: https://en.wikipedia.org/wiki/Paleocene%E2%80%93Eocene_Thermal_Maximum
+[permian]: https://en.wikipedia.org/wiki/Permian%E2%80%93Triassic_extinction_event
 [wwf-fishforward-facts]: https://www.fishforward.eu/en/topics/facts-figures/
 [bottom-trawling]: https://en.wikipedia.org/wiki/Bottom_trawling
 [algal-blooms-reported]: https://www.theguardian.com/environment/2020/jan/04/lethal-algae-blooms-an-ecosystem-out-of-balance
