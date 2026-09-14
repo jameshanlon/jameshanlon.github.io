@@ -74,8 +74,8 @@
 number generators</a>
 (RNGs), so I thought I would record things that should be useful as a
 reference. I won&#8217;t provide too much background here since there are many good
-existing references to the theory and practice of RNGs, the ones of which I
-have encountered I have linked&nbsp;to.</p>
+existing references to the theory and practice of RNGs, and I have linked to
+the ones I have&nbsp;encountered.</p>
 <h1>Properties</h1>
 <p>More specifically, a <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudorandom number
 generator</a> (<span class="caps">PRNG</span>)
@@ -86,15 +86,15 @@ source of entropy. True RNGs have an obvious importance in cryptographic&nbsp;ap
 <p>A pseudorandom sequence can be repeated by starting with a particular <strong>seed</strong>
 number.  The <strong>period</strong> of a <span class="caps">PRNG</span> is the longest unique sequence of numbers
 generated from any seed. The period is bounded by the size of the internal
-state of a generator ($n$ bits of state can encode $2^n$ numbers), however a
+state of a generator ($n$ bits of state can encode $2^n$ numbers); however, a
 generator may produce shorter repeated sequences, called <strong>cycles</strong>.</p>
 <p>The properties of a &#8216;good&#8217; <span class="caps">PRNG</span>&nbsp;are:</p>
 <ol>
 <li>
-<p>That the length of its period exceeds the number of values that taken from
+<p>That the length of its period exceeds the number of values taken from
    the generator by a program.  <a href="http://xoroshiro.di.unimi.it/#remarks">As a rule of
    thumb</a>, the period should be at least
-   the square of the numbers&nbsp;used.</p>
+   the square of the number of values&nbsp;used.</p>
 </li>
 <li>
 <p>For independent uses of a generator concurrently, that the probability is low
@@ -120,7 +120,7 @@ tested by sampling a large number of values and using statistical measures to
 analyse the difference from the expected distribution.  The fifth
 characteristic is straightforward to determine, whether the generator is
 implemented in hardware or software.  Much harder to determine, however, is the
-third property. If it were possible to prove whether a generator is free of
+fourth property. If it were possible to prove whether a generator is free of
 correlation, no <span class="caps">PRNG</span> would be considered random since by definition there
 exists a well-defined relationship between successive&nbsp;numbers.</p>
 <h1>Empirical&nbsp;testing</h1>
@@ -129,7 +129,7 @@ exploring different aspects of the generator&#8217;s statistics. They cannot be
 exhaustive, but are shown to be effective by their performance in detecting
 correlations in existing standard RNGs. This pragmatism is summed up well in
 <a href="http://portal.acm.org/citation.cfm?doid=1268776.1268777">this paper</a> with the
-comment: &#8220;the different between good and bad RNGs, in a nutshell, is that the
+comment: &#8220;the difference between good and bad RNGs, in a nutshell, is that the
 bad ones fail very simple tests whereas the good ones fail only very
 complicated tests that are hard to figure out or impractical to&nbsp;run.&#8221;</p>
 <p>There are two popular empirical test&nbsp;suites:</p>
@@ -138,7 +138,7 @@ complicated tests that are hard to figure out or impractical to&nbsp;run.&#8221;
 <p><a href="http://simul.iro.umontreal.ca/testu01/tu01.html">TestU01</a>, a comprehensive C
   library, containing example PRNGs, utilities and a collection of statistical
   tests drawn from the academic literature of RNGs. The statistical tests can
-  be run ggindividually, or as part of test batteries, which have various run
+  be run individually, or as part of test batteries, which have various run
   times and levels of&nbsp;stringency.</p>
 </li>
 <li>
@@ -146,7 +146,7 @@ complicated tests that are hard to figure out or impractical to&nbsp;run.&#8221;
   functionality to TestU01 but implemented in C++, with more modern features
   such as multithreading, flexible interfaces and support for long sequence
   lengths (over 100 terabytes). <a href="http://pracrand.sourceforge.net/PractRand.txt">According to the
-  author</a>, it&#8217;s tests are not
+  author</a>, its tests are not
   drawn from the literature (presumably designed by the author instead) and are
   therefore a good complement to testing with TestU01 or similar. It also
   requires more random bits than TestU01 and therefore takes longer to&nbsp;run.</p>
@@ -158,7 +158,7 @@ updated version of the original
 <a href="https://en.wikipedia.org/wiki/Diehard_tests">Diehard</a>) and the
 <a href="http://cristianopi.altervista.org/RaBiGeTe/">RaBiGeTe</a> test suite. There is
 also some interesting discussion from 2010 between the authors of PractRand and
-RaBiGete <a href="http://mathforum.org/kb/message.jspa?messageID=7152033">here</a>.</p>
+RaBiGeTe <a href="http://mathforum.org/kb/message.jspa?messageID=7152033">here</a>.</p>
 <h1>Testing with&nbsp;TestU01</h1>
 <p>TestU01 provides an interface to test external generators written in C. The
 interface requires a&nbsp;method, <code>GetU01</code>, to generate numbers in the unit interval
@@ -167,21 +167,21 @@ $[0, 1)$ as&nbsp;a <code>double</code> and a&nbsp;method, <code>GetBits</code>, 
 Just one function can be provided, with the other defined by TestU01 with
 the relationship&nbsp;$\texttt{GetU01}=\texttt{GetBits}/2^{32}$.</p>
 <p>Converting 32 random bits to a double-precision float is lossless in that it
-has be represented exactly in the 52 bits of mantissa. However, the conversion
+can be represented exactly in the 52 bits of mantissa. However, the conversion
 biases the higher bits since the lowest bits will be most affected by numerical
 errors. For this reason, it is considered good practice to also test the
-reversed output of generator, to expose the lowest bits. To test generators
+reversed output of the generator, to expose the lowest bits. To test generators
 with a larger output, say 64 bits, it is important that all the bits are
 exposed to the tests. One way to do this is to alternately use the high and low
 bits of a 64-bit value each call&nbsp;to <code>GetBits</code> or <code>GetU01</code>. A further reason to
-run the reverse of a generator is that the Crush test battery are defined to
+run the reverse of a generator is that the Crush test batteries are defined to
 ignore the bottom-most bit of the generator&#8217;s output, and most tests also
 ignore the second bit (see the <a href="http://simul.iro.umontreal.ca/testu01/guideshorttestu01.pdf">TestU01
 documentation</a>).</p>
 <p>In his testing of&nbsp;the <code>xorshift</code> family of generators, <a href="http://vigna.di.unimi.it/">Sebastiano
 Vigna</a> takes the following approach to measuring
 quality with TestU01: for a particular generator, run it with 100 different
-seeds, which are spaced at regular intervals in the state space, i.e.  for a
+seeds, which are spaced at regular intervals in the state space, i.e. for a
 generator with $n$ bits of state, choose seeds at $1 + i\lfloor 2^n/100\rfloor$
 for $0 \leq i &lt; 100$. The quality of a generator is then measured by the total
 number of failures over all seeds, with fewer failures meaning higher
@@ -202,15 +202,15 @@ detectable with the matrix rank test with parameters $N=1$, $n=80$, $r=15$,
 $s=15$, $L=k=5000$, or more simply by swapping the high and low 16-bit portions
 of each 32-bit word to move the bottom bit into the middle. I didn&#8217;t discover
 anything new&nbsp;about <code>xoroshiro128+</code> here, but what this does highlight is that
-comprehensive test sets like TestU01 are by no means exhaustive, and it
+comprehensive test sets like TestU01 are by no means exhaustive, and it is
 therefore worth testing some of their assumptions, particularly in this case if
 you are interested in the quality of bit&nbsp;0.</p>
 <p>Incidentally, TestU01 includes a battery of nine tests called Alphabit, which
-is allows specific bits or ranges of bits from a generator to be tested. It was
-not stringent enough however to detect the correlation&nbsp;of <code>xoroshirt128+</code><span class="quo">&#8216;</span>s bit&nbsp;0.</p>
+allows specific bits or ranges of bits from a generator to be tested. It was
+not, however, stringent enough to detect the correlation&nbsp;of <code>xoroshiro128+</code><span class="quo">&#8216;</span>s bit&nbsp;0.</p>
 <h1>An&nbsp;example</h1>
 <p>I&#8217;ve put together a simple example, <a href="https://github.com/jameshanlon/prng-testing/tree/2017-blog">available on
-Github</a>, of using
+GitHub</a>, of using
 TestU01 to assess the quality of a <span class="caps">PRNG</span>, which replicates Vigna&#8217;s testing&nbsp;of
 <code>xoroshiro128+</code>.  The code includes a C program to&nbsp;test <code>xoroshiro128+</code> with
 the Crush batteries and Python scripts to run the test over different seeds and
@@ -221,7 +221,7 @@ to summarise the output of&nbsp;TestU01.</p>
 <li>Sebastiano Vigna. An experimental exploration of Marsaglia&#8217;s xorshift
   generators, scrambled. <span class="caps">ACM</span> Trans. Math. Software, 42(4),&nbsp;2016.</li>
 <li>For a comprehensive general introduction to PRNGs and testing them, see &#8216;The
-  art of computer systems performance analysis&#8217; by Raj Jain (1991) Chapters 26
+  Art of Computer Systems Performance Analysis&#8217; by Raj Jain (1991), chapters 26
   and&nbsp;27.</li>
 </ul>
   </div>

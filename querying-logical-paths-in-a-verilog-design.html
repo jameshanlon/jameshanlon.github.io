@@ -73,7 +73,7 @@ speculative timing fixes a lengthy process. A command-line tool is useful as it
 can be integrated into more complex workflows, in contrast with using more
 complex and usually graphical <span class="caps">EDA</span>&nbsp;tooling.</p>
 <p>The tool addresses high-level structural problems in a design, such as
-incorrect dependencies when a signal including logic that is not necessary to
+incorrect dependencies when a signal includes logic that is not necessary to
 its function. It does not deal with other timing issues that are a product of
 the synthesis and physical build of the design. As such, all the structural
 information required is contained within the Verilog source&nbsp;code.</p>
@@ -94,12 +94,12 @@ $<span class="w"> </span>verilator<span class="w"> </span>--dump-netlist-graph<s
 
 <p>Here a modified version of <a href="https://www.veripool.org/wiki/verilator">Verilator</a>
 is used to generate the netlist. (Note&nbsp;that <code>netlist-paths</code> can invoke
-Verilator but with&nbsp;the <code>--compile</code> option, but PicoRV32 requires&nbsp;Verilator&#8217;s
-<code>--top-module</code> option. It may be useful to extend the command line arguments to
+Verilator with&nbsp;the <code>--compile</code> option, but PicoRV32 requires&nbsp;Verilator&#8217;s
+<code>--top-module</code> option. It may be useful to extend the command-line arguments to
 allow arbitrary arguments to be passed to Verilator.) Verilator performs the
-generation by traversing the abstract syntax tree of the design and constructs
+generation by traversing the abstract syntax tree of the design, constructing
 a graph of dependencies between variables and combinatorial logical constructs,
-and identifies variables corresponding to sequential elements (flip&nbsp;flops).</p>
+and identifying variables corresponding to sequential elements&nbsp;(flip-flops).</p>
 <p>The graph structure/netlist is written to file in <a href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">Graphviz dot
 format</a>, and specifies
 the vertices, with their type and source code location information, and the
@@ -157,9 +157,9 @@ REG_DST<span class="w"> </span>picorv32_axi.picorv32_core.cached_insn_imm
 of a non-blocking&nbsp;assignment <code>&lt;=</code>. Conversely,&nbsp;the <code>REG_SRC</code> type is where the
 same variable appears in an expression on the right-hand side. In general,
 there can only be a&nbsp;single <code>REG_DST</code> node with a specific name, whereas there
-can be&nbsp;multiple <code>REG_SRC</code> nodes with a specific names. The same is true&nbsp;with
+can be&nbsp;multiple <code>REG_SRC</code> nodes with a specific name. The same is true&nbsp;with
 <code>VAR</code>, <code>WIRE</code> and <code>PORT</code> types. When using this tool, I&#8217;ve found it
-straight forward to locate the variables I need&nbsp;using <code>grep</code> with
+straightforward to locate the variables I need&nbsp;using <code>grep</code> with
 <code>--dumpnames</code>, but there may be more sophisticated approaches that could be&nbsp;implemented.</p>
 <p>A start or end point can be specified as any named vertex, which is anything
 except logic statements. You can query if a path exists between two&nbsp;points:</p>
@@ -171,7 +171,7 @@ except logic statements. You can query if a path exists between two&nbsp;points:
 <span class="w">  </span>picorv32_axi.picorv32_core.dbg_valid_insn<span class="w">   </span>REG_DST<span class="w">         </span>picorv32.v:751
 </code></pre></div>
 
-<p>In this path report, it lists the sequential dependencies from the start point
+<p>This path report lists the sequential dependencies from the start point
 to the end point, through a sequence of zero or more combinatorial logic
 statements/blocks, with each dependency corresponding to a variable.
 Importantly, the filenames and line numbers given reference the original source&nbsp;code.</p>
@@ -180,29 +180,29 @@ and end points, the register version is preferentially located&nbsp;(<code>SRC</
 start point&nbsp;and <code>DST</code> for an end point), followed&nbsp;by <code>VAR</code>, <code>WIRE</code> and
 <code>PORT</code> types.</p>
 <p>You can also query all the paths that fan out from a particular start&nbsp;point:</p>
-<div class="highlight"><pre><span></span><code>netlist-paths netlist.graph --start picorv32_axi.picorv32_core.cpu_state
-Path 1
-  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
-  ASSIGNW                                     LOGIC           picorv32.v:1373
-  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
-  ALWAYS                                      LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.q_ascii_instr    REG_DST         picorv32.v:742
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>netlist-paths<span class="w"> </span>netlist.graph<span class="w"> </span>--start<span class="w"> </span>picorv32_axi.picorv32_core.cpu_state
+Path<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.cpu_state<span class="w">        </span>REG_SRC<span class="w">         </span>picorv32.v:1160
+<span class="w">  </span>ASSIGNW<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:1373
+<span class="w">  </span>picorv32_axi.picorv32_core.launch_next_insn<span class="w"> </span>WIRE<span class="w">            </span>picorv32.v:750
+<span class="w">  </span>ALWAYS<span class="w">                                      </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.q_ascii_instr<span class="w">    </span>REG_DST<span class="w">         </span>picorv32.v:742
 
-Path 2
-  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
-  ASSIGNW                                     LOGIC           picorv32.v:1373
-  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
-  ALWAYS                                      LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.q_insn_imm       REG_DST         picorv32.v:743
+Path<span class="w"> </span><span class="m">2</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.cpu_state<span class="w">        </span>REG_SRC<span class="w">         </span>picorv32.v:1160
+<span class="w">  </span>ASSIGNW<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:1373
+<span class="w">  </span>picorv32_axi.picorv32_core.launch_next_insn<span class="w"> </span>WIRE<span class="w">            </span>picorv32.v:750
+<span class="w">  </span>ALWAYS<span class="w">                                      </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.q_insn_imm<span class="w">       </span>REG_DST<span class="w">         </span>picorv32.v:743
 
-Path 3
-  picorv32_axi.picorv32_core.cpu_state        REG_SRC         picorv32.v:1160
-  ASSIGNW                                     LOGIC           picorv32.v:1373
-  picorv32_axi.picorv32_core.launch_next_insn WIRE            picorv32.v:750
-  ALWAYS                                      LOGIC           picorv32.v:760
-  picorv32_axi.picorv32_core.q_insn_opcode    REG_DST         picorv32.v:744
+Path<span class="w"> </span><span class="m">3</span>
+<span class="w">  </span>picorv32_axi.picorv32_core.cpu_state<span class="w">        </span>REG_SRC<span class="w">         </span>picorv32.v:1160
+<span class="w">  </span>ASSIGNW<span class="w">                                     </span>LOGIC<span class="w">           </span>picorv32.v:1373
+<span class="w">  </span>picorv32_axi.picorv32_core.launch_next_insn<span class="w"> </span>WIRE<span class="w">            </span>picorv32.v:750
+<span class="w">  </span>ALWAYS<span class="w">                                      </span>LOGIC<span class="w">           </span>picorv32.v:760
+<span class="w">  </span>picorv32_axi.picorv32_core.q_insn_opcode<span class="w">    </span>REG_DST<span class="w">         </span>picorv32.v:744
 ...
-Found 223 path(s)
+Found<span class="w"> </span><span class="m">223</span><span class="w"> </span>path<span class="o">(</span>s<span class="o">)</span>
 </code></pre></div>
 
 <p>Or query all the paths that fan in to a particular end&nbsp;point:</p>
@@ -232,11 +232,11 @@ Found<span class="w"> </span><span class="m">74</span><span class="w"> </span>pa
 </code></pre></div>
 
 <p>Since the number of paths between any two points in an arbitrary graph grows
-exponentially with the size of the graph, it infeasible to report all paths
+exponentially with the size of the graph, it is infeasible to report all paths
 between two points, so this tool simply looks for any path that satisfies those
 constraints. (An option is provided to enumerate all paths, but it can only be
 used on small&nbsp;netlists.)</p>
-<p>When trying to match a particular path in a physical build it it useful to
+<p>When trying to match a particular path in a physical build it is useful to
 further constrain the search to force it to match the same path. This can be
 done by specifying through points with&nbsp;the <code>--through</code> option. Each through
 argument is taken in order as an intermediate point in the path. The same
@@ -257,14 +257,14 @@ For&nbsp;example:</p>
 <a href="https://www.veripool.org/wiki/verilator">Verilator</a> to obtain the netlist of a
 Verilog design. (I would have liked to use
 <a href="http://www.clifford.at/yosys/">Yosys</a> to do this because it provides a neat
-interface to adding custom <span class="caps">AST</span> passes, but unfortunately it does not currently
+interface for adding custom <span class="caps">AST</span> passes, but unfortunately it does not currently
 support enough of the SystemVerilog standard.) The Verilator modifications add
 a new <span class="caps">AST</span> visitor, which walks the tree after it has been processed, for
 example to propagate constants and inline tasks and&nbsp;modules.</p>
 <p>The <code>netlist-paths</code> tool is implemented in C++ and makes use of the Boost Graph
 Library. Paths are identified using&nbsp;the <code>boost::depth_first_search</code> algorithm.
 The all-fan-out report enumerates paths to all the end points in a depth-first
-traversal of the graph, the fan-in variant uses&nbsp;the <code>boost::reverse_graph</code>
+traversal of the graph; the fan-in variant uses&nbsp;the <code>boost::reverse_graph</code>
 adaptor and performs the same algorithm. Properties are associated with
 vertices in the graph using&nbsp;a <code>boost::dynamic_property_map</code>. I put together a
 <a href="https://github.com/jameshanlon/boost_graph_example">simple example program</a> to
@@ -275,11 +275,11 @@ found there were some subtleties in getting this to&nbsp;work.</p>
 <ul>
 <li>Provide additional flexibility to allow a choice between multiple matching start, through or end&nbsp;points.</li>
 <li>Provide a mechanism to search for high fan-out&nbsp;variables.</li>
-<li>Provide a mechanism to seach for the longest paths in the&nbsp;graph.</li>
-<li>Provide a mechanism to assert there is no logical path between two sub&nbsp;modules.</li>
+<li>Provide a mechanism to search for the longest paths in the&nbsp;graph.</li>
+<li>Provide a mechanism to assert there is no logical path between two&nbsp;submodules.</li>
 <li>Detect and report timing&nbsp;loops.</li>
 <li>Add options&nbsp;to <code>dumpnames</code> to filter by type or&nbsp;direction.</li>
-<li>Add options to the querys to select only internal paths or only input/output&nbsp;paths.</li>
+<li>Add options to the queries to select only internal paths or only input/output&nbsp;paths.</li>
 </ul>
 <h2>Links</h2>
 <ul>

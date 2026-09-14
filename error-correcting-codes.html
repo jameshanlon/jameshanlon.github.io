@@ -69,29 +69,29 @@
       <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
   </div>
   <div class="article-body">
-    <p>Error correcting codes (ECCs) are used in computer and communication systems to
+    <p>Error-correcting codes (ECCs) are used in computer and communication systems to
 improve resiliency to bit flips caused by permanent hardware faults or
 transient conditions, such as neutron particles from cosmic rays, known
 generally as <a href="https://en.wikipedia.org/wiki/Soft_error">soft errors</a>. This note
-describes the principles of Hamming codes that underpin <span class="caps">ECC</span> schemes, <span class="caps">ECC</span> codes
-are constructed, focusing on single-error correction and double error
+describes the principles of Hamming codes that underpin <span class="caps">ECC</span> schemes, how the codes
+are constructed, focusing on single-error correction and double-error
 detection, and how they are&nbsp;implemented.</p>
 <p>ECCs work by adding additional redundant bits to be stored or transported with
 data. The bits are encoded as a function of the data in such a way that it is
 possible to detect erroneous bit flips and to correct them. The ratio of the
 number of data bits to the total number of bits encoded is called the <em>code
-rate</em>, with a rate of 1 being a an impossible encoding with no&nbsp;overhead.</p>
+rate</em>, with a rate of 1 being an impossible encoding with no&nbsp;overhead.</p>
 <h2>Simple&nbsp;ECCs</h2>
 <p><strong>Parity coding</strong> adds a single bit that indicates whether the number of set
-bits in the data is odd or even. When the data and parity bit is accessed or
+bits in the data is odd or even. When the data and parity bit are accessed or
 received, the parity can be recomputed and compared. This is sufficient to
 detect any odd number of bit flips but not to correct them. For applications
 where the error rate is low, so that only single bit flips are likely and
 double bit flips are rare enough to be ignored, parity error detection is
-sufficient and desirable due to it&#8217;s low overhead (just a single bit) and
+sufficient and desirable due to its low overhead (just a single bit) and
 simple&nbsp;implementation.</p>
 <p><strong>Repetition coding</strong> simply repeats each data bit a fixed number of times. When
-the encoded data is received, if each of the repeated bits are non identical,
+the encoded data is received, if the repeated bits are not identical,
 an error has occurred. With a repetition of two, single-bit errors can be
 detected but not corrected. With a repetition of three, single bit flips can be
 corrected by determining each data bit as the majority value in each triple,
@@ -132,11 +132,11 @@ cause correction to the wrong valid&nbsp;codeword.</p>
 111 &lt; Valid codeword
 </code></pre></div>
 
-<p>With Hamming distance four, two bit flips moves any valid codeword Hamming
+<p>With Hamming distance four, two bit flips move any valid codeword Hamming
 distance two from exactly two valid codewords, allowing detection of two flips
 but not correction. Single bit flips can be corrected as they were for distance
-three. Distance-four codes are widely used in computing, where is it often the
-case where single errors are frequent, double errors are rare and triple errors
+three. Distance-four codes are widely used in computing, where it is often the
+case that single errors are frequent, double errors are rare and triple errors
 occur so rarely they can be ignored. These codes are referred to as &#8216;<span class="caps">SECDED</span>
 <span class="caps">ECC</span>&#8217; (single error correction, double error&nbsp;detection).</p>
 <div class="highlight"><pre><span></span><code>0000 &lt; Valid codeword
@@ -200,14 +200,14 @@ is always the closest one. The following table summarises Hamming&nbsp;codes.</p
 </table>
 
 <h2>Creating a Hamming&nbsp;code</h2>
-<p>A codeword includes the data bits and checkbits. Each check bit corresponds to
+<p>A codeword includes the data bits and check bits. Each check bit corresponds to
 a subset of the data bits and it is set when the parity of those data bits is
 odd. To obtain a code with a particular Hamming distance, the number of check
 bits and their mapping to data bits must be chosen&nbsp;carefully.</p>
 <p>To build a single-error correcting (<span class="caps">SEC</span>) code that requires Hamming distance
 three between valid codewords, it is necessary&nbsp;for:</p>
 <ul>
-<li>The mapping of each data bit to check bits is&nbsp;unique.</li>
+<li>The mapping of each data bit to check bits to be&nbsp;unique.</li>
 <li>Each data bit to map to at least two check&nbsp;bits.</li>
 </ul>
 <p>To see why this works, consider two distinct codewords that necessarily
@@ -229,7 +229,7 @@ must have different data bits. If the data bits differ&nbsp;by:</p>
 <p>To build a <span class="caps">SECDED</span> code that requires Hamming distance of four between valid
 codewords, it is necessary&nbsp;for:</p>
 <ul>
-<li>The mapping of each data bit to check bits is&nbsp;unique.</li>
+<li>The mapping of each data bit to check bits to be&nbsp;unique.</li>
 <li>Each data bit to map to at least three check&nbsp;bits.</li>
 <li>Each check bit pattern to have an odd number of bits&nbsp;set.</li>
 </ul>
@@ -240,7 +240,7 @@ codewords, it is necessary&nbsp;for:</p>
 </li>
 <li>
 <p><strong>2 bits</strong> flip check bits in two patterns, and since any two odd-length patterns
-  must have at least two non-overlapping bits, the results is at least two
+  must have at least two non-overlapping bits, the result is at least two
   flipped bits, giving a total of four different bits. For&nbsp;example:</p>
 </li>
 </ul>
@@ -307,7 +307,7 @@ data[7]      x     x x
 <p>Note that mappings of data bits to check bits can be chosen flexibly, providing
 they maintain the rules that set the Hamming distance. This flexibility is
 useful when implementing <span class="caps">ECC</span> to reduce the cost of calculating the check bits.
-In contrast, many descriptions of <span class="caps">ECC</span> that I have found in text books and on
+In contrast, many descriptions of <span class="caps">ECC</span> that I have found in textbooks and on
 <a href="https://en.wikipedia.org/wiki/Hamming_code">Wikipedia</a> describe a specific
 encoding that does not acknowledge this freedom. The encoding they describe
 allows the syndrome to be interpreted as the bit index of the single bit error,
@@ -315,7 +315,7 @@ by the check bit in position $i$ covering data bits in position $i$.
 Additionally, they specify that parity bits are positioned in the codeword at
 power-of-two positions, for no apparent&nbsp;benefit.</p>
 <h2>Implementing <span class="caps">ECC</span></h2>
-<p>Given data bits and check bits, and mapping of data bits to check bits, <span class="caps">ECC</span>
+<p>Given data bits and check bits, and a mapping of data bits to check bits, <span class="caps">ECC</span>
 encoding works by calculating the check bits from the data bits, then combining
 data bits and check bits to form the codeword. Decoding works by taking the
 data bits from a codeword, recalculating the check bits, then calculating the
@@ -332,10 +332,10 @@ the check bits are calculated as follows (using Verilog&nbsp;syntax):</p>
 </code></pre></div>
 
 <p>And the codeword formed by concatenating the check bits and&nbsp;data:</p>
-<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">codeword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">check</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]};</span>
+<div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="n">codeword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">check_word</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]};</span>
 </code></pre></div>
 
-<p>Decoding of a codeword, splits it into the checkword and data bits, recomputes
+<p>Decoding a codeword splits it into the check word and data bits, recomputes
 the check bits and calculates the&nbsp;syndrome:</p>
 <div class="highlight"><pre><span></span><code><span class="k">assign</span><span class="w"> </span><span class="p">{</span><span class="n">old_check_word</span><span class="p">,</span><span class="w"> </span><span class="n">old_data</span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">codeword</span><span class="p">;</span>
 <span class="k">assign</span><span class="w"> </span><span class="n">new_check_word</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
@@ -349,13 +349,13 @@ the check bits and calculates the&nbsp;syndrome:</p>
 corresponding to a particular data bit, so a correction can be applied by
 creating a mask to flip the bit in that&nbsp;position:</p>
 <div class="highlight"><pre><span></span><code><span class="n">unique</span><span class="w"> </span><span class="k">case</span><span class="p">(</span><span class="n">syndrome</span><span class="p">)</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1110</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">0</span><span class="p">;</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b0111</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">1</span><span class="p">;</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1011</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">2</span><span class="p">;</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1101</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">3</span><span class="p">;</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1100</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">4</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b0111</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">0</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1110</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">1</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1101</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">2</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1011</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">3</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b0011</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">4</span><span class="p">;</span>
 <span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b0110</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">5</span><span class="p">;</span>
-<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b0011</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">6</span><span class="p">;</span>
+<span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1100</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">6</span><span class="p">;</span>
 <span class="w">  </span><span class="mh">4</span><span class="mb">&#39;b1001</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">7</span><span class="p">;</span>
 <span class="w">  </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
 <span class="k">endcase</span>
@@ -366,9 +366,9 @@ creating a mask to flip the bit in that&nbsp;position:</p>
 </code></pre></div>
 
 <p>The value of the syndrome can be further inspected to signal what action has
-been taken. If the syndrome&nbsp;is:</p>
+been taken. If the&nbsp;syndrome:</p>
 <ul>
-<li>Equal to zero, no error&nbsp;occurred.</li>
+<li>Is zero, no error&nbsp;occurred.</li>
 <li>Has one bit set, then this is a flip of a check bit and can be&nbsp;ignored.</li>
 <li>Has a value matching a pattern (three bits set or two bits in the adjacent positions), a correctable error&nbsp;occurred.</li>
 <li>Has a value not matching a pattern (two bits set in the other non-adjacent&nbsp;positions: <code>4'b1010</code>, <code>4'b0101</code>), or four bits set, a multi-bit uncorrectable error&nbsp;occurred.</li>
@@ -376,7 +376,7 @@ been taken. If the syndrome&nbsp;is:</p>
 <p>The above <span class="caps">SECDED</span> check-bit encoding can be implemented in a similar way, but
 since it uses only three-bit patterns, mapping syndromes to correction masks
 can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
-<div class="highlight"><pre><span></span><code><span class="n">unique</span><span class="w"> </span><span class="k">case</span><span class="p">(</span><span class="n">syndrome</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
 <span class="w">  </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">0</span><span class="p">;</span>
 <span class="w">  </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">1</span><span class="p">;</span>
 <span class="w">  </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">syndrome</span><span class="p">[</span><span class="mh">3</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">correction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="o">&lt;&lt;</span><span class="mh">2</span><span class="p">;</span>
@@ -389,7 +389,8 @@ can be done with three-input <span class="caps">AND</span>&nbsp;gates:</p>
 <span class="k">endcase</span>
 </code></pre></div>
 
-<p>And any syndromes with one or two bits set are correctable, and otherwise&nbsp;uncorrectable.</p>
+<p>A syndrome with one bit set, or three bits matching a pattern, is correctable.
+An even number of bits set indicates an uncorrectable double&nbsp;error.</p>
 <h2>References / further&nbsp;reading</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Error_correction_code">Error correction code</a>,&nbsp;Wikipedia.</li>

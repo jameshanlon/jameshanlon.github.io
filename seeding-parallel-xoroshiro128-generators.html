@@ -70,13 +70,13 @@
       <span class="article-tag"><a href="/tag/PRNGs.html">PRNGs</a></span>
   </div>
   <div class="article-body">
-    <p>As part of the <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu">statistical quality
+    <p>As part of the <a href="/the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu.html">statistical quality
 analysis</a> I
-did of the of&nbsp;the <code>xoroshiro128aox</code> <span class="caps">PRNG</span>, I looked at interleaved parallel
+did of&nbsp;the <code>xoroshiro128aox</code> <span class="caps">PRNG</span>, I looked at interleaved parallel
 generators (where a single generator is created by round-robin interleaving the
-output $n$ identical generators with different seeds) as a way to test its
+output of $n$ identical generators with different seeds) as a way to test its
 suitability for parallel processing. Against my intuition, I found that simple
-seeding schemes produce poor interleaved generators, and even when the
+seeding schemes produce poor interleaved generators, even when the
 subsequences are disjoint. These findings equally apply&nbsp;to <code>xoroshiro128+</code> as
 we will&nbsp;see.</p>
 <p>The <code>xoroshiro128+</code> creators <a href="https://prng.di.unimi.it">recommend using a jump
@@ -85,7 +85,7 @@ deterministically move to disjoint parts of the sequence. However, computing
 jumps is expensive to do in hardware because it involves 128-bit arithmetic and
 so it is preferable to compute seed values based on a simpler function of a
 machine&#8217;s state, such as an integer identifier for a process/thread. Since the
-probability of any two randomly-chosen sequences overlap is very small even
+probability of any two randomly chosen sequences overlapping is very small even
 with a large number of sequences, it seems reasonable to assume that a simple
 seed generator will perform okay in practice. Note also that the creators
 separately recommend &#8220;that initialization must be performed with a generator
@@ -106,7 +106,7 @@ defined in Python notation&nbsp;as:</p>
     <span class="n">seed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">128</span><span class="p">)</span> <span class="o">//</span> <span class="n">NUM_SEEDS</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">((</span><span class="mi">2</span><span class="o">**</span><span class="mi">128</span><span class="p">)</span> <span class="o">//</span> <span class="n">NUM_SEEDS</span><span class="p">))</span>
 </code></pre></div>
 
-<p>By adding a fixed offset to a initial state of balanced 0s and 1s [Scheme&nbsp;C]:</p>
+<p>By adding a fixed offset to an initial state of balanced 0s and 1s [Scheme&nbsp;C]:</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_SEEDS</span><span class="p">):</span>
     <span class="n">seed</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x55555555555555555555555555555555</span> <span class="o">+</span> <span class="n">i</span>
 </code></pre></div>
@@ -120,7 +120,7 @@ defined in Python notation&nbsp;as:</p>
 </ul>
 <p>To test these seeding schemes, I ran each generator against the standard
 PractRand test battery. PractRand is a good choice for these tests since it reports
-results at intermediate points and consumes much more output than Big Crush or Gjrand:
+results at intermediate points and consumes much more output than BigCrush or Gjrand:
 32 <span class="caps">TB</span> by default. A pass is achieved if no overtly suspicious $p$-values are&nbsp;flagged.</p>
 <p>The results are summarised in the following&nbsp;table:</p>
 <table>
@@ -173,7 +173,7 @@ results at intermediate points and consumes much more output than Big Crush or G
       <td>Scheme C</td>
       <td>10</td>
       <td>256 <span class="caps">MB</span></td>
-      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3</code></td>
+      <td><code>DC6</code>, <code>Gap</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme C</td>
@@ -185,7 +185,7 @@ results at intermediate points and consumes much more output than Big Crush or G
       <td>Scheme C</td>
       <td>1000</td>
       <td>256 <span class="caps">MB</span></td>
-      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>Brank</code>, <code>FPF</code>, <code>mod3n</code></td>
+      <td><code>BCFN</code>, <code>DC6</code>, <code>Gap</code>, <code>BRank</code>, <code>FPF</code>, <code>mod3n</code></td>
     </tr>
     <tr>
       <td>Scheme D</td>
@@ -209,7 +209,7 @@ results at intermediate points and consumes much more output than Big Crush or G
 </table>
 
 <p>Note&nbsp;that <code>DC6</code> and <code>BCFN</code> are both tests for linearity. For the failing
-generators (schemes A-C), I checked there are no duplicate values between the
+generators (schemes A-C), I checked that there are no duplicate values between the
 different generators to establish that no two sequences overlap (using&nbsp;the
 <code>analyse</code> mode). This means that the above failures are due to correlations
 between disjoint&nbsp;sequences.</p>

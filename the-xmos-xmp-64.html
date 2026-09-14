@@ -63,26 +63,26 @@
   </div>
   <div class="article-body">
     <p>The <span class="caps">XMP</span>-64 is an experimental single-board distributed-memory parallel computer
-with 512 hardware threads  and is programmable with a C-like language.  It was
-developed by <a href="https://www.xmos.com&gt;"><span class="caps">XMOS</span></a> in 2009 to demonstrate the
-scalablility of the <a href="https://en.wikipedia.org/wiki/XCore_XS1"><span class="caps">XS1</span> architecture</a>.
+with 512 hardware threads and is programmable with a C-like language.  It was
+developed by <a href="https://www.xmos.com"><span class="caps">XMOS</span></a> in 2009 to demonstrate the
+scalability of the <a href="https://en.wikipedia.org/wiki/XCore_XS1"><span class="caps">XS1</span> architecture</a>.
 Since then it has been <a href="https://www.xmos.com/published/xmp-64-end-life">discontinued</a>
 but remains a fascinating device from the point of view of providing a huge amount of
 parallelism that is programmable in a simple way. As such, I thought I would
 record some details and images of it&nbsp;here.</p>
 <p>The <span class="caps">XMP</span>-64 board contains a four-by-four grid of <a href="https://en.wikipedia.org/wiki/XCore_XS1-G"><span class="caps">XS1</span>-G4
 chips</a>, each with four processor
-cores, and with core providing eight hardware threads. The G4 chips themselves
+cores, and with each core providing eight hardware threads. The G4 chips themselves
 are connected in an order-four hypercube topology, with every G4 connected
 directly to four others. The G4 has 16 links, so four links are used to connect
 each direction.  The data rate of each link is 400 Mbits/second, or 1.6
 Gbits/second in each edge of the hypercube. The bisection bandwidth of the
-entire network is four times this again, at 6.4 Gbits/second. Each processor
+entire network is eight times this again, at 12.8 Gbits/second. Each processor
 core has 64 <span class="caps">KB</span> of <span class="caps">SRAM</span> memory and runs at 400 MHz. The whole <span class="caps">XMP</span>-64 array
 therefore provides 512 threads, 4 <span class="caps">MB</span> of memory and a peak performance of 25.6
-<span class="caps">GOPS</span>. (There are more details in the performance experiment document linked&nbsp;below)</p>
+<span class="caps">GOPS</span>. (There are more details in the performance experiment document linked&nbsp;below.)</p>
 <p>Since the G4 is an embedded processor, these performance numbers are not
-competitive with contemporary <span class="caps">CPU</span> or <span class="caps">GPU</span> devices; it does however burn only a
+competitive with contemporary <span class="caps">CPU</span> or <span class="caps">GPU</span> devices; however, it burns only a
 few tens of watts of power, provides deterministic (completely predictable)
 execution of 512 threads and provides a very simple programming&nbsp;interface.</p>
 <div class="text-center">
@@ -95,8 +95,8 @@ execution of 512 threads and provides a very simple programming&nbsp;interface.<
 </div>
 
 <p>As you can see in the pictures, there are two Ethernet interfaces at the top of
-the board, which could be used to daisy chain multiple <span class="caps">XMP</span>-64 boards together.
-Additionally there are 64-pin headers on either side that expose
+the board, which could be used to daisy-chain multiple <span class="caps">XMP</span>-64 boards together.
+Additionally, there are 64-pin headers on either side that expose
 general-purpose I/O pins connected directly to processors in the&nbsp;array.</p>
 <p>Below is an example program for the <span class="caps">XMP</span>-64 written in
 <a href="https://en.wikipedia.org/wiki/XC_(programming_language)"><span class="caps">XC</span></a>, a programming
@@ -105,53 +105,53 @@ language based on
 target the features of the <span class="caps">XS1</span> architecture. The program uses a ring topology
 of communication channels to connect one thread on each chip. As a token is
 passed around, the <span class="caps">LED</span> connected to each G4 is switched on for a short&nbsp;period.</p>
-<div class="highlight"><pre><span></span><code><span class="err">#</span><span class="nx">include</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">platform</span><span class="p">.</span><span class="nx">h</span><span class="o">&gt;</span>
-<span class="err">#</span><span class="nx">include</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">xs1</span><span class="p">.</span><span class="nx">h</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;platform.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;xs1.h&gt;</span>
 
-<span class="err">#</span><span class="nx">define</span><span class="w"> </span><span class="nx">NUM_CHIPS</span><span class="w"> </span><span class="p">(</span><span class="mf">16</span><span class="p">)</span>
-<span class="err">#</span><span class="nx">define</span><span class="w"> </span><span class="nx">STEP</span><span class="w">      </span><span class="p">(</span><span class="mf">4</span><span class="p">)</span>
+<span class="cp">#define NUM_CHIPS (16)</span>
+<span class="cp">#define STEP      (4)</span>
 
-<span class="nx">out</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">leds</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">4</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">8</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">12</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">16</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">20</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">24</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">28</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">32</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">36</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">40</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">44</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">48</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">52</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">56</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="mf">60</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">XS1_PORT_1E</span>
+<span class="n">out</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">leds</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">28</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">32</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">36</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">40</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">44</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">48</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">52</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">56</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span><span class="p">,</span>
+<span class="w">  </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="mi">60</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="n">XS1_PORT_1E</span>
 <span class="p">};</span>
 
-<span class="ow">void</span><span class="w"> </span><span class="nx">flash_led</span><span class="p">(</span><span class="kr">int</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">chanend</span><span class="w"> </span><span class="nx">prev</span><span class="p">,</span><span class="w"> </span><span class="nx">chanend</span><span class="w"> </span><span class="nx">next</span><span class="p">,</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="nx">port</span><span class="w"> </span><span class="nx">led</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">timer</span><span class="w"> </span><span class="nx">t</span><span class="p">;</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">next</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">flash_led</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">prev</span><span class="p">,</span><span class="w"> </span><span class="n">chanend</span><span class="w"> </span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">port</span><span class="w"> </span><span class="n">led</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">timer</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">next</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">prev</span><span class="w"> </span><span class="o">:&gt;</span><span class="w"> </span><span class="ow">void</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">led</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">delay_milliseconds</span><span class="p">(</span><span class="mf">100</span><span class="p">);</span>
-<span class="w">    </span><span class="nx">led</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">next</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">prev</span><span class="w"> </span><span class="p">:</span><span class="o">&gt;</span><span class="w"> </span><span class="kt">void</span><span class="p">;</span>
+<span class="w">    </span><span class="n">led</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">delay_milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+<span class="w">    </span><span class="n">led</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">next</span><span class="w"> </span><span class="o">&lt;:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 
-<span class="kr">int</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">chan</span><span class="w"> </span><span class="nx">c</span><span class="p">[</span><span class="nx">NUM_CHIPS</span><span class="p">];</span>
-<span class="w">  </span><span class="nx">par</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">par</span><span class="w"> </span><span class="p">(</span><span class="kr">int</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">NUM_CHIPS</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">STEP</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">on</span><span class="w"> </span><span class="nx">stdcore</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">flash_led</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span><span class="w"> </span><span class="nx">c</span><span class="p">[(</span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">NUM_CHIPS</span><span class="p">],</span><span class="w"> </span><span class="nx">leds</span><span class="p">[</span><span class="nx">i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">STEP</span><span class="p">]);</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">chan</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">NUM_CHIPS</span><span class="p">];</span>
+<span class="w">  </span><span class="n">par</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">par</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NUM_CHIPS</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">STEP</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">on</span><span class="w"> </span><span class="n">stdcore</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">flash_led</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">c</span><span class="p">[(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">NUM_CHIPS</span><span class="p">],</span><span class="w"> </span><span class="n">leds</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">STEP</span><span class="p">]);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -164,18 +164,18 @@ similar board was developed by the <a href="https://www.cs.bris.ac.uk/home/simon
 project</a>,
 which used <span class="caps">XS1</span> chips (12 cores per board) and allowed direct expansion of the
 network with multiple boards up to 480 cores. See the <a href="http://arxiv.org/pdf/1504.06357.pdf">research
-paper</a> (ArXiv) for more&nbsp;details.</p>
+paper</a> (arXiv) for more&nbsp;details.</p>
 <h2>More information and&nbsp;links</h2>
 <ul>
 <li>
-<p><a href="/files/xmp64experiments.pdf"><span class="caps">XMP</span>-64 performance experiments document</a> (<span class="caps">PDF</span>),&nbsp;2010,</p>
+<p><a href="/files/xmp64experiments.pdf"><span class="caps">XMP</span>-64 performance experiments document</a> (<span class="caps">PDF</span>),&nbsp;2010.</p>
 </li>
 <li>
 <p><a href="https://github.com/jameshanlon/xmp64-experiments"><span class="caps">XMP</span>-64 performance experiments source code</a>&nbsp;(GitHub).</p>
 </li>
 <li>
-<p><a href="http://ieeexplore.ieee.org/document/5948572">The <span class="caps">XMOS</span> <span class="caps">XK</span>-<span class="caps">XMP</span>-64 development board</a>, a writeup based on the
-  above for the Networks on Chip 2011 symposium, (<span class="caps">IEEE</span>&nbsp;Xplore).</p>
+<p><a href="http://ieeexplore.ieee.org/document/5948572">The <span class="caps">XMOS</span> <span class="caps">XK</span>-<span class="caps">XMP</span>-64 development board</a>, a write-up based on the
+  above for the Networks on Chip 2011 symposium (<span class="caps">IEEE</span>&nbsp;Xplore).</p>
 </li>
 <li>
 <p><a href="https://github.com/xcore/proj_xmp64">Example programs and <span class="caps">PCB</span> design files</a>&nbsp;(GitHub).</p>

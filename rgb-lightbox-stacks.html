@@ -71,14 +71,13 @@
 <p>The &#8216;<span class="caps">RGB</span> stacks&#8217; lightboxes are an experiment with using high-power LEDs,
 generous volumes and translucent acrylic plastic to create big blocks of
 colour. They are constructed from 12 mm birch ply and each pixel measures 300 x
-300 (outer dimensions). They are built as three columns of three pixels to
-allow them to be arranged in a square, a line, or in different locations. This
-note records some of the details of their construction. Although they are now
+300 mm (outer dimensions). They are built as three columns of three pixels to
+allow them to be arranged in a square, a line, or in different locations. Although they are now
 functional, refinement of their controls and modulation continues to be a work
 in progress. This note records some of the details of how they were built (I
-will it updated with any new&nbsp;developments).</p>
-<p>The project was inspired by a similar light box project (that unfortunately I
-can no longer find on the internet), but which was a single 3 x 3 cabinet
+will keep it updated with any new&nbsp;developments).</p>
+<p>The project was inspired by a similar lightbox project (that unfortunately I
+can no longer find on the internet), which was a single 3 x 3 cabinet
 achieving a similar block-colour effect. My motivation was to build something
 similar but that could also be used as subtle/ambient lighting, making use of
 the amazing colours and ability to accurately modulate LEDs to create smooth
@@ -138,8 +137,8 @@ fixings. (I unfortunately don&#8217;t have any pictures of the construction of t
 <figcaption>Detail of the lip added to seat the acrylic panels and the narrow double-sided tape to fix them in place.</figcaption>
 </figure>
 
-<p>The acrylic panels were cut to fit the inner box dimensions exactly, but with
-small variations in the dimensions of the boxes. Getting them all to fit was a
+<p>The acrylic panels were cut to fit the inner box dimensions exactly, but because of
+small variations in the dimensions of the boxes, getting them all to fit was a
 long process of sanding down each one to fit a particular opening. A secure fit
 of the panels was achieved with tight tolerances and narrow double-sided sticky
 tape (pictured above&nbsp;right).</p>
@@ -151,9 +150,9 @@ tape (pictured above&nbsp;right).</p>
 </figure>
 
 <p>Pairs of white and <span class="caps">RGB</span> LEDs were mounted on aluminium bar in each pixel. The
-<span class="caps">LED</span> were fixed in place with small bolts. I made small plastic washers to avoid
+LEDs were fixed in place with small bolts. I made small plastic washers to avoid
 shorting any of the contacts with the bolt heads. Although the aluminium bar
-probably provides a sufficient heat sink, I added additional heatsink blocks on
+probably provides a sufficient heatsink, I added additional heatsink blocks on
 the rear side, fixed with thermal glue (these were cut up from larger <span class="caps">IC</span>
 heatsinks). All of the <span class="caps">LED</span> wiring was conveniently done with <span class="caps">CAT6</span> cable, using
 all of the eight cores to wire the four channels. Each channel draws about
@@ -203,7 +202,7 @@ all of the eight cores to wire the four channels. Each channel draws about
 </figure>
 
 <p>Each box has a rear plug panel. The central box acts as a master and has
-connections for power, Ethernet, and provides serial data and power to the
+connections for power and Ethernet, and provides serial data and power to the
 other outer&nbsp;boxes.</p>
 <figure>
 <div class="row align-items-center">
@@ -235,30 +234,32 @@ other outer&nbsp;boxes.</p>
 <figcaption>The master and slave plug panels for each stack.</figcaption>
 </figure>
 
-<p>The inter-box wiring uses 5-pin <span class="caps">XLR</span> sockets, to carry power, ground and the
+<p>The inter-box wiring uses 5-pin <span class="caps">XLR</span> sockets to carry power, ground and the
 differential pair for the serial signal. The wires were made with a dual-core
-power wire (sufficient to carry the required power at 5V) with a another
+power wire (sufficient to carry the required power at 5V) with another
 dual-core wire for the serial, wrapped in a heatshrink&nbsp;coat.</p>
 <figure>
   <a href="https://jwh.ams3.digitaloceanspaces.com/homepage/RGB-stacks/cables.jpg" class="glightbox" data-gallery="all">
-    <img class="thumbnail" src="/thumbs/cables_600x600.jpg" alt="Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two CAT-6 cores for serial data.">
+    <img class="thumbnail" src="/thumbs/cables_600x600.jpg" alt="Custom cabling to connect the left- and right-hand boxes, containing a dual-core wire for power and two CAT6 cores for serial data.">
   </a>
-  <figcaption>Custom cabling to connect the left and right hand boxes, containing a dual-core wire for power and two <span class="caps">CAT</span>-6 cores for serial data.</figcaption>
+  <figcaption>Custom cabling to connect the left- and right-hand boxes, containing a dual-core wire for power and two <span class="caps">CAT6</span> cores for serial data.</figcaption>
 </figure>
 
-<p>The electronics for the <span class="caps">LED</span> drivers is described in a <a href="./three-channel-high-power-led-driver.html">separate
+<p>The electronics for the <span class="caps">LED</span> drivers are described in a <a href="./three-channel-high-power-led-driver.html">separate
 note</a>. Each of the <span class="caps">LED</span> driver boards has three
 outputs, so four boards are required to drive a single stack. The Raspberry Pi
-microcontroller is used to control all the pixels, and does so with a dual-wire
-<span class="caps">RS</span>-485 serial bus. This bus connects each of the driver boards in series, and
+is used to control all the pixels, and does so with a dual-wire
+<span class="caps">RS485</span> serial bus. This bus connects each of the driver boards in series, and
 the outer boxes are wired in parallel. Despite some concerns about this
-topology from notes on the <span class="caps">MAX</span>-485 driver <span class="caps">IC</span> datasheet and that I didn&#8217;t use
+topology from notes on the <span class="caps">MAX485</span> driver <span class="caps">IC</span> datasheet and that I didn&#8217;t use
 terminating resistors, the arrangement performs&nbsp;fine.</p>
 <p>So that I could easily access the electronics, I integrated the drivers and
 their wiring on a plywood board that sits in the base of a stack. The master
 stack has the power supply, taking mains voltage and providing 5V up to 60W
 (12A) for the three stacks. See the table below for calculated power of the
-LEDs only. Note that the power supply does not output enough power do drive
+LEDs only. The total power drawn is the current multiplied by the 5V supply, of
+which the <span class="caps">LED</span> power is delivered to the <span class="caps">LED</span> and the remainder is dissipated by
+the driver (see the <a href="./three-channel-high-power-led-driver.html"><span class="caps">LED</span> driver note</a> for more details). Note that the power supply does not output enough power to drive
 the boxes comfortably (80W would be more&nbsp;comfortable).</p>
 <table>
   <thead>
@@ -268,7 +269,8 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <th scope="col">Current (A)</th>
       <th scope="col"><span class="caps">LED</span> power (W)</th>
       <th scope="col">Driver efficiency</th>
-      <th scope="col">Driver power (W)</th>
+      <th scope="col">Total power (W)</th>
+      <th scope="col">Driver dissipation (W)</th>
     </tr>
   </thead>
   <tbody>
@@ -279,6 +281,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>0.72</td>
       <td>0.48</td>
       <td>1.5</td>
+      <td>0.78</td>
     </tr>
     <tr>
       <td>Green</td>
@@ -287,6 +290,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>1.02</td>
       <td>0.68</td>
       <td>1.5</td>
+      <td>0.48</td>
     </tr>
     <tr>
       <td>Blue</td>
@@ -295,6 +299,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>1.05</td>
       <td>0.7</td>
       <td>1.5</td>
+      <td>0.45</td>
     </tr>
     <tr>
       <td>White</td>
@@ -303,6 +308,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>0.96</td>
       <td>0.64</td>
       <td>1.5</td>
+      <td>0.54</td>
     </tr>
     <tr>
       <td>Total (per pixel)</td>
@@ -311,6 +317,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>3.75</td>
       <td>-</td>
       <td>6</td>
+      <td>2.25</td>
     </tr>
     <tr>
       <td>Total (per stack)</td>
@@ -319,6 +326,7 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>11.25</td>
       <td>-</td>
       <td>18</td>
+      <td>6.75</td>
     </tr>
     <tr>
       <td>Total</td>
@@ -327,19 +335,20 @@ the boxes comfortably (80W would be more&nbsp;comfortable).</p>
       <td>33.75</td>
       <td>-</td>
       <td>54</td>
+      <td>20.25</td>
     </tr>
   </tbody>
 </table>
 
-<p>To check the above power numbers I performed some measurments with a clamp
-meter of the central&nbsp;stack:</p>
+<p>To check the above power numbers I performed some measurements of the central
+stack with a clamp&nbsp;meter:</p>
 <ul>
-<li>With all LEDs off, the quiesence current is 360 mA at 5 V, dissipating 1.8&nbsp;W.</li>
+<li>With all LEDs off, the quiescent current is 360 mA at 5 V, dissipating 1.8&nbsp;W.</li>
 <li>With all LEDs on at full intensity, the current is 4.75 A at 5 V, dissipating
   23.75&nbsp;W.</li>
 </ul>
 <p>These numbers are slightly higher than expected, due to the <span class="caps">LED</span> driver current
-ranging between 0.357 mA (blue) and 0.370 mA&nbsp;(green).</p>
+ranging between 357 mA (blue) and 370 mA&nbsp;(green).</p>
 <figure>
 <div class="row align-items-center">
   <div class="col">
@@ -395,7 +404,7 @@ ranging between 0.357 mA (blue) and 0.370 mA&nbsp;(green).</p>
 <figcaption></figcaption>
 </figure>
 
-<p>It&#8217;s hard to capture the quality of the effect of the light boxes on camera.
+<p>It&#8217;s hard to capture the quality of the effect of the lightboxes on camera.
 The images below are two early tests: left just using a lamp in one of the
 pixels, right with no blending of the <span class="caps">RGB</span>&nbsp;channels.</p>
 <figure>
@@ -423,20 +432,21 @@ pixels, right with no blending of the <span class="caps">RGB</span>&nbsp;channel
 </figure>
 
 <p>The behaviour of the boxes is determined by the <span class="caps">PIC</span> programs and the Raspberry
-Pi. Since changes to the <span class="caps">PIC</span> program requires each of the boards to be
+Pi. Since changes to the <span class="caps">PIC</span> program require each of the boards to be
 programmed individually and for each program to be compiled with a unique
 identifier, this is not an easy way to experiment with modulating schemes.
 Instead, each <span class="caps">PIC</span> is programmed only to change the output intensity, and
-experimentation can be done using Python on the Raspberry Pi over <span class="caps">SSH</span>. In these
-scheme, updates are sent to the <span class="caps">LED</span> drivers synchronously, as a frame. At
-115,200 bps baud rate over <span class="caps">RS485</span>, this is sufficient to deliver up to 389
+experimentation can be done using Python on the Raspberry Pi over <span class="caps">SSH</span>. In this
+scheme, updates are sent to the <span class="caps">LED</span> drivers synchronously, as a frame. Each byte sent over
+the <span class="caps">UART</span> takes 10 bits, including the start and stop bits, so at 115,200 bps
+baud rate over <span class="caps">RS485</span>, a 37-byte frame is sufficient to deliver up to 311
 updates per second. In practice there are overheads that will reduce this. If,
-for smooth graduations between colours the frame rate was not adequate, an
+for smooth graduations between colours, the frame rate was not adequate, an
 optimisation could be to expand the capability of the <span class="caps">PIC</span> driver code to
 perform more complex actions like sweeps over intensity ranges, thereby
 reducing the number of updates&nbsp;required.</p>
 <p>As I mentioned, these boxes are not yet complete. To finish them, I want to add
-a button panel to switch them on off and control the lighting&nbsp;patterns.</p>
+a button panel to switch them on and off and control the lighting&nbsp;patterns.</p>
 <h2>References</h2>
 <ul>
 <li><a href="https://github.com/jameshanlon/PIC12F1572-pwm"><span class="caps">PIC12F1572</span> <span class="caps">PWM</span>&nbsp;example</a></li>
