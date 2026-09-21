@@ -21,13 +21,9 @@ points?" can be answered directly from the source. It is the successor to
 from Verilator but could only work with whole variables rather than bits.
 
 I presented the tool at [ORConf 2026](https://orconf.org/) ([slides
-here]({{'talks/slang-netlist-ORConf-2026.pdf'|asset}})). The question I most
-wanted to answer for that talk, and which the
-[documentation](https://jameswhanlon.com/slang-netlist) doesn't cover, is
-how the tool behaves on real designs: whether it produces useful results, and
-how its runtime and memory scale as designs get large. This note records the
-answers to both, starting with a small example analysis and then the
-benchmarks.
+here]({{'talks/slang-netlist-ORConf-2026.pdf'|asset}})) and covered how it
+behaves on real designs: whether it produces useful results, and how its runtime
+and memory scale. This note proivides the full detail on these results.
 
 ## Finding undriven inputs
 
@@ -67,24 +63,25 @@ def find_undriven_bit_ranges(graph, top_module):
 The full script, which also merges adjacent undriven ranges, is in the
 repository as
 [`examples/unconnected_inputs.py`](https://github.com/jameshanlon/slang-netlist/blob/main/examples/unconnected_inputs.py).
-I ran it on two open-source RISC-V cores, in both cases with a single thread.
-The runtimes are for building the graph end-to-end, including parsing and
+I ran it on two open-source RISC-V cores, taken as they come from the RTLMeter
+suite used for the benchmarks below, in both cases with a single thread. The
+runtimes are for building the graph end-to-end, including parsing and
 elaboration; the check itself is a single pass over the graph:
 
 | Design | Graph size | Runtime | Undriven inputs |
 |--------|------------|---------|-----------------|
 | [XuanTie C906](https://github.com/XUANTIE-RV/openc906) | 197 k nodes | 0.8 s | None |
-| [VeeR EL2](https://github.com/chipsalliance/Cores-VeeR-EL2) | 70 k nodes | 0.5 s | 569 ports, 1,124 bits |
+| [VeeR EL2](https://github.com/chipsalliance/Cores-VeeR-EL2) (default configuration) | 70 k nodes | 0.5 s | 569 ports, 1,124 bits |
 
 The C906 is clean. The VeeR EL2 findings are all real undriven connections
 rather than false positives, and fall into two groups. The large majority, 543
 ports, are gated-clock inputs left dangling because the clock gating cells are
 only instantiated under an `ifdef` that isn't set in this configuration. The
-remaining 26 are mostly AXI response signals on the core's bus interfaces,
-which are connected to wires in the testbench wrapper that are declared and
-read but never assigned. Neither is a bug in the
-core itself, but they are exactly the kind of thing that is worth knowing
-about, and it took less than a second to find them.
+remaining 26 are mostly AXI response signals on the core's bus interfaces, which
+are connected to wires in the testbench wrapper that are declared and read but
+never assigned. Neither is a bug in the core itself, but they are exactly the
+kind of thing that is worth knowing about, and it took less than a second to
+find them.
 
 ## Benchmarks
 
@@ -104,29 +101,28 @@ graph of 1.5 k nodes, and the largest, OpenPiton 8x8, produces 43.3 M nodes.
 In between are NVDLA, OpenTitan, the VeeR EH1, EH2 and EL2 cores, the XiangShan
 processor and the XuanTie C906, C910, E902 and E906 cores.
 
-Each configuration was run with the `slang-netlist` command-line tool at 1, 2,
-4 and 8 threads, with a single run per point. The host was a dual-socket AMD
-EPYC 9374F server (64 cores, no SMT) with 2.2 TB of memory, running Rocky
-Linux 8.10, so neither cores nor memory were a constraint. The binary was
-built with Clang 21.1 from slang-netlist 0.11.0 against slang `6001e362f`
-(414 commits after v10.0). The tool has a `--stats-json` option that reports the wall-clock time
-spent in each phase (parsing, elaboration, slang's analysis
-passes, and netlist construction, which is itself broken down into its
-sub-phases), together with the peak resident set size of the process and the
-number of nodes and edges in the graph. The benchmark scripts, which drive the
-sweeps, merge the results into a CSV with power-law fits and produce the charts
-below, are on the
+Each configuration was run with the `slang-netlist` command-line tool at 1, 2, 4
+and 8 threads, with a single run per point. The host was a dual-socket AMD EPYC
+9374F server (64 cores, no SMT) with 2.2 TB of memory, running Rocky Linux 8.10,
+so neither cores nor memory were a constraint. The binary was built with Clang
+21.1 from slang-netlist 0.11.0 against slang `6001e362f`. The `--stats-json`
+option reports the wall-clock time spent in each phase (parsing, elaboration,
+slang's analysis passes, and netlist construction, which is itself broken down
+into its sub-phases), together with the peak resident set size of the process
+and the number of nodes and edges in the graph. The benchmark scripts, which
+drive the sweeps, merge the results into a CSV with power-law fits and produce
+the charts below, are on the
 [`benchmark-scripts`](https://github.com/jameshanlon/slang-netlist/tree/benchmark-scripts/tests/external/rtlmeter/bench)
 branch of the repository.
 
-Two details of the setup matter for the numbers. The first is that the
-benchmark binary is a release build with the Python bindings disabled. Enabling
-the bindings drops slang's [mimalloc](https://github.com/microsoft/mimalloc)
-integration, and on this allocation-heavy workload that costs about 30% in
-runtime. The second is memory: OpenPiton 8x8 needs more than 30 GiB, and on a
-smaller host it swaps and the timings become meaningless, so the large
-configurations need a host with 40 GiB or more. The complete sweep takes a
-couple of hours, dominated by the largest configurations.
+Two details of the benchmark setup are worth noting. The first is that the
+`slang-netlist` binary is a release build with the Python bindings disabled.
+Enabling the bindings drops slang's
+[mimalloc](https://github.com/microsoft/mimalloc) integration, and on this
+allocation-heavy workload that costs about 30% in runtime. The second is memory:
+OpenPiton 8x8 needs more than 30 GiB, and so a sufficiently-sized host is
+required to prevent swapping. The complete sweep takes a couple of hours,
+dominated by the largest configurations.
 
 ### Runtime
 
@@ -230,15 +226,9 @@ Taking these results together: Slang Netlist handles all 27 configurations of
 the 13 RTLMeter designs that build cleanly, its runtime is close to linear in
 graph size, and even the largest open-source designs I could find build in about a
 minute on a host with enough memory. That is fast enough to run a check like
-the undriven-inputs analysis above as part of a routine flow, which was the
-goal. The main
+the undriven-inputs analysis above as part of a routine flow. The main
 limitations are memory on the largest designs and the parallel scaling of
-designs with a few very large blocks; elaboration is a fixed cost from slang
-that I can't do much about.
-
-If you try the tool on a design and find a case it doesn't handle, or have a
-use case for the graph that isn't covered by the examples, please [get in
-touch](mailto:mail@jameswhanlon.com) or open an issue.
+designs with a few very large blocks; elaboration is a fixed cost from slang.
 
 ## Links
 
