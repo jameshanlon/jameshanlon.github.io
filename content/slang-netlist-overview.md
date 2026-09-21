@@ -126,30 +126,27 @@ dominated by the largest configurations.
 
 ### Runtime
 
-The first chart plots total wall-clock time against graph size for every
-configuration, at 1 and 8 threads, on log-log axes, with a slope-one reference
-line for comparison. Runtime is close to linear in the size of the graph
-across four orders of magnitude: a power-law fit gives an exponent of 0.91 at
-1 thread and 0.85 at 8 threads, the slightly sub-linear figure reflecting the
-fixed start-up cost that dominates the smallest designs. This is what you
-would hope for from a process that is essentially a collection of per-block
-analyses followed by a merge. The largest design, OpenPiton 8x8, with 43.3 M
-nodes and 48.9 M edges, builds in 63 s with eight threads, and 240 s with one.
-At the other end, SERV takes about 10 ms.
+Runtime is close to linear in the size of the graph across four orders of
+magnitude: a power-law fit gives an exponent of 0.91 at 1 thread and 0.85 at
+8 threads, the slightly sub-linear figure reflecting the fixed start-up cost
+that dominates the smallest designs. That is what you would hope for from a
+process that is essentially a collection of per-block analyses followed by a
+merge. The largest design, OpenPiton 8x8, with 43.3 M nodes and 48.9 M edges,
+builds in 63 s with eight threads, and 240 s with one. At the other end, SERV
+takes about 10 ms.
 
 {{ macros.imagenothumb('slang-netlist/chart-time-vs-size.png',
-                       'Wall-clock time against netlist graph size, with 1 and 8 threads.') }}
+                       'Wall-clock time against netlist graph size, at 1 and 8 threads on log-log axes, with a slope-one reference line.') }}
 
-The vertical spread between the 1- and 8-thread points is the parallel
-speedup, which is discussed below. It is visibly larger for some designs than
-others.
+The vertical spread between the 1- and 8-thread points is the parallel speedup.
+It is visibly larger for some designs than others, which the thread scaling
+results below account for.
 
 ### Memory
 
-Peak resident memory at 8 threads against graph size is shown in the second
-chart, with a power-law fit through the points. Memory use scales sub-linearly
-with graph size, with a fitted exponent of 0.62, so the memory cost per node
-falls as designs get larger. The median design uses around 3.2 KiB per graph
+Peak resident memory at 8 threads scales sub-linearly with graph size, with a
+fitted exponent of 0.62, so the memory cost per node falls as designs get
+larger. The median design uses around 3.2 KiB per graph
 node, but OpenPiton 8x8 uses only about 750 bytes per node, at 30 GiB in
 total. At the other extreme, SERV's 1.5 k nodes sit on a fixed floor of about
 140 MB, which is the cost of the process and slang's own data structures before
@@ -159,20 +156,20 @@ analysis data, and OpenPiton's tile-based structure means a large graph is
 built from a comparatively small amount of elaborated source.
 
 {{ macros.imagenothumb('slang-netlist/chart-memory-vs-size.png',
-                       'Peak resident memory against netlist graph size.') }}
+                       'Peak resident memory against netlist graph size, with a power-law fit through the points.') }}
 
 ### Where the time goes
 
-The third chart breaks down the runtime of the six largest configurations by
-phase, at 8 threads, ordered by total time. Elaboration is significant
-throughout: it takes around 30% for most designs, and for Vortex-huge it takes
+Breaking the runtime of the six largest configurations down by phase, at
+8 threads, shows that elaboration is significant throughout: it takes around
+30% for most designs, and for Vortex-huge it takes
 just over half, more than netlist construction. In every other case netlist
 construction takes the largest share. Parsing and slang's analysis
 passes are small by comparison, with XiangShan the exception on parsing,
 which I put down to its Chisel-generated source being a few very large files.
 
 {{ macros.imagenothumb('slang-netlist/chart-phase-share.png',
-                       'Share of wall-clock time spent in each phase, with 8 threads.') }}
+                       'Share of wall-clock time spent in each phase at 8 threads, for the six largest configurations ordered by total time.') }}
 
 The significance of elaboration is that it is single-threaded in slang, so it
 doesn't benefit from additional cores: its median speedup across the suite
@@ -180,18 +177,16 @@ with 8 threads is 1.00×. By Amdahl's law, that puts a ceiling on the overall
 speedup regardless of how well netlist construction parallelises: with
 elaboration already around 30% of the remaining time at 8 threads, even
 unlimited threads could make these designs at most about 3.3× faster than they
-are now. It is also why the total-time speedups in the first chart are well
-below the netlist construction speedups discussed next: OpenPiton 8x8 gets
-3.8× overall against 4.9× for netlist construction alone.
+are now. It is also why the end-to-end speedups are well below those of netlist
+construction taken on its own: OpenPiton 8x8 gets 3.8× overall against 4.9×
+for netlist construction alone.
 
 ### Thread scaling
 
-The final chart shows the speedup of the netlist construction phase alone, as
-a function of thread count, for the four largest configurations. Netlist
-construction has four sub-phases: collecting the blocks, a parallel data-flow
-analysis that runs independently on each procedural block and continuous
-assignment, and then serial phases that merge the results and resolve
-R-values. OpenPiton scales well, at 5.5× for the 4x4 grid and 4.9× for 8x8,
+Netlist construction has four sub-phases: collecting the blocks, a parallel
+data-flow analysis that runs independently on each procedural block and
+continuous assignment, and then serial phases that merge the results and
+resolve R-values. OpenPiton scales well, at 5.5× for the 4x4 grid and 4.9× for 8x8,
 and the data-flow analysis on its own reaches 6.2× on the 4x4 grid, the best
 in the suite. The scaling is not just a matter of size: the 1x1 configuration,
 with 700 k nodes, still manages 3.8×, so it is presumably something about the
