@@ -34,7 +34,6 @@ pre-commit install
 make html        # Generate site with Pelican
 make all         # Same as make html (default target)
 make serve       # Run dev server at http://0.0.0.0:8000 with auto-rebuild
-make validate    # Build then run html5validator on output/
 make clean       # Remove output/
 ```
 

@@ -19,7 +19,6 @@ Build the website:
 $ make webpack
 $ make html
 ...
-$ make validate
 ```
 
 Run the development server:

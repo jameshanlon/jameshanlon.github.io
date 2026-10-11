@@ -35,7 +35,4 @@ endif
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
 
-validate: html
-	html5validator --root $(OUTPUTDIR)
-
-.PHONY: html clean regenerate serve validate
+.PHONY: html clean regenerate serve
