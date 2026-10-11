@@ -7,3 +7,7 @@ env
 .DS_Store
 node_modules
 node_modules
+reference
+reference-before
+reference-after
+.pytest_cache

@@ -38,4 +38,19 @@ clean:
 validate: html
 	html5validator --root $(OUTPUTDIR)
 
-.PHONY: html clean regenerate serve validate
+REFERENCE=$(BASEDIR)/reference
+
+manifest:
+	$(PY) tools/make_manifest.py $(OUTPUTDIR)
+
+reference:
+	rm -rf $(REFERENCE)
+	$(PELICAN) $(INPUTDIR) -o $(REFERENCE) -s $(CONFFILE) $(PELICANOPTS)
+
+diff:
+	diff -r -x thumbs $(REFERENCE) $(OUTPUTDIR)
+
+test:
+	pytest -v
+
+.PHONY: html clean regenerate serve validate manifest reference diff test
