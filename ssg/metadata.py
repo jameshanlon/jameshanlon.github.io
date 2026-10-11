@@ -54,7 +54,9 @@ def split_list(value):
 
 def parse_date(value):
     """
-    Return a timezone-aware datetime for a YYYY-MM-DD front matter date.
+    Return a timezone-aware datetime for a Y-M-D front matter date.
+
+    Month and day need not be zero-padded.
     """
-    naive = datetime.fromisoformat(value.strip())
+    naive = datetime.strptime(value.strip(), "%Y-%m-%d")
     return naive.replace(tzinfo=ZoneInfo(config.TIMEZONE))
