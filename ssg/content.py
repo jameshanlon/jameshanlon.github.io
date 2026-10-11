@@ -22,6 +22,12 @@ class MissingSummaryError(ValueError):
     """
 
 
+class MissingTitleError(ValueError):
+    """
+    Raised when published content declares no title.
+    """
+
+
 @dataclass(frozen=True)
 class Taxonomy:
     """
@@ -118,18 +124,23 @@ def load_one(env, context, path, template):
     if status != "published":
         return None
 
-    title = typogrify(_single(meta, "title"))
-    summary = _single(meta, "summary")
-    if summary is None:
+    raw_title = _single(meta, "title", "")
+    if not raw_title.strip():
+        raise MissingTitleError(f"{path}: content has no Title field")
+    title = typogrify(raw_title)
+
+    summary = _single(meta, "summary", "")
+    if not summary.strip():
         # Pelican's word-count truncation is not reimplemented, so an article
         # without a summary would be listed and syndicated with an empty one.
         # Pages render no summary, so they are exempt.
         if template == "article":
             raise MissingSummaryError(f"{path}: article has no Summary field")
+        summary = None
     else:
         summary = typogrify(render_formatted(summary))
 
-    slug = _single(meta, "slug") or slugify(_single(meta, "title"))
+    slug = _single(meta, "slug") or slugify(raw_title)
     date = _single(meta, "date")
     category = _single(meta, "category")
     tags = _single(meta, "tags")
@@ -153,9 +164,18 @@ def load_one(env, context, path, template):
 def check_unique_slugs(items):
     """
     Raise DuplicateSlugError if any two items share an output path.
+
+    Content is written before the direct templates, so a slug matching one of
+    those would be silently overwritten; such a collision is rejected too.
     """
+    reserved = {f"{name}.html": name for name in config.DIRECT_TEMPLATES}
     seen = {}
     for item in items:
+        if item.save_as in reserved:
+            raise DuplicateSlugError(
+                f"{item.source_path} writes to {item.save_as}, which is "
+                f"reserved for the {reserved[item.save_as]} template"
+            )
         if item.save_as in seen:
             raise DuplicateSlugError(
                 f"{item.source_path} and {seen[item.save_as]} both write to "
