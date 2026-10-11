@@ -1,5 +1,6 @@
 ---
 Title: The XC Programming Language
+Slug: the-xc-programming-language
 Date: 2014-12-13
 Category: Computing and Silicon
 Tags: computing, computer-architecture, programming-languages

@@ -1,5 +1,6 @@
 ---
 Title: Reducing memory use in deep neural networks
+Slug: reducing-memory-use-in-deep-neural-networks
 Date: 2017-2-5
 Category: Computing and Silicon
 Tags: computing; machine-intelligence

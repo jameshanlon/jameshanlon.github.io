@@ -1,5 +1,6 @@
 ---
 Title: Testing silicon logic with scan structures
+Slug: testing-silicon-logic-with-scan-structures
 Date: 2019-04-18
 Category: Computing and Silicon
 Tags: microelectronics

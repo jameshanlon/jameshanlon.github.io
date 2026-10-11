@@ -1,5 +1,6 @@
 ---
 Title: Garden workshop
+Slug: garden-workshop
 Date: 2021-10-04
 Category: Physical Projects
 Status: published

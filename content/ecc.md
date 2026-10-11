@@ -1,5 +1,6 @@
 ---
 Title: Error-correcting codes
+Slug: error-correcting-codes
 Date: 2020-05-02
 Category: Computing and Silicon
 Tags: computing

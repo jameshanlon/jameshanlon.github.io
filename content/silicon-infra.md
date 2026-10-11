@@ -1,5 +1,6 @@
 ---
 Title: Silicon infrastructure
+Slug: silicon-infrastructure
 Date: 2023-08-2
 Category: Computing and Silicon
 Tags: computing, microelectronics, verilog

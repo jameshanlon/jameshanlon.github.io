@@ -1,5 +1,6 @@
 ---
 Title: Seeding parallel xoroshiro128+ generators
+Slug: seeding-parallel-xoroshiro128-generators
 Date: 2022-10-1
 Category: Computing and Silicon
 Tags: computing, PRNGs

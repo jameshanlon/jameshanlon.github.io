@@ -1,5 +1,6 @@
 ---
 Title: Recycled allotment shed
+Slug: recycled-allotment-shed
 Date: 2019-11-10
 Category: Physical Projects
 Tags: sheds, construction

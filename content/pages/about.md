@@ -1,4 +1,5 @@
 Title: About
+Slug: about
 Status: published
 
 {% import 'post-macros.html' as macros %}

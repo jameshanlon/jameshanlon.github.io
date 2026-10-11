@@ -1,5 +1,6 @@
 ---
 Title: Reflections on the state of nature
+Slug: reflections-on-the-state-of-nature
 Date: 2020-12-04
 Category: Perspectives
 Status: published

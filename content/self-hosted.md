@@ -1,5 +1,6 @@
 ---
 Title: Personal data and self-hosting
+Slug: personal-data-and-self-hosting
 Date: 2024-08-26
 Category: Perspectives
 Tags: self-hosted

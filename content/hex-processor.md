@@ -1,5 +1,6 @@
 ---
 Title: From logic gates to a programming language using the Hex architecture
+Slug: from-logic-gates-to-a-programming-language-using-the-hex-architecture
 Date: 2022-11-18
 Category: Computing and Silicon
 Tags: computing, computer-architecture, microelectronics

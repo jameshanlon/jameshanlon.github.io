@@ -1,4 +1,5 @@
 Title: Code
+Slug: code
 Status: published
 
 {% for project in code %}

@@ -1,5 +1,6 @@
 ---
 Title: Home thermal-imaging survey
+Slug: home-thermal-imaging-survey
 Date: 2021-03-31
 Category: Home and Sustainability
 Status: published

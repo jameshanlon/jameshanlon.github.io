@@ -1,4 +1,5 @@
 Title: Archive
+Slug: archive
 Status: published
 
 <p>Somewhere to keep documents and presentations from over the years.</p>

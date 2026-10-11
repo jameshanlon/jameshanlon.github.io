@@ -1,4 +1,5 @@
 Title: Links
+Slug: links
 Status: published
 
 A collection of links to other places on the internet I find interesting.
