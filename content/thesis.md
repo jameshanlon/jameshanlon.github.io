@@ -1,5 +1,6 @@
 ---
 Title: Scalable abstractions for general-purpose parallel computation
+Slug: scalable-abstractions-for-general-purpose-parallel-computation
 Date: 2014-10-01
 Category: Computing and Silicon
 Tags: computing, computer-architecture

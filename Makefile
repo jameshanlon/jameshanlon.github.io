@@ -1,38 +1,23 @@
 PY?=python
-PELICAN?=pelican
-PELICANOPTS=--verbose
-
-BASEDIR=`pwd`
-INPUTDIR=$(BASEDIR)/content
+BASEDIR=$(CURDIR)
 OUTPUTDIR=$(BASEDIR)/output
-CONFFILE=$(BASEDIR)/pelicanconf.py
-
-DEBUG ?= 0
-ifeq ($(DEBUG), 1)
-	PELICANOPTS += -D
-endif
-
-RELATIVE ?= 0
-ifeq ($(RELATIVE), 1)
-	PELICANOPTS += --relative-urls
-endif
+PORT?=8000
 
 all: html
 
 html:
-	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
-
-regenerate:
-	$(PELICAN) -r $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
+	$(PY) -m ssg -o $(OUTPUTDIR) build
 
 serve:
-ifdef PORT
-	pelican -r --listen -b 0.0.0.0 -p $(PORT)
-else
-	pelican -r --listen -b 0.0.0.0
-endif
+	$(PY) -m ssg -o $(OUTPUTDIR) serve -p $(PORT) --watch
 
 clean:
 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
 
-.PHONY: html clean regenerate serve
+manifest:
+	$(PY) tools/make_manifest.py $(OUTPUTDIR)
+
+test:
+	pytest -v
+
+.PHONY: all html serve clean manifest test

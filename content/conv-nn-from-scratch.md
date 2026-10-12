@@ -1,5 +1,6 @@
 ---
 Title: A convolutional neural network from scratch
+Slug: a-convolutional-neural-network-from-scratch
 Date: 2017-2-10
 Category: Computing and Silicon
 Tags: machine-intelligence

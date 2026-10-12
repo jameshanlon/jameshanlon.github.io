@@ -1,5 +1,6 @@
 ---
 Title: Writing synthesizable Verilog
+Slug: writing-synthesizable-verilog
 Date: 2018-5-4
 Category: Computing and Silicon
 Tags: computing, microelectronics, programming-languages, verilog

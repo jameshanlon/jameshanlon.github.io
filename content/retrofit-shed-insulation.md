@@ -1,5 +1,6 @@
 ---
 Title: Retrofit shed insulation
+Slug: retrofit-shed-insulation
 Date: 2018-09-30
 Category: Home and Sustainability
 Tags: energy-efficiency, retrofit, sheds, sustainability

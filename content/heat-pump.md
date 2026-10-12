@@ -1,5 +1,6 @@
 ---
 Title: Review of heat pump use and performance
+Slug: review-of-heat-pump-use-and-performance
 Date: 2024-07-31
 Category: Home and Sustainability
 Tags: sustainability

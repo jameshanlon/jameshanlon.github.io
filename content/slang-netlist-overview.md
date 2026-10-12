@@ -1,5 +1,6 @@
 ---
 Title: Benchmarking Slang Netlist on open-source designs
+Slug: benchmarking-slang-netlist-on-open-source-designs
 Date: 2026-09-15
 Category: Computing and Silicon
 Tags: computing, microelectronics, verilog

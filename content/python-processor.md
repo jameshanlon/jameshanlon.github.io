@@ -1,5 +1,6 @@
 ---
 Title: Building a Python processor
+Slug: building-a-python-processor
 Date: 2023-06-27
 Category: Computing and Silicon
 Tags: computing, computer-architecture

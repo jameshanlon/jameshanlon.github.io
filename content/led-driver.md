@@ -1,5 +1,6 @@
 ---
 Title: Three-channel high-power LED driver
+Slug: three-channel-high-power-led-driver
 Date: 2018-12-30
 Category: Physical Projects
 Tags: lighting, electronics
