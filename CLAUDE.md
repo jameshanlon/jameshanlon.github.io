@@ -17,7 +17,7 @@ git config user.email mail@jameswhanlon.com
 
 ## Overview
 
-Personal homepage built with [Pelican](https://blog.getpelican.com/) (Python static site generator). Source lives in `content/` and `theme/`; output is generated into `output/`. The theme uses hand-written CSS with no framework dependencies. GLightbox is loaded from jsDelivr CDN for image lightboxes.
+Personal homepage built with an in-repo static site generator, `ssg/`. Source lives in `content/` and `theme/`; output is generated into `output/`. The theme uses hand-written CSS with no framework dependencies. GLightbox is loaded from jsDelivr CDN for image lightboxes.
 
 ## Setup
 
@@ -31,28 +31,39 @@ pre-commit install
 ## Build Commands
 
 ```bash
-make html        # Generate site with Pelican
+make html        # Generate site with ssg
 make all         # Same as make html (default target)
-make serve       # Run dev server at http://0.0.0.0:8000 with auto-rebuild
-make validate    # Build then run html5validator on output/
+make serve       # Run dev server at http://0.0.0.0:8000, rebuilding on change with --watch
+make manifest    # Regenerate tests/url_manifest.txt from the current output/
 make clean       # Remove output/
 ```
 
-For development, `pelican --listen` (without `-r`) serves without watching for changes. `make serve` adds `-r` for auto-regeneration.
+`make serve` runs `ssg serve --watch`; without `--watch` the dev server serves the current build without rebuilding.
 
 ## Architecture
 
 ### Content Pipeline
 
-The `jinja_content` plugin (`plugins/jinja_content/`) intercepts Pelican's readers and renders each Markdown/RST/HTML file as a **Jinja2 template first**, then as normal Markdown. This means content files can use Jinja2 syntax, access custom filters, and reference shared data.
+`ssg/` is a small, purpose-built static site generator. Each content file is rendered as a **Jinja2 template first**, then as Markdown. This means content files can use Jinja2 syntax, access custom filters, and reference shared data.
 
-Custom Jinja filters defined in `pelicanconf.py`:
+Modules:
+- `ssg/config.py` — site-wide settings (author, URLs, menu, Markdown extensions)
+- `ssg/content.py` — loads and parses articles and pages from `content/`
+- `ssg/metadata.py` — front matter parsing: slugs, list fields, dates
+- `ssg/render.py` — Markdown/Jinja rendering, typogrify, intra-site link resolution
+- `ssg/assets.py` — asset filters: remote URLs, local image copies, thumbnails
+- `ssg/feeds.py` — Atom and RSS feed generation
+- `ssg/site.py` — ties the above together to build the full output tree
+- `ssg/__main__.py` — the `ssg build`/`ssg serve` CLI, driven by the Makefile
+
+Custom Jinja filters, provided by `Assets` in `ssg/assets.py`:
 - `asset` — returns a remote URL on DigitalOcean Spaces (`https://jwh.ams3.digitaloceanspaces.com/homepage/...`)
-- `thumbnail` — generates a thumbnail (from local file or remote fetch) and returns its path; implemented in `thumbnail.py`
-- `image` — copies local image to `output/images/` or falls back to remote URL; implemented in `thumbnail.py`
-- `load_yaml` — loads a YAML file and returns its data
+- `thumbnail` — generates a thumbnail (from local file or remote fetch) and returns its path
+- `image` — copies local image to `output/images/` or falls back to remote URL
 
-`JINJA_CONTEXT` in `pelicanconf.py` injects `projects` (from `content/pages/projects.yml`) into all templates.
+A `load_yaml` filter loads a YAML file and returns its data; `projects` (from `content/pages/projects.yml`) is injected into all templates.
+
+`tests/url_manifest.txt` is the committed URL contract for the site: it lists every output path and a hash of its contents. `tests/test_url_surface.py` fails the build if a URL appears, disappears, or changes content without the manifest being regenerated (`make manifest`) and reviewed — this is the main guard against unintended regressions.
 
 ### Content Files
 
@@ -84,7 +95,7 @@ Analytics via [GoatCounter](https://www.goatcounter.com/).
 
 ### Images
 
-Images can be stored locally in `content/images/` (for development) or hosted remotely on DigitalOcean Spaces. `thumbnail.py` checks for a local copy first and falls back to fetching remotely. This means the build works offline if images are present locally, and works without local images by fetching from the remote store.
+Images can be stored locally in `content/images/` (for development) or hosted remotely on DigitalOcean Spaces. `ssg/assets.py` checks for a local copy first and falls back to fetching remotely. This means the build works offline if images are present locally, and works without local images by fetching from the remote store.
 
 To regenerate Pygments CSS after changing themes, generate light-mode rules with bare selectors into `pygments.css`.
 
