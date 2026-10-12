@@ -47,8 +47,8 @@ spare time. These notes are written primarily as a record for myself, but they
 are publicly available in the hope they will be useful to others. I'd
 love to hear from you if that's the case.
 
-This website is built using [Pelican](https://blog.getpelican.com), a static
-website generator written in Python, with a simple hand-written CSS theme. It
+This website is built using a small static site generator written
+specifically for it, with a simple hand-written CSS theme. It
 is hosted on GitHub Pages. The source code is available for
 [reuse](https://github.com/jameshanlon/jameshanlon.github.io). I track visitors
 using the excellent [GoatCounter](https://www.goatcounter.com).
