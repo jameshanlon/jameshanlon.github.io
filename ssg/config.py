@@ -34,10 +34,9 @@ MENU_ITEMS = [
 
 DIRECT_TEMPLATES = ["index", "tags", "categories", "authors", "archives", "notes"]
 
-# The extensions list is explicit and load-bearing. Pelican derives it from
-# extension_configs at reader init; passing extension_configs alone to
-# Markdown() loads nothing, silently dropping tables, footnotes, fenced code
-# and syntax highlighting.
+# The extensions list is explicit and load-bearing: passing extension_configs
+# alone to Markdown() loads nothing, silently dropping tables, footnotes,
+# fenced code and syntax highlighting.
 MARKDOWN = {
     "extensions": [
         "markdown.extensions.codehilite",

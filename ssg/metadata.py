@@ -6,7 +6,7 @@ from zoneinfo import ZoneInfo
 
 from ssg import config
 
-#: Applied in order, mirroring Pelican's default SLUG_REGEX_SUBSTITUTIONS.
+#: Applied in order to derive a slug from a title.
 SLUG_SUBSTITUTIONS = [
     (re.compile(r"[^\w\s-]"), ""),
     (re.compile(r"(?u)\A\s*"), ""),

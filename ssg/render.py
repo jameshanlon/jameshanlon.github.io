@@ -16,7 +16,7 @@ from ssg import config
 # rather than per call. Attr.w additionally converts &quot; entities.
 smartypants.Attr.default = smartypants.Attr.set1 | smartypants.Attr.w
 
-#: Matches a Pelican-style intra-site link, e.g. {filename}/led-driver.md
+#: Matches an intra-site link, e.g. {filename}/led-driver.md
 LINK_MARKER = re.compile(r"\{filename\}/?(?P<target>[^\"'#?]+)")
 
 
@@ -71,7 +71,7 @@ def render_markdown(text):
 
     The `markdown` Jinja filter, used by content/pages/code.md to render
     project descriptions from YAML. Deliberately not the configured extension
-    set, matching pelicanconf.py's render_markdown.
+    set.
     """
     return markdown(text.strip())
 

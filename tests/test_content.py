@@ -58,7 +58,7 @@ def test_content_without_a_status_field_is_not_published(tmp_path):
 
 
 def test_published_article_without_a_summary_fails_the_build(tmp_path):
-    # Pelican truncated the body to make one; nothing does that now, so the
+    # Nothing truncates the body to make a summary automatically, so the
     # omission must be loud rather than syndicating an empty summary.
     source = tmp_path / "note.md"
     source.write_text(

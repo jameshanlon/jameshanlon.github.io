@@ -131,8 +131,8 @@ def load_one(env, context, path, template):
 
     summary = _single(meta, "summary", "")
     if not summary.strip():
-        # Pelican's word-count truncation is not reimplemented, so an article
-        # without a summary would be listed and syndicated with an empty one.
+        # No automatic truncation is applied, so an article without a
+        # summary would be listed and syndicated with an empty one.
         # Pages render no summary, so they are exempt.
         if template == "article":
             raise MissingSummaryError(f"{path}: article has no Summary field")
