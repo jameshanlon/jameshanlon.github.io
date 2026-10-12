@@ -18,6 +18,6 @@ manifest:
 	$(PY) tools/make_manifest.py $(OUTPUTDIR)
 
 test:
-	pytest -v
+	$(PY) -m pytest -v
 
 .PHONY: all html serve clean manifest test
