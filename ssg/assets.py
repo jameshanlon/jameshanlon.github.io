@@ -7,7 +7,7 @@ import shutil
 from io import BytesIO
 
 import requests
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, UnidentifiedImageError
 
 from ssg import config
 
@@ -121,7 +121,10 @@ class Assets:
         response = requests.get(url, timeout=30)
         if response.status_code != 200:
             raise AssetError(f"image not found: {url}")
-        return Image.open(BytesIO(response.content))
+        try:
+            return Image.open(BytesIO(response.content))
+        except UnidentifiedImageError as exc:
+            raise AssetError(f"not a valid image: {url}") from exc
 
     def copy_static(self):
         """

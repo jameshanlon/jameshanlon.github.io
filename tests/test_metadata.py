@@ -1,7 +1,10 @@
+import re
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 
+from ssg import config
 from ssg.metadata import SlugError, parse_date, slugify, split_list
 
 
@@ -61,3 +64,20 @@ def test_parse_date_applies_the_site_timezone():
     parsed = parse_date("2019-10-04")
     assert parsed == datetime(2019, 10, 4, tzinfo=parsed.tzinfo)
     assert parsed.utcoffset().total_seconds() == 2 * 3600
+
+
+def test_parse_date_accepts_every_unpadded_date_in_content():
+    # Several real articles write Date fields with an unpadded month or day
+    # (e.g. 2017-2-10); strptime's leniency here must not be tightened away.
+    pattern = re.compile(r"^Date:\s*(\S+)", re.MULTILINE)
+    unpadded = [
+        value
+        for path in Path(config.CONTENT_DIR).glob("*.md")
+        for value in pattern.findall(path.read_text())
+        if re.fullmatch(r"\d{4}-\d{1,2}-\d{1,2}", value)
+        and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value)
+    ]
+
+    assert unpadded, "expected at least one unpadded date in content/"
+    for value in unpadded:
+        parse_date(value)

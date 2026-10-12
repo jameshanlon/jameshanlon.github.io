@@ -60,6 +60,23 @@ def test_thumbnail_reports_a_missing_remote_source(tmp_path, monkeypatch):
     assert not (tmp_path / "out" / "thumbs" / "gone_20x20.png").exists()
 
 
+def test_thumbnail_reports_a_remote_response_that_is_not_an_image(tmp_path, monkeypatch):
+    # A 200 response with a non-image body (e.g. an error page) must name the
+    # URL rather than surface a raw PIL error.
+    class Response:
+        status_code = 200
+        content = b"not an image"
+
+    monkeypatch.setattr("ssg.assets.requests.get", lambda url, timeout: Response())
+    assets = Assets(output_dir=tmp_path / "out", content_dir=tmp_path / "content")
+
+    with pytest.raises(AssetError, match="bad.png") as excinfo:
+        assets.thumbnail("bad.png", "20x20")
+
+    assert excinfo.value.__cause__ is not None
+    assert not (tmp_path / "out" / "thumbs" / "bad_20x20.png").exists()
+
+
 def _write_png(path, size):
     from PIL import Image
 

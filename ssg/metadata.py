@@ -1,4 +1,6 @@
-"""Front matter value parsing: slugs, list fields and dates."""
+"""
+Front matter value parsing: slugs, list fields and dates.
+"""
 
 import re
 from datetime import datetime

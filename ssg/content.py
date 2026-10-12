@@ -28,6 +28,12 @@ class MissingTitleError(ValueError):
     """
 
 
+class MalformedDateError(ValueError):
+    """
+    Raised when a content file's Date field cannot be parsed.
+    """
+
+
 @dataclass(frozen=True)
 class Taxonomy:
     """
@@ -145,6 +151,11 @@ def load_one(env, context, path, template):
     category = _single(meta, "category")
     tags = _single(meta, "tags")
 
+    try:
+        parsed_date = parse_date(date) if date else None
+    except ValueError as exc:
+        raise MalformedDateError(f"{path}: malformed Date field {date!r}") from exc
+
     return Content(
         source_path=str(path),
         title=title,
@@ -153,7 +164,7 @@ def load_one(env, context, path, template):
         content=typogrify(html),
         template=template,
         summary=summary,
-        date=parse_date(date) if date else None,
+        date=parsed_date,
         category=Taxonomy(category, "category") if category else None,
         author=Taxonomy(_single(meta, "author", config.AUTHOR), "author"),
         tags=[Taxonomy(t, "tag") for t in split_list(tags)] if tags else [],

@@ -1,4 +1,6 @@
-"""Site configuration."""
+"""
+Site configuration.
+"""
 
 from pathlib import Path
 

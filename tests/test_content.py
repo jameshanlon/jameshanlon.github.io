@@ -3,6 +3,7 @@ import pytest
 from ssg import config
 from ssg.content import (
     DuplicateSlugError,
+    MalformedDateError,
     MissingSummaryError,
     MissingTitleError,
     check_unique_slugs,
@@ -124,6 +125,38 @@ def test_published_content_without_a_title_is_reported_with_its_file(tmp_path):
 
     with pytest.raises(MissingTitleError, match="untitled.md"):
         load_one(env, {}, source, "article")
+
+
+def test_a_malformed_date_is_reported_with_its_file(tmp_path):
+    # A bare ValueError from strptime names neither the file nor the value.
+    source = tmp_path / "note.md"
+    source.write_text(
+        "Title: A note\nDate: not-a-date\nStatus: published\n"
+        "Summary: A short note.\n\nBody text.\n"
+    )
+    env = build_environment({})
+
+    with pytest.raises(MalformedDateError, match="note.md") as excinfo:
+        load_one(env, {}, source, "article")
+
+    assert "not-a-date" in str(excinfo.value)
+    assert excinfo.value.__cause__ is not None
+
+
+def test_unpadded_month_and_day_dates_still_load(tmp_path):
+    # Several real articles use unpadded forms like 2017-2-10; the fix for
+    # malformed dates must not tighten strptime's leniency here.
+    for value in ("2017-2-10", "2022-10-1", "2023-08-2"):
+        source = tmp_path / "note.md"
+        source.write_text(
+            f"Title: A note\nDate: {value}\nStatus: published\n"
+            "Summary: A short note.\n\nBody text.\n"
+        )
+        env = build_environment({})
+
+        content = load_one(env, {}, source, "article")
+
+        assert content.date is not None
 
 
 def test_a_slug_colliding_with_a_direct_template_is_rejected(tmp_path):
