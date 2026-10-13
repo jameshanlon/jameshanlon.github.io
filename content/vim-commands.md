@@ -1,5 +1,6 @@
 ---
 Title: Vim command composition
+Slug: vim-command-composition
 Date: 2018-08-23
 Category: Perspectives
 Tags: computing, vim

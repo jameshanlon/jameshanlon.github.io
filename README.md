@@ -1,7 +1,7 @@
 ![Build](https://github.com/jameshanlon/homepage/actions/workflows/build.yml/badge.svg)
 
 This repository contains the source for [my homepage](http://jameswhanlon.com),
-which is built using [Pelican](https://blog.getpelican.com/).
+which is built using the in-repo static site generator in `ssg/`.
 
 To get up and running:
 ```
@@ -23,7 +23,7 @@ $ make html
 
 Run the development server:
 ```
-$ pelican --listen
+$ make serve
 ...
 ```
 Then visit ``http://0.0.0.0:8000`` (or similar).

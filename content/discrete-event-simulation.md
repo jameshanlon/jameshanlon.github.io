@@ -1,5 +1,6 @@
 ---
 Title: Discrete-event simulation
+Slug: discrete-event-simulation
 Date: 2024-08-14
 Category: Computing and Silicon
 Tags: computing

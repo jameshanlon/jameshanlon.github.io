@@ -1,5 +1,6 @@
 ---
 Title: Querying logical paths in a Verilog design
+Slug: querying-logical-paths-in-a-verilog-design
 Date: 2018-11-20
 Category: Computing and Silicon
 Tags: computing, microelectronics, verilog

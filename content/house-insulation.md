@@ -1,5 +1,6 @@
 ---
 Title: Cornish Unit House retrofit insulation
+Slug: cornish-unit-house-retrofit-insulation
 Date: 2022-12-29
 Category: Home and Sustainability
 Tags: energy-efficiency, retrofit, sustainability

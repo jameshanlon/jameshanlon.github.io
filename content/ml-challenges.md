@@ -1,5 +1,7 @@
 ---
 Title: Machine learning challenges for computer architecture
+Summary: Neural networks are developing rapidly and place new demands on computer architecture. A survey of where those demands fall and which of them are hard.
+Slug: machine-learning-challenges-for-computer-architecture
 Date: 2016-11-4
 Category: Computing and Silicon
 Tags: computing; computer-architecture; machine-intelligence

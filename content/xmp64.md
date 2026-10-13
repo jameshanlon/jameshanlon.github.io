@@ -1,5 +1,7 @@
 ---
 Title: The XMOS XMP-64
+Summary: An overview of the XMOS XMP-64 development board, a 64-core parallel machine built from sixteen four-core XS1-G4 devices.
+Slug: the-xmos-xmp-64
 Date: 2014-12-04
 Category: Computing and Silicon
 Tags: computing, electronics

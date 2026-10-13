@@ -1,5 +1,6 @@
 ---
 Title: The hardware pseudorandom number generator of the Graphcore IPU
+Slug: the-hardware-pseudorandom-number-generator-of-the-graphcore-ipu
 Date: 2022-09-21
 Category: Computing and Silicon
 Tags: computing, PRNGs

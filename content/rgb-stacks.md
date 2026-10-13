@@ -1,5 +1,6 @@
 ---
 Title: RGB lightbox stacks
+Slug: rgb-lightbox-stacks
 Date: 2018-12-31
 Category: Physical Projects
 Tags: lighting, electronics

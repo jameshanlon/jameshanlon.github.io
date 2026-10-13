@@ -1,5 +1,6 @@
 ---
 Title: Notes on testing random number generators
+Slug: notes-on-testing-random-number-generators
 Date: 2017-4-5
 Category: Computing and Silicon
 Tags: computing, PRNGs

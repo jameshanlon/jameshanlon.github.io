@@ -11,20 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Upgrade pip
-        run: |
-          python3 -m pip install --upgrade pip
-
       - name: Install dependencies
-        run: |
-          python3 -m pip install -r ./requirements.txt
+        run: python3 -m pip install -r ./requirements.txt
 
       - name: Cache thumbs
         id: cache-thumbs
@@ -35,6 +30,9 @@ jobs:
 
       - name: Build the website
         run: make html
+
+      - name: Check the URL surface
+        run: make test
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

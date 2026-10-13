@@ -1,5 +1,6 @@
 ---
 Title: New chips for machine intelligence
+Slug: new-chips-for-machine-intelligence
 Date: 2019-10-04
 Category: Computing and Silicon
 Tags: computing, machine-intelligence, computer-architecture
