@@ -11,3 +11,4 @@ reference
 reference-before
 reference-after
 .pytest_cache
+cleaned
