@@ -206,20 +206,22 @@ def strip_jpeg_tail(data, index):
     Return the image data from a scan or end marker, with later frames stripped.
 
     Multi-picture JPEGs append further images after the first end-of-image
-    marker, each carrying its own metadata. Within entropy-coded data an 0xFF
-    byte is always stuffed or a restart marker, so the first end-of-image
-    marker found cannot be a false positive.
+    marker, each carrying its own metadata, and some images are padded with
+    zeros. Anything else trailing is refused rather than copied blindly, since
+    it could be an appended file. Within entropy-coded data an 0xFF byte is
+    always stuffed or a restart marker, so the first end-of-image marker found
+    cannot be a false positive.
     """
     end = data.find(b"\xff\xd9", index)
     if end < 0:
         raise AssetError("missing end-of-image marker")
     end += 2
     tail = data[end:]
-    if not tail:
-        return data[index:end]
-    if tail[:2] != b"\xff\xd8":
+    if tail[:2] == b"\xff\xd8":
+        return data[index:end] + strip_jpeg(tail)
+    if any(tail):
         raise AssetError(f"unexpected trailing data at offset {end}")
-    return data[index:end] + strip_jpeg(tail)
+    return data[index:end]
 
 
 def strip_jpeg(data):
@@ -293,7 +295,8 @@ def clean(filepath, data, dest):
     Write a metadata-free copy of an image, or return False if it had none.
 
     The decoded pixels and the stripped result are both checked before the copy
-    is kept, so a cleaned image can only differ from its original in metadata.
+    is kept, so a cleaned image can only differ from its original in metadata
+    and in any padding that followed the image data.
     """
     cleaned = strip(data)
     if cleaned == data:

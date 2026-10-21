@@ -43,8 +43,12 @@ stderr. `cleaned/` is then incomplete, so re-run before uploading.
 
 Stripping is lossless: JPEGs are filtered at the segment level and the
 entropy-coded data is copied verbatim, so images are never re-encoded. A
-cleaned image is checked to differ from its original only in metadata before it
-is written. Deliberately preserved:
+cleaned image is checked to differ from its original only in metadata, and in
+any zero padding that followed the image data, before it is written. Thirteen
+of the `house-insulation` images carry such padding, 17.7 MB of it in total,
+which `clean` drops. Trailing data that is not zero padding or a further frame
+is refused rather than copied, since it could be an appended file.
+Deliberately preserved:
 
 - **Orientation**, re-inserted as the only EXIF tag when an image relies on it.
   27 images display sideways without it.
