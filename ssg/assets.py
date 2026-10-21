@@ -17,6 +17,13 @@ THUMB_DIR = "thumbs"
 IMAGE_DIR = "images"
 
 
+def asset_url(filepath):
+    """
+    Return the remote URL for an asset on the object store.
+    """
+    return f"{config.REMOTE_PREFIX}/{filepath}"
+
+
 class AssetError(RuntimeError):
     """
     Raised when an asset cannot be found or processed.
@@ -65,7 +72,7 @@ class Assets:
         """
         Return the remote URL for an asset on the object store.
         """
-        return f"{config.REMOTE_PREFIX}/{filepath}"
+        return asset_url(filepath)
 
     def image(self, filepath):
         """
