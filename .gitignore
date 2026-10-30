@@ -1,6 +1,7 @@
 *.pyc
 *.pid
 *.bak
+*.bkp
 output
 cache
 env
