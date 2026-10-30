@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="James W. Hanlon">
+  <title>Building a Hex parallel processor</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./theme/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./theme/images/favicon-16x16.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/pygments.css"/>
+  <link rel="stylesheet" type="text/css" href="./theme/css/main.css"/>
+  <link href="https://jameswhanlon.com/reeds/atom.xml"
+        type="application/atom+xml" rel="alternate"
+        title="James W. Hanlon Atom Feed" />
+  <link href="https://jameswhanlon.com/reeds/rss.xml"
+        type="application/rss+xml" rel="alternate"
+        title="James W. Hanlon RSS Feed" />
+  <script src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() { GLightbox({ selector: '.glightbox' }); });</script>
+  <script data-goatcounter="https://jameswhanlon.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header>
+  <nav class="site-nav">
+    <div class="container">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+      <ul class="nav-links">
+        <li>
+            <a href="/index.html">about</a>
+        </li>
+        <li>
+            <a href="/notes.html">notes</a>
+        </li>
+        <li>
+            <a href="/code.html">code</a>
+        </li>
+        <li>
+            <a href="/links.html">links</a>
+        </li>
+        <li>
+            <a href="/archive.html">archive</a>
+        </li>
+      </ul>
+      <a class="nav-brand" href="/">James W. Hanlon</a>
+    </div>
+  </nav>
+  </header>
+
+  <main>
+  <div class="container">
+  <h1>
+    Building a Hex parallel&nbsp;processor
+  </h1>
+  <div class="lead">
+    <time class="published" datetime="2026-10-30T00:00:00+01:00">
+      30 Oct 2026
+    </time><br>
+      <span class="article-tag"><a href="/tag/computing.html">computing</a></span>
+      <span class="article-tag"><a href="/tag/computer-architecture.html">computer-architecture</a></span>
+      <span class="article-tag"><a href="/tag/microelectronics.html">microelectronics</a></span>
+      <span class="article-tag"><a href="/tag/verilog.html">verilog</a></span>
+  </div>
+  <div class="article-body">
+    <p>A few years ago I wrote about <a href="./from-logic-gates-to-a-programming-language-using-the-hex-architecture.html">an implementation of the Hex processor
+architecture</a>: a deliberately simple processor, a
+Verilog implementation of it, and a compiler for a simple imperative language
+called X that targets it. The point of the exercise was to have a complete,
+readable path from logic gates to a programming language, small enough to read
+in an&nbsp;afternoon.</p>
+<p>That version was resolutely sequential. Since Hex borrows a lot from the
+<a href="https://en.wikipedia.org/wiki/Transputer">Transputer</a>, and X borrows its syntax
+from <a href="https://en.wikipedia.org/wiki/Occam_(programming_language)">occam</a>, the
+obvious omission was the thing those two were actually built for: parallelism
+and message passing. The
+<a href="https://github.com/jameshanlon/hex-processor">repository</a> now has it with two
+new instructions in the <span class="caps">ISA</span>, a link interface and a router in the <span class="caps">RTL</span>, the
+concept of a process network in the simulator,&nbsp;and <code>par</code>, <code>chan</code> and&nbsp;the <code>!</code> and
+<code>?</code> operators in X. The result is a self-contained parallel processor with a
+parallel language targeted at it, where every layer is still small enough to&nbsp;read.</p>
+<h2>Two new&nbsp;instructions</h2>
+<p>Hex has four registers (<span class="caps">PC</span>, A, B and O) and 8-bit instructions made of a 4-bit
+opcode and a 4-bit operand.&nbsp;The <code>OPR</code> opcode selects a register-to-register
+sub-operation, and that is where the new instructions&nbsp;appear:</p>
+<table>
+<thead>
+<tr>
+<th>Sub-op</th>
+<th>Operand</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IN</code></td>
+<td>0x4</td>
+<td>Receive a word from channel slot B into A</td>
+</tr>
+<tr>
+<td><code>OUT</code></td>
+<td>0x5</td>
+<td>Send word A to channel slot B</td>
+</tr>
+</tbody>
+</table>
+<p>Both perform a <em>synchronous rendezvous</em> over a point-to-point channel, meaning
+that the two parties meet at the moment of transfer, so neither proceeds until
+both have arrived. Whichever gets there first blocks until the other is ready,
+at which point the value is exchanged and both continue. There is no buffering
+visible to the program and the transfer doubles as synchronisation. The B register
+selects one of the processor&#8217;s four <em>link slots</em>; the A register carries the
+value, received&nbsp;for <code>IN</code> and sent&nbsp;for <code>OUT</code>. Operating on an unwired slot is a
+runtime&nbsp;error.</p>
+<h2>The&nbsp;hardware</h2>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hex-network.svg" alt="Four Hex cores connected by the router. Each core has a private memory and a link interface with four channel slots, wired to one router port. The data and acknowledgement networks are two structurally identical routers, drawn here as a single block.">
+  <figcaption>Four Hex cores connected by the router. Each core has a private memory and a link interface with four channel slots, wired to one router port. The data and acknowledgement networks are two structurally identical routers, drawn here as a single block.</figcaption>
+</figure>
+
+<p>A core is a processor, a private memory, and a <em>link interface</em>. The processor
+side of that interface is small: when&nbsp;an <code>IN</code> or <code>OUT</code> reaches its execute
+phase, the core presents the slot index and the A register to the link
+interface and stalls while the interface reports itself busy. The blocking
+semantics of a channel operation are therefore a pipeline stall, rather than
+an exception or trap, and the architectural state does not advance until the
+operation&nbsp;completes.</p>
+<p>The link interface holds a <em>route table</em> mapping each of its four slots to a&nbsp;destination <code>(core, slot)</code> pair, and a one-word receive buffer per slot. Its
+state machine operates as&nbsp;follows:</p>
+<ul>
+<li>
+<p>An <code>OUT</code> injects a data <em>flit</em>, the granularity of network buffering,&nbsp;carrying
+  <code>(dst core, dst slot, src core, word)</code>, then waits for an acknowledgement.
+  A whole message is one flit, so there are no partial messages in flight to&nbsp;track.</p>
+</li>
+<li>
+<p>A delivered data flit lands in the receive buffer of the slot it names,
+  whether or not that core has reached&nbsp;its <code>IN</code> yet.</p>
+</li>
+<li>
+<p>An <code>IN</code> whose slot buffer is full returns an acknowledgement to the source
+  core recorded with the word, and&nbsp;completes.</p>
+</li>
+</ul>
+<p>Data moves eagerly in the network, one buffer deep, but the writer is only
+released when the reader has actually taken the value. That preserves rendezvous
+semantics while keeping the network itself free of any handshake state, and it
+makes the two arrival orders differ only in who&nbsp;waits:</p>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hex-rendezvous.svg" alt="A rendezvous in each arrival order. The writer always stalls from its OUT until the acknowledgement returns; the reader only stalls if its IN finds the slot buffer empty.">
+  <figcaption>A rendezvous in each arrival order. The writer always stalls from its <span class="caps">OUT</span> until the acknowledgement returns; the reader only stalls if its <span class="caps">IN</span> finds the slot buffer empty.</figcaption>
+</figure>
+
+<p>If the writer gets there first, its word is sitting in the reader&#8217;s slot buffer
+by the time the reader&nbsp;executes <code>IN</code>, so&nbsp;the <code>IN</code> completes immediately and
+acknowledges. If the reader gets there first,&nbsp;its <code>IN</code> finds the buffer empty
+and stalls until the flit lands. Either way the&nbsp;writer&#8217;s <code>OUT</code> does not retire
+until the acknowledgement comes back, so neither side can run ahead of the
+other by more than the word in&nbsp;flight.</p>
+<p>Acknowledgements travel on a network of their own. Sharing one network with
+the data would allow an acknowledgement to sit behind data flits that cannot be
+delivered until that same acknowledgement has released their writer, which is a
+cycle. So there are two routers, structurally identical: a 4&times;4 crossbar
+with a one-deep buffer per input, round-robin arbitration per output, and
+registered outputs that back-pressure their input buffer when the destination
+is not ready. The crossbar keeps no per-channel state, and a flit&#8217;s destination
+core selects its output port&nbsp;directly.</p>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hex-router.svg" alt="One plane of the router. Each output port has a round-robin arbiter that grants among the input buffers addressed to it, driving the mux that reads the granted buffer; the result is registered, and an output that cannot drain holds its flit and back-pressures that buffer.">
+  <figcaption>One plane of the router. Each output port has a round-robin arbiter that grants among the input buffers addressed to it, driving the mux that reads the granted buffer; the result is registered, and an output that cannot drain holds its flit and back-pressures that buffer.</figcaption>
+</figure>
+
+<p>Topology is then a matter of configuration rather than elaboration. The cores
+all connect to the routers, and the per-core route tables are programmed over a
+configuration port while reset is asserted. Any topology that fits within four
+cores of four links each, such as a pipeline, a ring, a tree, a line of
+bidirectional neighbours, is just a different set of route table&nbsp;entries.</p>
+<h2>Mapping X onto&nbsp;it</h2>
+<p>X was extended with four new syntax&nbsp;elements: <code>chan</code> declarations and formal
+parameters,&nbsp;a <code>par</code> statement,&nbsp;and <code>!</code> and <code>?</code> operators for sending and&nbsp;receiving.</p>
+<div class="highlight"><pre><span></span><code>proc relay(chan in, chan out) is
+  var v;
+  { in ? v; out ! v }
+</code></pre></div>
+
+<p>A <code>chan</code> formal is compiled as a one-word value holding a link slot index,&nbsp;so
+<code>out ! v</code> evaluates <code>v</code> into A, the channel expression into B, and&nbsp;emits <code>OPR
+OUT</code>. Receiving is the same in reverse,&nbsp;with <code>OPR IN</code> leaving the word in A to
+be stored into the target variable or array element. Channels are ordinary
+values in the generated code, which is what makes it possible to write a
+process once and run it on several cores with different&nbsp;arguments.</p>
+<p>The <code>par</code> statement is only supported as the body of&nbsp;the <code>main</code> process. The
+compiler then treats this as a description of a static process network rather
+than as a statement to generate code for. Additionally, each branch must be a
+call to a procedure, and its arguments must be channels; that branch becomes one
+processor, the called procedure becomes its entry point, and its channel
+arguments are assigned link slots 0, 1, 2… in argument order. A channel named by
+two different branches becomes a wiring edge between the two slots it occupies.&nbsp;Permitting <code>par</code> to occur at arbitrary points would require runtime allocation
+of execution resources, increasing the hardware complexity considerably. Occam
+has the concept&nbsp;of <code>placed par</code> to allocate processes to processors, and&nbsp;regular
+<code>par</code> maps processes to local&nbsp;threads.</p>
+<figure>
+  <img src="https://jwh.ams3.digitaloceanspaces.com/homepage/hex-processor/hex-par-mapping.svg" alt="The three-stage pipeline of examples/pipe.x mapped onto hardware. Each par branch becomes a core, each channel argument takes the next link slot, and each channel becomes one wiring edge, written into both endpoints' route tables at reset.">
+  <figcaption>The three-stage pipeline of examples/pipe.x mapped onto hardware. Each par branch becomes a core, each channel argument takes the next link slot, and each channel becomes one wiring edge, written into both endpoints&#8217; route tables at reset.</figcaption>
+</figure>
+
+<p>Both endpoints of an edge are programmed, so either may be the writer; the
+route table is consulted only&nbsp;by <code>OUT</code>, since&nbsp;an <code>IN</code> takes the source core
+from the word waiting in its slot&nbsp;buffer.</p>
+<p>The compiler then checks the things that make the network well formed, and
+rejects the program with a source location otherwise: every channel must have
+exactly two endpoints, with exactly one writer and one reader, and no process
+may use more than four channels. These are static checks on the network, done
+once at compile time, rather than runtime&nbsp;errors.</p>
+<p>Each processor is then compiled separately. The source is&nbsp;re-parsed, <code>main</code> is
+replaced by a call to that processor&#8217;s entry procedure with its slot indices as
+literal constants, and the normal pipeline runs to produce an image. So every
+core gets an image containing only the code it can reach, with its channel
+arguments constant-folded into slot&nbsp;numbers.</p>
+<p>The output of the compiler is a <em>network container</em>, containing the&nbsp;magic <code>HEXN</code>,
+a processor count, the list of wiring edges&nbsp;as <code>(proc, slot, proc, slot)</code>
+quadruples, and then one size-prefixed image per processor. A file without the
+magic is treated as a single plain image, so the container is transparent to
+everything that handles sequential&nbsp;programs.</p>
+<p>The simulator and <span class="caps">RTL</span> testbench consume the same&nbsp;container. <code>hexsim</code> builds a
+channel object per edge, boots one simulated processor per image, steps them
+round-robin, and implements the rendezvous directly: a channel is idle,
+writer-waiting or reader-waiting, and a processor that blocks simply does not
+advance its <span class="caps">PC</span>. It reports the exit code of the first processor to halt, and
+raises an error naming the blocked processors and slots when no core is runnable
+(deadlock detection for&nbsp;free). <code>hextb</code>, the Verilator testbench, loads the
+images into the <span class="caps">RTL</span> cores&#8217; memories, walks the same edge list to program both
+directions of each route table during reset, and services each core&#8217;s syscalls.
+Cores with no image are filled with a halt loop so they stay&nbsp;quiescent.</p>
+<p>The two are cross-checked against each other: each message-passing example is
+compiled once to a container, then run on both the C++ simulator and the <span class="caps">RTL</span>,
+and the outputs must agree. There are also <span class="caps">RTL</span> testbenches for the router, the
+link interface and a single core in&nbsp;isolation.</p>
+<h2>Examples</h2>
+<p>The smallest interesting program is a three-stage pipeline. Three processes, two
+channels, three&nbsp;cores:</p>
+<div class="highlight"><pre><span></span><code>val put = 1;
+
+proc putval(val c) is put(c, 0)
+
+proc source(chan out) is out ! &#39;P&#39;
+
+proc relay(chan in, chan out) is
+  var v;
+  { in ? v; out ! v }
+
+proc sink(chan in) is
+  var v;
+  { in ? v; putval(v) }
+
+proc main() is
+  chan a;
+  chan b;
+  par { source(a); relay(a, b); sink(b) }
+</code></pre></div>
+
+<p>This is the program whose mapping is drawn above. Running it&nbsp;prints <code>P</code>,
+having moved one word across two&nbsp;cores:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>xcmp<span class="w"> </span>examples/pipe.x<span class="w"> </span>-o<span class="w"> </span>pipe.bin
+$<span class="w"> </span>hexsim<span class="w"> </span>pipe.bin
+P
+$<span class="w"> </span>hextb<span class="w"> </span>pipe.bin
+Loaded<span class="w"> </span><span class="m">3</span><span class="w"> </span>processor<span class="w"> </span>image<span class="o">(</span>s<span class="o">)</span>
+P
+</code></pre></div>
+
+<p>A better demonstration is the concurrent prime sieve, the classic occam
+example. A generator emits the integers from 2 upwards down a pipeline of
+filters, terminated by a zero sentinel. The first value a filter receives is
+prime, which it prints; thereafter it forwards only the values not divisible by
+that&nbsp;prime:</p>
+<div class="highlight"><pre><span></span><code>proc generator(chan out) is
+  var i;
+{ i := 2;
+  while i &lt;= 12 do
+  { out ! i;
+    i := i + 1
+  };
+  out ! 0
+}
+
+proc filter(chan in, chan out) is
+  var p;
+  var v;
+{ in ? p;
+  printn(p);
+  putval(&#39;\n&#39;);
+  v := 1;
+  while v ~= 0 do
+  { in ? v;
+    if v = 0
+    then
+      out ! 0
+    else if rem(v, p) ~= 0
+      then
+        out ! v
+      else
+        skip
+  }
+}
+
+proc main() is
+  chan a;
+  chan b;
+  chan c;
+  par { generator(a); filter(a, b); filter(b, c); sink(c) }
+</code></pre></div>
+
+<p>The&nbsp;same <code>filter</code> procedure runs on two different cores with different channel
+arguments, which works precisely because channels are values. With four cores
+this prints the first three&nbsp;primes, <code>2</code>, <code>3</code> and <code>5</code>.&nbsp;(<code>sink</code> is&nbsp;a <code>filter</code>
+that prints its prime and then just drains the rest,&nbsp;and <code>printn</code> and <code>rem</code> are
+ordinary X code, since Hex has no multiply or divide&nbsp;instruction.)</p>
+<p>The <code>examples/</code> directory has more: a token ring, a worker farm
+with fan-out and fan-in, a parallel reduction over a binary tree of cores, a
+prefix sum along a line, a nearest-neighbour halo exchange with bidirectional
+channels, a divide-and-conquer sort with a stream merge, and a systolic
+multiply-accumulate pipeline for Horner&#8217;s rule. Four cores is not many, but it
+is enough for the shape of each of these to be the real&nbsp;one.</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/jameshanlon/hex-processor">hex-processor on&nbsp;GitHub</a></li>
+<li><a href="./from-logic-gates-to-a-programming-language-using-the-hex-architecture.html">From logic gates to a programming language using the Hex
+  architecture</a>, the original note on the
+  sequential processor, compiler and&nbsp;tooling</li>
+</ul>
+  </div>
+  <div class="article-footer">
+    <p>Please get in touch (mail @ this domain) with any
+    comments, corrections or suggestions.</p>
+  </div>
+  </div>
+  </main>
+
+  <hr>
+  <footer>
+    <div class="container">
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="Creative Commons Licence" style="border-width:0"
+             src="https://i.creativecommons.org/l/by/4.0/80x15.png" />
+      </a>
+      <br>
+      Unless otherwise noted, all content is freely available under a
+      <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        Creative Commons Attribution 4.0 International License</a>.<br>
+      The views expressed on this website are the author's personal views and should not be
+      attributed to any other person, including that of their employer.<br>
+      <br>
+      Subscribe: <a href="https://jameswhanlon.com/reeds/atom.xml">Atom</a> /
+      <a href="https://jameswhanlon.com/reeds/rss.xml">RSS</a>
+    </div>
+  </footer>
+</body>
+</html>
