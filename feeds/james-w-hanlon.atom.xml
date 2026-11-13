@@ -1,5 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"/><link href="https://jameswhanlon.com/feeds/james-w-hanlon.atom.xml" rel="self"/><id>https://jameswhanlon.com/</id><updated>2026-10-30T00:00:00+01:00</updated><entry><title>Building a Hex parallel processor</title><link href="https://jameswhanlon.com/building-a-hex-parallel-processor.html" rel="alternate"/><published>2026-10-30T00:00:00+01:00</published><updated>2026-10-30T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2026-10-30:/building-a-hex-parallel-processor.html</id><summary type="html">&lt;p&gt;A minimal set of changes for Hex to be a message-passing
+<feed xmlns="http://www.w3.org/2005/Atom"><title>James W. Hanlon - James W. Hanlon</title><link href="https://jameswhanlon.com/" rel="alternate"/><link href="https://jameswhanlon.com/feeds/james-w-hanlon.atom.xml" rel="self"/><id>https://jameswhanlon.com/</id><updated>2026-11-13T00:00:00+01:00</updated><entry><title>Heat pump performance post-renovation</title><link href="https://jameswhanlon.com/heat-pump-performance-post-renovation.html" rel="alternate"/><published>2026-11-13T00:00:00+01:00</published><updated>2026-11-13T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2026-11-13:/heat-pump-performance-post-renovation.html</id><summary type="html">&lt;p&gt;Comparing heat pump performance across the heating seasons either side of a whole-house renovation that added underfloor&amp;nbsp;heating.&lt;/p&gt;</summary><content type="html">&lt;p&gt;Two years ago I &lt;a href="https://jameswhanlon.com/review-of-heat-pump-use-and-performance.html"&gt;reviewed a year&amp;#8217;s worth of data&lt;/a&gt; from
+my Vaillant aroTHERM plus heat pump and the results were positive: a seasonal
+coefficient of performance (&lt;span class="caps"&gt;SCOP&lt;/span&gt;) of 3.41 and a house held at 19 degrees C all
+year. I also noted that the planned renovation work offered further efficiency&amp;nbsp;gains.&lt;/p&gt;
+&lt;p&gt;Building work started in December 2024 and the heat pump was decommissioned in
+February 2025 when the central heating system was drained and recommissioned in
+July 2025. During the work, the ground-floor living area was extended, the
+entire ground floor slab was replaced and upgraded with 100 mm of foam insulation,
+underfloor heating was installed throughout, allowing all ground-floor radiators
+to be removed. An additional bedroom was added upstairs with a new&amp;nbsp;radiator.&lt;/p&gt;
+&lt;p&gt;Underfloor heating has an enormous emitter area, so in principle it can deliver
+the same heat as conventional radiators at a lower flow temperature, thereby
+improving system efficiency. I expected an improvement, but the efficiency
+dropped. This note is about the changes observed in the data
+logged by the Vaillant&amp;nbsp;gateway.&lt;/p&gt;
+&lt;h2&gt;Picking a&amp;nbsp;comparison&lt;/h2&gt;
+&lt;p&gt;I now have four years of logged data but 2025 is the renovation year and is
+unusable as a comparison. The data shows the house going cold: the system ran
+normally until 10 February, then the hot water tank falls from 45 degrees C to
+10 over about ten days and the room temperature follows it down to a low of 4.3
+degrees C. On 11 March the gateway stops logging altogether and there is
+nothing until 16 July, a gap of 126&amp;nbsp;days.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump-post-renovation/shutdown.png" alt="Room and hot water tank temperature through the 2025 renovation. The weekly spikes before the shutdown are Legionella purges."&gt;
+  &lt;figcaption&gt;Room and hot water tank temperature through the 2025 renovation. The weekly spikes before the shutdown are Legionella purges.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;That leaves 2024 as the last full heating season before the work and 2026 as the
+first full one after it. The comparison throughout this note is therefore 1
+January to 30 April, in 2024 against 2026. Both are complete, with 121 and 120
+logged days respectively, and they were almost identically cold: 715 heating
+degree days against 729, and a mean outdoor temperature of 9.6 degrees C against&amp;nbsp;9.5.&lt;/p&gt;
+&lt;p&gt;I have limited this to the heating season because summer &lt;span class="caps"&gt;COP&lt;/span&gt; figures are
+dominated by cycling and standby losses on days when the heat pump has minimal
+heat demand, and the kWh quantisation in the Vaillant export makes them very
+noisy. The heating season is both the part that matters for energy use and the
+part where the measurement is&amp;nbsp;meaningful.&lt;/p&gt;
+&lt;p&gt;The caveats from the previous note still apply: the
+&lt;a href="https://protonsforbreakfast.wordpress.com/2023/02/06/the-myvaillant-app-a-review"&gt;Protons for Breakfast review&lt;/a&gt; of the myVaillant app measured
+roughly an 8% error in electricity consumed and 20% in heat generated, and many
+logged values are quantised to whole kWh, which means the raw data
+under-reports &lt;span class="caps"&gt;COP&lt;/span&gt;. Since I am comparing Vaillant&amp;#8217;s data against itself here,
+those errors should largely cancel, which is one advantage of a&amp;nbsp;before-and-after.&lt;/p&gt;
+&lt;h2&gt;The headline&amp;nbsp;figures&lt;/h2&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;1 January – 30 April&lt;/th&gt;
+      &lt;th scope="col"&gt;2024&lt;/th&gt;
+      &lt;th scope="col"&gt;2026&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Days logged&lt;/td&gt;
+      &lt;td&gt;121&lt;/td&gt;
+      &lt;td&gt;120&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Consumed electricity heating&lt;/td&gt;
+      &lt;td&gt;772 kWh&lt;/td&gt;
+      &lt;td&gt;1,050 kWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Consumed electricity hot water&lt;/td&gt;
+      &lt;td&gt;469 kWh&lt;/td&gt;
+      &lt;td&gt;335 kWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heat generated heating&lt;/td&gt;
+      &lt;td&gt;2,888 kWh&lt;/td&gt;
+      &lt;td&gt;3,529 kWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heat generated hot water&lt;/td&gt;
+      &lt;td&gt;1,363 kWh&lt;/td&gt;
+      &lt;td&gt;979 kWh&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;3.74&lt;/td&gt;
+      &lt;td&gt;3.36&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hot water &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;2.91&lt;/td&gt;
+      &lt;td&gt;2.92&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total &lt;span class="caps"&gt;SCOP&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;3.43&lt;/td&gt;
+      &lt;td&gt;3.25&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Heating degree days&lt;/td&gt;
+      &lt;td&gt;715&lt;/td&gt;
+      &lt;td&gt;729&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mean outdoor temperature&lt;/td&gt;
+      &lt;td&gt;9.6 °C&lt;/td&gt;
+      &lt;td&gt;9.5 °C&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mean room temperature&lt;/td&gt;
+      &lt;td&gt;18.7 °C&lt;/td&gt;
+      &lt;td&gt;19.9 °C&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Heating &lt;span class="caps"&gt;SCOP&lt;/span&gt; is down from 3.74 to 3.36, a drop of about 10%, between two seasons
+with essentially the same weather. Hot water &lt;span class="caps"&gt;SCOP&lt;/span&gt; is unchanged at 2.91 against&amp;nbsp;2.92.&lt;/p&gt;
+&lt;p&gt;Hot water &lt;em&gt;consumption&lt;/em&gt; fell sharply, from 469 to 335 kWh, but that reflects
+how much hot water we use, not how efficiently it is&amp;nbsp;made.&lt;/p&gt;
+&lt;h2&gt;Hot water as a&amp;nbsp;control&lt;/h2&gt;
+&lt;p&gt;The hot water result is consistent over both periods and so provides a useful&amp;nbsp;control.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump-post-renovation/monthly-water-scop.png" alt="Monthly hot water SCOP, before and after the renovation."&gt;
+  &lt;figcaption&gt;Monthly hot water &lt;span class="caps"&gt;SCOP&lt;/span&gt;, before and after the renovation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Month by month the hot water circuit performs almost identically in the two years: 2.77
+against 2.84 in January, then 2.95/2.92, 2.93/2.95 and 3.02/3.03. The cylinder,
+its connection to the heat pump and the way it is run were untouched by the
+building work, and the data reflects this. Whatever happened to the space
+heating did not happen to the heat pump as a&amp;nbsp;unit.&lt;/p&gt;
+&lt;h2&gt;The house needs more&amp;nbsp;heat&lt;/h2&gt;
+&lt;p&gt;The house is bigger than it was, so some increase in heat demand is expected.
+Plotting daily heat generated against outdoor temperature shows how&amp;nbsp;much.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump-post-renovation/heat-demand-vs-outdoor-temperature.png" alt="Daily heat generated for space heating against mean outdoor temperature."&gt;
+  &lt;figcaption&gt;Daily heat generated for space heating against mean outdoor temperature.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The 2026 curve sits consistently above the 2024 one. Normalised against heating
+degree days, demand rose about 20%, from 4.04 to 4.84 kWh per degree day. Two
+things drive that: the extension added heated floor area, and the house is now
+held about 1.1 degrees C warmer through the heating season, 19.9 against&amp;nbsp;18.7.&lt;/p&gt;
+&lt;p&gt;Floor area and room temperature affect efficiency differently. A bigger space at
+the same temperature needs more heat but shouldn&amp;#8217;t lower efficiency. Holding it
+warmer might. Needing more electricity &lt;em&gt;per unit of heat&lt;/em&gt; is the part I didn&amp;#8217;t&amp;nbsp;expect.&lt;/p&gt;
+&lt;h2&gt;The efficiency gap grows with the&amp;nbsp;cold&lt;/h2&gt;
+&lt;p&gt;Here is daily heating &lt;span class="caps"&gt;COP&lt;/span&gt; against outdoor temperature, using only days with more
+than 3 kWh of electricity for&amp;nbsp;heating:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump-post-renovation/cop-vs-outdoor-temperature.png" alt="Daily heating COP against mean outdoor temperature. Faint points are individual days; the line is a 2 degree C binned average."&gt;
+  &lt;figcaption&gt;Daily heating &lt;span class="caps"&gt;COP&lt;/span&gt; against mean outdoor temperature. Faint points are individual days; the line is a 2 degree C binned average.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The two curves are indistinguishable in mild weather and separate steadily as
+it gets&amp;nbsp;colder:&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Outdoor temperature&lt;/th&gt;
+      &lt;th scope="col"&gt;2024 &lt;span class="caps"&gt;COP&lt;/span&gt;&lt;/th&gt;
+      &lt;th scope="col"&gt;2026 &lt;span class="caps"&gt;COP&lt;/span&gt;&lt;/th&gt;
+      &lt;th scope="col"&gt;Difference&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;12 °C&lt;/td&gt;&lt;td&gt;3.89&lt;/td&gt;&lt;td&gt;3.92&lt;/td&gt;&lt;td&gt;+0.04&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;10 °C&lt;/td&gt;&lt;td&gt;3.89&lt;/td&gt;&lt;td&gt;3.73&lt;/td&gt;&lt;td&gt;−0.16&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;8 °C&lt;/td&gt;&lt;td&gt;3.91&lt;/td&gt;&lt;td&gt;3.45&lt;/td&gt;&lt;td&gt;−0.46&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;6 °C&lt;/td&gt;&lt;td&gt;3.79&lt;/td&gt;&lt;td&gt;3.19&lt;/td&gt;&lt;td&gt;−0.60&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;4 °C&lt;/td&gt;&lt;td&gt;3.65&lt;/td&gt;&lt;td&gt;2.97&lt;/td&gt;&lt;td&gt;−0.68&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;2 °C&lt;/td&gt;&lt;td&gt;3.43&lt;/td&gt;&lt;td&gt;2.70&lt;/td&gt;&lt;td&gt;−0.73&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;At 12 degrees C the two years are the same to within noise. At 2 degrees C
+the new one is 0.73 of a point worse, more than 20% lower. The cold end is
+what dominates winter energy use, so this is not a small&amp;nbsp;effect.&lt;/p&gt;
+&lt;p&gt;The same pattern appears in the monthly&amp;nbsp;figures:&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src="https://jwh.ams3.digitaloceanspaces.com/homepage/heat-pump-post-renovation/monthly-heating-scop.png" alt="Monthly heating SCOP, before and after the renovation."&gt;
+  &lt;figcaption&gt;Monthly heating &lt;span class="caps"&gt;SCOP&lt;/span&gt;, before and after the renovation.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;January is 3.64 against 3.09, a drop of 15%, and February 3.82 against 3.33, a
+drop of 13%. By March the gap has shrunk to 3.82 against 3.65, and by April it
+has gone entirely, 3.78 against&amp;nbsp;3.82.&lt;/p&gt;
+&lt;h2&gt;What it is&amp;nbsp;not&lt;/h2&gt;
+&lt;p&gt;I don&amp;#8217;t know the cause of the drop in efficiency, but the data rules out several&amp;nbsp;things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;It is not the heat pump itself. The same unit, over the same months, produced
+  unchanged hot water&amp;nbsp;performance.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;It is not that the house is bigger. More floor area explains a larger
+  bill, not a worse ratio of heat out to electricity in, and the hot water
+  circuit shows the unit is still capable of the previous &lt;span class="caps"&gt;COP&lt;/span&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;It is not a drift over time that happens to coincide with winter. The deficit
+  tracks outdoor temperature rather than date. It is largest in the coldest
+  weather and absent by April, in both the binned curve and the monthly&amp;nbsp;bars.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Possible&amp;nbsp;causes&lt;/h2&gt;
+&lt;p&gt;Three things could explain it, and the logged data cannot rule any of them&amp;nbsp;out:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;A warmer house. Holding 19.9 degrees C instead of 18.7 asks more
+  of the heat pump, and a higher flow temperature is what delivers that. A higher
+  flow temperature lowers &lt;span class="caps"&gt;COP&lt;/span&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The new underfloor circuit running at a flow temperature that is higher than
+  it needs to be. Underfloor heating should work at a much lower flow
+  temperature than radiators, and a setting that is too high makes the heat pump
+  work harder for every unit of&amp;nbsp;heat.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The screed still drying out. A new underfloor screed absorbs a lot of heat in
+  its first season, and the 2026 figures cover the first heating season since
+  recommissioning. The gap shrinking through the spring fits this, though it
+  fits the weather&amp;nbsp;too.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;None of these is proven, and I cannot yet say why the gap would appear only in
+cold weather, when the two years match at 12 degrees C. The first two ideas are
+about flow temperature, which is exactly what the logs do not record. The
+screed is easier to test: the winter of 2026/27 will show whether the gap
+shrinks in a second&amp;nbsp;season.&lt;/p&gt;
+&lt;p&gt;The limit is the data. The Vaillant export gives daily energy totals and hourly
+temperatures, and nothing else. There is no flow or return temperature, no
+compressor behaviour and no runtime hours. Nothing that would separate the
+remaining possibilities is logged. An
+&lt;a href="https://openenergymonitor.org"&gt;OpenEnergyMonitor&lt;/a&gt; install, which I have been meaning to do
+since the last note, would record flow and return temperatures directly and
+give me an independent check on Vaillant&amp;#8217;s energy figures at the same time. It
+would also show whether the underfloor flow temperature is too high. That is
+the next step before I speculate any&amp;nbsp;further.&lt;/p&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;A whole-house renovation that added insulation, an extension and underfloor
+heating throughout the ground floor left my heat pump about 10% less efficient
+at space heating across a full heating season, and around 15% less efficient in
+January and&amp;nbsp;February.&lt;/p&gt;
+&lt;p&gt;The house also needs about 20% more heat per degree day than it did. Both the
+extra floor area and the higher room temperature contribute. The
+efficiency drop is specific to space heating, grows with the cold, and has so
+far been seen in one heating season since the work. I suspect the warmer house
+or an underfloor flow temperature that is too high, but a screed that is still
+drying could also play a part, and the logged data does not contain enough to
+find&amp;nbsp;out.&lt;/p&gt;
+&lt;p&gt;The annual headline number hides all of this. The pattern only appeared when I
+plotted &lt;span class="caps"&gt;COP&lt;/span&gt; against outdoor temperature, which holds the weather constant
+instead of averaging over it. The data from the myVaillant app is somewhat
+inaccurate and doesn&amp;#8217;t record flow temperatures, but is good enough to show that
+something&amp;nbsp;changed.&lt;/p&gt;
+&lt;p&gt;The analysis code and the script that produces these charts are on
+&lt;a href="https://github.com/jameshanlon/home-energy-data"&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</content><category term="Home and Sustainability"/><category term="sustainability"/></entry><entry><title>Building a Hex parallel processor</title><link href="https://jameswhanlon.com/building-a-hex-parallel-processor.html" rel="alternate"/><published>2026-10-30T00:00:00+01:00</published><updated>2026-10-30T00:00:00+01:00</updated><author><name>James W. Hanlon</name></author><id>tag:jameswhanlon.com,2026-10-30:/building-a-hex-parallel-processor.html</id><summary type="html">&lt;p&gt;A minimal set of changes for Hex to be a message-passing
 multiprocessor and X to write parallel programs for&amp;nbsp;it.&lt;/p&gt;</summary><content type="html">&lt;p&gt;A few years ago I wrote about &lt;a href="https://jameswhanlon.com/from-logic-gates-to-a-programming-language-using-the-hex-architecture.html"&gt;an implementation of the Hex processor
 architecture&lt;/a&gt;: a deliberately simple processor, a
 Verilog implementation of it, and a compiler for a simple imperative language
